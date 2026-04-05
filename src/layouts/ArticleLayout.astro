@@ -1,0 +1,171 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+
+export interface RelatedLink {
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  readingMinutes: number;
+  ogUrl: string;
+  related?: RelatedLink[];
+}
+
+const { title, description, date, readingMinutes, ogUrl, related = [] } = Astro.props;
+
+const pageTitle = `${title} — Tides of Knowing`;
+const isoDate = date.toISOString();
+const displayDate = date.toLocaleDateString("en-AU", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const blogPostingLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  datePublished: isoDate,
+  author: {
+    "@type": "Person",
+    name: "Leigh Spencer",
+    url: "https://tidesofknowing.com/about",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Tides of Knowing",
+    url: "https://tidesofknowing.com/",
+  },
+  url: ogUrl,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": ogUrl,
+  },
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  ogUrl={ogUrl}
+  ogType="article"
+  articlePublishedTime={isoDate}
+  tdcPlacement="none"
+  jsonLd={blogPostingLd}
+>
+  <div class="article-shell page-inner">
+    <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+      <meta itemprop="datePublished" content={isoDate} />
+      <header class="article__head" data-reveal>
+        <h1 class="article__title" itemprop="headline">{title}</h1>
+        <p class="article__meta">
+          <time datetime={isoDate} itemprop="datePublished">{displayDate}</time>
+          <span class="article__meta-sep" aria-hidden="true">·</span>
+          <span>{readingMinutes} min read</span>
+        </p>
+      </header>
+      <div class="article-prose article__body" itemprop="articleBody">
+        <slot />
+      </div>
+    </article>
+
+    <div data-reveal>
+      <TdcConversionBlock />
+    </div>
+
+    {
+      related.length > 0 && (
+        <section class="related" aria-labelledby="related-heading" data-reveal>
+          <h2 id="related-heading" class="related__title">
+            Suggested reading
+          </h2>
+          <ul class="related__list">
+            {related.map((item) => (
+              <li>
+                <a class="related__link" href={item.href}>
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .article-shell {
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+  }
+
+  .article__head {
+    max-width: 680px;
+    margin-bottom: 2.5rem;
+    padding-top: clamp(1rem, 3vw, 2rem);
+  }
+
+  .article__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.15rem, 5vw, 3rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .article__meta {
+    margin: 0;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .article__meta-sep {
+    margin: 0 0.5rem;
+    opacity: 0.85;
+  }
+
+  .related {
+    margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    padding: 2rem 1.5rem;
+    background: var(--shore);
+    border-left: 3px solid var(--gold);
+    max-width: 680px;
+  }
+
+  .related__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--mountain-water);
+  }
+
+  .related__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .related__list li + li {
+    margin-top: 0.65rem;
+  }
+
+  .related__link {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+</style>

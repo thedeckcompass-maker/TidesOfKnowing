@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { getRelatedForSlug } from "../../data/relatedPosts";
+import { estimateReadingMinutes } from "../../lib/readingTime";
+import { siteBase } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => {
+    const slug = post.slug ?? post.id;
+    return {
+      params: { slug },
+      props: { post },
+    };
+  });
+}
+
+const { post } = Astro.props;
+const slug = post.slug ?? post.id;
+const { Content } = await render(post);
+const readingMinutes = estimateReadingMinutes(post.body ?? "");
+const ogUrl = new URL(`/blog/${slug}/`, siteBase(Astro)).href;
+const related = getRelatedForSlug(slug);
+---
+
+<ArticleLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  readingMinutes={readingMinutes}
+  ogUrl={ogUrl}
+  related={related}
+>
+  <Content />
+</ArticleLayout>

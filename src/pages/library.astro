@@ -1,0 +1,148 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { siteBase } from "../lib/site";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const ogUrl = new URL("/library/", siteBase(Astro)).href;
+---
+
+<BaseLayout
+  title="Library — Long-form writing on tarot, intuition & navigation"
+  description="A growing library of long-form writing on tarot, intuition, and personal navigation."
+  ogUrl={ogUrl}
+>
+  <div class="library page-inner">
+    <header class="library__head" data-reveal>
+      <h1 class="library__title">Library</h1>
+      <p class="library__lede">
+        Essays and reflections that reward slow reading — on tarot practice, inner compass, and the
+        craft of reading for yourself and others.
+      </p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <p class="library__empty" data-reveal>
+          The first articles are on their way. Until then, learn more{" "}
+          <a href="/about">about this publication</a> or join{" "}
+          <a href="https://thedeckcompass.com">The Deck Compass</a> waitlist.
+        </p>
+      ) : (
+        <ul class="library__list">
+          {posts.map((post) => (
+            <li class="library__item" data-reveal>
+              <article>
+                <a class="library__link" href={`/blog/${post.slug ?? post.id}/`}>
+                  <h2 class="library__post-title">{post.data.title}</h2>
+                  <time
+                    class="library__date"
+                    datetime={post.data.date.toISOString()}
+                  >
+                    {post.data.date.toLocaleDateString("en-AU", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                  <p class="library__desc">{post.data.description}</p>
+                </a>
+              </article>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .library {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 40rem;
+  }
+
+  .library__head {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .library__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.25rem, 5vw, 2.85rem);
+    color: var(--mountain-water);
+  }
+
+  .library__lede {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .library__empty {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .library__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .library__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+    transition: border-color 0.2s ease;
+  }
+
+  .library__link:hover {
+    border-bottom-color: var(--sky);
+  }
+
+  .library__link:hover .library__post-title {
+    color: var(--sky);
+  }
+
+  .library__post-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--mountain-water);
+    transition: color 0.2s ease;
+  }
+
+  .library__date {
+    display: block;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.65rem;
+  }
+
+  .library__desc {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+  }
+</style>
