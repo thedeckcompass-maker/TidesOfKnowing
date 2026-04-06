@@ -2,6 +2,8 @@
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import ArticleHeader from "../components/ArticleHeader.astro";
+import ShareButtons from "../components/share/ShareButtons.astro";
+import ShareSidebar from "../components/share/ShareSidebar.astro";
 import ArticleSeries from "../components/ArticleSeries.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
@@ -67,6 +69,8 @@ const jsonLdCombined = [
   articleLd,
   breadcrumbJsonLd(crumbs, base.href),
 ];
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <BaseLayout
@@ -82,41 +86,49 @@ const jsonLdCombined = [
   tdcPlacement="none"
   jsonLd={jsonLdCombined}
 >
-  <div class="article-shell page-inner">
+  <div class="article-shell page-inner tok-article-share-shell">
     <Breadcrumbs items={crumbs} />
-    <div class="article-main tok-articles-main">
-      <ArticleHeader
-        title={d.title}
-        subtitle={d.subtitle}
-        publishDate={d.publishDate}
-        readingTime={readingMinutes}
-        heroImage={d.heroImage}
-        heroImageAlt={d.heroImageAlt}
-        author={d.author}
-      />
+    <div class="tok-articles-share-layout">
+      <ShareSidebar title={d.title} url={canonicalUrl} />
+      <div class="article-main tok-articles-main">
+        <ArticleHeader
+          title={d.title}
+          subtitle={d.subtitle}
+          publishDate={d.publishDate}
+          readingTime={readingMinutes}
+          heroImage={d.heroImage}
+          heroImageAlt={d.heroImageAlt}
+          author={d.author}
+          shareUrl={canonicalUrl}
+        />
 
-      <article class="article tok-articles-article">
-        <div class="article-prose article__body tok-articles-body">
-          <slot />
+        <article class="article tok-articles-article">
+          <div class="article-prose article__body tok-articles-body">
+            <slot />
+          </div>
+          <ShareButtons title={d.title} url={canonicalUrl} placement="bottom" />
+        </article>
+
+        {
+          d.seriesName && (
+            <ArticleSeries
+              seriesName={d.seriesName}
+              seriesOrder={d.seriesOrder}
+              seriesTotal={d.seriesTotal}
+              previousArticle={d.previousArticle ?? undefined}
+              nextArticle={d.nextArticle ?? undefined}
+              currentSlug={d.slug}
+            />
+          )
+        }
+
+        <div data-reveal>
+          <TdcConversionBlock />
         </div>
-      </article>
-
-      {
-        d.seriesName && (
-          <ArticleSeries
-            seriesName={d.seriesName}
-            seriesOrder={d.seriesOrder}
-            seriesTotal={d.seriesTotal}
-            previousArticle={d.previousArticle ?? undefined}
-            nextArticle={d.nextArticle ?? undefined}
-            currentSlug={d.slug}
-          />
-        )
-      }
-
-      <div data-reveal>
-        <TdcConversionBlock />
       </div>
+    </div>
+    <div class="tok-share-mobile-bar" aria-label="Share this article">
+      <ShareButtons title={d.title} url={canonicalUrl} placement="mobile" />
     </div>
   </div>
 </BaseLayout>

@@ -1,0 +1,186 @@
+.tok-share {
+  --tok-share-size: 2.125rem;
+  --tok-share-icon: 1rem;
+}
+
+.tok-share__label {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-nav);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mountain-water);
+  opacity: 0.85;
+}
+
+.tok-share--top .tok-share__label,
+.tok-share--bottom .tok-share__label,
+.tok-share--mobile .tok-share__label {
+  margin-bottom: 0.4rem;
+}
+
+.tok-share__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tok-share--sidebar .tok-share__list {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.tok-share__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tok-share-size);
+  height: var(--tok-share-size);
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--shore);
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, var(--paper) 92%, var(--shore));
+  color: var(--mountain-water);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.tok-share__btn:hover {
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--shore));
+  background: color-mix(in srgb, var(--paper) 70%, var(--shore));
+}
+
+.tok-share__btn:focus {
+  outline: none;
+}
+
+.tok-share__btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.tok-share__icon {
+  width: var(--tok-share-icon);
+  height: var(--tok-share-icon);
+  flex-shrink: 0;
+}
+
+.tok-share__status {
+  margin: 0.35rem 0 0;
+  min-height: 1.15em;
+  font-family: var(--font-nav);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--mountain-water);
+}
+
+.tok-share--sidebar .tok-share__status {
+  text-align: center;
+}
+
+.tok-share--top {
+  margin-top: 1rem;
+}
+
+.tok-share--top .tok-share__list {
+  gap: 0.4rem;
+}
+
+.tok-share--bottom {
+  margin-top: 2rem;
+  padding: 0 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--shore);
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.tok-share--bottom .tok-share__status {
+  margin-top: 0.5rem;
+}
+
+.tok-share-sidebar {
+  display: none;
+}
+
+.tok-articles-share-layout {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .tok-articles-share-layout {
+    display: grid;
+    grid-template-columns: minmax(2.75rem, 3.25rem) minmax(0, 1fr);
+    gap: 0 1.5rem;
+    align-items: start;
+  }
+
+  .tok-share-sidebar {
+    display: block;
+    position: sticky;
+    top: 5.5rem;
+    align-self: start;
+    padding-top: 0.25rem;
+  }
+
+  .tok-share-sidebar .tok-share__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tok-share-sidebar .tok-share__list {
+    margin: 0;
+  }
+}
+
+.tok-share-mobile-bar {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .tok-share-mobile-bar {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom))
+      max(1rem, env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--paper) 94%, var(--shore));
+    border-top: 1px solid var(--shore);
+    box-shadow: 0 -4px 20px color-mix(in srgb, var(--near-black) 6%, transparent);
+  }
+
+  .tok-share-mobile-bar .tok-share {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .tok-article-share-shell {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+  }
+}
