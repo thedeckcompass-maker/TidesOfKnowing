@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { tagsFromArticles } from "../../lib/tags";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+const articles = await getCollection("articles");
+const tagRows = tagsFromArticles(articles);
+
+const PAGE_TITLE = "Topics — Tides of Knowing Articles";
+const PAGE_DESCRIPTION =
+  "Explore articles by topic: tarot methodology, intuition development, and precision reading.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL("/tags/", base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Topics", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-tags-index page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-tags-index__head" data-reveal>
+      <h1 class="tok-tags-index__title">Topics</h1>
+      <p class="tok-tags-index__lede">{PAGE_DESCRIPTION}</p>
+    </header>
+
+    {
+      tagRows.length === 0 ? (
+        <p class="tok-tags-index__empty" data-reveal>
+          Topics will appear when articles include <code>tags</code> in
+          frontmatter.
+        </p>
+      ) : (
+        <ul class="tok-tags-index__list">
+          {tagRows.map((t) => (
+            <li class="tok-tags-index__item" data-reveal>
+              <a class="tok-tags-index__link" href={`/tags/${t.slug}/`}>
+                <span class="tok-tags-index__label">{t.label}</span>
+                <span class="tok-tags-index__count">{t.count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-tags-index {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 40rem;
+  }
+
+  .tok-tags-index__head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-tags-index__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-tags-index__lede {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .tok-tags-index__empty {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .tok-tags-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .tok-tags-index__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.3);
+  }
+
+  .tok-tags-index__link:hover .tok-tags-index__label {
+    color: var(--sky);
+  }
+
+  .tok-tags-index__label {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--mountain-water);
+    transition: color 0.2s ease;
+  }
+
+  .tok-tags-index__count {
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+</style>

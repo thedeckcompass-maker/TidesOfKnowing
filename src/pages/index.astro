@@ -3,10 +3,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import { getCollection } from "astro:content";
 import { siteBase } from "../lib/site";
+import { sortArticlesLibraryNewest } from "../lib/articleLibraryOrder";
+import { sortBlogPostsForListing } from "../lib/sortBlogPosts";
 
-const latest = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+const latest = sortBlogPostsForListing(
+  await getCollection("blog", ({ data }) => !data.draft),
 );
+
+const latestMethodology = sortArticlesLibraryNewest(
+  await getCollection("articles"),
+).slice(0, 5);
 
 const homeUrl = new URL("/", siteBase(Astro)).href;
 
@@ -16,7 +22,7 @@ const websiteLd = {
   name: "Tides of Knowing",
   url: homeUrl,
   description:
-    "Long-form writing at the intersection of intuition, archetypal wisdom, and personal navigation. Companion publication to The Deck Compass.",
+    "Long-form writing on intuition, archetype, and usable perception — for readers moving beyond surface meanings toward clearer, grounded readings. Companion to The Deck Compass.",
   publisher: {
     "@type": "Organization",
     name: "Tides of Knowing",
@@ -26,8 +32,8 @@ const websiteLd = {
 ---
 
 <BaseLayout
-  title="Tides of Knowing — Essays on tarot, intuition & navigation"
-  description="Long-form writing by Leigh Spencer: tarot, archetypal insight, and reflective practice. Companion to The Deck Compass — join the waitlist for intuitive readers."
+  title="Tides of Knowing — Intuition, archetype, and grounded reading"
+  description="Long-form writing for readers deepening tarot and symbolic practice: perception you can hold and use, not only interpret. Subscribe for new work — companion to The Deck Compass."
   ogUrl={homeUrl}
   tdcPlacement="none"
   jsonLd={websiteLd}
@@ -36,7 +42,8 @@ const websiteLd = {
     <div class="page-inner hero__inner">
       <h1 class="hero__title" data-reveal>Tides of Knowing</h1>
       <p class="hero__lead" data-reveal>
-        Long-form writing at the intersection of intuition, archetypal wisdom, and personal navigation.
+        Long-form writing for those who read beyond the surface — and want to trust what they're
+        seeing.
       </p>
     </div>
   </section>
@@ -44,9 +51,33 @@ const websiteLd = {
   <section class="intro">
     <div class="page-inner intro__inner">
       <p class="intro__text" data-reveal>
-        <em>Tides of Knowing</em> is the companion publication to <strong>The Deck Compass</strong> — a
-        quiet home for essays and reflections that stay useful long after the feed moves on. Here,
-        depth matters more than velocity.
+        Tides of Knowing is where intuitive perception becomes usable.<br />
+        It's written for people who already understand the language of tarot, archetype, or symbolism
+        — but find that knowing what the cards mean doesn't always translate into clear, grounded
+        readings.
+      </p>
+      <p class="intro__text" data-reveal>
+        Here, the focus is not on more meanings, but on how to follow what is already present —<br />
+        how to recognise signal, hold it, and move with it in real time.
+      </p>
+      <p class="intro__text" data-reveal>
+        This is the companion publication to The Deck Compass: a body of work designed to deepen
+        perception, sharpen discernment, and make intuitive insight
+        something you can actually use — for yourself or for others.
+      </p>
+      <h2 class="latest__title" data-reveal>A quiet invitation</h2>
+      <p class="intro__text" data-reveal>
+        I've spent more than thirty years working with language, perception, and interpretation — as
+        a journalist, a reader, and an educator.
+      </p>
+      <p class="intro__text" data-reveal>This work comes from that intersection.</p>
+      <p class="intro__text" data-reveal>
+        If you're looking for a way to move beyond card meanings and into something more precise and
+        usable, you're in the right place.
+      </p>
+      <p class="intro__text" data-reveal>
+        You can read more about my background on the{" "}
+        <a href="/about/">About page</a>.
       </p>
     </div>
   </section>
@@ -55,14 +86,18 @@ const websiteLd = {
     <TdcConversionBlock />
   </div>
 
-  <section class="latest" aria-labelledby="latest-heading">
+  <section class="latest" aria-labelledby="blog-latest-heading">
     <div class="page-inner latest__inner">
-      <h2 id="latest-heading" class="latest__title" data-reveal>Latest articles</h2>
+      <h2 id="blog-latest-heading" class="latest__title" data-reveal>
+        Latest from the blog
+      </h2>
       {
         latest.length === 0 ? (
           <p class="latest__empty" data-reveal>
-            New pieces will appear here as they are published. Browse the{" "}
-            <a href="/library">library</a> for the full archive.
+            New posts will appear here as they are published. Browse the{" "}
+            <a href="/library/">blog archive</a>
+            {" "}for the full roll. Methodology articles and series live in the{" "}
+            <a href="/articles/">article library</a>.
           </p>
         ) : (
           <ul class="latest__list">
@@ -78,6 +113,47 @@ const websiteLd = {
                     })}
                   </span>
                   <span class="latest__post-desc">{post.data.description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="latest methodology" aria-labelledby="methodology-heading">
+    <div class="page-inner latest__inner">
+      <h2 id="methodology-heading" class="latest__title" data-reveal>
+        Latest in the library
+      </h2>
+      <p class="methodology__intro" data-reveal>
+        Long-form methodology pieces, series, and topics —{" "}
+        <a class="methodology__hub-link" href="/articles/">Browse the full article library</a>
+      </p>
+      {
+        latestMethodology.length === 0 ? (
+          <p class="latest__empty" data-reveal>
+            Articles will appear here as they are published. Open the{" "}
+            <a href="/articles/">article library</a> for the full catalog.
+          </p>
+        ) : (
+          <ul class="latest__list">
+            {latestMethodology.map((article) => (
+              <li class="latest__item" data-reveal>
+                <a
+                  class="latest__link"
+                  href={`/articles/${article.data.slug}/`}
+                >
+                  <span class="latest__post-title">{article.data.title}</span>
+                  <span class="latest__post-meta">
+                    {article.data.publishDate.toLocaleDateString("en-AU", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                  <span class="latest__post-desc">{article.data.excerpt}</span>
                 </a>
               </li>
             ))}
@@ -132,6 +208,15 @@ const websiteLd = {
     line-height: 1.8;
   }
 
+  .intro__text + .intro__text {
+    margin-top: 1.25rem;
+  }
+
+  .intro__text br {
+    display: block;
+    margin-top: 0.35rem;
+  }
+
   .latest {
     padding: clamp(2.5rem, 7vw, 4.5rem) 0 clamp(3rem, 8vw, 5rem);
     background: var(--lavender);
@@ -140,6 +225,36 @@ const websiteLd = {
       rgba(216, 219, 241, 0.35) 0%,
       var(--paper) 45%
     );
+  }
+
+  .latest.methodology {
+    padding-top: clamp(1.5rem, 4vw, 2.5rem);
+    background: linear-gradient(
+      180deg,
+      var(--paper) 0%,
+      rgba(216, 219, 241, 0.22) 55%,
+      var(--paper) 100%
+    );
+  }
+
+  .methodology__intro {
+    margin: 0 0 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 40rem;
+  }
+
+  .methodology__hub-link {
+    font-family: var(--font-nav);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .methodology__hub-link:hover {
+    color: var(--sky);
   }
 
   .latest__inner {
@@ -153,6 +268,19 @@ const websiteLd = {
     font-weight: 400;
     font-size: clamp(1.85rem, 4vw, 2.35rem);
     color: var(--mountain-water);
+  }
+
+  .intro__inner > .latest__title {
+    margin-top: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro__inner > .latest__title + .intro__text {
+    margin-top: 1rem;
+  }
+
+  .intro__inner > .latest__title ~ .intro__text + .intro__text {
+    margin-top: 1.25rem;
   }
 
   .latest__empty {

@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
 import { getRelatedForSlug } from "../../data/relatedPosts";
 import { estimateReadingMinutes } from "../../lib/readingTime";
+import { countWords } from "../../lib/wordCount";
 import { siteBase } from "../../lib/site";
 
 export async function getStaticPaths() {
@@ -18,10 +19,26 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const slug = post.slug ?? post.id;
-const { Content } = await render(post);
-const readingMinutes = estimateReadingMinutes(post.body ?? "");
-const ogUrl = new URL(`/blog/${slug}/`, siteBase(Astro)).href;
+const rendered = await render(post);
+const { Content, headings } = rendered;
+
+const body = post.body ?? "";
+const wordCount = countWords(body);
+const tocHeadings = headings
+  .filter((h) => h.depth === 2)
+  .map((h) => ({ slug: h.slug, text: h.text }));
+
+const readingMinutes =
+  post.data.readingTime ?? estimateReadingMinutes(body);
+
+const defaultHero = "/images/blog/placeholders/hero.svg";
+const heroImage = post.data.heroImage ?? defaultHero;
+const base = siteBase(Astro);
+const heroImageAbsolute = new URL(heroImage, base).href;
+
+const ogUrl = new URL(`/blog/${slug}/`, base).href;
 const related = getRelatedForSlug(slug);
+const showToc = wordCount >= 1500 && tocHeadings.length >= 4;
 ---
 
 <ArticleLayout
@@ -31,6 +48,13 @@ const related = getRelatedForSlug(slug);
   readingMinutes={readingMinutes}
   ogUrl={ogUrl}
   related={related}
+  heroImage={heroImage}
+  heroImageAlt={post.data.heroImageAlt}
+  heroCaption={post.data.heroCaption}
+  heroImageAbsolute={heroImageAbsolute}
+  articleTags={post.data.tags}
+  tocHeadings={tocHeadings}
+  showToc={showToc}
 >
   <Content />
 </ArticleLayout>

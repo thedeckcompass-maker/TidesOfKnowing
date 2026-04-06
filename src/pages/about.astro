@@ -1,43 +1,210 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import { siteBase } from "../lib/site";
 
 const ogUrl = new URL("/about/", siteBase(Astro)).href;
+const profilePath = "/images/about/leigh-spencer-profile.png";
+const ogImage = new URL(profilePath, siteBase(Astro)).href;
 ---
 
 <BaseLayout
-  title="About — Leigh Spencer & Tides of Knowing"
-  description="Leigh Spencer: writer, guide, and founder. Tides of Knowing is the long-form companion to The Deck Compass — essays on tarot, intuition, and fourth-generation Matakite practice."
+  title="About — Tides of Knowing"
+  description="Long-form publication by Leigh Spencer — writer, guide, and fourth-generation Matakite. Tarot as perception and decision-making, with The Deck Compass as the practice home for building capability."
   ogUrl={ogUrl}
+  ogImage={ogImage}
+  tdcPlacement="none"
 >
   <article class="about page-inner">
     <header class="about__head" data-reveal>
-      <h1 class="about__title">About</h1>
+      <h1 class="about__title">About — Tides of Knowing</h1>
     </header>
+
+    <figure class="about__figure" data-reveal>
+      <img
+        class="about__photo"
+        src={profilePath}
+        width="640"
+        height="853"
+        alt="Professional portrait of Leigh Spencer, writer and guide, smiling outdoors in a park setting."
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
 
     <div class="about__body">
       <p class="about__p" data-reveal>
-        <strong>Tides of Knowing</strong> is a long-form publication by <strong>Leigh Spencer</strong>,
-        created as a companion to <a href="https://thedeckcompass.com">The Deck Compass</a> — a
-        subscription platform for intuitive tarot readers. Where The Deck Compass supports practice,
-        community, and structured learning, ToK holds the slower work: essays, archetypal
-        reflection, and writing meant to surface in search and AI answers for years to come.
+        <strong>Tides of Knowing</strong> is a long-form publication by <strong>Leigh Spencer</strong> — writer, guide, and fourth-generation Matakite.
       </p>
 
       <p class="about__p" data-reveal>
-        Leigh is a writer, guide, and founder with <strong>49 years of tarot experience</strong> and
-        a lineage as a <strong>fourth-generation Matakite</strong> — carrying forward intuitive and
-        ancestral ways of seeing. Her work sits at the intersection of reflective practice, pattern
-        recognition, and practical navigation for readers who take the cards seriously but leave
-        performance at the door.
+        Matakite is a Māori term for those who carry the gift of sight: the capacity to perceive beyond the visible world. It is not a credential and not something acquired through study. It is inherited, recognised, and carried as responsibility. That lineage informs this work, alongside a second discipline that shapes it equally.
       </p>
 
-      <blockquote class="about__quote" data-reveal>
+      <p class="about__p" data-reveal>
+        Leigh brings together 49 years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reveal. Neither is privileged. Both are in service of the same outcome:
+      </p>
+      <p class="about__pull" data-reveal>
+        clarity that lands and can be acted on.
+      </p>
+
+      <h2 class="about__h2" data-reveal>What This Work Addresses</h2>
+      <p class="about__p" data-reveal>
+        Tides of Knowing exists for a specific experience many people encounter as they deepen their relationship with tarot:
+      </p>
+      <p class="about__p" data-reveal>
+        You learn the meanings.<br />
+        You study the systems.<br />
+        You read more, hoping clarity will follow.
+      </p>
+      <p class="about__p" data-reveal>
+        And yet, when you sit with the cards — for yourself or for someone else — something still doesn’t fully hold.
+      </p>
+      <p class="about__p" data-reveal>
+        The message feels close, but not quite clear.<br />
+        The reading feels partial, or slightly out of tune.
+      </p>
+      <p class="about__p" data-reveal>
+        This is not a lack of effort, and it is not solved by accumulating more meanings.
+      </p>
+      <p class="about__p" data-reveal>
+        It is the point where understanding stops extending capability.
+      </p>
+      <p class="about__p" data-reveal>
+        That is the space this work is designed to meet.
+      </p>
+
+      <h2 class="about__h2" data-reveal>The Focus of This Publication</h2>
+      <p class="about__p" data-reveal>
+        Tides of Knowing approaches tarot as a practice of perception and decision-making, rather than an exercise in interpretation alone.
+      </p>
+      <p class="about__p" data-reveal>The writing explores:</p>
+      <ul class="about__list" data-reveal>
+        <li>How intuitive signal is recognised and followed</li>
+        <li>Why more knowledge does not always lead to better readings</li>
+        <li>How to move from description into insight</li>
+        <li>The role of pattern recognition across a spread</li>
+        <li>How to stay with what is true, even when it is subtle</li>
+        <li>The difference between a reading that explains and a reading that lands</li>
+      </ul>
+      <p class="about__p" data-reveal>
+        These are the underlying mechanics of a reading — whether it is for yourself or for others.
+      </p>
+
+      <h2 class="about__h2" data-reveal>The Nature of This Work</h2>
+      <p class="about__p" data-reveal>
+        This is not a trend-based site.<br />
+        It does not offer quick answers to complex questions.<br />
+        It does not prioritise volume over clarity.
+      </p>
+      <p class="about__p" data-reveal>
+        Tides of Knowing is built as a long-term body of work — writing that returns you to the same place with greater depth each time you engage with it.
+      </p>
+      <p class="about__p" data-reveal>
+        It is for people who sense that something in their practice is trying to refine — not through more information, but through a different way of seeing.
+      </p>
+      <blockquote class="about__callout" data-reveal>
         <p>
-          This site exists for writing that does not chase trends — only clarity, depth, and a steady
-          light for anyone finding their way.
+          If it’s real, it can be explained.<br />
+          And if it can be explained, it can be followed.
         </p>
       </blockquote>
+
+      <h2 class="about__h2" data-reveal>The Deck Compass</h2>
+      <p class="about__p" data-reveal>
+        Tides of Knowing is the editorial foundation for The Deck Compass.
+      </p>
+      <p class="about__p" data-reveal>
+        Where this publication develops understanding, The Deck Compass develops capability.
+      </p>
+      <p class="about__p" data-reveal>
+        It is a structured environment designed for people who want to strengthen how they work with the cards — whether that is for personal reflection or reading for others — through:
+      </p>
+      <ul class="about__list" data-reveal>
+        <li>Guided practice</li>
+        <li>Real-time refinement</li>
+        <li>Applied learning rather than passive consumption</li>
+        <li>A clear methodology for developing intuitive accuracy</li>
+      </ul>
+      <p class="about__p" data-reveal>
+        If the writing here names something you recognise but cannot yet consistently act on, The Deck Compass is where that capacity is built.
+      </p>
+
+      <div class="about__cta" data-reveal>
+        <TdcConversionBlock variant="inline" headingId="tdc-about-deck-compass" />
+      </div>
+
+      <h2 class="about__h2" data-reveal>
+        The COMPASS Method — The Seven Pillars of Intuition
+      </h2>
+      <p class="about__p" data-reveal>
+        At the centre of this work is the COMPASS Method — a framework developed through decades of reading, observation, and teaching.
+      </p>
+      <p class="about__p" data-reveal>
+        It focuses on seven core capacities that underpin accurate, grounded intuitive work:
+      </p>
+      <ul class="about__list" data-reveal>
+        <li>Recognising signal</li>
+        <li>Knowing what to prioritise</li>
+        <li>Tracking relationships within a spread</li>
+        <li>Holding coherence while reading</li>
+        <li>Translating insight into clear language</li>
+        <li>Staying with what is true, rather than what is expected</li>
+        <li>Closing a reading with clarity</li>
+      </ul>
+      <p class="about__p" data-reveal>
+        These are not abstract ideas. They are skills that develop through attention, practice, and correction.
+      </p>
+      <p class="about__p" data-reveal>
+        Most people try to improve their readings by learning more meanings.<br />
+        This work focuses on what happens after meaning is already known.
+      </p>
+
+      <div class="about__cta" data-reveal>
+        <TdcConversionBlock variant="inline" headingId="tdc-about-method" />
+      </div>
+
+      <h2 class="about__h2" data-reveal>Who This Is For</h2>
+      <p class="about__p" data-reveal>This work is for people who:</p>
+      <ul class="about__list" data-reveal>
+        <li>Have spent time learning tarot and want something deeper than more definitions</li>
+        <li>Use the cards for personal reflection and want clearer, more grounded insight</li>
+        <li>Sense that their readings could be more accurate, more connected, or more complete</li>
+        <li>Prefer depth, precision, and clarity over volume or performance</li>
+      </ul>
+      <p class="about__p" data-reveal>
+        You do not need to read for others for this to matter.<br />
+        But you do need to be willing to look more closely at how you read.
+      </p>
+
+      <h2 class="about__h2" data-reveal>How to Use This Work</h2>
+      <p class="about__p" data-reveal>
+        You may arrive here through a single idea — something that puts language to an experience you have already had.
+      </p>
+      <p class="about__p" data-reveal>If that happens, pay attention.</p>
+      <p class="about__p" data-reveal>
+        Because that moment of recognition is the same thing this work develops:<br />
+        the ability to notice what is true, and follow it.
+      </p>
+      <p class="about__p" data-reveal>
+        The writing helps you see it.<br />
+        The practice helps you hold it.
+      </p>
+
+      <h2 class="about__h2" data-reveal>What This Ultimately Is</h2>
+      <p class="about__p" data-reveal>
+        Tides of Knowing is for those who want to connect more deeply with what is present in a reading but not yet fully formed.
+      </p>
+      <p class="about__p" data-reveal>
+        What sits beyond literal meaning.<br />
+        What emerges through the relationship between reader, cards, and seeker.
+      </p>
+      <p class="about__p" data-reveal>
+        And how to stay with that long enough for it to become clear — and speakable.
+      </p>
+      <div class="about__cta about__cta--end" data-reveal>
+        <TdcConversionBlock variant="inline" headingId="tdc-about-close" />
+      </div>
     </div>
   </article>
 </BaseLayout>
@@ -45,11 +212,11 @@ const ogUrl = new URL("/about/", siteBase(Astro)).href;
 <style>
   .about {
     padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 40rem;
+    max-width: 42rem;
   }
 
   .about__head {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .about__title {
@@ -57,28 +224,110 @@ const ogUrl = new URL("/about/", siteBase(Astro)).href;
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(2.25rem, 5vw, 2.85rem);
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
     color: var(--mountain-water);
   }
 
-  .about__p {
-    margin: 0 0 1.35rem;
-    font-size: 1.08rem;
-    line-height: 1.8;
+  .about__figure {
+    margin: 0 0 1.75rem;
+    max-width: min(100%, 18rem);
   }
 
-  .about__quote {
-    margin: 2rem 0 0;
-    padding: 0.25rem 0 0.25rem 1.25rem;
+  .about__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 0.2rem;
+    border: 1px solid rgba(198, 161, 74, 0.45);
+    box-shadow: 0 12px 32px rgba(13, 50, 77, 0.12);
+  }
+
+  @media (min-width: 640px) {
+    .about__figure {
+      float: right;
+      margin: 0 0 1rem 1.75rem;
+      max-width: 14.5rem;
+    }
+  }
+
+  .about__body::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .about__h2 {
+    margin: 2.25rem 0 0.85rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+    font-weight: 600;
+    font-style: normal;
+    color: var(--mountain-water);
+    line-height: 1.25;
+  }
+
+  .about__p {
+    margin: 0 0 1.1rem;
+    font-size: 1.06rem;
+    line-height: 1.78;
+  }
+
+  .about__p a {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .about__p a:hover {
+    color: var(--mountain-water);
+  }
+
+  .about__pull {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+    line-height: 1.5;
+    color: var(--mountain-water);
+    padding-left: 1rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .about__list {
+    margin: 0 0 1.25rem;
+    padding-left: 1.35rem;
+    font-size: 1.06rem;
+    line-height: 1.7;
+  }
+
+  .about__list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .about__callout {
+    margin: 1.5rem 0;
+    padding: 0.35rem 0 0.35rem 1.25rem;
     border-left: 3px solid var(--gold);
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 1.2rem;
+    font-size: 1.12rem;
     line-height: 1.65;
     color: var(--ink);
   }
 
-  .about__quote p {
+  .about__callout p {
     margin: 0;
+  }
+
+  .about__cta {
+    margin-top: 1.25rem;
+    margin-bottom: 0.35rem;
+    clear: both;
+  }
+
+  .about__cta--end {
+    margin-top: 2rem;
+    margin-bottom: 0;
   }
 </style>

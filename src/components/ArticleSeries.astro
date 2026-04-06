@@ -1,0 +1,205 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+  seriesName: string;
+  seriesOrder?: number;
+  seriesTotal?: number;
+  previousArticle?: string | null;
+  nextArticle?: string | null;
+  currentSlug: string;
+}
+
+const {
+  seriesName,
+  seriesOrder,
+  seriesTotal,
+  previousArticle,
+  nextArticle,
+  currentSlug,
+} = Astro.props;
+
+const all = await getCollection("articles");
+const seriesArticles = all
+  .filter((a) => a.data.seriesName === seriesName)
+  .sort((a, b) => {
+    const ao = a.data.seriesOrder ?? 9999;
+    const bo = b.data.seriesOrder ?? 9999;
+    if (ao !== bo) return ao - bo;
+    return a.data.title.localeCompare(b.data.title);
+  });
+---
+
+<nav class="tok-series" aria-label="Article series navigation">
+  <div class="tok-series__header">
+    <h2 class="tok-series__name">{seriesName}</h2>
+    {
+      seriesOrder != null && seriesTotal != null && (
+        <p class="tok-series__progress">
+          Part {seriesOrder} of {seriesTotal}
+        </p>
+      )
+    }
+  </div>
+
+  <div class="tok-series__nav">
+    {
+      previousArticle ? (
+        <a
+          href={`/articles/${previousArticle}/`}
+          class="tok-series__link tok-series__link--prev"
+        >
+          ← Previous article
+        </a>
+      ) : (
+        <span class="tok-series__placeholder" aria-hidden="true" />
+      )
+    }
+    {
+      nextArticle ? (
+        <a
+          href={`/articles/${nextArticle}/`}
+          class="tok-series__link tok-series__link--next"
+        >
+          Next article →
+        </a>
+      ) : (
+        <span class="tok-series__placeholder" aria-hidden="true" />
+      )
+    }
+  </div>
+
+  {
+    seriesArticles.length > 0 && (
+      <div class="tok-series__list-wrap">
+        <p class="tok-series__list-label">
+          <strong>Complete series</strong>
+        </p>
+        <ol class="tok-series__list">
+          {seriesArticles.map((a) => {
+            const slug = a.data.slug;
+            const isCurrent = slug === currentSlug;
+            return (
+              <li
+                class:list={[
+                  "tok-series__item",
+                  { "tok-series__item--current": isCurrent },
+                ]}
+              >
+                {isCurrent ? (
+                  <span class="tok-series__current" aria-current="page">
+                    {a.data.title}
+                    <span class="tok-series__here">
+                      {" "}
+                      ← You are here
+                    </span>
+                  </span>
+                ) : (
+                  <a href={`/articles/${slug}/`}>{a.data.title}</a>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    )
+  }
+</nav>
+
+<style>
+  .tok-series {
+    margin-top: 3.5rem;
+    padding: 2rem 1rem;
+    border-top: 2px solid var(--shore);
+    border-bottom: 2px solid var(--shore);
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tok-series__header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .tok-series__name {
+    font-family: var(--font-display);
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .tok-series__progress {
+    margin: 0;
+    color: var(--mountain-water);
+    font-size: 0.875rem;
+    font-family: var(--font-nav);
+  }
+
+  .tok-series__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .tok-series__placeholder {
+    min-width: 1px;
+    flex: 1;
+  }
+
+  .tok-series__link {
+    padding: 0.75rem 1.25rem;
+    background: var(--shore);
+    border-radius: 0.375rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-family: var(--font-nav);
+    font-size: 0.9375rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .tok-series__link:hover {
+    background: var(--pale-horizon);
+    color: var(--navy);
+  }
+
+  .tok-series__list-wrap {
+    margin-top: 1.5rem;
+  }
+
+  .tok-series__list-label {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9375rem;
+  }
+
+  .tok-series__list {
+    margin: 0;
+    padding-left: 1.5rem;
+    list-style: decimal;
+  }
+
+  .tok-series__item {
+    margin: 0.5rem 0;
+  }
+
+  .tok-series__item--current .tok-series__current {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .tok-series__here {
+    font-weight: 500;
+    font-style: italic;
+    color: var(--mountain-water);
+    opacity: 0.85;
+  }
+
+  .tok-series__item:not(.tok-series__item--current) a {
+    color: var(--sky);
+  }
+</style>

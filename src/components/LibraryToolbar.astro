@@ -1,0 +1,139 @@
+---
+interface SeriesOpt {
+  slug: string;
+  label: string;
+}
+
+interface Props {
+  sort: "newest" | "oldest" | "series";
+  /** When false, filter select is hidden (non–newest-first views). */
+  showFilter: boolean;
+  /** When false, sort dropdown is hidden (e.g. series filter uses reading order). */
+  showSort?: boolean;
+  /** `all` or series slug. */
+  filter: "all" | string;
+  seriesOptions: SeriesOpt[];
+}
+
+const { sort, showFilter, showSort = true, filter, seriesOptions } = Astro.props;
+
+const sortChoices: { id: "newest" | "oldest" | "series"; label: string; href: string }[] =
+  [
+    { id: "newest", label: "Newest", href: "/articles/" },
+    { id: "oldest", label: "Oldest", href: "/articles/sort/oldest/" },
+    { id: "series", label: "By series", href: "/articles/sort/series/" },
+  ];
+---
+
+<div class="lib-toolbar">
+  {
+    showSort && (
+      <div class="lib-toolbar__field">
+        <label class="lib-toolbar__label" for="lib-sort">Sort</label>
+        <select
+          id="lib-sort"
+          class="lib-toolbar__select"
+          data-lib-nav="sort"
+        >
+          {
+            sortChoices.map((c) => (
+              <option value={c.href} selected={c.id === sort}>
+                {c.label}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+    )
+  }
+
+  {
+    showFilter && (
+      <div class="lib-toolbar__field">
+        <label class="lib-toolbar__label" for="lib-filter">
+          Series
+        </label>
+        <select
+          id="lib-filter"
+          class="lib-toolbar__select"
+          data-lib-nav="filter"
+        >
+          <option value="/articles/" selected={filter === "all"}>
+            All series
+          </option>
+          {seriesOptions.map((s) => (
+            <option
+              value={`/articles/filter/${s.slug}/`}
+              selected={filter === s.slug}
+            >
+              {s.label}
+            </option>
+          ))}
+        </select>
+      </div>
+    )
+  }
+
+  {
+    !showFilter && (
+      <p class="lib-toolbar__hint">
+        Series filter applies to the default newest-first library view.
+      </p>
+    )
+  }
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll("[data-lib-nav]").forEach(function (el) {
+      el.addEventListener("change", function () {
+        var v = el.value;
+        if (v) window.location.href = v;
+      });
+    });
+  })();
+</script>
+
+<style>
+  .lib-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .lib-toolbar__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: min(100%, 12rem);
+  }
+
+  .lib-toolbar__label {
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .lib-toolbar__select {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid rgba(198, 161, 74, 0.5);
+    border-radius: 0.35rem;
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--ink);
+  }
+
+  .lib-toolbar__hint {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--mountain-water);
+    max-width: 28ch;
+  }
+</style>

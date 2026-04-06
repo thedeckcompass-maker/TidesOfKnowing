@@ -1,0 +1,118 @@
+---
+interface Props {
+  prevHref: string | null;
+  nextHref: string | null;
+  pages: { num: number; href: string; current: boolean }[];
+}
+
+const { prevHref, nextHref, pages } = Astro.props;
+---
+
+{
+  pages.length > 1 && (
+    <nav class="lib-pager" aria-label="Pagination">
+      {prevHref ? (
+        <a class="lib-pager__edge" href={prevHref} rel="prev">
+          « Previous
+        </a>
+      ) : (
+        <span class="lib-pager__edge lib-pager__edge--disabled">« Previous</span>
+      )}
+
+      <ol class="lib-pager__list">
+        {pages.map((p) => (
+          <li class="lib-pager__item">
+            {p.current ? (
+              <span class="lib-pager__current" aria-current="page">
+                {p.num}
+              </span>
+            ) : (
+              <a class="lib-pager__link" href={p.href}>
+                {p.num}
+              </a>
+            )}
+          </li>
+        ))}
+      </ol>
+
+      {nextHref ? (
+        <a class="lib-pager__edge" href={nextHref} rel="next">
+          Next »
+        </a>
+      ) : (
+        <span class="lib-pager__edge lib-pager__edge--disabled">Next »</span>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .lib-pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  .lib-pager__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    justify-content: center;
+  }
+
+  .lib-pager__link,
+  .lib-pager__current {
+    display: inline-flex;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-nav);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+  }
+
+  .lib-pager__link {
+    text-decoration: none;
+    color: var(--sky);
+    border: 1px solid rgba(116, 179, 206, 0.45);
+  }
+
+  .lib-pager__link:hover {
+    color: var(--mountain-water);
+    border-color: var(--mountain-water);
+  }
+
+  .lib-pager__current {
+    background: var(--navy);
+    color: var(--lavender);
+  }
+
+  .lib-pager__edge {
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--sky);
+  }
+
+  .lib-pager__edge:hover {
+    color: var(--mountain-water);
+  }
+
+  .lib-pager__edge--disabled {
+    color: rgba(30, 77, 107, 0.35);
+    cursor: not-allowed;
+  }
+</style>

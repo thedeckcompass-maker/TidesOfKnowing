@@ -1,0 +1,229 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "../../utils/slugify";
+import { sortArticles } from "../../utils/sortArticles";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+const articles = await getCollection("articles");
+
+const bySeries = new Map<
+  string,
+  { title: string; items: typeof articles }
+>();
+for (const a of articles) {
+  const name = a.data.seriesName;
+  if (!name) continue;
+  const slug = slugify(name);
+  const cur = bySeries.get(slug);
+  if (!cur) bySeries.set(slug, { title: name, items: [a] });
+  else cur.items.push(a);
+}
+
+const rows = [...bySeries.entries()].map(([slug, v]) => {
+  const byReadingOrder = sortArticles(v.items, "series");
+  const first = byReadingOrder[0];
+  const latest = sortArticles(v.items, "newest")[0];
+  return {
+    slug,
+    title: v.title,
+    count: v.items.length,
+    /** Primary list link: part 1 (by seriesOrder, then publish date). */
+    startHref: first ? `/articles/${first.data.slug}/` : `/series/${slug}/`,
+    latestTitle: latest?.data.title,
+    latestHref: latest ? `/articles/${latest.data.slug}/` : null,
+    latestDate: latest?.data.publishDate,
+  };
+});
+
+rows.sort((a, b) => a.title.localeCompare(b.title));
+
+const PAGE_TITLE = "Series — Tides of Knowing Articles";
+const PAGE_DESCRIPTION =
+  "Browse article series on tarot methodology, precision reading, and intuition development.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL("/series/", base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Series", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-series-index page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-series-index__head" data-reveal>
+      <h1 class="tok-series-index__title">Series</h1>
+      <p class="tok-series-index__lede">{PAGE_DESCRIPTION}</p>
+    </header>
+
+    {
+      rows.length === 0 ? (
+        <p class="tok-series-index__empty" data-reveal>
+          Series will appear when articles include a <code>seriesName</code> in
+          frontmatter.
+        </p>
+      ) : (
+        <ul class="tok-series-index__list">
+          {rows.map((r) => (
+            <li class="tok-series-index__item" data-reveal>
+              <a class="tok-series-index__link" href={r.startHref}>
+                <span class="tok-series-index__name">{r.title}</span>
+                <span class="tok-series-index__meta">
+                  {r.count} article{r.count === 1 ? "" : "s"}
+                </span>
+              </a>
+              <p class="tok-series-index__sub">
+                <a class="tok-series-index__overview" href={`/series/${r.slug}/`}>
+                  Series overview
+                </a>
+              </p>
+              {r.latestTitle && r.latestHref && r.latestDate && (
+                <p class="tok-series-index__latest">
+                  Latest:{" "}
+                  <a href={r.latestHref}>{r.latestTitle}</a>
+                  <time datetime={r.latestDate.toISOString()}>
+                    {" "}
+                    ·{" "}
+                    {r.latestDate.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-series-index {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .tok-series-index__head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-series-index__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-series-index__lede {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .tok-series-index__empty {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .tok-series-index__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tok-series-index__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  .tok-series-index__link:hover .tok-series-index__name {
+    color: var(--sky);
+  }
+
+  .tok-series-index__sub {
+    margin: 0.25rem 0 0;
+    font-size: 0.88rem;
+  }
+
+  .tok-series-index__overview {
+    color: var(--sky);
+    text-decoration: none;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tok-series-index__overview:hover {
+    text-decoration: underline;
+  }
+
+  .tok-series-index__name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--mountain-water);
+    transition: color 0.2s ease;
+  }
+
+  .tok-series-index__meta {
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tok-series-index__latest {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+import type { BreadcrumbItem } from "../lib/breadcrumbs";
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol class="breadcrumbs__list">
+    {
+      items.map((item, i) => (
+        <li class="breadcrumbs__item">
+          {item.url ? (
+            <a class="breadcrumbs__link" href={item.url}>
+              {item.label}
+            </a>
+          ) : (
+            <span class="breadcrumbs__current" aria-current="page">
+              {item.label}
+            </span>
+          )}
+          {i < items.length - 1 && (
+            <span class="breadcrumbs__sep" aria-hidden="true">
+              /
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem 1rem;
+  }
+
+  .breadcrumbs__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .breadcrumbs__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumbs__link {
+    color: var(--sky);
+    text-decoration: none;
+  }
+
+  .breadcrumbs__link:hover {
+    color: var(--mountain-water);
+  }
+
+  .breadcrumbs__current {
+    color: var(--ink);
+    max-width: min(100%, 28rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .breadcrumbs__sep {
+    color: rgba(30, 77, 107, 0.45);
+    user-select: none;
+  }
+</style>

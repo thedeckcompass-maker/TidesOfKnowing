@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "../../utils/slugify";
+import { sortArticlesLibraryNewest } from "../../lib/articleLibraryOrder";
+import { articlesWithTagSlug } from "../../lib/tags";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  const slugs = [
+    ...new Set(
+      articles.flatMap((a) => a.data.tags.map((t) => slugify(t))),
+    ),
+  ];
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug: tagSlug } = Astro.params;
+const articles = await getCollection("articles");
+const tagged = sortArticlesLibraryNewest(
+  articlesWithTagSlug(articles, tagSlug!),
+);
+
+const tagLabel =
+  tagged[0]?.data.tags.find((t) => slugify(t) === tagSlug) ??
+  tagSlug!.replace(/-/g, " ");
+
+const PAGE_DESCRIPTION = `Articles tagged “${tagLabel}” — Tides of Knowing.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(`/tags/${tagSlug}/`, base).href;
+
+const PAGE_TITLE = `${tagLabel} — Topics — Tides of Knowing`;
+
+const minutesById = new Map(
+  articles.map((a) => [a.id, readingMinutesForArticle(a)]),
+);
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${tagLabel} — topics`,
+  description: PAGE_DESCRIPTION,
+  numberOfItems: tagged.length,
+  itemListElement: tagged.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
+    name: a.data.title,
+  })),
+};
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Topics", url: "/tags/" },
+  { label: tagLabel, url: null },
+];
+
+const jsonLd = [itemListLd, breadcrumbJsonLd(crumbs, siteHref)];
+
+const ogImage = tagged[0]
+  ? new URL(tagged[0].data.heroImage, base).href
+  : new URL("/favicon.svg", base).href;
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-tag-landing page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-tag-landing__head" data-reveal>
+      <h1 class="tok-tag-landing__title">{tagLabel}</h1>
+      <p class="tok-tag-landing__lede">{PAGE_DESCRIPTION}</p>
+    </header>
+
+    {
+      tagged.length === 0 ? (
+        <p class="tok-tag-landing__empty">No articles use this topic.</p>
+      ) : (
+        <div class="tok-tag-landing__grid" data-reveal>
+          {tagged.map((a) => (
+            <ArticleCard
+              article={a}
+              readingMinutes={minutesById.get(a.id) ?? 1}
+            />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-tag-landing {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 72rem;
+  }
+
+  .tok-tag-landing__head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-tag-landing__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-tag-landing__lede {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .tok-tag-landing__empty {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .tok-tag-landing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: 1.15rem;
+  }
+</style>

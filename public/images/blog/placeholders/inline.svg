@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none" aria-hidden="true">
+  <rect width="800" height="500" fill="#1E4D6B"/>
+  <path d="M0 320 Q120 280 240 300 T480 290 T800 310 V500 H0 Z" fill="#74B3CE" opacity="0.5"/>
+  <path d="M0 380 Q200 330 400 360 T800 340 V500 H0 Z" fill="#C6A14A" opacity="0.22"/>
+  <text x="400" y="240" text-anchor="middle" fill="#F3F0EA" font-family="Georgia, serif" font-size="36" font-style="italic">Inline Image</text>
+</svg>

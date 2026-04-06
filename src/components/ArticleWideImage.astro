@@ -1,0 +1,20 @@
+---
+/**
+ * Wide-bleed image (slightly wider than the text column). Prefer at most once per article.
+ * Global styles: src/styles/global.css (`.article-wide-bleed`).
+ */
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<div class="article-wide-bleed">
+  <figure class="article-wide-bleed__figure">
+    <img src={src} alt={alt} loading="lazy" decoding="async" width="1200" height="500" />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+</div>

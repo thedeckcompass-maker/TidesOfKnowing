@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { sortArticles } from "../../../../../utils/sortArticles";
+import {
+  LIBRARY_PER_PAGE,
+  slicePage,
+  totalPages,
+} from "../../../../../lib/libraryPagination";
+import { readingMinutesForArticle } from "../../../../../lib/articleReadingMinutes";
+import { seriesOptionsFromArticles } from "../../../../../lib/librarySeries";
+import { libraryPaginationState } from "../../../../../lib/libraryPageUrls";
+import Breadcrumbs from "../../../../../components/Breadcrumbs.astro";
+import ArticleCard from "../../../../../components/ArticleCard.astro";
+import LibraryToolbar from "../../../../../components/LibraryToolbar.astro";
+import LibraryPagination from "../../../../../components/LibraryPagination.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../../lib/breadcrumbs";
+import { siteBase } from "../../../../../lib/site";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  const sorted = sortArticles(articles, "series");
+  const tp = totalPages(sorted.length, LIBRARY_PER_PAGE);
+  if (tp <= 1) return [];
+  return Array.from({ length: tp - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const PAGE_DESCRIPTION =
+  "Browse all articles grouped by series — tarot methodology and intuition development from Tides of Knowing.";
+
+const pageNum = Number.parseInt(Astro.params.page ?? "2", 10);
+const articles = await getCollection("articles");
+const sorted = sortArticles(articles, "series");
+const tp = totalPages(sorted.length, LIBRARY_PER_PAGE);
+const listPage = slicePage(sorted, pageNum, LIBRARY_PER_PAGE);
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(
+  `/articles/sort/series/page/${pageNum}/`,
+  base,
+).href;
+
+const PAGE_TITLE = `Articles — by series — page ${pageNum} — Tides of Knowing`;
+
+const seriesOpts = seriesOptionsFromArticles(articles);
+
+const minutesById = new Map(
+  articles.map((a) => [a.id, readingMinutesForArticle(a)]),
+);
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `Tides of Knowing Articles — by series — page ${pageNum}`,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "By series", url: "/articles/sort/series/" },
+  { label: `Page ${pageNum}`, url: null },
+];
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+
+const ogImage = listPage[0]
+  ? new URL(listPage[0].data.heroImage, base).href
+  : new URL("/favicon.svg", base).href;
+
+const pager = libraryPaginationState({ kind: "series" }, pageNum, tp, base);
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  sequentialLinks={{
+    prev: pager.relPrevAbsolute ?? undefined,
+    next: pager.relNextAbsolute ?? undefined,
+  }}
+  jsonLd={jsonLd}
+>
+  <div class="tok-library tok-library--list page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-library__hero" data-reveal>
+      <h1 class="tok-library__title">Articles · By series</h1>
+      <p class="tok-library__lede">{PAGE_DESCRIPTION}</p>
+      <p class="tok-library__page">Page {pageNum} of {tp}</p>
+    </header>
+
+    <section class="tok-library__section" aria-labelledby="all-heading" data-reveal>
+      <h2 id="all-heading" class="tok-library__h2">All articles</h2>
+
+      <LibraryToolbar
+        sort="series"
+        showFilter={false}
+        filter="all"
+        seriesOptions={seriesOpts}
+      />
+
+      {
+        listPage.length === 0 ? (
+          <p class="tok-library__empty">No articles on this page.</p>
+        ) : (
+          <>
+            <div class="tok-library__grid">
+              {listPage.map((a) => (
+                <ArticleCard
+                  article={a}
+                  readingMinutes={minutesById.get(a.id) ?? 1}
+                />
+              ))}
+            </div>
+            <LibraryPagination
+              prevHref={pager.prevHref}
+              nextHref={pager.nextHref}
+              pages={pager.pages}
+            />
+          </>
+        )
+      }
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-library {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 72rem;
+  }
+
+  .tok-library__hero {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-library__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-library__lede {
+    margin: 0;
+    max-width: 42rem;
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  .tok-library__page {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tok-library__section {
+    margin-bottom: 2rem;
+  }
+
+  .tok-library__h2 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+    font-weight: 600;
+    color: var(--mountain-water);
+  }
+
+  .tok-library__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: 1.15rem;
+  }
+
+  .tok-library__empty {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--mountain-water);
+  }
+</style>

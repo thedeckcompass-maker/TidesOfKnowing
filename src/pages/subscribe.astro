@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
+
+const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
+---
+
+<BaseLayout
+  title="Subscribe — Tides of Knowing"
+  description="Get new articles and updates from Tides of Knowing. Join the list to stay close to the work."
+  ogUrl={ogUrl}
+>
+  <article class="tok-subscribe page-inner">
+    <header class="tok-subscribe__head">
+      <h1 class="tok-subscribe__title">Get new articles and early access</h1>
+      <p class="tok-subscribe__lede">
+        This work develops over time.<br />
+        Join the list to stay close to it.
+      </p>
+    </header>
+
+    <div class="tok-subscribe__form-wrap">
+      <div class="ml-embedded" data-form="6Tmwkx"></div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .tok-subscribe {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 36rem;
+  }
+
+  .tok-subscribe__head {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  .tok-subscribe__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .tok-subscribe__lede {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+
+  .tok-subscribe__form-wrap {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    min-height: 4rem;
+  }
+</style>

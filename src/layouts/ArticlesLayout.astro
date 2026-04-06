@@ -1,0 +1,134 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import ArticleHeader from "../components/ArticleHeader.astro";
+import ArticleSeries from "../components/ArticleSeries.astro";
+import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { siteBase } from "../lib/site";
+import { slugify } from "../utils/slugify";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+  readingMinutes?: number;
+}
+
+const { article, readingMinutes } = Astro.props;
+const d = article.data;
+const base = siteBase(Astro);
+const canonicalPath = `/articles/${d.slug}/`;
+const ogUrl = new URL(canonicalPath, base).href;
+const heroAbsolute = new URL(d.heroImage, base).href;
+
+const pageTitle = `${d.title} | Tides of Knowing`;
+const publishedISO = d.publishDate.toISOString();
+const modifiedISO = d.updatedDate?.toISOString();
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+];
+if (d.seriesName) {
+  crumbs.push({
+    label: d.seriesName,
+    url: `/series/${slugify(d.seriesName)}/`,
+  });
+}
+crumbs.push({ label: d.title, url: null });
+
+const articleLd: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: d.title,
+  description: d.excerpt,
+  image: heroAbsolute,
+  datePublished: publishedISO,
+  dateModified: modifiedISO ?? publishedISO,
+  author: {
+    "@type": "Person",
+    name: d.author,
+    url: "https://tidesofknowing.com/about",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Tides of Knowing",
+    url: "https://tidesofknowing.com/",
+  },
+  url: ogUrl,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": ogUrl,
+  },
+  keywords: d.tags.join(", "),
+};
+
+const jsonLdCombined = [
+  articleLd,
+  breadcrumbJsonLd(crumbs, base.href),
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={d.excerpt}
+  ogUrl={ogUrl}
+  ogType="article"
+  articlePublishedTime={publishedISO}
+  articleModifiedTime={modifiedISO}
+  ogImage={heroAbsolute}
+  articleTags={d.tags}
+  metaAuthor={d.author}
+  tdcPlacement="none"
+  jsonLd={jsonLdCombined}
+>
+  <div class="article-shell page-inner">
+    <Breadcrumbs items={crumbs} />
+    <div class="article-main tok-articles-main">
+      <ArticleHeader
+        title={d.title}
+        subtitle={d.subtitle}
+        publishDate={d.publishDate}
+        readingTime={readingMinutes}
+        heroImage={d.heroImage}
+        heroImageAlt={d.heroImageAlt}
+        author={d.author}
+      />
+
+      <article class="article tok-articles-article">
+        <div class="article-prose article__body tok-articles-body">
+          <slot />
+        </div>
+      </article>
+
+      {
+        d.seriesName && (
+          <ArticleSeries
+            seriesName={d.seriesName}
+            seriesOrder={d.seriesOrder}
+            seriesTotal={d.seriesTotal}
+            previousArticle={d.previousArticle ?? undefined}
+            nextArticle={d.nextArticle ?? undefined}
+            currentSlug={d.slug}
+          />
+        )
+      }
+
+      <div data-reveal>
+        <TdcConversionBlock />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-articles-main {
+    padding-bottom: 3rem;
+  }
+
+  .tok-articles-body {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+  }
+</style>

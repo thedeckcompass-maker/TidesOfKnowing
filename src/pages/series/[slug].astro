@@ -1,0 +1,203 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "../../utils/slugify";
+import { sortArticles } from "../../utils/sortArticles";
+import { seriesData } from "../../data/series";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  const slugs = [
+    ...new Set(
+      articles
+        .filter((a) => a.data.seriesName)
+        .map((a) => slugify(a.data.seriesName!)),
+    ),
+  ];
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const articles = await getCollection("articles");
+const inSeries = articles.filter(
+  (a) => a.data.seriesName && slugify(a.data.seriesName) === slug,
+);
+const sorted = sortArticles(inSeries, "series");
+
+const seriesTitle =
+  sorted[0]?.data.seriesName ?? slug.replace(/-/g, " ");
+
+const meta = seriesData[slug!];
+const description =
+  meta?.description ??
+  `Articles in the “${seriesTitle}” series from Tides of Knowing.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(`/series/${slug}/`, base).href;
+
+const PAGE_TITLE = `${seriesTitle} — Series — Tides of Knowing`;
+
+const minutesById = new Map(
+  articles.map((a) => [a.id, readingMinutesForArticle(a)]),
+);
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: seriesTitle,
+  description,
+  numberOfItems: sorted.length,
+  itemListElement: sorted.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
+    name: a.data.title,
+  })),
+};
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Series", url: "/series/" },
+  { label: seriesTitle, url: null },
+];
+
+const jsonLd = [itemListLd, breadcrumbJsonLd(crumbs, siteHref)];
+
+const ogImage = sorted[0]
+  ? new URL(sorted[0].data.heroImage, base).href
+  : new URL("/favicon.svg", base).href;
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={description}
+  ogUrl={canonical}
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-series-landing page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-series-landing__head" data-reveal>
+      <h1 class="tok-series-landing__title">{seriesTitle}</h1>
+      {meta?.status && (
+        <p class="tok-series-landing__status">
+          {meta.status === "complete" ? "Complete series" : "Ongoing series"}
+          {meta.totalParts != null && ` · ${meta.totalParts} parts`}
+        </p>
+      )}
+      <p class="tok-series-landing__desc">{description}</p>
+      <p class="tok-series-landing__filter">
+        <a href={`/articles/filter/${slug}/`}>Paginated library view →</a>
+      </p>
+    </header>
+
+    {
+      sorted.length === 0 ? (
+        <p class="tok-series-landing__empty">No articles in this series.</p>
+      ) : (
+        <ol class="tok-series-landing__parts" data-reveal>
+          {sorted.map((a, i) => (
+            <li class="tok-series-landing__part">
+              <span class="tok-series-landing__pos">
+                Part {a.data.seriesOrder ?? i + 1}
+              </span>
+              <ArticleCard
+                article={a}
+                readingMinutes={minutesById.get(a.id) ?? 1}
+              />
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-series-landing {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 72rem;
+  }
+
+  .tok-series-landing__head {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-series-landing__title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 2.65rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-series-landing__status {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tok-series-landing__desc {
+    margin: 0;
+    max-width: 48rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .tok-series-landing__filter {
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .tok-series-landing__empty {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .tok-series-landing__parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tok-series-landing__part {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .tok-series-landing__part {
+      grid-template-columns: 6rem 1fr;
+      align-items: start;
+    }
+  }
+
+  .tok-series-landing__pos {
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    padding-top: 0.35rem;
+  }
+</style>

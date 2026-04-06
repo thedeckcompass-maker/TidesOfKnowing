@@ -1,11 +1,41 @@
 ---
+interface Props {
+  /**
+   * default — full navy band (home / footer).
+   * subtle — same band, tighter vertical padding.
+   * inline — no band; body text + button for long-form pages (e.g. About).
+   */
+  variant?: "default" | "subtle" | "inline";
+  /** Required when multiple blocks exist on one page (unique `aria-labelledby`). */
+  headingId?: string;
+}
+
+const { variant = "default", headingId = "tdc-heading" } = Astro.props;
 ---
 
-<section class="tdc" aria-labelledby="tdc-heading">
-  <div class="page-inner tdc__inner">
-    <h2 id="tdc-heading" class="tdc__title">The Deck Compass launches May 2026</h2>
-    <p class="tdc__sub">A subscription platform for intuitive tarot readers. Join the waitlist.</p>
-    <a class="tdc__btn" href="https://thedeckcompass.com">Join the Waitlist →</a>
+<section
+  class:list={[
+    "tdc",
+    { "tdc--subtle": variant === "subtle" },
+    { "tdc--inline": variant === "inline" },
+  ]}
+  aria-labelledby={headingId}
+>
+  <div
+    class:list={["tdc__inner", { "page-inner": variant !== "inline" }]}
+  >
+    <p class="tdc__kicker">Stay close to the work</p>
+    {
+      variant === "inline" ? (
+        <p id={headingId} class="tdc__heading">Get new articles and early access</p>
+      ) : (
+        <h2 id={headingId} class="tdc__heading">Get new articles and early access</h2>
+      )
+    }
+    <p class="tdc__sub">
+      This work develops over time. Join the list to stay close to it.
+    </p>
+    <a class="tdc__btn" href="/subscribe/">Join the list →</a>
   </div>
 </section>
 
@@ -13,7 +43,9 @@
   .tdc {
     background: var(--mountain-water);
     color: var(--paper);
-    padding: clamp(2.5rem, 6vw, 3.75rem) 0;
+    margin-top: 4rem;
+    padding-top: calc(1rem + clamp(2.5rem, 6vw, 3.75rem));
+    padding-bottom: clamp(2.5rem, 6vw, 3.75rem);
   }
 
   .tdc__inner {
@@ -21,7 +53,17 @@
     max-width: 40rem;
   }
 
-  .tdc__title {
+  .tdc__kicker {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(217, 219, 241, 0.75);
+  }
+
+  .tdc__heading {
     margin: 0 0 0.75rem;
     font-family: var(--font-display);
     font-weight: 400;
@@ -67,5 +109,76 @@
   .tdc__btn:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 4px;
+  }
+
+  .tdc--subtle {
+    margin-top: 2.25rem;
+    padding-top: clamp(1.5rem, 4vw, 2.25rem);
+    padding-bottom: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .tdc--subtle .tdc__heading {
+    font-size: clamp(1.45rem, 3.2vw, 1.9rem);
+  }
+
+  .tdc--subtle .tdc__sub {
+    margin-bottom: 1.35rem;
+    font-size: 1rem;
+  }
+
+  /* In-flow: no teal box, matches article column */
+  .tdc--inline {
+    background: transparent;
+    color: var(--ink);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .tdc--inline .tdc__inner {
+    text-align: left;
+    max-width: none;
+    margin: 0;
+    padding: 1.5rem 0 0.25rem;
+    margin-top: 0.35rem;
+    border-top: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  .tdc--inline .tdc__kicker {
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .tdc--inline .tdc__heading {
+    margin: 0 0 0.45rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+    font-weight: 600;
+    font-style: italic;
+    font-family: var(--font-display);
+    line-height: 1.35;
+    color: var(--mountain-water);
+  }
+
+  .tdc--inline .tdc__sub {
+    margin: 0 0 1rem;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    opacity: 0.9;
+    color: var(--ink);
+  }
+
+  .tdc--inline .tdc__btn {
+    color: var(--mountain-water);
+    border-color: var(--gold);
+  }
+
+  .tdc--inline .tdc__btn:hover {
+    background: rgba(198, 161, 74, 0.14);
+    color: var(--mountain-water);
+    border-color: var(--gold);
+  }
+
+  .tdc--inline .tdc__btn:focus-visible {
+    outline-color: var(--mountain-water);
   }
 </style>

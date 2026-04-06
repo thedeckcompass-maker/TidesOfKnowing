@@ -1,10 +1,23 @@
 ---
+/**
+ * Article images (Markdown + public/):
+ * - Place article images in: public/images/blog/[article-slug]/
+ * - Reference in markdown: ![Alt text](/images/blog/[article-slug]/filename.jpg)
+ * - Placeholders: /images/blog/placeholders/ (hero.svg, inline.svg for section blocks, wide.svg for wide bleed)
+ * - Section image + caption: <figure class="article-section-image"><img ...><figcaption>...</figcaption></figure>
+ * - Intentional wide bleed (max once/article): <div class="article-wide-bleed"><img ...></div>
+ */
 import BaseLayout from "./BaseLayout.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 
 export interface RelatedLink {
   title: string;
   href: string;
+}
+
+export interface TocHeading {
+  slug: string;
+  text: string;
 }
 
 interface Props {
@@ -14,9 +27,32 @@ interface Props {
   readingMinutes: number;
   ogUrl: string;
   related?: RelatedLink[];
+  heroImage: string;
+  heroImageAlt?: string;
+  heroCaption?: string;
+  heroImageAbsolute: string;
+  articleTags: string[];
+  tocHeadings: TocHeading[];
+  showToc: boolean;
 }
 
-const { title, description, date, readingMinutes, ogUrl, related = [] } = Astro.props;
+const {
+  title,
+  description,
+  date,
+  readingMinutes,
+  ogUrl,
+  related = [],
+  heroImage,
+  heroImageAlt,
+  heroCaption,
+  heroImageAbsolute,
+  articleTags,
+  tocHeadings,
+  showToc,
+} = Astro.props;
+
+const heroAlt = heroImageAlt ?? title;
 
 const pageTitle = `${title} — Tides of Knowing`;
 const isoDate = date.toISOString();
@@ -26,12 +62,14 @@ const displayDate = date.toLocaleDateString("en-AU", {
   day: "numeric",
 });
 
-const blogPostingLd = {
+const articleJsonLd: Record<string, unknown> = {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
+  "@type": "Article",
   headline: title,
   description,
+  image: heroImageAbsolute,
   datePublished: isoDate,
+  dateModified: isoDate,
   author: {
     "@type": "Person",
     name: "Leigh Spencer",
@@ -56,59 +94,252 @@ const blogPostingLd = {
   ogUrl={ogUrl}
   ogType="article"
   articlePublishedTime={isoDate}
+  ogImage={heroImageAbsolute}
+  articleTags={articleTags}
+  metaAuthor="Leigh Spencer"
   tdcPlacement="none"
-  jsonLd={blogPostingLd}
+  jsonLd={articleJsonLd}
 >
-  <div class="article-shell page-inner">
-    <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
-      <meta itemprop="datePublished" content={isoDate} />
-      <header class="article__head" data-reveal>
-        <h1 class="article__title" itemprop="headline">{title}</h1>
-        <p class="article__meta">
-          <time datetime={isoDate} itemprop="datePublished">{displayDate}</time>
-          <span class="article__meta-sep" aria-hidden="true">·</span>
-          <span>{readingMinutes} min read</span>
-        </p>
-      </header>
-      <div class="article-prose article__body" itemprop="articleBody">
-        <slot />
+  <div class:list={["article-shell", "page-inner", { "article-shell--toc": showToc }]}>
+    <div class="article-layout">
+      {
+        showToc && tocHeadings.length > 0 && (
+          <nav class="article-toc" aria-label="On this page" data-article-toc>
+            <p class="article-toc__label">On this page</p>
+            <ul class="article-toc__list">
+              {tocHeadings.map((h) => (
+                <li>
+                  <a class="article-toc__link" href={`#${h.slug}`}>
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+
+      <div class="article-main">
+        <figure class="article-hero" data-reveal>
+          <img
+            class="article-hero__img"
+            src={heroImage}
+            alt={heroAlt}
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+          />
+          {
+            heroCaption && (
+              <figcaption class="article-hero__caption">{heroCaption}</figcaption>
+            )
+          }
+        </figure>
+
+        <header class="article__head" data-reveal>
+          <h1 class="article__title">{title}</h1>
+          <p class="article__meta">
+            <time datetime={isoDate}>{displayDate}</time>
+            <span class="article__meta-sep" aria-hidden="true">
+              ·
+            </span>
+            <span>{readingMinutes} min read</span>
+          </p>
+        </header>
+
+        <article class="article" itemscope itemtype="https://schema.org/Article">
+          <meta itemprop="datePublished" content={isoDate} />
+          <meta itemprop="headline" content={title} />
+          <div class="article-prose article__body" itemprop="articleBody">
+            <slot />
+          </div>
+        </article>
+
+        <div data-reveal>
+          <TdcConversionBlock />
+        </div>
+
+        {
+          related.length > 0 && (
+            <section class="related" aria-labelledby="related-heading" data-reveal>
+              <h2 id="related-heading" class="related__title">
+                Suggested reading
+              </h2>
+              <ul class="related__list">
+                {related.map((item) => (
+                  <li>
+                    <a class="related__link" href={item.href}>
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
       </div>
-    </article>
-
-    <div data-reveal>
-      <TdcConversionBlock />
     </div>
-
-    {
-      related.length > 0 && (
-        <section class="related" aria-labelledby="related-heading" data-reveal>
-          <h2 id="related-heading" class="related__title">
-            Suggested reading
-          </h2>
-          <ul class="related__list">
-            {related.map((item) => (
-              <li>
-                <a class="related__link" href={item.href}>
-                  {item.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
   </div>
 </BaseLayout>
 
+{
+  showToc && tocHeadings.length > 0 && (
+    <script define:vars={{ tocHeadings }}>
+      (function () {
+        var nav = document.querySelector("[data-article-toc]");
+        if (!nav || !tocHeadings.length) return;
+        var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+        var ids = tocHeadings.map(function (h) {
+          return h.slug;
+        });
+        var ticking = false;
+        function updateActive() {
+          var y = window.scrollY + Math.min(window.innerHeight * 0.28, 160);
+          var active = ids[0];
+          for (var i = 0; i < ids.length; i++) {
+            var el = document.getElementById(ids[i]);
+            if (el && el.offsetTop <= y) active = ids[i];
+          }
+          links.forEach(function (link) {
+            var hash = link.getAttribute("href");
+            link.classList.toggle("is-active", hash === "#" + active);
+          });
+        }
+        function onScroll() {
+          if (!ticking) {
+            window.requestAnimationFrame(function () {
+              updateActive();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+        updateActive();
+      })();
+    </script>
+  )
+}
+
 <style>
+  .article-layout {
+    display: block;
+  }
+
+  @media (min-width: 1200px) {
+    .article-shell--toc .article-layout {
+      display: grid;
+      grid-template-columns: minmax(11rem, 13.5rem) minmax(0, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.75rem);
+      align-items: start;
+    }
+  }
+
+  .article-toc {
+    display: none;
+  }
+
+  @media (min-width: 1200px) {
+    .article-shell--toc .article-toc {
+      display: block;
+      position: sticky;
+      top: 5.5rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+  }
+
+  .article-toc__label {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0.55;
+  }
+
+  .article-toc__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid rgba(198, 161, 74, 0.2);
+  }
+
+  .article-toc__link {
+    display: block;
+    padding: 0.4rem 0 0.4rem 0.85rem;
+    font-family: var(--font-nav);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    line-height: 1.35;
+    color: var(--ink);
+    opacity: 0.7;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    transition:
+      opacity 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .article-toc__link:hover {
+    opacity: 0.95;
+    color: var(--mountain-water);
+  }
+
+  .article-toc__link.is-active {
+    opacity: 1;
+    color: var(--ink);
+    font-weight: 600;
+    border-left-color: var(--gold);
+  }
+
+  .article-main {
+    min-width: 0;
+  }
+
   .article-shell {
     padding-bottom: clamp(3rem, 8vw, 5rem);
   }
 
+  .article-hero {
+    margin: 0 0 1.75rem;
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .article-hero__img {
+    display: block;
+    width: 100%;
+    max-height: 500px;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .article-hero__caption {
+    margin: 0.65rem 0 0;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
   .article__head {
     max-width: 680px;
-    margin-bottom: 2.5rem;
-    padding-top: clamp(1rem, 3vw, 2rem);
+    margin-inline: auto;
+    margin-bottom: 1.75rem;
+    padding-top: 0;
   }
 
   .article__title {
@@ -136,8 +367,24 @@ const blogPostingLd = {
     opacity: 0.85;
   }
 
+  /* Drop cap — first paragraph of body only */
+  .article__body.article-prose :global(> p:first-of-type) {
+    display: flow-root;
+  }
+
+  .article__body.article-prose :global(> p:first-of-type::first-letter) {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 400;
+    line-height: 0.8;
+    margin: 0.1rem 0.12rem 0 0;
+    color: var(--gold);
+  }
+
   .related {
     margin-top: clamp(2.5rem, 6vw, 3.5rem);
+    margin-inline: auto;
     padding: 2rem 1.5rem;
     background: var(--shore);
     border-left: 3px solid var(--gold);

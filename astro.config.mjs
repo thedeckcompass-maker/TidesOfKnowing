@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
+// Sitemap: `src/pages/sitemap.xml.ts` (priorities + changefreq).
 export default defineConfig({
   site: "https://tidesofknowing.com",
-  integrations: [sitemap()],
+  integrations: [],
   server: {
     port: 4322,
   },

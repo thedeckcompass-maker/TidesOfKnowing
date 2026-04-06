@@ -2,34 +2,37 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { siteBase } from "../lib/site";
+import { sortBlogPostsForListing } from "../lib/sortBlogPosts";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+const posts = sortBlogPostsForListing(
+  await getCollection("blog", ({ data }) => !data.draft),
 );
 
 const ogUrl = new URL("/library/", siteBase(Astro)).href;
 ---
 
 <BaseLayout
-  title="Library — Long-form writing on tarot, intuition & navigation"
-  description="A growing library of long-form writing on tarot, intuition, and personal navigation."
+  title="Blog — Tides of Knowing | Journal & announcements"
+  description="Blog posts and journal entries from Tides of Knowing. For methodology articles, series, and topics, browse the article library."
   ogUrl={ogUrl}
 >
   <div class="library page-inner">
     <header class="library__head" data-reveal>
-      <h1 class="library__title">Library</h1>
+      <h1 class="library__title">Blog</h1>
       <p class="library__lede">
-        Essays and reflections that reward slow reading — on tarot practice, inner compass, and the
-        craft of reading for yourself and others.
+        This page is the blog roll — journal-style posts and announcements. The main long-form
+        catalog (featured articles, series, topics, and pagination) lives in the{" "}
+        <a href="/articles/">article library</a>.
       </p>
     </header>
 
     {
       posts.length === 0 ? (
         <p class="library__empty" data-reveal>
-          The first articles are on their way. Until then, learn more{" "}
-          <a href="/about">about this publication</a> or join{" "}
-          <a href="https://thedeckcompass.com">The Deck Compass</a> waitlist.
+          The first blog posts are on their way. For methodology articles, visit the{" "}
+          <a href="/articles/">article library</a>. Until then, learn more{" "}
+          <a href="/about">about this publication</a> or join the{" "}
+          <a href="/subscribe/">Join the list</a> for updates.
         </p>
       ) : (
         <ul class="library__list">

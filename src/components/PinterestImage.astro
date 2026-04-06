@@ -1,0 +1,49 @@
+---
+/**
+ * Usage: <PinterestImage src="/images/posts/[post-slug]-pinterest.jpg" alt="[description with primary keyword]" />
+ * Place inside article body content where pinnable image should be anchored.
+ */
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<!-- Pinterest-pinnable image: visually hidden but DOM-present for crawlers. Recommended image dimensions 1000×1500px. -->
+<div class="pinterest-image-root">
+  <img
+    class="pinterest-image"
+    src={src}
+    alt={alt}
+    width="1000"
+    height="1500"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+
+<style>
+  .pinterest-image-root {
+    position: relative;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .pinterest-image {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+</style>
