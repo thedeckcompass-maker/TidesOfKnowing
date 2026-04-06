@@ -6,14 +6,24 @@ import { siteBase } from "../lib/site";
 const ogUrl = new URL("/about/", siteBase(Astro)).href;
 const profilePath = "/images/about/leigh-spencer-profile.png";
 const ogImage = new URL(profilePath, siteBase(Astro)).href;
+
+const aboutPageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Tides of Knowing About | Practical intuition, perception and the COMPASS Method",
+  url: ogUrl,
+  description:
+    "Tides of Knowing is a practical body of work by Leigh Spencer focused on intuition, perception, interpretation and the COMPASS Method for grounded, usable insight.",
+};
 ---
 
 <BaseLayout
-  title="About — Tides of Knowing"
-  description="Long-form publication by Leigh Spencer — writer, guide, and fourth-generation Matakite. Tarot as perception and decision-making, with The Deck Compass as the practice home for building capability."
+  title="Tides of Knowing About | Practical intuition, perception and the COMPASS Method"
+  description="Learn about Leigh Spencer’s approach to practical intuition through tarot, oracle and Lenormand, and the COMPASS Method for clearer, grounded interpretation."
   ogUrl={ogUrl}
   ogImage={ogImage}
   tdcPlacement="none"
+  jsonLd={aboutPageLd}
 >
   <article class="about page-inner">
     <header class="about__head" data-reveal>
@@ -138,27 +148,72 @@ const ogImage = new URL(profilePath, siteBase(Astro)).href;
         The COMPASS Method — The Seven Pillars of Intuition
       </h2>
       <p class="about__p" data-reveal>
-        At the centre of this work is the COMPASS Method — a framework developed through decades of reading, observation, and teaching.
+        At the centre of this work is the COMPASS Method — a seven-pillar framework developed through decades of reading, observation, and teaching.
       </p>
       <p class="about__p" data-reveal>
-        It focuses on seven core capacities that underpin accurate, grounded intuitive work:
-      </p>
-      <ul class="about__list" data-reveal>
-        <li>Recognising signal</li>
-        <li>Knowing what to prioritise</li>
-        <li>Tracking relationships within a spread</li>
-        <li>Holding coherence while reading</li>
-        <li>Translating insight into clear language</li>
-        <li>Staying with what is true, rather than what is expected</li>
-        <li>Closing a reading with clarity</li>
-      </ul>
-      <p class="about__p" data-reveal>
-        These are not abstract ideas. They are skills that develop through attention, practice, and correction.
+        COMPASS names the conditions that support clear, grounded intuitive work:
       </p>
       <p class="about__p" data-reveal>
-        Most people try to improve their readings by learning more meanings.<br />
-        This work focuses on what happens after meaning is already known.
+        <strong>C — Center</strong>
       </p>
+      <p class="about__p" data-reveal>How you arrive.</p>
+      <p class="about__p" data-reveal>
+        The reading begins before a card is touched. Center is about arriving without urgency, so your attention is not already leaning ahead of the moment.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>O — Open</strong>
+      </p>
+      <p class="about__p" data-reveal>How the question is held.</p>
+      <p class="about__p" data-reveal>
+        Open creates space around the question so it is not constrained by fear, expectation, or the need for immediate reassurance.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>M — Map</strong>
+      </p>
+      <p class="about__p" data-reveal>What is actually present.</p>
+      <p class="about__p" data-reveal>
+        Before interpretation begins, the reading needs a clear structure. Map is about laying out what is there so attention has something real to rest on.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>P — Perceive</strong>
+      </p>
+      <p class="about__p" data-reveal>What is relating.</p>
+      <p class="about__p" data-reveal>
+        Once the reading is visible, Perceive is the ability to notice relationship, pattern, emphasis, and movement without rushing too quickly into conclusion.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>A — Align</strong>
+      </p>
+      <p class="about__p" data-reveal>How insight is held.</p>
+      <p class="about__p" data-reveal>
+        Align brings responsibility to the reading. It is the discipline of staying with what is true, without overreaching, performing certainty, or saying more than the reading can support.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>S — Sense</strong>
+      </p>
+      <p class="about__p" data-reveal>How meaning settles.</p>
+      <p class="about__p" data-reveal>
+        Not all understanding arrives at once. Sense is about allowing coherence to gather, rather than forcing language before the reading has fully formed.
+      </p>
+      <p class="about__p" data-reveal>
+        <strong>S — Seal</strong>
+      </p>
+      <p class="about__p" data-reveal>How the reading is completed.</p>
+      <p class="about__p" data-reveal>
+        Seal closes the work cleanly, so insight can be integrated without residue, over-reading, or unfinished threads.
+      </p>
+      <p class="about__p" data-reveal>
+        These are not abstract ideals. They are practical disciplines of attention.
+      </p>
+      <p class="about__p" data-reveal>
+        Most people try to deepen their readings by accumulating more card meanings.<br />
+        The COMPASS Method begins where that approach starts to fall short.
+      </p>
+      <p class="about__p" data-reveal>
+        It is designed for the stage at which meaning is no longer the main issue — when the real work becomes how to hold a question properly, how to recognise what matters, how to follow relationship and signal, and how to bring a reading through to clear, accurate closure.
+      </p>
+      <p class="about__p" data-reveal>This is the why.</p>
+      <p class="about__p" data-reveal>The how is what we teach inside the system.</p>
 
       <div class="about__cta" data-reveal>
         <TdcConversionBlock variant="inline" headingId="tdc-about-method" />
