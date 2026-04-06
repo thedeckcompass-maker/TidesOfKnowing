@@ -87,7 +87,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
   jsonLd={jsonLdCombined}
 >
   <div class="article-shell page-inner tok-article-share-shell">
-    <Breadcrumbs items={crumbs} />
+    <div class="tok-articles-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
     <div class="tok-articles-share-layout">
       <ShareSidebar title={d.title} url={canonicalUrl} />
       <div class="article-main tok-articles-main">
@@ -134,6 +136,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 </BaseLayout>
 
 <style>
+  .tok-articles-breadcrumbs {
+    margin-top: 1.5rem;
+  }
+
   .tok-articles-main {
     padding-bottom: 3rem;
   }
