@@ -50,12 +50,12 @@ const articleLd: Record<string, unknown> = {
   author: {
     "@type": "Person",
     name: d.author,
-    url: "https://tidesofknowing.com/about",
+    url: "https://www.tidesofknowing.com/about/",
   },
   publisher: {
     "@type": "Organization",
     name: "Tides of Knowing",
-    url: "https://tidesofknowing.com/",
+    url: "https://www.tidesofknowing.com/",
   },
   url: ogUrl,
   mainEntityOfPage: {
@@ -70,7 +70,7 @@ const jsonLdCombined = [
   breadcrumbJsonLd(crumbs, base.href),
 ];
 
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalUrl = ogUrl;
 ---
 
 <BaseLayout

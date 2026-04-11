@@ -6,7 +6,7 @@ import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
 
 export const prerender = true;
 
-const SITE = "https://tidesofknowing.com";
+const SITE = "https://www.tidesofknowing.com";
 
 type Row = { path: string; changefreq: string; priority: string };
 
