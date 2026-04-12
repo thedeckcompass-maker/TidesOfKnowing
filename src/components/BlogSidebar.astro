@@ -1,0 +1,170 @@
+---
+import type { BlogCategoryRow } from "../lib/blogCategories";
+
+interface Props {
+  categories: BlogCategoryRow[];
+  /** When set, highlights the active category link in the list. */
+  activeCategorySlug?: string | null;
+}
+
+const { categories, activeCategorySlug = null } = Astro.props;
+---
+
+<aside class="tok-blog-sidebar" aria-label="About this journal">
+  <section class="tok-blog-sidebar__block" data-reveal>
+    <h2 class="tok-blog-sidebar__h">About the author</h2>
+    <p class="tok-blog-sidebar__p">
+      <strong>Leigh Spencer</strong> writes Tides of Knowing — methodology articles for intuitive
+      tarot readers, and this journal for timely notes, announcements, and shorter reflections.
+      <a class="tok-blog-sidebar__inline-link" href="/about/">Read more</a>
+    </p>
+  </section>
+
+  <section class="tok-blog-sidebar__block" data-reveal>
+    <h2 class="tok-blog-sidebar__h">Newsletter</h2>
+    <p class="tok-blog-sidebar__p tok-blog-sidebar__p--tight">
+      New articles and occasional journal notes, in your inbox.
+    </p>
+    <div class="tok-blog-sidebar__form ml-embedded" data-form="6Tmwkx"></div>
+  </section>
+
+  <section class="tok-blog-sidebar__block" data-reveal>
+    <h2 class="tok-blog-sidebar__h">Categories</h2>
+    {
+      categories.length === 0 ? (
+        <p class="tok-blog-sidebar__p tok-blog-sidebar__muted">Categories will appear as posts are added.</p>
+      ) : (
+        <ul class="tok-blog-sidebar__cats">
+          {categories.map((c) => (
+            <li>
+              <a
+                class:list={[
+                  "tok-blog-sidebar__cat",
+                  { "is-active": activeCategorySlug === c.slug },
+                ]}
+                href={`/blog/category/${c.slug}/`}
+              >
+                <span>{c.label}</span>
+                <span class="tok-blog-sidebar__count">{c.count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <p class="tok-blog-sidebar__p tok-blog-sidebar__muted tok-blog-sidebar__tags-note">
+      Tags on each post add finer topics for search and discovery; methodology series live in the{" "}
+      <a href="/articles/">articles</a> index.
+    </p>
+  </section>
+</aside>
+
+<style>
+  .tok-blog-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 960px) {
+    .tok-blog-sidebar {
+      position: sticky;
+      top: 5.5rem;
+      align-self: start;
+    }
+  }
+
+  .tok-blog-sidebar__block {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  .tok-blog-sidebar__block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .tok-blog-sidebar__h {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .tok-blog-sidebar__p {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .tok-blog-sidebar__p--tight {
+    margin-bottom: 0.75rem;
+  }
+
+  .tok-blog-sidebar__muted {
+    font-size: 0.92rem;
+    opacity: 0.88;
+  }
+
+  .tok-blog-sidebar__tags-note {
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+
+  .tok-blog-sidebar__inline-link {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .tok-blog-sidebar__form {
+    min-height: 3rem;
+  }
+
+  .tok-blog-sidebar__cats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tok-blog-sidebar__cat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    text-decoration: none;
+    color: var(--mountain-water);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.08rem;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.22);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .tok-blog-sidebar__cat:hover {
+    color: var(--sky);
+    border-bottom-color: rgba(116, 179, 206, 0.45);
+  }
+
+  .tok-blog-sidebar__cat.is-active {
+    color: var(--ink);
+    border-bottom-color: var(--gold);
+  }
+
+  .tok-blog-sidebar__count {
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+    flex-shrink: 0;
+  }
+</style>

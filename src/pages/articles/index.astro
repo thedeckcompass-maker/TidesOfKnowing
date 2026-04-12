@@ -43,20 +43,19 @@ const minutesById = new Map(
   articles.map((a) => [a.id, readingMinutesForArticle(a)]),
 );
 
-const blogPostLd = sortedNewest.map((a) => ({
-  "@type": "BlogPosting",
-  headline: a.data.title,
-  url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
-  datePublished: a.data.publishDate.toISOString().slice(0, 10),
-}));
-
-const blogLd = {
+const articlesItemListLd = {
   "@context": "https://schema.org",
-  "@type": "Blog",
-  name: "Tides of Knowing — Articles",
+  "@type": "ItemList",
+  name: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   url: canonical,
-  blogPost: blogPostLd,
+  numberOfItems: sortedNewest.length,
+  itemListElement: sortedNewest.map((a, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: a.data.title,
+    url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
+  })),
 };
 
 const crumbs: BreadcrumbItem[] = [
@@ -64,7 +63,7 @@ const crumbs: BreadcrumbItem[] = [
   { label: "Articles", url: null },
 ];
 
-const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
+const jsonLd = [articlesItemListLd, breadcrumbJsonLd(crumbs, siteHref)];
 
 const ogImage = featured[0]
   ? new URL(featured[0].data.heroImage, base).href

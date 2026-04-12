@@ -1,0 +1,276 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogSidebar from "../../../components/BlogSidebar.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import { getCollection } from "astro:content";
+import { siteBase } from "../../../lib/site";
+import {
+  blogCategoryIndex,
+  blogCategoryLabel,
+  blogCategorySlugFromLabel,
+} from "../../../lib/blogCategories";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const rows = blogCategoryIndex(posts);
+  return rows.map((r) => ({
+    params: { slug: r.slug },
+    props: { categoryLabel: r.label },
+  }));
+}
+
+interface Props {
+  categoryLabel: string;
+}
+
+const { categoryLabel } = Astro.props;
+const { slug } = Astro.params;
+
+const allPosts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const posts = allPosts.filter(
+  (p) => blogCategorySlugFromLabel(blogCategoryLabel(p)) === slug,
+);
+
+const categoryRows = blogCategoryIndex(allPosts);
+
+const PAGE_TITLE = `${categoryLabel} — Blog | Tides of Knowing`;
+const PAGE_DESCRIPTION = `Journal posts in “${categoryLabel}” on the Tides of Knowing blog.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(`/blog/category/${slug}/`, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Blog", url: "/blog/" },
+  { label: categoryLabel, url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-index page-inner">
+    <div class="tok-blog-index-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-index-grid">
+      <div class="tok-blog-index-main">
+        <header class="tok-blog-index-head" data-reveal>
+          <h1 class="tok-blog-index-title">{categoryLabel}</h1>
+          <p class="tok-blog-index-lede">
+            Posts in this category.{" "}
+            <a href="/blog/">All blog posts</a>
+            ·{" "}
+            <a href="/articles/">Articles</a>
+          </p>
+        </header>
+
+        {
+          posts.length === 0 ? (
+            <p class="tok-blog-index-empty" data-reveal>
+              No posts in this category yet.{" "}
+              <a href="/blog/">Back to the blog</a>.
+            </p>
+          ) : (
+            <ul class="tok-blog-feed">
+              {posts.map((post) => {
+                const postSlug = post.slug ?? post.id;
+                const cat = blogCategoryLabel(post);
+                const catSlug = blogCategorySlugFromLabel(cat);
+                return (
+                  <li class="tok-blog-feed__item" data-reveal>
+                    <article class="tok-blog-feed__article">
+                      <p class="tok-blog-feed__meta">
+                        <time datetime={post.data.date.toISOString()}>
+                          {post.data.date.toLocaleDateString("en-AU", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </time>
+                        <span class="tok-blog-feed__sep" aria-hidden="true">
+                          ·
+                        </span>
+                        <a class="tok-blog-feed__cat" href={`/blog/category/${catSlug}/`}>
+                          {cat}
+                        </a>
+                      </p>
+                      <h2 class="tok-blog-feed__title">
+                        <a href={`/blog/${postSlug}/`}>{post.data.title}</a>
+                      </h2>
+                      <p class="tok-blog-feed__excerpt">{post.data.description}</p>
+                      <p class="tok-blog-feed__more-wrap">
+                        <a class="tok-blog-feed__more" href={`/blog/${postSlug}/`}>
+                          Read more
+                        </a>
+                      </p>
+                    </article>
+                  </li>
+                );
+              })}
+            </ul>
+          )
+        }
+      </div>
+
+      <BlogSidebar categories={categoryRows} activeCategorySlug={slug ?? null} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-blog-index-breadcrumbs {
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tok-blog-index-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding: 0 0 clamp(3rem, 8vw, 5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .tok-blog-index-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 17.5rem);
+      gap: 2.75rem;
+    }
+  }
+
+  .tok-blog-index-head {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.35rem;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .tok-blog-index-title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.25rem, 5vw, 2.85rem);
+    color: var(--mountain-water);
+  }
+
+  .tok-blog-index-lede {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.75;
+    max-width: 40rem;
+  }
+
+  .tok-blog-index-empty {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 36rem;
+  }
+
+  .tok-blog-feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .tok-blog-feed__article {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(198, 161, 74, 0.28);
+  }
+
+  .tok-blog-feed__item:last-child .tok-blog-feed__article {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .tok-blog-feed__meta {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tok-blog-feed__sep {
+    margin: 0 0.4rem;
+    opacity: 0.85;
+  }
+
+  .tok-blog-feed__cat {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tok-blog-feed__cat:hover {
+    color: var(--sky);
+  }
+
+  .tok-blog-feed__title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.45rem, 3.5vw, 1.85rem);
+    line-height: 1.2;
+  }
+
+  .tok-blog-feed__title a {
+    color: var(--mountain-water);
+    text-decoration: none;
+  }
+
+  .tok-blog-feed__title a:hover {
+    color: var(--sky);
+  }
+
+  .tok-blog-feed__excerpt {
+    margin: 0 0 0.85rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    opacity: 0.92;
+  }
+
+  .tok-blog-feed__more-wrap {
+    margin: 0;
+  }
+
+  .tok-blog-feed__more {
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--sky);
+  }
+
+  .tok-blog-feed__more:hover {
+    color: var(--mountain-water);
+  }
+</style>

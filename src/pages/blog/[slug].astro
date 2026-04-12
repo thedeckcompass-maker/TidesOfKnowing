@@ -1,10 +1,14 @@
 ---
 import { getCollection, render } from "astro:content";
-import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
 import { getRelatedForSlug } from "../../data/relatedPosts";
 import { estimateReadingMinutes } from "../../lib/readingTime";
-import { countWords } from "../../lib/wordCount";
 import { siteBase } from "../../lib/site";
+import {
+  blogCategoryIndex,
+  blogCategoryLabel,
+  blogCategorySlugFromLabel,
+} from "../../lib/blogCategories";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -20,41 +24,64 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const slug = post.slug ?? post.id;
 const rendered = await render(post);
-const { Content, headings } = rendered;
+const { Content } = rendered;
 
 const body = post.body ?? "";
-const wordCount = countWords(body);
-const tocHeadings = headings
-  .filter((h) => h.depth === 2)
-  .map((h) => ({ slug: h.slug, text: h.text }));
 
 const readingMinutes =
   post.data.readingTime ?? estimateReadingMinutes(body);
 
-const defaultHero = "/images/blog/placeholders/hero.svg";
-const heroImage = post.data.heroImage ?? defaultHero;
 const base = siteBase(Astro);
-const heroImageAbsolute = new URL(heroImage, base).href;
+const defaultOg = new URL("/favicon.svg", base).href;
+const heroImage = post.data.heroImage?.trim();
+const ogImageAbsolute = heroImage
+  ? new URL(heroImage, base).href
+  : defaultOg;
 
 const ogUrl = new URL(`/blog/${slug}/`, base).href;
 const related = getRelatedForSlug(slug);
-const showToc = wordCount >= 1500 && tocHeadings.length >= 4;
+
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const sidebarCategories = blogCategoryIndex(allPosts);
+
+const categoryLabel = blogCategoryLabel(post);
+const categorySlug = blogCategorySlugFromLabel(categoryLabel);
+
+const byDateAsc = [...allPosts].sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+const idx = byDateAsc.findIndex((p) => (p.slug ?? p.id) === slug);
+const prevPost =
+  idx > 0
+    ? {
+        slug: byDateAsc[idx - 1].slug ?? byDateAsc[idx - 1].id,
+        title: byDateAsc[idx - 1].data.title,
+      }
+    : null;
+const nextPost =
+  idx >= 0 && idx < byDateAsc.length - 1
+    ? {
+        slug: byDateAsc[idx + 1].slug ?? byDateAsc[idx + 1].id,
+        title: byDateAsc[idx + 1].data.title,
+      }
+    : null;
+
 ---
 
-<ArticleLayout
+<BlogPostLayout
   title={post.data.title}
   description={post.data.description}
   date={post.data.date}
   readingMinutes={readingMinutes}
   ogUrl={ogUrl}
-  related={related}
-  heroImage={heroImage}
-  heroImageAlt={post.data.heroImageAlt}
-  heroCaption={post.data.heroCaption}
-  heroImageAbsolute={heroImageAbsolute}
+  ogImageAbsolute={ogImageAbsolute}
+  categoryLabel={categoryLabel}
+  categorySlug={categorySlug}
   articleTags={post.data.tags}
-  tocHeadings={tocHeadings}
-  showToc={showToc}
+  related={related}
+  sidebarCategories={sidebarCategories}
+  prevPost={prevPost}
+  nextPost={nextPost}
 >
   <Content />
-</ArticleLayout>
+</BlogPostLayout>

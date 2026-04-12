@@ -1,0 +1,350 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+import BlogSidebar from "../components/BlogSidebar.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import type { RelatedLink } from "../data/relatedPosts";
+import type { BlogCategoryRow } from "../lib/blogCategories";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { siteBase } from "../lib/site";
+
+interface NavPost {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  readingMinutes: number;
+  ogUrl: string;
+  ogImageAbsolute: string;
+  categoryLabel: string;
+  categorySlug: string;
+  articleTags: string[];
+  related?: RelatedLink[];
+  sidebarCategories: BlogCategoryRow[];
+  prevPost: NavPost | null;
+  nextPost: NavPost | null;
+}
+
+const {
+  title,
+  description,
+  date,
+  readingMinutes,
+  ogUrl,
+  ogImageAbsolute,
+  categoryLabel,
+  categorySlug,
+  articleTags,
+  related = [],
+  sidebarCategories,
+  prevPost,
+  nextPost,
+} = Astro.props;
+
+const pageTitle = `${title} — Tides of Knowing`;
+const isoDate = date.toISOString();
+const displayDate = date.toLocaleDateString("en-AU", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Blog", url: "/blog/" },
+  { label: title, url: null },
+];
+
+const blogPostingLd: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  image: ogImageAbsolute,
+  datePublished: isoDate,
+  dateModified: isoDate,
+  author: {
+    "@type": "Person",
+    name: "Leigh Spencer",
+    url: "https://www.tidesofknowing.com/about/",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Tides of Knowing",
+    url: "https://www.tidesofknowing.com/",
+  },
+  url: ogUrl,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": ogUrl,
+  },
+  articleSection: categoryLabel,
+  keywords: articleTags.join(", "),
+};
+
+const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  ogUrl={ogUrl}
+  ogType="article"
+  articlePublishedTime={isoDate}
+  ogImage={ogImageAbsolute}
+  articleTags={articleTags}
+  metaAuthor="Leigh Spencer"
+  tdcPlacement="none"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-post-shell page-inner">
+    <div class="tok-blog-post-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-post-grid">
+      <div class="tok-blog-post-main">
+        <header class="tok-blog-post-head" data-reveal>
+          <p class="tok-blog-post-kicker">
+            <a class="tok-blog-post-cat" href={`/blog/category/${categorySlug}/`}>
+              {categoryLabel}
+            </a>
+          </p>
+          <h1 class="tok-blog-post-title">{title}</h1>
+          <p class="tok-blog-post-meta">
+            <time datetime={isoDate}>{displayDate}</time>
+            <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
+            <span>{readingMinutes} min read</span>
+          </p>
+        </header>
+
+        <article class="tok-blog-article">
+          <div class="article-prose tok-blog-post-prose">
+            <slot />
+          </div>
+        </article>
+
+        <nav class="tok-blog-adj" aria-label="Adjacent posts" data-reveal>
+          {
+            prevPost ? (
+              <a class="tok-blog-adj__link tok-blog-adj__link--prev" href={`/blog/${prevPost.slug}/`}>
+                <span class="tok-blog-adj__label">Previous post</span>
+                <span class="tok-blog-adj__title">{prevPost.title}</span>
+              </a>
+            ) : (
+              <span class="tok-blog-adj__spacer" />
+            )
+          }
+          {
+            nextPost ? (
+              <a class="tok-blog-adj__link tok-blog-adj__link--next" href={`/blog/${nextPost.slug}/`}>
+                <span class="tok-blog-adj__label">Next post</span>
+                <span class="tok-blog-adj__title">{nextPost.title}</span>
+              </a>
+            ) : (
+              <span class="tok-blog-adj__spacer" />
+            )
+          }
+        </nav>
+
+        <div data-reveal>
+          <TdcConversionBlock />
+        </div>
+
+        {
+          related.length > 0 && (
+            <section class="tok-blog-related" aria-labelledby="blog-related-heading" data-reveal>
+              <h2 id="blog-related-heading" class="tok-blog-related__title">
+                Suggested reading
+              </h2>
+              <ul class="tok-blog-related__list">
+                {related.map((item) => (
+                  <li>
+                    <a class="tok-blog-related__link" href={item.href}>
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+
+      <BlogSidebar categories={sidebarCategories} activeCategorySlug={categorySlug} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-blog-post-breadcrumbs {
+    margin-top: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .tok-blog-post-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .tok-blog-post-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 17.5rem);
+      gap: 2.75rem;
+    }
+  }
+
+  .tok-blog-post-main {
+    min-width: 0;
+    max-width: 42rem;
+  }
+
+  .tok-blog-post-kicker {
+    margin: 0 0 0.5rem;
+  }
+
+  .tok-blog-post-cat {
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--gold);
+  }
+
+  .tok-blog-post-cat:hover {
+    color: var(--sky);
+  }
+
+  .tok-blog-post-title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.18;
+    color: var(--mountain-water);
+  }
+
+  .tok-blog-post-meta {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(31, 42, 46, 0.55);
+  }
+
+  .tok-blog-post-meta-sep {
+    margin: 0 0.45rem;
+  }
+
+  .tok-blog-article {
+    margin-bottom: 2rem;
+  }
+
+  .tok-blog-post-prose {
+    font-size: 1.04rem;
+  }
+
+  .tok-blog-adj {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(198, 161, 74, 0.35);
+  }
+
+  @media (min-width: 520px) {
+    .tok-blog-adj {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .tok-blog-adj__spacer {
+    display: none;
+  }
+
+  @media (min-width: 520px) {
+    .tok-blog-adj__spacer {
+      display: block;
+    }
+  }
+
+  .tok-blog-adj__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.35rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .tok-blog-adj__link:hover .tok-blog-adj__title {
+    color: var(--sky);
+  }
+
+  .tok-blog-adj__link--next {
+    text-align: right;
+  }
+
+  .tok-blog-adj__label {
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tok-blog-adj__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: var(--mountain-water);
+    transition: color 0.2s ease;
+  }
+
+  .tok-blog-related {
+    margin-top: 1rem;
+    padding: 1.5rem 1.25rem;
+    background: var(--shore);
+    border-left: 3px solid var(--gold);
+  }
+
+  .tok-blog-related__title {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.35rem;
+    color: var(--mountain-water);
+  }
+
+  .tok-blog-related__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tok-blog-related__list li + li {
+    margin-top: 0.5rem;
+  }
+
+  .tok-blog-related__link {
+    font-weight: 600;
+  }
+</style>

@@ -2,17 +2,16 @@
 title: "Welcome to the library"
 description: "A long-form introduction to intuitive tarot, reflective practice, and how Tides of Knowing serves readers who want depth without the noise of the feed."
 date: 2026-04-05
+category: "Announcements"
 tags:
   - announcement
   - the-deck-compass
   - intuitive-tarot
 draft: false
 featured: true
-heroImage: "/images/blog/placeholders/hero.svg"
-heroCaption: "Replace with your photograph under public/images/blog/welcome-to-the-library/"
 ---
 
-If you have carried a deck for more than a season, you already understand that intuitive tarot is not a party trick. It is a discipline of attention: learning to stay with an image until it yields something truer than your first association. This library is written for that kind of reader—someone who treats the cards as a conversation rather than a verdict machine. Over time, these pages will gather essays, exercises, and quiet arguments that reward rereading when the world feels loud and your practice feels thin.
+If you have carried a deck for more than a season, you already understand that intuitive tarot is not a party trick. It is a discipline of attention: learning to stay with an image until it yields something truer than your first association. The [methodology articles](/articles/) are written for that kind of reader—someone who treats the cards as a conversation rather than a verdict machine. Over time, those pages will gather essays, exercises, and quiet arguments that reward rereading when the world feels loud and your practice feels thin.
 
 The voice here is mine—Leigh Spencer. I write as a guide and founder, and as someone who has lived with tarot for forty-nine years, including the long work of sorting intuition from wishful thinking. My lineage as a fourth-generation Matakite shapes how I listen: not as a claim to special sight, but as an inheritance of practice that values steadiness over spectacle. I am not interested in convincing you that the cards predict the future. I am interested in how they clarify the present, and how honest language around symbols can restore agency instead of stealing it.
 

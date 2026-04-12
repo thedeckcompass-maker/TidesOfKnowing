@@ -5,8 +5,11 @@ export const blogSchema = z.object({
   title: z.string(),
   description: z.string(),
   date: z.coerce.date(),
+  /** Broad bucket for the journal (e.g. Announcements, Reflections, Site updates). */
+  category: z.string().optional(),
   tags: z.array(z.string()),
   draft: z.boolean().default(false),
+  /** Optional image for Open Graph only; not shown as a full-width cover on blog posts. */
   heroImage: z.string().optional(),
   heroImageAlt: z.string().optional(),
   heroCaption: z.string().optional(),

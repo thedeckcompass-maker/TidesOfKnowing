@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { slugify } from "../utils/slugify";
+import { blogCategoryIndex } from "../lib/blogCategories";
 import { LIBRARY_PER_PAGE, totalPages } from "../lib/libraryPagination";
 import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
 
@@ -49,7 +50,7 @@ export const GET: APIRoute = async () => {
   rows.push({ path: "/", changefreq: "weekly", priority: "1.0" });
   rows.push({ path: "/about/", changefreq: "monthly", priority: "0.8" });
   rows.push({ path: "/subscribe/", changefreq: "weekly", priority: "0.75" });
-  rows.push({ path: "/library/", changefreq: "weekly", priority: "0.65" });
+  rows.push({ path: "/blog/", changefreq: "weekly", priority: "0.7" });
   rows.push({ path: "/series/", changefreq: "monthly", priority: "0.75" });
   rows.push({ path: "/tags/", changefreq: "monthly", priority: "0.65" });
 
@@ -96,6 +97,14 @@ export const GET: APIRoute = async () => {
   );
   for (const t of tagSlugs) {
     rows.push({ path: `/tags/${t}/`, changefreq: "monthly", priority: "0.6" });
+  }
+
+  for (const c of blogCategoryIndex(blog)) {
+    rows.push({
+      path: `/blog/category/${c.slug}/`,
+      changefreq: "weekly",
+      priority: "0.55",
+    });
   }
 
   for (const post of blog) {
