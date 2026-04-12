@@ -12,5 +12,6 @@ export default defineConfig({
   redirects: {
     "/library/": "/articles/",
     "/topics/": "/tags/",
+    "/blog/welcome-to-the-library/": "/blog/welcome-to-tides-of-knowing/",
   },
 });

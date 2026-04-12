@@ -9,17 +9,17 @@ async function addArticle() {
   console.log("Tides of Knowing — article publisher");
   console.log("=====================================\n");
 
-  const stagingDir = path.join(root, "staging");
+  const intakeArticlesDir = path.join(root, "content-intake", "articles");
   const articlesDir = path.join(root, "src", "content", "articles");
   const imagesDir = path.join(root, "public", "images", "articles");
 
   try {
-    const files = await fs.readdir(stagingDir);
+    const files = await fs.readdir(intakeArticlesDir);
     const mdFiles = files.filter((f) => f.endsWith(".md"));
 
     if (mdFiles.length === 0) {
-      console.log("No markdown files found in ./staging/");
-      console.log("Add your articles to the staging folder first.\n");
+      console.log("No markdown files found in ./content-intake/articles/");
+      console.log("Add your articles to content-intake/articles/ first.\n");
       return;
     }
 
@@ -30,7 +30,7 @@ async function addArticle() {
 
     for (const file of mdFiles) {
       const slug = path.basename(file, ".md");
-      const sourcePath = path.join(stagingDir, file);
+      const sourcePath = path.join(intakeArticlesDir, file);
       const destPath = path.join(articlesDir, file);
 
       await fs.copyFile(sourcePath, destPath);
@@ -50,7 +50,7 @@ async function addArticle() {
         await fs.mkdir(articleImageDir, { recursive: true });
 
         for (const imgFile of imageFiles) {
-          const imgSource = path.join(stagingDir, imgFile);
+          const imgSource = path.join(intakeArticlesDir, imgFile);
           const imgDest = path.join(articleImageDir, imgFile);
           await fs.copyFile(imgSource, imgDest);
           console.log(`  Image: ${imgFile}`);
