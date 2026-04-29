@@ -105,7 +105,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     ].join("\n");
 
     await resend.emails.send({
-      from: "COMPASS Applications <onboarding@resend.dev>",
+      from: "Tides of Knowing <hello@tidesofknowing.com>",
       to: [toEmail],
       subject: "New COMPASS Application",
       text: textBody,
