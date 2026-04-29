@@ -1,0 +1,117 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
+
+const title = "Privacy Policy | Tides of Knowing";
+const description =
+  "Privacy Policy for Tides of Knowing and the COMPASS programme.";
+const ogUrl = new URL("/privacy/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="legal page-inner">
+    <h1 class="legal__title">Privacy Policy</h1>
+    <p class="legal__updated">Last updated: 30 April 2026</p>
+
+    <p>
+      Tides of Knowing respects your privacy and is committed to protecting your personal information.
+    </p>
+
+    <h2>Information We Collect</h2>
+    <p>We collect personal information when you:</p>
+    <ul>
+      <li>Submit an application for COMPASS</li>
+      <li>Contact us directly</li>
+      <li>Make a payment</li>
+    </ul>
+    <p>
+      This may include your name, email address, and any information you provide in your application.
+    </p>
+
+    <h2>How We Use Your Information</h2>
+    <p>We use your information to:</p>
+    <ul>
+      <li>Review and respond to applications</li>
+      <li>Deliver the COMPASS programme</li>
+      <li>Communicate with you about your participation</li>
+      <li>Process payments</li>
+    </ul>
+    <p>
+      We do not sell, rent, or share your personal information with third parties for marketing purposes.
+    </p>
+
+    <h2>Payments</h2>
+    <p>Payments are processed securely through Stripe. We do not store your payment details.</p>
+
+    <h2>Data Storage</h2>
+    <p>
+      Your information is stored securely and only retained for as long as necessary to deliver the programme and maintain communication.
+    </p>
+
+    <h2>Your Rights</h2>
+    <p>
+      You may request access to or deletion of your personal information at any time by contacting us.
+    </p>
+
+    <h2>Contact</h2>
+    <p>For any privacy-related questions, contact:</p>
+    <p><a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .legal__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .legal__updated {
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+
+  .legal h2 {
+    margin: 2rem 0 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--mountain-water);
+  }
+
+  .legal p,
+  .legal ul {
+    margin: 0 0 1rem;
+    font-size: 1.06rem;
+    line-height: 1.75;
+  }
+
+  .legal ul {
+    padding-left: 1.35rem;
+  }
+
+  .legal li {
+    margin-bottom: 0.4rem;
+  }
+
+  .legal a {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .legal a:hover {
+    color: var(--mountain-water);
+  }
+</style>
