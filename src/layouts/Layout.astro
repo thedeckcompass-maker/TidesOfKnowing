@@ -1,0 +1,11 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = Record<string, unknown>;
+const props = Astro.props as Props;
+---
+
+<BaseLayout {...(props as any)}>
+  <slot />
+</BaseLayout>
+
