@@ -1,24 +1,28 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
 
 const title = "COMPASS: Build Intuition. Trust the Reading.";
-const description = "A 6-week live programme for tarot and oracle readers who want to move beyond meanings and learn how to trust their reading.";
+const description =
+  "A 6-week live programme for tarot, oracle, and Lenormand readers who want to move beyond meanings and learn how to trust the reading.";
+const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 ---
 
-<Layout title={title} description={description} tdcPlacement="none">
+<BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
   <article class="compass page-inner">
-    <section class="compass__hero">
-      <h1 class="compass__h1">COMPASS: Build Intuition. Trust the Reading.</h1>
-      <p>
-        You already know the cards. That is not the problem.
-      </p>
-      <p>
-        The problem is what happens when you’re in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting.
-      </p>
-      <p>
-        COMPASS exists to change that.
-      </p>
-    </section>
+    <h1 class="compass__h1">COMPASS: Build Intuition. Trust the Reading.</h1>
+
+    <p class="compass__p">
+      You already know the cards. That is not the problem.
+    </p>
+
+    <p class="compass__p">
+      The problem is what happens when you’re in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.
+    </p>
+
+    <p class="compass__p">
+      COMPASS exists to change that.
+    </p>
 
     <section class="compass__section">
       <h2 class="compass__h2">If This Sounds Like You</h2>
@@ -27,20 +31,24 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
         <li>You start strong, then lose the thread halfway through</li>
         <li>You over-explain instead of saying what you actually see</li>
         <li>You feel intuitive hits, then immediately doubt them</li>
-        <li>You keep looking for the “right” meaning instead of trusting your read</li>
-        <li>You finish readings and think: that wasn’t as clear as it should have been</li>
+        <li>
+          You keep looking for the “right” meaning instead of trusting your read
+        </li>
+        <li>
+          You finish readings and think: that wasn’t as clear as it should have been
+        </li>
       </ul>
     </section>
 
     <section class="compass__section">
       <h2 class="compass__h2">What You’ll Learn</h2>
-      <p>
+      <p class="compass__p">
         Most tarot training focuses on what the cards mean.
       </p>
-      <p>
+      <p class="compass__p">
         COMPASS focuses on what the reader is doing.
       </p>
-      <p>
+      <p class="compass__p">
         You will learn how to trust your own perception in a reading, stay with it, and communicate it clearly.
       </p>
     </section>
@@ -56,15 +64,15 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
         <li>Sense</li>
         <li>Seal</li>
       </ul>
-      <p>
-        This is not about learning more tarot. It’s about learning how to read.
+      <p class="compass__p">
+        This is not about learning more tarot. It is about learning how to read.
       </p>
     </section>
 
     <section class="compass__section">
       <h2 class="compass__h2">How It Works</h2>
-      <p>
-        6-week live programme. Small group. Real readings.
+      <p class="compass__p">
+        This is a 6-week live programme for a small group of readers.
       </p>
       <ul class="compass__list">
         <li>Weekly live sessions</li>
@@ -76,14 +84,14 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
 
     <section class="compass__section">
       <h2 class="compass__h2">About Leigh Spencer</h2>
-      <p>
+      <p class="compass__p">
         I’ve been reading tarot and oracle cards for over 40 years.
       </p>
-      <p>
-        Before that, I spent 30 years as a journalist, broadcaster, and editor — trained to observe, interpret, and communicate clearly.
+      <p class="compass__p">
+        Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.
       </p>
-      <p>
-        COMPASS is built from real reading experience — and from seeing exactly where readers lose trust in themselves.
+      <p class="compass__p">
+        COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.
       </p>
     </section>
 
@@ -92,23 +100,26 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
       <ul class="compass__list">
         <li>Limited to 6 participants</li>
         <li>Minimum 2 participants to run</li>
-        <li>Live only (no replay-based delivery)</li>
+        <li>Live only, not replay-based delivery</li>
       </ul>
-      <p>
+      <p class="compass__p">
         You are asked to apply because fit matters.
+      </p>
+      <p class="compass__p">
+        This is a small live programme where direct feedback and outcome matter more than filling places.
       </p>
     </section>
 
     <section class="compass__section">
       <h2 class="compass__h2">Investment</h2>
-      <p>
+      <p class="compass__p">
         NZD $497
       </p>
     </section>
 
-    <section class="compass__section compass__apply">
+    <section class="compass__section">
       <h2 class="compass__h2">Apply</h2>
-      <p>
+      <p class="compass__p">
         Send a short message with:
       </p>
       <ul class="compass__list">
@@ -116,23 +127,18 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
         <li>What’s not working in your readings</li>
         <li>Why you want to join</li>
       </ul>
-      <p>
+      <p class="compass__p">
         If accepted, your place will be held for 48 hours.
       </p>
-
       <a class="compass__cta" href="mailto:hello@tidesofknowing.com">Apply Now</a>
     </section>
   </article>
-</Layout>
+</BaseLayout>
 
 <style>
   .compass {
     padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
     max-width: 42rem;
-  }
-
-  .compass__hero {
-    margin-bottom: 1.25rem;
   }
 
   .compass__h1 {
@@ -159,13 +165,7 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
     margin-top: 0;
   }
 
-  .compass__hero p {
-    margin: 0 0 1.1rem;
-    font-size: 1.06rem;
-    line-height: 1.78;
-  }
-
-  .compass__section p {
+  .compass__p {
     margin: 0 0 1.1rem;
     font-size: 1.06rem;
     line-height: 1.78;
@@ -186,7 +186,6 @@ const description = "A 6-week live programme for tarot and oracle readers who wa
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2rem;
     padding: 0.85rem 1.75rem;
     font-family: var(--font-nav);
     font-size: 0.72rem;
