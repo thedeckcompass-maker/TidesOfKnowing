@@ -10,23 +10,43 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
   <article class="compass page-inner">
-    <h1 class="compass__h1">COMPASS: Build Intuition. Trust the Reading.</h1>
+    <section class="compass__hero">
+      <div class="compass__hero-copy compass__panel">
+        <p class="compass__eyebrow">6-week live programme</p>
+        <h1 class="compass__h1">COMPASS: Build Intuition. Trust the Reading.</h1>
 
-    <p class="compass__p">
-      You already know the cards. That is not the problem.
-    </p>
+        <p class="compass__p">
+          You already know the cards. That is not the problem.
+        </p>
 
-    <p class="compass__p">
-      The problem is what happens when you’re in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.
-    </p>
+        <p class="compass__p">
+          The problem is what happens when you’re in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.
+        </p>
 
-    <p class="compass__p">
-      COMPASS exists to change that.
-    </p>
+        <a class="compass__cta compass__cta--primary" href="/compass/apply/">
+          Apply for COMPASS
+        </a>
 
-    <section class="compass__section">
+        <a class="compass__sub-link" href="/articles/compass-method/">
+          Read the COMPASS Method article
+        </a>
+      </div>
+
+      <figure class="compass__hero-figure compass__panel">
+        <img
+          src="/images/articles/compass-method/compass-method-hero.png"
+          alt="Illustration of the COMPASS Method framework for clear intuitive readings."
+          loading="lazy"
+          decoding="async"
+          class="compass__hero-image"
+        />
+      </figure>
+    </section>
+
+    <section class="compass__section compass__section--soft">
+      <p class="compass__eyebrow">Problem fit</p>
       <h2 class="compass__h2">If This Sounds Like You</h2>
-      <ul class="compass__list">
+      <ul class="compass__list compass__list--card">
         <li>You know the meanings, but your readings still feel uncertain</li>
         <li>You start strong, then lose the thread halfway through</li>
         <li>You over-explain instead of saying what you actually see</li>
@@ -41,53 +61,59 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     </section>
 
     <section class="compass__section">
-      <h2 class="compass__h2">What You’ll Learn</h2>
-      <p class="compass__p">
-        Most tarot training focuses on what the cards mean.
-      </p>
-      <p class="compass__p">
-        COMPASS focuses on what the reader is doing.
-      </p>
-      <p class="compass__p">
-        You will learn how to trust your own perception in a reading, stay with it, and communicate it clearly.
-      </p>
-    </section>
-
-    <section class="compass__section">
+      <p class="compass__eyebrow">Method</p>
       <h2 class="compass__h2">The COMPASS Method</h2>
-      <ul class="compass__list">
-        <li>Center</li>
-        <li>Open</li>
-        <li>Map</li>
-        <li>Perceive</li>
-        <li>Align</li>
-        <li>Sense</li>
-        <li>Seal</li>
-      </ul>
+      <p class="compass__pillars">
+        <span>Center</span>
+        <span>Open</span>
+        <span>Map</span>
+        <span>Perceive</span>
+        <span>Align</span>
+        <span>Sense</span>
+        <span>Seal</span>
+      </p>
       <p class="compass__p">
         This is not about learning more tarot. It is about learning how to read.
       </p>
     </section>
 
-    <section class="compass__section">
-      <h2 class="compass__h2">How It Works</h2>
+    <section class="compass__section compass__section--soft">
+      <p class="compass__eyebrow">Learning outcomes</p>
+      <h2 class="compass__h2">What You’ll Learn</h2>
       <p class="compass__p">
+        Most tarot training focuses on what the cards mean.
+        COMPASS focuses on what the reader is doing.
+      </p>
+      <ul class="compass__list compass__list--card">
+        <li>Trust your own perception in a reading</li>
+        <li>Stay with what is actually unfolding</li>
+        <li>Communicate what you see clearly and cleanly</li>
+      </ul>
+    </section>
+
+    <section class="compass__section">
+      <p class="compass__eyebrow">Process</p>
+      <h2 class="compass__h2">How It Works</h2>
+      <p class="compass__p compass__process-intro">
         This is a 6-week live programme for a small group of readers.
       </p>
-      <ul class="compass__list">
+      <ul class="compass__list compass__list--card">
         <li>Weekly live sessions</li>
         <li>Guided practice readings</li>
         <li>Direct feedback and correction</li>
         <li>Real application, not theory</li>
       </ul>
+
+      <a class="compass__cta compass__cta--secondary" href="/compass/apply/">
+        Apply for COMPASS
+      </a>
     </section>
 
-    <section class="compass__section">
+    <section class="compass__section compass__section--warm">
+      <p class="compass__eyebrow">Authority</p>
       <h2 class="compass__h2">About Leigh Spencer</h2>
       <p class="compass__p">
         I’ve been reading tarot and oracle cards for over 40 years.
-      </p>
-      <p class="compass__p">
         Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.
       </p>
       <p class="compass__p">
@@ -96,6 +122,7 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     </section>
 
     <section class="compass__section">
+      <p class="compass__eyebrow">Programme details</p>
       <h2 class="compass__h2">Enrollment</h2>
       <ul class="compass__list">
         <li>Limited to 6 participants</li>
@@ -111,13 +138,15 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     </section>
 
     <section class="compass__section">
+      <p class="compass__eyebrow">Investment</p>
       <h2 class="compass__h2">Investment</h2>
       <p class="compass__p">
         NZD $497
       </p>
     </section>
 
-    <section class="compass__section">
+    <section class="compass__section compass__section--final">
+      <p class="compass__eyebrow">Apply</p>
       <h2 class="compass__h2">Apply</h2>
       <p class="compass__p">
         Send a short message with:
@@ -130,19 +159,64 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
       <p class="compass__p">
         If accepted, your place will be held for 48 hours.
       </p>
-      <a class="compass__cta" href="mailto:hello@tidesofknowing.com">Apply Now</a>
+      <a class="compass__cta" href="/compass/apply/">Apply Now</a>
     </section>
   </article>
 </BaseLayout>
 
 <style>
   .compass {
-    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 42rem;
+    padding: clamp(2rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 62rem;
+  }
+
+  .compass__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+    margin-bottom: 3rem;
+  }
+
+  .compass__hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .compass__panel {
+    background: linear-gradient(180deg, var(--paper) 0%, rgba(216, 219, 241, 0.24) 100%);
+    border: 1px solid rgba(198, 161, 74, 0.35);
+    border-radius: 0.25rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .compass__hero-figure {
+    margin: 0;
+  }
+
+  .compass__hero-image {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 0.2rem;
+    border: 1px solid rgba(198, 161, 74, 0.4);
+    box-shadow: 0 12px 32px rgba(13, 50, 77, 0.12);
+  }
+
+  .compass__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
   }
 
   .compass__h1 {
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.9rem;
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 400;
@@ -152,7 +226,7 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   }
 
   .compass__h2 {
-    margin: 2.25rem 0 0.85rem;
+    margin: 0 0 0.85rem;
     font-family: var(--font-display);
     font-size: clamp(1.35rem, 2.8vw, 1.65rem);
     font-weight: 600;
@@ -162,17 +236,40 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   }
 
   .compass__section + .compass__section {
-    margin-top: 0;
+    margin-top: 1.25rem;
   }
 
   .compass__p {
-    margin: 0 0 1.1rem;
+    margin: 0 0 0.9rem;
     font-size: 1.06rem;
-    line-height: 1.78;
+    line-height: 1.72;
+  }
+
+  .compass__pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0 0 1rem;
+  }
+
+  .compass__pillars span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.42rem 0.68rem;
+    border: 1px solid rgba(116, 179, 206, 0.45);
+    border-radius: 999px;
+    background: rgba(116, 179, 206, 0.1);
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
   }
 
   .compass__list {
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.9rem;
     padding-left: 1.35rem;
     font-size: 1.06rem;
     line-height: 1.7;
@@ -182,10 +279,73 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     margin-bottom: 0.4rem;
   }
 
+  .compass__list--card {
+    margin-bottom: 0;
+    padding: 0.85rem 1.1rem 0.45rem 2.1rem;
+    background: var(--shore);
+    border: 1px solid rgba(198, 161, 74, 0.3);
+    border-radius: 0.25rem;
+  }
+
+  .compass__process-intro {
+    margin-bottom: 0.7rem;
+  }
+
+  .compass__section {
+    padding: clamp(1.1rem, 2.6vw, 1.45rem);
+    border-radius: 0.25rem;
+  }
+
+  .compass__section--soft {
+    background: linear-gradient(180deg, rgba(216, 219, 241, 0.22) 0%, rgba(243, 240, 234, 0.9) 100%);
+    border: 1px solid rgba(116, 179, 206, 0.25);
+  }
+
+  .compass__section--warm {
+    background: linear-gradient(180deg, rgba(198, 161, 74, 0.12) 0%, rgba(243, 240, 234, 0.95) 100%);
+    border: 1px solid rgba(198, 161, 74, 0.3);
+  }
+
+  .compass__section--final {
+    background: var(--near-black);
+    border: 1px solid rgba(198, 161, 74, 0.45);
+  }
+
+  .compass__section--final .compass__h2,
+  .compass__section--final .compass__p,
+  .compass__section--final .compass__list {
+    color: var(--paper);
+  }
+
+  .compass__section--final .compass__eyebrow {
+    color: var(--gold);
+  }
+
+  .compass__section--final .compass__cta {
+    color: var(--paper);
+    border-color: var(--gold);
+  }
+
+  .compass__sub-link {
+    margin-top: 0.25rem;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--mountain-water);
+  }
+
+  .compass__sub-link:hover {
+    color: var(--sky);
+  }
+
   .compass__cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-top: 1.25rem;
     padding: 0.85rem 1.75rem;
     font-family: var(--font-nav);
     font-size: 0.72rem;
@@ -199,10 +359,23 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     background: transparent;
   }
 
+  .compass__cta--primary {
+    align-self: flex-start;
+  }
+
+  .compass__cta--secondary {
+    margin-top: 1.5rem;
+  }
+
   .compass__cta:hover {
     background: rgba(198, 161, 74, 0.14);
     color: var(--mountain-water);
     border-color: var(--gold);
+  }
+
+  .compass__section--final .compass__cta:hover {
+    color: var(--paper);
+    background: rgba(198, 161, 74, 0.2);
   }
 
   .compass__cta:focus-visible {
@@ -210,7 +383,21 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     outline-offset: 4px;
   }
 
+  @media (max-width: 900px) {
+    .compass__hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .compass__hero-figure {
+      order: -1;
+    }
+  }
+
   @media (max-width: 520px) {
+    .compass__section {
+      padding: 0.95rem;
+    }
+
     .compass__h1 {
       font-size: clamp(2rem, 9vw, 2.45rem);
     }

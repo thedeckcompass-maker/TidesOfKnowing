@@ -11,7 +11,9 @@
     "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing"
   },
   "dependencies": {
-    "astro": "^5.7.0"
+    "@astrojs/cloudflare": "^12.6.13",
+    "astro": "^5.7.0",
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "wrangler": "^4.54.0"

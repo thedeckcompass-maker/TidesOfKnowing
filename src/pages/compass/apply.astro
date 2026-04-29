@@ -1,0 +1,288 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Apply for COMPASS | Tides of Knowing";
+const description =
+  "A short COMPASS application reviewed personally to ensure the programme is a strong fit.";
+const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
+  <article class="compass-apply page-inner">
+    <header class="compass-apply__hero">
+      <p class="compass-apply__eyebrow">COMPASS training application</p>
+      <h1 class="compass-apply__title">Apply for COMPASS</h1>
+      <p class="compass-apply__subtext">
+        A thoughtful application helps ensure this live programme is the right fit for where your reading practice is now.
+      </p>
+    </header>
+
+    <section class="compass-apply__panel">
+      <p class="compass-apply__intro">
+        This is a short application, reviewed personally. You can expect a response within 48 hours.
+      </p>
+
+      <form id="compass-application-form" class="compass-apply__form">
+        <div class="compass-apply__grid">
+          <label class="compass-apply__field">
+            <span>Name *</span>
+            <input name="name" type="text" autocomplete="name" required />
+          </label>
+
+          <label class="compass-apply__field">
+            <span>Email *</span>
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+
+          <label class="compass-apply__field">
+            <span>Location</span>
+            <input name="location" type="text" autocomplete="address-level2" />
+          </label>
+
+          <label class="compass-apply__field">
+            <span>Experience level *</span>
+            <select name="experience_level" required>
+              <option value="">Select one</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Developing">Developing</option>
+              <option value="Experienced">Experienced</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="compass-apply__field">
+          <span>What is not working in your readings right now? *</span>
+          <textarea name="current_situation" rows="5" required></textarea>
+        </label>
+
+        <label class="compass-apply__field">
+          <span>What outcome are you wanting from COMPASS? *</span>
+          <textarea name="desired_outcome" rows="5" required></textarea>
+        </label>
+
+        <label class="compass-apply__field">
+          <span>Why now? *</span>
+          <textarea name="why_now" rows="5" required></textarea>
+        </label>
+
+        <div class="compass-apply__actions">
+          <button id="compass-apply-submit" type="submit" class="compass-apply__submit">
+            Submit Application
+          </button>
+          <p id="compass-apply-error" class="compass-apply__error" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <p id="compass-apply-success" class="compass-apply__success" hidden>
+        Your application has been received. I will review it personally and respond within 48 hours.
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById("compass-application-form");
+    const submitBtn = document.getElementById("compass-apply-submit");
+    const errorEl = document.getElementById("compass-apply-error");
+    const successEl = document.getElementById("compass-apply-success");
+
+    if (!(form instanceof HTMLFormElement)) return;
+    if (!(submitBtn instanceof HTMLButtonElement)) return;
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      if (errorEl) errorEl.textContent = "";
+      if (successEl) successEl.hidden = true;
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      try {
+        const response = await fetch("/api/compass-apply", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(function () {
+          return {};
+        });
+
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || "Unable to submit right now. Please try again.");
+        }
+
+        form.reset();
+        if (successEl) successEl.hidden = false;
+      } catch (err) {
+        if (errorEl) {
+          errorEl.textContent =
+            err instanceof Error ? err.message : "Unable to submit right now. Please try again.";
+        }
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Application";
+      }
+    });
+  })();
+</script>
+
+<style>
+  .compass-apply {
+    padding: clamp(2rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 46rem;
+  }
+
+  .compass-apply__hero {
+    margin-bottom: 1.4rem;
+  }
+
+  .compass-apply__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .compass-apply__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.8vw, 2.75rem);
+    line-height: 1.16;
+    color: var(--mountain-water);
+  }
+
+  .compass-apply__subtext {
+    margin: 0;
+    font-size: 1.04rem;
+    line-height: 1.7;
+  }
+
+  .compass-apply__panel {
+    padding: clamp(1rem, 3vw, 1.45rem);
+    border-radius: 0.25rem;
+    border: 1px solid rgba(198, 161, 74, 0.35);
+    background: linear-gradient(180deg, rgba(216, 219, 241, 0.2) 0%, var(--paper) 100%);
+  }
+
+  .compass-apply__intro {
+    margin: 0 0 1rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+
+  .compass-apply__form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .compass-apply__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+
+  .compass-apply__field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .compass-apply__field > span {
+    font-family: var(--font-nav);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .compass-apply__field input,
+  .compass-apply__field select,
+  .compass-apply__field textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid rgba(116, 179, 206, 0.55);
+    border-radius: 0.2rem;
+    padding: 0.62rem 0.7rem;
+  }
+
+  .compass-apply__field textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .compass-apply__field input:focus-visible,
+  .compass-apply__field select:focus-visible,
+  .compass-apply__field textarea:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+  }
+
+  .compass-apply__actions {
+    margin-top: 0.35rem;
+  }
+
+  .compass-apply__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--font-nav);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .compass-apply__submit:hover {
+    background: rgba(198, 161, 74, 0.14);
+  }
+
+  .compass-apply__submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .compass-apply__error {
+    margin: 0.65rem 0 0;
+    color: #8c2f2f;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    min-height: 1.2rem;
+  }
+
+  .compass-apply__success {
+    margin: 1.1rem 0 0;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(198, 161, 74, 0.12);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 720px) {
+    .compass-apply__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
