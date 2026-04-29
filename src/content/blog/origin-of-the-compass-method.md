@@ -94,7 +94,7 @@ For a long time, I used this internally. It worked for me, and that was enough.
 
 As I started teaching — first informally, then in more structured learning environments — I realised that intuition can be taught only when there is something concrete enough to practise. Not a slogan about trusting yourself, but a shared language for the conditions under which perception stays honest.
 
-I formalised it because people needed it, and because after four decades of learning it the slow way — across two careers, through thousands of readings and hundreds of stories — I did not want everyone else to need forty years to stumble into the same conclusions.
+I formalised it because people needed it, and because after four decades of learning it the slow way — across two careers, through thousands of readings and hundreds of stories — I did not want everyone else to need forty years to stumble into the same conclusions. It is something that can now be <a href="/compass/" data-link="compass">worked with in practice</a>.
 
 ## The journalist and the intuitive
 

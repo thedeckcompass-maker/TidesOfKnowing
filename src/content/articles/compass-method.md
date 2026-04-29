@@ -60,7 +60,7 @@ It sits alongside the broader questions the [methodology series](/articles/) add
 
 ## Relationship to The Deck Compass
 
-**The Deck Compass** is the structured teaching environment where this framework is applied with feedback, repetition, and real-world reading conditions. **Tides of Knowing** is where the ideas are published and argued with in the open. The method and the publication are related but not identical: one is a named framework; the other is the editorial home for the wider conversation around precision, ethics, and craft.
+**The Deck Compass** is the structured teaching environment where this framework is <a href="/compass/" data-link="compass">worked with in practice</a> through feedback, repetition, and real-world reading conditions. **Tides of Knowing** is where the ideas are published and argued with in the open. The method and the publication are related but not identical: one is a named framework; the other is the editorial home for the wider conversation around precision, ethics, and craft.
 
 For a personal account of how this framework developed over time, see [The origin of the COMPASS Method](/blog/origin-of-the-compass-method/).
 

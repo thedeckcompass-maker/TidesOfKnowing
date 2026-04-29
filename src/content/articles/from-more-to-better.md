@@ -69,7 +69,7 @@ Here's the test: sit down with a real question, a real spread, and someone who n
 
 At that moment, you do not need more meaning. You need selection, direction, and clarity. And here's the problem: those things are almost never taught. We teach the content. We don't teach the cognitive process.
 
-This is the gap The Deck Compass methodology is built to address. Not what the cards mean, but how you move through a reading — how you select from what you know, how you construct a line of meaning, how you arrive at something that lands rather than something that meanders.
+This is the gap The Deck Compass methodology is built to address, and where it is <a href="/compass/" data-link="compass">worked with in practice</a>. Not what the cards mean, but how you move through a reading — how you select from what you know, how you construct a line of meaning, how you arrive at something that lands rather than something that meanders.
 
 ---
 

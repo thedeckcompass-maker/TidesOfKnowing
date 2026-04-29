@@ -127,7 +127,7 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
         <a class="site-logo" href="/">Tides of Knowing</a>
         <nav class="site-nav" aria-label="Primary">
           <a class="site-nav__link" href="/articles/">Articles</a>
-          <a class="site-nav__link" href="/compass/">Training</a>
+          <a class="site-nav__link" href="/compass/" data-link="compass">Training</a>
           <a class="site-nav__link" href="/articles/compass-method/">COMPASS Method</a>
           <details class="site-nav__dropdown">
             <summary class="site-nav__dropdown-summary">Browse</summary>
@@ -196,6 +196,17 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
         );
         nodes.forEach(function (el) {
           io.observe(el);
+        });
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        document.addEventListener("click", function (event) {
+          var target = event.target;
+          if (!(target instanceof Element)) return;
+          var link = target.closest('[data-link="compass"]');
+          if (!link) return;
+          console.log("COMPASS link clicked");
         });
       })();
     </script>
