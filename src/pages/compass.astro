@@ -145,6 +145,43 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
       </p>
     </section>
 
+    <section class="compass__section compass__section--soft" aria-labelledby="compass-faq-heading">
+      <p class="compass__eyebrow">FAQ</p>
+      <h2 id="compass-faq-heading" class="compass__h2">Common questions</h2>
+      <dl class="compass__faq">
+        <div class="compass__faq-item">
+          <dt class="compass__faq-q">What level do I need to be at?</dt>
+          <dd class="compass__faq-a">
+            You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read, not learning meanings from scratch.
+          </dd>
+        </div>
+        <div class="compass__faq-item">
+          <dt class="compass__faq-q">How is this delivered?</dt>
+          <dd class="compass__faq-a">
+            COMPASS is a small, live programme with weekly sessions, guided practice, and direct feedback. It is not pre-recorded or self-paced.
+          </dd>
+        </div>
+        <div class="compass__faq-item">
+          <dt class="compass__faq-q">What if I’m not confident yet?</dt>
+          <dd class="compass__faq-a">
+            That’s exactly what this is designed for. The focus is on helping you trust what you are seeing and communicate it clearly, not on performing or being “right.”
+          </dd>
+        </div>
+        <div class="compass__faq-item">
+          <dt class="compass__faq-q">What happens after I apply?</dt>
+          <dd class="compass__faq-a">
+            I review each application to ensure the group is aligned. If it’s a good fit, you’ll receive a payment link to secure your place.
+          </dd>
+        </div>
+        <div class="compass__faq-item">
+          <dt class="compass__faq-q">What if I’m unsure?</dt>
+          <dd class="compass__faq-a">
+            You’re welcome to <a class="compass__faq-link" href="/contact/">reach out</a> before applying if you want to check whether it’s right for you.
+          </dd>
+        </div>
+      </dl>
+    </section>
+
     <section class="compass__section compass__section--final">
       <p class="compass__eyebrow">Apply</p>
       <h2 class="compass__h2">Apply</h2>
@@ -289,6 +326,49 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__process-intro {
     margin-bottom: 0.7rem;
+  }
+
+  .compass__faq {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .compass__faq-item {
+    padding: 1rem 0;
+    border-top: 1px solid rgba(116, 179, 206, 0.28);
+  }
+
+  .compass__faq-item:first-of-type {
+    border-top: none;
+    padding-top: 0.35rem;
+  }
+
+  .compass__faq-q {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--mountain-water);
+  }
+
+  .compass__faq-a {
+    margin: 0;
+    font-size: 1.06rem;
+    line-height: 1.72;
+  }
+
+  .compass__faq-link {
+    color: var(--mountain-water);
+    font-weight: 600;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  .compass__faq-link:hover {
+    color: var(--sky);
   }
 
   .compass__section {

@@ -1,0 +1,185 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
+
+const title = "Contact | Tides of Knowing";
+const description = "Get in touch with Tides of Knowing.";
+const ogUrl = new URL("/contact/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="contact page-inner">
+    <h1 class="contact__title">Contact</h1>
+    <p class="contact__intro">If you have a question about COMPASS or need support, you can send a message here.</p>
+
+    <form class="contact__form" id="contact-form" novalidate>
+      <label class="contact__label" for="name">Name</label>
+      <input class="contact__input" id="name" name="name" type="text" required />
+
+      <label class="contact__label" for="email">Email</label>
+      <input class="contact__input" id="email" name="email" type="email" required />
+
+      <label class="contact__label" for="message">Message</label>
+      <textarea class="contact__textarea" id="message" name="message" rows="6" required></textarea>
+
+      <button class="contact__button" type="submit">Send</button>
+      <p class="contact__status" id="contact-status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="contact__fallback">You can also email directly at <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a></p>
+  </article>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("contact-status");
+    if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement)) return;
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const nameInput = form.querySelector("#name");
+      const emailInput = form.querySelector("#email");
+      const messageInput = form.querySelector("#message");
+
+      if (
+        !(nameInput instanceof HTMLInputElement) ||
+        !(emailInput instanceof HTMLInputElement) ||
+        !(messageInput instanceof HTMLTextAreaElement)
+      ) {
+        return;
+      }
+
+      const payload = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        message: messageInput.value.trim(),
+      };
+
+      if (!payload.name || !payload.email || !payload.message) {
+        status.textContent = "Please complete all required fields.";
+        return;
+      }
+
+      status.textContent = "Sending...";
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result?.ok) {
+          status.textContent = "Something went wrong. Please try again.";
+          return;
+        }
+
+        form.reset();
+        status.textContent = "Your message has been sent.\nI’ll come back to you shortly.";
+      } catch (_error) {
+        status.textContent = "Something went wrong. Please try again.";
+      }
+    });
+  })();
+</script>
+
+<style>
+  .contact {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .contact__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .contact__intro {
+    margin: 0 0 1.5rem;
+    font-size: 1.06rem;
+    line-height: 1.72;
+  }
+
+  .contact__form {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .contact__label {
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .contact__input,
+  .contact__textarea {
+    width: 100%;
+    border: 1px solid rgba(13, 50, 77, 0.28);
+    border-radius: 0.2rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 8rem;
+  }
+
+  .contact__button {
+    margin-top: 0.4rem;
+    justify-self: start;
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .contact__button:hover {
+    background: rgba(198, 161, 74, 0.14);
+  }
+
+  .contact__status {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    min-height: 1.25rem;
+    white-space: pre-line;
+  }
+
+  .contact__fallback {
+    margin: 1rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .contact__fallback a {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .contact__fallback a:hover {
+    color: var(--mountain-water);
+  }
+</style>
