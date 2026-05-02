@@ -11,6 +11,14 @@ export type SeriesMeta = {
 };
 
 export const seriesData: Record<string, SeriesMeta> = {
+  "the-ai-and-intuition-series": {
+    title: "The AI and Intuition Series",
+    description:
+      "Seven essays on what large language models can and cannot reach in intuitive practice: pre-symbolic perception, tarot as interface, meaning versus attention, augmentation versus replacement, and the practitioner’s edge.",
+    totalParts: 7,
+    status: "complete",
+    publishedDate: "2026-05-03",
+  },
   "the-deck-compass-methodology-series": {
     title: "The Deck Compass Methodology Series",
     description:
