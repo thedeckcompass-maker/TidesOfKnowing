@@ -61,6 +61,8 @@ const jsonLdArray = jsonLd
   : [];
 
 const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
+
+const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -109,7 +111,7 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -146,7 +148,13 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
             </ul>
           </details>
           <a class="site-nav__link" href="/blog/">Blog</a>
-          <a class="site-nav__link" href="/tools/">Tools</a>
+          <a
+            class="site-nav__link site-nav__link--tools"
+            href="/tools/"
+            aria-current={isToolsSection ? "page" : undefined}
+          >
+            Tools
+          </a>
           <a class="site-nav__link" href="/about">About</a>
         </nav>
       </div>
@@ -279,6 +287,22 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
 
   .site-nav__link:hover {
     color: var(--lavender);
+  }
+
+  .site-nav__link--tools {
+    color: rgba(198, 161, 74, 0.92);
+    font-weight: 700;
+  }
+
+  .site-nav__link--tools:hover {
+    color: var(--gold);
+  }
+
+  .site-nav__link--tools[aria-current="page"] {
+    color: var(--gold);
+    text-decoration: underline;
+    text-decoration-color: rgba(198, 161, 74, 0.55);
+    text-underline-offset: 0.18em;
   }
 
   .site-nav__dropdown {
