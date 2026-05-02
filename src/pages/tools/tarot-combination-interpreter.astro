@@ -67,22 +67,6 @@ const faqJsonLd = {
       This tool helps you explore how tarot cards interact, rather than reading them in isolation.
     </p>
 
-    <div class="tarot-tool__seo-intro">
-      <p>
-        This tarot combination interpreter is designed for readers who already know some card meanings but want help understanding how two cards speak to each other. A two-card tarot combination is rarely just one meaning placed beside another. The first card opens a force, theme, or question; the second card modifies, mirrors, challenges, softens, or redirects it. This tool uses the full 78-card Rider–Waite–Smith system, including card imagery, keywords, arcana, suit, and rank relationships, to help you notice the movement between the cards. It is not intended to replace your intuition or turn tarot into a fixed formula. It is a practice tool for learning how interpretation works.
-      </p>
-    </div>
-
-    <nav class="tarot-tool__jump" aria-label="On this page">
-      <p class="tarot-tool__jump-title">On this page</p>
-      <ul class="tarot-tool__jump-list">
-        <li><a class="tarot-tool__jump-link" href="#tarot-tool">Use the tool</a></li>
-        <li><a class="tarot-tool__jump-link" href="#how-combinations-work">How combinations work</a></li>
-        <li><a class="tarot-tool__jump-link" href="#common-mistakes">Common mistakes</a></li>
-        <li><a class="tarot-tool__jump-link" href="#faq">FAQ</a></li>
-      </ul>
-    </nav>
-
     <div id="tarot-tool" class="tarot-tool__tool-wrap">
     <div class="tarot-tool__panel" aria-labelledby="tarot-tool-heading">
       <h2 class="visually-hidden" id="tarot-tool-heading">Choose two cards</h2>
@@ -109,6 +93,48 @@ const faqJsonLd = {
       ></div>
     </div>
     </div>
+
+    <nav class="tarot-tool__crossnav" aria-label="Tarot tools">
+      <p class="tarot-tool__crossnav-title">Tarot tools</p>
+      <ul class="tarot-tool__crossnav-list">
+        <li class="tarot-tool__crossnav-item">
+          <a
+            class="tarot-tool__crossnav-link"
+            href="/tools/tarot-combination-interpreter/"
+            aria-current="page"
+            >Two-Card Combination Interpreter</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--current">Current</span>
+        </li>
+        <li class="tarot-tool__crossnav-item">
+          <a class="tarot-tool__crossnav-link tarot-tool__crossnav-link--soon" href="/tools/three-card-tarot-spread-interpreter/"
+            >Three-Card Spread Interpreter</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--soon">Coming next</span>
+        </li>
+        <li class="tarot-tool__crossnav-item">
+          <a class="tarot-tool__crossnav-link tarot-tool__crossnav-link--soon" href="/tools/repeated-tarot-card-meaning/"
+            >Repeated Card Meaning Tool</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--soon">Coming next</span>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="tarot-tool__seo-intro">
+      <p>
+        This tarot combination interpreter is designed for readers who already know some card meanings but want help understanding how two cards speak to each other. A two-card tarot combination is rarely just one meaning placed beside another. The first card opens a force, theme, or question; the second card modifies, mirrors, challenges, softens, or redirects it. This tool uses the full 78-card Rider–Waite–Smith system, including card imagery, keywords, arcana, suit, and rank relationships, to help you notice the movement between the cards. It is not intended to replace your intuition or turn tarot into a fixed formula. It is a practice tool for learning how interpretation works.
+      </p>
+    </div>
+
+    <nav class="tarot-tool__jump" aria-label="On this page">
+      <p class="tarot-tool__jump-title">On this page</p>
+      <ul class="tarot-tool__jump-list">
+        <li><a class="tarot-tool__jump-link" href="#how-combinations-work">How combinations work</a></li>
+        <li><a class="tarot-tool__jump-link" href="#common-mistakes">Common mistakes</a></li>
+        <li><a class="tarot-tool__jump-link" href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
 
     <section class="tarot-tool__seo">
       <h2 class="tarot-tool__h2" id="how-combinations-work">What Is a Tarot Combination?</h2>
@@ -608,7 +634,7 @@ const faqJsonLd = {
   }
 
   .tarot-tool__intro {
-    margin: 0 0 1.5rem;
+    margin: 0 0 0.85rem;
     font-size: 1.06rem;
     line-height: 1.72;
   }
@@ -618,6 +644,78 @@ const faqJsonLd = {
   #common-mistakes,
   #faq {
     scroll-margin-top: 5.5rem;
+  }
+
+  .tarot-tool__crossnav {
+    margin: 0 0 1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(198, 161, 74, 0.42);
+    border-radius: 0.25rem;
+    background: rgba(255, 252, 245, 0.65);
+  }
+
+  .tarot-tool__crossnav-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tarot-tool__crossnav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tarot-tool__crossnav-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.65rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .tarot-tool__crossnav-link {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.1em;
+    font-weight: 500;
+  }
+
+  .tarot-tool__crossnav-link[aria-current="page"] {
+    color: var(--mountain-water);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .tarot-tool__crossnav-link--soon {
+    color: var(--mountain-water);
+    opacity: 0.88;
+  }
+
+  .tarot-tool__crossnav-label {
+    font-family: var(--font-nav);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tarot-tool__crossnav-label--current {
+    color: var(--mountain-water);
+    opacity: 0.85;
+  }
+
+  .tarot-tool__crossnav-label--soon {
+    color: var(--gold);
   }
 
   .tarot-tool__seo-intro {
@@ -635,21 +733,22 @@ const faqJsonLd = {
   }
 
   .tarot-tool__jump {
-    margin: 0 0 1.35rem;
-    padding: 0.65rem 0.85rem;
-    border: 1px solid rgba(13, 50, 77, 0.15);
+    margin: 0 0 1.1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(13, 50, 77, 0.18);
     border-radius: 0.2rem;
-    background: rgba(13, 50, 77, 0.04);
+    background: rgba(13, 50, 77, 0.055);
   }
 
   .tarot-tool__jump-title {
-    margin: 0 0 0.45rem;
+    margin: 0 0 0.35rem;
     font-family: var(--font-nav);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--mountain-water);
+    opacity: 0.92;
   }
 
   .tarot-tool__jump-list {
@@ -674,7 +773,7 @@ const faqJsonLd = {
   }
 
   .tarot-tool__tool-wrap {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .tarot-tool__panel {

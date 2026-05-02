@@ -4,7 +4,7 @@ import { siteBase } from "../../lib/site";
 
 const title = "Tarot Interpretation Tools | Tides of Knowing";
 const description =
-  "Free tarot tools to practice interpreting how cards work together in a spread, starting with a two-card combination interpreter.";
+  "Practise tarot card relationships, spread flow, and repeated pattern recognition with free interpretation tools from Tides of Knowing.";
 const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 ---
 
@@ -12,11 +12,36 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
   <article class="tools-hub page-inner">
     <h1 class="tools-hub__title">Tarot Interpretation Tools</h1>
     <p class="tools-hub__intro">
-      These tools are designed to help you move beyond individual card meanings and begin interpreting how tarot cards work together in a spread.
+      These tools help tarot readers practise card relationships, spread flow, and repeated pattern recognition—so readings stay relational instead of collapsing into isolated keywords.
     </p>
-    <ul class="tools-hub__list">
-      <li>
-        <a class="tools-hub__link" href="/tools/tarot-combination-interpreter/">Tarot Combination Interpreter</a>
+
+    <ul class="tools-hub__grid" role="list">
+      <li class="tools-hub__card">
+        <a class="tools-hub__card-link" href="/tools/tarot-combination-interpreter/">
+          <span class="tools-hub__card-name">Two-Card Tarot Combination Interpreter</span>
+        </a>
+        <p class="tools-hub__card-desc">
+          Explore how two tarot cards interact through imagery, keywords, arcana, suit, and rank relationships.
+        </p>
+        <p class="tools-hub__status tools-hub__status--live">Available now</p>
+      </li>
+      <li class="tools-hub__card tools-hub__card--soon">
+        <a class="tools-hub__card-link tools-hub__card-link--soon" href="/tools/three-card-tarot-spread-interpreter/">
+          <span class="tools-hub__card-name">Three-Card Tarot Spread Interpreter</span>
+        </a>
+        <p class="tools-hub__card-desc">
+          Read a three-card spread as movement, sequence, and story rather than three isolated meanings.
+        </p>
+        <p class="tools-hub__status tools-hub__status--next">Coming next</p>
+      </li>
+      <li class="tools-hub__card tools-hub__card--soon">
+        <a class="tools-hub__card-link tools-hub__card-link--soon" href="/tools/repeated-tarot-card-meaning/">
+          <span class="tools-hub__card-name">Repeated Tarot Card Meaning Tool</span>
+        </a>
+        <p class="tools-hub__card-desc">
+          Explore why a card may keep appearing and what repeated patterns may be asking you to notice.
+        </p>
+        <p class="tools-hub__status tools-hub__status--next">Coming next</p>
       </li>
     </ul>
   </article>
@@ -25,7 +50,7 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 <style>
   .tools-hub {
     padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 42rem;
+    max-width: 48rem;
   }
 
   .tools-hub__title {
@@ -39,29 +64,91 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
   }
 
   .tools-hub__intro {
-    margin: 0 0 1.5rem;
-    font-size: 1.06rem;
+    margin: 0 0 1.35rem;
+    font-size: 1.05rem;
     line-height: 1.72;
+    max-width: 40rem;
   }
 
-  .tools-hub__list {
+  .tools-hub__grid {
     margin: 0;
-    padding-left: 1.35rem;
-    font-size: 1.06rem;
-    line-height: 1.7;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
   }
 
-  .tools-hub__list li {
-    margin-bottom: 0.4rem;
+  @media (min-width: 640px) {
+    .tools-hub__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  .tools-hub__link {
+  @media (min-width: 960px) {
+    .tools-hub__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .tools-hub__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(198, 161, 74, 0.45);
+    border-radius: 0.35rem;
+    background: rgba(255, 255, 255, 0.4);
+    min-height: 0;
+  }
+
+  .tools-hub__card--soon {
+    border-style: dashed;
+    border-color: rgba(13, 50, 77, 0.22);
+    background: rgba(13, 50, 77, 0.03);
+  }
+
+  .tools-hub__card-link {
+    text-decoration: none;
     color: var(--sky);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .tools-hub__card-link:hover {
+    color: var(--mountain-water);
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
-  .tools-hub__link:hover {
+  .tools-hub__card-link--soon {
     color: var(--mountain-water);
+    opacity: 0.92;
+  }
+
+  .tools-hub__card-desc {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.62;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .tools-hub__status {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tools-hub__status--live {
+    color: var(--mountain-water);
+  }
+
+  .tools-hub__status--next {
+    color: var(--gold);
   }
 </style>
