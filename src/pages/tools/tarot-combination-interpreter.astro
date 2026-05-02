@@ -76,12 +76,38 @@ const faqJsonLd = {
           <select class="tarot-tool__select" id="tarot-card-1" name="card1" required aria-required="true">
             <option value="">Select a card</option>
           </select>
+          <fieldset class="tarot-tool__orient" id="tarot-orient-fieldset-1">
+            <legend class="tarot-tool__orient-legend">Orientation</legend>
+            <div class="tarot-tool__orient-row">
+              <label class="tarot-tool__orient-choice">
+                <input type="radio" name="tok_orient_1" value="upright" checked />
+                Upright
+              </label>
+              <label class="tarot-tool__orient-choice">
+                <input type="radio" name="tok_orient_1" value="reversed" />
+                Reversed
+              </label>
+            </div>
+          </fieldset>
         </div>
         <div class="tarot-tool__field">
           <label class="tarot-tool__label" for="tarot-card-2">Card 2</label>
           <select class="tarot-tool__select" id="tarot-card-2" name="card2" required aria-required="true">
             <option value="">Select a card</option>
           </select>
+          <fieldset class="tarot-tool__orient" id="tarot-orient-fieldset-2">
+            <legend class="tarot-tool__orient-legend">Orientation</legend>
+            <div class="tarot-tool__orient-row">
+              <label class="tarot-tool__orient-choice">
+                <input type="radio" name="tok_orient_2" value="upright" checked />
+                Upright
+              </label>
+              <label class="tarot-tool__orient-choice">
+                <input type="radio" name="tok_orient_2" value="reversed" />
+                Reversed
+              </label>
+            </div>
+          </fieldset>
         </div>
       </div>
       <button class="tarot-tool__button" type="button" id="tarot-interpret-btn">Interpret Combination</button>
@@ -245,6 +271,55 @@ const faqJsonLd = {
     return k.map((w) => escHtml(String(w))).join(", ");
   }
 
+  function extendedKeywordsLine(card) {
+    const ex = card.extendedKeywords;
+    if (!Array.isArray(ex) || ex.length === 0) return "";
+    return ex.map((w) => escHtml(String(w))).join(", ");
+  }
+
+  function orientationLabel(isReversed) {
+    return isReversed ? "Reversed" : "Upright";
+  }
+
+  /**
+   * Upright: essenceSentence when present, otherwise coreMeaning (HTML-safe).
+   * Reversed: fixed interpretive frame naming loss of flow (not “simple opposite”).
+   */
+  function orientationFrame(card, isReversed) {
+    const n = escHtml(card.name);
+    if (!isReversed) {
+      const ess = card.essenceSentence && String(card.essenceSentence).trim();
+      if (ess) return escHtml(ess);
+      return escHtml(String(card.coreMeaning || "").trim());
+    }
+    return (
+      "When reversed, " +
+      n +
+      " suggests that its usual movement is blocked, internalised, delayed, distorted, or being expressed without clear alignment. The question is not simply the opposite of the upright card, but where its energy has lost flow, proportion, or conscious direction."
+    );
+  }
+
+  function readOrientReversed(radioName) {
+    const el = document.querySelector('input[name="' + radioName + '"]:checked');
+    return el instanceof HTMLInputElement && el.value === "reversed";
+  }
+
+  function applySavedOrientation(radioName, storageKey) {
+    const raw = localStorage.getItem(storageKey);
+    const v = raw === "reversed" ? "reversed" : "upright";
+    const input = document.querySelector('input[name="' + radioName + '"][value="' + v + '"]');
+    if (input instanceof HTMLInputElement) input.checked = true;
+  }
+
+  function saveTarotPreferences(sel1, sel2) {
+    if (sel1.value) localStorage.setItem("tok_card1", sel1.value);
+    if (sel2.value) localStorage.setItem("tok_card2", sel2.value);
+    const o1 = readOrientReversed("tok_orient_1") ? "reversed" : "upright";
+    const o2 = readOrientReversed("tok_orient_2") ? "reversed" : "upright";
+    localStorage.setItem("tok_card1_orientation", o1);
+    localStorage.setItem("tok_card2_orientation", o2);
+  }
+
   const ARC_MAJOR = "Major Arcana";
   const ARC_MINOR = "Minor Arcana";
 
@@ -337,6 +412,344 @@ const faqJsonLd = {
     }
 
     return "Read this pair as two instruments answering the same question from different registers; let arcana and suit tell you which voice leads.";
+  }
+
+  /** Keywords shared between two cards (first five only each), original casing from card2 where possible. */
+  function sharedKeywordsList(card1, card2) {
+    const a = new Set();
+    for (const w of card1.keywords || []) {
+      a.add(String(w).toLowerCase());
+    }
+    const shared = [];
+    const got = new Set();
+    for (const w of card2.keywords || []) {
+      const low = String(w).toLowerCase();
+      if (a.has(low) && !got.has(low)) {
+        got.add(low);
+        shared.push(String(w));
+      }
+    }
+    return shared;
+  }
+
+  function joinSharedKeywordsHtml(words) {
+    if (words.length === 0) return "";
+    if (words.length === 1) return escHtml(words[0]);
+    if (words.length === 2) return escHtml(words[0]) + " and " + escHtml(words[1]);
+    return (
+      words
+        .slice(0, -1)
+        .map((w) => escHtml(w))
+        .join(", ") +
+      ", and " +
+      escHtml(words[words.length - 1])
+    );
+  }
+
+  /**
+   * Three-sentence combination meaning when both upright: active force + context, interaction, outcome direction.
+   * Uses names and kwTriple only (no changes to keyword extraction helpers).
+   */
+  function combinationMeaningBothUpright(card1, card2) {
+    const n1 = escHtml(card1.name);
+    const n2 = escHtml(card2.name);
+    const k1 = kwTriple(card1);
+    const k2 = kwTriple(card2);
+    const a1 = card1.arcana;
+    const a2 = card2.arcana;
+    const shared = sharedKeywordsList(card1, card2);
+
+    const s1 =
+      n1 +
+      " reads as the moving force—" +
+      k1[0] +
+      ", " +
+      k1[1] +
+      ", and " +
+      k1[2] +
+      ". " +
+      n2 +
+      " reads as the surrounding condition—" +
+      k2[0] +
+      ", " +
+      k2[1] +
+      ", and " +
+      k2[2] +
+      ".";
+
+    let s2;
+    if (shared.length > 0) {
+      s2 =
+        "They lean into the same pressure through " +
+        joinSharedKeywordsHtml(shared) +
+        ", so the second image mostly amplifies or steadies what the first already carries rather than changing the subject.";
+    } else if (a1 === ARC_MAJOR && a2 === ARC_MINOR) {
+      s2 =
+        "The broad arc of " +
+        n1 +
+        " lands inside the tighter weather of " +
+        n2 +
+        ", where motive meets cost, habit, or rivalry in a form you can actually touch.";
+    } else if (a1 === ARC_MINOR && a2 === ARC_MAJOR) {
+      s2 =
+        "The concrete texture of " +
+        n1 +
+        " is being reframed by " +
+        n2 +
+        ", so what felt like a local hassle now answers to a larger pattern that will not stay politely in the background.";
+    } else if (a1 === ARC_MAJOR && a2 === ARC_MAJOR) {
+      s2 =
+        "Two large themes negotiate without one erasing the other: where they agree, the conviction deepens, and where they disagree, the fault line becomes the most honest part of the reading.";
+    } else {
+      const sameSuit = card1.suit && card2.suit && String(card1.suit) === String(card2.suit);
+      if (sameSuit) {
+        s2 =
+          "Both cards breathe the same suit’s air, so the friction is less about mixed signals and more about whether the storyline escalates, repairs, or simply rehearses itself.";
+      } else {
+        s2 =
+          "Different channels answer at once, so the live question is which voice sets the pace and which one is trying to correct the first—tension stays practical rather than abstract.";
+      }
+    }
+
+    let s3;
+    if (shared.length > 0) {
+      s3 =
+        "What gathers is a single through-line: small choices start to feel like they belong to one stubborn pattern that will keep returning until it is named cleanly.";
+    } else if (a1 === ARC_MAJOR && a2 === ARC_MINOR) {
+      s3 =
+        "The drift is toward proof in the body and the ledger—whether the stance of " +
+        n1 +
+        " can still steer once " +
+        n2 +
+        " has named what is strained, contested, or scarce.";
+    } else if (a1 === ARC_MINOR && a2 === ARC_MAJOR) {
+      s3 =
+        "The emerging shape is threshold energy: " +
+        n1 +
+        " keeps offering tactical moves while " +
+        n2 +
+        " insists the next chapter will not respect half-measures.";
+    } else if (a1 === ARC_MAJOR && a2 === ARC_MAJOR) {
+      s3 =
+        "The combination keeps bending toward a life-pattern decision—whichever theme you feed begins to own the emotional colour of what follows.";
+    } else {
+      s3 =
+        "The outcome direction is pragmatic sorting inside one situation—who carries the cost, what repeats, and what would actually have to shift for the pressure to ease.";
+    }
+
+    return s1 + " " + s2 + " " + s3;
+  }
+
+  /**
+   * Combination meaning with orientation: both upright uses base logic plus lived essence when present;
+   * mixed or double reversal stresses blocked, delayed, or distorted exchange (not fortune-telling).
+   */
+  function combinationMeaningParagraph(card1, card2, rev1, rev2) {
+    const n1 = escHtml(card1.name);
+    const n2 = escHtml(card2.name);
+    const k1 = kwTriple(card1);
+    const k2 = kwTriple(card2);
+    if (!rev1 && !rev2) {
+      let p = combinationMeaningBothUpright(card1, card2);
+      const e1 = card1.essenceSentence && String(card1.essenceSentence).trim();
+      const e2 = card2.essenceSentence && String(card2.essenceSentence).trim();
+      if (e1 || e2) {
+        p += " At the lived level: ";
+        if (e1 && e2) p += escHtml(e1) + " " + escHtml(e2);
+        else p += escHtml(e1 || e2);
+      }
+      return p;
+    }
+    if (rev1 && !rev2) {
+      return (
+        n1 +
+        " still carries the vocabulary of " +
+        k1[0] +
+        ", " +
+        k1[1] +
+        ", and " +
+        k1[2] +
+        ", but reversed it reads as a blocked or distorted initiating force: present, yet struggling for proportion, outlet, or conscious aim. " +
+        n2 +
+        " remains upright as the surrounding field—" +
+        k2[0] +
+        ", " +
+        k2[1] +
+        ", and " +
+        k2[2] +
+        "—so it answers with clearer voltage, like corrective friction, a mirror that will not soften the lie, or steady pressure that refuses to cosign the twist. " +
+        "The combination tilts toward repair through what " +
+        n2 +
+        " names outright, while " +
+        n1 +
+        " keeps asking where the starting impulse corks itself before it can become useful."
+      );
+    }
+    if (!rev1 && rev2) {
+      return (
+        n1 +
+        " reads as the moving force—" +
+        k1[0] +
+        ", " +
+        k1[1] +
+        ", and " +
+        k1[2] +
+        "—still legible and outward-facing. " +
+        n2 +
+        ", reversed, arrives as muffled, delayed, or interned condition around " +
+        k2[0] +
+        ", " +
+        k2[1] +
+        ", and " +
+        k2[2] +
+        ": the response channel struggles to answer cleanly, so support, context, or consequence may arrive distorted, late, or folded inward. " +
+        "The drift is toward over steering the opening while the second voice cannot meet it on stable ground—integration waits on whatever keeps " +
+        n2 +
+        " from moving in one honest piece."
+      );
+    }
+    return (
+      n1 +
+      " and " +
+      n2 +
+      " still invoke " +
+      k1[0] +
+      ", " +
+      k1[1] +
+      ", and " +
+      k1[2] +
+      " against " +
+      k2[0] +
+      ", " +
+      k2[1] +
+      ", and " +
+      k2[2] +
+      ", yet both reversed folds the exchange toward doubled static: pressure met with pressure that will not cross into clean contact. " +
+      "Hidden tension, withheld movement, or unfinished quarrel with the self tends to run the understory, so the pair reads less like a sharp fight and more like a revolving door of unintegrated material. " +
+      "What gathers is oblique surfacing—symptoms, repeats, and off-centre signals—until the story admits where flow, proportion, and direction both went missing at once."
+    );
+  }
+
+  /** One situational reflection question when both cards upright; arcana-aware without initiating/modifying framing. */
+  function compassReflectionUprightPair(card1, card2) {
+    const n1 = escHtml(card1.name);
+    const n2 = escHtml(card2.name);
+    const k1 = kwTriple(card1);
+    const k2 = kwTriple(card2);
+    const a1 = card1.arcana;
+    const a2 = card2.arcana;
+    const shared = sharedKeywordsList(card1, card2);
+
+    if (shared.length > 0) {
+      return (
+        "Where am I treating " +
+        joinSharedKeywordsHtml(shared) +
+        " as background noise even though both " +
+        n1 +
+        " and " +
+        n2 +
+        " keep returning it to the centre?"
+      );
+    }
+    if (a1 === ARC_MAJOR && a2 === ARC_MINOR) {
+      return (
+        "What is missing in how I handle " +
+        k2[0] +
+        ", " +
+        k2[1] +
+        ", and " +
+        k2[2] +
+        " if I keep answering the situation mainly from the posture " +
+        n1 +
+        " prefers?"
+      );
+    }
+    if (a1 === ARC_MINOR && a2 === ARC_MAJOR) {
+      return (
+        "Is this a case of " +
+        n1 +
+        " asking for a practical fix while " +
+        n2 +
+        " is really naming a threshold I keep stepping around?"
+      );
+    }
+    if (a1 === ARC_MAJOR && a2 === ARC_MAJOR) {
+      return (
+        "Which story do " +
+        n1 +
+        " and " +
+        n2 +
+        " jointly refuse to let me simplify—and what would honesty cost if I stopped negotiating with either one?"
+      );
+    }
+    return (
+      "Where does " +
+      n1 +
+      " with its " +
+      k1[0] +
+      " and " +
+      n2 +
+      " with its " +
+      k2[0] +
+      " disagree about what has to change first?"
+    );
+  }
+
+  /** COMPASS-style reflection; orientation steers the opening question before arcana nuance. */
+  function compassReflectionQuestion(card1, card2, rev1, rev2) {
+    if (rev1 && rev2) {
+      return "What is trying to surface here, but cannot yet move cleanly?";
+    }
+    if (rev1) {
+      return "Where is the starting energy blocked before it can become useful?";
+    }
+    if (rev2) {
+      return "What response or support is unavailable, distorted, or not yet ready?";
+    }
+    return compassReflectionUprightPair(card1, card2);
+  }
+
+  function coreEssenceSectionHtml(card1, card2, rev1, rev2) {
+    const l1 = orientationLabel(rev1);
+    const l2 = orientationLabel(rev2);
+    let h =
+      '<section class="tarot-tool__out-block">' +
+      '<h3 class="tarot-tool__out-h3">Core meanings and essence</h3>' +
+      '<p class="tarot-tool__out-p"><strong>Card 1: ' +
+      escHtml(card1.name) +
+      " (" +
+      escHtml(l1) +
+      ') as the initiating force</strong></p>' +
+      '<p class="tarot-tool__out-p">' +
+      orientationFrame(card1, rev1) +
+      "</p>";
+    if (!rev1) {
+      h +=
+        '<p class="tarot-tool__out-p"><strong>Core meaning</strong><br />' + escHtml(String(card1.coreMeaning || "").trim()) + "</p>";
+      const ex1 = extendedKeywordsLine(card1);
+      if (ex1) {
+        h += '<p class="tarot-tool__out-p"><strong>Extended keywords</strong><br />' + ex1 + "</p>";
+      }
+    }
+    h +=
+      '<p class="tarot-tool__out-p"><strong>Card 2: ' +
+      escHtml(card2.name) +
+      " (" +
+      escHtml(l2) +
+      ') as the modifying force</strong></p>' +
+      '<p class="tarot-tool__out-p">' +
+      orientationFrame(card2, rev2) +
+      "</p>";
+    if (!rev2) {
+      h +=
+        '<p class="tarot-tool__out-p"><strong>Core meaning</strong><br />' + escHtml(String(card2.coreMeaning || "").trim()) + "</p>";
+      const ex2 = extendedKeywordsLine(card2);
+      if (ex2) {
+        h += '<p class="tarot-tool__out-p"><strong>Extended keywords</strong><br />' + ex2 + "</p>";
+      }
+    }
+    h += "</section>";
+    return h;
   }
 
   const RANK_MEANING = {
@@ -450,6 +863,26 @@ const faqJsonLd = {
     return "";
   }
 
+  function cardImageSlotHtml(src, name, reversed) {
+    const imgCls = "tarot-tool__card-img" + (reversed ? " tarot-tool__card-img--reversed" : "");
+    const meta = reversed ? "Reversed" : "Upright";
+    const alt = escAttr(name + " (" + meta + ")");
+    return (
+      '<div class="tarot-tool__card-slot">' +
+      '<img class="' +
+      imgCls +
+      '" src="' +
+      escAttr(src) +
+      '" alt="' +
+      alt +
+      '" loading="lazy" decoding="async" />' +
+      '<p class="tarot-tool__orient-meta">' +
+      escHtml(meta) +
+      "</p>" +
+      "</div>"
+    );
+  }
+
   function initTarotTool() {
     const sel1 = document.getElementById("tarot-card-1");
     const sel2 = document.getElementById("tarot-card-2");
@@ -467,6 +900,16 @@ const faqJsonLd = {
     const saved2 = localStorage.getItem("tok_card2");
     if (saved1) sel1.value = saved1;
     if (saved2) sel2.value = saved2;
+    applySavedOrientation("tok_orient_1", "tok_card1_orientation");
+    applySavedOrientation("tok_orient_2", "tok_card2_orientation");
+
+    const persist = () => saveTarotPreferences(sel1, sel2);
+    sel1.addEventListener("change", persist);
+    sel2.addEventListener("change", persist);
+    const orientInputs = document.querySelectorAll('input[name="tok_orient_1"], input[name="tok_orient_2"]');
+    for (let i = 0; i < orientInputs.length; i++) {
+      orientInputs[i].addEventListener("change", persist);
+    }
 
     btn.addEventListener("click", () => {
       const c1 = sel1.value.trim();
@@ -482,38 +925,19 @@ const faqJsonLd = {
         return;
       }
 
-      localStorage.setItem("tok_card1", c1);
-      localStorage.setItem("tok_card2", c2);
+      persist();
+
+      const rev1 = readOrientReversed("tok_orient_1");
+      const rev2 = readOrientReversed("tok_orient_2");
+      const l1 = orientationLabel(rev1);
+      const l2 = orientationLabel(rev2);
 
       const src1 = "/images/tarot/rws/" + card1.slug + ".jpg";
       const src2 = "/images/tarot/rws/" + card2.slug + ".jpg";
 
-      const k1 = kwTriple(card1);
-      const k2 = kwTriple(card2);
-      const comboParagraph =
-        escHtml(card1.name) +
-        " brings the first movement of this combination through " +
-        k1[0] +
-        ", " +
-        k1[1] +
-        ", and " +
-        k1[2] +
-        ". " +
-        escHtml(card2.name) +
-        " modifies or responds to that movement through " +
-        k2[0] +
-        ", " +
-        k2[1] +
-        ", and " +
-        k2[2] +
-        ". Read together, these cards ask you to notice the relationship between the two forces, rather than treating them as separate definitions.";
-
-      const compassParagraph =
-        "The COMPASS question here is: what changes when " +
-        escHtml(card1.name) +
-        " is read as the initiating force and " +
-        escHtml(card2.name) +
-        " is read as the modifying force?";
+      const comboParagraph = combinationMeaningParagraph(card1, card2, rev1, rev2);
+      const compassParagraph = compassReflectionQuestion(card1, card2, rev1, rev2);
+      const coreEssenceHtml = coreEssenceSectionHtml(card1, card2, rev1, rev2);
 
       const relationshipParagraph = relationshipFrame(card1, card2);
       const rankParagraph = rankFrame(card1, card2);
@@ -529,49 +953,37 @@ const faqJsonLd = {
 
       out.innerHTML =
         '<div class="tarot-tool__combo-images">' +
-        '<img class="tarot-tool__card-img" src="' +
-        src1 +
-        '" alt="' +
-        escAttr(card1.name) +
-        '" loading="lazy" decoding="async" />' +
-        '<img class="tarot-tool__card-img" src="' +
-        src2 +
-        '" alt="' +
-        escAttr(card2.name) +
-        '" loading="lazy" decoding="async" />' +
+        cardImageSlotHtml(src1, card1.name, rev1) +
+        cardImageSlotHtml(src2, card2.name, rev2) +
         "</div>" +
         '<div class="tarot-tool__combo-copy">' +
         "<p class=\"tarot-tool__out-lede\">Combination selected:<br>" +
         escHtml(c1) +
-        " + " +
+        " (" +
+        escHtml(l1) +
+        ") + " +
         escHtml(c2) +
-        "</p>" +
+        " (" +
+        escHtml(l2) +
+        ")</p>" +
         '<section class="tarot-tool__out-block">' +
         '<h3 class="tarot-tool__out-h3">Card keywords</h3>' +
         '<p class="tarot-tool__out-p"><strong>' +
         escHtml(card1.name) +
-        ":</strong> " +
+        " (" +
+        escHtml(l1) +
+        "):</strong> " +
         keywordsFiveLine(card1) +
         "</p>" +
         '<p class="tarot-tool__out-p"><strong>' +
         escHtml(card2.name) +
-        ":</strong> " +
+        " (" +
+        escHtml(l2) +
+        "):</strong> " +
         keywordsFiveLine(card2) +
         "</p>" +
         "</section>" +
-        '<section class="tarot-tool__out-block">' +
-        '<h3 class="tarot-tool__out-h3">Core meanings</h3>' +
-        '<p class="tarot-tool__out-p"><strong>' +
-        escHtml(card1.name) +
-        ":</strong><br />" +
-        escHtml(card1.coreMeaning) +
-        "</p>" +
-        '<p class="tarot-tool__out-p"><strong>' +
-        escHtml(card2.name) +
-        ":</strong><br />" +
-        escHtml(card2.coreMeaning) +
-        "</p>" +
-        "</section>" +
+        coreEssenceHtml +
         '<section class="tarot-tool__out-block">' +
         '<h3 class="tarot-tool__out-h3">Arcana and suit relationship</h3>' +
         '<p class="tarot-tool__out-p">' +
@@ -826,6 +1238,45 @@ const faqJsonLd = {
     padding: 0.65rem 0.6rem;
   }
 
+  .tarot-tool__orient {
+    margin: 0.35rem 0 0;
+    padding: 0;
+    border: none;
+    min-width: 0;
+  }
+
+  .tarot-tool__orient-legend {
+    padding: 0;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    margin: 0 0 0.35rem;
+  }
+
+  .tarot-tool__orient-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: center;
+  }
+
+  .tarot-tool__orient-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .tarot-tool__orient-choice input {
+    accent-color: var(--mountain-water);
+  }
+
   .tarot-tool__button {
     justify-self: start;
     padding: 0.8rem 1.6rem;
@@ -872,6 +1323,15 @@ const faqJsonLd = {
     }
   }
 
+  .tarot-tool__card-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    max-width: 180px;
+    width: 100%;
+  }
+
   .tarot-tool__card-img {
     display: block;
     max-width: 180px;
@@ -880,6 +1340,21 @@ const faqJsonLd = {
     border-radius: 0.2rem;
     border: 1px solid rgba(198, 161, 74, 0.4);
     box-shadow: 0 6px 18px rgba(13, 50, 77, 0.12);
+  }
+
+  .tarot-tool__card-img--reversed {
+    transform: rotate(180deg);
+  }
+
+  .tarot-tool__orient-meta {
+    margin: 0;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    text-align: center;
   }
 
   .tarot-tool__combo-copy {

@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import {
+  getLibraryFeaturedArticles,
   sortArticlesLibraryNewest,
 } from "../../lib/articleLibraryOrder";
 import {
@@ -28,7 +29,12 @@ const PAGE_DESCRIPTION =
 
 const articles = await getCollection("articles");
 const sortedNewest = sortArticlesLibraryNewest(articles);
-const featured = sortedNewest.slice(0, LIBRARY_FEATURED_COUNT);
+const {
+  featured,
+  heading: featuredHeading,
+  featuredHeadingId,
+  ogArticle,
+} = getLibraryFeaturedArticles(articles, sortedNewest, LIBRARY_FEATURED_COUNT);
 const listPage = slicePage(sortedNewest, 1, LIBRARY_PER_PAGE);
 const tp = totalPages(sortedNewest.length, LIBRARY_PER_PAGE);
 
@@ -65,8 +71,8 @@ const crumbs: BreadcrumbItem[] = [
 
 const jsonLd = [articlesItemListLd, breadcrumbJsonLd(crumbs, siteHref)];
 
-const ogImage = featured[0]
-  ? new URL(featured[0].data.heroImage, base).href
+const ogImage = ogArticle
+  ? new URL(ogArticle.data.heroImage, base).href
   : new URL("/favicon.svg", base).href;
 
 const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
@@ -94,9 +100,13 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
     {
       featured.length > 0 && (
-        <section class="tok-library__section" aria-labelledby="latest-heading" data-reveal>
-          <h2 id="latest-heading" class="tok-library__h2">
-            Latest articles
+        <section
+          class="tok-library__section"
+          aria-labelledby={featuredHeadingId}
+          data-reveal
+        >
+          <h2 id={featuredHeadingId} class="tok-library__h2">
+            {featuredHeading}
           </h2>
           <div class="tok-library__feat-grid">
             {featured.map((a) => (

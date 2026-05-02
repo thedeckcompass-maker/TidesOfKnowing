@@ -87,3 +87,71 @@ export function sortArticlesLibraryOldest(
   });
   return units.flatMap((u) => u.items);
 }
+
+/** Single chronologically newest article (not the same as first entry in `sortArticlesLibraryNewest` output). */
+export function getChronologicallyNewestArticle(
+  articles: ArticleEntry[],
+): ArticleEntry | undefined {
+  if (articles.length === 0) return undefined;
+  return [...articles].sort((a, b) => {
+    const diff =
+      b.data.publishDate.getTime() - a.data.publishDate.getTime();
+    if (diff !== 0) return diff;
+    return a.data.slug.localeCompare(b.data.slug);
+  })[0];
+}
+
+export type LibraryFeaturedResult = {
+  featured: ArticleEntry[];
+  heading: "Latest series" | "Latest articles";
+  featuredHeadingId: "latest-series-heading" | "latest-heading";
+  ogArticle: ArticleEntry | undefined;
+};
+
+/**
+ * Featured strip on /articles/: if the chronologically newest post is in a series,
+ * show every article in that series (seriesOrder asc; missing order uses publishDate newest-first).
+ * Otherwise keep the first `fallbackCount` entries from `sortedNewest` (existing behaviour).
+ */
+export function getLibraryFeaturedArticles(
+  articles: ArticleEntry[],
+  sortedNewest: ArticleEntry[],
+  fallbackCount: number,
+): LibraryFeaturedResult {
+  const newest = getChronologicallyNewestArticle(articles);
+  if (!newest) {
+    return {
+      featured: [],
+      heading: "Latest articles",
+      featuredHeadingId: "latest-heading",
+      ogArticle: undefined,
+    };
+  }
+
+  const seriesName = newest.data.seriesName?.trim();
+  if (seriesName) {
+    const featured = articles.filter(
+      (a) => a.data.seriesName?.trim() === seriesName,
+    );
+    featured.sort((a, b) => {
+      const ao = a.data.seriesOrder ?? 9999;
+      const bo = b.data.seriesOrder ?? 9999;
+      if (ao !== bo) return ao - bo;
+      return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+    });
+    return {
+      featured,
+      heading: "Latest series",
+      featuredHeadingId: "latest-series-heading",
+      ogArticle: newest,
+    };
+  }
+
+  const featured = sortedNewest.slice(0, fallbackCount);
+  return {
+    featured,
+    heading: "Latest articles",
+    featuredHeadingId: "latest-heading",
+    ogArticle: featured[0],
+  };
+}
