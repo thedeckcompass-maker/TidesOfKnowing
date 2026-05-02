@@ -1306,57 +1306,6 @@ const faqJsonLd = {
     min-height: 0;
   }
 
-  .tarot-tool__combo-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  @media (min-width: 520px) {
-    .tarot-tool__combo-images {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-    }
-  }
-
-  .tarot-tool__card-slot {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    max-width: 180px;
-    width: 100%;
-  }
-
-  .tarot-tool__card-img {
-    display: block;
-    max-width: 180px;
-    width: 100%;
-    height: auto;
-    border-radius: 0.2rem;
-    border: 1px solid rgba(198, 161, 74, 0.4);
-    box-shadow: 0 6px 18px rgba(13, 50, 77, 0.12);
-  }
-
-  .tarot-tool__card-img--reversed {
-    transform: rotate(180deg);
-  }
-
-  .tarot-tool__orient-meta {
-    margin: 0;
-    font-family: var(--font-nav);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mountain-water);
-    text-align: center;
-  }
-
   .tarot-tool__combo-copy {
     white-space: normal;
   }
@@ -1464,5 +1413,45 @@ const faqJsonLd = {
     border-left: 2px solid rgba(198, 161, 74, 0.45);
     font-size: 1.02rem;
     line-height: 1.68;
+  }
+</style>
+
+<style is:global>
+  /* JS-injected interpretation markup lives under #output; scoped Astro CSS does not apply there. */
+  #output .tarot-tool__combo-images {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  #output .tarot-tool__card-slot {
+    max-width: 180px;
+    margin: 0;
+  }
+
+  #output .tarot-tool__card-img {
+    display: block;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 520px) {
+    #output .tarot-tool__combo-images {
+      flex-direction: column;
+    }
+  }
+
+  #output .tarot-tool__card-img--reversed {
+    transform: rotate(180deg);
+  }
+
+  #output .tarot-tool__orient-meta {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    color: inherit;
   }
 </style>
