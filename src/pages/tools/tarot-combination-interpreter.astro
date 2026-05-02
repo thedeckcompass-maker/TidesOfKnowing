@@ -1422,25 +1422,27 @@ const faqJsonLd = {
     display: flex;
     gap: 1.5rem;
     align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
   #output .tarot-tool__card-slot {
-    max-width: 180px;
-    margin: 0;
+    flex: 1 1 0;
+    max-width: 50%;
   }
 
   #output .tarot-tool__card-img {
     display: block;
-    width: 180px;
-    max-width: 100%;
+    width: 100%;
     height: auto;
   }
 
   @media (max-width: 520px) {
     #output .tarot-tool__combo-images {
       flex-direction: column;
+    }
+
+    #output .tarot-tool__card-slot {
+      max-width: 100%;
     }
   }
 
