@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Tarot Interpretation Tools | Tides of Knowing";
+const description =
+  "Free tarot tools to practice interpreting how cards work together in a spread, starting with a two-card combination interpreter.";
+const ogUrl = new URL("/tools/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="tools-hub page-inner">
+    <h1 class="tools-hub__title">Tarot Interpretation Tools</h1>
+    <p class="tools-hub__intro">
+      These tools are designed to help you move beyond individual card meanings and begin interpreting how tarot cards work together in a spread.
+    </p>
+    <ul class="tools-hub__list">
+      <li>
+        <a class="tools-hub__link" href="/tools/tarot-combination-interpreter/">Tarot Combination Interpreter</a>
+      </li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  .tools-hub {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .tools-hub__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .tools-hub__intro {
+    margin: 0 0 1.5rem;
+    font-size: 1.06rem;
+    line-height: 1.72;
+  }
+
+  .tools-hub__list {
+    margin: 0;
+    padding-left: 1.35rem;
+    font-size: 1.06rem;
+    line-height: 1.7;
+  }
+
+  .tools-hub__list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .tools-hub__link {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tools-hub__link:hover {
+    color: var(--mountain-water);
+  }
+</style>
