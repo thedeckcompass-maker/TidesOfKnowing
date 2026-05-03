@@ -1,0 +1,581 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Two-Card Tarot Reading Tool | Tides of Knowing";
+const description =
+  "Read two tarot cards in sequence using field-setting and response layers from the Tides of Knowing deck dataset: arrival, negotiation, relational effects, and combination logic.";
+const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="tarot-tool page-inner">
+    <h1 class="tarot-tool__title">Two-Card Tarot Reading Tool</h1>
+    <p class="tarot-tool__subtitle">When Two Cards Meet</p>
+    <p class="tarot-tool__intro">
+      Choose two cards and their orientations. The reading uses the first card to set the field and the second to negotiate what is present, then names how each card acts on the other and how the pair resolves in order.
+    </p>
+
+    <div id="tok2-tool" class="tarot-tool__tool-wrap">
+      <div class="tarot-tool__panel" aria-labelledby="tok2-tool-heading">
+        <h2 class="visually-hidden" id="tok2-tool-heading">Choose two cards</h2>
+        <div class="tarot-tool__fields">
+          <div class="tarot-tool__field">
+            <label class="tarot-tool__label" for="tok2-card-1">Card 1</label>
+            <select class="tarot-tool__select" id="tok2-card-1" name="card1" required aria-required="true">
+              <option value="">Select a card</option>
+            </select>
+            <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-1">
+              <legend class="tarot-tool__orient-legend">Orientation</legend>
+              <div class="tarot-tool__orient-row">
+                <label class="tarot-tool__orient-choice">
+                  <input type="radio" name="tok2_orient_1" value="upright" checked />
+                  Upright
+                </label>
+                <label class="tarot-tool__orient-choice">
+                  <input type="radio" name="tok2_orient_1" value="reversed" />
+                  Reversed
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <div class="tarot-tool__field">
+            <label class="tarot-tool__label" for="tok2-card-2">Card 2</label>
+            <select class="tarot-tool__select" id="tok2-card-2" name="card2" required aria-required="true">
+              <option value="">Select a card</option>
+            </select>
+            <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-2">
+              <legend class="tarot-tool__orient-legend">Orientation</legend>
+              <div class="tarot-tool__orient-row">
+                <label class="tarot-tool__orient-choice">
+                  <input type="radio" name="tok2_orient_2" value="upright" checked />
+                  Upright
+                </label>
+                <label class="tarot-tool__orient-choice">
+                  <input type="radio" name="tok2_orient_2" value="reversed" />
+                  Reversed
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read pair</button>
+        <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <nav class="tarot-tool__crossnav" aria-label="Tarot tools">
+      <p class="tarot-tool__crossnav-title">Tarot tools</p>
+      <ul class="tarot-tool__crossnav-list">
+        <li class="tarot-tool__crossnav-item">
+          <a class="tarot-tool__crossnav-link" href="/tools/tarot-combination-interpreter/">Two-Card Combination Interpreter</a>
+        </li>
+        <li class="tarot-tool__crossnav-item">
+          <a
+            class="tarot-tool__crossnav-link"
+            href="/tools/two-card-tarot-reading/"
+            aria-current="page"
+            >Two-Card Tarot Reading Tool</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--current">Current</span>
+        </li>
+        <li class="tarot-tool__crossnav-item">
+          <a class="tarot-tool__crossnav-link tarot-tool__crossnav-link--soon" href="/tools/three-card-tarot-spread-interpreter/"
+            >Three-Card Spread Interpreter</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--soon">Coming next</span>
+        </li>
+        <li class="tarot-tool__crossnav-item">
+          <a class="tarot-tool__crossnav-link tarot-tool__crossnav-link--soon" href="/tools/repeated-tarot-card-meaning/"
+            >Repeated Card Meaning Tool</a
+          >
+          <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--soon">Coming next</span>
+        </li>
+      </ul>
+    </nav>
+  </article>
+</BaseLayout>
+
+<script>
+  import { tarotCardsNew } from "../../data/tarotCardsNew.js";
+
+  function findCardByName(name) {
+    for (let i = 0; i < tarotCardsNew.length; i++) {
+      if (tarotCardsNew[i].name === name) return tarotCardsNew[i];
+    }
+    return null;
+  }
+
+  function fillSelect(select) {
+    for (let i = 0; i < tarotCardsNew.length; i++) {
+      const opt = document.createElement("option");
+      opt.value = tarotCardsNew[i].name;
+      opt.textContent = tarotCardsNew[i].name;
+      select.appendChild(opt);
+    }
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function escAttr(str) {
+    return String(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  }
+
+  function orientationLabel(isReversed) {
+    return isReversed ? "Reversed" : "Upright";
+  }
+
+  function face(card, isReversed) {
+    return isReversed ? card.reversed : card.upright;
+  }
+
+  function readOrientReversed(radioName) {
+    const el = document.querySelector('input[name="' + radioName + '"]:checked');
+    return el instanceof HTMLInputElement && el.value === "reversed";
+  }
+
+  function keywordsHtml(arr) {
+    if (!Array.isArray(arr)) return "";
+    return arr.map((w) => escHtml(String(w))).join(", ");
+  }
+
+  function renderReading() {
+    const sel1 = document.getElementById("tok2-card-1");
+    const sel2 = document.getElementById("tok2-card-2");
+    const out = document.getElementById("tok2-output");
+    if (!(sel1 instanceof HTMLSelectElement) || !(sel2 instanceof HTMLSelectElement) || !(out instanceof HTMLElement)) return;
+
+    if (!sel1.value || !sel2.value) {
+      out.innerHTML = '<p class="tarot-tool__out-p">Select both cards to continue.</p>';
+      return;
+    }
+
+    const c1 = findCardByName(sel1.value);
+    const c2 = findCardByName(sel2.value);
+    if (!c1 || !c2) {
+      out.innerHTML = '<p class="tarot-tool__out-p">Could not load one or both cards from the dataset.</p>';
+      return;
+    }
+
+    const rev1 = readOrientReversed("tok2_orient_1");
+    const rev2 = readOrientReversed("tok2_orient_2");
+    const f1 = face(c1, rev1);
+    const f2 = face(c2, rev2);
+    const l1 = orientationLabel(rev1);
+    const l2 = orientationLabel(rev2);
+
+    const imgCls1 = "tarot-tool__card-img" + (rev1 ? " tarot-tool__card-img--reversed" : "");
+    const imgCls2 = "tarot-tool__card-img" + (rev2 ? " tarot-tool__card-img--reversed" : "");
+    const alt1 = escAttr(c1.name + " (" + l1 + ")");
+    const alt2 = escAttr(c2.name + " (" + l2 + ")");
+
+    const whenFirst1 = c1.combinationLogic && String(c1.combinationLogic.whenFirst || "").trim();
+    const whenSecond2 = c2.combinationLogic && String(c2.combinationLogic.whenSecond || "").trim();
+
+    let h = "";
+    h += '<div class="tarot-tool__combo-images">';
+    h += '<div class="tarot-tool__card-slot"><img class="' + imgCls1 + '" src="' + escAttr(c1.image) + '" alt="' + alt1 + '" loading="lazy" decoding="async" /></div>';
+    h += '<div class="tarot-tool__card-slot"><img class="' + imgCls2 + '" src="' + escAttr(c2.image) + '" alt="' + alt2 + '" loading="lazy" decoding="async" /></div>';
+    h += "</div>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Selected cards</h3>';
+    h +=
+      '<p class="tarot-tool__out-p"><strong>Card 1:</strong> ' +
+      escHtml(c1.name) +
+      " — " +
+      escHtml(l1) +
+      "</p>";
+    h +=
+      '<p class="tarot-tool__out-p"><strong>Card 2:</strong> ' +
+      escHtml(c2.name) +
+      " — " +
+      escHtml(l2) +
+      "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Keywords by orientation</h3>';
+    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c1.name) + " (" + escHtml(l1) + ")</strong><br />" + keywordsHtml(f1.keywords) + "</p>";
+    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c2.name) + " (" + escHtml(l2) + ")</strong><br />" + keywordsHtml(f2.keywords) + "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Essence sentences</h3>';
+    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c1.name) + "</strong><br />" + escHtml(String(f1.essenceSentence || "").trim()) + "</p>";
+    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c2.name) + "</strong><br />" + escHtml(String(f2.essenceSentence || "").trim()) + "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Field Condition</h3>';
+    h +=
+      '<p class="tarot-tool__out-p"><strong>' +
+      escHtml(c1.name) +
+      " (" +
+      escHtml(l1) +
+      ")</strong><br />" +
+      escHtml(String(f1.arrivalBehaviour || "").trim()) +
+      "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Interaction Dynamic</h3>';
+    h +=
+      '<p class="tarot-tool__out-p"><strong>' +
+      escHtml(c2.name) +
+      " (" +
+      escHtml(l2) +
+      ")</strong><br />" +
+      escHtml(String(f2.responseBehaviour || "").trim()) +
+      "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Relational Effects</h3>';
+    h +=
+      '<p class="tarot-tool__out-p"><strong>' +
+      escHtml(c1.name) +
+      "</strong><br />" +
+      escHtml(String(f1.relationalEffect || "").trim()) +
+      "</p>";
+    h +=
+      '<p class="tarot-tool__out-p"><strong>' +
+      escHtml(c2.name) +
+      "</strong><br />" +
+      escHtml(String(f2.relationalEffect || "").trim()) +
+      "</p></section>";
+
+    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">Resulting State</h3>';
+    if (whenFirst1) {
+      h +=
+        '<p class="tarot-tool__out-p"><strong>' +
+        escHtml(c1.name) +
+        "</strong><br />" +
+        escHtml(whenFirst1) +
+        "</p>";
+    }
+    if (whenSecond2) {
+      h +=
+        '<p class="tarot-tool__out-p"><strong>' +
+        escHtml(c2.name) +
+        "</strong><br />" +
+        escHtml(whenSecond2) +
+        "</p>";
+    }
+    if (!whenFirst1 && !whenSecond2) {
+      h += '<p class="tarot-tool__out-p">No combination logic lines are present in the dataset for this pair.</p>';
+    }
+    h += "</section>";
+
+    out.innerHTML = h;
+  }
+
+  const sel1 = document.getElementById("tok2-card-1");
+  const sel2 = document.getElementById("tok2-card-2");
+  const btn = document.getElementById("tok2-read-btn");
+
+  if (sel1 instanceof HTMLSelectElement) fillSelect(sel1);
+  if (sel2 instanceof HTMLSelectElement) fillSelect(sel2);
+
+  if (btn instanceof HTMLButtonElement) {
+    btn.addEventListener("click", renderReading);
+  }
+</script>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tarot-tool {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .tarot-tool__title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .tarot-tool__subtitle {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    line-height: 1.3;
+    color: var(--gold);
+  }
+
+  .tarot-tool__intro {
+    margin: 0 0 0.85rem;
+    font-size: 1.06rem;
+    line-height: 1.72;
+  }
+
+  #tok2-tool {
+    scroll-margin-top: 5.5rem;
+  }
+
+  .tarot-tool__crossnav {
+    margin: 0 0 1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid rgba(198, 161, 74, 0.42);
+    border-radius: 0.25rem;
+    background: rgba(255, 252, 245, 0.65);
+  }
+
+  .tarot-tool__crossnav-title {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tarot-tool__crossnav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tarot-tool__crossnav-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.65rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .tarot-tool__crossnav-link {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.1em;
+    font-weight: 500;
+  }
+
+  .tarot-tool__crossnav-link[aria-current="page"] {
+    color: var(--mountain-water);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .tarot-tool__crossnav-link--soon {
+    color: var(--mountain-water);
+    opacity: 0.88;
+  }
+
+  .tarot-tool__crossnav-label {
+    font-family: var(--font-nav);
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tarot-tool__crossnav-label--current {
+    color: var(--gold);
+  }
+
+  .tarot-tool__crossnav-label--soon {
+    color: rgba(13, 50, 77, 0.55);
+  }
+
+  .tarot-tool__tool-wrap {
+    margin-bottom: 1rem;
+  }
+
+  .tarot-tool__panel {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 0;
+    padding: clamp(1rem, 3vw, 1.35rem);
+    border: 1px solid rgba(13, 50, 77, 0.22);
+    border-radius: 0.2rem;
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  .tarot-tool__fields {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 520px) {
+    .tarot-tool__fields {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .tarot-tool__field {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .tarot-tool__label {
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .tarot-tool__select {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid rgba(13, 50, 77, 0.28);
+    border-radius: 0.2rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.65rem 0.6rem;
+  }
+
+  .tarot-tool__orient {
+    margin: 0.35rem 0 0;
+    padding: 0;
+    border: none;
+    min-width: 0;
+  }
+
+  .tarot-tool__orient-legend {
+    padding: 0;
+    font-family: var(--font-nav);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    margin: 0 0 0.35rem;
+  }
+
+  .tarot-tool__orient-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    align-items: center;
+  }
+
+  .tarot-tool__orient-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .tarot-tool__orient-choice input {
+    accent-color: var(--mountain-water);
+  }
+
+  .tarot-tool__button {
+    justify-self: start;
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .tarot-tool__button:hover {
+    background: rgba(198, 161, 74, 0.14);
+  }
+
+  .tarot-tool__output {
+    margin: 0;
+    padding: 0.85rem 0 0;
+    border-top: 1px solid rgba(13, 50, 77, 0.15);
+    font-size: 1.02rem;
+    line-height: 1.75;
+    white-space: normal;
+    min-height: 0;
+  }
+
+  .tarot-tool__combo-copy {
+    white-space: normal;
+  }
+
+  .tarot-tool__out-block {
+    margin: 0 0 1.35rem;
+  }
+
+  .tarot-tool__out-h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--mountain-water);
+    line-height: 1.3;
+  }
+
+  .tarot-tool__out-p {
+    margin: 0 0 0.55rem;
+    font-size: 1.02rem;
+    line-height: 1.72;
+  }
+
+  .tarot-tool__out-p:last-child {
+    margin-bottom: 0;
+  }
+</style>
+
+<style is:global>
+  #tok2-output .tarot-tool__combo-images {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  #tok2-output .tarot-tool__card-slot {
+    flex: 1 1 0;
+    max-width: 50%;
+  }
+
+  #tok2-output .tarot-tool__card-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 520px) {
+    #tok2-output .tarot-tool__combo-images {
+      flex-direction: column;
+    }
+
+    #tok2-output .tarot-tool__card-slot {
+      max-width: 100%;
+    }
+  }
+
+  #tok2-output .tarot-tool__card-img--reversed {
+    transform: rotate(180deg);
+  }
+</style>

@@ -1,0 +1,9989 @@
+# Tides of Knowing – Tarot Card System
+
+## The Fool
+
+cardId: the-fool
+arcana: Major
+suit: None
+rank: None
+number: 0
+image: /images/tarot/the-fool.jpg
+
+---
+
+### Upright
+
+keywords:
+- beginning
+- unconditioned potential
+- trust in movement
+- openness
+- threshold
+
+extendedKeywords:
+- entering without precedent
+- responding to impulse rather than analysis
+- absence of accumulated weight
+- willingness to step before knowing
+- freedom from prior pattern
+- unstructured readiness
+- forward motion without map
+- presence at the edge of the known
+
+essenceSentence:
+Movement begins from a place of openness, before structure or expectation has formed.
+
+coreMeaning:
+The Fool initiates without precedent. It carries no inherited pattern, no accumulated caution, no defined direction. Movement happens because nothing yet prevents it. This is not naivety but unconditioned readiness, the state before a sequence begins. The card sets the conditions for everything that follows without committing to what those conditions will become.
+
+arrivalBehaviour:
+Sets the field as open and uncommitted. It defines the space as one where prior rules do not yet apply, establishing potential rather than direction. The register is light, unfixed, and forward-leaning.
+
+responseBehaviour:
+Negotiates by introducing openness into the existing field. It refuses to absorb the weight of what is already present, redirecting interaction toward possibility rather than continuation.
+
+relationalEffect:
+opens — releases adjacent cards from accumulated context and returns them to potential
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- recklessness
+- avoidance
+- arrested beginning
+- false start
+- unprepared movement
+
+extendedKeywords:
+- stepping without sensing
+- refusing necessary structure
+- mistaking impulse for readiness
+- avoiding consequence
+- chronic restart pattern
+- evasion of commitment
+- unintegrated risk
+- movement without contact
+
+essenceSentence:
+Beginning is attempted without the openness or sensing that makes real movement possible.
+
+coreMeaning:
+The reversed Fool moves without contact. Either impulse overrides perception, producing recklessness, or the readiness to begin has been blocked, producing false starts and avoidance. The unconditioned quality of the upright collapses into either heedlessness or stalled approach. Movement loses its trustworthy lightness and becomes either careless or refused.
+
+arrivalBehaviour:
+Sets the field as unstable or evasive. It defines the space through unfocused movement or visible reluctance, creating an opening register that does not actually open anything.
+
+responseBehaviour:
+Negotiates by deflecting rather than entering. It either overcommits without sensing the field or withdraws from real engagement, leaving the interaction unresolved.
+
+relationalEffect:
+destabilises — introduces unfocused or evasive motion that prevents adjacent cards from settling
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+Zero precedes sequence. The Fool establishes the precondition for development without participating in it directly. It opens the field that all subsequent numbered cards will structure.
+
+movementUpright:
+outward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one beginning without precedent. Upright, the space is opened to genuine possibility. Reversed, the opening is false, either reckless or refused, and conditions the field with unstable potential.
+
+whenSecond:
+Reframes whatever has come before as not yet binding. It either reopens the situation to fresh movement or, reversed, exposes the prior card's momentum as misdirected.
+
+pairingTendencies:
+- With Major Arcana: Two archetypal forces meet at threshold; the Fool resists the other card's gravity, returning the interaction to potential rather than progression.
+- With Court Cards: The personal embodiment is destabilised; the Court figure is asked to act before they have fully formed their position.
+- With same suit: Movement amplifies within the same field; beginnings reinforce without introducing grounding.
+- With conflicting suit: Tension between unstructured movement and material consequence; openness is tested against the need for form.
+
+specificPairings:
+- With The World: The end-state is dissolved back into beginning; completion is reframed as another threshold rather than a resting place.
+- With Death: Two thresholds meet, one of ending and one of beginning, producing radical reset rather than gradual transition.
+- With The Hierophant: Direct inversion; inherited structure is refused, creating friction over whether prior pattern applies.
+
+---
+
+## The Magician
+
+cardId: the-magician
+arcana: Major
+suit: None
+rank: None
+number: 1
+image: /images/tarot/the-magician.jpg
+
+---
+
+### Upright
+
+keywords:
+- initiation
+- directed will
+- conscious creation
+- focus
+- activation
+
+extendedKeywords:
+- channelling intention into form
+- alignment of thought and action
+- conscious use of available resources
+- translating idea into movement
+- bridging intention and material
+- precision in action
+- coherence between thought, word, and deed
+- active authorship
+
+essenceSentence:
+Will becomes effective when intention, capability, and material align under focused attention.
+
+coreMeaning:
+The Magician concentrates dispersed potential into directed action. It does not generate from nothing; it organises what is already present and applies it toward a chosen outcome. The card marks the point where intent becomes capable of producing form, where the elements available are recognised, gathered, and used. It is authorship in its functional state, the precise junction where will meets means.
+
+arrivalBehaviour:
+Sets the field as intentional and directed. It defines the space as one where action is conscious, structured, and purposeful. The register is focused, controlled, and forward-moving.
+
+responseBehaviour:
+Negotiates by organising what is already present. It aligns elements in the existing field to create coherence and direction, turning scattered potential into deliberate action.
+
+relationalEffect:
+focuses — concentrates adjacent cards into directed movement and intentional expression
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- manipulation
+- scattered intent
+- misuse of will
+- self-deception
+- fragmented action
+
+extendedKeywords:
+- directing skill toward distortion
+- presenting capability that is not real
+- failing to align means with intent
+- unfocused or dispersed effort
+- using technique without integrity
+- mistaking performance for action
+- gaps between word and deed
+- power held but not properly wielded
+
+essenceSentence:
+Will fails to become effective when intention is unfocused, misaligned, or dishonestly applied.
+
+coreMeaning:
+The reversed Magician separates capability from integrity. Either the elements are present but cannot be coordinated, producing scatter, or they are coordinated toward distortion, producing manipulation. Authorship breaks down at the junction where intent should meet means. The result is action that does not land, technique without coherence, or the appearance of capability without its substance.
+
+arrivalBehaviour:
+Sets the field as performative or unfocused. It defines the space through apparent capability that lacks alignment, creating a directed register that does not actually direct.
+
+responseBehaviour:
+Negotiates by misapplying focus within the existing field. It either scatters the available energy or channels it toward distortion, producing motion without coherent result.
+
+relationalEffect:
+distorts — misaligns adjacent cards and fragments their intended direction
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+One initiates structured action. The Magician follows the Fool's opening with the first directed act, converting unconditioned potential into specific intent. It establishes the principle that all subsequent numbered cards will develop.
+
+movementUpright:
+outward
+
+movementReversed:
+scattered
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of directed will. Upright, the field is shaped through clear intention and focused action. Reversed, the direction is false or scattered, and the field is conditioned by misaligned intent.
+
+whenSecond:
+Reorganises or challenges what has come before. Upright, it gathers the prior card's material into usable form. Reversed, it exposes distortion or misapplied effort in the preceding card.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of authorship; the Magician asks whether the other archetype's energy can be directed or whether it resists channelling.
+- With Court Cards: The personal embodiment is offered tools and intent; the Court figure either becomes effective through alignment or exposes the gap between capability and execution.
+- With same suit: Will is amplified within a single domain; intent and material reinforce each other, producing concentrated outcome or concentrated distortion.
+- With conflicting suit: Tension between directed will and an opposing register; focus must contend with resistance that does not yield to technique alone.
+
+specificPairings:
+- With The High Priestess: Direct polarity; outward authorship meets inward knowing, producing either integrated expression or a split between what is done and what is sensed.
+- With The Fool: Unconditioned potential is given its first direction, converting openness into specific act.
+- With Seven of Swords: Capability is uncoupled from integrity, exposing manipulation rather than authorship.
+
+---
+
+## The High Priestess
+
+cardId: the-high-priestess
+arcana: Major
+suit: None
+rank: None
+number: 2
+image: /images/tarot/the-high-priestess.jpg
+
+---
+
+### Upright
+
+keywords:
+- inner knowing
+- receptivity
+- threshold awareness
+- stillness
+- unspoken truth
+
+extendedKeywords:
+- perceiving without acting
+- holding what cannot yet be said
+- listening beneath surface
+- knowledge that arrives through quiet
+- the pause that reveals
+- intuition as structural sense
+- the witness position
+- knowing prior to formulation
+
+essenceSentence:
+Knowledge arrives through stillness and is held inwardly before it takes form.
+
+coreMeaning:
+The High Priestess receives what cannot be reached through directed action. She is the inward counterpart to the Magician's outward will, the position where perception precedes expression. Her knowing is not produced; it is recognised. The card holds the threshold between what is sensed and what is spoken, refusing to collapse one into the other prematurely. It is the structural pause that allows truth to surface on its own terms.
+
+arrivalBehaviour:
+Sets the field as quiet and perceptive. It defines the space as one where surface activity is suspended and deeper signal can be registered. The register is still, attentive, and reserved.
+
+responseBehaviour:
+Negotiates by withholding action and allowing perception to deepen. It does not engage the existing field on its own terms but slows it, drawing attention to what has been overlooked or unspoken.
+
+relationalEffect:
+deepens — draws adjacent cards toward what is unspoken or unseen beneath their surface
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- disconnection from intuition
+- secrets held destructively
+- surface noise
+- ignored signal
+- inward distortion
+
+extendedKeywords:
+- refusing what is sensed
+- mistaking silence for absence
+- withdrawal that conceals rather than perceives
+- knowing without integrating
+- intuition overridden by activity
+- secrecy used as defence
+- inner signal misread
+- closed receptivity
+
+essenceSentence:
+Inner knowing is severed, distorted, or actively refused, leaving perception unintegrated.
+
+coreMeaning:
+The reversed High Priestess loses the threshold function. Either the inward signal is no longer received, producing disconnection from intuition, or it is received but refused, producing concealment and distortion. The card's stillness becomes withdrawal, its receptivity becomes closure, its silence becomes secrecy. Perception that should deepen interaction instead severs it.
+
+arrivalBehaviour:
+Sets the field as closed or opaque. It defines the space through unavailable signal, creating a register of withholding rather than receptivity.
+
+responseBehaviour:
+Negotiates by refusing depth in the existing field. It either ignores what is being offered or converts perception into concealment, producing distance rather than attunement.
+
+relationalEffect:
+withholds — closes adjacent cards off from the deeper signal they were carrying
+
+interactionStyle:
+internalised
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Two introduces polarity and reflection. The High Priestess answers the Magician's outward act with inward reception, establishing the structural counterweight that allows direction to be tested against deeper knowing.
+
+movementUpright:
+inward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one requiring perception before action. Upright, the field is set as receptive, attentive to what is beneath the surface. Reversed, the field is conditioned by closure, where signal is unavailable or refused.
+
+whenSecond:
+Slows or deepens what has come before. Upright, it draws the prior card's material toward its unspoken layer, asking what has not been said. Reversed, it severs the prior card from its own depth, leaving it operating on surface alone.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of awareness; the High Priestess asks whether the other archetype can hold its own depth or whether it is operating only on its outward face.
+- With Court Cards: The personal embodiment is asked to listen rather than act; the Court figure either deepens through receptivity or exposes their reliance on surface response.
+- With same suit: Receptivity is amplified within a single domain; perception and feeling reinforce each other, producing attunement or, reversed, mutual withdrawal.
+- With conflicting suit: Tension between inward knowing and an active or material register; depth must contend with demands for visible action or concrete result.
+
+specificPairings:
+- With The Magician: Direct polarity; inward knowing meets outward authorship, producing either integrated expression or a split between what is done and what is sensed.
+- With The Moon: Perception meets the unconscious, deepening either toward genuine insight or toward illusion and concealment.
+- With Eight of Wands: Rapid outward movement meets the demand for stillness, exposing whether speed is carrying signal or outrunning it.
+
+---
+
+## The Empress
+
+cardId: the-empress
+arcana: Major
+suit: None
+rank: None
+number: 3
+image: /images/tarot/the-empress.jpg
+
+---
+
+### Upright
+
+keywords:
+- generative abundance
+- embodied creativity
+- nurturing presence
+- fertility
+- sensory fullness
+
+extendedKeywords:
+- bringing form into flourishing
+- creating conditions for growth
+- presence that nourishes without demand
+- abundance grounded in the body
+- relational warmth as structural support
+- creative output rooted in care
+- the field that allows life to develop
+- material expression of generative force
+
+essenceSentence:
+Creative force takes form through embodied presence and the conditions that allow growth to flourish.
+
+coreMeaning:
+The Empress brings generative force into material expression. She is the point where the inward knowing of the High Priestess becomes embodied, producing not just perception but living form. Her function is not to direct or initiate but to provide the conditions under which what has been seeded can develop. The card represents creativity expressed through nourishment, where presence itself is what allows growth, and where abundance is the natural result of receptive ground meeting active care.
+
+arrivalBehaviour:
+Sets the field as fertile and supportive. It defines the space as one where development is possible, where what is offered will be received and held. The register is warm, embodied, and steady.
+
+responseBehaviour:
+Negotiates by providing ground for what is already present. It supports the existing field through nourishment rather than redirection, allowing the prior card's material to develop on its own terms.
+
+relationalEffect:
+nourishes — provides adjacent cards with the conditions they need to develop into form
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- creative blockage
+- smothering care
+- depletion
+- neglect
+- distorted nurture
+
+extendedKeywords:
+- giving that consumes rather than supports
+- abundance that cannot be received
+- creative force turned inward and stagnant
+- presence withheld where it is needed
+- nurture as control
+- material expression refused or stalled
+- self-neglect through over-extension to others
+- conditions for growth withdrawn
+
+essenceSentence:
+Generative force fails to take form, either through blockage, depletion, or care that smothers what it intends to support.
+
+coreMeaning:
+The reversed Empress loses the balance between holding and feeding. Either nurture becomes possessive, producing dependence rather than growth, or generative force is withheld, producing stagnation. The conditions for development collapse in one of two directions: too much support that suffocates, or too little that starves. The card's abundance becomes either burden or absence, and creative force loses its ground.
+
+arrivalBehaviour:
+Sets the field as depleted or smothering. It defines the space through care that distorts, creating conditions that appear supportive but do not allow development.
+
+responseBehaviour:
+Negotiates by overextending or withdrawing within the existing field. It either floods the prior card with care it cannot use or refuses the support that was needed, producing stagnation rather than growth.
+
+relationalEffect:
+smothers — overwhelms adjacent cards with distorted care or starves them of the support they need
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+Three brings polarity into form. The Empress resolves the tension between the Magician's outward will and the High Priestess's inward knowing by producing a third term: embodied creation. It is the first card where structure becomes generative.
+
+movementUpright:
+outward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of generative ground. Upright, the field is set as fertile and capable of holding development. Reversed, the field is conditioned by distorted care, where the conditions for growth are either suffocating or withheld.
+
+whenSecond:
+Provides ground or refuses it. Upright, it receives the prior card's material and supports its development. Reversed, it either smothers what was offered or withdraws the support that would have allowed it to take form.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of generative expression; the Empress asks whether the other archetype's energy can be brought into form or whether it resists embodiment.
+- With Court Cards: The personal embodiment is met with conditions for development; the Court figure either matures through the support offered or exposes their inability to receive nourishment cleanly.
+- With same suit: Generative force is amplified within a single domain; care and creativity reinforce each other, producing flourishing or, reversed, mutual depletion.
+- With conflicting suit: Tension between embodied creation and an opposing register; nourishment must contend with demands for action, analysis, or detachment that resist the slow work of growth.
+
+specificPairings:
+- With The Emperor: Generative ground meets structural authority, producing either balanced creation or tension between organic development and imposed form.
+- With The High Priestess: Inward knowing is brought into embodied expression, converting perception into living form.
+- With Five of Pentacles: The absence of nourishment is exposed, showing what occurs when the conditions for growth are withdrawn.
+
+---
+
+## The Emperor
+
+cardId: the-emperor
+arcana: Major
+suit: None
+rank: None
+number: 4
+image: /images/tarot/the-emperor.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural authority
+- order
+- defined boundaries
+- stability through form
+- governance
+
+extendedKeywords:
+- establishing reliable structure
+- holding the frame that others operate within
+- authority grounded in responsibility
+- decision as containment
+- protection through clarity of rules
+- form that endures over time
+- the architecture beneath function
+- power exercised through definition
+
+essenceSentence:
+Stability is established through clear structure, defined boundaries, and authority that holds form.
+
+coreMeaning:
+The Emperor establishes the architecture within which development occurs. He is the structural counterpart to the Empress's generative ground, providing the form that allows what is grown to be sustained. His function is not to nurture but to define: to set boundaries, hold rules, and create the reliable conditions under which complex action can take place. The card represents authority in its load-bearing form, where power is the ability to maintain structure rather than impose it.
+
+arrivalBehaviour:
+Sets the field as ordered and contained. It defines the space as one where rules apply, where the frame is established, and where action takes place within recognisable form. The register is firm, deliberate, and structural.
+
+responseBehaviour:
+Negotiates by introducing form into the existing field. It organises what is present according to defined principles, providing the architecture that allows the prior card's energy to be held and directed.
+
+relationalEffect:
+structures — imposes form on adjacent cards, giving their energy a frame within which to operate
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- rigidity
+- domination
+- collapsed authority
+- control without ground
+- structural failure
+
+extendedKeywords:
+- form that no longer serves function
+- authority enforced rather than earned
+- rules used to suppress rather than support
+- inflexibility under pressure
+- power without responsibility
+- structure that has become brittle
+- absence of containing frame
+- governance turned to coercion
+
+essenceSentence:
+Structure fails through rigidity, coercion, or the collapse of authority that once held form.
+
+coreMeaning:
+The reversed Emperor loses the balance between form and function. Either structure becomes rigid and oppressive, producing control rather than stability, or authority collapses entirely, producing chaos within a frame that no longer holds. Power separates from responsibility. The card's function as containing architecture either hardens into prison or crumbles into absence, leaving the field without reliable form.
+
+arrivalBehaviour:
+Sets the field as rigid or unstable. It defines the space through structure that does not serve, creating an ordered register that operates through coercion or no longer holds at all.
+
+responseBehaviour:
+Negotiates by imposing or withdrawing structure within the existing field. It either crushes the prior card's material under inflexible form or exposes the absence of frame, leaving energy without containment.
+
+relationalEffect:
+constrains — locks adjacent cards into rigid form or strips them of the structure they needed
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Four establishes structural stability. The Emperor consolidates the generative force of the Three into reliable form, providing the architectural ground on which subsequent development can be built. It is the first card where structure becomes binding.
+
+movementUpright:
+stalled
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of structural authority. Upright, the field is set as ordered, with reliable form and clear boundaries. Reversed, the field is conditioned by rigidity or collapse, where structure either oppresses or fails to hold.
+
+whenSecond:
+Imposes or withdraws form from what has come before. Upright, it provides the architecture that allows the prior card's energy to be sustained. Reversed, it either crushes the prior material under inflexibility or exposes the absence of needed structure.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of authority; the Emperor asks whether the other archetype's energy can be contained within form or whether it resists definition.
+- With Court Cards: The personal embodiment is met with structural expectation; the Court figure either matures into responsibility through the frame offered or exposes the gap between role and capacity.
+- With same suit: Authority is amplified within a single domain; structure and action reinforce each other, producing reliable form or, reversed, compounded rigidity.
+- With conflicting suit: Tension between defined form and an opposing register; structure must contend with emotional, intuitive, or material currents that do not reduce to rule.
+
+specificPairings:
+- With The Empress: Structural authority meets generative ground, producing either balanced creation or tension between imposed form and organic development.
+- With The Tower: The structure built is tested or destroyed, exposing whether it was load-bearing or held by force.
+- With Four of Pentacles: Structural holding repeats at the material level, amplifying either reliable containment or the collapse into possessive rigidity.
+
+---
+
+## The Hierophant
+
+cardId: the-hierophant
+arcana: Major
+suit: None
+rank: None
+number: 5
+image: /images/tarot/the-hierophant.jpg
+
+---
+
+### Upright
+
+keywords:
+- transmitted tradition
+- inherited structure
+- shared framework
+- consecration
+- formal teaching
+
+extendedKeywords:
+- passing knowledge through established form
+- the legitimacy of received practice
+- belonging to a lineage
+- ritual as structural transmission
+- the bridge between authority and individual
+- recognised pathways for development
+- collective meaning held through form
+- initiation into shared understanding
+
+essenceSentence:
+Knowledge and meaning are transmitted through established form, connecting the individual to a larger continuity.
+
+coreMeaning:
+The Hierophant transmits what cannot be invented alone. Where the Emperor establishes structure, the Hierophant carries that structure forward through generations, converting authority into tradition. His function is the legitimate passage of meaning, the recognised pathway through which the individual is connected to a continuity larger than themselves. The card represents the moment where personal development requires inherited form, where what is being learned cannot be derived from first principles but must be received through established practice.
+
+arrivalBehaviour:
+Sets the field as formal and continuous. It defines the space as one where established practice applies, where meaning is held within recognised structure, and where the individual is positioned in relation to a larger frame. The register is measured, ceremonial, and rooted in continuity.
+
+responseBehaviour:
+Negotiates by situating the existing field within tradition. It connects the prior card's material to recognised form, asking how what is present relates to what has been established, and offering the framework through which it can be understood.
+
+relationalEffect:
+formalises — connects adjacent cards to inherited structure, locating them within established meaning
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- dogma
+- broken transmission
+- conformity without meaning
+- institutional rigidity
+- severed lineage
+
+extendedKeywords:
+- form preserved after function is lost
+- ritual without understanding
+- inherited structure that no longer fits
+- pressure to conform without reason
+- rebellion that is itself reactive
+- teaching that cannot be received
+- legitimacy claimed without ground
+- the gap between tradition and lived truth
+
+essenceSentence:
+Transmission fails when inherited form persists without meaning, or when the connection to lineage is broken.
+
+coreMeaning:
+The reversed Hierophant separates form from function. Either tradition is preserved as empty structure, producing dogma and conformity without understanding, or the connection to lineage is severed, producing rebellion that lacks the ground it pushes against. Both failures lose the transmission itself. The card's role as bridge collapses, leaving the individual either trapped within structure that no longer carries meaning, or cut off from the continuity that would have given their development context.
+
+arrivalBehaviour:
+Sets the field as rigid or fractured. It defines the space through inherited form that no longer functions, creating a formal register that either demands conformity without meaning or cannot establish continuity at all.
+
+responseBehaviour:
+Negotiates by imposing dogma or refusing tradition within the existing field. It either forces the prior card's material into a frame that does not fit, or rejects the inherited structure that would have given it context, leaving the interaction unmoored.
+
+relationalEffect:
+constrains — locks adjacent cards into hollow form or severs their connection to the meaning that would situate them
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+Five introduces challenge and adjustment. The Hierophant tests the Emperor's structure by asking whether it can be transmitted, whether the form holds when passed forward. It is the first card where structure is examined for its capacity to carry meaning across time.
+
+movementUpright:
+stalled
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of inherited structure. Upright, the field is set within established form, where meaning is transmitted through recognised practice. Reversed, the field is conditioned by hollow tradition or severed continuity, where form persists without function or cannot be passed at all.
+
+whenSecond:
+Situates or fails to situate what has come before. Upright, it connects the prior card's material to recognised form, providing the framework that gives it lineage. Reversed, it either forces the prior material into structure that does not fit, or exposes the absence of legitimate continuity.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of transmission; the Hierophant asks whether the other archetype's energy can be carried through inherited form or whether it resists tradition entirely.
+- With Court Cards: The personal embodiment is met with established practice; the Court figure either matures into the role tradition offers or exposes the gap between inherited form and individual capacity.
+- With same suit: Tradition is amplified within a single domain; structure and continuity reinforce each other, producing legitimate transmission or, reversed, compounded dogma.
+- With conflicting suit: Tension between inherited form and an opposing register; tradition must contend with currents that do not recognise its authority or cannot be contained by its frame.
+
+specificPairings:
+- With The Fool: Inherited structure meets unconditioned beginning, exposing whether tradition can be received or must be refused for genuine movement to occur.
+- With The Emperor: Structural authority is carried forward into transmissible form, converting power into continuity.
+- With Five of Pentacles: Failure of transmission appears at the material level, exposing absence of support or rejection of available structure.
+
+---
+
+## The Lovers
+
+cardId: the-lovers
+arcana: Major
+suit: None
+rank: None
+number: 6
+image: /images/tarot/the-lovers.jpg
+
+---
+
+### Upright
+
+keywords:
+- conscious choice
+- alignment
+- union through difference
+- value-driven decision
+- integrated polarity
+
+extendedKeywords:
+- choosing what one is committed to
+- relationship as chosen ground
+- the meeting of distinct wholes
+- decision that defines identity
+- alignment between inner truth and outer act
+- union that preserves rather than dissolves difference
+- love as structural choice
+- the moment where values become binding
+
+essenceSentence:
+Union is achieved through conscious choice, where distinct wholes align without losing their difference.
+
+coreMeaning:
+The Lovers establishes union through choice rather than fusion. The card is not about attraction or feeling alone, but about the conscious act of aligning with what one values, and the structural commitment that follows. Where the Hierophant transmits inherited meaning, the Lovers requires the individual to choose what they will stand within. The card represents the meeting of distinct wholes, where union depends on each side remaining itself, and where the decision made shapes everything that comes after.
+
+arrivalBehaviour:
+Sets the field as one of choice and alignment. It defines the space as a place where values must be named, where commitment is being asked for, and where the meeting between distinct positions is structurally significant. The register is deliberate, weighted, and oriented toward decision.
+
+responseBehaviour:
+Negotiates by asking what the existing field aligns with. It draws the prior card's material toward conscious commitment, exposing whether the situation can hold integrated union or whether the alignment is unstable.
+
+relationalEffect:
+aligns — draws adjacent cards toward the values they are committed to and the choices that follow
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- misalignment
+- avoided choice
+- compromised values
+- fractured union
+- decision under distortion
+
+extendedKeywords:
+- choosing against one's own truth
+- union built on absorbed difference
+- avoidance of the decision that defines
+- alignment forced rather than recognised
+- relationship that consumes rather than meets
+- value conflict left unresolved
+- choice driven by fear or pressure
+- the split between inner truth and outer commitment
+
+essenceSentence:
+Union fails when choice is avoided, values are compromised, or alignment is forced rather than recognised.
+
+coreMeaning:
+The reversed Lovers loses the integrity of choice. Either the decision that would define alignment is avoided, leaving the field unresolved, or it is made under distortion, producing union that costs one side its difference. The card's structural function as conscious commitment collapses into either drift or compromise. What appears as union becomes absorption, conflict, or inertia, and the individual is no longer standing within values they have actually chosen.
+
+arrivalBehaviour:
+Sets the field as misaligned or evasive. It defines the space through unresolved choice or compromised commitment, creating a register where union appears available but cannot hold without distortion.
+
+responseBehaviour:
+Negotiates by deflecting or distorting choice within the existing field. It either avoids the alignment the prior card was moving toward, or accepts a union that requires the prior material to be absorbed rather than met.
+
+relationalEffect:
+fractures — exposes misalignment in adjacent cards, separating what appeared joined or revealing union built on compromise
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+Six introduces harmonisation through choice. The Lovers resolves the tension introduced by the Five's challenge by requiring conscious alignment, converting tested structure into chosen commitment. It is the first card where decision becomes structurally binding.
+
+movementUpright:
+outward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of choice and alignment. Upright, the field is set as a place where values must be named and union becomes possible through conscious commitment. Reversed, the field is conditioned by avoided or compromised choice, where alignment is unstable or forced.
+
+whenSecond:
+Tests what has come before for alignment. Upright, it draws the prior card's material toward conscious commitment, asking whether the situation can hold integrated union. Reversed, it exposes misalignment or absorption, revealing where the prior card cannot meet without distortion.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of chosen commitment; the Lovers asks whether the other archetype's energy can enter conscious alignment or whether union with it requires distortion.
+- With Court Cards: The personal embodiment is met with the demand for choice; the Court figure either reveals integrated commitment or exposes the gap between stated values and lived alignment.
+- With same suit: Choice is amplified within a single domain; alignment and value reinforce each other, producing integrated union or, reversed, compounded compromise.
+- With conflicting suit: Tension between chosen alignment and an opposing register; commitment must contend with currents that pull toward incompatible ground.
+
+specificPairings:
+- With The Devil: Conscious choice meets unconscious binding, exposing whether union is freely chosen or held by attachment that cannot be named.
+- With Two of Cups: Relational union repeats at the personal level, amplifying either mutual recognition or, reversed, absorption that mimics meeting.
+- With The Hierophant: Inherited form is tested against personal choice, asking whether tradition can be entered consciously or must be refused.
+
+---
+
+## The Chariot
+
+cardId: the-chariot
+arcana: Major
+suit: None
+rank: None
+number: 7
+image: /images/tarot/the-chariot.jpg
+
+---
+
+### Upright
+
+keywords:
+- directed momentum
+- disciplined will
+- victory through control
+- aligned drive
+- forward thrust
+
+extendedKeywords:
+- harnessing opposing forces toward a single direction
+- movement made possible by self-mastery
+- the will that holds tension without collapsing it
+- progress through deliberate effort
+- breakthrough achieved by integration of conflict
+- control exercised over impulse
+- direction maintained against resistance
+- the moment where commitment produces motion
+
+essenceSentence:
+Forward motion is achieved through disciplined will, where opposing forces are held together and directed toward a single aim.
+
+coreMeaning:
+The Chariot converts chosen alignment into actual movement. Where the Lovers establishes commitment, the Chariot demands its execution: the harnessing of opposing impulses, the holding of tension without resolution, the steady direction of force toward a defined aim. Its function is not to soften conflict but to keep it usable. The card represents will in its most active structural form, where mastery is not the absence of opposition but the capacity to drive through it without being pulled apart.
+
+arrivalBehaviour:
+Sets the field as directional and propulsive. It defines the space as one where forward motion is required, where opposing forces must be integrated rather than resolved, and where commitment translates into visible drive. The register is taut, deliberate, and oriented toward outcome.
+
+responseBehaviour:
+Negotiates by introducing momentum into the existing field. It gathers the prior card's tensions and converts them into direction, refusing to allow stagnation and pressing the interaction toward defined movement.
+
+relationalEffect:
+propels — gathers adjacent cards' tensions and drives them forward toward defined direction
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- loss of direction
+- forced control
+- internal conflict unresolved
+- stalled momentum
+- runaway drive
+
+extendedKeywords:
+- pushing forward without integration
+- will exerted against itself
+- direction abandoned under pressure
+- control that suppresses rather than harnesses
+- momentum that cannot be steered
+- aggression mistaken for drive
+- collapse of the tension that produced movement
+- effort without coherent aim
+
+essenceSentence:
+Movement breaks down when opposing forces cannot be held together, producing either forced control, scatter, or directionless drive.
+
+coreMeaning:
+The reversed Chariot loses the integration that made movement possible. Either the opposing forces collapse into one, producing forced control that suppresses what should be harnessed, or they pull apart, producing scatter and stalled momentum. The card's function as disciplined will fails in one of two directions: aggression that overrides rather than directs, or drive that cannot find its line. What was active mastery becomes either coercion or chaos, and the chosen aim is lost.
+
+arrivalBehaviour:
+Sets the field as forced or fragmented. It defines the space through movement that does not integrate, creating a directional register that either suppresses opposition or cannot hold its course.
+
+responseBehaviour:
+Negotiates by overriding or losing direction within the existing field. It either forces the prior card's material into a line it cannot sustain, or fragments under the tensions present, producing motion that does not arrive.
+
+relationalEffect:
+strains — pushes adjacent cards into forced direction or fractures their momentum into incoherent drive
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Seven introduces test and assertion. The Chariot tests the alignment chosen at the Six by requiring it to produce movement, converting commitment into execution. It is the first card where will is measured by its capacity to maintain direction under pressure.
+
+movementUpright:
+outward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of directed momentum. Upright, the field is set as propulsive, where opposing forces are held together and movement is required. Reversed, the field is conditioned by forced control or stalled drive, where direction either coerces or cannot hold.
+
+whenSecond:
+Drives or strains what has come before. Upright, it gathers the prior card's tensions into forward motion, converting the situation into active progress. Reversed, it either forces the prior material into a direction it cannot sustain, or exposes the absence of integrated will needed to move.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of directed will; the Chariot asks whether the other archetype's energy can be harnessed into forward motion or whether it resists being driven.
+- With Court Cards: The personal embodiment is met with the demand for execution; the Court figure either reveals disciplined drive or exposes the gap between intention and the will to carry it through resistance.
+- With same suit: Momentum is amplified within a single domain; will and direction reinforce each other, producing breakthrough or, reversed, compounded force without coherence.
+- With conflicting suit: Tension between directed drive and an opposing register; momentum must contend with currents that resist forward motion or refuse the line being held.
+
+specificPairings:
+- With Strength: Outward drive meets inward composure, producing either integrated mastery or a split between force applied and force contained.
+- With The Lovers: Chosen alignment is tested by the demand for movement, converting commitment into sustained direction under pressure.
+- With Five of Wands: Failure to integrate opposition is exposed, showing how competing forces scatter when not driven toward a single aim.
+
+---
+
+## Strength
+
+cardId: strength
+arcana: Major
+suit: None
+rank: None
+number: 8
+image: /images/tarot/strength.jpg
+
+---
+
+### Upright
+
+keywords:
+- inner composure
+- contained force
+- gentled power
+- patient mastery
+- integrated instinct
+
+extendedKeywords:
+- holding intensity without suppression
+- power exercised through stillness
+- the strength that does not need to assert itself
+- composure that transforms what it meets
+- instinct met with awareness rather than control
+- endurance grounded in self-knowledge
+- the capacity to remain whole under pressure
+- mastery expressed through gentleness
+
+essenceSentence:
+Power is exercised through composure, where intensity is held and gentled rather than suppressed or unleashed.
+
+coreMeaning:
+Strength holds force without converting it into aggression. Where the Chariot drives opposing impulses through outward will, Strength meets the same intensity inwardly, transforming it through composure rather than control. Its function is the integration of what cannot be defeated by force: instinct, fear, desire, and reactivity, all met with steadiness that neither suppresses nor indulges them. The card represents power in its most contained form, where mastery is the refusal to be overwhelmed and the capacity to remain present with what is intense.
+
+arrivalBehaviour:
+Sets the field as steady and contained. It defines the space as one where intensity is present but does not destabilise, where force is held without being deployed, and where composure shapes the register more than action does. The tone is calm, grounded, and inwardly firm.
+
+responseBehaviour:
+Negotiates by absorbing intensity from the existing field. It meets the prior card's force with composure rather than counter-force, transforming what was reactive or volatile into something the interaction can actually hold.
+
+relationalEffect:
+gentles — meets intensity in adjacent cards with composure that contains rather than suppresses
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- inner turbulence
+- suppressed force
+- self-doubt
+- overwhelm
+- reactive intensity
+
+extendedKeywords:
+- power that has lost its containment
+- force that suppresses what should be integrated
+- composure that has hardened into denial
+- instinct overriding awareness
+- self-mastery collapsed into self-criticism
+- intensity acted out rather than held
+- weakness mistaken for gentleness
+- the gap between inner state and outer presentation
+
+essenceSentence:
+Composure breaks down when intensity is suppressed, denied, or allowed to override the awareness that would gentle it.
+
+coreMeaning:
+Reversed Strength loses the integration between awareness and instinct. Either intensity is suppressed and converted into self-doubt, producing inward collapse, or it overrides composure entirely, producing reactivity that cannot be held. The card's function as contained power fails in one of two directions: force that has nowhere to go, or force that goes everywhere. What was steadiness becomes either brittleness or volatility, and the capacity to remain present with intensity is lost.
+
+arrivalBehaviour:
+Sets the field as turbulent or suppressed. It defines the space through intensity that cannot be held cleanly, creating a register that appears composed but conceals overwhelm, or that has already given way to reactivity.
+
+responseBehaviour:
+Negotiates by suppressing or amplifying intensity within the existing field. It either denies the prior card's force, producing strain, or matches it reactively, producing escalation rather than containment.
+
+relationalEffect:
+strains — meets intensity in adjacent cards with suppression or reactivity, preventing it from being properly held
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Eight introduces refinement through repetition and pressure. Strength tests the active will of the Seven by requiring its inward counterpart, converting drive into composure. It is the first card where mastery is measured by what is held rather than what is moved.
+
+movementUpright:
+inward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of contained intensity. Upright, the field is set as steady, where force is present but held in composure. Reversed, the field is conditioned by suppression or reactivity, where intensity either collapses inward or overrides the awareness that should gentle it.
+
+whenSecond:
+Steadies or strains what has come before. Upright, it absorbs the prior card's intensity through composure, converting volatility into something the interaction can hold. Reversed, it either suppresses the prior force into denial or amplifies it into reactivity, breaking the containment that was needed.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of contained power; Strength asks whether the other archetype's intensity can be held inwardly or whether it requires outward expression to remain coherent.
+- With Court Cards: The personal embodiment is met with the demand for composure; the Court figure either reveals integrated mastery or exposes the gap between presented steadiness and underlying turbulence.
+- With same suit: Composure is amplified within a single domain; intensity and containment reinforce each other, producing integrated mastery or, reversed, compounded suppression.
+- With conflicting suit: Tension between inward containment and an opposing register; composure must contend with currents that demand expression, action, or release rather than holding.
+
+specificPairings:
+- With The Chariot: Inward composure meets outward drive, producing either integrated mastery or a split between force contained and force applied.
+- With The Devil: Contained instinct meets unconscious binding, exposing the difference between integrated power and power that has captured the will.
+- With Seven of Wands: The test of holding ground under pressure repeats at the active level, amplifying either steady defence or the strain of force exercised without inward composure.
+
+---
+
+## The Hermit
+
+cardId: the-hermit
+arcana: Major
+suit: None
+rank: None
+number: 9
+image: /images/tarot/the-hermit.jpg
+
+---
+
+### Upright
+
+keywords:
+- inward turning
+- considered solitude
+- guided introspection
+- distilled understanding
+- deliberate withdrawal
+
+extendedKeywords:
+- stepping back to perceive what proximity obscures
+- knowledge gained through sustained attention
+- the lamp held to one's own ground
+- solitude as structural method
+- pace slowed to allow integration
+- guidance that comes from within rather than from external authority
+- the position from which the path becomes visible
+- understanding that requires distance to form
+
+essenceSentence:
+Understanding arrives through deliberate withdrawal, where solitude allows what is essential to come into focus.
+
+coreMeaning:
+The Hermit withdraws from active engagement to allow understanding to form. Where Strength holds intensity inwardly through composure, the Hermit holds the entire field at a distance, creating the conditions under which what has been lived can be examined. Its function is not retreat but distillation: the deliberate slowing of pace that allows experience to become knowledge. The card represents the position from which the path is seen rather than walked, where solitude is method rather than absence, and where the light that guides comes from one's own sustained attention.
+
+arrivalBehaviour:
+Sets the field as quiet and reflective. It defines the space as one where pace has slowed, where engagement has been suspended deliberately, and where attention is turned toward what has not yet been understood. The register is patient, contained, and inwardly oriented.
+
+responseBehaviour:
+Negotiates by introducing distance into the existing field. It steps back from the prior card's momentum or intensity, creating the space in which what was being acted on can instead be examined.
+
+relationalEffect:
+slows — pulls adjacent cards into reflection, holding them at the distance required for understanding to form
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- isolation
+- avoidance through withdrawal
+- arrested reflection
+- disconnection
+- counsel refused or refused to be received
+
+extendedKeywords:
+- solitude that has hardened into severance
+- introspection that loops without producing insight
+- the refusal to return from withdrawal
+- distance maintained as defence rather than method
+- inner guidance dismissed or unavailable
+- examination that becomes self-critical rumination
+- the gap between solitude and integration
+- isolation mistaken for depth
+
+essenceSentence:
+Withdrawal fails when solitude becomes severance, or when introspection loops without producing the understanding it was meant to find.
+
+coreMeaning:
+The reversed Hermit loses the structural function of solitude. Either withdrawal hardens into isolation, severing the connection that would allow what is understood to be brought back, or introspection becomes a closed loop, producing rumination rather than insight. The card's lamp goes out or is held over nothing. What was deliberate distance becomes either avoidance dressed as depth, or a path that no longer leads anywhere, and the understanding that solitude was meant to produce does not arrive.
+
+arrivalBehaviour:
+Sets the field as severed or stalled. It defines the space through withdrawal that has lost its method, creating a reflective register that either refuses re-engagement or cannot move past circular self-examination.
+
+responseBehaviour:
+Negotiates by withdrawing or refusing within the existing field. It either pulls away from the prior card entirely, producing severance, or absorbs its material into rumination that does not return as understanding.
+
+relationalEffect:
+isolates — cuts adjacent cards off from the engagement or insight that solitude was meant to support
+
+interactionStyle:
+internalised
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+Nine introduces near-completion and consolidation. The Hermit gathers what has been developed across the prior sequence and holds it at distance for examination, converting accumulated experience into understood form. It is the card where progress is measured by what has been distilled rather than what has been done.
+
+movementUpright:
+inward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of considered withdrawal. Upright, the field is set as reflective, where pace has slowed and understanding is being formed through attention. Reversed, the field is conditioned by isolation or rumination, where solitude has lost its method or hardened into severance.
+
+whenSecond:
+Slows or severs what has come before. Upright, it pulls the prior card's material into reflection, allowing it to be examined rather than continued. Reversed, it either cuts the prior card off from re-engagement or absorbs it into a loop that produces no insight.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of considered understanding; the Hermit asks whether the other archetype's energy can withstand examination or whether it depends on continued momentum to remain coherent.
+- With Court Cards: The personal embodiment is met with the demand for reflection; the Court figure either reveals integrated understanding or exposes the gap between accumulated experience and what has actually been distilled.
+- With same suit: Reflection is amplified within a single domain; solitude and examination reinforce each other, producing distilled understanding or, reversed, compounded isolation.
+- With conflicting suit: Tension between considered distance and an opposing register; reflection must contend with currents that demand engagement, action, or expression rather than examination.
+
+specificPairings:
+- With The Star: Deliberate solitude meets restored hope, producing either integrated insight that returns to the world or contrast between distance and renewal.
+- With The Wheel of Fortune: Understanding distilled through solitude is tested against changing conditions, asking whether insight holds under movement.
+- With Eight of Wands: Deliberate slowness meets rapid movement, exposing whether speed carries signal or outruns necessary reflection.
+
+---
+
+## Wheel of Fortune
+
+cardId: wheel-of-fortune
+arcana: Major
+suit: None
+rank: None
+number: 10
+image: /images/tarot/wheel-of-fortune.jpg
+
+---
+
+### Upright
+
+keywords:
+- turning point
+- cyclical change
+- shifting circumstance
+- structural reorientation
+- pattern revealed
+
+extendedKeywords:
+- the moment where conditions change without consultation
+- recognition that one is inside a larger movement
+- fate as the visible turn of impersonal pattern
+- circumstance redirected by forces beyond control
+- the closing of one cycle and opening of another
+- alignment with timing rather than will
+- the structural pivot that reorganises the field
+- meaning revealed by the shape of recurrence
+
+essenceSentence:
+Conditions turn through forces larger than personal will, revealing the pattern that has been operating beneath circumstance.
+
+coreMeaning:
+The Wheel of Fortune marks the structural turn that no individual position controls. Where the Hermit examines what has been lived, the Wheel changes what is being lived, introducing the recognition that personal effort operates inside larger movement. Its function is not random change but pattern made visible, the moment where the underlying shape of circumstance asserts itself and the field reorganises accordingly. The card represents the pivot where accumulated trajectory meets impersonal timing, and where the response required is alignment with the turn rather than resistance to it.
+
+arrivalBehaviour:
+Sets the field as turning. It defines the space as one where conditions are shifting through forces that did not originate in the present interaction, where the prior pattern is closing, and where a new configuration is forming. The register is dynamic, impersonal, and structurally weighted.
+
+responseBehaviour:
+Negotiates by introducing the turn into the existing field. It does not engage the prior card on its own terms but reorganises the conditions under which the interaction is taking place, exposing what has been operating beneath the surface and shifting the ground accordingly.
+
+relationalEffect:
+turns — reorganises adjacent cards by changing the conditions they were operating within
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- resisted change
+- repeating pattern
+- bad timing
+- stalled cycle
+- unrecognised turn
+
+extendedKeywords:
+- the loop that cannot complete
+- circumstance returning in distorted form
+- forcing continuation when the cycle has closed
+- pattern operating without being seen
+- alignment refused or missed
+- the turn that arrives but is not received
+- recurrence that produces no new ground
+- timing misread or actively resisted
+
+essenceSentence:
+The turn is refused, missed, or distorted, leaving the cycle to repeat without producing the reorientation it was meant to bring.
+
+coreMeaning:
+The reversed Wheel loses the alignment between movement and pattern. Either the turn is resisted, producing the same conditions returning under different surfaces, or it is missed entirely, leaving the field locked inside a cycle that no longer generates new ground. The card's structural pivot fails to land. What should have reorganised circumstance instead repeats it, and the pattern that was meant to become visible continues operating beneath recognition, producing strain that has no clear source.
+
+arrivalBehaviour:
+Sets the field as locked or repeating. It defines the space through circumstance that should be turning but is not, creating a register where pattern persists without reorientation and where the underlying shape remains hidden.
+
+responseBehaviour:
+Negotiates by resisting or distorting the turn within the existing field. It either holds the prior card's material in a configuration that should have closed, or introduces movement that cycles back to the same ground rather than producing genuine reorganisation.
+
+relationalEffect:
+loops — locks adjacent cards into repeating pattern, preventing the structural turn that would reorient them
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Ten completes the cycle and produces the turn. The Wheel marks the structural close of the first ten-card sequence, where accumulated movement meets the pivot that determines what is carried forward. It is the card where pattern itself becomes the active force.
+
+movementUpright:
+cyclical
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of structural turning. Upright, the field is set as actively reorganising, where conditions are shifting through forces larger than the present configuration. Reversed, the field is conditioned by stalled cycle or unrecognised pattern, where the turn that should have arrived is being resisted or missed.
+
+whenSecond:
+Turns or fails to turn what has come before. Upright, it changes the conditions the prior card was operating within, exposing the pattern beneath and reorganising the field. Reversed, it locks the prior card's material into recurrence, producing repetition rather than reorientation.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of pattern and timing; the Wheel asks whether the other archetype's energy is positioned to turn with the cycle or whether it will be reorganised against its own direction.
+- With Court Cards: The personal embodiment is met with circumstance that does not negotiate; the Court figure either reveals alignment with the turn or exposes the strain of holding a position the cycle has already left behind.
+- With same suit: The turn is amplified within a single domain; pattern and circumstance reinforce each other, producing structural reorientation or, reversed, compounded recurrence.
+- With conflicting suit: Tension between cyclical reorganisation and an opposing register; the turn must contend with currents that operate on a different timing or refuse the pivot the Wheel introduces.
+
+specificPairings:
+- With The Hermit: Understanding distilled through solitude is tested against turning circumstance, asking whether what has been seen at distance holds when conditions change.
+- With Justice: Impersonal turn is followed by impersonal reckoning, producing either integrated alignment with consequence or the collision between cycle and accountability.
+- With Eight of Pentacles: Slow accumulation of effort meets structural turn, exposing whether patient work aligns with the cycle or is reorganised against its own direction.
+
+---
+
+## Justice
+
+cardId: justice
+arcana: Major
+suit: None
+rank: None
+number: 11
+image: /images/tarot/justice.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural reckoning
+- impersonal accountability
+- cause meeting effect
+- clarity of consequence
+- balanced judgement
+
+extendedKeywords:
+- the moment where prior action returns as outcome
+- truth weighed without distortion
+- decision rendered through structural rather than personal logic
+- alignment between what was done and what now follows
+- accountability that does not negotiate
+- the clean cut between what holds and what does not
+- judgement that proceeds from evidence rather than preference
+- the establishment of consequence as a structural fact
+
+essenceSentence:
+Cause and effect align without distortion, producing the consequence that prior action has earned.
+
+coreMeaning:
+Justice introduces the structural reckoning that follows the Wheel's turn. Where the Wheel reorganises conditions through impersonal pattern, Justice renders the verdict that pattern produces, converting accumulated cause into visible effect. Its function is not moral judgement in the personal sense but the clean alignment of consequence with what has actually occurred. The card represents the moment where evasion ends, where prior action returns in measurable form, and where the field is sorted according to what holds under examination rather than what was hoped to hold.
+
+arrivalBehaviour:
+Sets the field as accountable and weighed. It defines the space as one where consequence is being rendered, where evidence determines outcome, and where personal preference does not adjust the result. The register is exact, impersonal, and structurally firm.
+
+responseBehaviour:
+Negotiates by weighing the existing field. It examines the prior card's material against what has actually been produced, sorting what aligns from what does not and rendering the consequence that was already structurally present.
+
+relationalEffect:
+weighs — measures adjacent cards against their own consequence, rendering the alignment that was already structurally present
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- evaded accountability
+- distorted judgement
+- imbalance
+- consequence avoided or misapplied
+- bias
+
+extendedKeywords:
+- truth shaped to preferred outcome
+- the verdict that does not match the evidence
+- responsibility deflected onto another
+- judgement rendered through personal rather than structural logic
+- consequence that lands in the wrong place
+- the gap between what was done and what is acknowledged
+- accountability postponed indefinitely
+- the scale tilted by what should not weigh on it
+
+essenceSentence:
+Reckoning fails when cause and effect are separated, producing consequence that misaligns with what was actually done.
+
+coreMeaning:
+Reversed Justice loses the structural alignment between action and outcome. Either accountability is evaded, leaving consequence suspended in distortion, or judgement is rendered through bias, producing a verdict that does not match the evidence. The card's clean cut becomes either deferred indefinitely or applied where it does not belong. What should have been impersonal reckoning becomes personal grievance, and the consequence that was structurally present is either avoided, misdirected, or absorbed by someone other than the one whose action produced it.
+
+arrivalBehaviour:
+Sets the field as distorted or unaccountable. It defines the space through reckoning that has been deflected, creating a register where consequence is present but misaligned with cause, and where judgement does not proceed from evidence.
+
+responseBehaviour:
+Negotiates by deflecting or distorting consequence within the existing field. It either refuses to render the verdict the prior card had earned, or applies it in a place that did not produce it, leaving the alignment between cause and effect unresolved.
+
+relationalEffect:
+distorts — separates adjacent cards from their actual consequence, producing reckoning that misaligns with what was done
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+Eleven introduces the second structural pivot, where the cycle that began with the Fool's threshold is examined against what it has produced. Justice converts the Wheel's turn into rendered consequence, establishing the principle that structural reckoning will weigh whatever the second half of the sequence develops.
+
+movementUpright:
+stalled
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of structural reckoning. Upright, the field is set as accountable, where consequence is being rendered through evidence rather than preference. Reversed, the field is conditioned by evaded or distorted judgement, where reckoning has been deflected or misapplied.
+
+whenSecond:
+Weighs or distorts what has come before. Upright, it measures the prior card's material against its own consequence, rendering the alignment that was already structurally present. Reversed, it either refuses the verdict the prior card had earned, or applies consequence in a place that did not produce it.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of accountability; Justice asks whether the other archetype's energy can withstand examination against its own results, or whether it depends on consequence remaining suspended.
+- With Court Cards: The personal embodiment is met with the demand for reckoning; the Court figure either reveals integrated accountability or exposes the gap between presented position and what their action has actually produced.
+- With same suit: Reckoning is amplified within a single domain; cause and effect reinforce each other, producing rendered consequence or, reversed, compounded distortion.
+- With conflicting suit: Tension between structural judgement and an opposing register; accountability must contend with currents that resist examination or operate on logic Justice cannot weigh.
+
+specificPairings:
+- With The Wheel of Fortune: Impersonal turn produces impersonal verdict, converting structural movement into rendered consequence.
+- With The Hanged Man: Rendered verdict meets suspension, producing either acceptance of consequence or the split between what has been weighed and what has been received.
+- With Seven of Swords: Structural reckoning meets deception, exposing whether evasion holds when weighed against what was actually done.
+
+---
+
+## The Hanged Man
+
+cardId: the-hanged-man
+arcana: Major
+suit: None
+rank: None
+number: 12
+image: /images/tarot/the-hanged-man.jpg
+
+---
+
+### Upright
+
+keywords:
+- chosen suspension
+- inverted perspective
+- productive surrender
+- pause before transformation
+- relinquished control
+
+extendedKeywords:
+- stepping out of forward motion deliberately
+- letting the field rearrange without intervention
+- the position from which what was hidden becomes visible
+- surrender as structural method rather than defeat
+- pause that reorganises rather than delays
+- release of the grip that was preventing insight
+- view obtained by hanging where one did not expect to hang
+- the patience that allows a different outcome to form
+
+essenceSentence:
+Insight arrives through chosen suspension, where releasing control allows what could not otherwise be seen to come into view.
+
+coreMeaning:
+The Hanged Man suspends action to allow reorganisation. Where Justice renders consequence as structural fact, the Hanged Man receives that consequence by releasing the grip that would have resisted it, converting forced position into chosen surrender. Its function is not passivity but the deliberate inversion of perspective that allows what was previously inaccessible to become visible. The card represents the pause that does structural work, where forward effort is set aside not as defeat but as method, and where what is hanging is the will to control rather than the self.
+
+arrivalBehaviour:
+Sets the field as suspended and reoriented. It defines the space as one where forward motion has been released deliberately, where the usual axis of action is inverted, and where the conditions for insight are being established through stillness rather than effort. The register is patient, accepting, and structurally inverted.
+
+responseBehaviour:
+Negotiates by suspending action within the existing field. It does not engage the prior card on its own momentum but releases the grip the situation was demanding, allowing the configuration to reorganise itself rather than being driven toward outcome.
+
+relationalEffect:
+suspends — releases adjacent cards from forward motion, allowing reorganisation that effort could not produce
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- stalled surrender
+- martyrdom
+- pointless sacrifice
+- refused release
+- prolonged inaction
+
+extendedKeywords:
+- suspension that has lost its method
+- pause that has become avoidance
+- sacrifice without structural function
+- the grip that should have released but did not
+- inversion held past the point of insight
+- waiting that no longer produces reorganisation
+- surrender mistaken for virtue
+- the position maintained for its own sake
+
+essenceSentence:
+Suspension fails when surrender becomes avoidance, sacrifice serves no structural function, or the pause is held past the point where insight could form.
+
+coreMeaning:
+The reversed Hanged Man loses the productive function of suspension. Either the release that should have produced reorganisation never arrives, leaving the field locked in pause that no longer generates insight, or the surrender becomes martyrdom, sacrifice performed without structural purpose. The card's deliberate inversion collapses into either inertia or self-defeating endurance. What was chosen method becomes either refusal to move or refusal to stop suffering, and the reorganisation that suspension was meant to allow does not occur.
+
+arrivalBehaviour:
+Sets the field as stalled or sacrificial. It defines the space through suspension that has lost its method, creating an inverted register that either refuses to release into reorganisation or holds itself in sacrifice that produces no structural result.
+
+responseBehaviour:
+Negotiates by holding suspension past its function within the existing field. It either refuses to release the prior card's material, producing prolonged stall, or absorbs it into sacrificial position that drains the interaction without producing the insight surrender was meant to bring.
+
+relationalEffect:
+stalls — holds adjacent cards in suspension past the point where reorganisation could form
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Twelve introduces the deliberate pause that reorganises the second half of the sequence. The Hanged Man converts rendered consequence into accepted surrender, establishing the principle that transformation requires the relinquishment of control before it can complete. It is the card where stillness becomes structural method.
+
+movementUpright:
+stalled
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of chosen suspension. Upright, the field is set as deliberately paused, where forward motion has been released and reorganisation is being allowed to form. Reversed, the field is conditioned by stalled surrender or sacrificial position, where the suspension has lost its method or its purpose.
+
+whenSecond:
+Suspends or stalls what has come before. Upright, it releases the prior card's momentum, allowing the configuration to reorganise itself rather than being driven toward outcome. Reversed, it either holds the prior card's material in pause that no longer produces insight, or absorbs it into sacrifice that drains rather than reorganises.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of chosen surrender; the Hanged Man asks whether the other archetype's energy can release into reorganisation or whether it depends on continued grip to remain coherent.
+- With Court Cards: The personal embodiment is met with the demand for surrender; the Court figure either reveals productive release or exposes the gap between performed acceptance and the grip that has not actually been let go.
+- With same suit: Suspension is amplified within a single domain; release and reorientation reinforce each other, producing structural insight or, reversed, compounded stall.
+- With conflicting suit: Tension between chosen pause and an opposing register; suspension must contend with currents that demand action, expression, or resolution rather than release.
+
+specificPairings:
+- With Justice: Rendered consequence meets chosen surrender, producing either integrated acceptance or the split between verdict and the grip that refuses to receive it.
+- With Death: Chosen suspension precedes structural ending, converting deliberate pause into the transformation it makes possible.
+- With Eight of Swords: Chosen release meets self-imposed restriction, exposing the difference between suspension that reorganises and binding that only appears to do so.
+
+---
+
+## Death
+
+cardId: death
+arcana: Major
+suit: None
+rank: None
+number: 13
+image: /images/tarot/death.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural ending
+- transformation through release
+- definitive close
+- clearing
+- threshold of becoming
+
+extendedKeywords:
+- the form that cannot continue and must be released
+- ending as the precondition for what comes next
+- transformation that removes rather than adjusts
+- the close that no negotiation reopens
+- clearing the field of what has completed
+- death as structural function rather than catastrophe
+- the cut that allows new ground to form
+- finality that produces possibility rather than absence
+
+essenceSentence:
+A form that cannot continue is released, clearing the ground from which transformation can proceed.
+
+coreMeaning:
+Death enacts the structural ending that the Hanged Man's suspension was preparing for. Where the Hanged Man releases the grip that was preventing reorganisation, Death removes the form itself, converting suspension into definitive close. Its function is not destruction but completion: the recognition that what has reached its limit cannot be carried forward, and that the field requires clearing before new development can begin. The card represents the cut that no negotiation reopens, where transformation proceeds through release rather than adjustment, and where ending is the precondition for what follows.
+
+arrivalBehaviour:
+Sets the field as ending and clearing. It defines the space as one where what could not continue is being released, where the close is structural rather than negotiable, and where the ground is being prepared for what has not yet formed. The register is final, definite, and oriented toward what comes after.
+
+responseBehaviour:
+Negotiates by ending what is present in the existing field. It does not adjust the prior card's material but removes the form it was operating within, clearing the configuration so that something other than continuation becomes possible.
+
+relationalEffect:
+ends — removes the form adjacent cards were operating within, clearing the ground for what follows
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- resisted ending
+- prolonged decay
+- transformation refused
+- incomplete release
+- the form that will not close
+
+extendedKeywords:
+- holding what should have been released
+- ending that has begun but cannot complete
+- the residue of a form that no longer functions
+- transformation arrested midway
+- attachment to what has already ended
+- the close that is repeatedly reopened
+- structural decay without structural release
+- the field that cannot clear
+
+essenceSentence:
+The ending that was structurally required is refused, leaving form decaying without releasing, and transformation suspended without completing.
+
+coreMeaning:
+Reversed Death loses the structural function of close. Either the ending is refused outright, leaving form to persist past its capacity to function, or it has begun but cannot complete, producing prolonged decay rather than clearing. The card's cut becomes either deflected or stalled. What should have been definitive release becomes attachment to what has already ended, and the ground that needed clearing remains occupied by form that no longer holds. Transformation is suspended at the threshold rather than carried through it.
+
+arrivalBehaviour:
+Sets the field as decaying or unresolved. It defines the space through ending that has been refused or arrested, creating a register where form persists past its function and where the clearing that should have occurred has not arrived.
+
+responseBehaviour:
+Negotiates by refusing or arresting close within the existing field. It either holds the prior card's material in form that has already lost coherence, or stalls the ending midway, producing decay rather than the definitive release transformation required.
+
+relationalEffect:
+arrests — prevents adjacent cards from completing the ending that was structurally required, leaving them in prolonged decay
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Thirteen introduces the structural close that reorganises the second half of the sequence. Death converts chosen suspension into definitive ending, establishing the principle that transformation requires the release of form before new development can begin. It is the card where ending becomes structural method.
+
+movementUpright:
+releasing
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of structural ending. Upright, the field is set as clearing, where what cannot continue is being released and the ground is being prepared for what follows. Reversed, the field is conditioned by refused or arrested close, where form persists past its function and transformation is suspended at the threshold.
+
+whenSecond:
+Ends or arrests what has come before. Upright, it removes the form the prior card was operating within, clearing the configuration so that continuation becomes impossible and something else becomes available. Reversed, it either refuses to close the prior card's material, or stalls the ending midway, producing decay rather than release.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of definitive ending; Death asks whether the other archetype's energy can be released or whether it depends on continued form to remain coherent.
+- With Court Cards: The personal embodiment is met with the demand for ending; the Court figure either reveals integrated release or exposes the gap between acknowledged completion and the form that has not actually been let go.
+- With same suit: Ending is amplified within a single domain; release and clearing reinforce each other, producing structural transformation or, reversed, compounded decay.
+- With conflicting suit: Tension between definitive close and an opposing register; ending must contend with currents that demand continuation, repair, or return rather than release.
+
+specificPairings:
+- With The Hanged Man: Chosen suspension is followed by structural ending, converting deliberate pause into the transformation it makes possible.
+- With The Fool: Ending meets beginning, producing radical reset rather than gradual transition.
+- With Ten of Swords: Structural close repeats at the mental level, amplifying either definitive ending or refusal to release a finality that has already arrived.
+
+---
+
+## Temperance
+
+cardId: temperance
+arcana: Major
+suit: None
+rank: None
+number: 14
+image: /images/tarot/temperance.jpg
+
+---
+
+### Upright
+
+keywords:
+- integration
+- measured blending
+- right proportion
+- patient synthesis
+- alchemical balance
+
+extendedKeywords:
+- combining elements without forcing their fusion
+- the slow work of finding correct measure
+- bringing extremes into workable proportion
+- patience that allows synthesis to form
+- the steady hand that does not over-pour
+- harmonisation that preserves the integrity of what is mixed
+- pacing as structural method
+- the moment where opposites become usable together
+
+essenceSentence:
+Disparate elements are brought into right proportion through patient measure, producing synthesis that preserves the integrity of what is combined.
+
+coreMeaning:
+Temperance integrates what Death has cleared the ground for. Where Death removes the form that could not continue, Temperance combines what remains into workable proportion, converting ending into the patient synthesis that follows. Its function is not compromise but correct measure: the deliberate blending of elements that retain their distinctness while becoming usable together. The card represents the alchemical pause where extremes are brought into balance through pacing rather than force, and where what was previously incompatible finds the proportion that allows it to function as a whole.
+
+arrivalBehaviour:
+Sets the field as measured and integrative. It defines the space as one where pacing matters, where extremes are being brought into proportion, and where synthesis is being formed through patient combination rather than imposed resolution. The register is steady, deliberate, and oriented toward workable balance.
+
+responseBehaviour:
+Negotiates by introducing measure into the existing field. It does not force the prior card's material into resolution but blends it with what is present, finding the proportion that allows previously disparate elements to function together.
+
+relationalEffect:
+balances — brings adjacent cards into workable proportion, finding the measure that allows them to function together
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- imbalance
+- excess
+- forced synthesis
+- impatience
+- mismeasured combination
+
+extendedKeywords:
+- pouring without proportion
+- combining elements that cannot yet integrate
+- the rush that prevents synthesis from forming
+- balance attempted through suppression rather than measure
+- excess in one direction that distorts the whole
+- the hand that does not steady itself
+- patience refused or unavailable
+- mixture that produces strain rather than wholeness
+
+essenceSentence:
+Synthesis fails when measure is lost, producing imbalance, excess, or combination forced before the elements can integrate.
+
+coreMeaning:
+Reversed Temperance loses the patient function of measure. Either pacing collapses into impatience, producing forced synthesis that distorts what is being combined, or one element is allowed to dominate, producing excess that pulls the whole out of proportion. The card's steady hand becomes either rushed or unsteady. What should have been the slow work of finding correct measure becomes either the demand for immediate resolution or the failure to recognise when proportion has tipped, and the synthesis that integration requires does not form.
+
+arrivalBehaviour:
+Sets the field as imbalanced or rushed. It defines the space through measure that has been lost, creating a register where combination is being attempted without the pacing required for synthesis, or where excess in one direction has distorted the proportion of the whole.
+
+responseBehaviour:
+Negotiates by forcing or distorting measure within the existing field. It either rushes the prior card's material into combination before it can integrate, or allows one element to dominate, producing excess that strains rather than balances.
+
+relationalEffect:
+strains — forces adjacent cards into combination without measure, producing excess or distortion rather than synthesis
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Fourteen introduces patient synthesis as the structural counterpart to definitive ending. Temperance converts the cleared ground of the Thirteen into integrated combination, establishing the principle that what follows ending must be brought into proportion before it can be carried forward. It is the card where pacing becomes structural method.
+
+movementUpright:
+integrating
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of measured integration. Upright, the field is set as patiently combining, where extremes are being brought into proportion and synthesis is being formed through pacing. Reversed, the field is conditioned by imbalance or forced combination, where measure has been lost or one element dominates the whole.
+
+whenSecond:
+Integrates or strains what has come before. Upright, it brings the prior card's material into proportion with what is present, finding the measure that allows synthesis to form. Reversed, it either rushes the prior card into combination before it can integrate, or allows excess to distort the proportion of the whole.
+
+pairingTendencies:
+- With Major Arcana: Two structural forces meet at the level of patient synthesis; Temperance asks whether the other archetype's energy can be brought into measured proportion or whether it resists the pacing required for integration.
+- With Court Cards: The personal embodiment is met with the demand for measure; the Court figure either reveals integrated proportion or exposes the gap between presented balance and the excess or rush operating beneath it.
+- With same suit: Synthesis is amplified within a single domain; combination and proportion reinforce each other, producing integrated wholeness or, reversed, compounded imbalance.
+- With conflicting suit: Tension between measured integration and an opposing register; synthesis must contend with currents that demand immediate resolution or refuse the pacing required for combination to hold.
+
+specificPairings:
+- With The Devil: Patient synthesis meets bound excess, exposing the difference between measure that integrates and attachment that has lost proportion.
+- With Death: Cleared ground is integrated through patient combination, converting release into synthesis.
+- With Two of Cups: Measured integration repeats at the relational level, amplifying mutual proportion or imbalance that mimics union.
+
+---
+
+## The Devil
+
+cardId: the-devil
+arcana: Major
+suit: None
+rank: None
+number: 15
+image: /images/tarot/the-devil.jpg
+
+---
+
+### Upright
+
+keywords:
+- binding attachment
+- unconscious compulsion
+- material entanglement
+- shadow made visible
+- chosen captivity
+
+extendedKeywords:
+- the chain that is held in the hand rather than locked at the wrist
+- attachment that operates beneath conscious choice
+- desire that has captured the will rather than serving it
+- the structure of compulsion made visible
+- material binding mistaken for material reality
+- the shadow that runs the situation while denying it does so
+- captivity preserved because release would require facing what is bound
+- the gap between what is named and what actually holds
+
+essenceSentence:
+Attachment binds beneath conscious awareness, producing captivity that is preserved precisely because it is not seen for what it is.
+
+coreMeaning:
+The Devil reveals what Temperance's measured synthesis cannot integrate. Where Temperance brings disparate elements into workable proportion, the Devil exposes the binding that resists proportion entirely, the attachment that operates beneath conscious choice and shapes the field through compulsion rather than commitment. Its function is not moral but structural: the visibility of what has captured the will. The card marks the moment where shadow becomes legible, where the chain is recognised as held rather than locked, and where the captivity organising behaviour is shown to be sustained by something other than what it claims.
+
+arrivalBehaviour:
+Sets the field as bound and compulsive. It defines the space as one where attachment is operating beneath the surface, where the visible terms are not the real terms, and where compulsion is shaping movement more than choice. The register is heavy, charged, and structurally captured.
+
+responseBehaviour:
+Negotiates by exposing binding within the existing field. It does not engage the prior card on its stated terms but reveals what has actually been holding the configuration in place, surfacing the attachment beneath the surface and changing what the interaction is actually about.
+
+relationalEffect:
+binds — exposes the attachment holding adjacent cards in place, revealing compulsion operating beneath conscious choice
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- recognised binding
+- breaking compulsion
+- release of attachment
+- shadow integrated
+- chains acknowledged
+
+extendedKeywords:
+- the moment where the held chain is seen as held
+- the loosening that follows recognition
+- attachment named and therefore moveable
+- compulsion that loses force when its source is identified
+- the work of unbinding from what was chosen unconsciously
+- release that requires facing what was kept hidden
+- the structure of captivity examined rather than re-enacted
+- shadow brought into conscious relationship rather than denied
+
+essenceSentence:
+Binding is recognised for what it is, allowing the attachment beneath awareness to begin loosening through conscious acknowledgment.
+
+coreMeaning:
+Reversed Devil performs the structural inversion of the upright. Where the upright reveals binding while it is still operating, the reversed marks the recognition that begins to loosen it. Attachment is named, the chain is seen as held, and the compulsion running beneath consciousness loses its capacity to organise behaviour. The card shifts from exposure to release. What was captivity preserved by denial becomes captivity that can be examined, and the work of unbinding becomes possible because the binding is no longer hidden.
+
+arrivalBehaviour:
+Sets the field as recognising and loosening. It defines the space as one where attachment is being acknowledged, where compulsion is becoming examinable, and where binding is beginning to lose its automatic force. The register is sober, clarifying, and oriented toward release.
+
+responseBehaviour:
+Negotiates by acknowledging binding within the existing field. It surfaces the attachment holding the prior card's material in place, but in a register that allows recognition rather than continued capture, initiating structural release.
+
+relationalEffect:
+loosens — surfaces binding in adjacent cards in a way that allows it to be acknowledged and begin releasing
+
+interactionStyle:
+integrating
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+Fifteen introduces the structural visibility of shadow. The Devil converts the synthesis of the Fourteen into recognition of what cannot be integrated, establishing the principle that binding and unconscious attachment must become visible before the sequence can continue. It is the card where compulsion becomes structurally legible.
+
+movementUpright:
+stalled
+
+movementReversed:
+releasing
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of bound attachment. Upright, the field is set as compulsively organised, where binding operates beneath the stated terms and shapes movement through attachment rather than choice. Reversed, the field is conditioned by recognised binding, where the chain has been acknowledged and release has begun.
+
+whenSecond:
+Binds or loosens what has come before. Upright, it exposes the attachment holding the prior card's material in place, changing the interaction by surfacing what was operating beneath the surface. Reversed, it acknowledges that binding and begins the structural release recognition allows.
+
+pairingTendencies:
+- With Major Arcana: Binding meets archetypal force; the Devil tests whether the other archetype can withstand having its attachments made visible.
+- With Court Cards: The personal embodiment is confronted with its binding; the Court figure reveals either awareness of what binds them or the gap between stated freedom and actual compulsion.
+- With same suit: Binding intensifies within a single domain; attachment reinforces itself, producing capture or, reversed, recognition and release.
+- With conflicting suit: Tension between binding and opposing logic; compulsion must contend with forces that expose or disrupt what it seeks to maintain.
+
+specificPairings:
+- With The Lovers: Conscious choice meets unconscious binding, exposing whether union is freely chosen or structurally held.
+- With Temperance: Measured integration meets bound excess, exposing the difference between proportion and attachment that cannot be balanced.
+- With The Tower: Binding is followed by collapse, converting attachment into the breaking of the structure that sustained it.
+
+---
+
+## The Tower
+
+cardId: the-tower
+arcana: Major
+suit: None
+rank: None
+number: 16
+image: /images/tarot/the-tower.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural collapse
+- sudden revelation
+- forced clearing
+- shattered form
+- ground broken open
+
+extendedKeywords:
+- the form that could not be released voluntarily and must therefore be broken
+- collapse that exposes what was being held in place by force
+- the lightning strike that no negotiation prevents
+- structure failing under pressure it could no longer absorb
+- truth arriving through rupture rather than recognition
+- the falling that clears what could not be cleared otherwise
+- foundation revealed by the loss of what was built on it
+- the moment where what cannot continue is taken down
+
+essenceSentence:
+A structure that could not be released is broken open, exposing the ground that was held in place by force.
+
+coreMeaning:
+The Tower performs the structural collapse that the Devil's binding could not release through recognition alone. Where the Devil exposes attachment, the Tower removes the form that attachment was holding in place, converting unconscious binding into the breaking of what could not otherwise be let go. Its function is forced clearing. The collapse occurs because the structure has been sustained past its capacity to hold. The lightning is the arrival of truth faster than gradual acknowledgment would permit. What was being held is revealed by the loss of the holding.
+
+arrivalBehaviour:
+Sets the field as collapsing and exposing. It defines the space as one where structure is failing under pressure it can no longer absorb, where what was held in place is being taken down, and where ground is being opened through rupture. The register is sudden, exposing, and structurally final.
+
+responseBehaviour:
+Negotiates by collapsing the existing field. It does not adjust the prior card but breaks the structure that was holding it, forcing the configuration into the clearing that voluntary release could not produce.
+
+relationalEffect:
+shatters — breaks the structure adjacent cards were operating within, forcing exposure that could not be reached through gradual acknowledgment
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- delayed collapse
+- partial revelation
+- avoided rupture
+- internal fracture
+- structure failing without falling
+
+extendedKeywords:
+- the collapse that has begun but has not yet broken through
+- form held together past the point where it can hold
+- rupture experienced internally without external release
+- structure fracturing privately while presenting intact
+- revelation arriving in fragments rather than event
+- pressure accumulating without discharge
+- collapse postponed at increasing structural cost
+- breakdown managed rather than released
+
+essenceSentence:
+The collapse required is delayed or partial, leaving form fracturing internally without producing the clearing that rupture would bring.
+
+coreMeaning:
+Reversed Tower loses the function of forced clearing. Collapse is delayed, partial, or internalised. Structure fractures but does not fall. Pressure accumulates or discharges in fragments. The result is prolonged strain rather than decisive clearing. What should have been released remains in compromised form. The ground is not cleared, and the configuration persists in instability.
+
+arrivalBehaviour:
+Sets the field as fracturing and unresolved. It defines the space through collapse that has been delayed or partial, creating a register where structure is failing without falling and revelation is incomplete.
+
+responseBehaviour:
+Negotiates by introducing fracture without release. It strains the prior card's structure but does not break it, leaving the interaction in unresolved breakdown.
+
+relationalEffect:
+fractures — introduces structural strain in adjacent cards without producing the clearing that complete collapse would bring
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Sixteen introduces forced structural clearing. The Tower converts recognised attachment into collapse, establishing the principle that when release is refused, rupture will perform it. It is the point where structural truth overrides maintained form.
+
+movementUpright:
+descending
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as structural collapse. Upright, the field is set as breaking open, where form fails and ground is cleared through rupture. Reversed, the field is conditioned by delayed or partial collapse, where structure fractures without releasing.
+
+whenSecond:
+Collapses or fractures what has come before. Upright, it breaks the prior card's structure completely, forcing exposure. Reversed, it introduces strain without release, leaving the prior configuration unstable but intact.
+
+pairingTendencies:
+- With Major Arcana: Collapse meets archetypal force; the Tower tests whether the other structure can withstand accumulated pressure or must break.
+- With Court Cards: The personal embodiment is destabilised; the figure either releases with the collapse or is exposed by resisting it.
+- With same suit: Collapse amplifies within a domain; rupture compounds into full clearing or, reversed, sustained fracture.
+- With conflicting suit: Tension between rupture and continuity; collapse meets forces attempting to stabilise or maintain form.
+
+specificPairings:
+- With The Emperor: Built structure meets collapse; form is tested for integrity and either holds or is destroyed.
+- With The Devil: Binding converts to collapse; what was recognised but not released is forcibly broken.
+- With Five of Pentacles: Collapse repeats materially; structural failure manifests as loss or exposure in lived conditions.
+
+---
+
+## The Star
+
+cardId: the-star
+arcana: Major
+suit: None
+rank: None
+number: 17
+image: /images/tarot/the-star.jpg
+
+---
+
+### Upright
+
+keywords:
+- restored hope
+- quiet renewal
+- replenishment
+- guiding orientation
+- openness recovered
+
+extendedKeywords:
+- the calm that follows structural rupture
+- renewal that does not require effort to receive
+- the still water that allows replenishment
+- orientation through distant light rather than immediate path
+- trust restored after collapse
+- vulnerability held without defence
+- the openness that becomes possible once force is no longer holding form
+- guidance that arrives through stillness rather than direction
+
+essenceSentence:
+After collapse, openness is recovered, and renewal arrives quietly through the trust that becomes possible when defence is no longer required.
+
+coreMeaning:
+The Star restores what the Tower's collapse made possible. Where the Tower breaks the structure that could no longer hold, the Star opens the field that follows, converting forced clearing into quiet renewal. Its function is structural openness. Trust returns not as belief but as condition. The card marks the moment where vulnerability is no longer a risk to manage but a state that allows replenishment. Guidance shifts from direction to orientation. Nothing is forced. What restores does so because defence is no longer present.
+
+arrivalBehaviour:
+Sets the field as open and replenishing. It defines the space as one where defence has been released, where trust is structurally available, and where renewal occurs through stillness rather than effort. The register is calm, unguarded, and quietly orienting.
+
+responseBehaviour:
+Negotiates by opening the existing field. It does not engage the prior card on defended terms but removes the need for defence, allowing what was strained or collapsed to begin restoring through openness.
+
+relationalEffect:
+restores — opens adjacent cards to replenishment by removing the need for defence
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- depleted hope
+- disconnection from renewal
+- closed openness
+- guidance lost
+- trust withheld
+
+extendedKeywords:
+- the well that cannot be drawn from
+- renewal refused or unavailable
+- vulnerability hardened back into defence
+- distant light obscured or ignored
+- replenishment interrupted before completion
+- openness closed before it can be received
+- discouragement preventing restoration
+- orientation lost through mistrust
+
+essenceSentence:
+Renewal fails when openness is refused, depleted, or closed before replenishment can be received.
+
+coreMeaning:
+Reversed Star loses openness as structural function. Renewal is either unavailable or refused. Trust collapses back into defence. What was offered quietly cannot land. The field remains depleted not because restoration is impossible, but because the condition required to receive it is absent. Guidance is obscured not by distance but by closure. The card marks the failure to remain open long enough for replenishment to take hold.
+
+arrivalBehaviour:
+Sets the field as depleted or closed. It defines the space through withheld openness or unavailable renewal, creating a register where restoration cannot land.
+
+responseBehaviour:
+Negotiates by withholding openness. It either refuses the renewal the prior card allows, or absorbs it into closure, preventing replenishment from completing.
+
+relationalEffect:
+withholds — closes adjacent cards off from renewal by reintroducing defence
+
+interactionStyle:
+internalised
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+Seventeen introduces renewal following collapse. The Star converts the clearing of Sixteen into openness that allows replenishment, establishing the principle that recovery requires receptivity rather than effort. It is where openness becomes structural method.
+
+movementUpright:
+inward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of restored openness. Upright, the field is set as replenishing, where defence is absent and renewal is available. Reversed, the field is conditioned by closure or depletion, where openness is unavailable or refused.
+
+whenSecond:
+Restores or blocks renewal in what has come before. Upright, it opens the prior card to replenishment, allowing recovery to begin. Reversed, it prevents that recovery by closing the field, leaving depletion in place.
+
+pairingTendencies:
+- With Major Arcana: Openness meets archetypal force; the Star tests whether the other structure can release defence and receive renewal.
+- With Court Cards: The personal embodiment is offered restoration; the figure either accepts openness or reveals the defence preventing it.
+- With same suit: Renewal amplifies within a domain; openness reinforces restoration or, reversed, deepens depletion.
+- With conflicting suit: Tension between stillness and demand; renewal meets forces requiring action or structure rather than receptivity.
+
+specificPairings:
+- With The Tower: Collapse resolves into renewal; forced clearing is followed by openness that allows restoration.
+- With The Hermit: Solitude meets replenishment; inward reflection integrates with renewed openness.
+- With Five of Cups: Loss meets restoration; grief either opens into renewal or remains closed against it.
+
+---
+
+## The Moon
+
+cardId: the-moon
+arcana: Major
+suit: None
+rank: None
+number: 18
+image: /images/tarot/the-moon.jpg
+
+---
+
+### Upright
+
+keywords:
+- unconscious surfacing
+- ambiguity
+- distorted perception
+- liminal terrain
+- intuitive navigation
+
+extendedKeywords:
+- the territory that cannot be seen clearly but must be crossed
+- material rising from beneath conscious awareness
+- the path that shifts depending on what light is cast on it
+- ambiguity that resists premature resolution
+- intuition required precisely because perception is unreliable
+- the field where what is feared and what is real become difficult to separate
+- navigation through terrain that does not stabilise
+- the moment where what was beneath the surface begins to become visible without yet being legible
+
+essenceSentence:
+Unconscious material surfaces into perception that cannot fully resolve it, requiring navigation through ambiguity rather than clarity.
+
+coreMeaning:
+The Moon exposes what the Star's openness allowed to surface. Where the Star restores trust through openness, the Moon brings into view the material that openness made accessible. Its function is partial visibility. What emerges is not yet legible. The terrain shifts. Perception cannot stabilise it. The card requires navigation without resolution. Intuition replaces certainty. What is being crossed cannot be fully known while it is being crossed.
+
+arrivalBehaviour:
+Sets the field as ambiguous and unstable. It defines the space as one where unconscious material is surfacing, where perception cannot resolve what is present, and where the terrain itself does not hold steady. The register is shifting, uncertain, and charged.
+
+responseBehaviour:
+Negotiates by surfacing what was not visible. It does not engage the prior card on its stated terms but exposes what was beneath them, altering what the interaction is actually navigating.
+
+relationalEffect:
+obscures — surfaces unconscious material in adjacent cards while preventing clear resolution, forcing intuitive navigation
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- illusion
+- confusion mistaken for depth
+- unconscious projection
+- distorted intuition
+- self-deception
+
+extendedKeywords:
+- projection taken as perception
+- ambiguity exploited rather than navigated
+- intuition detached from grounded reference
+- unconscious content mistaken for guidance
+- fear shaping the terrain rather than being met within it
+- confusion presented as insight
+- looping projection reinforcing itself
+- the field captured by what should have been examined
+
+essenceSentence:
+Ambiguity collapses into illusion when unconscious material is mistaken for guidance rather than navigated with awareness.
+
+coreMeaning:
+Reversed Moon loses the function of ambiguity. The terrain is no longer being crossed but inhabited as illusion. Projection replaces perception. What surfaces is taken as truth rather than examined. The field becomes self-reinforcing. Confusion organises behaviour. What should have required navigation becomes something that captures the navigator. The card marks the failure to distinguish between what is seen and what is projected.
+
+arrivalBehaviour:
+Sets the field as illusory and unstable. It defines the space through projection, where confusion is mistaken for insight and unconscious material shapes perception without being recognised.
+
+responseBehaviour:
+Negotiates by amplifying distortion. It absorbs the prior card into projection, reshaping what is present into something that appears meaningful but is not grounded.
+
+relationalEffect:
+distorts — captures adjacent cards in projection that mimics insight, preventing navigation through ambiguity
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Eighteen introduces the test of navigating ambiguity. The Moon converts openness into surfacing, establishing the principle that what rises must be crossed before it can be understood.
+
+movementUpright:
+inward
+
+movementReversed:
+cyclical
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as ambiguous and shifting. Upright, the field is set as unstable, where unconscious material is surfacing and cannot yet be resolved. Reversed, the field is conditioned by illusion, where ambiguity has collapsed into projection.
+
+whenSecond:
+Surfaces or distorts what has come before. Upright, it reveals what was beneath the prior card, changing the nature of the interaction. Reversed, it absorbs the prior card into projection, preventing clarity from forming.
+
+pairingTendencies:
+- With Major Arcana: Ambiguity meets archetypal force; the Moon tests whether the structure can operate without clarity.
+- With Court Cards: The personal embodiment must navigate uncertainty; the figure either holds intuitive awareness or collapses into projection.
+- With same suit: Surfacing intensifies; intuition deepens or illusion compounds.
+- With conflicting suit: Tension between ambiguity and definition; the field resists clarity demanded by opposing forces.
+
+specificPairings:
+- With The High Priestess: Inner perception meets unconscious surfacing; depth either clarifies or deepens into obscurity.
+- With The Sun: Ambiguity meets clarity; the field resolves or exposes the contrast between what can and cannot be seen.
+- With Seven of Cups: Projection amplifies; multiple possibilities either require navigation or become illusion.
+
+---
+
+## The Sun
+
+cardId: the-sun
+arcana: Major
+suit: None
+rank: None
+number: 19
+image: /images/tarot/the-sun.jpg
+
+---
+
+### Upright
+
+keywords:
+- full illumination
+- vitality
+- clarity without distortion
+- integrated visibility
+- unguarded presence
+
+extendedKeywords:
+- light that exposes without consuming
+- vitality expressed without defence
+- clarity that has nothing to conceal
+- the warmth that allows growth to continue in plain sight
+- presence that does not need to perform itself
+- truth that has emerged from ambiguity into legible form
+- the energy that follows successful navigation of what was hidden
+- visibility that is structurally earned rather than imposed
+
+essenceSentence:
+Full illumination follows successful navigation of ambiguity, producing vitality and clarity that no longer require defence.
+
+coreMeaning:
+The Sun completes the emergence initiated by the Moon. Where the Moon surfaces and destabilises perception, the Sun resolves that material into full visibility. Its function is earned clarity. Nothing remains concealed. The field becomes legible without distortion. Vitality is not imposed but arises from what has been successfully crossed. Presence sustains itself because it no longer needs protection. The card marks the condition where light is no longer revealing something, it is the state in which everything is already revealed.
+
+arrivalBehaviour:
+Sets the field as fully illuminated. It defines the space as one where clarity is structurally present, where nothing requires concealment, and where vitality is expressed without defence. The register is warm, direct, and fully visible.
+
+responseBehaviour:
+Negotiates by illuminating what is present. It brings the prior card fully into visibility, removing distortion, concealment, or ambiguity, and allowing the interaction to resolve through clarity.
+
+relationalEffect:
+illuminates — brings adjacent cards into full visibility, removing distortion and allowing clear expression
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- dimmed vitality
+- false brightness
+- visibility refused
+- forced positivity
+- clarity that does not arrive
+
+extendedKeywords:
+- light performed rather than present
+- vitality that cannot sustain itself
+- brightness used to conceal rather than reveal
+- clarity claimed before it is earned
+- presence that cannot relax into visibility
+- positivity masking unresolved material
+- warmth that does not reach what requires it
+- the appearance of illumination without its structure
+
+essenceSentence:
+Illumination fails when clarity is performed rather than earned, leaving vitality dimmed or falsely expressed.
+
+coreMeaning:
+Reversed Sun breaks the integrity of illumination. Either the light is insufficient, leaving the field dim and unable to fully express itself, or it is forced, producing brightness that conceals rather than reveals. The card marks a failure to complete the process that produces clarity. What appears visible is not fully seen. What appears vital cannot sustain itself. The field either lacks illumination or imitates it. In both cases, the clarity required to resolve the interaction is not structurally present.
+
+arrivalBehaviour:
+Sets the field as dimmed or artificially bright. It defines the space through insufficient vitality or performed illumination, creating a register where presence is either weakened or overstated.
+
+responseBehaviour:
+Negotiates by dimming or distorting visibility. It either fails to fully illuminate the prior card, leaving it unresolved, or imposes clarity where it has not been earned, masking what remains unseen.
+
+relationalEffect:
+dims — prevents adjacent cards from reaching full visibility, leaving them partially concealed or falsely illuminated
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Nineteen completes emergence into illumination. The Sun converts the ambiguity of the Eighteen into clarity, establishing the principle that what has been navigated becomes fully visible and structurally present.
+
+movementUpright:
+outward
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of full clarity. Upright, the field is set as visible and vital, where nothing requires concealment. Reversed, the field is conditioned by dimmed or false illumination, where clarity is either absent or performed.
+
+whenSecond:
+Illuminates or distorts what has come before. Upright, it brings the prior card into full visibility, resolving ambiguity or concealment. Reversed, it either fails to illuminate or falsely resolves, leaving distortion in place.
+
+pairingTendencies:
+- With Major Arcana: Illumination meets archetypal force; the Sun tests whether the structure can sustain full visibility.
+- With Court Cards: The personal embodiment is exposed; the figure either stands in clarity or reveals where visibility cannot be maintained.
+- With same suit: Illumination amplifies; clarity strengthens or, reversed, exaggeration compounds distortion.
+- With conflicting suit: Tension between visibility and concealment; clarity meets forces operating through ambiguity or structure.
+
+specificPairings:
+- With The Moon: Polarity resolved; ambiguity becomes clarity or the contrast between them is exposed.
+- With Judgement: Illumination becomes recognition; what is visible is now called forward into structural response.
+- With Nine of Cups: Visibility meets satisfaction; contentment is either fully realised or revealed as incomplete.
+
+---
+
+## Judgement
+
+cardId: judgement
+arcana: Major
+suit: None
+rank: None
+number: 20
+image: /images/tarot/judgement.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural awakening
+- definitive recognition
+- the call answered
+- accumulated truth made legible
+- threshold of becoming
+
+extendedKeywords:
+- the moment where what has been integrated is summoned forward
+- recognition that arrives as call rather than conclusion
+- the verdict rendered by accumulated experience itself
+- awakening that requires response rather than reflection
+- the past gathered and converted into directional clarity
+- standing up to what has been seen
+- the threshold where becoming is ready to be enacted
+- the call that cannot be answered by anyone else
+
+essenceSentence:
+Accumulated experience becomes legible as call, requiring definitive recognition and response.
+
+coreMeaning:
+Judgement converts the Sun's illumination into decisive awakening. Where the Sun establishes full visibility, Judgement renders that visibility actionable. Its function is summoning. What has been integrated is no longer observed but called forward. The card marks the moment where accumulated experience becomes directional, where recognition requires response, and where the threshold of becoming is crossed not by acquiring more but by acting on what is already complete enough.
+
+arrivalBehaviour:
+Sets the field as summoning and decisive. It defines the space as one where accumulated experience is converting into direction, where recognition is unavoidable, and where response is structurally required. The register is rising, clear, and irreversible.
+
+responseBehaviour:
+Negotiates by calling forward what is already present. It converts the prior card's material into directional clarity, requiring the interaction to recognise what it has become and respond accordingly.
+
+relationalEffect:
+summons — converts adjacent cards' accumulated experience into a call that requires response
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- refused awakening
+- self-criticism
+- call unrecognised
+- delayed recognition
+- accumulated experience denied
+
+extendedKeywords:
+- the call that is heard but not answered
+- recognition deflected into self-evaluation
+- accumulated truth turned inward as judgement rather than direction
+- awakening stalled at the threshold
+- the past revisited instead of enacted
+- response avoided through analysis or doubt
+- the call present but not received
+- recognition that cannot land
+
+essenceSentence:
+Awakening fails when the call is refused or diverted into self-criticism instead of response.
+
+coreMeaning:
+Reversed Judgement interrupts awakening. The call is either not recognised or not acted upon. Accumulated experience becomes material for self-criticism rather than direction. The threshold is reached but not crossed. Instead of summoning forward, the card loops back into evaluation. What should resolve into action remains suspended in reflection. The failure is not lack of readiness, but refusal to respond to what is already known.
+
+arrivalBehaviour:
+Sets the field as stalled or self-critical. It defines the space through recognition that has not been acted on, creating a register where the call is present but not answered.
+
+responseBehaviour:
+Negotiates by deflecting the call. It either fails to convert the prior card's material into direction or absorbs it into self-evaluation, preventing action.
+
+relationalEffect:
+deflects — prevents adjacent cards from resolving into action by diverting recognition into hesitation or critique
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+Twenty introduces structural awakening. Judgement converts illumination into action, establishing the principle that what has been seen must be responded to before completion can occur.
+
+movementUpright:
+ascending
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as awakening. Upright, the field is set as decisive and summoning, where accumulated experience becomes direction. Reversed, the field is conditioned by refusal or delay, where recognition is present but not enacted.
+
+whenSecond:
+Summons or deflects what has come before. Upright, it converts prior material into direction and response. Reversed, it prevents that conversion, leaving the interaction unresolved.
+
+pairingTendencies:
+- With Major Arcana: Awakening meets archetypal force; Judgement tests whether the structure can resolve into action.
+- With Court Cards: The personal embodiment is called forward; the figure either responds or reveals avoidance.
+- With same suit: Awakening amplifies; recognition reinforces action or, reversed, reinforces delay.
+- With conflicting suit: Tension between action and hesitation; the call meets forces that resist resolution.
+
+specificPairings:
+- With The Sun: Illumination becomes action; clarity resolves into recognition that demands response.
+- With The World: Awakening completes into integration; the call resolves into closure of the cycle.
+- With Five of Pentacles: Recognition meets exclusion; the call tests whether what is available can be received or remains unanswered.
+
+---
+
+## The World
+
+cardId: the-world
+arcana: Major
+suit: None
+rank: None
+number: 21
+image: /images/tarot/the-world.jpg
+
+---
+
+### Upright
+
+keywords:
+- structural completion
+- integrated wholeness
+- cycle fulfilled
+- arrival
+- closure that opens
+
+extendedKeywords:
+- the form that has finished becoming itself
+- completion that contains rather than ends
+- wholeness as the integration of every prior stage
+- arrival that requires no further development to be complete
+- the close that makes the next opening possible
+- the moment where the sequence resolves into its own shape
+- integration that has nothing left to exclude
+- the structural state in which what was begun has been fully realised
+
+essenceSentence:
+The cycle is fulfilled, and integration is complete in a wholeness that contains every stage that produced it.
+
+coreMeaning:
+The World completes the structural cycle initiated by The Fool. Where The Fool opens the field, The World closes it through integrated wholeness. Its function is completion that contains. Every stage is absorbed into a final configuration that requires no further development. This is not an ending that removes what came before, but one that includes it fully. The card represents arrival as a load-bearing state, where the cycle resolves into its own shape and simultaneously becomes the threshold for what follows.
+
+arrivalBehaviour:
+Sets the field as complete and integrated. It defines the space as one where development has resolved, where all prior stages are contained, and where no further progression is structurally required. The register is full, stable, and self-contained.
+
+responseBehaviour:
+Negotiates by completing what is present. It integrates the prior card's material into a resolved whole, converting the interaction into a state where development has finished and nothing further needs to be added.
+
+relationalEffect:
+completes — integrates adjacent cards into a unified state that contains all prior development
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- delayed completion
+- unfinished cycle
+- arrival deferred
+- integration incomplete
+- closure that does not close
+
+extendedKeywords:
+- the wholeness that has not fully formed
+- completion approached but not entered
+- the cycle looping without resolution
+- arrival repeatedly postponed
+- integration missing a final structural step
+- the gap between near-completion and actual fulfilment
+- closure performed without being achieved
+- development that cannot finalise itself
+
+essenceSentence:
+Completion is deferred, leaving integration incomplete and the cycle suspended just short of resolution.
+
+coreMeaning:
+Reversed World interrupts completion. The cycle approaches resolution but does not close. Integration is incomplete, or closure is simulated rather than achieved. The structure appears finished but does not hold. The result is repetition, delay, or near-completion that cannot stabilise. What should resolve into wholeness remains suspended, preventing transition into the next cycle.
+
+arrivalBehaviour:
+Sets the field as nearly complete or unstable. It defines the space as one where resolution has not fully landed, creating a register of suspended fulfilment or incomplete closure.
+
+responseBehaviour:
+Negotiates by delaying or simulating completion. It either fails to integrate the prior card's material or forces a premature sense of closure, leaving the structure unresolved.
+
+relationalEffect:
+defers — holds adjacent cards just short of completion, preventing full integration
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+Twenty-one closes the cycle initiated by Zero. The World converts accumulated development into integrated wholeness, establishing the principle that completion contains all prior stages and becomes the threshold for renewal.
+
+movementUpright:
+returning
+
+movementReversed:
+stalled
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as complete. Upright, the field is set as integrated and resolved. Reversed, the field is conditioned by incomplete or unstable closure.
+
+whenSecond:
+Completes or delays what has come before. Upright, it integrates prior material into a finished state. Reversed, it prevents closure or simulates it prematurely.
+
+pairingTendencies:
+- With Major Arcana: Completion meets archetypal force; the World tests whether the structure can resolve fully or requires continued development.
+- With Court Cards: The personal embodiment is brought to completion; the figure either stabilises in wholeness or reveals incomplete integration.
+- With same suit: Completion amplifies; integration strengthens or, reversed, repetition compounds.
+- With conflicting suit: Tension between closure and continuation; completion meets forces that resist resolution.
+
+specificPairings:
+- With The Fool: Completion returns to origin; the end becomes the beginning of the next cycle.
+- With Judgement: Awakening resolves into integration; recognition becomes completion.
+- With Ten of Pentacles: Completion echoes materially; structural wholeness manifests in sustained form or reveals instability in legacy.
+
+---
+
+## Ace of Wands
+
+cardId: ace-of-wands
+arcana: Minor
+suit: Wands
+rank: Ace
+number: None
+image: /images/tarot/ace-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- ignition
+- creative impulse
+- initiating force
+- raw potential
+- emergence
+
+extendedKeywords:
+- the spark before direction is chosen
+- generative energy arriving without form
+- impulse that precedes intention
+- creative force at the moment of first contact
+- the will that has not yet become a plan
+- energy that demands expression
+- beginning that contains no ceiling
+- the moment before movement becomes committed
+
+essenceSentence:
+Creative force arrives at its purest, an impulse that has not yet been shaped by direction or outcome.
+
+coreMeaning:
+The Ace of Wands is the fire principle distilled to its point of origin. It carries no history and no plan, only the raw generative charge that precedes every creative act. Its function is ignition: the moment a dormant field is introduced to energy that will not remain contained. The wand is held from outside the frame, offered rather than possessed, indicating that this force arrives as invitation. Something is beginning that did not exist a moment ago, and it asks only for a hand willing to take hold.
+
+arrivalBehaviour:
+Sets the field as charged and open. It defines the space as one where something new is entering and where existing conditions are about to be animated. The register is energised, expectant, and directional without yet being directed.
+
+responseBehaviour:
+Negotiates by amplifying what is already present. It adds charge to whatever energy has come before, accelerating movement, intensifying latent creative tension, or reigniting what had begun to cool.
+
+relationalEffect:
+ignites — accelerates latent movement in adjacent cards
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- blocked ignition
+- stalled impulse
+- misdirected energy
+- creative hesitation
+- force without outlet
+
+extendedKeywords:
+- the spark that does not catch
+- creative energy turning inward without release
+- impulse blocked at the moment of emergence
+- potential that cannot find its channel
+- enthusiasm that collapses before acting
+- creative restlessness without direction
+- the will that second-guesses itself into stillness
+- energy accumulated with no point of discharge
+
+essenceSentence:
+Creative force is present but blocked, turning restlessly inward without finding the outlet it requires.
+
+coreMeaning:
+Reversed, the Ace of Wands carries its charge but cannot release it. The ignition fails to catch, or the energy is redirected inward, producing restlessness, frustration, or creative paralysis. The impulse is real but obstructed, whether by circumstance, timing, or an inability to commit to direction. The force does not disappear; it accumulates. What has not been allowed expression becomes pressure without purpose, generative energy cycling without a point of discharge.
+
+arrivalBehaviour:
+Sets the field as energised but obstructed. It defines the space as one where creative potential is present but not yet able to move, creating a register of latent pressure and frustrated readiness.
+
+responseBehaviour:
+Negotiates by introducing disruption without resolution. It adds charge to prior material but cannot direct it cleanly, creating agitation, restarts, or energy that disperses before it can be used.
+
+relationalEffect:
+stalls — holds adjacent cards in charged non-release
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+The Ace carries the undivided principle of its suit. It contains everything the suit can become without yet being any particular expression of it. Structurally, it sets a field of pure potential that all subsequent cards will draw from, differentiate, and test.
+
+movementUpright:
+outward propagation of generative force into the field
+
+movementReversed:
+inward cycling of energy without discharge
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as charged and initiating. Upright, it establishes a field of creative potential that the second card must meet, channel, or develop. Reversed, it establishes a field of blocked or frustrated energy that the second card must either unblock or compound.
+
+whenSecond:
+Amplifies what has come before. Upright, it introduces generative force into existing material, accelerating or reigniting it. Reversed, it receives prior energy but cannot direct it, adding agitation or internal pressure to the existing field.
+
+pairingTendencies:
+- With Major Arcana: The raw creative impulse meets archetypal force; the Ace is given shape, direction, or resistance by the larger structural principle present.
+- With Court Cards: The creative charge seeks embodiment; the figure either takes hold of the impulse and directs it or fails to contain the force it has been offered.
+- With same suit: Fire compounds; movement accelerates or, reversed, blocked energy intensifies into frustration or burnout.
+- With conflicting suit: Fire meets Water; creative impulse encounters emotional resistance, dampening, or the demand to feel before acting.
+
+specificPairings:
+- The Emperor — raw creative force is structured into directed action
+- Three of Wands — ignition extends into forward-directed expansion
+- Two of Cups — creative impulse is slowed by relational exchange
+
+---
+
+## Two of Wands
+
+cardId: two-of-wands
+arcana: Minor
+suit: Wands
+rank: Two
+number: None
+image: /images/tarot/two-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- vision
+- deliberate pause
+- personal power
+- horizon held
+- decision before departure
+
+extendedKeywords:
+- the moment of standing at the edge of what has been built
+- creative force that has taken its first form and now surveys
+- power held in the hand while the next move is considered
+- the world as potential seen from a position of existing achievement
+- ambition that has not yet committed to its direction
+- the pause between ignition and trajectory
+- authority that belongs to the one who holds it
+- expansion glimpsed before it is entered
+
+essenceSentence:
+Creative force has found its first foothold and now holds the horizon, weighing what it will become against what it has already made.
+
+coreMeaning:
+The Two of Wands is the moment after ignition when the initial charge has stabilised into personal power and the figure turns outward to consider what comes next. One wand is fixed to the wall; the other is held in hand. What has been built is real, but the world beyond it is larger. The card carries the particular tension of someone who has already achieved something and now stands at the edge of it, looking further. Direction has not yet been chosen, but the capacity to choose is fully present. This is deliberate vision, not restless waiting.
+
+arrivalBehaviour:
+Sets the field as poised and expansive. It defines the space as one where a position of existing power or achievement is being used as a vantage point, where the next move is being held rather than made. The register is steady, contemplative, and forward-facing.
+
+responseBehaviour:
+Negotiates by widening the scope of what is present. It takes prior energy and elevates it to a strategic register, introducing the question of where this leads and what the view from here makes possible.
+
+relationalEffect:
+expands — opens adjacent cards toward larger possibility
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- fear of departure
+- vision without commitment
+- power unused
+- horizon avoided
+- planning that does not move
+
+extendedKeywords:
+- the world held in hand but not entered
+- ambition that turns back toward what is already known
+- expansion glimpsed and then retreated from
+- the plan that is revised rather than executed
+- personal power held too tightly to be used
+- the hesitation that becomes a permanent position
+- vision that does not translate into movement
+- safety chosen at the cost of the larger horizon
+
+essenceSentence:
+The horizon is visible but not entered, and the power to move remains held rather than deployed.
+
+coreMeaning:
+Reversed, the Two of Wands carries its vision but cannot convert it into departure. The figure sees what is possible and turns back. The capacity for expansion is present, but fear of leaving the known position, or an inability to commit to a single direction, keeps movement from beginning. Plans cycle rather than resolve. The wand held in hand becomes something gripped rather than wielded, and the world seen from the parapet remains a view rather than a destination.
+
+arrivalBehaviour:
+Sets the field as suspended between possibility and retreat. It defines the space as one where vision is present but movement is withheld, creating a register of stalled ambition or overcautious deliberation.
+
+responseBehaviour:
+Negotiates by pulling prior energy back toward reconsideration. It receives existing momentum and reintroduces doubt or hesitation, slowing committed movement or redirecting it into further planning.
+
+relationalEffect:
+withholds — holds adjacent cards at the threshold of expansion
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+Two introduces the first pause and the first relationship, here between what has been achieved and what could be entered. It holds the tension between the singular force of the Ace and the committed direction of the Three, functioning as the moment of deliberate choice before trajectory is fixed.
+
+movementUpright:
+forward elevation into strategic horizon-setting
+
+movementReversed:
+returning to prior ground without committing forward
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as a field of considered potential. Upright, it establishes a vantage point from which the second card is surveyed, giving it strategic context. Reversed, it conditions the field with hesitation, requiring the second card to either break the stall or compound it.
+
+whenSecond:
+Receives prior energy and elevates it to a wider register. Upright, it introduces vision and scope to what has come before, asking where the existing force leads. Reversed, it receives prior momentum and introduces second-guessing or retreat, narrowing rather than expanding the field.
+
+pairingTendencies:
+- With Major Arcana: Personal vision meets structural principle; the figure's deliberate pause is either confirmed as necessary or challenged by a force that demands commitment.
+- With Court Cards: The vantage point gains or loses its holder; the figure either embodies the strategic pause or reveals an inability to translate vision into action.
+- With same suit: Fire builds on fire; upright, the trajectory gains scope and momentum; reversed, indecision compounds into prolonged stalling.
+- With conflicting suit: Fire meets Water; the deliberate outward gaze is drawn back into emotional consideration, complicating the clean forward vision with relational or feeling-based resistance.
+
+specificPairings:
+- The Chariot — deliberate vision converts into directed movement
+- Three of Wands — surveyed horizon becomes active trajectory
+- Two of Cups — forward vision is redirected by relational exchange
+
+---
+
+## Three of Wands
+
+cardId: three-of-wands
+arcana: Minor
+suit: Wands
+rank: Three
+number: None
+image: /images/tarot/three-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- expansion
+- committed trajectory
+- foresight
+- ships already launched
+- waiting with purpose
+
+extendedKeywords:
+- the moment when what was planned has been set in motion
+- ambition that has crossed from vision into action
+- watching the horizon for what the decision has made possible
+- movement that is now beyond the point of recall
+- the confidence of one who has already departed inwardly
+- foresight operating from a position of committed investment
+- expansion that has left the shore and is now in open water
+- anticipation that belongs to someone who has already acted
+
+essenceSentence:
+The decision has been made and the ships have sailed; what remains is the purposeful watch for what the commitment will return.
+
+coreMeaning:
+The Three of Wands is the point past decision. Where the Two held the horizon under deliberation, the Three stands at the cliff edge having already sent something out into the world. The ships are visible on the water below, moving away. This is not waiting in uncertainty but watching in confidence, the particular stillness of someone whose investment is already in motion and who now tracks what it will bring back. Expansion is no longer potential; it is underway. The figure does not look back at what was left behind.
+
+arrivalBehaviour:
+Sets the field as already in motion. It defines the space as one where investment has been committed and outcomes are developing beyond direct control, creating a register of forward momentum and purposeful anticipation.
+
+responseBehaviour:
+Negotiates by confirming and extending what is present. It receives prior energy as already-committed, treating existing material as foundation rather than possibility, and turns attention toward what the existing movement will produce.
+
+relationalEffect:
+extends — carries adjacent cards beyond the point of decision
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- returns delayed
+- overextension
+- foresight failed
+- plans adrift
+- commitment without reward
+
+extendedKeywords:
+- ships that have not come back
+- expansion that has moved beyond what can be sustained
+- the cost of having committed before the ground was ready
+- investment that is not returning as expected
+- foresight that missed something essential
+- waiting that has become anxious rather than purposeful
+- the horizon that holds no sign of what was sent out
+- momentum that has carried too far without foundation
+
+essenceSentence:
+What was launched has not returned, and the confidence of commitment is replaced by the strain of waiting for something that may not come.
+
+coreMeaning:
+Reversed, the Three of Wands carries the consequence of committed movement that has not resolved as expected. The ships went out but have not come back, or what returns is not what was sent for. Expansion has outpaced foundation. The foresight that drove the decision missed something, and the figure at the cliff edge now watches an empty horizon. This is not the paralysis of the reversed Two but the particular difficulty of someone who acted and finds the action has not held. Overextension, delays, or miscalculated reach are structurally present.
+
+arrivalBehaviour:
+Sets the field as overextended or unreturned. It defines the space as one where committed movement has not produced expected results, creating a register of strained anticipation or investment that has gone further than the foundation supports.
+
+responseBehaviour:
+Negotiates by introducing the weight of unmet expectation into prior material. It receives existing energy as already-spent and asks what has been produced, adding pressure or recalibration to the field.
+
+relationalEffect:
+strains — introduces tension of unreturned investment into adjacent cards
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+Three is the first expression of a principle in the world, the point where potential has become action and action has produced something observable. It carries the energy of initial returns and first consequences, functioning as the moment the sequence enters reality and begins to encounter what reality does with it.
+
+movementUpright:
+outward expansion into developing return
+
+movementReversed:
+returning under strain from extended reach
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as already in motion. Upright, it establishes a field of committed expansion where the second card is received as part of the developing return. Reversed, it establishes a field of strained or overextended investment that the second card must either relieve or compound.
+
+whenSecond:
+Confirms and extends prior movement. Upright, it receives existing energy as foundation and carries it further outward, treating what came before as already-committed. Reversed, it introduces delay or unreturned investment into prior material, shifting the register from momentum to strain.
+
+pairingTendencies:
+- With Major Arcana: Committed expansion meets archetypal structure; the developing returns are either confirmed, redirected, or complicated by a force larger than the original intention.
+- With Court Cards: The launched investment gains or loses its navigator; the figure either holds the trajectory with confidence or reveals that the commitment has moved beyond their capacity to steer.
+- With same suit: Fire sustains fire; upright, momentum builds and expansion deepens; reversed, overextension compounds or returns compound delays.
+- With conflicting suit: Fire meets Water; outward expansion encounters emotional undertow, and the committed trajectory is complicated by what was not felt before the ships were sent out.
+
+specificPairings:
+- The Star — committed expansion is sustained across distance without immediate return
+- Ace of Wands — original ignition is revealed as the source of current movement
+- Five of Cups — returns register as loss against initial expectation
+
+---
+
+## Four of Wands
+
+cardId: four-of-wands
+arcana: Minor
+suit: Wands
+rank: Four
+number: None
+image: /images/tarot/four-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- celebration
+- earned pause
+- communal joy
+- stable foundation
+- homecoming
+
+extendedKeywords:
+- the moment when effort resolves into festivity
+- a threshold that has been built and is now stood beneath
+- joy that belongs to more than one person
+- the structure that holds the celebration rather than the celebration itself
+- rest that has been earned by what preceded it
+- community gathered at the place of arrival
+- the pause between one movement and the next that is not empty
+- stability experienced as warmth rather than constraint
+
+essenceSentence:
+Effort has produced a stable place of arrival, and what has been built now holds a celebration that belongs to everyone who contributed to it.
+
+coreMeaning:
+The Four of Wands is the first resting point in the suit, but it is not stillness. It is the structured pause that fire earns when it has built something solid enough to gather beneath. The four wands form a canopy hung with flowers; figures celebrate in the space they define. The foundation is real, the joy is earned, and the community is present. This card carries the particular quality of arrival that does not require what comes next to be meaningful. The moment is complete in itself, not as a stopping point but as a homecoming.
+
+arrivalBehaviour:
+Sets the field as celebratory and grounded. It defines the space as one where something has been completed well enough to warrant gathering, creating a register of communal warmth, earned stability, and structured joy.
+
+responseBehaviour:
+Negotiates by providing a stable, welcoming ground for what is present. It receives prior energy as worthy of celebration, converting momentum into arrival and integrating existing material into a shared moment of recognition.
+
+relationalEffect:
+grounds — anchors adjacent cards in stable celebratory resolution
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- disrupted celebration
+- unstable foundation
+- deferred homecoming
+- tension beneath festivity
+- belonging withheld
+
+extendedKeywords:
+- the gathering that does not quite come together
+- a structure that looks like home but does not hold
+- celebration that conceals unresolved tension
+- arrival that does not feel like arrival
+- community present in form but absent in warmth
+- the foundation that requires more work before it can bear weight
+- joy that is performed rather than felt
+- the threshold that has not yet been fully built
+
+essenceSentence:
+The structure of celebration is present but the ground beneath it is unstable, and arrival does not carry the warmth it was meant to hold.
+
+coreMeaning:
+Reversed, the Four of Wands carries the form of celebration without its substance. The canopy is raised but something beneath it is unresolved. The gathering happens but the warmth does not land, or the homecoming is postponed, complicated by tension that the festivity cannot cover. The foundation exists but has not set fully; what was built holds the shape of stability without yet providing it. This is not collapse but incompletion, the particular discomfort of a moment that should feel like arrival but does not.
+
+arrivalBehaviour:
+Sets the field as superficially festive but internally unsettled. It defines the space as one where the conditions for celebration are present but the underlying stability has not fully formed, creating a register of unresolved tension beneath apparent warmth.
+
+responseBehaviour:
+Negotiates by introducing instability into what appears complete. It receives prior energy as needing further grounding, revealing that what looked like arrival has not fully landed, and that the foundation requires more before it can hold.
+
+relationalEffect:
+unsettles — introduces instability into adjacent grounded structures
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+Four is the number of structure, foundation, and stable form. In the Wands suit it marks the first point where fire has produced something solid enough to stand beneath, converting the outward momentum of the preceding cards into a grounded, communal resting point before the suit moves into conflict.
+
+movementUpright:
+integration into stable communal structure
+
+movementReversed:
+stalling within incomplete foundation
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as grounded and celebratory. Upright, it establishes a stable, warm field that the second card enters as a place of earned arrival. Reversed, it establishes a field of apparent stability with unresolved tension beneath, conditioning the second card to either expose or compound the incompletion.
+
+whenSecond:
+Receives prior energy as worthy of celebration and converts it into arrival. Upright, it grounds what has come before in communal warmth and earned rest. Reversed, it receives prior momentum but cannot fully stabilise it, introducing the sense that what appeared complete still requires more.
+
+pairingTendencies:
+- With Major Arcana: Earned celebration meets archetypal force; the stable foundation is either confirmed as a genuine threshold or revealed as insufficient to hold what the larger principle requires.
+- With Court Cards: The communal joy finds or loses its host; the figure either embodies the warmth of arrival or reveals that the gathering lacks genuine centre.
+- With same suit: Fire rests before continuing; upright, the pause deepens into genuine restoration; reversed, unresolved tension beneath the celebration compounds before the suit moves forward.
+- With conflicting suit: Fire meets Water; the earned communal joy encounters emotional complexity, and the warmth of the gathering is tested by feeling that the celebration has not yet addressed.
+
+specificPairings:
+- The Sun — celebration is fully affirmed and radiates outward
+- Ten of Wands — stable pause contrasts with accumulated burden
+- Five of Swords — celebration is undermined by unresolved conflict
+
+---
+
+## Five of Wands
+
+cardId: five-of-wands
+arcana: Minor
+suit: Wands
+rank: Five
+number: None
+image: /images/tarot/five-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- conflict
+- competition
+- scattered energy
+- contested ground
+- creative friction
+
+extendedKeywords:
+- multiple forces moving without coordination
+- the friction that precedes alignment
+- competition that has not yet produced a winner
+- energy that is real but pulling in too many directions
+- the clash of wills that is not yet destructive
+- disagreement as a generative rather than terminal state
+- the moment when many fires occupy the same field
+- struggle that contains more vitality than resolution
+
+essenceSentence:
+Multiple forces contest the same ground, and the friction between them is real but not yet resolved into either destruction or direction.
+
+coreMeaning:
+The Five of Wands is the disruption that follows the earned stability of the Four. Five figures raise their wands against each other, but no one is struck and no ground is clearly won. This is contest without conclusion, conflict that has not yet organised itself into opposition with clear sides. The energy is genuine and high; the problem is coordination, not power. Creative friction, competitive pressure, and the clash of differing wills occupy the same field simultaneously. The card does not resolve this; it presents it as the condition that must be moved through before the suit can continue.
+
+arrivalBehaviour:
+Sets the field as contested and energised. It defines the space as one where multiple forces are active and in friction with each other, creating a register of productive disruption, competitive pressure, and unresolved contest that demands engagement rather than retreat.
+
+responseBehaviour:
+Negotiates by introducing friction into what is present. It receives prior energy and immediately brings it into contact with competing forces, disrupting settled or singular momentum and requiring the existing field to prove itself against resistance.
+
+relationalEffect:
+disrupts — introduces competing forces into adjacent cards
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- avoided conflict
+- suppressed competition
+- internal friction
+- pointless struggle
+- conflict turned inward
+
+extendedKeywords:
+- the contest that no one will name
+- friction that has no productive outlet
+- competition collapsing into avoidance or sabotage
+- the struggle that is happening beneath the surface
+- energy that cannot find a clean point of contact
+- conflict internalised until it becomes self-opposition
+- disagreement that will not declare itself
+- the wasted friction of forces that will not meet directly
+
+essenceSentence:
+The contest has turned inward or underground, and the friction that could have been productive becomes energy spent against itself.
+
+coreMeaning:
+Reversed, the Five of Wands carries its conflict without its vitality. The competing forces do not meet cleanly; instead, the contest goes underground, becomes passive, or turns inward. Disagreement that will not name itself, competition expressed through sabotage or avoidance, internal friction that produces no forward movement. The energy is still present but has lost its directness. What could have been a productive clash becomes a dispersal of force with no point of resolution, leaving the field drained rather than charged.
+
+arrivalBehaviour:
+Sets the field as suppressed or internally conflicted. It defines the space as one where friction is present but not surfacing cleanly, creating a register of unacknowledged tension, misdirected energy, and conflict that has nowhere productive to go.
+
+responseBehaviour:
+Negotiates by internalising the friction of what is present. It receives prior energy and turns it back on itself, converting forward momentum into circular struggle or introducing the sense that resistance is coming from within rather than without.
+
+relationalEffect:
+scatters — disperses adjacent card energy into internal friction
+
+interactionStyle:
+internalised
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Fire
+
+numericalFunction:
+Five is the number of disruption and challenge, the point where the stability of four is broken open and tested. In the Wands suit it marks the moment where accumulated fire energy encounters resistance from multiple directions simultaneously, converting the structured rest of the Four into active, unresolved contest before the suit can move toward mastery.
+
+movementUpright:
+outward collision of competing forces
+
+movementReversed:
+inward redirection of unresolved conflict
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as contested and friction-filled. Upright, it establishes a field where competing forces are active and the second card must find its footing against resistance. Reversed, it establishes a field of suppressed or internalised conflict that the second card either surfaces or deepens.
+
+whenSecond:
+Introduces friction into prior material. Upright, it disrupts settled momentum and brings the existing field into contact with competing forces, requiring proof rather than assumption. Reversed, it receives prior energy and turns it inward, replacing direct engagement with avoidance or self-opposition.
+
+pairingTendencies:
+- With Major Arcana: Scattered contest meets archetypal principle; the competing forces are either organised by the larger structure or overwhelmed by a force that reframes the conflict entirely.
+- With Court Cards: The contested field finds or fails to find a figure capable of directing it; the person either steps into the friction with authority or is drawn into the scramble without leverage.
+- With same suit: Fire meets fire in contest; upright, the friction builds toward eventual direction; reversed, the internal conflict compounds into burnout or sustained directionlessness.
+- With conflicting suit: Fire meets Water; the scattered contest encounters emotional resistance that either dampens the conflict or reveals that the real struggle is beneath the surface where it has been all along.
+
+specificPairings:
+- The Tower — contested energy escalates into structural collapse
+- Four of Wands — disruption breaks prior stability into contest
+- Five of Cups — conflict converts into emotional loss
+
+---
+
+## Six of Wands
+
+cardId: six-of-wands
+arcana: Minor
+suit: Wands
+rank: Six
+number: None
+image: /images/tarot/six-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- victory
+- public recognition
+- earned confidence
+- triumphant return
+- acclaim
+
+extendedKeywords:
+- the moment when effort is witnessed and confirmed by others
+- confidence that has been tested and has held
+- recognition arriving from outside as validation of what was internal
+- the return of one who went out and came back having succeeded
+- leadership confirmed through demonstrated capacity
+- the crowd as witness rather than judge
+- triumph that does not require modesty to be legitimate
+- the self seen clearly by others and found worthy
+
+essenceSentence:
+Effort has been witnessed, tested, and confirmed; the return is triumphant and the recognition is earned.
+
+coreMeaning:
+The Six of Wands is the resolution of the Five's contested ground into clear victory. The figure rides elevated above the crowd, wreathed and acknowledged, and those around carry wands upright rather than raised in contest. The conflict has produced a winner, and the winner is being seen. This is not arrogance but earned confidence, the particular quality of someone who went into the friction and came through it with their capacity confirmed. Public recognition functions here as structural validation, the external world reflecting back what the internal world already knew.
+
+arrivalBehaviour:
+Sets the field as victorious and publicly confirmed. It defines the space as one where effort has resolved into recognised success, creating a register of confident forward momentum, visible achievement, and the particular authority of someone who has been seen and found capable.
+
+responseBehaviour:
+Negotiates by elevating what is present into a register of confirmed success. It receives prior energy as having passed its test and now being publicly recognised, converting struggle or effort into visible achievement and giving the existing field the confidence of demonstrated capacity.
+
+relationalEffect:
+elevates — lifts adjacent cards into confirmed achievement
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- delayed recognition
+- hollow victory
+- arrogance
+- dependence on acclaim
+- confidence undermined
+
+extendedKeywords:
+- success that does not feel like success
+- recognition withheld or arriving from the wrong sources
+- confidence that requires external confirmation to survive
+- the crowd that does not appear or does not respond as expected
+- victory claimed before it has been earned
+- pride that has separated from genuine capacity
+- the return that is not witnessed
+- achievement that collapses without an audience
+
+essenceSentence:
+Victory is claimed or approaching but the recognition does not land, and confidence becomes dependent on an audience that is absent or unmoved.
+
+coreMeaning:
+Reversed, the Six of Wands carries its achievement but loses its grounding in genuine capacity. Recognition is withheld, arrives hollow, or is sought before it has been earned. Confidence that was structural becomes dependent, requiring external validation to maintain itself. The figure rides but the crowd is absent or unimpressed, and without the confirming witness the victory does not fully register. Alternatively, acclaim has arrived but the capacity beneath it is not as solid as the recognition suggests, and the gap between image and substance begins to show.
+
+arrivalBehaviour:
+Sets the field as achievement-seeking or recognition-dependent. It defines the space as one where success is present or approaching but the confirming witness is missing or insufficient, creating a register of unvalidated confidence or premature claim.
+
+responseBehaviour:
+Negotiates by introducing the question of legitimacy into what is present. It receives prior energy as needing external confirmation and either finds that confirmation hollow or reveals that the confidence in the existing field rests on audience rather than capacity.
+
+relationalEffect:
+deflates — reduces adjacent cards to validation-seeking states
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+Six is the number of harmony and resolution after disruption. In the Wands suit it marks the point where the contested energy of the Five is organised into clear outcome, converting scattered friction into directional triumph. It functions as the first confirmation that the suit's forward movement has produced something that can be publicly witnessed and held.
+
+movementUpright:
+ascending through recognised achievement
+
+movementReversed:
+returning into validation dependency
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of confirmed achievement. Upright, it establishes a field of earned recognition that the second card enters as a space of demonstrated capacity and forward confidence. Reversed, it establishes a field where success is present but ungrounded, conditioning the second card to either provide the missing validation or expose the gap between claim and capacity.
+
+whenSecond:
+Receives prior energy as having passed its test and confirms it publicly. Upright, it elevates existing material into recognised achievement, giving prior effort its external witness. Reversed, it receives prior momentum but introduces dependence or hollowness, revealing that the confidence present requires more grounding than the existing field provides.
+
+pairingTendencies:
+- With Major Arcana: Personal triumph meets archetypal force; the recognised achievement is either confirmed as genuinely significant or reframed by a larger principle that the victory has not yet accounted for.
+- With Court Cards: The triumphant figure meets its embodiment or its shadow; the person either fully inhabits the confidence the card offers or reveals that the recognition they carry belongs to a role rather than a self.
+- With same suit: Fire builds on confirmed success; upright, momentum and authority compound toward mastery; reversed, dependence on recognition compounds into performance that loses contact with underlying capacity.
+- With conflicting suit: Fire meets Water; public triumph encounters emotional undercurrent, and the confidence of recognised achievement is complicated by feeling that the victory has not addressed.
+
+specificPairings:
+- The Chariot — recognised success is directed into continued movement
+- Five of Wands — contest resolves into visible victory
+- Two of Cups — triumph is reframed through relational connection
+
+---
+
+## Seven of Wands
+
+cardId: seven-of-wands
+arcana: Minor
+suit: Wands
+rank: Seven
+number: None
+image: /images/tarot/seven-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- defence
+- holding ground
+- challenge met
+- perseverance under pressure
+- advantaged position
+
+extendedKeywords:
+- the cost of being the one who succeeded
+- standing above those who would take what has been earned
+- pressure that confirms rather than defeats
+- the challenge that arrives because of the height already reached
+- courage that is not absence of fear but continuation despite it
+- the position that must be actively maintained
+- resistance as the price of visible achievement
+- the one who holds the high ground against those below
+
+essenceSentence:
+The position earned through victory must now be actively defended against those the victory has drawn to contest it.
+
+coreMeaning:
+The Seven of Wands is the consequence of the Six. Having been seen, recognised, and elevated, the figure now faces the challenge that visibility invites. The high ground is real but it is contested; six wands rise from below against the one held above. This is not the chaotic friction of the Five but targeted pressure directed at someone who has something worth taking. The card carries the particular quality of someone who must fight to keep what they have earned, where retreat is not available and the defence must be active. The advantaged position is an asset only if it is held.
+
+arrivalBehaviour:
+Sets the field as pressured and defensive. It defines the space as one where a position of achievement is being actively contested, creating a register of determined resistance, sustained effort under challenge, and the particular clarity of someone who knows exactly what they are protecting and why.
+
+responseBehaviour:
+Negotiates by introducing the demand for active defence into what is present. It receives prior energy as a position that has attracted challenge and requires protection, converting existing achievement or confidence into something that must now be sustained against pressure rather than simply held.
+
+relationalEffect:
+pressures — introduces sustained challenge into adjacent cards
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- overwhelmed
+- position abandoned
+- capitulation
+- exhausted defence
+- challenge conceded
+
+extendedKeywords:
+- the high ground given up under sustained pressure
+- defence that has run out of the will to continue
+- the point where holding on becomes more costly than letting go
+- a position surrendered before it needed to be
+- exhaustion mistaken for defeat
+- the challenge that was not met because the energy was not there
+- capitulation dressed as strategic withdrawal
+- the one who steps down from the height they earned
+
+essenceSentence:
+The defence has failed or been abandoned, and the position earned through effort is conceded to the pressure that was not met with sufficient will.
+
+coreMeaning:
+Reversed, the Seven of Wands carries the same pressure but the capacity or will to meet it has failed. The figure steps back from the high ground, either overwhelmed by the sustained challenge or depleted before the contest was decided. This is not always defeat from without; sometimes the reversal marks a decision to stop defending, a surrender that feels like relief but costs the position. The challenge itself has not changed, but the one who must answer it has run out of the particular quality required to hold what they have.
+
+arrivalBehaviour:
+Sets the field as depleted or conceding. It defines the space as one where sustained pressure has exceeded the available defence, creating a register of exhaustion, abandoned position, or the particular hollowness of someone who has stopped fighting before the outcome was clear.
+
+responseBehaviour:
+Negotiates by withdrawing resistance from what is present. It receives prior energy as a position that is no longer being actively defended, allowing challenge to move through the field without meeting the opposition that would have held it.
+
+relationalEffect:
+yields — removes active resistance from adjacent cards
+
+interactionStyle:
+avoidant
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Fire
+
+numericalFunction:
+Seven is the number of challenge, inner conflict, and the test of what has been achieved. In the Wands suit it marks the point where the triumph of the Six is subjected to sustained external pressure, asking whether the position earned can be actively maintained or whether visible success has outpaced the capacity to defend it.
+
+movementUpright:
+ascending under sustained resistance
+
+movementReversed:
+descending through loss of defended position
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of active defence under pressure. Upright, it establishes a field where a position is being held against challenge and the second card must engage with that sustained resistance. Reversed, it establishes a field of conceded or exhausted defence, conditioning the second card to either fill the abandoned ground or compound the withdrawal.
+
+whenSecond:
+Introduces the demand for defence into prior material. Upright, it receives existing achievement or confidence and subjects it to the pressure of sustained challenge, requiring the prior field to prove it can be held. Reversed, it receives prior momentum and withdraws from it, introducing the sense that what was being built or protected is no longer being actively sustained.
+
+pairingTendencies:
+- With Major Arcana: The defended position meets archetypal force; the challenge being faced is either confirmed as surmountable or reframed by a larger principle that the defence alone cannot address.
+- With Court Cards: The one holding the high ground meets its embodiment or its limit; the figure either demonstrates the authority required to sustain the defence or reveals that the position has exceeded their capacity to hold.
+- With same suit: Fire sustains or depletes fire; upright, the defence draws on accumulated Wands energy and holds; reversed, the sustained challenge burns through reserves and the position weakens.
+- With conflicting suit: Fire meets Water; the active defence encounters emotional pressure that does not engage directly but erodes the will required to hold the position over time.
+
+specificPairings:
+- Strength — defence is sustained through endurance rather than force
+- Six of Wands — victory is immediately tested through visible challenge
+- Ten of Cups — defended position is weighed against emotional fulfilment
+
+---
+
+## Eight of Wands
+
+cardId: eight-of-wands
+arcana: Minor
+suit: Wands
+rank: Eight
+number: None
+image: /images/tarot/eight-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- swift movement
+- momentum released
+- rapid development
+- communication in flight
+- convergence
+
+extendedKeywords:
+- the moment when all held energy is released at once
+- movement that has cleared every obstacle and is now unimpeded
+- multiple forces aligned and travelling in the same direction
+- the acceleration that follows a period of delay or containment
+- news, signal, or message arriving faster than expected
+- trajectory that has found its angle and will not be deflected
+- the particular clarity of action that no longer requires deliberation
+- everything moving toward the same point at the same time
+
+essenceSentence:
+All held energy releases at once into unimpeded movement, and what was building toward expression is now fully in flight.
+
+coreMeaning:
+The Eight of Wands is the suit's moment of pure velocity. Eight wands cross the sky in parallel, angled downward, nothing in their path. There is no figure, no contest, no landscape of consequence, only the wands themselves in motion. What this card carries is the quality of release after accumulation, the particular force of something that has been building and has finally found its angle of departure. Movement is rapid, aligned, and unobstructed. Communication travels, decisions land, situations develop faster than the pace that preceded them. The energy is not scattered as in the Five but coherent and directional.
+
+arrivalBehaviour:
+Sets the field as accelerating and unobstructed. It defines the space as one where movement has been released from whatever was containing it, creating a register of rapid development, incoming information, and the particular momentum of multiple forces aligned toward a single point.
+
+responseBehaviour:
+Negotiates by accelerating what is present. It receives prior energy as having found its release point and carries it forward at speed, converting deliberation or accumulation into active, unimpeded movement and bringing existing material rapidly toward its destination.
+
+relationalEffect:
+accelerates — drives adjacent cards toward rapid resolution
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- delayed movement
+- scattered trajectory
+- miscommunication
+- stalled momentum
+- misdirected force
+
+extendedKeywords:
+- energy released before alignment is achieved
+- movement that has lost its angle and is no longer coherent
+- communication that arrives distorted, late, or not at all
+- the rush that produces chaos rather than convergence
+- momentum that disperses before reaching its target
+- forces that were meant to align but have crossed instead
+- the acceleration that carries things in the wrong direction
+- the message sent but not received as intended
+
+essenceSentence:
+Energy has released but without alignment, and what should have been swift convergence becomes scattered movement or misdirected force.
+
+coreMeaning:
+Reversed, the Eight of Wands carries its velocity but has lost its coherence. The wands are in motion but their angles have diverged; they are no longer travelling in parallel toward the same point. Release has happened before alignment was achieved, or the direction was miscalculated and the momentum is now carrying things the wrong way. Communication misfires, information arrives garbled or too late, plans that seemed ready to land overshoot or fall short. The speed is still present but it is working against resolution rather than toward it.
+
+arrivalBehaviour:
+Sets the field as moving but misaligned. It defines the space as one where energy has been released without sufficient direction, creating a register of rushed or chaotic development, crossed signals, and momentum that is not arriving where it was aimed.
+
+responseBehaviour:
+Negotiates by disrupting the trajectory of what is present. It receives prior energy as moving but poorly aimed, introducing misdirection, communication failure, or the sense that what was building toward expression has released at the wrong moment or in the wrong direction.
+
+relationalEffect:
+misdirects — pulls adjacent cards off established trajectory
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Fire
+
+numericalFunction:
+Eight is the number of momentum, realignment, and the return of power after a period of challenge. In the Wands suit it marks the point where the sustained pressure of the Seven resolves into unobstructed forward movement, converting defensive energy into pure velocity and clearing the path for the suit's final stages of development.
+
+movementUpright:
+release into aligned velocity
+
+movementReversed:
+dispersion through misaligned momentum
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as accelerating and directional. Upright, it establishes a field of released momentum where the second card is carried rapidly toward resolution. Reversed, it establishes a field of misdirected or premature release, conditioning the second card to either correct the trajectory or be carried off course by the existing momentum.
+
+whenSecond:
+Accelerates and resolves prior material. Upright, it receives existing energy as ready for release and carries it swiftly toward its destination, collapsing deliberation into action. Reversed, it receives prior momentum but disperses or misdirects it, introducing the sense that the existing movement has lost its angle before reaching its target.
+
+pairingTendencies:
+- With Major Arcana: Swift release meets archetypal structure; the unimpeded momentum is either confirmed as carrying something significant or interrupted by a principle larger than the speed of its delivery.
+- With Court Cards: Rapid movement finds or loses its direction through the figure present; the person either rides the momentum with precision or is carried by it without sufficient control over where it lands.
+- With same suit: Fire accelerates fire; upright, momentum compounds into rapid, coherent development; reversed, speed without alignment compounds into escalating misdirection or cascading miscommunication.
+- With conflicting suit: Fire meets Water; swift unimpeded movement encounters emotional current that deflects its trajectory, and what was travelling in a straight line is pulled sideways by feeling that was not factored into the direction.
+
+specificPairings:
+- The Magician — momentum is directed with precision
+- Two of Wands — prior vision converts into active movement
+- Four of Cups — incoming momentum meets withdrawal and is missed
+
+---
+
+## Nine of Wands
+
+cardId: nine-of-wands
+arcana: Minor
+suit: Wands
+rank: Nine
+number: None
+image: /images/tarot/nine-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- resilience
+- guarded persistence
+- battle-worn readiness
+- last reserves
+- the will that has not broken
+
+extendedKeywords:
+- the one who has taken damage and is still standing
+- endurance that knows exactly what it has cost
+- vigilance that comes from having been caught unprepared before
+- the particular strength of someone near the end who has not yet stopped
+- readiness that does not pretend the previous challenges were not real
+- persistence that has earned the right to its wariness
+- the wound that has become a warning system
+- the final position before the last effort is made
+
+essenceSentence:
+The figure is wounded, guarded, and still standing, holding the last position with the full knowledge of what getting here has cost.
+
+coreMeaning:
+The Nine of Wands is the suit's penultimate test, the moment just before the final effort when the accumulated cost of everything that came before is fully visible. The figure leans on one wand while eight stand behind them, a constructed barrier as much as a reserve. The bandaged head speaks to damage already taken. This is not the fresh courage of the Seven but the worn, clear-eyed readiness of someone who has been through the full sequence and is still present. Resilience here is not optimism; it is the refusal to stop when stopping would be easier.
+
+arrivalBehaviour:
+Sets the field as battle-worn and guarded. It defines the space as one where significant effort has already been expended and what remains is held with careful, watchful determination, creating a register of earned wariness, sustained will, and the particular clarity of someone who has nothing left to prove but one more step to take.
+
+responseBehaviour:
+Negotiates by introducing the weight of sustained effort into what is present. It receives prior energy as something that has been carried a long way and is now being held with deliberate care, adding the quality of hard-won persistence to the existing field and making whatever comes next feel like it must be worth the cost already paid.
+
+relationalEffect:
+fortifies — reinforces adjacent cards with sustained endurance
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- exhaustion
+- paranoia
+- defensive collapse
+- inability to continue
+- wounds reopened
+
+extendedKeywords:
+- the will that has finally given out
+- wariness that has crossed into obstruction
+- the guard that will not come down even when the threat has passed
+- damage that has not healed and is now preventing forward movement
+- persistence that has become its own trap
+- the one who cannot stop defending because they cannot believe the fight is over
+- exhaustion that reads every new thing as another attack
+- the final position held past the point where holding it serves anything
+
+essenceSentence:
+The endurance that carried the figure this far has become the obstacle, and what was protective vigilance has curdled into exhausted obstruction.
+
+coreMeaning:
+Reversed, the Nine of Wands carries its damage past the point of useful wariness. The guard that was necessary has become a wall that prevents forward movement as much as it prevents harm. The figure cannot distinguish between genuine threat and the residue of old challenges, and so everything arriving is met with the same defensive posture that the actual battles required. Exhaustion has become indistinguishable from the position itself. The will has not broken but it has calcified, and what was resilience is now a refusal to acknowledge that the hardest part may already be behind.
+
+arrivalBehaviour:
+Sets the field as defensively closed and exhausted. It defines the space as one where sustained effort has produced a posture of protection that can no longer modulate itself, creating a register of wary immobility, accumulated damage, and the particular difficulty of someone who cannot let their guard down even when doing so would allow them to finish.
+
+responseBehaviour:
+Negotiates by introducing defensive resistance into what is present. It receives prior energy through a lens of accumulated damage, treating incoming material as potential threat and adding caution or obstruction to whatever forward movement the existing field was building toward.
+
+relationalEffect:
+obstructs — introduces defensive rigidity into adjacent cards
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Fire
+
+numericalFunction:
+Nine is the number of near-completion, the penultimate position where everything accumulated by the sequence is present but the final resolution has not yet arrived. In the Wands suit it marks the point where the full cost of the journey is visible and the question becomes whether what remains is enough to complete it.
+
+movementUpright:
+ascending under sustained endurance
+
+movementReversed:
+stalling under defensive exhaustion
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as one of guarded, sustained readiness. Upright, it establishes a field where significant effort has been expended and what remains is held with deliberate care, conditioning the second card to arrive into a space of earned wariness and last reserves. Reversed, it establishes a field of defensive obstruction and exhaustion, conditioning the second card to either break through the guard or be subjected to its blanket suspicion.
+
+whenSecond:
+Adds the weight of sustained endurance to prior material. Upright, it receives existing energy as something that has been carried far and reinforces it with the particular quality of someone who has not stopped despite the cost. Reversed, it receives prior momentum and subjects it to defensive resistance, treating incoming force as another challenge rather than support and slowing the field toward stalled wariness.
+
+pairingTendencies:
+- With Major Arcana: Battle-worn persistence meets archetypal force; the accumulated endurance is either confirmed as sufficient for what remains or confronted by a principle that the existing wariness alone cannot meet.
+- With Court Cards: The guarded figure meets its embodiment or its breaking point; the person either demonstrates the authority of someone who has earned their position through sustained effort or reveals that the damage taken has exceeded the capacity to continue effectively.
+- With same suit: Fire sustains through final reserves; upright, accumulated Wands energy reinforces the last position before completion; reversed, sustained fire has burned through its fuel and the wariness compounds into a field that cannot move forward.
+- With conflicting suit: Fire meets Water; battle-worn persistence encounters emotional current that either softens the guard or confirms its necessity, and the question becomes whether the vigilance has been protecting something real or preventing the feeling that would allow it to rest.
+
+specificPairings:
+- The Hermit — endurance is withdrawn into solitary persistence
+- Ten of Wands — final reserves meet full burden
+- Nine of Swords — physical endurance meets mental strain
+
+---
+
+## Ten of Wands
+
+cardId: ten-of-wands
+arcana: Minor
+suit: Wands
+rank: Ten
+number: None
+image: /images/tarot/ten-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- burden
+- overextension
+- completion through effort
+- the weight of success
+- carrying to the finish
+
+extendedKeywords:
+- the one who has taken on more than was wise and is still going
+- success that has accumulated into something too heavy to carry easily
+- responsibility that has expanded beyond its original scope
+- the final stretch made difficult by everything brought along to reach it
+- effort that is close enough to completion to make stopping unthinkable
+- the cost of having said yes to everything the suit offered
+- ambition fulfilled and now carried home on the back
+- the moment when what was built becomes what must be borne
+
+essenceSentence:
+Everything the suit has produced is now being carried toward completion by the one who built it, and the weight is the full measure of what was made.
+
+coreMeaning:
+The Ten of Wands closes the suit's numbered sequence at the point of maximum load. The figure hunches forward under ten bundled wands, face obscured by the weight, a settlement visible ahead. The destination exists and is close, but the burden is real and total. This is not failure; it is the consequence of sustained creative ambition that has accumulated beyond what one person can carry without strain. The fire that ignited in the Ace has produced, expanded, defended, and persisted until it has become this: everything arriving at once, all of it requiring transport, none of it able to be set down until the threshold is crossed.
+
+arrivalBehaviour:
+Sets the field as heavily burdened and close to completion. It defines the space as one where accumulated effort and responsibility are being carried toward a visible finish, creating a register of strained forward movement, the particular determination of someone who will not stop because the end is in sight, and the weight of everything the journey has produced.
+
+responseBehaviour:
+Negotiates by adding the full weight of accumulated effort to what is present. It receives prior energy as something that must now be carried rather than simply held, converting the existing field into a register of responsibility, overextension, or the final push that completion requires.
+
+relationalEffect:
+burdens — adds accumulated weight to adjacent cards
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- collapse under weight
+- burden released
+- delegation refused
+- crushing responsibility
+- the load that cannot be carried further
+
+extendedKeywords:
+- the point where the weight exceeds the will to continue
+- responsibility that has become imprisonment
+- the refusal to set down what is destroying the carrier
+- burden carried past every reasonable stopping point
+- the one who cannot ask for help even when the load has broken them
+- collapse that was preventable and was not prevented
+- release that arrives as failure rather than choice
+- the cost of having carried everything alone for too long
+
+essenceSentence:
+The burden has exceeded what can be carried, and what was strained determination becomes collapse or the desperate refusal to set anything down.
+
+coreMeaning:
+Reversed, the Ten of Wands carries its load past the breaking point. The figure does not make it to the settlement, or arrives there broken, or refuses to put the wands down even when the destination has been reached. Overextension has become collapse, or the accumulated responsibility has calcified into a weight that cannot be released because releasing it would require acknowledging that it should have been shared or shed long ago. The reversed card asks what is being carried that no longer needs to be, and why the carrier cannot stop.
+
+arrivalBehaviour:
+Sets the field as collapsed or rigidly overburdened. It defines the space as one where accumulated weight has exceeded the carrier's capacity, creating a register of exhausted breakdown, the inability to delegate or release, or the crushing pressure of responsibility that has nowhere to go.
+
+responseBehaviour:
+Negotiates by introducing the full weight of unsustainable burden into what is present. It receives prior energy as something that has accumulated to the point of collapse, adding crushing pressure or the refusal to release to whatever the existing field was building toward.
+
+relationalEffect:
+crushes — collapses adjacent cards under unsustainable load
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+Ten is the number of completion and excess, the point where the suit's principle has fully expressed itself and in doing so has exceeded what any single position can contain. In the Wands suit it marks the moment where creative ambition has accumulated into burden, closing the numbered sequence by demonstrating the full cost of the fire that began with the Ace.
+
+movementUpright:
+ascending under maximum load
+
+movementReversed:
+descending through collapse of burden
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as burdened and close to its limit. Upright, it establishes a field of strained but determined forward movement where the second card must engage with the weight already being carried. Reversed, it establishes a field of collapse or unsustainable overextension, conditioning the second card to either provide relief or compound the crushing weight.
+
+whenSecond:
+Adds the full weight of accumulated effort to prior material. Upright, it receives existing energy as something that must now be carried to completion and introduces the strain of that final responsibility into the field. Reversed, it receives prior momentum and converts it into collapse or rigidly held burden, introducing the sense that what was being built has now exceeded the capacity to carry it.
+
+pairingTendencies:
+- With Major Arcana: Maximum load meets archetypal principle; the accumulated burden is either given context by a larger structure that makes the weight meaningful or confronted by a force that demands the carrier put something down before continuing.
+- With Court Cards: The overburdened figure meets its embodiment or its limit; the person either demonstrates the authority of someone who can carry this to completion or reveals that the responsibility accumulated has exceeded their actual capacity.
+- With same suit: Fire completes its sequence under full load; upright, the accumulated Wands energy arrives at its destination despite the weight; reversed, the suit's full creative output collapses back on the one who generated it.
+- With conflicting suit: Fire meets Water; the strained carrying of accumulated responsibility encounters emotional current that either provides the relief of being seen in the effort or adds the further weight of unmet feeling to an already overloaded field.
+
+specificPairings:
+- The World — burden resolves into completed integration
+- Four of Wands — completion weight contrasts with prior stability
+- Ten of Swords — full burden meets total collapse
+
+---
+
+## Page of Wands
+
+cardId: page-of-wands
+arcana: Minor
+suit: Wands
+rank: Page
+number: None
+image: /images/tarot/page-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- enthusiastic beginnings
+- creative exploration
+- new direction sensed
+- message received
+- inspired restlessness
+
+extendedKeywords:
+- the one who has felt the spark but not yet chosen its direction
+- energy that is genuine but has not yet found its form
+- curiosity as a mode of creative engagement
+- the news that changes what is possible
+- a self still in the process of discovering what it is capable of
+- enthusiasm that precedes commitment
+- the wand examined rather than wielded
+- fire at the stage of sensing rather than acting
+
+essenceSentence:
+Creative fire has arrived in a self still discovering what to do with it, and the energy is real but direction has not yet been chosen.
+
+coreMeaning:
+The Page of Wands carries the suit's generative charge at its earliest stage of embodiment. The figure holds the wand upright and studies it, absorbed in what it represents rather than what it can do. The landscape is desert and open; no path has been committed to. This is the fire principle at the point of discovery, present in a person who feels the creative impulse strongly but has not yet organised it into direction or sustained effort. The Page brings news, begins things, and explores possibilities with genuine enthusiasm. The limitation is not the energy but the experience to channel it.
+
+arrivalBehaviour:
+Sets the field as open and exploratory. It defines the space as one where creative potential is present and being actively sensed rather than directed, creating a register of enthusiastic possibility, new information arriving, and the particular aliveness of someone at the beginning of something they do not yet fully understand.
+
+responseBehaviour:
+Negotiates by introducing fresh creative energy into what is present. It receives prior material as something to be explored and responded to with enthusiasm, bringing the quality of genuine curiosity and new perspective to whatever the existing field has established, without the weight of sustained commitment.
+
+relationalEffect:
+animates — introduces fresh creative energy into adjacent cards
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- creative blocks
+- misdirected enthusiasm
+- false start
+- news delayed
+- energy without focus
+
+extendedKeywords:
+- enthusiasm that cannot find its point of entry
+- the spark that ignites and immediately loses direction
+- creative restlessness that produces starts but not continuations
+- information that arrives garbled or not at all
+- the one who feels the fire but cannot hold it long enough to use it
+- beginning again and again without moving forward
+- curiosity that scatters rather than gathers
+- inspiration that dissipates before it can be acted on
+
+essenceSentence:
+Creative fire is present but cannot find its form, and the enthusiasm that should begin something instead spends itself in false starts and scattered restlessness.
+
+coreMeaning:
+Reversed, the Page of Wands carries the same creative charge but cannot organise it into even the beginning of direction. Enthusiasm ignites and disperses. New directions are sensed but none hold long enough to be followed. Messages arrive late, garbled, or not at all. The figure looks at the wand but cannot determine what it is for. This is not the earned wariness of the Nine or the collapse of the Ten but the simpler difficulty of creative energy that has not yet found the developmental stage that would allow it to focus. The fire is real; the capacity to hold it is not yet present.
+
+arrivalBehaviour:
+Sets the field as restless and unfocused. It defines the space as one where creative energy is present but cannot cohere into direction, creating a register of scattered enthusiasm, false starts, and the particular frustration of someone who feels the impulse strongly but cannot make it land.
+
+responseBehaviour:
+Negotiates by introducing creative restlessness into what is present. It receives prior material with genuine interest but cannot sustain engagement long enough to develop it, adding energetic disruption rather than focused contribution to the existing field.
+
+relationalEffect:
+scatters — disperses adjacent creative focus into unfocused energy
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Fire
+
+numericalFunction:
+The Page carries the suit's principle at its earliest stage of human embodiment, before experience has shaped the energy into mastery. Structurally, the Page introduces the court sequence as the point where the suit's elemental force enters a developing self, bringing message, possibility, and the particular quality of creative energy that has not yet been tested by sustained effort or real consequence.
+
+movementUpright:
+outward sensing of emerging direction
+
+movementReversed:
+scattering of unformed energy
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as exploratory and energised. Upright, it establishes a field of open creative possibility where the second card is received with enthusiasm and curiosity. Reversed, it establishes a field of restless, unfocused energy that the second card must either organise or be scattered by.
+
+whenSecond:
+Brings fresh creative energy to prior material. Upright, it receives existing energy with genuine enthusiasm and animates the field with new perspective, treating what came before as something exciting to engage with rather than something to be completed. Reversed, it receives prior material but cannot sustain its engagement, introducing scattered enthusiasm that disrupts rather than develops what the existing field has established.
+
+pairingTendencies:
+- With Major Arcana: Nascent creative fire meets archetypal force; the Page's undirected enthusiasm is either given shape and direction by the larger principle or overwhelmed by a force it does not yet have the experience to meet.
+- With Court Cards: The developing self meets an embodied figure; the Page either finds the model that shows it what its energy can become or encounters a dynamic that exposes how much development remains.
+- With same suit: Fire meets fire at different stages of development; upright, the Page's fresh enthusiasm is given context and direction by the accumulated Wands energy present; reversed, undirected fire compounds into escalating restlessness without a stabilising force.
+- With conflicting suit: Fire meets Water; the Page's enthusiastic creative energy encounters emotional depth it has not yet learned to navigate, and the creative impulse is either enriched by feeling or confused by the demand to slow down and sense before acting.
+
+specificPairings:
+- The Fool — unformed creative impulse meets archetypal beginning
+- Knight of Wands — early energy meets committed action
+- Seven of Cups — enthusiasm disperses into illusion and excess possibility
+
+---
+
+## Knight of Wands
+
+cardId: knight-of-wands
+arcana: Minor
+suit: Wands
+rank: Knight
+number: None
+image: /images/tarot/knight-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- bold action
+- passionate pursuit
+- adventurous drive
+- charismatic force
+- committed momentum
+
+extendedKeywords:
+- the one who has chosen direction and is moving at full speed
+- creative energy that has found its vector and will not be slowed
+- confidence that does not require certainty before it acts
+- the pursuit of what excites without pausing to count the cost
+- momentum that is as much about the movement as the destination
+- charisma that draws others into the slipstream
+- the fire that has become a rider rather than a spark
+- action that is total, immediate, and entirely committed
+
+essenceSentence:
+Creative fire has found its direction and committed to it completely, moving at full speed with the particular confidence of one who does not require certainty before acting.
+
+coreMeaning:
+The Knight of Wands is the suit's creative energy at the point of full forward commitment. The horse rears, the figure leans into motion, the wand is raised not in defence but in the direction of travel. Where the Page sensed and explored, the Knight has chosen and departed. This is fire embodied in action, in pursuit, in the exhilaration of movement for its own sake as much as for the destination. The Knight brings intensity, speed, and magnetic force. The limitation is the same as the energy: total commitment to direction without the patience or perspective that sustained effort over time produces.
+
+arrivalBehaviour:
+Sets the field as charged with forward momentum and passionate intent. It defines the space as one where direction has been chosen and is being pursued at speed, creating a register of bold, energised movement, magnetic confidence, and the particular force of someone who has committed completely and expects the world to respond to that commitment.
+
+responseBehaviour:
+Negotiates by accelerating and intensifying what is present. It receives prior energy as something to be met with full engagement and immediately moves it forward, bringing the existing field into a register of bold action and pursued direction, removing hesitation and replacing it with committed momentum.
+
+relationalEffect:
+propels — drives adjacent cards into forward commitment
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- reckless action
+- scattered pursuit
+- impulsive misdirection
+- burnout
+- frustrated momentum
+
+extendedKeywords:
+- speed without direction producing damage rather than progress
+- the pursuit that has outrun its own purpose
+- charisma that has become domineering force
+- commitment to the wrong direction maintained past the point of correction
+- momentum that cannot stop even when stopping is necessary
+- the rider who has lost control of the horse
+- creative energy burning through everything including itself
+- the cost of having acted before the direction was clear
+
+essenceSentence:
+The commitment to forward movement has outrun both direction and judgment, and the force that should propel becomes the source of damage or exhaustion.
+
+coreMeaning:
+Reversed, the Knight of Wands carries its full speed into a field where the direction has failed or was never properly established. The momentum does not diminish; it becomes the problem. Recklessness, impulsivity, and the inability to course-correct while moving at speed are the characteristic difficulties. The charisma that attracted others now drives them away or drags them into the damage. Creative energy has not diminished but it has lost its alignment with any productive direction, and the force of the pursuit is now working against the outcome it was meant to achieve.
+
+arrivalBehaviour:
+Sets the field as forcefully misdirected. It defines the space as one where committed energy is moving at speed but without reliable direction, creating a register of reckless momentum, impulsive action, and the particular disruption of force that cannot moderate itself.
+
+responseBehaviour:
+Negotiates by overwhelming what is present with undirected speed. It receives prior energy and immediately accelerates it beyond the point of careful navigation, introducing recklessness into whatever the existing field was building toward and replacing considered movement with the force of momentum that has outrun its purpose.
+
+relationalEffect:
+overwhelms — drives adjacent cards beyond sustainable pace
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+The Knight carries the suit's principle at its most active and committed expression, the point where the developing energy of the Page has organised itself into direction and is now in full pursuit of it. Structurally, the Knight occupies the position of maximum forward momentum in the court sequence, embodying the suit's elemental fire at the moment of total engagement before the tempering that Queen and King represent.
+
+movementUpright:
+outward surge of committed directional force
+
+movementReversed:
+scattering through uncontrolled momentum
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as charged with committed forward momentum. Upright, it establishes a field of bold, directional energy that the second card must meet, ride, or be moved by. Reversed, it establishes a field of reckless, misdirected speed that the second card must either redirect or be overwhelmed by.
+
+whenSecond:
+Accelerates and commits prior material to a direction. Upright, it receives existing energy and immediately moves it forward at speed, converting deliberation or potential into pursued action. Reversed, it receives prior momentum and drives it past the point of productive navigation, introducing impulsive force that overwhelms careful development.
+
+pairingTendencies:
+- With Major Arcana: Committed pursuit meets archetypal structure; the Knight's full-speed momentum is either given meaningful direction by the larger principle or brought into sharp confrontation with a force it cannot simply outrun.
+- With Court Cards: The boldly committed figure meets its complement or its challenge; another court either matches the Knight's intensity and gives it direction or is overwhelmed by the force of its pursuit.
+- With same suit: Fire at full speed meets accumulated Wands energy; upright, the pursuit is sustained and amplified by the suit's gathered force; reversed, speed without direction compounds into escalating recklessness that burns through everything in the field.
+- With conflicting suit: Fire meets Water; the Knight's committed forward momentum encounters emotional depth that cannot be outrun, and the pursuit is either slowed into something richer or crashes against feeling it refused to factor into its direction.
+
+specificPairings:
+- The Chariot — momentum is disciplined into directed arrival
+- Page of Wands — early exploration converts into full commitment
+- Eight of Cups — pursuit meets withdrawal and unresolved departure
+
+---
+
+## Queen of Wands
+
+cardId: queen-of-wands
+arcana: Minor
+suit: Wands
+rank: Queen
+number: None
+image: /images/tarot/queen-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- confident authority
+- magnetic presence
+- creative mastery
+- warmth that leads
+- self-possession
+
+extendedKeywords:
+- the one who occupies the room without needing to announce it
+- creative fire that has been tempered into sustained, directed warmth
+- authority that does not require external confirmation to hold itself
+- the capacity to inspire others without losing the centre of one's own purpose
+- leadership that operates through presence rather than assertion
+- passion that has matured into something that can be given without being spent
+- the fire that knows how to burn without consuming
+- mastery expressed as ease rather than effort
+
+essenceSentence:
+Creative fire has matured into self-possessed authority, and the warmth it radiates draws others without diminishing the source.
+
+coreMeaning:
+The Queen of Wands is the suit's creative energy at the point of full maturation in the receptive mode. She sits with a sunflower in one hand and a wand in the other, the black cat at her feet, facing outward with complete composure. The fire is entirely hers; she does not pursue it or defend it or carry it as burden. She embodies it. The warmth she radiates is structural, a quality of being rather than a quality of doing, and it draws people and possibilities toward her without effort. Where the Knight pursued, the Queen holds the centre from which pursuit becomes unnecessary.
+
+arrivalBehaviour:
+Sets the field as warm, magnetic, and self-contained. It defines the space as one where creative authority is fully present and entirely at ease, creating a register of confident mastery, generous warmth, and the particular gravity of someone whose presence organises the field without requiring anything of it.
+
+responseBehaviour:
+Negotiates by centring and warming what is present. It receives prior energy with full confidence, neither threatened by what came before nor requiring it to be different, bringing the existing field into a register of creative mastery and sustained warmth that makes everything around it more coherent and alive.
+
+relationalEffect:
+draws — organises adjacent cards around a warm central presence
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- dimmed confidence
+- jealousy
+- creative insecurity
+- demanding presence
+- warmth withheld
+
+extendedKeywords:
+- the magnetic centre that has become a controlling force
+- confidence that has curdled into the need to be the most visible
+- creative authority that will not share the field
+- warmth that is conditional on being the one who gives it
+- the one who leads by diminishing rather than elevating
+- self-possession that has become self-absorption
+- the fire that burns others rather than warming them
+- presence that demands rather than draws
+
+essenceSentence:
+The self-possession that was the source of magnetic warmth has contracted into insecurity, and what radiated outward now burns inward or consumes what it touches.
+
+coreMeaning:
+Reversed, the Queen of Wands carries her creative authority but has lost its ease. The confidence that was structural becomes brittle, requiring maintenance through comparison or control. The warmth that drew others becomes conditional, offered only to those who confirm the Queen's centrality. Jealousy, possessiveness, or the need to be the most creatively visible person in any room replaces the generosity of the upright position. The fire still burns but it no longer knows how to warm without scorching, and the presence that organised the field now demands it.
+
+arrivalBehaviour:
+Sets the field as demanding and creatively competitive. It defines the space as one where authority is present but insecure, creating a register of conditional warmth, controlling presence, and the particular difficulty of someone whose creative confidence requires the diminishment of others to sustain itself.
+
+responseBehaviour:
+Negotiates by asserting dominance over what is present. It receives prior energy as something to be measured against rather than warmly integrated, introducing competition or conditional acceptance into the existing field and replacing the generous centre of the upright position with a presence that must be the most significant thing in the room.
+
+relationalEffect:
+dominates — asserts control over adjacent cards
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Fire
+
+numericalFunction:
+The Queen carries the suit's principle in its fully matured, inwardly stable expression. Structurally, the Queen occupies the position of mastery achieved through integration rather than pursuit, embodying the suit's elemental fire at the point where it has been fully internalised and can now be radiated outward as warmth, authority, and creative presence without effort or defence.
+
+movementUpright:
+integration into stable creative centre
+
+movementReversed:
+inward contraction of insecure authority
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as centred and magnetically warm. Upright, it establishes a field of confident creative authority that the second card enters as a space already organised by a strong, generous presence. Reversed, it establishes a field of controlling or insecure authority that the second card must either defer to or contest.
+
+whenSecond:
+Receives prior energy with full confidence and warmth. Upright, it takes what came before and centres it within a field of creative mastery, making the existing material more coherent and alive without asserting dominance over it. Reversed, it receives prior energy and immediately asserts its own primacy, introducing competitive or conditional dynamics that displace the existing field's momentum.
+
+pairingTendencies:
+- With Major Arcana: Mature creative authority meets archetypal force; the Queen's self-possessed mastery is either confirmed as sufficient to meet the larger principle or confronted by a force that her warmth alone cannot contain or organise.
+- With Court Cards: The magnetic centre meets another embodied figure; the Queen either draws the other court into her field with genuine warmth or enters a dynamic of competing authority where the ease of her position is tested by another's claim to the centre.
+- With same suit: Fire meets its fullest human expression; upright, the Queen's mastery gives the accumulated Wands energy its most coherent and sustainable form; reversed, competitive fire compounds into a field where creative authority is contested rather than shared.
+- With conflicting suit: Fire meets Water; the Queen's self-possessed creative authority encounters emotional depth that either enriches her warmth or destabilises her confidence, asking whether the ease she carries can hold when feeling introduces what it cannot organise.
+
+specificPairings:
+- The Empress — creative authority expands into generative abundance
+- King of Wands — complete creative polarity achieves full authority
+- Queen of Swords — warmth meets precision in dynamic tension
+
+---
+
+## King of Wands
+
+cardId: king-of-wands
+arcana: Minor
+suit: Wands
+rank: King
+number: None
+image: /images/tarot/king-of-wands.jpg
+
+---
+
+### Upright
+
+keywords:
+- visionary leadership
+- creative command
+- entrepreneurial mastery
+- inspiring authority
+- directed fire
+
+extendedKeywords:
+- the one who has turned creative vision into a force that moves others
+- fire that has become strategic without losing its heat
+- authority that leads through the quality of its direction rather than the fact of its position
+- the capacity to hold the long view without losing the immediate charge
+- leadership that inspires because the vision is genuine and the commitment is total
+- creative mastery expressed as the ability to build something larger than the self
+- the fire that organises rather than consumes
+- the one who has earned the right to direct others because they have already done what they are asking
+
+essenceSentence:
+Creative fire has matured into visionary command, and the authority it carries moves others not through assertion but through the undeniable quality of its direction.
+
+coreMeaning:
+The King of Wands is the suit's creative energy at its fullest expression of outward mastery. He sits forward on the throne, wand in hand, as if about to rise; the salamander on his robe completes its circle. This is not the stillness of integration but the readiness of someone who has mastered the fire and now directs it with strategic vision. Where the Queen holds the centre, the King extends outward, turning creative authority into something that builds, leads, and transforms the larger field. The inspiration he offers is not warmth but direction, and the direction is worth following because the one who gives it has already been where it leads.
+
+arrivalBehaviour:
+Sets the field as commanded and purposefully directed. It defines the space as one where visionary authority is fully present and actively orienting the field toward a larger goal, creating a register of strategic clarity, inspired leadership, and the particular force of someone whose creative command is both earned and undeniable.
+
+responseBehaviour:
+Negotiates by taking command of what is present. It receives prior energy as material to be organised and directed toward a larger vision, bringing the existing field into a register of purposeful, strategic movement and giving what came before the shape and direction that transforms creative force into lasting achievement.
+
+relationalEffect:
+commands — organises adjacent cards into directed purpose
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- autocratic control
+- vision without collaboration
+- creative tyranny
+- impulsive authority
+- the leader who has stopped listening
+
+extendedKeywords:
+- command that has become control for its own sake
+- vision held so tightly it cannot incorporate what others bring
+- the one who leads because they must be in front, not because the direction is sound
+- creative authority that has curdled into the refusal to be questioned
+- inspiration that has become demand
+- the fire that organises by burning away anything that does not conform
+- leadership that mistakes forcefulness for vision
+- the earned authority that has stopped earning and started assuming
+
+essenceSentence:
+Visionary command has hardened into autocratic control, and the creative authority that should inspire has become a force that demands conformity rather than drawing genuine commitment.
+
+coreMeaning:
+Reversed, the King of Wands carries his full authority but has lost the quality that made it worth following. The strategic vision has become fixed; the command has become control; the leadership has become dominance. What distinguished the upright King was that his direction was worth following because it was genuinely visionary and genuinely earned. Reversed, the direction is asserted rather than demonstrated, and the fire that should inspire becomes the fire that burns away dissent, difference, and the input that would have kept the vision alive. The King still commands; he has simply stopped being worth commanding for.
+
+arrivalBehaviour:
+Sets the field as autocratically controlled. It defines the space as one where authority is fully present but has become closed to input, creating a register of forced direction, creative domination, and the particular difficulty of a field organised entirely around a single vision that will not incorporate anything that challenges it.
+
+responseBehaviour:
+Negotiates by taking control rather than command. It receives prior energy not as material to be developed but as something to be organised on its own terms, introducing the demand for conformity into whatever the existing field was building toward and replacing collaborative creative direction with unilateral assertion.
+
+relationalEffect:
+dominates — imposes unilateral direction on adjacent cards
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Fire
+
+numericalFunction:
+The King carries the suit's principle at its fullest expression of outward, directed mastery. Structurally, the King occupies the position of complete creative authority in the court sequence, embodying the suit's elemental fire at the point where it has been fully integrated, strategically directed, and turned outward as a force capable of organising and inspiring others toward a larger vision.
+
+movementUpright:
+outward projection of strategic creative force
+
+movementReversed:
+inward fixation of controlling authority
+
+---
+
+### Combination Logic
+
+whenFirst:
+Defines the interaction as visionary and commanding. Upright, it establishes a field of strategic creative authority that the second card enters as a space already oriented toward a larger purpose. Reversed, it establishes a field of autocratic control that the second card must either conform to or resist, with little room for anything between.
+
+whenSecond:
+Takes command of prior material and directs it toward a larger vision. Upright, it receives existing energy and organises it with strategic clarity, giving what came before the shape and direction that transforms creative force into lasting achievement. Reversed, it receives prior momentum and asserts control over it, replacing whatever direction was already present with its own and leaving no space for the existing field to contribute on its own terms.
+
+pairingTendencies:
+- With Major Arcana: Visionary command meets archetypal principle; the King's earned creative authority is either confirmed and amplified by the larger structure or confronted by a force that his command alone cannot direct or contain.
+- With Court Cards: The commanding figure meets another embodied authority; the King either draws the other court into productive alignment with his vision or enters a dynamic of competing authority where the question of who directs the field must be resolved.
+- With same suit: Fire meets its fullest directed expression; upright, the King's strategic command gives the accumulated Wands energy its most purposeful and organised form; reversed, competing fires burn against each other in a field where authority is contested and vision has become a weapon.
+- With conflicting suit: Fire meets Water; the King's outward-directed creative command encounters emotional current that cannot be organised by vision alone, and the authority that moves others through direction is tested by a force that requires feeling rather than strategy to navigate.
+
+specificPairings:
+- The Emperor — visionary command integrates with structural authority
+- Queen of Wands — complete creative polarity achieves unified mastery
+- King of Cups — strategic vision meets emotional depth in tension
+
+---
+
+## Ace of Cups
+
+cardId: ace-of-cups
+arcana: Minor
+suit: Cups
+rank: Ace
+number: None
+image: /images/tarot/ace-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- receptivity
+- emotional beginning
+- love
+- intuition
+- overflow
+
+extendedKeywords:
+- new emotional current
+- open heart
+- intuitive clarity
+- spiritual nourishment
+- creative wellspring
+- unconditional offering
+- inner abundance
+- feeling that arrives unbidden
+
+essenceSentence:
+The emotional field opens and something genuine begins to pour through.
+
+coreMeaning:
+The Ace of Cups is the pure potential of the Water element before it takes direction. It marks the moment feeling becomes available, not yet formed into attachment, grief, or longing, simply present and offered. The dove descends, the cup overflows, and what arrives is not chosen but received. This is love before it has an object, intuition before it has a question, creativity before it has a form.
+
+arrivalBehaviour:
+Enters a spread as an open emotional field. Softens preceding structure by introducing availability where there was containment or distance. Does not initiate action but alters the condition in which action can occur.
+
+responseBehaviour:
+Receives surrounding cards without resistance. Draws out emotional content already present and gives it space to register. Does not escalate but deepens the felt dimension of the spread.
+
+relationalEffect:
+opens adjacent cards to feeling
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- emotional blockage
+- suppression
+- emptiness
+- missed feeling
+- withdrawal
+
+extendedKeywords:
+- feeling held at arm's length
+- intuition refused
+- creative drought
+- overflow contained without release
+- numbness mistaken for calm
+- love that cannot land
+- blocked receptivity
+- offer that cannot be accepted
+
+essenceSentence:
+The cup remains present but the channel for feeling does not open.
+
+coreMeaning:
+Reversed, the Ace of Cups describes emotional capacity without movement. The field exists but is closed or inaccessible. This can present as numbness, creative stagnation, or an inability to receive or express genuine feeling. What should flow remains contained, accumulating without integration.
+
+arrivalBehaviour:
+Enters as a closed emotional condition. Identifies where feeling is restricted or unavailable despite underlying capacity. Marks the absence of flow rather than the absence of substance.
+
+responseBehaviour:
+Reduces emotional engagement within the spread. Causes surrounding cards to operate without full access to feeling. Signals unreadiness rather than resistance.
+
+relationalEffect:
+seals adjacent cards from feeling
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Aces carry pure elemental potential. They describe conditions rather than outcomes. In a spread, an Ace marks the presence of a force before it is shaped by interaction or experience.
+
+movementUpright:
+moves outward through availability and emotional release
+
+movementReversed:
+moves inward through containment and withheld expression
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes an emotionally open condition. Subsequent cards operate within that openness, either developing it, resisting it, or exposing its limits.
+
+whenSecond:
+Receives the preceding condition through feeling. Introduces emotional context to whatever has already been established.
+
+pairingTendencies:
+- With Major Arcana: heightens the emotional condition into an archetypal context
+- With Court Cards: positions the figure as conduit or block for emotional flow
+- With same suit: extends and develops the emotional sequence
+- With conflicting suit: creates tension between feeling and impulse
+
+specificPairings:
+- The Star — aligns emotional opening with restoration
+- Two of Cups — converts potential into mutual exchange
+- Five of Wands — disrupts emotional flow with competing forces
+
+---
+
+## Two of Cups
+
+cardId: two-of-cups
+arcana: Minor
+suit: Cups
+rank: Two
+number: None
+image: /images/tarot/two-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- reciprocity
+- recognition
+- connection
+- mutual regard
+- union
+
+extendedKeywords:
+- meeting of equals
+- emotional exchange
+- shared frequency
+- bond in formation
+- genuine offer returned
+- mirrored feeling
+- relational alignment
+- presence acknowledged
+
+essenceSentence:
+Two fields meet and begin to move in mutual exchange.
+
+coreMeaning:
+The Two of Cups establishes a relational condition between two positions. Feeling moves in both directions with equal weight. Each position remains distinct while the exchange between them becomes active. The field is defined by contact rather than isolation.
+
+arrivalBehaviour:
+Introduces a relational condition. Sets a field where two positions enter active engagement.
+
+responseBehaviour:
+Forms a returning current against existing direction. Reorients the spread toward exchange between two poles.
+
+relationalEffect:
+pairs adjacent cards into exchange
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- misalignment
+- disconnection
+- imbalance
+- broken bond
+- withheld recognition
+
+extendedKeywords:
+- offer not returned
+- false rapport
+- one-sided feeling
+- contact refused
+- bond under strain
+- recognition withheld
+- exchange collapsed
+- presence unacknowledged
+
+essenceSentence:
+Two positions remain separate as the exchange between them fails to form.
+
+coreMeaning:
+The Two of Cups reversed establishes a relational condition without completion. A second position is present but the current does not return. The field remains divided rather than shared.
+
+arrivalBehaviour:
+Introduces a split relational condition. Sets a field where two positions do not align.
+
+responseBehaviour:
+Exposes absence of return within existing interaction. Redirects attention to imbalance between positions.
+
+relationalEffect:
+separates adjacent cards from exchange
+
+interactionStyle:
+disrupting
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Twos introduce polarity. A second position enters the field. The spread shifts from singular movement to interaction between distinct forces.
+
+movementUpright:
+moves outward through reciprocal exchange between positions
+
+movementReversed:
+stalls between positions through lack of return
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a relational field. Subsequent cards operate within the condition of exchange between positions.
+
+whenSecond:
+Introduces a second pole into the established field. Forces evaluation of whether return is present.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Lovers: intensifies mutual exchange into structural bond
+Ace of Cups: directs emotional potential into shared exchange
+Five of Wands: disrupts exchange through competing forces
+
+---
+
+## Three of Cups
+
+cardId: three-of-cups
+arcana: Minor
+suit: Cups
+rank: Three
+number: None
+image: /images/tarot/three-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- celebration
+- community
+- shared joy
+- abundance
+- togetherness
+
+extendedKeywords:
+- collective emotional field
+- joy in company
+- shared harvest
+- friendship as structure
+- belonging without condition
+- communal recognition
+- emotional circulation across positions
+- gathering that holds
+
+essenceSentence:
+Multiple positions enter a shared field and the current between them sustains itself.
+
+coreMeaning:
+The Three of Cups establishes a collective emotional condition. Feeling circulates across more than two positions without dependency on a single exchange. The field becomes self-supporting through shared participation. Each position contributes to and draws from the same current.
+
+arrivalBehaviour:
+Introduces a collective emotional condition. Sets a field where multiple positions share the same current.
+
+responseBehaviour:
+Expands existing interaction into group circulation. Moves the spread from exchange between two positions to distribution across several.
+
+relationalEffect:
+distributes adjacent cards into shared field
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- isolation
+- exclusion
+- excess
+- fractured community
+- joy withheld
+
+extendedKeywords:
+- celebration without belonging
+- group that excludes
+- emotional withdrawal from community
+- overextension without cohesion
+- connection performed not sustained
+- shared field collapsed
+- third position disrupting structure
+- abundance without circulation
+
+essenceSentence:
+Multiple positions remain present but the shared current fails to circulate.
+
+coreMeaning:
+The Three of Cups reversed establishes a collective condition without cohesion. Positions exist within the same structure but the current does not move freely. The field breaks into separate units rather than operating as a whole.
+
+arrivalBehaviour:
+Introduces a fractured collective condition. Sets a field where multiple positions do not share a stable current.
+
+responseBehaviour:
+Exposes breakdown within group interaction. Redirects attention to where distribution fails to hold.
+
+relationalEffect:
+fragments adjacent cards from shared field
+
+interactionStyle:
+distorting
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Water
+
+numericalFunction:
+Threes extend polarity into structure. A third position creates a field capable of sustaining interaction without reliance on a single exchange.
+
+movementUpright:
+moves outward through circulation across multiple positions
+
+movementReversed:
+scatters across positions without cohesion
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a collective field. Subsequent cards operate within shared distribution across positions.
+
+whenSecond:
+Expands the established field beyond dual exchange. Forces interaction into a multi-position structure.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Sun: amplifies shared field into full expression
+Ten of Cups: stabilises collective field into sustained structure
+Seven of Wands: disrupts shared field through defensive stance
+
+---
+
+## Four of Cups
+
+cardId: four-of-cups
+arcana: Minor
+suit: Cups
+rank: Four
+number: None
+image: /images/tarot/four-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- withdrawal
+- apathy
+- contemplation
+- disengagement
+- reassessment
+
+extendedKeywords:
+- offer unnoticed
+- inward turn
+- emotional plateau
+- saturation without engagement
+- stillness that resists
+- available feeling refused
+- attention directed inward
+- peripheral offer ignored
+
+essenceSentence:
+The field presents and the position does not engage.
+
+coreMeaning:
+The Four of Cups establishes a condition where emotional input is present but not received. The field contains available current but the position remains inward. The structure holds without movement due to lack of engagement rather than lack of substance.
+
+arrivalBehaviour:
+Introduces inward withdrawal. Sets a field where available emotional input is not taken up.
+
+responseBehaviour:
+Refuses existing momentum. Suspends interaction without redirecting it.
+
+relationalEffect:
+stalls adjacent cards through non-engagement
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- re-engagement
+- emerging from withdrawal
+- restlessness
+- missed opportunity recognised
+- reluctant opening
+
+extendedKeywords:
+- attention returning outward
+- offer registering
+- apathy loosening
+- movement after stasis
+- awareness of prior refusal
+- partial receptivity
+- stirring beneath withdrawal
+- incomplete readiness
+
+essenceSentence:
+The inward position loosens and the field begins to register again.
+
+coreMeaning:
+The Four of Cups reversed establishes a condition where withdrawal is no longer fixed. The position begins to register external input but does not fully engage. Movement returns without full commitment.
+
+arrivalBehaviour:
+Introduces partial re-engagement. Sets a field where inward withdrawal begins to release.
+
+responseBehaviour:
+Allows limited reception of existing input. Introduces movement without continuity.
+
+relationalEffect:
+loosens adjacent cards from stasis
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Water
+
+numericalFunction:
+Fours stabilise structure. The field holds without progression or collapse, maintaining a fixed condition.
+
+movementUpright:
+contracts inward through refusal of available input
+
+movementReversed:
+moves outward through partial and inconsistent engagement
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a suspended field. Subsequent cards operate against or around non-engagement.
+
+whenSecond:
+Receives the established field by not responding. Introduces absence of uptake.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hermit: reinforces inward withdrawal into sustained isolation
+Ace of Cups: presents available input against non-engagement
+Eight of Wands: drives movement against suspended position
+
+---
+
+## Five of Cups
+
+cardId: five-of-cups
+arcana: Minor
+suit: Cups
+rank: Five
+number: None
+image: /images/tarot/five-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- loss
+- grief
+- regret
+- fixation
+- remaining resource overlooked
+
+extendedKeywords:
+- attention held by what is gone
+- spilled feeling
+- mourning as orientation
+- two cups standing unseen
+- partial loss treated as total
+- emotional field narrowed by absence
+- sorrow without shift
+- remaining resource unregistered
+
+essenceSentence:
+The position fixes on loss and does not register what remains.
+
+coreMeaning:
+The Five of Cups establishes a condition where loss dominates the field. Attention is directed toward what has been removed while remaining resource is not engaged. The structure holds but operates under reduced scope.
+
+arrivalBehaviour:
+Introduces a loss-weighted condition. Sets a field where attention is fixed on absence.
+
+responseBehaviour:
+Contracts existing movement toward loss. Pulls focus away from available resource.
+
+relationalEffect:
+narrows adjacent cards toward absence
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- turning
+- acceptance
+- grief releasing
+- resource acknowledged
+- reorientation
+
+extendedKeywords:
+- attention shifting outward
+- remaining resource registering
+- mourning releasing
+- two cups entering awareness
+- grief integrated into field
+- scope widening
+- movement returning after contraction
+- focus no longer fixed on absence
+
+essenceSentence:
+The position releases fixation and begins to register what remains.
+
+coreMeaning:
+The Five of Cups reversed establishes a condition where attention is no longer fixed on loss. Remaining resource enters the field and becomes active. The structure expands without removing the prior loss.
+
+arrivalBehaviour:
+Introduces reorientation. Sets a field where attention begins to move away from absence.
+
+responseBehaviour:
+Expands existing condition toward available resource. Reduces dominance of loss within the field.
+
+relationalEffect:
+widens adjacent cards toward resource
+
+interactionStyle:
+releasing
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Fives disrupt established structure. The field shifts under instability without immediate resolution.
+
+movementUpright:
+descends into fixation on loss
+
+movementReversed:
+moves outward through reorientation toward resource
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a loss-weighted field. Subsequent cards operate under reduced scope defined by absence.
+
+whenSecond:
+Receives the established field through contraction. Filters interaction through loss orientation.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Death: aligns loss with structural ending
+Four of Cups: reinforces inward contraction around absence
+Ace of Wands: introduces forward drive against fixation
+
+---
+
+## Six of Cups
+
+cardId: six-of-cups
+arcana: Minor
+suit: Cups
+rank: Six
+number: None
+image: /images/tarot/six-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- nostalgia
+- innocence
+- return
+- gifting
+- remembered feeling
+
+extendedKeywords:
+- past as living presence
+- offering without condition
+- childhood pattern active
+- familiar emotional register
+- goodwill extended freely
+- memory shaping current field
+- return to known emotional ground
+- simplicity as structural force
+
+essenceSentence:
+The past enters the present field as emotional resource.
+
+coreMeaning:
+The Six of Cups establishes a condition where remembered feeling becomes active in the current field. Prior emotional ground returns as a stabilising influence. The field operates through familiarity, goodwill, and uncomplicated exchange.
+
+arrivalBehaviour:
+Introduces remembered emotional register. Sets a field where past feeling becomes active ground.
+
+responseBehaviour:
+Grounds existing movement in familiar emotional pattern. Pulls new or complex energy toward prior recognition.
+
+relationalEffect:
+grounds adjacent cards in remembered feeling
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- stuck in the past
+- idealisation
+- outgrown pattern
+- reluctance to move forward
+- nostalgia as obstruction
+
+extendedKeywords:
+- past preferred over present
+- familiar pattern no longer functional
+- memory distorted by longing
+- emotional field anchored behind current position
+- goodwill turned into dependency
+- return without function
+- childhood dynamic replaying unresolved
+- comfort zone mistaken for ground
+
+essenceSentence:
+The past holds the position behind the present field.
+
+coreMeaning:
+The Six of Cups reversed establishes a condition where remembered feeling becomes restrictive. Familiar emotional ground remains active but no longer supports current movement. The field is held behind the present condition.
+
+arrivalBehaviour:
+Introduces backward-weighted emotional pattern. Sets a field where past feeling restricts present movement.
+
+responseBehaviour:
+Pulls existing energy toward prior emotional ground. Interrupts forward orientation through familiar pattern.
+
+relationalEffect:
+anchors adjacent cards to prior pattern
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Water
+
+numericalFunction:
+Sixes restore equilibrium after disruption. The field restabilises at a functional level after the instability of the Five.
+
+movementUpright:
+returns through past feeling brought into present use
+
+movementReversed:
+stalls through past feeling holding movement behind the present
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a field grounded in remembered feeling. Subsequent cards operate within conditions shaped by prior emotional pattern.
+
+whenSecond:
+Receives the established field through familiarity. Locates present interaction in prior emotional ground.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: distorts remembered feeling through unconscious pattern
+Two of Cups: grounds exchange in prior recognition
+Three of Wands: pulls expansion against remembered ground
+
+---
+
+## Seven of Cups
+
+cardId: seven-of-cups
+arcana: Minor
+suit: Cups
+rank: Seven
+number: None
+image: /images/tarot/seven-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- illusion
+- fantasy
+- overwhelm
+- scattered desire
+- choice without ground
+
+extendedKeywords:
+- multiple images without substance
+- wish projected onto field
+- appetite without direction
+- options without confirmation
+- imagination exceeding discernment
+- desire generating disorientation
+- field populated by projection
+- possibility without anchor
+
+essenceSentence:
+The field fills with projections and the position cannot fix on one.
+
+coreMeaning:
+The Seven of Cups establishes a condition where multiple ungrounded possibilities occupy the field. No single option stabilises into action. The structure holds but lacks anchor, dispersing attention across competing projections.
+
+arrivalBehaviour:
+Introduces projection-saturated field. Sets a condition where multiple ungrounded possibilities occupy the space.
+
+responseBehaviour:
+Disperses existing direction across competing projections. Prevents consolidation into action.
+
+relationalEffect:
+disperses adjacent cards into projection
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- clarity emerging
+- illusion dissolving
+- choice forced
+- disillusionment
+- return to ground
+
+extendedKeywords:
+- projection contracting
+- false options falling away
+- discernment returning
+- field narrowing toward single path
+- forced recognition of limits
+- desire reduced to actionable scope
+- illusion breaking down
+- ground reasserting
+
+essenceSentence:
+The projected field contracts and remaining options become actionable.
+
+coreMeaning:
+The Seven of Cups reversed establishes a condition where projection collapses. The field narrows as ungrounded possibilities fall away. Remaining options stabilise into potential action through reduction.
+
+arrivalBehaviour:
+Introduces contracting projection field. Sets a condition where ungrounded possibilities reduce.
+
+responseBehaviour:
+Forces existing energy toward selection. Removes unsupported options from the field.
+
+relationalEffect:
+contracts adjacent cards toward selection
+
+interactionStyle:
+revealing
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Sevens introduce internal challenge. The field tests its own structure through pressure from within.
+
+movementUpright:
+scatters outward through competing projections
+
+movementReversed:
+contracts inward through reduction of possibilities
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a projection-saturated field. Subsequent cards operate within dispersed and ungrounded conditions.
+
+whenSecond:
+Receives the established field through fragmentation. Prevents consolidation into stable direction.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: amplifies projection into full distortion
+Four of Cups: contrasts inward withdrawal with outward dispersion
+King of Wands: imposes direction against scattered projection
+
+---
+
+## Eight of Cups
+
+cardId: eight-of-cups
+arcana: Minor
+suit: Cups
+rank: Eight
+number: None
+image: /images/tarot/eight-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- departure
+- disengagement
+- seeking
+- leaving what no longer serves
+- turning away
+
+extendedKeywords:
+- deliberate withdrawal from established field
+- emotional sufficiency abandoned
+- movement away from completed structure
+- search for deeper meaning
+- cups left standing but walked away from
+- turning toward the unknown
+- sufficiency without continuation
+- inner call overriding structure
+
+essenceSentence:
+The position leaves an intact field and moves away from it.
+
+coreMeaning:
+The Eight of Cups establishes a condition where an existing emotional structure is exited. The field remains intact but the position disengages from it. Movement is directed away from what is complete.
+
+arrivalBehaviour:
+Introduces deliberate departure. Sets a field where a position exits established structure.
+
+responseBehaviour:
+Withdraws from existing interaction. Removes participation without altering the remaining structure.
+
+relationalEffect:
+removes adjacent cards from engagement
+
+interactionStyle:
+releasing
+
+---
+
+### Reversed
+
+keywords:
+- inability to leave
+- return
+- drift
+- fear of departure
+- unfinished withdrawal
+
+extendedKeywords:
+- return to prior structure
+- departure not completed
+- movement interrupted
+- position held between states
+- withdrawal reversed
+- attachment maintained past point
+- drift without direction
+- suspension between leaving and staying
+
+essenceSentence:
+The departure does not complete and the position remains within the field.
+
+coreMeaning:
+The Eight of Cups reversed establishes a condition where withdrawal is incomplete. The position remains connected to the existing structure despite movement away having begun. The field holds unresolved departure.
+
+arrivalBehaviour:
+Introduces suspended withdrawal. Sets a field where departure does not resolve.
+
+responseBehaviour:
+Holds existing interaction in partial disengagement. Prevents full separation or return.
+
+relationalEffect:
+suspends adjacent cards between engagement and withdrawal
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Eights generate movement within structure. The field shifts through directed change rather than disruption.
+
+movementUpright:
+moves away from established structure through deliberate withdrawal
+
+movementReversed:
+stalls between departure and return through incomplete withdrawal
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a departure condition. Subsequent cards operate within the context of leaving established structure.
+
+whenSecond:
+Receives the established field through withdrawal. Removes engagement from what has been set.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hermit: directs withdrawal into solitary seeking
+Two of Cups: removes position from established exchange
+Ace of Wands: introduces new direction against withdrawal
+
+---
+
+## Nine of Cups
+
+cardId: nine-of-cups
+arcana: Minor
+suit: Cups
+rank: Nine
+number: None
+image: /images/tarot/nine-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- satisfaction
+- fulfilment
+- wish granted
+- emotional sufficiency
+- contentment
+
+extendedKeywords:
+- desire met by reality
+- field at capacity
+- pleasure without extension
+- emotional completion held
+- inner state aligned with condition
+- wish resolved into form
+- self-contained feeling
+- abundance without outward movement
+
+essenceSentence:
+The position holds what it sought and does not move beyond it.
+
+coreMeaning:
+The Nine of Cups establishes a condition where emotional desire has reached completion. The field is sufficient and self-contained. No further movement is generated from within the structure.
+
+arrivalBehaviour:
+Introduces completed emotional condition. Sets a field where desire has resolved into sufficiency.
+
+responseBehaviour:
+Stabilises existing movement at completion. Prevents further extension beyond achieved state.
+
+relationalEffect:
+stabilises adjacent cards within sufficiency
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- dissatisfaction
+- shallow fulfilment
+- wish unfulfilled
+- overindulgence
+- contentment that does not hold
+
+extendedKeywords:
+- desire met without stability
+- field at capacity without rest
+- pleasure without continuation
+- completion that does not sustain
+- form without alignment
+- self-containment without satisfaction
+- fulfilment without depth
+- abundance without function
+
+essenceSentence:
+The position reaches completion and the field does not sustain it.
+
+coreMeaning:
+The Nine of Cups reversed establishes a condition where fulfilment does not hold. The structure is complete but does not stabilise into sufficiency. The field remains unsettled despite apparent completion.
+
+arrivalBehaviour:
+Introduces unstable completion. Sets a field where achieved state does not sustain.
+
+responseBehaviour:
+Destabilises existing completion. Prevents satisfaction from holding within the field.
+
+relationalEffect:
+undermines adjacent cards within completion
+
+interactionStyle:
+distorting
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Nines extend development to its limit. The field reaches completion before transition.
+
+movementUpright:
+holds at completion through contained sufficiency
+
+movementReversed:
+breaks from completion through instability within fulfilment
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a completed field. Subsequent cards operate within a condition of achieved sufficiency.
+
+whenSecond:
+Receives the established field through confirmation. Fixes the condition at completion.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Star: extends sufficiency into renewal
+Seven of Cups: contrasts completion with prior projection
+Ten of Wands: opposes sufficiency with sustained burden
+
+---
+
+## Ten of Cups
+
+cardId: ten-of-cups
+arcana: Minor
+suit: Cups
+rank: Ten
+number: None
+image: /images/tarot/ten-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- fulfilment
+- harmony
+- emotional completion
+- lasting stability
+- belonging
+
+extendedKeywords:
+- emotional arc completed
+- shared field sustained
+- fulfilment distributed across positions
+- collective condition held
+- belonging without break
+- shared life operating as structure
+- completion extending beyond self
+- field operating at full capacity
+
+essenceSentence:
+The emotional field completes and sustains multiple positions within it.
+
+coreMeaning:
+The Ten of Cups establishes a condition where emotional development has reached full extension across a shared field. The structure holds multiple positions within a stable and sustained condition. No further expansion is required within the current cycle.
+
+arrivalBehaviour:
+Introduces completed shared emotional condition. Sets a field where fulfilment is distributed across positions.
+
+responseBehaviour:
+Extends existing interaction into sustained shared structure. Stabilises conditions across multiple positions.
+
+relationalEffect:
+completes adjacent cards into shared structure
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- fractured harmony
+- disconnection within belonging
+- conditional stability
+- incomplete fulfilment
+- strain within structure
+
+extendedKeywords:
+- shared field not holding
+- belonging unevenly distributed
+- structure present without cohesion
+- fulfilment not shared across positions
+- completion without stability
+- field sustaining unevenly
+- connection present without continuity
+- structure under internal strain
+
+essenceSentence:
+The shared structure holds but does not sustain all positions within it.
+
+coreMeaning:
+The Ten of Cups reversed establishes a condition where shared completion exists without full distribution. The structure is present but does not operate evenly across positions. The field holds but does not sustain all within it.
+
+arrivalBehaviour:
+Introduces uneven shared condition. Sets a field where completion does not distribute equally.
+
+responseBehaviour:
+Exposes instability within shared structure. Prevents full cohesion across positions.
+
+relationalEffect:
+fractures adjacent cards within shared structure
+
+interactionStyle:
+distorting
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Tens complete the cycle. The field reaches full expression before transition.
+
+movementUpright:
+extends outward through sustained shared completion
+
+movementReversed:
+stalls within shared structure through uneven distribution
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a completed shared field. Subsequent cards operate within sustained structure.
+
+whenSecond:
+Receives the established field through confirmation. Fixes the condition at full extension.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The World: reinforces full completion of cycle
+Three of Cups: extends collective field into sustained structure
+Five of Cups: contrasts shared completion with fixation on loss
+
+---
+
+## Page of Cups
+
+cardId: page-of-cups
+arcana: Minor
+suit: Cups
+rank: Page
+number: None
+image: /images/tarot/page-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- receptivity
+- intuitive message
+- emotional openness
+- imaginative sensitivity
+- emerging feeling
+
+extendedKeywords:
+- feeling arriving before form
+- message from inner field
+- early-stage emotional signal
+- sensitivity as operative state
+- unexpected emotional input
+- inner field becoming active
+- openness without direction
+- intuition without testing
+
+essenceSentence:
+The position receives incoming emotional signal without shaping it.
+
+coreMeaning:
+The Page of Cups establishes a condition where emotional and intuitive input enters the field in unformed state. The structure receives without directing or resolving what arrives.
+
+arrivalBehaviour:
+Introduces open receptive condition. Sets a field where incoming emotional material is received without filtering.
+
+responseBehaviour:
+Absorbs existing input without shaping it. Holds incoming signal without directing outcome.
+
+relationalEffect:
+opens adjacent cards to incoming signal
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- emotional immaturity
+- blocked intuition
+- oversensitivity
+- creative suppression
+- distorted feeling
+
+extendedKeywords:
+- input without containment
+- intuitive signal misread
+- sensitivity without structure
+- emotional flooding
+- signal turned into noise
+- creative impulse suppressed
+- reception without stability
+- input handled without clarity
+
+essenceSentence:
+The position receives input but cannot contain or stabilise it.
+
+coreMeaning:
+The Page of Cups reversed establishes a condition where incoming emotional and intuitive material is not contained. The structure receives but does not stabilise what enters the field.
+
+arrivalBehaviour:
+Introduces uncontained receptive condition. Sets a field where incoming material is not held.
+
+responseBehaviour:
+Absorbs input without control. Disrupts stability through lack of containment.
+
+relationalEffect:
+destabilises adjacent cards through uncontained input
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Water
+
+numericalFunction:
+Pages introduce elemental energy in unformed state. The field receives input without developed capacity.
+
+movementUpright:
+moves inward through open reception of unformed input
+
+movementReversed:
+scatters through uncontained reception without structure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a receptive field. Subsequent cards operate as incoming material within that condition.
+
+whenSecond:
+Receives the established field without shaping it. Maintains openness without direction.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The High Priestess: deepens reception into structured intuition
+Two of Cups: converts reception into mutual exchange
+Knight of Wands: opposes reception with directed momentum
+
+---
+
+## Knight of Cups
+
+cardId: knight-of-cups
+arcana: Minor
+suit: Cups
+rank: Knight
+number: None
+image: /images/tarot/knight-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- pursuit
+- emotional direction
+- movement
+- invitation
+- intentional advance
+
+extendedKeywords:
+- feeling in motion
+- emotional aim identified
+- offer extended forward
+- movement guided by feeling
+- directed emotional current
+- approach without force
+- sensitivity in action
+- intent carried through movement
+
+essenceSentence:
+The position moves through the field toward an emotional aim.
+
+coreMeaning:
+The Knight of Cups establishes a condition where emotional energy acquires direction and momentum. The field is defined by movement toward a defined aim rather than reception or stasis.
+
+arrivalBehaviour:
+Introduces directed emotional movement. Sets a field where a position advances toward an aim.
+
+responseBehaviour:
+Moves through existing conditions with intention. Carries emotional direction across the field.
+
+relationalEffect:
+draws adjacent cards toward movement
+
+interactionStyle:
+initiating
+
+---
+
+### Reversed
+
+keywords:
+- misdirection
+- emotional volatility
+- unreliable pursuit
+- distorted aim
+- unstable movement
+
+extendedKeywords:
+- movement without stable aim
+- emotional direction shifting
+- pursuit without grounding
+- momentum detached from outcome
+- inconsistent advance
+- feeling driving without anchor
+- direction without reliability
+- movement without resolution
+
+essenceSentence:
+The position moves but does not hold a stable direction.
+
+coreMeaning:
+The Knight of Cups reversed establishes a condition where emotional movement is present but unstable. Direction shifts or fails to hold, and momentum does not resolve into arrival.
+
+arrivalBehaviour:
+Introduces unstable emotional movement. Sets a field where direction does not hold.
+
+responseBehaviour:
+Moves through existing conditions without stable aim. Disrupts coherence of direction.
+
+relationalEffect:
+unsettles adjacent cards through unstable movement
+
+interactionStyle:
+distorting
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Water
+
+numericalFunction:
+Knights direct elemental energy into motion. The field shifts through purposeful movement.
+
+movementUpright:
+moves outward through directed emotional pursuit
+
+movementReversed:
+scatters through unstable emotional direction
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a field of directed movement. Subsequent cards operate within advancing momentum.
+
+whenSecond:
+Receives the established field through movement. Carries the condition forward.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Lovers: directs movement into consequential choice
+Ace of Cups: aligns movement with emotional origin
+King of Wands: contrasts emotional direction with will-driven command
+
+---
+
+## Queen of Cups
+
+cardId: queen-of-cups
+arcana: Minor
+suit: Cups
+rank: Queen
+number: None
+image: /images/tarot/queen-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- emotional depth
+- intuitive authority
+- containment
+- inner knowing
+- stable sensitivity
+
+extendedKeywords:
+- feeling held without overflow
+- intuition as stable function
+- emotional field contained
+- depth without instability
+- sensitivity under control
+- inner state as authority
+- reception without absorption
+- capacity fully developed
+
+essenceSentence:
+The position contains the emotional field without being moved by it.
+
+coreMeaning:
+The Queen of Cups establishes a condition where emotional depth is stabilised as containment. The field holds feeling without requiring movement or release. The structure operates through sustained internal capacity.
+
+arrivalBehaviour:
+Introduces contained emotional depth. Sets a field where feeling is held within stable structure.
+
+responseBehaviour:
+Receives existing input and holds it. Maintains stability without directing movement.
+
+relationalEffect:
+stabilises adjacent cards through containment
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- emotional overwhelm
+- loss of containment
+- boundary collapse
+- distorted intuition
+- unregulated feeling
+
+extendedKeywords:
+- feeling without boundary
+- intuition destabilised
+- emotional saturation
+- absorption without control
+- depth without structure
+- sensitivity without containment
+- internal flooding
+- loss of internal stability
+
+essenceSentence:
+The position is overtaken by the emotional field it cannot contain.
+
+coreMeaning:
+The Queen of Cups reversed establishes a condition where emotional depth is no longer contained. The field saturates the position and destabilises internal structure. Containment fails and feeling overwhelms.
+
+arrivalBehaviour:
+Introduces uncontained emotional saturation. Sets a field where feeling exceeds structure.
+
+responseBehaviour:
+Absorbs existing input without stability. Breaks containment through excess.
+
+relationalEffect:
+saturates adjacent cards through loss of boundary
+
+interactionStyle:
+internalised
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Water
+
+numericalFunction:
+Queens stabilise elemental capacity as internal authority. The field operates through sustained containment.
+
+movementUpright:
+holds inward through stable emotional containment
+
+movementReversed:
+collapses inward through loss of containment
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a contained emotional field. Subsequent cards operate within stable internal capacity.
+
+whenSecond:
+Receives the established field through containment. Holds the condition without movement.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The High Priestess: reinforces contained intuitive depth
+Knight of Cups: contrasts directed movement with contained presence
+Queen of Wands: contrasts internal containment with external command
+
+---
+
+## King of Cups
+
+cardId: king-of-cups
+arcana: Minor
+suit: Cups
+rank: King
+number: None
+image: /images/tarot/king-of-cups.jpg
+
+---
+
+### Upright
+
+keywords:
+- emotional mastery
+- authority
+- balance
+- governance
+- stability
+
+extendedKeywords:
+- feeling held under control
+- emotional field governed
+- depth stabilised
+- authority through containment
+- balanced internal state
+- controlled emotional capacity
+- regulated response
+- command without force
+
+essenceSentence:
+The position governs the emotional field without being moved by it.
+
+coreMeaning:
+The King of Cups establishes a condition where emotional depth is governed through stable authority. The field operates under control without suppression. Movement is regulated through balance rather than reaction.
+
+arrivalBehaviour:
+Introduces governed emotional authority. Sets a field where feeling is held under control.
+
+responseBehaviour:
+Regulates existing interaction. Maintains equilibrium across the field.
+
+relationalEffect:
+stabilises adjacent cards through governance
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- manipulation
+- suppression
+- emotional control
+- instability beneath surface
+- detachment
+
+extendedKeywords:
+- control without integration
+- suppressed emotional field
+- authority without depth
+- managed response without authenticity
+- emotional distance
+- instability concealed
+- governance without balance
+- detached regulation
+
+essenceSentence:
+The position controls the field but does not stabilise it.
+
+coreMeaning:
+The King of Cups reversed establishes a condition where emotional authority operates without stability. Control is present but does not produce equilibrium. The field is managed rather than governed.
+
+arrivalBehaviour:
+Introduces controlled but unstable authority. Sets a field where governance lacks balance.
+
+responseBehaviour:
+Constrains existing interaction without stabilising it. Prevents genuine equilibrium.
+
+relationalEffect:
+flattens adjacent cards through imposed control
+
+interactionStyle:
+avoidant
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Water
+
+numericalFunction:
+Kings express elemental capacity as outward authority. The field operates through command and governance.
+
+movementUpright:
+holds steady through controlled emotional governance
+
+movementReversed:
+contracts through imposed control without stability
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a governed field. Subsequent cards operate under controlled emotional authority.
+
+whenSecond:
+Receives the established field through regulation. Maintains balance across conditions.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Emperor: contrasts emotional governance with structural command
+Queen of Cups: aligns containment with authority
+Knight of Wands: opposes control with impulsive drive
+
+---
+
+## Ace of Swords
+
+cardId: ace-of-swords
+arcana: Minor
+suit: Swords
+rank: Ace
+number: None
+image: /images/tarot/ace-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- clarity
+- breakthrough
+- truth
+- inception
+- precision
+
+extendedKeywords:
+- singular decisive force
+- mental clarity arriving whole
+- cutting through accumulated noise
+- truth before consequence
+- the first clean thought
+- language as instrument
+- perception stripped of distortion
+- the moment of knowing
+
+essenceSentence:
+A single point of mental force cuts through confusion and establishes truth as the operative condition.
+
+coreMeaning:
+Introduces undiluted cognitive force into the spread. Establishes clarity as the governing field condition. Initiates a mental sequence from a singular point of precision.
+
+arrivalBehaviour:
+Introduces a high-clarity mental field. Removes ambiguity from the spread. Establishes precision as the operative condition.
+
+responseBehaviour:
+Reorients the field around a single point of clarity. Strips adjacent complexity. Overrides existing field conditions.
+
+relationalEffect:
+cuts adjacent cards to a single operative truth
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- confusion
+- blocked clarity
+- misused force
+- false premise
+- mental noise
+
+extendedKeywords:
+- clarity arriving fractured
+- force without direction
+- the wrong conclusion reached quickly
+- truth withheld or distorted
+- mental pressure with no outlet
+- decisive action on false information
+- the blade turned inward
+- inception of a flawed premise
+
+essenceSentence:
+Mental force enters without a defined point and generates unresolved pressure.
+
+coreMeaning:
+Introduces cognitive force without a fixed point. Establishes distortion as the governing field condition. Initiates a sequence from an unstable premise.
+
+arrivalBehaviour:
+Introduces unfocused mental pressure into the spread. Establishes distortion as the operative condition. Sets an unstable cognitive baseline.
+
+responseBehaviour:
+Adds pressure to the existing field without resolution. Disrupts coherence. Fails to establish a stable operative condition.
+
+relationalEffect:
+pressures adjacent cards without delivering resolution
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+The Ace marks the inception point of a suit. Introduces elemental force in undifferentiated form. Establishes initial field conditions for sequence development.
+
+movementUpright:
+moves outward through a concentrated point of cognitive force
+
+movementReversed:
+scatters inward through unfocused mental pressure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a high-clarity field. Forces subsequent cards to operate within precision. Compresses ambiguity across the spread.
+
+whenSecond:
+Cuts into the existing field. Reorients conditions toward a single operative point. Removes competing signals.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The High Priestess: extracts hidden knowledge into explicit clarity
+Three of Swords: defines the precise point of fracture
+Ace of Pentacles: imposes cognitive structure onto material inception
+
+---
+
+## Two of Swords
+
+cardId: two-of-swords
+arcana: Minor
+suit: Swords
+rank: Two
+number: None
+image: /images/tarot/two-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- stalemate
+- avoidance
+- suspension
+- blocked decision
+- enforced truce
+
+extendedKeywords:
+- perception deliberately shut off
+- two forces held in equal tension
+- choice refused rather than unmade
+- the mind protecting itself from knowing
+- stillness as a defensive posture
+- equilibrium maintained by will
+- information blocked at the threshold
+- the pause before truth lands
+
+essenceSentence:
+Two opposing forces are held in tension and prevent resolution.
+
+coreMeaning:
+Establishes a divided cognitive field. Holds two opposing forces in fixed equilibrium. Prevents progression through sustained non-resolution.
+
+arrivalBehaviour:
+Introduces a field of suspended opposition. Blocks resolution from entering the spread. Establishes two positions that cannot advance.
+
+responseBehaviour:
+Divides the existing field into opposing positions. Holds both without integration. Suspends directional movement.
+
+relationalEffect:
+holds adjacent cards in irresolvable opposition
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- forced choice
+- information overload
+- collapsed truce
+- indecision exposed
+- overwhelm
+
+extendedKeywords:
+- the stalemate breaking under pressure
+- too much information arriving at once
+- the blindfold removed without readiness
+- decision forced before clarity arrives
+- paralysis replacing equilibrium
+- the truce collapsing into chaos
+- avoidance made impossible
+- overwhelm as the cost of exposure
+
+essenceSentence:
+The held opposition breaks and releases uncontained pressure into the field.
+
+coreMeaning:
+Establishes a collapsed cognitive field. Releases opposing forces without containment. Removes the structure that sustained equilibrium.
+
+arrivalBehaviour:
+Introduces a field of collapsed opposition. Removes stabilising tension. Establishes uncontained pressure.
+
+responseBehaviour:
+Destabilises the existing field. Releases held forces simultaneously. Disrupts coherence without forming structure.
+
+relationalEffect:
+floods adjacent cards with uncontained opposing pressure
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Two introduces duality within a suit. Establishes opposing forces in structural tension. Sets equilibrium as the initial condition of development.
+
+movementUpright:
+moves inward through sustained containment of opposing force
+
+movementReversed:
+releases outward through collapse of contained opposition
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a suspended field. Prevents forward movement. Holds subsequent cards within opposition.
+
+whenSecond:
+Divides the existing field. Converts directional force into equilibrium. Arrests progression.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Justice: locks judgement into suspended balance
+Two of Cups: divides reciprocal exchange into opposition
+Four of Pentacles: compounds holding into reinforced stasis
+
+---
+
+## Three of Swords
+
+cardId: three-of-swords
+arcana: Minor
+suit: Swords
+rank: Three
+number: None
+image: /images/tarot/three-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- heartbreak
+- grief
+- rupture
+- painful truth
+- sorrow
+
+extendedKeywords:
+- truth arriving as wound
+- the third force breaking a held structure
+- sorrow with a precise cause
+- grief that knows its own name
+- pain as confirmation not surprise
+- the moment of irreversible knowing
+- clarity delivered through loss
+- the break that cannot be reversed
+
+essenceSentence:
+A third force pierces a held structure and establishes rupture as the field condition.
+
+coreMeaning:
+Establishes a ruptured cognitive field. Introduces a third force that breaks existing equilibrium. Fixes loss as a defined and active condition.
+
+arrivalBehaviour:
+Introduces a field of acute rupture. Establishes loss as the operative condition. Fixes a point of irreversible break within the spread.
+
+responseBehaviour:
+Delivers a penetrating force into the existing field. Breaks established structures. Converts current conditions into defined loss.
+
+relationalEffect:
+pierces adjacent cards through fixed rupture
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- prolonged grief
+- recovery
+- releasing sorrow
+- repressed pain
+- wounds reopened
+
+extendedKeywords:
+- grief that does not discharge
+- sorrow held beyond its active phase
+- pain without resolution
+- the wound remaining open
+- recovery unable to initiate
+- prior rupture reactivated
+- loss not processed
+- the break not integrated
+
+essenceSentence:
+Rupture remains active and does not discharge from the field.
+
+coreMeaning:
+Establishes a sustained rupture field. Holds loss in an active state without release. Prevents transition out of the break condition.
+
+arrivalBehaviour:
+Introduces a field of sustained rupture. Establishes unresolved loss as the operative condition. Maintains an open break within the spread.
+
+responseBehaviour:
+Maintains rupture within the existing field. Prevents discharge of accumulated loss. Disrupts progression without closing the break.
+
+relationalEffect:
+holds adjacent cards within sustained rupture
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+The Three introduces a third force into a divided field. Breaks equilibrium established by the Two. Produces active disruption within the sequence.
+
+movementUpright:
+moves inward through penetrating force that fixes rupture as active condition
+
+movementReversed:
+stalls inward through sustained rupture without discharge
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a ruptured field. Forces subsequent cards into loss conditions. Overrides stabilising structures.
+
+whenSecond:
+Breaks the existing field. Converts conditions into defined rupture. Fixes loss within the pairing.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Tower: compounds structural collapse through aligned rupture
+Three of Cups: converts shared cohesion into defined loss
+Ace of Swords: fixes inception into immediate rupture
+
+---
+
+## Four of Swords
+
+cardId: four-of-swords
+arcana: Minor
+suit: Swords
+rank: Four
+number: None
+image: /images/tarot/four-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- rest
+- withdrawal
+- recuperation
+- stillness
+- sanctuary
+
+extendedKeywords:
+- deliberate removal from active force
+- stillness as a structural requirement
+- the mind standing down from conflict
+- recovery held inside a protected container
+- pause between rupture and re-engagement
+- enforced quiet as operative condition
+- withdrawal that preserves rather than avoids
+- rest as a load-bearing function
+
+essenceSentence:
+Active force is set down inside a protected container and establishes stillness as the operative condition.
+
+coreMeaning:
+Establishes a withdrawn cognitive field. Contains active force within a stable structure. Holds energy in suspension without progression.
+
+arrivalBehaviour:
+Introduces stillness and protected withdrawal. Establishes suspension as the operative condition. Removes active force from circulation.
+
+responseBehaviour:
+Absorbs active energy from the existing field. Converts movement into contained stillness. Maintains suspension without redirection.
+
+relationalEffect:
+stills adjacent cards within contained suspension
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- restlessness
+- forced return
+- burnout
+- resistance to rest
+- premature re-engagement
+
+extendedKeywords:
+- stillness refused or broken before completion
+- return to active force before recovery holds
+- the protected container failing
+- rest interrupted from outside or within
+- exhaustion without a viable pause point
+- withdrawal collapsing into re-exposure
+- burnout as the cost of refused stillness
+- the mind returning to conflict too soon
+
+essenceSentence:
+The contained stillness breaks and releases active force back into the field.
+
+coreMeaning:
+Establishes a disrupted withdrawal field. Breaks containment of suspended force. Returns active energy without stabilisation.
+
+arrivalBehaviour:
+Introduces disrupted stillness. Establishes premature re-engagement as the operative condition. Removes containment from the field.
+
+responseBehaviour:
+Releases contained energy into the existing field. Disrupts suspension. Reintroduces unstable activity.
+
+relationalEffect:
+releases adjacent cards from incomplete suspension
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Four establishes structural containment within a suit. Holds accumulated energy in a fixed state. Inserts stabilisation before further progression.
+
+movementUpright:
+moves inward through contraction into contained stillness
+
+movementReversed:
+releases outward through collapse of contained suspension
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a suspended field. Removes active force. Holds subsequent cards within stillness.
+
+whenSecond:
+Absorbs the existing field. Converts movement into suspension. Maintains containment across the pairing.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hermit: compounds withdrawal into extended containment
+Four of Cups: reinforces disengagement through dual withdrawal
+Five of Swords: positions conflict immediately after suspension
+
+---
+
+## Five of Swords
+
+cardId: five-of-swords
+arcana: Minor
+suit: Swords
+rank: Five
+number: None
+image: /images/tarot/five-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- conflict
+- defeat
+- hollow victory
+- aggression
+- loss
+
+extendedKeywords:
+- winning at the cost of the field
+- force used past the point of necessity
+- the victor left alone in a depleted position
+- conflict that produces no functional outcome
+- domination without gain
+- the cost of winning made visible
+- others removed from the field by force
+- aggression as its own endpoint
+
+essenceSentence:
+Force exceeds its function and leaves the field depleted.
+
+coreMeaning:
+Establishes a depleted post-conflict field. Removes cooperative structures. Fixes dominance without functional outcome.
+
+arrivalBehaviour:
+Introduces a depleted field following conflict. Establishes loss of cooperative potential. Fixes isolation as the operative condition.
+
+responseBehaviour:
+Strips the existing field of cooperation. Converts active conditions into depleted dominance. Removes shared structure.
+
+relationalEffect:
+depletes adjacent cards of cooperative potential
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- aftermath
+- regret
+- unresolved conflict
+- releasing aggression
+- reconciliation attempt
+
+extendedKeywords:
+- the cost of conflict registering after conclusion
+- aggression turned inward
+- the hollow outcome re-entering awareness
+- conflict without closure
+- attempts at repair within depletion
+- the removed position seeking return
+- force recognised as excessive after use
+- residual hostility without active target
+
+essenceSentence:
+Residual conflict remains active within a depleted field.
+
+coreMeaning:
+Establishes a residual conflict field. Holds tension without active engagement. Maintains depletion with unresolved force.
+
+arrivalBehaviour:
+Introduces residual conflict into the field. Establishes unresolved tension as the operative condition. Maintains depletion without active force.
+
+responseBehaviour:
+Saturates the existing field with unresolved tension. Prevents closure. Maintains instability without escalation.
+
+relationalEffect:
+saturates adjacent cards with unresolved conflict residue
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Five introduces disruption within a suit. Breaks structural continuity. Produces loss that interrupts forward development.
+
+movementUpright:
+moves outward through force that exhausts the field
+
+movementReversed:
+stalls inward through unresolved conflict held within depletion
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a depleted field. Removes cooperative function. Forces subsequent cards into isolated conditions.
+
+whenSecond:
+Strips the existing field. Converts conditions into depletion. Removes shared structure.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: obscures depletion within unresolved conditions
+Five of Cups: compounds loss across parallel fields
+Six of Swords: positions transition after depletion
+
+---
+
+## Six of Swords
+
+cardId: six-of-swords
+arcana: Minor
+suit: Swords
+rank: Six
+number: None
+image: /images/tarot/six-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- transition
+- passage
+- moving on
+- guided movement
+- mental shift
+
+extendedKeywords:
+- leaving a depleted field under deliberate direction
+- movement away from what cannot be maintained
+- passage assisted rather than self-generated
+- the mind carried toward calmer conditions
+- transition without full resolution
+- forward movement as structural necessity
+- weight carried into the next field
+- prior condition remaining within motion
+
+essenceSentence:
+A depleted field is exited through directed passage while unresolved weight remains in motion.
+
+coreMeaning:
+Establishes transition as the operative field condition. Converts prior conditions into forward movement. Carries unresolved elements within the transition.
+
+arrivalBehaviour:
+Introduces directed movement away from an established condition. Establishes transition as the operative state. Pulls the field into forward passage.
+
+responseBehaviour:
+Absorbs the existing field into directional movement. Converts static conditions into transition. Maintains unresolved elements within motion.
+
+relationalEffect:
+carries adjacent cards through directed transition
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- delayed transition
+- resistance to moving on
+- stalled passage
+- returning to old conditions
+- unfinished departure
+
+extendedKeywords:
+- movement away blocked or interrupted
+- passage unable to complete
+- return toward prior conditions
+- transition failing to stabilise
+- resistance to forward motion
+- field held between positions
+- departure without sustained direction
+- prior condition reasserting
+
+essenceSentence:
+Directed passage stalls and holds the field between departure and arrival.
+
+coreMeaning:
+Establishes a suspended transition field. Prevents completion of movement. Holds conditions between origin and destination.
+
+arrivalBehaviour:
+Introduces stalled transition. Establishes suspension between conditions. Prevents directional completion.
+
+responseBehaviour:
+Interrupts directional movement in the existing field. Holds energy between states. Prevents progression.
+
+relationalEffect:
+suspends adjacent cards within incomplete transition
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Six introduces directed passage after disruption. Converts accumulated conditions into movement. Establishes transition as the mechanism for continuation.
+
+movementUpright:
+moves outward through directed passage carrying unresolved elements
+
+movementReversed:
+stalls outward through interrupted passage holding between states
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a transitional field. Moves subsequent cards into forward passage. Prevents anchoring in prior conditions.
+
+whenSecond:
+Converts the existing field into movement. Carries conditions forward. Maintains unresolved elements within transition.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Star: directs transition toward stabilised restoration
+Five of Swords: positions departure from depleted conflict
+Six of Cups: carries prior emotional patterns into transition
+
+---
+
+## Seven of Swords
+
+cardId: seven-of-swords
+arcana: Minor
+suit: Swords
+rank: Seven
+number: None
+image: /images/tarot/seven-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- deception
+- strategy
+- evasion
+- theft
+- partial action
+
+extendedKeywords:
+- taking what can be carried and leaving the rest
+- movement executed outside of others' awareness
+- strategy that depends on not being seen
+- intelligence applied to avoid direct confrontation
+- the incomplete extraction as a deliberate choice
+- operating at the edge of a field without entering it
+- cognitive force deployed through concealment
+- success contingent on remaining undetected
+
+essenceSentence:
+Cognitive force operates through concealment and partial extraction.
+
+coreMeaning:
+Establishes a concealed operational field. Introduces asymmetric awareness. Executes partial action without full engagement.
+
+arrivalBehaviour:
+Introduces concealment as the operative condition. Establishes asymmetric awareness across the field. Withholds full action.
+
+responseBehaviour:
+Introduces a hidden variable into the existing field. Converts direct conditions into concealed operation. Maintains partial engagement.
+
+relationalEffect:
+introduces concealed variables into adjacent cards
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- exposure
+- confession
+- returning what was taken
+- failed strategy
+- conscience activated
+
+extendedKeywords:
+- concealed action brought into visibility
+- strategy failing through detection
+- withheld elements forced into the open
+- incomplete extraction recognised
+- internal pressure toward disclosure
+- return or reparation initiated
+- concealment collapsing under pressure
+- hidden variables becoming dominant
+
+essenceSentence:
+Concealment collapses and exposes withheld action.
+
+coreMeaning:
+Establishes an exposed field condition. Removes concealment from prior action. Forces visibility of hidden elements.
+
+arrivalBehaviour:
+Introduces exposure as the operative condition. Removes concealment from the field. Reveals withheld elements.
+
+responseBehaviour:
+Strips concealment from the existing field. Converts hidden variables into visible conditions. Maintains exposure without resolution.
+
+relationalEffect:
+exposes adjacent cards through forced visibility
+
+interactionStyle:
+revealing
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Seven introduces deviation within a suit. Redirects force into indirect operation. Establishes asymmetry within the field.
+
+movementUpright:
+moves laterally through concealed partial extraction
+
+movementReversed:
+contracts inward through collapse of concealment into exposure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a concealed field. Introduces asymmetric awareness. Forces subsequent cards to operate with hidden variables.
+
+whenSecond:
+Introduces concealment into the existing field. Converts direct conditions into partial operation. Maintains asymmetry.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: compounds concealment through obscured conditions
+Seven of Cups: compounds partial action through dispersed focus
+Knight of Swords: opposes direct force with concealed movement
+
+---
+
+## Eight of Swords
+
+cardId: eight-of-swords
+arcana: Minor
+suit: Swords
+rank: Eight
+number: None
+image: /images/tarot/eight-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- restriction
+- entrapment
+- self-imposed limitation
+- powerlessness
+- mental imprisonment
+
+extendedKeywords:
+- perception blocked by the structure containing it
+- restriction maintained through belief not force
+- the trap that holds because it is not tested
+- cognitive force turned against its own mobility
+- blindness to available exits as an operative condition
+- limitation experienced as absolute
+- the field contracting around a fixed position
+- entrapment sustained by the perceiver's own framework
+
+essenceSentence:
+Cognitive force contracts into a self-sustained limitation that fixes restriction as the operative condition.
+
+coreMeaning:
+Establishes a contracted cognitive field. Maintains restriction through internal structure. Fixes limitation as self-sustained.
+
+arrivalBehaviour:
+Introduces contraction as the operative condition. Establishes internal restriction. Blocks mobility from within the field.
+
+responseBehaviour:
+Contracts the existing field around a fixed limitation. Converts open conditions into restricted structure. Maintains immobility.
+
+relationalEffect:
+contracts adjacent cards into self-sustained restriction
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- release
+- self-liberation
+- clarity returning
+- removing the blindfold
+- escaped restriction
+
+extendedKeywords:
+- the self-imposed framework recognised and dismantled
+- perception recovering mobility after contraction
+- the exit becoming visible from inside the field
+- restriction acknowledged as belief rather than force
+- cognitive force recovering its own range of motion
+- the contracted field beginning to expand
+- liberation generated from within the limiting structure
+- the blindfold removed by the wearer
+
+essenceSentence:
+Self-sustained restriction is dismantled and restores mobility within the field.
+
+coreMeaning:
+Establishes release from internal restriction. Removes the limiting structure. Restores directional mobility.
+
+arrivalBehaviour:
+Introduces release from restriction. Establishes expanding mobility. Removes internal limitation.
+
+responseBehaviour:
+Opens the existing field from contraction. Converts restriction into movement. Restores range without full stabilisation.
+
+relationalEffect:
+releases adjacent cards from internal restriction
+
+interactionStyle:
+revealing
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Eight establishes internal constraint within a suit. Holds force inside self-referential limitation. Defines the condition preceding structural release.
+
+movementUpright:
+contracts inward through self-sustained restriction
+
+movementReversed:
+moves outward through dismantling of internal limitation
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a restricted field. Blocks mobility. Forces subsequent cards into constrained operation.
+
+whenSecond:
+Contracts the existing field. Converts movement into restriction. Reduces operational range.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Devil: compounds restriction through reinforced limitation
+Two of Swords: deepens immobility through dual restriction
+Six of Wands: blocks reception of external validation
+
+---
+
+## Nine of Swords
+
+cardId: nine-of-swords
+arcana: Minor
+suit: Swords
+rank: Nine
+number: None
+image: /images/tarot/nine-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- anguish
+- anxiety
+- despair
+- mental torment
+- sleepless dread
+
+extendedKeywords:
+- the mind generating its own worst field
+- fear operating without an external source
+- dread arriving in the undefended state
+- cognitive force turned entirely against the self
+- suffering exceeding its originating condition
+- internal threat sustained without input
+- thought loops without exit
+- anguish as a self-sustaining condition
+
+essenceSentence:
+Cognitive force turns against itself and sustains maximum internal pressure.
+
+coreMeaning:
+Establishes a field of self-sustained cognitive torment. Maintains pressure without external input. Fixes internal distress as the dominant condition.
+
+arrivalBehaviour:
+Introduces maximum internal pressure. Establishes self-sustained distress as the operative condition. Saturates the field from within.
+
+responseBehaviour:
+Saturates the existing field with internal distress. Converts all conditions into cognitive pressure. Maintains intensity without release.
+
+relationalEffect:
+saturates adjacent cards with internal cognitive torment
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- releasing despair
+- shame
+- reaching a limit
+- seeking help
+- the worst has passed
+
+extendedKeywords:
+- anguish losing structural intensity
+- internal loops breaking down
+- residual shame following peak distress
+- pressure reaching a limit
+- external contact becoming available
+- partial release within ongoing condition
+- distress acknowledged without escalation
+- internal threat reducing in intensity
+
+essenceSentence:
+Maximum internal pressure reduces and begins to lose structural intensity.
+
+coreMeaning:
+Establishes a post-peak distress field. Reduces internal pressure. Maintains residual distress without escalation.
+
+arrivalBehaviour:
+Introduces reduced but active internal distress. Establishes diminishing pressure as the operative condition. Holds residual intensity.
+
+responseBehaviour:
+Reduces saturation within the existing field. Converts peak pressure into partial release. Maintains unresolved residue.
+
+relationalEffect:
+reduces adjacent cards from peak saturation
+
+interactionStyle:
+delayed
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+The Nine concentrates accumulated force within a suit. Drives internal pressure to its maximum. Precedes structural resolution or collapse.
+
+movementUpright:
+contracts inward through maximum internal pressure
+
+movementReversed:
+moves outward through reduction of internal pressure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a saturated field. Fixes maximum internal pressure. Forces subsequent cards into distress conditions.
+
+whenSecond:
+Saturates the existing field. Converts all conditions into internal pressure. Overrides prior structure.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: amplifies internal pressure through obscured perception
+Eight of Swords: compounds restriction within maximum pressure
+Nine of Cups: destabilises emotional satisfaction through internal distress
+
+---
+
+## Ten of Swords
+
+cardId: ten-of-swords
+arcana: Minor
+suit: Swords
+rank: Ten
+number: None
+image: /images/tarot/ten-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- collapse
+- finality
+- defeat
+- ending
+- rock bottom
+
+extendedKeywords:
+- the suit's accumulated force reaching total exhaustion
+- a condition that cannot deteriorate further
+- the end functioning as a floor
+- cognitive force spent completely
+- the moment after which only new conditions operate
+- collapse as structural completion
+- the field emptied by accumulated weight
+- finality closing the sequence
+
+essenceSentence:
+Accumulated cognitive force exhausts and collapses the field to a terminal condition.
+
+coreMeaning:
+Establishes total collapse as the operative field condition. Exhausts all accumulated force. Fixes finality as the structural endpoint.
+
+arrivalBehaviour:
+Introduces total exhaustion into the field. Establishes collapse as the operative condition. Removes all remaining extension.
+
+responseBehaviour:
+Drives the existing field to termination. Converts all conditions into exhaustion. Closes structural continuity.
+
+relationalEffect:
+drives adjacent cards to terminal collapse
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- resisting the end
+- incomplete collapse
+- slow recovery
+- refusing finality
+- the ending drawn out
+
+extendedKeywords:
+- collapse not reaching completion
+- terminal point approached but not established
+- finality resisted through continued deterioration
+- recovery attempted before closure
+- the field holding decline without resolution
+- the end failing to land
+- exhaustion without structural completion
+- closure deferred
+
+essenceSentence:
+Collapse fails to complete and sustains the field in ongoing deterioration.
+
+coreMeaning:
+Establishes incomplete collapse as the operative field condition. Maintains deterioration without closure. Prevents terminal completion.
+
+arrivalBehaviour:
+Introduces sustained deterioration. Establishes incomplete collapse as the operative condition. Holds the field without resolution.
+
+responseBehaviour:
+Extends deterioration within the existing field. Prevents closure. Maintains instability without reaching termination.
+
+relationalEffect:
+suspends adjacent cards within incomplete collapse
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+The Ten completes the suit sequence. Exhausts accumulated force. Establishes the terminal condition preceding renewal.
+
+movementUpright:
+descends through total exhaustion into terminal collapse
+
+movementReversed:
+stalls descending through incomplete collapse without closure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a terminal field. Removes extension. Forces subsequent cards into post-collapse conditions.
+
+whenSecond:
+Drives the existing field to termination. Converts all conditions into collapse. Removes structural continuity.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Judgement: aligns collapse with structural renewal
+Nine of Swords: resolves internal pressure through termination
+Ace of Wands: transitions collapse into new initiation
+
+---
+
+## Page of Swords
+
+cardId: page-of-swords
+arcana: Minor
+suit: Swords
+rank: Page
+number: None
+image: /images/tarot/page-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- curiosity
+- vigilance
+- mental alertness
+- new ideas
+- watchfulness
+
+extendedKeywords:
+- intelligence before application
+- observation ahead of engagement
+- alertness without commitment
+- cognitive force in early posture
+- questioning as primary function
+- perception scanning without action
+- readiness at the field edge
+- ideas exceeding testing capacity
+
+essenceSentence:
+Cognitive force enters an alert scanning posture without commitment.
+
+coreMeaning:
+Establishes observational alertness as the operative field condition. Holds intelligence without directional force. Maintains readiness without engagement.
+
+arrivalBehaviour:
+Introduces active observation. Establishes scanning as the operative condition. Holds the field at the point before engagement.
+
+responseBehaviour:
+Examines the existing field. Introduces questioning without action. Maintains observation without redirection.
+
+relationalEffect:
+holds adjacent cards under active observation
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- scattered thinking
+- defensive surveillance
+- rumour
+- hasty conclusions
+- mental restlessness
+
+extendedKeywords:
+- alertness without stable focus
+- observation deployed defensively
+- scanning becoming reactive
+- ideas without evaluation
+- cognitive restlessness without anchor
+- watchfulness converting into suspicion
+- monitoring without understanding
+- readiness without direction
+
+essenceSentence:
+Alertness loses focus and converts into reactive scanning without direction.
+
+coreMeaning:
+Establishes unfocused observation as the operative field condition. Disrupts stable attention. Maintains restless cognitive activity without structure.
+
+arrivalBehaviour:
+Introduces scattered alertness. Establishes unstable observation as the operative condition. Removes focus from the field.
+
+responseBehaviour:
+Destabilises the existing field through reactive scanning. Converts directed conditions into restlessness. Maintains activity without coherence.
+
+relationalEffect:
+destabilises adjacent cards through reactive observation
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Air
+
+numericalFunction:
+The Page introduces elemental force in its initial court expression. Establishes observation before direction. Defines the entry posture of suit intelligence.
+
+movementUpright:
+moves laterally through active scanning without commitment
+
+movementReversed:
+scatters laterally through unfocused reactive observation
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes an observational field. Delays engagement. Forces subsequent cards into scrutiny before action.
+
+whenSecond:
+Introduces observation into the existing field. Converts action into examination. Maintains non-commitment.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hierophant: subjects structure to active questioning
+Knight of Swords: opposes commitment with observation
+Page of Cups: holds dual developing awareness without integration
+
+---
+
+## Knight of Swords
+
+cardId: knight-of-swords
+arcana: Minor
+suit: Swords
+rank: Knight
+number: None
+image: /images/tarot/knight-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- speed
+- ambition
+- direct action
+- intellectual force
+- forward charge
+
+extendedKeywords:
+- cognitive force committed to forward motion
+- the mind operating at full velocity
+- action exceeding assessment
+- direction held without deviation
+- force applied without field evaluation
+- trajectory maintained without correction
+- ideas converted into immediate movement
+- momentum as dominant condition
+
+essenceSentence:
+Cognitive force commits to forward motion and establishes momentum as the operative condition.
+
+coreMeaning:
+Establishes directed high-velocity force as the operative field condition. Converts cognition into immediate action. Maintains single-direction momentum.
+
+arrivalBehaviour:
+Introduces committed forward motion. Establishes velocity as the operative condition. Pulls the field into directional force.
+
+responseBehaviour:
+Drives through the existing field. Converts all conditions into forward momentum. Maintains direction without absorption.
+
+relationalEffect:
+drives adjacent cards through high-velocity forward force
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- recklessness
+- impulsivity
+- derailed momentum
+- aggression without direction
+- force turned destructive
+
+extendedKeywords:
+- forward velocity without functional target
+- momentum exceeding operational control
+- force applied without evaluation
+- trajectory continuing without correction
+- speed operating as instability
+- direction fixed without function
+- momentum detached from purpose
+- aggression without defined objective
+
+essenceSentence:
+Forward force continues without a functional target and converts momentum into instability.
+
+coreMeaning:
+Establishes undirected high-velocity force as the operative field condition. Maintains momentum without target. Converts direction into instability.
+
+arrivalBehaviour:
+Introduces uncontrolled velocity. Establishes undirected force as the operative condition. Removes functional targeting.
+
+responseBehaviour:
+Drives through the existing field without engagement. Converts conditions into unstable momentum. Maintains force without direction.
+
+relationalEffect:
+destabilises adjacent cards through uncontrolled velocity
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Knight converts observation into action. Establishes directional force within the suit. Drives momentum before reflective correction.
+
+movementUpright:
+moves outward through single-direction high-velocity force
+
+movementReversed:
+scatters outward through uncontrolled velocity without target
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a high-velocity field. Drives subsequent cards into forward motion. Prevents stabilisation.
+
+whenSecond:
+Converts the existing field into momentum. Overrides prior conditions. Maintains directional force.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Chariot: compounds directed momentum into maximum velocity
+Page of Swords: opposes velocity with observation
+Knight of Cups: conflicts directional force across opposing elements
+
+---
+
+## Queen of Swords
+
+cardId: queen-of-swords
+arcana: Minor
+suit: Swords
+rank: Queen
+number: None
+image: /images/tarot/queen-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- clarity
+- discernment
+- independence
+- direct perception
+- incisive authority
+
+extendedKeywords:
+- intelligence processed through experience
+- perception cleared of distortion
+- authority derived from cognitive self-sufficiency
+- truth delivered without modification
+- signal separated from noise
+- discernment operating as a fixed condition
+- independence as a stable posture
+- clarity established through prior disruption
+
+essenceSentence:
+Refined cognitive force establishes discernment as a stable field condition.
+
+coreMeaning:
+Establishes refined cognitive authority as the operative field condition. Maintains direct perception. Fixes discernment as a stable function.
+
+arrivalBehaviour:
+Introduces direct cognitive authority. Establishes discernment as the operative condition. Removes ambiguity from the field.
+
+responseBehaviour:
+Subjects the existing field to immediate discernment. Strips distortion from conditions. Maintains clarity without negotiation.
+
+relationalEffect:
+strips adjacent cards of distortion through direct discernment
+
+interactionStyle:
+revealing
+
+---
+
+### Reversed
+
+keywords:
+- coldness
+- cruelty
+- biased perception
+- bitterness
+- weaponised intelligence
+
+extendedKeywords:
+- discernment converted into cutting force
+- clarity applied as harm
+- experience forming fixed distortion
+- intelligence directed through grievance
+- cognitive authority becoming defensive
+- perception shaped by unresolved experience
+- authority excluding rather than clarifying
+- cutting without function
+
+essenceSentence:
+Refined cognitive force distorts and applies discernment as directed harm.
+
+coreMeaning:
+Establishes distorted cognitive authority as the operative field condition. Maintains perception without clarity. Fixes intelligence into a reactive structure.
+
+arrivalBehaviour:
+Introduces distorted discernment. Establishes biased perception as the operative condition. Applies cognitive force without balance.
+
+responseBehaviour:
+Applies cutting force to the existing field. Converts conditions into distorted interpretation. Maintains perception without correction.
+
+relationalEffect:
+cuts adjacent cards through distorted discernment
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Air
+
+numericalFunction:
+The Queen refines elemental force within a suit. Stabilises perception through experience. Establishes discernment before closure.
+
+movementUpright:
+moves inward through stabilised perception maintaining clarity
+
+movementReversed:
+contracts inward through distorted perception maintaining bias
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a field of discernment. Removes ambiguity. Forces subsequent cards into clarity.
+
+whenSecond:
+Subjects the existing field to discernment. Strips distortion. Maintains direct perception.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Justice: compounds discernment into adjudicated clarity
+Three of Swords: links refined perception to originating rupture
+Queen of Cups: contrasts cognitive and emotional perception
+
+---
+
+## King of Swords
+
+cardId: king-of-swords
+arcana: Minor
+suit: Swords
+rank: King
+number: None
+image: /images/tarot/king-of-swords.jpg
+
+---
+
+### Upright
+
+keywords:
+- authority
+- judgement
+- sovereign intellect
+- ethical clarity
+- command
+
+extendedKeywords:
+- cognitive force operating as structural governance
+- truth held as a governing principle
+- intellect directing order and consequence
+- authority established without force
+- judgement applied without distortion
+- the mind structuring the field
+- command derived from cognitive mastery
+- ethical precision governing conditions
+
+essenceSentence:
+Cognitive force governs the field through impartial structural authority.
+
+coreMeaning:
+Establishes sovereign cognitive authority as the operative field condition. Maintains impartial judgement. Fixes order through structural governance.
+
+arrivalBehaviour:
+Introduces governing cognitive authority. Establishes judgement as the operative condition. Imposes structural order.
+
+responseBehaviour:
+Applies structural governance to the existing field. Converts conditions into ordered systems. Maintains impartial control.
+
+relationalEffect:
+governs adjacent cards through structural cognitive authority
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- tyranny
+- manipulation
+- corrupt authority
+- cold calculation
+- abuse of intellect
+
+extendedKeywords:
+- cognitive authority directed toward self-interest
+- judgement shaped by personal agenda
+- intellect used for control
+- authority maintained through manipulation
+- ethical structure removed
+- governance without accountability
+- cognitive mastery applied coercively
+- truth applied selectively
+
+essenceSentence:
+Cognitive authority distorts and governs the field through manipulation.
+
+coreMeaning:
+Establishes corrupted cognitive authority as the operative field condition. Maintains control without impartiality. Fixes dominance through distortion.
+
+arrivalBehaviour:
+Introduces distorted governance. Establishes manipulative authority as the operative condition. Removes impartial structure.
+
+responseBehaviour:
+Imposes control onto the existing field. Converts conditions into manipulated structures. Maintains dominance without balance.
+
+relationalEffect:
+corrupts adjacent cards through manipulative authority
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Air
+
+numericalFunction:
+The King completes the court sequence. Establishes full governance of elemental force. Defines structural authority within the suit.
+
+movementUpright:
+moves outward through structural governance maintaining order
+
+movementReversed:
+contracts inward through distorted governance maintaining control
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes a governed field. Imposes order. Forces subsequent cards into structured conditions.
+
+whenSecond:
+Applies governance to the existing field. Converts conditions into ordered systems. Maintains control.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Justice: aligns governance with adjudicated structure
+Queen of Swords: reinforces discernment within authority
+King of Cups: contrasts cognitive and emotional governance
+
+---
+
+## Ace of Pentacles
+
+cardId: ace-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Ace
+number: None
+image: /images/tarot/ace-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- manifestation
+- opportunity
+- foundation
+- abundance
+- inception
+
+extendedKeywords:
+- material ground opening
+- tangible potential arriving
+- resource threshold crossing
+- physical world entry point
+- new financial channel forming
+- grounded inception condition
+- prosperity seed planted
+- earthly cycle beginning
+
+essenceSentence:
+Material potential enters as a singular grounded point establishing physical availability.
+
+coreMeaning:
+Establishes a field of material availability at point of origin.
+
+arrivalBehaviour:
+Introduces a primary material field in an open ground state.
+
+responseBehaviour:
+Anchors incoming charge into physical structure.
+
+relationalEffect:
+grounds adjacent cards into material form
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- blocked potential
+- missed opportunity
+- false start
+- scarcity
+- stagnation
+
+extendedKeywords:
+- material threshold refusing entry
+- resource channel closed at origin
+- grounded potential withheld
+- physical world access delayed
+- prosperity seed failing to take
+- inception condition blocked
+- earthly cycle not opening
+- opportunity arriving without traction
+
+essenceSentence:
+Material potential is present without field access.
+
+coreMeaning:
+Establishes a field of withheld material availability at point of origin.
+
+arrivalBehaviour:
+Introduces a closed material field at source.
+
+responseBehaviour:
+Applies weight without conversion.
+
+relationalEffect:
+blocks adjacent cards from materialisation
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+initiates undifferentiated material potential
+
+movementUpright:
+moves outward through grounded expansion into physical availability
+
+movementReversed:
+contracts inward through restricted material flow
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes material field at origin.
+
+whenSecond:
+Grounds preceding charge into physical structure.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Empress: expands material fertility field
+Ten of Pentacles: completes material cycle from origin
+Ace of Swords: slows cognitive charge into physical form
+
+---
+
+## Two of Pentacles
+
+cardId: two-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Two
+number: None
+image: /images/tarot/two-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- balance
+- adaptability
+- juggling
+- flux
+- management
+
+extendedKeywords:
+- multiple demands held simultaneously
+- dynamic equilibrium maintained
+- resource flow actively managed
+- material priorities in motion
+- shifting weight between obligations
+- practical flexibility under load
+- sustained adjustment without collapse
+- financial circulation in balance
+
+essenceSentence:
+Two material demands are held in active equilibrium.
+
+coreMeaning:
+Establishes a field of dynamic material balance between dual demands.
+
+arrivalBehaviour:
+Introduces dual material tension within a single field.
+
+responseBehaviour:
+Redistributes incoming charge across two material points.
+
+relationalEffect:
+distributes adjacent cards across dual demands
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- imbalance
+- overwhelm
+- dropped priorities
+- mismanagement
+- disarray
+
+extendedKeywords:
+- material demands exceeding capacity
+- resource flow disrupted
+- competing obligations out of sync
+- practical adjustment failing
+- financial circulation blocked
+- priorities collapsing under weight
+- balancing mechanism broken
+- material tension without resolution
+
+essenceSentence:
+Dual material demands exceed holding capacity.
+
+coreMeaning:
+Establishes a field of failed material balance between dual demands.
+
+arrivalBehaviour:
+Introduces unstable dual material pressure without regulation.
+
+responseBehaviour:
+Applies uneven weight across competing demands.
+
+relationalEffect:
+destabilises adjacent cards through imbalance
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+introduces dual material polarity
+
+movementUpright:
+moves laterally through continuous redistribution between two material points
+
+movementReversed:
+scatters laterally through unstable redistribution between two material points
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes dual material field.
+
+whenSecond:
+Splits preceding charge across two material points.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Wheel of Fortune: cycles material balance across change
+Ten of Pentacles: tensions origin against completion weight
+Two of Cups: aligns material duality with relational duality
+
+---
+
+## Three of Pentacles
+
+cardId: three-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Three
+number: None
+image: /images/tarot/three-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- collaboration
+- craftsmanship
+- skill
+- contribution
+- recognition
+
+extendedKeywords:
+- skilled labour operating within structure
+- multiple contributors aligned to single output
+- material competence demonstrated
+- work assessed against standard
+- collaborative effort producing tangible result
+- individual skill integrated into collective form
+- expertise acknowledged within shared project
+- practical mastery in active application
+
+essenceSentence:
+Skilled contribution operates within structured material coordination.
+
+coreMeaning:
+Establishes a field of structured material collaboration across multiple contributors.
+
+arrivalBehaviour:
+Introduces coordinated material structure with distributed skill.
+
+responseBehaviour:
+Integrates incoming charge into collaborative structure.
+
+relationalEffect:
+integrates adjacent cards into collective output
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- misalignment
+- poor collaboration
+- undervalued skill
+- disorganisation
+- mediocrity
+
+extendedKeywords:
+- collaborative structure breaking down
+- individual skill operating without integration
+- contribution unrecognised within shared framework
+- collective effort producing poor output
+- expertise misapplied or dismissed
+- shared project without functional alignment
+- material competence blocked from expression
+- working structure failing to hold contributors
+
+essenceSentence:
+Collaborative structure persists without aligned contribution.
+
+coreMeaning:
+Establishes a field of failed material collaboration across multiple contributors.
+
+arrivalBehaviour:
+Introduces fragmented material structure with misaligned skill.
+
+responseBehaviour:
+Disrupts incoming charge within collective structure.
+
+relationalEffect:
+fragments adjacent cards within collaboration
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+activates structural integration across multiple points
+
+movementUpright:
+moves outward through coordinated material construction
+
+movementReversed:
+stalls outward through disrupted structural integration
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes collaborative material field.
+
+whenSecond:
+Integrates preceding charge into structured collaboration.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hierophant: formalises collaborative structure
+Two of Pentacles: stabilises dual tension into structure
+Three of Swords: holds structure against mental disruption
+
+---
+
+## Four of Pentacles
+
+cardId: four-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Four
+number: None
+image: /images/tarot/four-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- control
+- retention
+- security
+- consolidation
+- possession
+
+extendedKeywords:
+- material resources held under tight control
+- financial position defended against loss
+- accumulated wealth protected from outflow
+- security maintained through restriction
+- boundaries drawn around material assets
+- possession prioritised over circulation
+- stability achieved through containment
+- resource flow deliberately constrained
+
+essenceSentence:
+Material resources are held within controlled containment.
+
+coreMeaning:
+Establishes a field of material containment with restricted outflow.
+
+arrivalBehaviour:
+Introduces closed material boundary with retained resources.
+
+responseBehaviour:
+Restricts incoming charge within fixed boundary.
+
+relationalEffect:
+seals adjacent cards within containment
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- release
+- greed
+- instability
+- hoarding
+- loss
+
+extendedKeywords:
+- material retention breaking down
+- controlled boundary failing to hold
+- accumulated resources releasing without direction
+- financial position destabilised
+- possession loosening under pressure
+- security mechanism disrupted
+- containment structure collapsing
+- resource outflow no longer managed
+
+essenceSentence:
+Material containment fails and resources move without control.
+
+coreMeaning:
+Establishes a field of failed material containment with unstable boundaries.
+
+arrivalBehaviour:
+Introduces unstable material boundary with uncontrolled flow.
+
+responseBehaviour:
+Disrupts containment of incoming charge.
+
+relationalEffect:
+releases adjacent cards from containment
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+stabilises material structure through closure
+
+movementUpright:
+moves inward through fixed containment of material resources
+
+movementReversed:
+scatters outward through loss of containment
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes contained material field.
+
+whenSecond:
+Encloses preceding charge within boundary.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Devil: intensifies material attachment
+Three of Pentacles: restricts collaborative output
+Four of Cups: aligns containment with withdrawal
+
+---
+
+## Five of Pentacles
+
+cardId: five-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Five
+number: None
+image: /images/tarot/five-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- lack
+- hardship
+- exclusion
+- poverty
+- isolation
+
+extendedKeywords:
+- material resources critically reduced
+- financial hardship as operative condition
+- physical world support withdrawn
+- exclusion from available resource structures
+- poverty operating alongside visible abundance
+- material security absent from field
+- basic needs unmet within existing environment
+- survival condition without external aid
+
+essenceSentence:
+Material resources are reduced within a deprived field.
+
+coreMeaning:
+Establishes a field of material deprivation with restricted access.
+
+arrivalBehaviour:
+Introduces depleted material field with absent support.
+
+responseBehaviour:
+Withdraws material support from incoming charge.
+
+relationalEffect:
+drains adjacent cards of material resources
+
+interactionStyle:
+disrupting
+
+---
+
+### Reversed
+
+keywords:
+- recovery
+- re-entry
+- renewed support
+- financial improvement
+- isolation ending
+
+extendedKeywords:
+- material hardship beginning to lift
+- access to support structures reopening
+- resource flow returning to depleted field
+- financial recovery as operative condition
+- exclusion condition reversing
+- poverty cycle interrupted
+- physical world support re-entering field
+- survival condition stabilising toward sufficiency
+
+essenceSentence:
+Material resources return into a previously deprived field.
+
+coreMeaning:
+Establishes a field of partial material recovery with reopening access.
+
+arrivalBehaviour:
+Introduces returning material flow into depleted field.
+
+responseBehaviour:
+Restores material support to incoming charge.
+
+relationalEffect:
+restores adjacent cards to resource flow
+
+interactionStyle:
+resolving
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Earth
+
+numericalFunction:
+disrupts established material structure
+
+movementUpright:
+moves downward through material withdrawal from the field
+
+movementReversed:
+moves upward through material return into the field
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes deprived material field.
+
+whenSecond:
+Reduces material availability of preceding charge.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Moon: distorts perception within deprivation
+Six of Pentacles: contrasts scarcity with redistribution
+Five of Cups: aligns material and emotional deficit
+
+---
+
+## Six of Pentacles
+
+cardId: six-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Six
+number: None
+image: /images/tarot/six-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- generosity
+- distribution
+- charity
+- exchange
+- equity
+
+extendedKeywords:
+- material resources actively redistributed
+- giving and receiving in structured exchange
+- resource flow directed from surplus to deficit
+- financial balance restored through circulation
+- power differential present within giving act
+- material support dispensed with condition
+- controlled generosity operating in field
+- wealth circulating between unequal positions
+
+essenceSentence:
+Material resources move between surplus and deficit positions.
+
+coreMeaning:
+Establishes a field of structured material redistribution across unequal positions.
+
+arrivalBehaviour:
+Introduces directed material flow between positions.
+
+responseBehaviour:
+Redirects incoming charge toward deficit points.
+
+relationalEffect:
+circulates adjacent cards through exchange
+
+interactionStyle:
+integrating
+
+---
+
+### Reversed
+
+keywords:
+- imbalance
+- exploitation
+- withheld generosity
+- strings attached
+- bad debt
+
+extendedKeywords:
+- material redistribution operating with hidden conditions
+- resource flow directed for control rather than equity
+- giving withheld or weaponised
+- power differential exploited within exchange
+- charity functioning as dependency mechanism
+- financial support carrying coercive terms
+- circulation of resources blocked or manipulated
+- generosity absent from material field
+
+essenceSentence:
+Material resources move through distorted or restricted exchange.
+
+coreMeaning:
+Establishes a field of distorted material redistribution with imbalanced flow.
+
+arrivalBehaviour:
+Introduces manipulated material flow between positions.
+
+responseBehaviour:
+Distorts distribution of incoming charge.
+
+relationalEffect:
+distorts adjacent cards through exchange
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Earth
+
+numericalFunction:
+restores material flow through redistribution
+
+movementUpright:
+moves outward through directed circulation between positions
+
+movementReversed:
+stalls outward through restricted circulation between positions
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes redistributive material field.
+
+whenSecond:
+Redirects preceding charge across positions.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+Justice: balances distribution across structure
+Five of Pentacles: counteracts deprivation with flow
+Six of Swords: parallels transition through redistribution
+
+---
+
+## Seven of Pentacles
+
+cardId: seven-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Seven
+number: None
+image: /images/tarot/seven-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- patience
+- assessment
+- investment
+- pause
+- growth
+
+extendedKeywords:
+- long-term material effort under evaluation
+- sustained investment awaiting return
+- growth visible but incomplete
+- progress assessed before next action
+- material development held at threshold
+- effort and outcome held in deliberate tension
+- productive pause within material cycle
+- return on investment not yet realised
+
+essenceSentence:
+Material effort holds in suspension for evaluation.
+
+coreMeaning:
+Establishes a field of suspended material development under assessment.
+
+arrivalBehaviour:
+Introduces material pause at evaluation threshold.
+
+responseBehaviour:
+Slows incoming charge into suspension.
+
+relationalEffect:
+suspends adjacent cards within assessment
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- impatience
+- poor return
+- wasted effort
+- stagnation
+- misdirection
+
+extendedKeywords:
+- material investment failing to produce return
+- sustained effort assessed as insufficient
+- growth absent or misaligned with input
+- productive pause collapsing into stagnation
+- assessment revealing poor material outcome
+- long-term development off course
+- effort and outcome in negative tension
+- material cycle producing diminishing results
+
+essenceSentence:
+Material effort holds without productive outcome.
+
+coreMeaning:
+Establishes a field of failed material suspension under negative assessment.
+
+arrivalBehaviour:
+Introduces stalled material pause without progression.
+
+responseBehaviour:
+Collapses incoming charge into stagnation.
+
+relationalEffect:
+stalls adjacent cards within suspension
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+holds material development at evaluative threshold
+
+movementUpright:
+moves inward through sustained suspension before progression
+
+movementReversed:
+stalls inward through collapsed evaluation
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes suspended material field.
+
+whenSecond:
+Slows preceding charge into evaluation.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Hermit: deepens evaluative withdrawal
+Six of Pentacles: interrupts circulation with pause
+Seven of Wands: opposes pressure with suspension
+
+---
+
+## Eight of Pentacles
+
+cardId: eight-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Eight
+number: None
+image: /images/tarot/eight-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- mastery
+- diligence
+- apprenticeship
+- refinement
+- focus
+
+extendedKeywords:
+- skilled labour applied with sustained attention
+- repetitive practice producing incremental refinement
+- craft developed through deliberate effort
+- material competence deepening through application
+- single task held under concentrated focus
+- apprenticeship condition active in field
+- output quality improving through iteration
+- expertise accumulated through disciplined repetition
+
+essenceSentence:
+Material effort concentrates through repeated application.
+
+coreMeaning:
+Establishes a field of focused material development through repetition.
+
+arrivalBehaviour:
+Introduces concentrated material effort on single task.
+
+responseBehaviour:
+Narrows incoming charge into focused application.
+
+relationalEffect:
+concentrates adjacent cards into output
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- poor quality
+- shortcuts
+- disengagement
+- perfectionism
+- stagnation
+
+extendedKeywords:
+- skilled effort applied without sustained attention
+- repetitive practice producing no refinement
+- craft development stalled or abandoned
+- material competence blocked from deepening
+- focus absent from single-task application
+- apprenticeship condition disrupted
+- output quality degraded through inattention
+- expertise accumulation halted
+
+essenceSentence:
+Material effort disperses without focused application.
+
+coreMeaning:
+Establishes a field of disrupted material development through loss of focus.
+
+arrivalBehaviour:
+Introduces unfocused material effort across tasks.
+
+responseBehaviour:
+Disperses incoming charge across applications.
+
+relationalEffect:
+disperses adjacent cards through effort
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+drives material development through repetition
+
+movementUpright:
+moves inward through sustained focus on single task
+
+movementReversed:
+scatters inward through loss of focus on task
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes focused material field.
+
+whenSecond:
+Narrows preceding charge into application.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Magician: channels will into craft
+Seven of Pentacles: converts pause into effort
+Eight of Swords: binds focus within restriction
+
+---
+
+## Nine of Pentacles
+
+cardId: nine-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Nine
+number: None
+image: /images/tarot/nine-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- sufficiency
+- independence
+- refinement
+- self-reliance
+- abundance
+
+extendedKeywords:
+- material security achieved through personal effort
+- autonomous resource position established
+- cultivated abundance operating without external dependency
+- refined material environment as operative condition
+- self-generated prosperity fully functional
+- physical world mastery held without external support
+- solitary sufficiency as stable field condition
+- earned independence within material domain
+
+essenceSentence:
+Material sufficiency operates within autonomous containment.
+
+coreMeaning:
+Establishes a field of self-contained material sufficiency without external reliance.
+
+arrivalBehaviour:
+Introduces autonomous material field with internal resource stability.
+
+responseBehaviour:
+Withdraws incoming charge from external dependence.
+
+relationalEffect:
+stabilises adjacent cards within sufficiency
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- dependency
+- superficiality
+- insecurity
+- overreach
+- instability
+
+extendedKeywords:
+- material security maintained through external dependency
+- self-generated abundance failing to hold
+- cultivated sufficiency revealed as superficial
+- autonomous resource position destabilised
+- physical world mastery operating without stable foundation
+- financial independence compromised by hidden reliance
+- refined material environment masking instability
+- self-reliance condition disrupted or false
+
+essenceSentence:
+Material sufficiency operates without stable autonomy.
+
+coreMeaning:
+Establishes a field of unstable material sufficiency with external reliance.
+
+arrivalBehaviour:
+Introduces compromised material field with unstable autonomy.
+
+responseBehaviour:
+Exposes dependency within incoming charge.
+
+relationalEffect:
+undermines adjacent cards through instability
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Earth
+
+numericalFunction:
+holds material development at autonomous completion threshold
+
+movementUpright:
+moves inward through contained material independence
+
+movementReversed:
+contracts inward through destabilised independence
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes autonomous material field.
+
+whenSecond:
+Draws preceding charge into self-containment.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Star: stabilises renewal within sufficiency
+Eight of Pentacles: contrasts effort with completion
+Nine of Cups: aligns material and emotional sufficiency
+
+---
+
+## Ten of Pentacles
+
+cardId: ten-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Ten
+number: None
+image: /images/tarot/ten-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- legacy
+- completion
+- wealth
+- lineage
+- permanence
+
+extendedKeywords:
+- material accumulation reaching full generational expression
+- wealth established as permanent structural condition
+- family or institutional legacy as operative field
+- long-term material security extending beyond individual
+- physical world development reaching collective completion
+- inherited prosperity functioning within established structure
+- multigenerational resource continuity present in field
+- material abundance operating at systemic scale
+
+essenceSentence:
+Material development holds as permanent collective structure.
+
+coreMeaning:
+Establishes a field of complete material legacy with generational permanence.
+
+arrivalBehaviour:
+Introduces collective material structure with sustained continuity.
+
+responseBehaviour:
+Extends incoming charge into structural permanence.
+
+relationalEffect:
+anchors adjacent cards within legacy
+
+interactionStyle:
+resolving
+
+---
+
+### Reversed
+
+keywords:
+- instability
+- lost legacy
+- family conflict
+- financial collapse
+- impermanence
+
+extendedKeywords:
+- generational material structure failing to hold
+- inherited wealth or legacy under threat
+- long-term resource continuity disrupted
+- family or institutional structure in conflict
+- permanent material condition revealed as unstable
+- collective abundance dissolving into individual loss
+- multigenerational resource continuity broken
+- physical world completion condition collapsing
+
+essenceSentence:
+Material structure fails to sustain collective continuity.
+
+coreMeaning:
+Establishes a field of collapsing material legacy with broken continuity.
+
+arrivalBehaviour:
+Introduces unstable collective structure with disrupted continuity.
+
+responseBehaviour:
+Breaks incoming charge from structural permanence.
+
+relationalEffect:
+dissolves adjacent cards from legacy
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+completes material development into collective structure
+
+movementUpright:
+moves outward through expansion into permanent structure
+
+movementReversed:
+contracts inward through collapse of structure
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes legacy material field.
+
+whenSecond:
+Extends preceding charge into permanence.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The World: completes cycle within structure
+Nine of Pentacles: contrasts individual and collective sufficiency
+Ten of Swords: opposes material completion with collapse
+
+---
+
+## Page of Pentacles
+
+cardId: page-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Page
+number: None
+image: /images/tarot/page-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- study
+- diligence
+- potential
+- curiosity
+- groundedness
+
+extendedKeywords:
+- material world approached through careful study
+- practical learning as operative condition
+- new skill held under deliberate attention
+- physical world examined before engagement
+- resource potential in early development
+- grounded curiosity applied to material domain
+- methodical approach to practical knowledge
+- earthly ambition present without experience
+
+essenceSentence:
+Material potential holds within focused study.
+
+coreMeaning:
+Establishes a field of early material development through structured inquiry.
+
+arrivalBehaviour:
+Introduces material study at initial threshold.
+
+responseBehaviour:
+Focuses incoming charge into examination.
+
+relationalEffect:
+focuses adjacent cards into study
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- unfocused
+- impractical
+- missed opportunity
+- laziness
+- daydreaming
+
+extendedKeywords:
+- material study abandoned or unfocused
+- practical learning failing to engage
+- new skill held without deliberate attention
+- resource potential left undeveloped
+- grounded curiosity absent from material domain
+- methodical approach replaced by distraction
+- earthly ambition present without application
+- physical world examination stalled
+
+essenceSentence:
+Material potential holds without focused study.
+
+coreMeaning:
+Establishes a field of disrupted material development through unfocused inquiry.
+
+arrivalBehaviour:
+Introduces unfocused material study at threshold.
+
+responseBehaviour:
+Disperses incoming charge across distraction.
+
+relationalEffect:
+disperses adjacent cards through distraction
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: low
+
+element: Earth
+
+numericalFunction:
+initiates material inquiry at threshold
+
+movementUpright:
+moves inward through focused study of material domain
+
+movementReversed:
+stalls inward through unfocused study
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes material study field.
+
+whenSecond:
+Draws preceding charge into examination.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Magician: directs study toward application
+Eight of Pentacles: develops study into practice
+Page of Swords: aligns study with inquiry
+
+---
+
+## Knight of Pentacles
+
+cardId: knight-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Knight
+number: None
+image: /images/tarot/knight-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- reliability
+- diligence
+- persistence
+- thoroughness
+- responsibility
+
+extendedKeywords:
+- material tasks executed with methodical consistency
+- long-term commitment operating as field condition
+- practical responsibility held without deviation
+- slow deliberate progress as operative mechanism
+- resource development advanced through sustained effort
+- dutiful engagement with physical world demands
+- incremental material advancement without shortcuts
+- dependable output produced through disciplined application
+
+essenceSentence:
+Material effort advances through sustained consistency.
+
+coreMeaning:
+Establishes a field of methodical material progression through sustained effort.
+
+arrivalBehaviour:
+Introduces steady material movement through consistent application.
+
+responseBehaviour:
+Advances incoming charge through repetition.
+
+relationalEffect:
+stabilises adjacent cards through consistency
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- stagnation
+- stubbornness
+- laziness
+- inflexibility
+- neglect
+
+extendedKeywords:
+- methodical material progress collapsed into stagnation
+- long-term commitment abandoned or rigidly overextended
+- practical responsibility neglected or refused
+- slow deliberate progress hardened into immobility
+- resource development halted through inaction
+- dutiful engagement replaced by avoidance
+- incremental advancement blocked by inflexibility
+- dependable output absent from material field
+
+essenceSentence:
+Material effort stalls within rigid or absent application.
+
+coreMeaning:
+Establishes a field of blocked material progression through stagnation.
+
+arrivalBehaviour:
+Introduces halted material movement through inflexibility.
+
+responseBehaviour:
+Halts incoming charge through resistance.
+
+relationalEffect:
+blocks adjacent cards through stagnation
+
+interactionStyle:
+blocked
+
+---
+
+### Relational Profile
+
+archetypeWeight: medium
+
+element: Earth
+
+numericalFunction:
+drives material progression through sustained repetition
+
+movementUpright:
+moves forward through steady material advancement
+
+movementReversed:
+stalls forward through halted advancement
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes sustained material field.
+
+whenSecond:
+Advances preceding charge through consistency.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Emperor: enforces structured advancement
+Page of Pentacles: develops study into progression
+Knight of Cups: contrasts steady and emotional momentum
+
+---
+
+## Queen of Pentacles
+
+cardId: queen-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: Queen
+number: None
+image: /images/tarot/queen-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- nurturing
+- practicality
+- abundance
+- security
+- resourcefulness
+
+extendedKeywords:
+- material environment actively maintained and sustained
+- practical care operating as primary field condition
+- physical world managed with competent authority
+- domestic or professional abundance held in stable form
+- resource stewardship functioning without external dependency
+- nurturing presence applied to material domain
+- earthly comfort generated and distributed
+- self-sufficient care extended to surrounding environment
+
+essenceSentence:
+Material resources are maintained through sustained practical care.
+
+coreMeaning:
+Establishes a field of stable material stewardship through competent maintenance.
+
+arrivalBehaviour:
+Introduces sustained material care within established environment.
+
+responseBehaviour:
+Stabilises incoming charge through maintenance.
+
+relationalEffect:
+sustains adjacent cards through care
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- neglect
+- insecurity
+- smothering
+- self-neglect
+- dysfunction
+
+extendedKeywords:
+- material environment failing to sustain itself
+- practical care absent or operating through control
+- physical world management breaking down
+- domestic or professional abundance destabilised
+- resource stewardship compromised by neglect or excess
+- nurturing presence withdrawn or turned inward
+- earthly comfort withheld or weaponised
+- self-sufficient care collapsing into dependency
+
+essenceSentence:
+Material resources are mismanaged through failed practical care.
+
+coreMeaning:
+Establishes a field of unstable material stewardship through disrupted maintenance.
+
+arrivalBehaviour:
+Introduces failed material care within environment.
+
+responseBehaviour:
+Withdraws support from incoming charge.
+
+relationalEffect:
+destabilises adjacent cards through neglect
+
+interactionStyle:
+distorted
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+stabilises material field through sustained care
+
+movementUpright:
+moves outward through extension of material care
+
+movementReversed:
+contracts inward through withdrawal of care
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes stewardship material field.
+
+whenSecond:
+Stabilises preceding charge through care.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Empress: amplifies generative care field
+Knight of Pentacles: balances momentum with maintenance
+Queen of Swords: contrasts care with analysis
+
+---
+
+## King of Pentacles
+
+cardId: king-of-pentacles
+arcana: Minor
+suit: Pentacles
+rank: King
+number: None
+image: /images/tarot/king-of-pentacles.jpg
+
+---
+
+### Upright
+
+keywords:
+- mastery
+- authority
+- prosperity
+- security
+- leadership
+
+extendedKeywords:
+- material domain held under full sovereign authority
+- accumulated wealth operating as stable structural condition
+- practical leadership functioning at peak competence
+- long-term resource security established and maintained
+- physical world mastery expressed through command
+- financial authority extended across institutional scale
+- earthly power operating without external validation
+- material achievement functioning as permanent field condition
+
+essenceSentence:
+Material domain operates under sovereign authority.
+
+coreMeaning:
+Establishes a field of complete material authority with stable resource command.
+
+arrivalBehaviour:
+Introduces sovereign material control across field.
+
+responseBehaviour:
+Stabilises incoming charge through command.
+
+relationalEffect:
+commands adjacent cards through authority
+
+interactionStyle:
+stabilising
+
+---
+
+### Reversed
+
+keywords:
+- corruption
+- rigidity
+- materialism
+- abuse of power
+- instability
+
+extendedKeywords:
+- material authority operating through corruption or excess
+- accumulated wealth functioning as instrument of control
+- practical leadership collapsed into rigid self-interest
+- long-term resource security undermined by misuse
+- physical world mastery turned toward exploitation
+- financial authority operating without ethical constraint
+- earthly power functioning through domination
+- material achievement held at cost of wider destruction
+
+essenceSentence:
+Material authority operates through corrupted control.
+
+coreMeaning:
+Establishes a field of corrupted material authority with unstable command.
+
+arrivalBehaviour:
+Introduces distorted material control across field.
+
+responseBehaviour:
+Dominates incoming charge through control.
+
+relationalEffect:
+dominates adjacent cards through control
+
+interactionStyle:
+reactive
+
+---
+
+### Relational Profile
+
+archetypeWeight: high
+
+element: Earth
+
+numericalFunction:
+completes material authority through sovereign command
+
+movementUpright:
+moves outward through expansion of authority across domain
+
+movementReversed:
+contracts inward through collapse of authority
+
+---
+
+### Combination Logic
+
+whenFirst:
+Establishes sovereign material field.
+
+whenSecond:
+Draws preceding charge into authority.
+
+pairingTendencies:
+
+Major Arcana:
+Court Cards:
+same suit:
+conflicting suit:
+
+specificPairings:
+
+The Emperor: aligns structural and material authority
+Queen of Pentacles: contrasts care with command
+King of Swords: contrasts material and mental authority
+
+---
