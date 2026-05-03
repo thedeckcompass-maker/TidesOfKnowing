@@ -57,7 +57,7 @@ export const tarotCardsNew = [
       ],
       "essenceSentence": "Beginning is attempted without the openness or sensing that makes real movement possible.",
       "coreMeaning": "The reversed Fool moves without contact. Either impulse overrides perception, producing recklessness, or the readiness to begin has been blocked, producing false starts and avoidance. The unconditioned quality of the upright collapses into either heedlessness or stalled approach. Movement loses its trustworthy lightness and becomes either careless or refused.",
-      "arrivalBehaviour": "Sets the field as unstable or evasive. It defines the space through unfocused movement or visible reluctance, creating an opening register that does not actually open anything.",
+      "arrivalBehaviour": "Sets the field as unstable or evasive. It defines the space through unfocused movement or visible reluctance, creating an opening register that signals a threshold without yielding one.",
       "responseBehaviour": "Negotiates by deflecting rather than entering. It either overcommits without sensing the field or withdraws from real engagement, leaving the interaction unresolved.",
       "relationalEffect": "destabilises — introduces unfocused or evasive motion that prevents adjacent cards from settling",
       "interactionStyle": "distorted"
@@ -136,9 +136,9 @@ export const tarotCardsNew = [
         "gaps between word and deed",
         "power held but not properly wielded"
       ],
-      "essenceSentence": "Will fails to become effective when intention is unfocused, misaligned, or dishonestly applied.",
+      "essenceSentence": "Will loses effectiveness when intention is unfocused, misaligned, or dishonestly applied.",
       "coreMeaning": "The reversed Magician separates capability from integrity. Either the elements are present but cannot be coordinated, producing scatter, or they are coordinated toward distortion, producing manipulation. Authorship breaks down at the junction where intent should meet means. The result is action that does not land, technique without coherence, or the appearance of capability without its substance.",
-      "arrivalBehaviour": "Sets the field as performative or unfocused. It defines the space through apparent capability that lacks alignment, creating a directed register that does not actually direct.",
+      "arrivalBehaviour": "Sets the field as performative or unfocused. It defines the space through apparent capability that lacks alignment, creating a directed register whose guidance does not translate into coherent motion.",
       "responseBehaviour": "Negotiates by misapplying focus within the existing field. It either scatters the available energy or channels it toward distortion, producing motion without coherent result.",
       "relationalEffect": "distorts — misaligns adjacent cards and fragments their intended direction",
       "interactionStyle": "distorted"
@@ -298,7 +298,7 @@ export const tarotCardsNew = [
         "self-neglect through over-extension to others",
         "conditions for growth withdrawn"
       ],
-      "essenceSentence": "Generative force fails to take form, either through blockage, depletion, or care that smothers what it intends to support.",
+      "essenceSentence": "Generative force never settles into form, either through blockage, depletion, or care that smothers what it intends to support.",
       "coreMeaning": "The reversed Empress loses the balance between holding and feeding. Either nurture becomes possessive, producing dependence rather than growth, or generative force is withheld, producing stagnation. The conditions for development collapse in one of two directions: too much support that suffocates, or too little that starves. The card's abundance becomes either burden or absence, and creative force loses its ground.",
       "arrivalBehaviour": "Sets the field as depleted or smothering. It defines the space through care that distorts, creating conditions that appear supportive but do not allow development.",
       "responseBehaviour": "Negotiates by overextending or withdrawing within the existing field. It either floods the prior card with care it cannot use or refuses the support that was needed, producing stagnation rather than growth.",
@@ -379,7 +379,7 @@ export const tarotCardsNew = [
         "absence of containing frame",
         "governance turned to coercion"
       ],
-      "essenceSentence": "Structure fails through rigidity, coercion, or the collapse of authority that once held form.",
+      "essenceSentence": "Structure breaks down through rigidity, coercion, or the collapse of authority that once held form.",
       "coreMeaning": "The reversed Emperor loses the balance between form and function. Either structure becomes rigid and oppressive, producing control rather than stability, or authority collapses entirely, producing chaos within a frame that no longer holds. Power separates from responsibility. The card's function as containing architecture either hardens into prison or crumbles into absence, leaving the field without reliable form.",
       "arrivalBehaviour": "Sets the field as rigid or unstable. It defines the space through structure that does not serve, creating an ordered register that operates through coercion or no longer holds at all.",
       "responseBehaviour": "Negotiates by imposing or withdrawing structure within the existing field. It either crushes the prior card's material under inflexible form or exposes the absence of frame, leaving energy without containment.",
@@ -866,7 +866,7 @@ export const tarotCardsNew = [
         "timing misread or actively resisted"
       ],
       "essenceSentence": "The turn is refused, missed, or distorted, leaving the cycle to repeat without producing the reorientation it was meant to bring.",
-      "coreMeaning": "The reversed Wheel loses the alignment between movement and pattern. Either the turn is resisted, producing the same conditions returning under different surfaces, or it is missed entirely, leaving the field locked inside a cycle that no longer generates new ground. The card's structural pivot fails to land. What should have reorganised circumstance instead repeats it, and the pattern that was meant to become visible continues operating beneath recognition, producing strain that has no clear source.",
+      "coreMeaning": "The reversed Wheel loses the alignment between movement and pattern. Either the turn is resisted, producing the same conditions returning under different surfaces, or it is missed entirely, leaving the field locked inside a cycle that no longer generates new ground. The card's structural pivot never completes its turn. What should have reorganised circumstance instead repeats it, and the pattern that was meant to become visible continues operating beneath recognition, producing strain that has no clear source.",
       "arrivalBehaviour": "Sets the field as locked or repeating. It defines the space through circumstance that should be turning but is not, creating a register where pattern persists without reorientation and where the underlying shape remains hidden.",
       "responseBehaviour": "Negotiates by resisting or distorting the turn within the existing field. It either holds the prior card's material in a configuration that should have closed, or introduces movement that cycles back to the same ground rather than producing genuine reorganisation.",
       "relationalEffect": "loops — locks adjacent cards into repeating pattern, preventing the structural turn that would reorient them",
@@ -1046,7 +1046,7 @@ export const tarotCardsNew = [
       "whenSecond": "Suspends or stalls what has come before. Upright, it releases the prior card's momentum, allowing the configuration to reorganise itself rather than being driven toward outcome. Reversed, it either holds the prior card's material in pause that no longer produces insight, or absorbs it into sacrifice that drains rather than reorganises.",
       "pairingTendencies": {
         "majorArcana": "Two structural forces meet at the level of chosen surrender; the Hanged Man asks whether the other archetype's energy can release into reorganisation or whether it depends on continued grip to remain coherent.",
-        "courtCards": "The personal embodiment is met with the demand for surrender; the Court figure either reveals productive release or exposes the gap between performed acceptance and the grip that has not actually been let go.",
+        "courtCards": "The personal embodiment is met with the demand for surrender; the Court figure either reveals productive release or exposes the gap between performed acceptance and the grip that still has not released.",
         "sameSuit": "Suspension is amplified within a single domain; release and reorientation reinforce each other, producing structural insight or, reversed, compounded stall.",
         "conflictingSuit": "Tension between chosen pause and an opposing register; suspension must contend with currents that demand action, expression, or resolution rather than release."
       },
@@ -1127,7 +1127,7 @@ export const tarotCardsNew = [
       "whenSecond": "Ends or arrests what has come before. Upright, it removes the form the prior card was operating within, clearing the configuration so that continuation becomes impossible and something else becomes available. Reversed, it either refuses to close the prior card's material, or stalls the ending midway, producing decay rather than release.",
       "pairingTendencies": {
         "majorArcana": "Two structural forces meet at the level of definitive ending; Death asks whether the other archetype's energy can be released or whether it depends on continued form to remain coherent.",
-        "courtCards": "The personal embodiment is met with the demand for ending; the Court figure either reveals integrated release or exposes the gap between acknowledged completion and the form that has not actually been let go.",
+        "courtCards": "The personal embodiment is met with the demand for ending; the Court figure either reveals integrated release or exposes the gap between acknowledged completion and the form that still has not released.",
         "sameSuit": "Ending is amplified within a single domain; release and clearing reinforce each other, producing structural transformation or, reversed, compounded decay.",
         "conflictingSuit": "Tension between definitive close and an opposing register; ending must contend with currents that demand continuation, repair, or return rather than release."
       },
@@ -1190,7 +1190,7 @@ export const tarotCardsNew = [
         "mixture that produces strain rather than wholeness"
       ],
       "essenceSentence": "Synthesis fails when measure is lost, producing imbalance, excess, or combination forced before the elements can integrate.",
-      "coreMeaning": "Reversed Temperance loses the patient function of measure. Either pacing collapses into impatience, producing forced synthesis that distorts what is being combined, or one element is allowed to dominate, producing excess that pulls the whole out of proportion. The card's steady hand becomes either rushed or unsteady. What should have been the slow work of finding correct measure becomes either the demand for immediate resolution or the failure to recognise when proportion has tipped, and the synthesis that integration requires does not form.",
+      "coreMeaning": "Reversed Temperance loses the patient function of measure. Either pacing collapses into impatience, producing forced synthesis that distorts what is being combined, or one element is allowed to dominate, producing excess that pulls the whole out of proportion. The card's steady hand becomes either rushed or unsteady. What should have been the slow work of finding correct measure becomes either the demand for immediate resolution or the failure to recognise when proportion has tipped, and the work of integration never yields a true synthesis.",
       "arrivalBehaviour": "Sets the field as imbalanced or rushed. It defines the space through measure that has been lost, creating a register where combination is being attempted without the pacing required for synthesis, or where excess in one direction has distorted the proportion of the whole.",
       "responseBehaviour": "Negotiates by forcing or distorting measure within the existing field. It either rushes the prior card's material into combination before it can integrate, or allows one element to dominate, producing excess that strains rather than balances.",
       "relationalEffect": "strains — forces adjacent cards into combination without measure, producing excess or distortion rather than synthesis",
@@ -1433,7 +1433,7 @@ export const tarotCardsNew = [
         "orientation lost through mistrust"
       ],
       "essenceSentence": "Renewal fails when openness is refused, depleted, or closed before replenishment can be received.",
-      "coreMeaning": "Reversed Star loses openness as structural function. Renewal is either unavailable or refused. Trust collapses back into defence. What was offered quietly cannot land. The field remains depleted not because restoration is impossible, but because the condition required to receive it is absent. Guidance is obscured not by distance but by closure. The card marks the failure to remain open long enough for replenishment to take hold.",
+      "coreMeaning": "Reversed Star loses openness as structural function. Renewal is either unavailable or refused. Trust collapses back into defence. What was offered quietly cannot land. The field remains depleted not because restoration is impossible, but because the condition required to receive it is absent. Guidance is obscured not by distance but by closure. The card marks that openness closes before replenishment can take hold.",
       "arrivalBehaviour": "Sets the field as depleted or closed. It defines the space through withheld openness or unavailable renewal, creating a register where restoration cannot land.",
       "responseBehaviour": "Negotiates by withholding openness. It either refuses the renewal the prior card allows, or absorbs it into closure, preventing replenishment from completing.",
       "relationalEffect": "withholds — closes adjacent cards off from renewal by reintroducing defence",
@@ -1514,7 +1514,7 @@ export const tarotCardsNew = [
         "the field captured by what should have been examined"
       ],
       "essenceSentence": "Ambiguity collapses into illusion when unconscious material is mistaken for guidance rather than navigated with awareness.",
-      "coreMeaning": "Reversed Moon loses the function of ambiguity. The terrain is no longer being crossed but inhabited as illusion. Projection replaces perception. What surfaces is taken as truth rather than examined. The field becomes self-reinforcing. Confusion organises behaviour. What should have required navigation becomes something that captures the navigator. The card marks the failure to distinguish between what is seen and what is projected.",
+      "coreMeaning": "Reversed Moon loses the function of ambiguity. The terrain is no longer being crossed but inhabited as illusion. Projection replaces perception. What surfaces is taken as truth rather than examined. The field becomes self-reinforcing. Confusion organises behaviour. What should have required navigation becomes something that captures the navigator. The card marks the loss of distinction between what is seen and what is projected.",
       "arrivalBehaviour": "Sets the field as illusory and unstable. It defines the space through projection, where confusion is mistaken for insight and unconscious material shapes perception without being recognised.",
       "responseBehaviour": "Negotiates by amplifying distortion. It absorbs the prior card into projection, reshaping what is present into something that appears meaningful but is not grounded.",
       "relationalEffect": "distorts — captures adjacent cards in projection that mimics insight, preventing navigation through ambiguity",
@@ -1595,7 +1595,7 @@ export const tarotCardsNew = [
         "the appearance of illumination without its structure"
       ],
       "essenceSentence": "Illumination fails when clarity is performed rather than earned, leaving vitality dimmed or falsely expressed.",
-      "coreMeaning": "Reversed Sun breaks the integrity of illumination. Either the light is insufficient, leaving the field dim and unable to fully express itself, or it is forced, producing brightness that conceals rather than reveals. The card marks a failure to complete the process that produces clarity. What appears visible is not fully seen. What appears vital cannot sustain itself. The field either lacks illumination or imitates it. In both cases, the clarity required to resolve the interaction is not structurally present.",
+      "coreMeaning": "Reversed Sun breaks the integrity of illumination. Either the light is insufficient, leaving the field dim and unable to fully express itself, or it is forced, producing brightness that conceals rather than reveals. The card marks a stalled movement toward the process that produces clarity. What appears visible is not fully seen. What appears vital cannot sustain itself. The field either lacks illumination or imitates it. In both cases, the clarity required to resolve the interaction is not structurally present.",
       "arrivalBehaviour": "Sets the field as dimmed or artificially bright. It defines the space through insufficient vitality or performed illumination, creating a register where presence is either weakened or overstated.",
       "responseBehaviour": "Negotiates by dimming or distorting visibility. It either fails to fully illuminate the prior card, leaving it unresolved, or imposes clarity where it has not been earned, masking what remains unseen.",
       "relationalEffect": "dims — prevents adjacent cards from reaching full visibility, leaving them partially concealed or falsely illuminated",
@@ -4834,7 +4834,7 @@ export const tarotCardsNew = [
         "exhaustion without structural completion",
         "closure deferred"
       ],
-      "essenceSentence": "Collapse fails to complete and sustains the field in ongoing deterioration.",
+      "essenceSentence": "Collapse never reaches closure, so the field stays in drawn-out deterioration.",
       "coreMeaning": "Establishes incomplete collapse as the operative field condition. Maintains deterioration without closure. Prevents terminal completion.",
       "arrivalBehaviour": "Introduces sustained deterioration. Establishes incomplete collapse as the operative condition. Holds the field without resolution.",
       "responseBehaviour": "Extends deterioration within the existing field. Prevents closure. Maintains instability without reaching termination.",
