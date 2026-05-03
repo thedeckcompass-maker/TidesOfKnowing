@@ -367,6 +367,24 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return effectHumanMap[prefix] || "changing the situation in a way that cannot be ignored";
   }
 
+  function actioniseEffect(text) {
+    if (!text) return "";
+
+    const t = text.toLowerCase().trim();
+
+    if (t.startsWith("drawing")) return "draws the situation inward to a deeper level";
+    if (t.startsWith("reducing")) return "reduces the momentum of what is already in motion";
+    if (t.startsWith("opening")) return "opens the situation and releases what was fixed";
+    if (t.startsWith("focusing")) return "focuses the situation into a clear direction";
+    if (t.startsWith("pushing")) return "pushes the situation forward";
+    if (t.startsWith("breaking")) return "breaks the structure of the situation open";
+    if (t.startsWith("bringing")) return "brings the situation into direct connection";
+    if (t.startsWith("completing")) return "completes what the situation has already built";
+    if (t.startsWith("holding")) return "holds something back that needs to be seen";
+
+    return text;
+  }
+
   function classifyInteraction(p1, p2) {
     const reinforcing = [
       "drives",
@@ -604,6 +622,77 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     const p1 = effectPrefix(f1.relationalEffect);
     const p2 = effectPrefix(f2.relationalEffect);
+    let anchorText = "This pairing is not yet decisive.";
+
+    // Collapse / escalation
+    if (
+      (p1 === "depletes" && p2 === "drives") ||
+      (p1 === "drains" && p2 === "drives") ||
+      (p1 === "cuts" && p2 === "depletes") ||
+      (p1 === "pressures" && p2 === "shatters")
+    ) {
+      anchorText = "What begins as depletion does not recover here.";
+    }
+
+    // Support / completion
+    if (
+      (p1 === "pairs" && p2 === "completes") ||
+      (p1 === "aligns" && p2 === "completes") ||
+      (p1 === "nourishes" && p2 === "sustains")
+    ) {
+      anchorText = "What begins as connection is reinforced.";
+    }
+
+    // Sequence / momentum
+    if (
+      (p1 === "opens" && p2 === "drives") ||
+      (p1 === "opens" && p2 === "propels") ||
+      (p1 === "opens" && p2 === "focuses")
+    ) {
+      anchorText = "What begins as openness is given direction.";
+    }
+
+    // Suppression vs acceleration
+    if (p1 === "withholds" && p2 === "accelerates") {
+      anchorText = "What is held back is pushed forward before it is ready.";
+    }
+
+    let outcomeLine =
+      "The next movement depends on whether the second energy supports, redirects, or resists what the first has already set in motion.";
+
+    // Collapse / escalation
+    if (
+      (p1 === "depletes" && p2 === "drives") ||
+      (p1 === "drains" && p2 === "drives") ||
+      (p1 === "cuts" && p2 === "depletes") ||
+      (p1 === "pressures" && p2 === "shatters")
+    ) {
+      outcomeLine = "Left as it is, this continues toward exhaustion, collapse, or finality.";
+    }
+
+    // Support / completion
+    if (
+      (p1 === "pairs" && p2 === "completes") ||
+      (p1 === "aligns" && p2 === "completes") ||
+      (p1 === "nourishes" && p2 === "sustains")
+    ) {
+      outcomeLine = "Left as it is, this stabilises and strengthens over time.";
+    }
+
+    // Sequence / momentum
+    if (
+      (p1 === "opens" && p2 === "drives") ||
+      (p1 === "opens" && p2 === "propels") ||
+      (p1 === "opens" && p2 === "focuses")
+    ) {
+      outcomeLine = "Left as it is, this builds momentum and moves forward.";
+    }
+
+    // Suppression vs acceleration
+    if (p1 === "withholds" && p2 === "accelerates") {
+      outcomeLine = "Left as it is, this creates strain as movement outpaces alignment.";
+    }
+
     const interactionLine = classifyInteraction(p1, p2);
     const signal = [signalWord(p1), signalWord(p2), interactionSignal(interactionLine)].join(" + ");
 
@@ -700,7 +789,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       " (" +
       escHtml(l1) +
       ")</strong><br />" +
-      escHtml(humaniseEffect(f1.relationalEffect)) +
+      escHtml(actioniseEffect(humaniseEffect(f1.relationalEffect))) +
       "</p>";
     h +=
       '<p class="tarot-tool__out-p"><strong>' +
@@ -708,7 +797,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       " (" +
       escHtml(l2) +
       ")</strong><br />" +
-      escHtml(humaniseEffect(f2.relationalEffect)) +
+      escHtml(actioniseEffect(humaniseEffect(f2.relationalEffect))) +
       "</p></section>";
 
     h += '<section class="tarot-tool__out-block">';
@@ -731,7 +820,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<section class="tarot-tool__out-block">';
     h += '<h3 class="tarot-tool__out-h3">8. Ease, Friction, or Avoidance</h3>';
     h += '<p class="tarot-tool__out-p">';
-    h += escHtml(interactionLine);
+    h += escHtml(anchorText + " " + outcomeLine);
     h += "</p>";
     h += "</section>";
 
@@ -785,6 +874,29 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       if (!moveText && p1 === "withholds" && p2 === "accelerates") {
         moveText =
           "Do not mistake speed for resolution. Something important is still withheld, and movement without alignment may increase strain rather than solve it.";
+      }
+
+      if (
+        moveText === null &&
+        ((p1 === "deepens" && p2 === "reduces") ||
+          (p1 === "deepens" && p2 === "draws") ||
+          (p1 === "withholds" && p2 === "draws") ||
+          (p1 === "stills" && p2 === "draws") ||
+          (p1 === "deepens" && p2 === "stills") ||
+          (p1 === "deepens" && p2 === "slows") ||
+          (p1 === "withholds" && p2 === "slows"))
+      ) {
+        moveText =
+          "Do not rush this into action. The useful move is to stay with what is being revealed, reduce the noise, and let the deeper signal become clear before deciding what comes next.";
+      }
+
+      if (
+        moveText === null &&
+        ["deepens", "stills", "withholds", "draws", "reduces", "slows"].includes(p1) &&
+        ["deepens", "stills", "withholds", "draws", "reduces", "slows"].includes(p2)
+      ) {
+        moveText =
+          "This is not asking for immediate action. The useful move is to listen longer, reduce pressure, and let the real meaning surface before making a decision.";
       }
 
       if (!moveText) {
