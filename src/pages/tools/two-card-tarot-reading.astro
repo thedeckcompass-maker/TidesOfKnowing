@@ -654,22 +654,23 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function buildResultNotePanel(opts) {
-    const { verdictText, f1, f2, c1, c2, signalLine, skipVerdict } = opts;
-    if (!skipVerdict) {
-      const v = clean(verdictText);
-      if (v) return cleanSentence(panelFilterBanned(v));
+    const { f1, f2, c1, c2, signalLine, interactionLine, summaryForDedup } = opts;
+    if (clean(f1?.relationalEffect)) {
+      const rel = humaniseEffect(f1.relationalEffect);
+      if (clean(rel)) return cleanSentence(panelFilterBanned(rel));
     }
-    const rel = humaniseEffect(f1.relationalEffect);
-    if (clean(rel)) return cleanSentence(panelFilterBanned(rel));
     const rsp = clean(f2.responseBehaviour);
     if (rsp) return cleanSentence(panelHumaniseExistingDynamic(panelFilterBanned(rsp)));
-    const signalWords = String(signalLine || "")
-      .split(/\s*\+\s*/)
-      .map((s) => s.trim())
-      .filter(Boolean);
-    const thru = signalWords.length
-      ? signalWords.map((w) => w.toLowerCase()).join(", ")
-      : "the qualities named in the signal";
+    const il = clean(interactionLine);
+    if (il && !isGenericInteractionLine(il)) {
+      const ilSent = cleanSentence(panelFilterBanned(il));
+      const sumD = clean(summaryForDedup)
+        ? cleanSentence(panelFilterBanned(clean(summaryForDedup)))
+        : "";
+      if (!sumD || ilSent !== sumD) return ilSent;
+    }
+    const sigLower = String(signalLine || "").toLowerCase();
+    const thru = sigLower.trim() || "the qualities named in the signal";
     return joinCleanSentences([
       `${c2.name} changes how ${c1.name} can continue`,
       `The movement between them resolves through ${thru}`,
@@ -679,29 +680,23 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   function resolvePanelInteractionNote(ctx) {
     const {
       anchorOutcomeJoined,
-      verdictText,
       f1,
       f2,
       c1,
       c2,
       signalLine,
+      interactionLine,
       summaryForVerdictDedup,
     } = ctx;
     if (clean(anchorOutcomeJoined)) return anchorOutcomeJoined;
-    const sum = clean(summaryForVerdictDedup);
-    const verdictNorm = clean(verdictText)
-      ? cleanSentence(panelFilterBanned(clean(verdictText)))
-      : "";
-    const sumNorm = sum ? cleanSentence(panelFilterBanned(sum)) : "";
-    const skipVerdict = Boolean(sumNorm && verdictNorm && sumNorm === verdictNorm);
     return buildResultNotePanel({
-      verdictText,
       f1,
       f2,
       c1,
       c2,
       signalLine,
-      skipVerdict,
+      interactionLine,
+      summaryForDedup: summaryForVerdictDedup,
     });
   }
 
@@ -816,7 +811,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       derived = joinCleanSentences(
         [usefulLine, anchorP, outcomeP].filter(Boolean).map((p) => panelFilterBanned(p)),
       );
-      summaryOnly = joinCleanSentences([panelFilterBanned(usefulLine)].filter(Boolean));
+      summaryOnly = cleanSentence(panelFilterBanned(usefulLine));
     }
 
     if (!clean(derived) || derived.toLowerCase().includes("the interaction depends")) {
@@ -853,39 +848,44 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     const noteCtx = {
       anchorOutcomeJoined,
-      verdictText,
       f1,
       f2,
       c1,
       c2,
       signalLine,
+      interactionLine,
     };
+
+    const summaryFromInteraction = clean(usefulLine)
+      ? cleanSentence(panelFilterBanned(usefulLine))
+      : "";
 
     if (useSplit) {
       const note = resolvePanelInteractionNote({
         ...noteCtx,
-        summaryForVerdictDedup: summaryOnly,
+        summaryForVerdictDedup: summaryFromInteraction || summaryOnly,
       });
       return {
-        summary: summaryOnly,
+        summary: summaryFromInteraction || summaryOnly,
         note,
-        full: joinCleanSentences([summaryOnly, note].filter(Boolean)),
+        full: joinCleanSentences([(summaryFromInteraction || summaryOnly), note].filter(Boolean)),
       };
     }
 
     const fullOnly = joinCleanSentences([panelFilterBanned(merged)].filter(Boolean));
+    const summaryOut = summaryFromInteraction || fullOnly;
     const note = resolvePanelInteractionNote({
       ...noteCtx,
-      summaryForVerdictDedup: fullOnly,
+      summaryForVerdictDedup: summaryOut,
     });
     let noteOut = note;
     const n1 = cleanSentence(panelFilterBanned(clean(noteOut)));
-    const n2 = cleanSentence(panelFilterBanned(clean(fullOnly)));
-    if (clean(noteOut) && clean(fullOnly) && n1 === n2) noteOut = "";
+    const n2 = cleanSentence(panelFilterBanned(clean(summaryOut)));
+    if (clean(noteOut) && clean(summaryOut) && n1 === n2) noteOut = "";
     return {
-      summary: fullOnly,
+      summary: summaryOut,
       note: noteOut,
-      full: joinCleanSentences([fullOnly, noteOut].filter(Boolean)),
+      full: joinCleanSentences([summaryOut, noteOut].filter(Boolean)),
     };
   }
 
@@ -1055,8 +1055,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     const signal = s1 + " + " + s2 + " + " + s3;
 
-    let verdictText =
-      "Pause before deciding. This interaction needs more observation before the useful move becomes clear.";
+    let verdictText = "";
 
     if (
       (p1 === "depletes" && p2 === "drives") ||
@@ -1111,11 +1110,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       verdictText = "This is breaking open. Stop trying to preserve what can no longer hold.";
     }
 
-    const verdictSentence = clean(verdictText);
     const resolvedSignalSentence = "";
     const signalSentence =
-      (resolvedSignalSentence && resolvedSignalSentence.length > 0 ? resolvedSignalSentence : null) ||
-      (verdictSentence && verdictSentence.length > 0 ? verdictSentence : null) ||
+      (resolvedSignalSentence && resolvedSignalSentence.length > 0 ? resolvedSignalSentence : "") ||
+      (interactionLine && !isGenericInteractionLine(interactionLine) ? cleanSentence(interactionLine) : "") ||
+      (f2?.responseBehaviour
+        ? cleanSentence(panelHumaniseExistingDynamic(String(f2.responseBehaviour)))
+        : "") ||
+      (f1?.relationalEffect ? cleanSentence(humaniseEffect(f1.relationalEffect)) : "") ||
       "Pause before deciding. This interaction needs more observation before the useful move becomes clear.";
 
     let h = "";
@@ -1692,7 +1694,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .section-label {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
