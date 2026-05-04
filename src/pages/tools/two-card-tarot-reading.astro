@@ -344,7 +344,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   function humaniseEffect(effect) {
     const prefix = effectPrefix(effect);
-    return effectHumanMap[prefix] || "changing the situation in a way that cannot be ignored";
+    const raw = effectHumanMap[prefix] || "changing the situation in a way that cannot be ignored";
+    return normaliseRelationalLanguage(raw);
   }
 
   function actioniseEffect(text) {
@@ -630,6 +631,34 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return ensureTerminalPunctuation(sentenceCase(str));
   }
 
+  function normaliseRelationalLanguage(str) {
+    if (!str) return "";
+
+    return String(str)
+      .replace(/\bsets the field\b/gi, "establishes the situation")
+      .replace(/\benters the field\b/gi, "enters the situation")
+      .replace(/\banchors the field\b/gi, "anchors the situation")
+      .replace(/\bestablishes a field\b/gi, "establishes a condition")
+      .replace(/\bwithin the field\b/gi, "within the situation")
+      .replace(/\bthe field is set as\b/gi, "This begins as")
+      .replace(/\bfield\b/gi, "situation");
+  }
+
+  function formatBlockText(text) {
+    const n = normaliseRelationalLanguage(clean(text));
+    if (!n) return "";
+    return cleanSentence(n);
+  }
+
+  function selectStrongestSentence(str) {
+    const raw = clean(str);
+    if (!raw) return "";
+    const parts = raw.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+    if (parts.length <= 1) return raw;
+    const longest = parts.slice().sort((a, b) => b.length - a.length)[0];
+    return /[.!?]$/.test(longest) ? longest : `${longest}.`;
+  }
+
   function joinCleanSentences(parts) {
     return parts
       .map((p) => String(p ?? "").trim())
@@ -642,7 +671,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const s = String(str || "");
     return (
       /pause before deciding|not yet decisive|supports, redirects, or resists/i.test(s) ||
-      /the interaction depends on how the second energy meets the first/i.test(s)
+      /the interaction depends on how the second energy meets the first/i.test(s) ||
+      /the combined line resolves as support/i.test(s)
     );
   }
 
@@ -758,6 +788,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     t = t.replace(/\bthe field\b/gi, "the situation");
     t = t.replace(/\ba field\b/gi, "a situation");
     t = t.replace(/\s+/g, " ").trim();
+    t = normaliseRelationalLanguage(t);
     return t;
   }
 
@@ -776,11 +807,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   function panelIncomingPressure(f2) {
     const rsp = clean(f2.responseBehaviour);
     const rel = humaniseEffect(f2.relationalEffect);
-    return joinCleanSentences(
+    const joined = joinCleanSentences(
       [rsp, rel]
         .filter(Boolean)
         .map((p) => panelHumaniseExistingDynamic(panelFilterBanned(p))),
     );
+    return selectStrongestSentence(joined);
   }
 
   function panelInteractionResult(
@@ -796,9 +828,17 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     verdictUsedInSignal,
   ) {
     const il = clean(interactionLine);
+    const classifyFirst = il ? firstSentenceOnly(il) : "";
+    const classifyOk =
+      il &&
+      !isGenericInteractionLine(il) &&
+      !isGeneric(il) &&
+      !isGeneric(classifyFirst) &&
+      !/the combined line resolves as support/i.test(classifyFirst);
+
     let summary = "";
-    if (il && !isGenericInteractionLine(il) && !isGeneric(il)) {
-      summary = cleanSentence(panelFilterBanned(firstSentenceOnly(il)));
+    if (classifyOk) {
+      summary = cleanSentence(panelFilterBanned(classifyFirst));
     } else {
       const syn = buildSynthesisSentence(c1, c2, signalLine, f1, f2);
       if (clean(syn) && !isGeneric(syn)) {
@@ -820,10 +860,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       }
     }
 
+    summary = cleanSentence(panelFilterBanned(firstSentenceOnly(summary)));
+
     let note = "";
     const vt = clean(verdictText);
     if (vt && !isGeneric(vt) && !verdictUsedInSignal) {
-      const v = cleanSentence(panelFilterBanned(vt));
+      const v = cleanSentence(panelFilterBanned(firstSentenceOnly(vt)));
       if (
         !isGeneric(v) &&
         normaliseForDedupe(v) !== normaliseForDedupe(summary) &&
@@ -844,11 +886,23 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (normaliseForDedupe(note) === normaliseForDedupe(summary)) {
       note = "";
     }
+    if (
+      clean(note) &&
+      normaliseForDedupe(firstSentenceOnly(note)) === normaliseForDedupe(summary)
+    ) {
+      note = "";
+    }
+
+    const summaryOut = formatBlockText(summary);
+    let noteOut = note ? formatBlockText(note) : "";
+    if (normaliseForDedupe(noteOut) === normaliseForDedupe(summaryOut)) {
+      noteOut = "";
+    }
 
     return {
-      summary,
-      note,
-      full: joinCleanSentences([summary, note].filter(Boolean)),
+      summary: summaryOut,
+      note: noteOut,
+      full: joinCleanSentences([summaryOut, noteOut].filter(Boolean)),
     };
   }
 
@@ -1127,7 +1181,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="signal-block">';
     h += '<div class="signal-label">The Signal</div>';
     h += '<div class="signal-words">' + escHtml(signal) + "</div>";
-    h += '<div class="signal-note">' + escHtml(cleanSentence(signalSentence)) + "</div>";
+    h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
     h += "</div>";
 
     const panelIx = panelInteractionResult(
@@ -1147,11 +1201,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="section-label">Relational Energies at Play</div>';
     h += '<div class="energy-block">';
     h += '<div class="energy-tag">Existing Dynamic</div>';
-    h += '<div class="energy-text">' + escHtml(panelField) + "</div>";
+    h += '<div class="energy-text">' + escHtml(formatBlockText(panelField)) + "</div>";
     h += "</div>";
     h += '<div class="energy-block">';
     h += '<div class="energy-tag">Incoming Pressure</div>';
-    h += '<div class="energy-text">' + escHtml(panelIncoming) + "</div>";
+    h += '<div class="energy-text">' + escHtml(formatBlockText(panelIncoming)) + "</div>";
     h += "</div>";
     h += '<div class="energy-block result">';
     h += '<div class="energy-tag">Interaction Result</div>';
@@ -1223,14 +1277,22 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<h3 class="tarot-tool__out-h3">The Reading</h3>';
     h += '<div class="tok2-prose">';
     h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal">';
-    h += escHtml(c1.name) + " has already set the tone by " + escHtml(humaniseEffect(f1.relationalEffect)) + ". ";
-    h += escHtml(c2.name) + " enters that room by " + escHtml(humaniseEffect(f2.relationalEffect)) + ". ";
+    h +=
+      escHtml(c1.name) +
+      " has already set the tone by " +
+      escHtml(formatBlockText(humaniseEffect(f1.relationalEffect))) +
+      " ";
+    h +=
+      escHtml(c2.name) +
+      " enters that room by " +
+      escHtml(formatBlockText(humaniseEffect(f2.relationalEffect))) +
+      " ";
     if (
       clean(interactionLine) &&
       !isGenericInteractionLine(interactionLine) &&
       !isGeneric(interactionLine)
     ) {
-      h += escHtml(interactionLine);
+      h += escHtml(formatBlockText(interactionLine));
     }
     h += "</p>";
     const readingArrivalLayer = joinCleanSentences(
@@ -1243,7 +1305,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       clean(readingArrivalLayer) &&
       normaliseForDedupe(readingArrivalLayer) !== normaliseForDedupe(panelField)
     ) {
-      h += '<p class="tarot-tool__out-p">' + escHtml(readingArrivalLayer) + "</p>";
+      h += '<p class="tarot-tool__out-p">' + escHtml(formatBlockText(readingArrivalLayer)) + "</p>";
     }
     if (clean(f2.responseBehaviour)) {
       const rspReading = cleanSentence(
@@ -1254,15 +1316,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           '<p class="tarot-tool__out-p">' +
           escHtml(c2.name) +
           " in this position also carries: " +
-          escHtml(rspReading) +
+          escHtml(formatBlockText(rspReading)) +
           "</p>";
       }
     }
 
     h += '<p class="tarot-tool__out-p">';
     h += "<strong>Underneath the surface:</strong> ";
-    h += escHtml(clean(f1.coreMeaning)) + " ";
-    h += escHtml(clean(f2.coreMeaning));
+    h += escHtml(formatBlockText(clean(f1.coreMeaning))) + " ";
+    h += escHtml(formatBlockText(clean(f2.coreMeaning)));
     h += "</p>";
     h += "</div>";
 
@@ -1358,18 +1420,18 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       if (whenFirst1) {
         h +=
           '<div class="tok2-shift-row"><span class="tok2-shift-label">The room</span><span class="tok2-shift-value">' +
-          escHtml(capitaliseFirst(whenFirstText)) +
+          escHtml(formatBlockText(capitaliseFirst(whenFirstText))) +
           "</span></div>";
       }
       if (whenSecond2) {
         h +=
           '<div class="tok2-shift-row"><span class="tok2-shift-label">The entering energy</span><span class="tok2-shift-value">' +
-          escHtml(capitaliseFirst(whenSecondText)) +
+          escHtml(formatBlockText(capitaliseFirst(whenSecondText))) +
           "</span></div>";
       }
       h +=
         '<div class="tok2-shift-row tok2-shift-row--move"><span class="tok2-shift-label">The move</span><span class="tok2-shift-value">' +
-        escHtml(moveText) +
+        escHtml(formatBlockText(moveText)) +
         "</span></div>";
       h += "</div>";
     }
@@ -1382,7 +1444,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<h3 class="tarot-tool__out-h3">Reflection Question</h3>';
     h += '<div class="tok2-reflection-block">';
     h += '<p class="tok2-reflection-lead">Before you leave this reading, ask:</p>';
-    h += '<p class="tok2-reflection-question">' + escHtml(reflectionQ) + "</p>";
+    h += '<p class="tok2-reflection-question">' + escHtml(formatBlockText(reflectionQ)) + "</p>";
     h += '<p class="tok2-return-prompt">You read this on ' + escHtml(readDate) + ". Return in 7 days and ask what has shifted.</p>";
     h += "</div>";
     h += '<div class="tok2-deeper-invite">';
@@ -1440,10 +1502,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const supportP2 = "If this reading gave you something useful, a coffee keeps the work going.";
 
     h += '<div class="support-block tok2-support">';
-    h += "<p>" + escHtml(supportP1) + "</p>";
+    h += "<p>" + escHtml(formatBlockText(supportP1)) + "</p>";
     h +=
       '<a href="https://www.buymeacoffee.com/tidesofknowing" target="_blank" rel="noopener noreferrer" class="bmc-image-link"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" class="bmc-image-button" loading="lazy" decoding="async" /></a>';
-    h += "<p>" + escHtml(supportP2) + "</p>";
+    h += "<p>" + escHtml(formatBlockText(supportP2)) + "</p>";
     h += "</div>";
 
     h += "</section>";
