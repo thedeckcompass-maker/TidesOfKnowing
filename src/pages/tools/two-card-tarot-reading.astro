@@ -646,6 +646,50 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return text;
   }
 
+  function panelSplitWords(s) {
+    return String(s || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  function panelFilterBanned(s) {
+    return String(s || "")
+      .replace(/\b(energy|journey|process|vibration)\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  /** Keeps between minWords and maxWords inclusive by trimming or merging sources. */
+  function panelWordRange(primary, secondary, minWords, maxWords) {
+    const max = Math.max(minWords, maxWords);
+    const min = Math.min(minWords, maxWords);
+    let words = panelSplitWords(panelFilterBanned(primary));
+    if (words.length < min && secondary) {
+      words = panelSplitWords(panelFilterBanned([primary, secondary].filter(Boolean).join(" ")));
+    }
+    if (words.length > max) words = words.slice(0, max);
+    return words.join(" ");
+  }
+
+  function panelFieldCondition(f1) {
+    const arrival = clean(f1.arrivalBehaviour);
+    const essence = clean(f1.essenceSentence);
+    return panelWordRange(arrival || essence, arrival && essence && arrival !== essence ? essence : "", 8, 14);
+  }
+
+  function panelIncomingPressure(f2) {
+    const rel = humaniseEffect(f2.relationalEffect);
+    const rsp = clean(f2.responseBehaviour);
+    const effectLead = clean(String(f2.relationalEffect || "").split("\u2014")[0]);
+    return panelWordRange([rel, rsp].filter(Boolean).join(" "), effectLead, 8, 14);
+  }
+
+  function panelInteractionResult(interactionLine, anchorText, outcomeLine) {
+    const merged = [clean(interactionLine), clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" ");
+    return panelWordRange(merged, "", 8, 14);
+  }
+
   function renderReading() {
     const sel1 = document.getElementById("tok2-card-1");
     const sel2 = document.getElementById("tok2-card-2");
@@ -831,6 +875,26 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<p class="tarot-tool__signal-verdict">' + escHtml(verdictText) + "</p>";
     h += "</section>";
 
+    const panelField = panelFieldCondition(f1);
+    const panelIncoming = panelIncomingPressure(f2);
+    const panelResult = panelInteractionResult(interactionLine, anchorText, outcomeLine);
+
+    h += '<div class="interaction-panel">';
+    h += '<div class="interaction-title">Relational Energies at Play</div>';
+    h +=
+      '<div class="interaction-row"><div class="interaction-label">Field Condition</div><div class="interaction-value">' +
+      escHtml(panelField) +
+      "</div></div>";
+    h +=
+      '<div class="interaction-row"><div class="interaction-label">Incoming Pressure</div><div class="interaction-value">' +
+      escHtml(panelIncoming) +
+      "</div></div>";
+    h +=
+      '<div class="interaction-row highlight"><div class="interaction-label">Interaction Result</div><div class="interaction-value">' +
+      escHtml(panelResult) +
+      "</div></div>";
+    h += "</div>";
+
     h += '<section class="tarot-tool__out-block">';
     h += '<h3 class="tarot-tool__out-h3">1. The Two Cards</h3>';
 
@@ -839,8 +903,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</p>";
 
     h += '<div class="tarot-tool__combo-images">';
-    h +=
-      '<div class="tarot-tool__card-slot"><img class="' +
+    h += '<div class="card-block"><div class="tarot-tool__card-slot"><img class="' +
       imgCls1 +
       '" src="' +
       escAttr(src1) +
@@ -850,7 +913,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       imgErr +
       '" /><p class="tarot-tool__card-placeholder" style="display:none;">Image unavailable</p></div>';
     h +=
-      '<div class="tarot-tool__card-slot"><img class="' +
+      '<div class="card-caption"><span class="caption-label">The room already holds</span><br/><span class="caption-card">' +
+      escHtml(c1.name) +
+      "</span></div></div>";
+    h += '<div class="card-block"><div class="tarot-tool__card-slot"><img class="' +
       imgCls2 +
       '" src="' +
       escAttr(src2) +
@@ -859,10 +925,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       '" loading="lazy" decoding="async" onerror="' +
       imgErr +
       '" /><p class="tarot-tool__card-placeholder" style="display:none;">Image unavailable</p></div>';
+    h +=
+      '<div class="card-caption"><span class="caption-label entering">Entering the room \u2192</span><br/><span class="caption-card">' +
+      escHtml(c2.name) +
+      "</span></div></div>";
     h += "</div>";
-
-    h += '<p class="tarot-tool__out-p"><strong>The room already holds:</strong> ' + escHtml(c1.name) + "</p>";
-    h += '<p class="tarot-tool__out-p"><strong>What enters the room:</strong> ' + escHtml(c2.name) + "</p>";
 
     h += "</section>";
 
@@ -871,24 +938,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<p class="tarot-tool__out-p">' + keywordsHtml(f1.keywords) + "</p>";
     h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c2.name) + " (" + escHtml(l2) + ")</strong></p>";
     h += '<p class="tarot-tool__out-p">' + keywordsHtml(f2.keywords) + "</p></section>";
-
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">3. Core Signal</h3>';
-    h +=
-      '<p class="tarot-tool__out-p"><strong>' +
-      escHtml(c1.name) +
-      " (" +
-      escHtml(l1) +
-      ")</strong><br />" +
-      escHtml(String(f1.essenceSentence || "").trim()) +
-      "</p>";
-    h +=
-      '<p class="tarot-tool__out-p"><strong>' +
-      escHtml(c2.name) +
-      " (" +
-      escHtml(l2) +
-      ")</strong><br />" +
-      escHtml(String(f2.essenceSentence || "").trim()) +
-      "</p></section>";
 
     h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">4. The Room Already Holds</h3>';
     h +=
@@ -1383,6 +1432,80 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 </style>
 
 <style is:global>
+  #tok2-output .interaction-panel {
+    margin: 24px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  #tok2-output .interaction-title {
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 1.02rem;
+    line-height: 1.35;
+    border-bottom: 1px solid #eee;
+    background: #f7f7f7;
+    color: var(--mountain-water, #0d324d);
+  }
+
+  #tok2-output .interaction-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.35rem 1rem;
+    padding: 10px 16px;
+    border-top: 1px solid #eee;
+  }
+
+  #tok2-output .interaction-panel > .interaction-row:nth-child(2) {
+    border-top: none;
+  }
+
+  #tok2-output .interaction-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #666;
+    flex: 0 0 35%;
+    max-width: 35%;
+  }
+
+  #tok2-output .interaction-value {
+    flex: 1 1 55%;
+    max-width: 65%;
+    text-align: right;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--ink, #1a1a1a);
+  }
+
+  #tok2-output .interaction-row.highlight {
+    background: #fafafa;
+    font-weight: 600;
+  }
+
+  @media (max-width: 520px) {
+    #tok2-output .interaction-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #tok2-output .interaction-label {
+      flex: 1 1 auto;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    #tok2-output .interaction-value {
+      flex: 1 1 auto;
+      max-width: 100%;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
   #tok2-output .tarot-tool__combo-images {
     display: flex;
     gap: 1.5rem;
@@ -1390,9 +1513,40 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     justify-content: space-between;
   }
 
-  #tok2-output .tarot-tool__card-slot {
+  #tok2-output .card-block {
     flex: 1 1 0;
     max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #tok2-output .tarot-tool__card-slot {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  #tok2-output .card-caption {
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1.4;
+    max-width: 100%;
+  }
+
+  #tok2-output .card-caption .caption-label {
+    font-size: 12px;
+    color: #777;
+    font-weight: 500;
+  }
+
+  #tok2-output .card-caption .caption-label.entering {
+    letter-spacing: 0.02em;
+  }
+
+  #tok2-output .card-caption .caption-card {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
   }
 
   #tok2-output .tarot-tool__card-img {
@@ -1406,7 +1560,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       flex-direction: column;
     }
 
-    #tok2-output .tarot-tool__card-slot {
+    #tok2-output .card-block {
       max-width: 100%;
     }
   }
