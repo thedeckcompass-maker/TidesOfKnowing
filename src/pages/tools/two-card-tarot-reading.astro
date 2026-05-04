@@ -78,6 +78,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
 <script>
   import { tarotCardsNew } from "../../data/tarotCardsNew.js";
+  import { interactionArchetypeMap } from "../../data/interactionArchetypes.js";
 
   function cardImagePath(card) {
     const fileId =
@@ -125,11 +126,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return el instanceof HTMLInputElement && el.value === "reversed";
   }
 
-  function keywordsHtml(arr) {
-    if (!Array.isArray(arr)) return "";
-    return arr.map((w) => escHtml(String(w))).join(", ");
-  }
-
   function effectPrefix(effect) {
     return String(effect || "")
       .trim()
@@ -150,7 +146,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     blocks: "prevents movement",
     burdens: "adds weight",
     carries: "moves something forward",
-    circulates: "keeps energy moving",
+    circulates: "keeps the pattern in motion",
     commands: "takes command",
     completes: "brings something to completion",
     concentrates: "pulls everything into focus",
@@ -170,7 +166,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     disrupts: "interrupts the pattern",
     dissolves: "breaks down boundaries",
     distorts: "twists what should be clear",
-    distributes: "spreads energy across the field",
+    distributes: "spreads influence across the pattern",
     dominates: "overpowers the field",
     drains: "removes available support",
     draws: "pulls something inward",
@@ -198,7 +194,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     isolates: "pulls away and cuts off connection",
     loops: "keeps something repeating",
     loosens: "releases tension",
-    misdirects: "sends energy the wrong way",
+    misdirects: "sends focus the wrong way",
     narrows: "limits the field of movement",
     nourishes: "supports growth",
     obscures: "makes things harder to see",
@@ -244,107 +240,108 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   const effectHumanMap = {
-    accelerates: "accelerating what is already in motion",
-    aligns: "bringing things into alignment",
-    anchors: "anchoring the field so it can hold",
-    animates: "bringing movement and life into the field",
-    arrests: "stopping movement before it can continue",
-    balances: "restoring balance where the field has tipped",
-    binds: "binding the forces together",
-    blocks: "blocking movement or access",
-    burdens: "placing weight on the field",
-    carries: "carrying the existing force forward",
-    circulates: "keeping energy moving through the field",
-    commands: "taking command of the situation",
-    completes: "bringing the sequence to completion",
-    concentrates: "drawing scattered energy into one point",
-    constrains: "restricting movement and limiting options",
-    contracts: "pulling the field inward",
-    corrupts: "distorting the integrity of what is present",
-    crushes: "applying pressure until movement is compromised",
-    cuts: "cutting through the field with precision",
-    deepens: "drawing everything inward to a deeper level",
-    defers: "pushing resolution further away",
-    deflates: "reducing the force that was carrying the situation",
-    deflects: "pushing the interaction away from direct contact",
-    depletes: "draining what was available to sustain the field",
-    destabilises: "disrupting stability so things cannot settle",
-    dims: "reducing clarity, warmth, or vitality",
-    disperses: "scattering attention across too many directions",
-    disrupts: "interrupting the pattern already in motion",
-    dissolves: "breaking down the boundaries that were holding form",
-    distorts: "twisting what should be clear",
-    distributes: "spreading energy across the field",
-    dominates: "overpowering the field rather than meeting it",
-    drains: "removing the support or resource the field needs",
-    draws: "pulling something inward or closer",
-    drives: "pushing the field forward with force",
-    elevates: "raising the situation into a higher register",
-    ends: "bringing the existing movement to a close",
-    expands: "widening what the situation can hold",
-    exposes: "bringing something hidden into view",
-    extends: "carrying the existing movement further",
-    flattens: "reducing depth, difference, or dimension",
-    floods: "overwhelming the field with too much at once",
-    focuses: "focusing everything into a clear and directed path",
-    formalises: "locking things into a defined structure",
-    fortifies: "strengthening the boundary around what is present",
-    fractures: "breaking coherence into separated parts",
-    fragments: "breaking coherence into disconnected parts",
-    gentles: "softening the force of the interaction",
-    governs: "governing the field through judgement and authority",
-    grounds: "bringing things into practical reality",
-    holds: "holding something in place",
-    ignites: "setting energy into motion",
-    illuminates: "making something visible or undeniable",
-    integrates: "bringing separate elements into coherence",
-    introduces: "bringing a new condition into the field",
-    isolates: "pulling away and cutting off connection",
-    loops: "keeping the same pattern repeating",
-    loosens: "releasing tension or rigidity",
-    misdirects: "sending energy away from its true direction",
-    narrows: "limiting the field of movement",
-    nourishes: "supporting growth so something can develop",
-    obscures: "making what matters harder to see",
-    obstructs: "standing in the way of movement",
-    opens: "opening the field and releasing what was fixed",
-    overwhelms: "flooding the field with more than it can hold",
-    pairs: "bringing two forces into direct relation",
-    pierces: "breaking through the surface",
-    pressures: "increasing pressure on the field",
-    propels: "pushing the situation forward",
-    reduces: "lessening intensity or pressure",
-    releases: "letting something move, leave, or become free",
-    removes: "taking away what was previously present",
-    restores: "returning the field to balance or function",
-    saturates: "filling the field until nothing else can enter",
-    scatters: "dispersing focus across the field",
-    seals: "closing the field around what is present",
-    separates: "creating distance between the forces",
-    shatters: "breaking the structure open",
-    slows: "reducing momentum",
-    smothers: "overwhelming something so it cannot grow",
-    stabilises: "settling the field into steadier form",
-    stalls: "holding movement in place",
-    stills: "quieting the field",
-    strains: "placing stress on the structure",
-    strips: "removing what was supporting the field",
-    structures: "imposing order and structure",
-    summons: "calling something forward",
-    suspends: "holding something in pause",
-    sustains: "keeping the existing force alive",
-    turns: "forcing a shift that changes the direction of events",
-    undermines: "weakening the foundation beneath the field",
-    unsettles: "making the field unstable",
-    weighs: "adding heaviness to the field",
-    widens: "opening the field further",
-    withholds: "holding something back that needs to be seen",
-    yields: "softening and giving way",
+    accelerates: "It accelerates what is already in motion",
+    aligns: "It brings things into alignment",
+    anchors: "It anchors the field so it can hold",
+    animates: "It brings movement and life into the field",
+    arrests: "It stops movement before it can continue",
+    balances: "It restores balance where the field has tipped",
+    binds: "It binds the forces together",
+    blocks: "It blocks movement or access",
+    burdens: "It places weight on the field",
+    carries: "It carries the existing force forward",
+    circulates: "It keeps the pattern in motion through what is present",
+    commands: "It takes command of the situation",
+    completes: "It brings the sequence to completion",
+    concentrates: "It draws scattered focus into one point",
+    constrains: "It restricts movement and limits options",
+    contracts: "It pulls the field inward",
+    corrupts: "It distorts the integrity of what is present",
+    crushes: "It applies pressure until movement is compromised",
+    cuts: "It cuts through the field with precision",
+    deepens: "It draws everything inward to a deeper level",
+    defers: "It pushes resolution further away",
+    deflates: "It reduces the force that was carrying the situation",
+    deflects: "It pushes the interaction away from direct contact",
+    depletes: "It drains what was available to sustain the field",
+    destabilises: "It disrupts stability so things cannot settle",
+    dims: "It reduces clarity, warmth, or vitality",
+    disperses: "It scatters attention across too many directions",
+    disrupts: "It interrupts the pattern already in motion",
+    dissolves: "It breaks down the boundaries that were holding form",
+    distorts: "It twists what should be clear",
+    distributes: "It spreads influence across what is present",
+    dominates: "It overpowers the field rather than meeting it",
+    drains: "It removes the support or resource the field needs",
+    draws: "It pulls something inward or closer",
+    drives: "It pushes the field forward with force",
+    elevates: "It raises the situation into a higher register",
+    ends: "It brings the existing movement to a close",
+    expands: "It widens what the situation can hold",
+    exposes: "It brings something hidden into view",
+    extends: "It carries the existing movement further",
+    flattens: "It reduces depth, difference, or dimension",
+    floods: "It overwhelms the field with too much at once",
+    focuses: "It focuses everything into a clear and directed path",
+    formalises: "It locks things into a defined structure",
+    fortifies: "It strengthens the boundary around what is present",
+    fractures: "It breaks coherence into separated parts",
+    fragments: "It breaks coherence into disconnected parts",
+    gentles: "It softens the force of the interaction",
+    governs: "It governs the field through judgement and authority",
+    grounds: "It brings things into practical reality",
+    holds: "It holds something in place",
+    ignites: "It sets something into motion",
+    illuminates: "It makes something visible or undeniable",
+    integrates: "It brings separate elements into coherence",
+    introduces: "It brings a new condition into the field",
+    isolates: "It pulls away and cuts off connection",
+    loops: "It keeps the same pattern repeating",
+    loosens: "It releases tension or rigidity",
+    misdirects: "It sends focus away from its true direction",
+    narrows: "It limits the field of movement",
+    nourishes: "It supports growth so something can develop",
+    obscures: "It makes what matters harder to see",
+    obstructs: "It stands in the way of movement",
+    opens: "It opens the field and releases what was fixed",
+    overwhelms: "It floods the field with more than it can hold",
+    pairs: "It brings two forces into direct relation",
+    pierces: "It breaks through the surface",
+    pressures: "It increases pressure on the field",
+    propels: "It pushes the situation forward",
+    reduces: "It lessens intensity or pressure",
+    releases: "It lets something move, leave, or become free",
+    removes: "It takes away what was previously present",
+    restores: "It returns the field to balance or function",
+    saturates: "It fills the field until nothing else can enter",
+    scatters: "It disperses focus across the field",
+    seals: "It closes the field around what is present",
+    separates: "It creates distance between the forces",
+    shatters: "It breaks the structure open",
+    slows: "It reduces momentum",
+    smothers: "It overwhelms something so it cannot grow",
+    stabilises: "It settles the field into steadier form",
+    stalls: "It holds movement in place",
+    stills: "It quiets the field",
+    strains: "It places stress on the structure",
+    strips: "It removes what was supporting the field",
+    structures: "It imposes order and structure",
+    summons: "It calls something forward",
+    suspends: "It holds something in pause",
+    sustains: "It keeps the existing force alive",
+    turns: "It forces a shift that changes the direction of events",
+    undermines: "It weakens the foundation beneath the field",
+    unsettles: "It makes the field unstable",
+    weighs: "It adds heaviness to the field",
+    widens: "It opens the field further",
+    withholds: "It holds something back that needs to be seen",
+    yields: "It softens and gives way",
   };
 
   function humaniseEffect(effect) {
     const prefix = effectPrefix(effect);
-    const raw = effectHumanMap[prefix] || "changing the situation in a way that cannot be ignored";
+    const raw =
+      effectHumanMap[prefix] || "It changes what is present in a way that cannot be ignored";
     return normaliseRelationalLanguage(raw);
   }
 
@@ -366,7 +363,17 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return text;
   }
 
-  function classifyInteraction(p1, p2) {
+  function classifyInteractionFallbackLine(p1, p2, c1, c2) {
+    const n1 = c1?.name || "the first card";
+    const n2 = c2?.name || "the second card";
+    const pressureish = ["pressures", "strains", "dominates", "crushes", "burdens"];
+    if (pressureish.includes(p2)) {
+      return `${n2} puts pressure on what ${n1} had already established.`;
+    }
+    return `${n2} changes what ${n1} had already set in motion.`;
+  }
+
+  function classifyInteraction(p1, p2, c1, c2) {
     const reinforcing = [
       "drives",
       "propels",
@@ -404,11 +411,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const focusing = ["focuses", "narrows", "cuts", "pierces", "concentrates"];
 
     if (dispersing.includes(p1) && reducing.includes(p2)) {
-      return "The first force scatters the field, while the second reduces what remains, thinning the situation out.";
+      return "The first card scatters the situation, while the second reduces what remains, thinning the room out.";
     }
 
     if (opening.includes(p1) && focusing.includes(p2)) {
-      return "The second force builds on what the first has opened, creating a natural sequence.";
+      return "The second card builds on what the first has opened, creating a natural sequence.";
     }
 
     if (structuring.includes(p1) && disruptive.includes(p2)) {
@@ -416,15 +423,19 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     if (reinforcing.includes(p1) && reinforcing.includes(p2)) {
-      return "Both forces are pushing in the same direction, amplifying the effect.";
+      return "Both cards are pushing in the same direction, amplifying the effect.";
     }
 
     if (reducing.includes(p2)) {
-      return "The second force reduces or drains what the first has created.";
+      return `${c2.name} reduces or drains what ${c1.name} has created.`;
+    }
+
+    if (dispersing.includes(p2)) {
+      return `${c2.name} disrupts the pattern ${c1.name} created.`;
     }
 
     if (disruptive.includes(p2)) {
-      return "The second force breaks or overrides the structure created by the first.";
+      return `${c2.name} breaks or overrides the structure ${c1.name} created.`;
     }
 
     if (p1 === "governs" && p2 === "opens") {
@@ -435,7 +446,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       (opening.includes(p2) && structuring.includes(p1)) ||
       (focusing.includes(p1) && dispersing.includes(p2))
     ) {
-      return "The two forces are working at cross purposes, creating instability in how the situation develops.";
+      return "The two cards are working at cross purposes, creating instability in how the situation develops.";
     }
 
     if (
@@ -443,7 +454,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       (p1 === "obscures" && p2 === "accelerates") ||
       (p1 === "blocks" && p2 === "accelerates")
     ) {
-      return "One force holds the situation back while the other pushes it forward, creating strain through forced movement without alignment.";
+      return "One card holds the situation back while the other pushes it forward, creating strain through forced movement without alignment.";
     }
 
     // Cooperative completion
@@ -454,7 +465,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       (p1 === "opens" && p2 === "nourishes") ||
       (p1 === "stabilises" && p2 === "sustains")
     ) {
-      return "The second force confirms and completes what the first has opened, creating support rather than resistance.";
+      return "The second card confirms and completes what the first has opened, creating support rather than resistance.";
     }
 
     // Escalation to collapse
@@ -464,7 +475,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       (p1 === "cuts" && p2 === "depletes") ||
       (p1 === "pressures" && p2 === "shatters")
     ) {
-      return "The second force escalates what is already damaged, pushing the situation toward exhaustion or collapse.";
+      return "The second card escalates what is already damaged, pushing the situation toward exhaustion or collapse.";
     }
 
     // Natural sequence / alignment
@@ -475,15 +486,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       (p1 === "introduces" && p2 === "drives") ||
       (p1 === "opens" && p2 === "anchors")
     ) {
-      return "The second force gives direction to what the first has opened, creating forward movement rather than resistance.";
+      return "The second card gives direction to what the first has opened, creating forward movement rather than resistance.";
     }
 
     // Strong alignment / momentum
     if ((p1 === "pairs" && p2 === "sustains") || (p1 === "aligns" && p2 === "drives")) {
-      return "The two forces align and build on each other, creating momentum that carries the situation forward.";
+      return "The two cards align and build on each other, creating momentum that carries the situation forward.";
     }
 
-    return "The interaction depends on how the second energy meets the first, and whether it supports, redirects, or resists what is already in motion.";
+    return classifyInteractionFallbackLine(p1, p2, c1, c2);
   }
 
   const signalWordMap = {
@@ -513,6 +524,308 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     withholds: "Withholding",
   };
 
+  const keywordRelevanceMap = {
+    giving: [
+      "exchange",
+      "resource",
+      "resources",
+      "giving",
+      "receiving",
+      "reciprocity",
+      "balance",
+      "imbalance",
+      "surplus",
+      "deficit",
+      "support",
+      "obligation",
+      "dependence",
+      "generosity",
+      "distribution",
+      "redistribution",
+    ],
+    conflict: [
+      "conflict",
+      "friction",
+      "fragment",
+      "fragmentation",
+      "misalignment",
+      "breakdown",
+      "competition",
+      "discord",
+      "resistance",
+      "instability",
+      "disruption",
+      "separation",
+      "divided",
+      "unresolved",
+      "failure",
+    ],
+    shift: [
+      "change",
+      "transition",
+      "movement",
+      "redirection",
+      "turning",
+      "threshold",
+      "alteration",
+      "instability",
+      "adjustment",
+      "reorientation",
+    ],
+    holding: [
+      "holding",
+      "containment",
+      "structure",
+      "stability",
+      "discipline",
+      "boundary",
+      "maintenance",
+      "control",
+      "preservation",
+      "endurance",
+    ],
+    withdrawal: [
+      "withdrawal",
+      "retreat",
+      "absence",
+      "withholding",
+      "distance",
+      "removal",
+      "separation",
+      "silence",
+      "concealment",
+      "refusal",
+    ],
+    expansion: [
+      "growth",
+      "expansion",
+      "increase",
+      "opening",
+      "possibility",
+      "abundance",
+      "movement",
+      "development",
+      "widening",
+    ],
+    alignment: [
+      "alignment",
+      "coherence",
+      "integration",
+      "agreement",
+      "harmony",
+      "attunement",
+      "coordination",
+      "shared",
+      "mutual",
+    ],
+    dispersal: [
+      "scatter",
+      "scattering",
+      "dispersion",
+      "dispersal",
+      "confusion",
+      "diffusion",
+      "fragmentation",
+      "spread",
+      "leakage",
+    ],
+    focus: [
+      "focus",
+      "clarity",
+      "attention",
+      "precision",
+      "direction",
+      "decision",
+      "discernment",
+      "concentration",
+    ],
+    pressure: [
+      "pressure",
+      "force",
+      "tension",
+      "constraint",
+      "demand",
+      "burden",
+      "strain",
+      "stress",
+      "compression",
+    ],
+    opening: [
+      "opening",
+      "beginning",
+      "emergence",
+      "invitation",
+      "possibility",
+      "potential",
+      "threshold",
+      "entry",
+    ],
+    closure: [
+      "closure",
+      "ending",
+      "completion",
+      "release",
+      "finality",
+      "resolution",
+      "conclusion",
+      "sealing",
+    ],
+  };
+
+  function normaliseRelevanceToken(str) {
+    return String(str || "")
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .trim();
+  }
+
+  function selectRelevantExtendedKeywords(extendedKeywords = [], tokens = [], limit = 4) {
+    if (!Array.isArray(extendedKeywords) || !extendedKeywords.length) return [];
+
+    const relevanceTerms = new Set();
+
+    tokens
+      .map(normaliseRelevanceToken)
+      .forEach((token) => {
+        const terms = keywordRelevanceMap[token];
+        if (Array.isArray(terms)) {
+          terms.forEach((term) => relevanceTerms.add(term.toLowerCase()));
+        }
+      });
+
+    const seen = new Set();
+
+    const scored = extendedKeywords
+      .filter(Boolean)
+      .map((phrase) => {
+        const text = String(phrase).trim();
+        const lower = text.toLowerCase();
+        let score = 0;
+
+        relevanceTerms.forEach((term) => {
+          if (lower.includes(term)) score += 1;
+        });
+
+        return { text, score };
+      })
+      .filter((item) => {
+        const key = item.text.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+    const matched = scored
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.text);
+
+    const fallback = scored
+      .filter((item) => item.score === 0)
+      .map((item) => item.text);
+
+    return [...matched, ...fallback].slice(0, limit);
+  }
+
+  function scrubExtendedKeywordPhrase(phrase) {
+    return cleanRelationalSceneLanguage(String(phrase || "").trim());
+  }
+
+  function splitMeaningSentences(str) {
+    if (!str) return [];
+    return String(str)
+      .replace(/\s+/g, " ")
+      .trim()
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  function selectRelevantMeaningSentences(coreMeaning = "", tokens = [], limit = 2) {
+    const sentences = splitMeaningSentences(coreMeaning);
+    if (!sentences.length) return [];
+
+    const relevanceTerms = new Set();
+
+    tokens
+      .map(normaliseRelevanceToken)
+      .forEach((token) => {
+        const terms = keywordRelevanceMap[token];
+        if (Array.isArray(terms)) {
+          terms.forEach((term) => relevanceTerms.add(term.toLowerCase()));
+        }
+      });
+
+    const seen = new Set();
+
+    const scored = sentences
+      .map((sentence) => {
+        const cleaned =
+          typeof cleanRelationalSceneLanguage === "function"
+            ? cleanRelationalSceneLanguage(sentence)
+            : sentence;
+
+        const text = String(cleaned).trim();
+        const lower = text.toLowerCase();
+        let score = 0;
+
+        relevanceTerms.forEach((term) => {
+          if (lower.includes(term)) score += 1;
+        });
+
+        return { text, score };
+      })
+      .filter((item) => {
+        if (!item.text) return false;
+        const key = item.text.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+    const matched = scored
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.text);
+
+    const fallback = scored
+      .filter((item) => item.score === 0)
+      .map((item) => item.text);
+
+    return [...matched, ...fallback].slice(0, limit);
+  }
+
+  function buildUnderneathSurfaceText(c1, c2, card1Lines = [], card2Lines = []) {
+    const first = String(card1Lines[0] || "").trim();
+    const second = String(card2Lines[0] || "").trim();
+    const third = String(card1Lines[1] || "").trim();
+    const fourth = String(card2Lines[1] || "").trim();
+
+    const parts = [];
+
+    if (first && second) {
+      parts.push(
+        `Underneath this pairing, ${c1.name} shows one side of the deeper pattern: ${sentenceCase(first)}. ${c2.name} shows the pressure point: ${sentenceCase(second)}.`,
+      );
+    } else if (first) {
+      parts.push(`Underneath this pairing, ${c1.name} reveals the deeper pattern: ${sentenceCase(first)}.`);
+    } else if (second) {
+      parts.push(`Underneath this pairing, ${c2.name} reveals the pressure point: ${sentenceCase(second)}.`);
+    }
+
+    if (third || fourth) {
+      parts.push(
+        joinCleanSentences([
+          "Together they name what still lies beneath the surface.",
+          third,
+          fourth,
+        ].filter(Boolean)),
+      );
+    }
+
+    return formatBlockText(joinCleanSentences(parts));
+  }
+
   function normaliseSignalTerm(term) {
     const value = String(term || "").toLowerCase();
 
@@ -526,6 +839,83 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     };
 
     return map[value] || value;
+  }
+
+  const ARCHETYPE_KEYS = new Set([
+    "giving",
+    "conflict",
+    "holding",
+    "withdrawal",
+    "expansion",
+    "dispersal",
+    "pressure",
+    "alignment",
+    "shift",
+    "focus",
+    "opening",
+    "closure",
+  ]);
+
+  /** Map displayed signal words (vocabulary or signalWordMap labels) to CSV archetype column keys. */
+  function signalWordToArchetypeKey(displayToken) {
+    const w = String(displayToken || "").toLowerCase().trim();
+    if (!w) return "";
+    const synonymToKey = {
+      giving: "giving",
+      conflict: "conflict",
+      holding: "holding",
+      withdrawal: "withdrawal",
+      expansion: "expansion",
+      dispersal: "dispersal",
+      pressure: "pressure",
+      alignment: "alignment",
+      shift: "shift",
+      focus: "focus",
+      opening: "opening",
+      closure: "closure",
+      completion: "closure",
+      momentum: "shift",
+      connection: "alignment",
+      depletion: "withdrawal",
+      collapse: "closure",
+      rupture: "conflict",
+      concealment: "holding",
+      acceleration: "expansion",
+      rigidity: "holding",
+      support: "giving",
+      stability: "holding",
+      direction: "focus",
+      bonding: "alignment",
+      ending: "closure",
+      release: "dispersal",
+      clarity: "focus",
+      reflection: "shift",
+      threshold: "opening",
+      block: "holding",
+      constraint: "holding",
+      restriction: "holding",
+      severance: "closure",
+      depth: "withdrawal",
+      drive: "shift",
+      introduction: "opening",
+      nurture: "giving",
+      obscuring: "holding",
+      stillness: "holding",
+      structure: "holding",
+      sustain: "giving",
+      withholding: "holding",
+    };
+    if (synonymToKey[w]) return synonymToKey[w];
+    if (ARCHETYPE_KEYS.has(w)) return w;
+    return "";
+  }
+
+  function getInteractionArchetype(p1, p2) {
+    const k1 = signalWordToArchetypeKey(p1);
+    const k2 = signalWordToArchetypeKey(p2);
+    if (!k1 || !k2) return "";
+    const key = `${k1}|${k2}`;
+    return interactionArchetypeMap[key] || "";
   }
 
   function vocabularyWord(card, isReversed) {
@@ -615,10 +1005,78 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return ensureTerminalPunctuation(sentenceCase(str));
   }
 
+  function ensureCompleteSentence(str) {
+    if (!str) return "";
+    let s = String(str).trim();
+    if (!s) return "";
+
+    const fragmentStart =
+      /^(keeping|breaking|holding|creating|moving|drawing|pulling|fragmenting|circulating|redirecting|resisting|stabilising|stabilizing|opening|closing|expanding|contracting|disrupting|integrating|intensifying|softening|anchoring|testing|pressuring|scattering|gathering|withdrawing|amplifying|revealing|concealing)\b/i;
+
+    if (fragmentStart.test(s)) {
+      s = `It ${s}`;
+    }
+
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+
+    if (!/[.!?]$/.test(s)) {
+      s += ".";
+    }
+
+    return s;
+  }
+
   function lowerInitial(str) {
     if (!str) return "";
     const trimmed = String(str).trim();
     return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
+  }
+
+  function humaniseReadingSentence(str) {
+    if (!str) return "";
+
+    let text = String(str).trim();
+
+    const replacements = [
+      [/^Establishes a condition of /i, "creates "],
+      [/^Establishes /i, "creates "],
+      [/^Introduces /i, "brings in "],
+      [/^Extends /i, "extends "],
+      [/^Disrupts /i, "disrupts "],
+      [/^Integrates /i, "integrates "],
+      [/^Anchors /i, "anchors "],
+      [/^Distorts /i, "distorts "],
+      [/^Completes /i, "completes "],
+      [/^Begins /i, "begins "],
+      [/^Moves /i, "moves "],
+      [/^Brings /i, "brings "],
+      [/^Redirects /i, "redirects "],
+      [/^Circulates /i, "circulates "],
+      [/^Fragments adjacent cards within /i, "breaks the connection between the cards within "],
+      [/^Fragments /i, "breaks "],
+      [/^Adjacent cards through /i, "places the cards in relation through "],
+    ];
+
+    for (const [pattern, replacement] of replacements) {
+      text = text.replace(pattern, replacement);
+    }
+
+    text = text
+      .replace(/\bfield\b/gi, "situation")
+      .replace(/\bmaterial\b/gi, "")
+      .replace(/\bcondition\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    return cleanSentence(text);
+  }
+
+  function humaniseReadingParagraph(text) {
+    const raw = clean(text);
+    if (!raw) return "";
+    const spans = raw.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+    if (spans.length === 0) return "";
+    return spans.map((s) => humaniseReadingSentence(s)).filter(Boolean).join(" ");
   }
 
   function normaliseRelationalLanguage(str) {
@@ -631,13 +1089,129 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       .replace(/\bestablishes a field\b/gi, "establishes a condition")
       .replace(/\bwithin the field\b/gi, "within the situation")
       .replace(/\bthe field is set as\b/gi, "This begins as")
+      .replace(/\bincoming charge\b/gi, "what is already moving")
+      .replace(/\bpreceding charge\b/gi, "what came before")
       .replace(/\bfield\b/gi, "situation");
+  }
+
+  function cleanRelationalSceneLanguage(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/\badjacent cards?\b/gi, "the situation")
+      .replace(/\bincoming charge\b/gi, "what enters")
+      .replace(/\bpreceding charge\b/gi, "what came before")
+      .replace(/\boperative condition\b/gi, "active condition")
+      .replace(/\bfield condition\b/gi, "condition")
+      .replace(/\bthe field\b/gi, "the room")
+      .replace(/\brelationalEffect\b/gi, "")
+      .replace(/\bextendedKeywords\b/gi, "")
+      .replace(/\bcoreMeaning\b/gi, "")
+      .replace(/\bcombinationLogic\b/gi, "")
+      .replace(/\bpairingTendencies\b/gi, "")
+      .replace(/\bspecificPairings\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   function formatBlockText(text) {
     const n = normaliseRelationalLanguage(clean(text));
     if (!n) return "";
     return cleanSentence(n);
+  }
+
+  function cleanInteractionSourceText(str) {
+    if (!str) return "";
+    const cleaned =
+      typeof cleanRelationalSceneLanguage === "function"
+        ? cleanRelationalSceneLanguage(String(str))
+        : String(str);
+
+    return formatBlockText(
+      cleaned
+        .replace(/\bUpright,\s*/gi, "")
+        .replace(/\bReversed,\s*/gi, "")
+        .replace(/\s+/g, " ")
+        .trim(),
+    );
+  }
+
+  function getPairingCategory(c1, c2) {
+    const isMajor = c1?.arcana === "Major" || c2?.arcana === "Major";
+    if (isMajor) return "majorArcana";
+
+    const courtRanks = new Set(["Page", "Knight", "Queen", "King"]);
+    const isCourt = courtRanks.has(c1?.rank) || courtRanks.has(c2?.rank);
+    if (isCourt) return "courtCards";
+
+    if (c1?.suit && c2?.suit && c1.suit === c2.suit) return "sameSuit";
+
+    if (
+      c1?.arcana === "Minor" &&
+      c2?.arcana === "Minor" &&
+      c1?.suit &&
+      c2?.suit &&
+      c1.suit !== c2.suit
+    ) {
+      return "conflictingSuit";
+    }
+
+    return "";
+  }
+
+  function getAuthoredInteractionText(c1, c2) {
+    const specific1 = Array.isArray(c1?.combinationLogic?.specificPairings)
+      ? c1.combinationLogic.specificPairings
+      : [];
+
+    const specific2 = Array.isArray(c2?.combinationLogic?.specificPairings)
+      ? c2.combinationLogic.specificPairings
+      : [];
+
+    const matchFromC1 = specific1.find((line) =>
+      String(line || "").toLowerCase().includes(String(c2?.name || "").toLowerCase()),
+    );
+
+    if (matchFromC1) {
+      return cleanInteractionSourceText(matchFromC1);
+    }
+
+    const matchFromC2 = specific2.find((line) =>
+      String(line || "").toLowerCase().includes(String(c1?.name || "").toLowerCase()),
+    );
+
+    if (matchFromC2) {
+      return cleanInteractionSourceText(matchFromC2);
+    }
+
+    const category = getPairingCategory(c1, c2);
+    if (!category) return "";
+
+    const tendency1 = c1?.combinationLogic?.pairingTendencies?.[category] || "";
+    if (tendency1 && String(tendency1).trim()) {
+      return cleanInteractionSourceText(tendency1);
+    }
+
+    const tendency2 = c2?.combinationLogic?.pairingTendencies?.[category] || "";
+    if (tendency2 && String(tendency2).trim()) {
+      return cleanInteractionSourceText(tendency2);
+    }
+
+    return "";
+  }
+
+  function formatAuthoredInteractionForProse(c1, c2, authoredText) {
+    if (!clean(authoredText)) return "";
+    const lc = String(authoredText).toLowerCase();
+    const n1 = String(c1?.name || "").toLowerCase();
+    const n2 = String(c2?.name || "").toLowerCase();
+    const hasBoth = n1 && n2 && lc.includes(n1) && lc.includes(n2);
+    if (hasBoth) return authoredText;
+    return formatBlockText(
+      joinCleanSentences([
+        `${c1.name} and ${c2.name} name a pair-specific pattern here.`,
+        authoredText,
+      ]),
+    );
   }
 
   function selectStrongestSentence(str) {
@@ -680,13 +1254,54 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return parts[0] ? parts[0].trim() : t;
   }
 
+  function sentencesHighlySimilar(a, b) {
+    const na = normaliseForDedupe(formatBlockText(a));
+    const nb = normaliseForDedupe(formatBlockText(b));
+    if (!na || !nb) return false;
+    if (na === nb) return true;
+    const wa = na.split(/\s+/).filter((w) => w.length > 2);
+    const wb = nb.split(/\s+/).filter((w) => w.length > 2);
+    if (!wa.length || !wb.length) return false;
+    const setB = new Set(wb);
+    let inter = 0;
+    for (const w of wa) {
+      if (setB.has(w)) inter++;
+    }
+    const union = wa.length + wb.length - inter;
+    return union > 0 && inter / union >= 0.45;
+  }
+
+  function stockOldSecondCardRelationLine(sig) {
+    const t = clean(sig).toLowerCase();
+    return (
+      t === "the second card changes the conditions the first card had established." ||
+      /\bthe second card changes the conditions the first card\b/.test(t)
+    );
+  }
+
+  function signalDuplicatesInteractionSummary(sig, sum, c1, c2) {
+    if (!clean(sum) || !clean(sig)) return false;
+    if (sentencesHighlySimilar(sig, sum)) return true;
+    const n1 = c1?.name || "";
+    const n2 = c2?.name || "";
+    if (n1 && n2 && sum.includes(n1) && sum.includes(n2) && stockOldSecondCardRelationLine(sig)) return true;
+    return false;
+  }
+
+  function shortSignalNoticeFromLine(signalLine) {
+    const r = splitSignalRoles(signalLine);
+    if (!r.first || !r.second) return "";
+    return cleanSentence(`Notice how ${r.first.toLowerCase()} meets ${r.second.toLowerCase()}.`);
+  }
+
   /** Banned stock copy for scrubbed fragments (anchor/outcome, etc.). */
   function isGenericRelPanelCopy(str) {
     const t = String(str || "").toLowerCase().trim();
     if (!t) return false;
     if (isGeneric(str)) return true;
     if (t.includes("this pairing is not yet decisive")) return true;
-    if (t.includes("whether the second energy supports")) return true;
+    if (t.includes("whether the second energy supports") || t.includes("whether the second card supports"))
+      return true;
     if (t.includes("depends on whether the second") && t.includes("supports")) return true;
     return false;
   }
@@ -716,12 +1331,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     if (first && second && interaction && interaction !== "shift") {
       return cleanSentence(
-        `This interaction holds ${first} and ${second} in a ${interaction} pattern`,
+        `The meeting holds ${first} and ${second} in a ${interaction} pattern.`,
       );
     }
 
     if (first && second) {
-      return cleanSentence(`This interaction brings ${first} into contact with ${second}`);
+      return cleanSentence(`One pattern meets another: ${first} meets ${second}.`);
     }
 
     if (f2?.responseBehaviour && f1?.relationalEffect) {
@@ -731,6 +1346,20 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return "";
   }
 
+  function buildInteractionFallbackSummary(c1, c2, signalLine) {
+    const roles = splitSignalRoles(signalLine);
+    const r1 = roles.first ? roles.first.toLowerCase() : "";
+    const r2 = roles.second ? roles.second.toLowerCase() : "";
+    if (r1 && r2) {
+      return cleanSentence(
+        `${c2.name} changes the conditions ${c1.name} had established, asking whether ${r1} can remain intact once ${r2} enters the room.`,
+      );
+    }
+    return cleanSentence(
+      `${c2.name} changes the conditions ${c1.name} had established, asking what can still hold once the second card enters.`,
+    );
+  }
+
   function buildInteractionConsequence(c1, c2, signalLine) {
     const roles = splitSignalRoles(signalLine);
     const first = roles.first ? roles.first.toLowerCase() : "";
@@ -738,12 +1367,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     if (first && second) {
       return cleanSentence(
-        `What ${c1.name} opens through ${first} is tested by the ${second} ${c2.name} brings into the situation`,
+        `What ${c1.name} opens through ${first} is tested by ${second} when ${c2.name} enters the room.`,
       );
     }
 
     return cleanSentence(
-      `${c2.name} changes the consequences of what ${c1.name} has already set in motion`,
+      `${c2.name} changes what ${c1.name} had already set in motion.`,
     );
   }
 
@@ -754,12 +1383,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     if (first && second) {
       return cleanSentence(
-        `Look for the point where ${first} becomes affected by ${second}. That is where the next choice needs to be made`,
+        `Watch the point where ${first} meets ${second}, and name what has to change next.`,
       );
     }
 
     return cleanSentence(
-      `Look at what changes after ${c2.name} enters the situation ${c1.name} has opened`,
+      `Watch what changes after ${c2.name} enters the room ${c1.name} has created.`,
     );
   }
 
@@ -870,6 +1499,73 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return selectStrongestSentence(joined);
   }
 
+  /** Card 1 arrival + essence, scene-scrubbed (not framed); used only in Before Card 2 Arrived. */
+  function sceneCard1EstablishedBody(f1) {
+    const arrival = clean(f1.arrivalBehaviour);
+    const essence = clean(f1.essenceSentence);
+    if (!arrival && !essence) return "";
+    let inner;
+    if (arrival && essence && arrival !== essence) {
+      inner = joinCleanSentences(
+        [arrival, essence].map((x) => panelHumaniseExistingDynamic(panelFilterBanned(x))),
+      );
+    } else {
+      inner = joinCleanSentences([panelHumaniseExistingDynamic(panelFilterBanned(arrival || essence))].filter(Boolean));
+    }
+    inner = cleanRelationalSceneLanguage(inner);
+    if (!clean(inner)) return "";
+    return humaniseReadingParagraph(inner);
+  }
+
+  function buildBeforeCard2ArrivedProse(c1, c2, f1) {
+    const body = sceneCard1EstablishedBody(f1);
+    if (!clean(body)) return "";
+    const lead = `Before ${c2.name} arrived, ${c1.name} had already set what the room would be asked to hold.`;
+    return joinCleanSentences([lead, body]);
+  }
+
+  function buildTheArrivalProse(c1, c2, f2, rev2, whenSecondText) {
+    const rspBase = scrubGenericRelPanelFragment(clean(f2.responseBehaviour));
+    let rsp = "";
+    if (rspBase) {
+      rsp = humaniseReadingSentence(
+        cleanRelationalSceneLanguage(panelHumaniseExistingDynamic(panelFilterBanned(rspBase))),
+      );
+      if (isGenericRelPanelCopy(rsp)) rsp = "";
+    }
+
+    let relH = "";
+    if (clean(String(f2.relationalEffect || ""))) {
+      relH = humaniseReadingSentence(
+        ensureCompleteSentence(humaniseEffect(f2.relationalEffect)),
+      );
+      relH = cleanRelationalSceneLanguage(relH);
+      if (!clean(relH)) relH = "";
+    }
+
+    let whenH = "";
+    const whenRaw = scrubGenericRelPanelFragment(clean(String(whenSecondText || "")));
+    if (
+      whenRaw &&
+      !isGeneric(whenRaw) &&
+      !isGenericInteractionLine(whenRaw) &&
+      !isGenericRelPanelCopy(whenRaw)
+    ) {
+      whenH = humaniseReadingSentence(
+        cleanRelationalSceneLanguage(panelHumaniseExistingDynamic(panelFilterBanned(whenRaw))),
+      );
+      if (isGenericRelPanelCopy(whenH)) whenH = "";
+    }
+
+    if (!rsp && !relH && !whenH) return "";
+
+    const orient = rev2 ? " reversed" : "";
+    const lead = `${c2.name} enters${orient} into what ${c1.name} had already set in motion in the room, and the two cards meet on those terms.`;
+    const details = joinCleanSentences([rsp, relH, whenH].filter(Boolean));
+    if (!details) return cleanSentence(lead);
+    return joinCleanSentences([lead, details]);
+  }
+
   function panelInteractionResult(
     interactionLine,
     verdictText,
@@ -899,9 +1595,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       if (clean(syn) && !isGeneric(syn)) {
         summary = syn;
       } else {
-        summary = cleanSentence(
-          panelFilterBanned(`${c2.name} tests whether what ${c1.name} begins can hold alignment.`),
-        );
+        summary = cleanSentence(panelFilterBanned(buildInteractionFallbackSummary(c1, c2, signalLine)));
       }
     }
     if (isGeneric(summary)) {
@@ -909,9 +1603,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       if (clean(syn) && !isGeneric(syn)) {
         summary = syn;
       } else {
-        summary = cleanSentence(
-          panelFilterBanned(`${c2.name} tests whether what ${c1.name} begins can hold alignment.`),
-        );
+        summary = cleanSentence(panelFilterBanned(buildInteractionFallbackSummary(c1, c2, signalLine)));
       }
     }
 
@@ -936,8 +1628,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       const secondN = roles.second.toLowerCase();
       note = cleanSentence(
         firstN && secondN
-          ? `The useful move is to notice where ${firstN} meets ${secondN}, and whether that contact restores clarity or increases distortion.`
-          : `The useful move is to notice what changes when ${c2.name} enters what ${c1.name} has already set in motion.`,
+          ? `Watch the point where ${firstN} meets ${secondN}, and notice whether the contact steadies the pattern or bends it out of shape.`
+          : `Watch what changes when ${c2.name} enters the room ${c1.name} has created.`,
       );
     }
     if (normaliseForDedupe(note) === normaliseForDedupe(summary)) {
@@ -963,16 +1655,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     };
   }
 
-  function keywordsHtmlFirst(arr, max) {
-    if (!Array.isArray(arr)) return "";
-    return keywordsHtml(arr.slice(0, Math.max(0, max)));
-  }
-
   function reflectionQuestionForPair(c1, c2, p1, p2, signalLine) {
     const n1 = c1.name;
     const n2 = c2.name;
     if (p1 === "opens" && (p2 === "drives" || p2 === "propels" || p2 === "focuses")) {
-      return `What wants to land clearly once ${n2} gives direction to how ${n1} opened the situation?`;
+      return `What wants to land clearly once ${n2} gives direction to how ${n1} opened the pattern?`;
     }
     if ((p1 === "pairs" && p2 === "completes") || (p1 === "aligns" && p2 === "completes")) {
       return `What would deepen if you trusted what ${n1} and ${n2} are already settling into together?`;
@@ -1000,7 +1687,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (first && second) {
       return `Where is ${first} being changed by ${second}, and what does that reveal?`;
     }
-    return `What changes when ${n2} enters what ${n1} has already established?`;
+    return `What changes when ${n2} enters the room ${n1} has created?`;
   }
 
   function formatReadingDate() {
@@ -1058,82 +1745,16 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     const p1 = effectPrefix(f1.relationalEffect);
     const p2 = effectPrefix(f2.relationalEffect);
-    let anchorText = "";
 
-    // Collapse / escalation
-    if (
-      (p1 === "depletes" && p2 === "drives") ||
-      (p1 === "drains" && p2 === "drives") ||
-      (p1 === "cuts" && p2 === "depletes") ||
-      (p1 === "pressures" && p2 === "shatters")
-    ) {
-      anchorText = "What begins as depletion does not recover here.";
-    }
-
-    // Support / completion
-    if (
-      (p1 === "pairs" && p2 === "completes") ||
-      (p1 === "aligns" && p2 === "completes") ||
-      (p1 === "nourishes" && p2 === "sustains")
-    ) {
-      anchorText = "What begins as connection is reinforced.";
-    }
-
-    // Sequence / momentum
-    if (
-      (p1 === "opens" && p2 === "drives") ||
-      (p1 === "opens" && p2 === "propels") ||
-      (p1 === "opens" && p2 === "focuses")
-    ) {
-      anchorText = "What begins as openness is given direction.";
-    }
-
-    // Suppression vs acceleration
-    if (p1 === "withholds" && p2 === "accelerates") {
-      anchorText = "What is held back is pushed forward before it is ready.";
-    }
-
-    let outcomeLine = "";
-
-    // Collapse / escalation
-    if (
-      (p1 === "depletes" && p2 === "drives") ||
-      (p1 === "drains" && p2 === "drives") ||
-      (p1 === "cuts" && p2 === "depletes") ||
-      (p1 === "pressures" && p2 === "shatters")
-    ) {
-      outcomeLine = "Left as it is, this continues toward exhaustion, collapse, or finality.";
-    }
-
-    // Support / completion
-    if (
-      (p1 === "pairs" && p2 === "completes") ||
-      (p1 === "aligns" && p2 === "completes") ||
-      (p1 === "nourishes" && p2 === "sustains")
-    ) {
-      outcomeLine = "Left as it is, this stabilises and strengthens over time.";
-    }
-
-    // Sequence / momentum
-    if (
-      (p1 === "opens" && p2 === "drives") ||
-      (p1 === "opens" && p2 === "propels") ||
-      (p1 === "opens" && p2 === "focuses")
-    ) {
-      outcomeLine = "Left as it is, this builds momentum and moves forward.";
-    }
-
-    // Suppression vs acceleration
-    if (p1 === "withholds" && p2 === "accelerates") {
-      outcomeLine = "Left as it is, this creates strain as movement outpaces alignment.";
-    }
-
-    const interactionLine = classifyInteraction(p1, p2);
+    const classifyLine = classifyInteraction(p1, p2, c1, c2);
+    const authoredInteractionText = getAuthoredInteractionText(c1, c2);
     const panelField = panelFieldCondition(f1);
     const panelIncoming = panelIncomingPressure(f2);
     const s1 = signalWord(p1, c1, rev1);
     const s2 = signalWord(p2, c2, rev2);
-    const s3 = interactionSignal(interactionLine);
+    const archetypeProse = getInteractionArchetype(s1, s2);
+    const interactionLineForPanel = clean(archetypeProse) ? archetypeProse : classifyLine;
+    const s3 = interactionSignal(classifyLine);
 
     const signal = s1 + " + " + s2 + " + " + s3;
 
@@ -1198,7 +1819,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       signalSentence = resolvedSignalSentence;
     }
     if (!signalSentence || isGeneric(signalSentence)) {
-      const il = clean(interactionLine);
+      const il = clean(classifyLine);
       if (il && !isGenericInteractionLine(il) && !isGeneric(il)) {
         const cand = cleanSentence(panelFilterBanned(firstSentenceOnly(il)));
         if (!isGeneric(cand)) signalSentence = cand;
@@ -1213,15 +1834,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (!signalSentence || isGeneric(signalSentence)) {
       const sigT = String(signal || "").trim();
       if (sigT) {
-        signalSentence =
-          "This interaction moves through " +
-          sigT.toLowerCase() +
-          ". Let it reveal its direction before deciding.";
+        signalSentence = joinCleanSentences([
+          "This meeting moves through " + sigT.toLowerCase() + ".",
+          "Do not force a conclusion before the pattern has shown itself.",
+        ]);
       }
     }
     if (!signalSentence || isGeneric(signalSentence)) {
       signalSentence =
-        "Pause before deciding. This interaction needs more observation before the useful move becomes clear.";
+        "Pause before deciding. Observe the pair until the next step stays clear.";
     }
     if (
       panelIncoming &&
@@ -1230,25 +1851,17 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     ) {
       const sigT = String(signal || "").trim();
       if (sigT) {
-        signalSentence =
-          "This interaction moves through " +
-          sigT.toLowerCase() +
-          ". Let it reveal its direction before deciding.";
+        signalSentence = joinCleanSentences([
+          "This meeting moves through " + sigT.toLowerCase() + ".",
+          "Do not force a conclusion before the pattern has shown itself.",
+        ]);
       }
     }
 
     const verdictUsedInSignal = false;
 
-    let h = "";
-
-    h += '<div class="signal-block">';
-    h += '<div class="signal-label">The Signal</div>';
-    h += '<div class="signal-words">' + escHtml(signal) + "</div>";
-    h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
-    h += "</div>";
-
     let panelIx = panelInteractionResult(
-      interactionLine,
+      interactionLineForPanel,
       verdictText,
       f1,
       f2,
@@ -1259,6 +1872,17 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       panelIncoming,
       verdictUsedInSignal,
     );
+
+    if (clean(authoredInteractionText)) {
+      const authoredSummary = formatAuthoredInteractionForProse(c1, c2, authoredInteractionText);
+      if (clean(authoredSummary)) {
+        panelIx = {
+          summary: authoredSummary,
+          note: "",
+          full: authoredSummary,
+        };
+      }
+    }
 
     const sigNorm = normaliseForDedupe(formatBlockText(signalSentence));
     const ixNorm = normaliseForDedupe(panelIx.summary);
@@ -1273,29 +1897,57 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         note: noteAdj,
         full: joinCleanSentences([cons, noteAdj].filter(Boolean)),
       };
+      const shortSig = shortSignalNoticeFromLine(signal);
+      signalSentence = shortSig || "";
     }
 
-    h += '<div class="interaction-panel interaction-stack">';
-    h += '<div class="section-label">Relational Energies at Play</div>';
-    h += '<div class="energy-block">';
-    h += '<div class="energy-tag">Existing Dynamic</div>';
-    h += '<div class="energy-text">' + escHtml(formatBlockText(panelField)) + "</div>";
-    h += "</div>";
-    h += '<div class="energy-block">';
-    h += '<div class="energy-tag">Incoming Pressure</div>';
-    h += '<div class="energy-text">' + escHtml(formatBlockText(panelIncoming)) + "</div>";
-    h += "</div>";
-    h += '<div class="energy-block result">';
-    h += '<div class="energy-tag">Interaction Result</div>';
-    h += '<div class="result-summary">' + escHtml(panelIx.summary) + "</div>";
-    if (clean(panelIx.note)) {
-      h += '<div class="result-note">' + escHtml(panelIx.note) + "</div>";
+    const card1Action = humaniseReadingSentence(
+      ensureCompleteSentence(humaniseEffect(f1.relationalEffect)),
+    );
+    const card2Action = humaniseReadingSentence(
+      ensureCompleteSentence(humaniseEffect(f2.relationalEffect)),
+    );
+    const openingProse = joinCleanSentences([
+      `${c1.name} sets the tone here`,
+      card1Action,
+      `When ${c2.name} enters, the pattern shifts`,
+      card2Action,
+    ]);
+
+    const interactionSummary = clean(panelIx.summary) ? String(panelIx.summary).trim() : "";
+    const interactionNote = clean(panelIx.note) ? String(panelIx.note).trim() : "";
+    const ndIx = (s) => normaliseForDedupe(s);
+    if (clean(interactionSummary) && clean(signalSentence) && signalDuplicatesInteractionSummary(signalSentence, interactionSummary, c1, c2)) {
+      const shortSig = shortSignalNoticeFromLine(signal);
+      signalSentence = shortSig || "";
     }
-    h += "</div>";
+    const showSummary =
+      Boolean(interactionSummary) && ndIx(interactionSummary) !== ndIx(openingProse);
+    const showNote =
+      Boolean(interactionNote) &&
+      ndIx(interactionNote) !== ndIx(openingProse) &&
+      (!showSummary || ndIx(interactionNote) !== ndIx(interactionSummary));
+
+    let h = "";
+
+    h += '<div class="signal-block">';
+    h += '<div class="signal-label">The Signal</div>';
+    h +=
+      '<p class="tok2-section-intro">' +
+      escHtml("Three signals name the movement between the cards.") +
+      "</p>";
+    h += '<div class="signal-words">' + escHtml(signal) + "</div>";
+    if (clean(formatBlockText(signalSentence))) {
+      h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
+    }
     h += "</div>";
 
     h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
     h += '<h3 class="tarot-tool__out-h3">The Two Cards</h3>';
+    h +=
+      '<p class="tok2-section-intro">' +
+      escHtml(`${c1.name} holds the room. ${c2.name} enters.`) +
+      "</p>";
 
     h += '<div class="tarot-tool__combo-images">';
     h += '<div class="card-block"><div class="tarot-tool__card-slot"><img class="' +
@@ -1308,8 +1960,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       imgErr +
       '" /><p class="tarot-tool__card-placeholder" style="display:none;">Image unavailable</p></div>';
     h +=
-      '<div class="card-caption"><span class="caption-label">The room already holds</span><br/><span class="caption-card">' +
+      '<div class="card-caption"><span class="caption-card">' +
       escHtml(c1.name) +
+      '</span><br/><span class="caption-orient">' +
+      escHtml(l1) +
       "</span></div></div>";
     h += '<div class="card-block"><div class="tarot-tool__card-slot"><img class="' +
       imgCls2 +
@@ -1321,98 +1975,149 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       imgErr +
       '" /><p class="tarot-tool__card-placeholder" style="display:none;">Image unavailable</p></div>';
     h +=
-      '<div class="card-caption"><span class="caption-label entering">Entering the room \u2192</span><br/><span class="caption-card">' +
+      '<div class="card-caption"><span class="caption-card">' +
       escHtml(c2.name) +
+      '</span><br/><span class="caption-orient">' +
+      escHtml(l2) +
       "</span></div></div>";
     h += "</div>";
 
     h += "</section>";
 
-    h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
-    h += '<h3 class="tarot-tool__out-h3">What Each Card Brings</h3>';
-    h += '<div class="tok2-keywords-summary">';
-    h += '<div class="tok2-keywords-summary__col">';
-    h +=
-      '<p class="tok2-keywords-summary__head"><strong>' +
-      escHtml(c1.name) +
-      " (" +
-      escHtml(l1) +
-      ")</strong></p>";
-    h += '<p class="tok2-keywords-summary__kw">' + keywordsHtmlFirst(f1.keywords, 5) + "</p>";
-    h += "</div>";
-    h += '<div class="tok2-keywords-summary__col">';
-    h +=
-      '<p class="tok2-keywords-summary__head"><strong>' +
-      escHtml(c2.name) +
-      " (" +
-      escHtml(l2) +
-      ")</strong></p>";
-    h += '<p class="tok2-keywords-summary__kw">' + keywordsHtmlFirst(f2.keywords, 5) + "</p>";
-    h += "</div>";
-    h += "</div></section>";
+    const beforeCard2Prose = buildBeforeCard2ArrivedProse(c1, c2, f1);
+    const beforeCard2Out = beforeCard2Prose
+      ? formatBlockText(cleanRelationalSceneLanguage(beforeCard2Prose))
+      : "";
+    if (clean(beforeCard2Out)) {
+      h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
+      h += '<h3 class="tarot-tool__out-h3">Before Card 2 Arrived</h3>';
+      h += '<div class="tok2-prose">';
+      h +=
+        '<p class="tok2-section-intro">' +
+        escHtml("First, look at what was already established.") +
+        "</p>";
+      h += '<p class="tarot-tool__out-p">' + escHtml(beforeCard2Out) + "</p>";
+      h += "</div>";
+      h += "</section>";
+    }
 
-    h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
-    h += '<h3 class="tarot-tool__out-h3">The Reading</h3>';
-    h += '<div class="tok2-prose">';
-    h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal">';
-    h +=
-      escHtml(c1.name) +
-      " has already set the tone by " +
-      escHtml(lowerInitial(formatBlockText(humaniseEffect(f1.relationalEffect)))) +
-      " ";
-    h +=
-      escHtml(c2.name) +
-      " enters that room by " +
-      escHtml(lowerInitial(formatBlockText(humaniseEffect(f2.relationalEffect)))) +
-      " ";
-    if (
-      clean(interactionLine) &&
-      !isGenericInteractionLine(interactionLine) &&
-      !isGeneric(interactionLine)
-    ) {
-      h += escHtml(formatBlockText(interactionLine));
+    const theArrivalProse = buildTheArrivalProse(c1, c2, f2, rev2, whenSecondText);
+    const theArrivalOut = theArrivalProse
+      ? formatBlockText(cleanRelationalSceneLanguage(theArrivalProse))
+      : "";
+    if (clean(theArrivalOut)) {
+      h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
+      h += '<h3 class="tarot-tool__out-h3">The Arrival</h3>';
+      h += '<div class="tok2-prose">';
+      h +=
+        '<p class="tok2-section-intro">' +
+        escHtml("Now notice what changes when the second card enters.") +
+        "</p>";
+      h += '<p class="tarot-tool__out-p">' + escHtml(theArrivalOut) + "</p>";
+      h += "</div>";
+      h += "</section>";
     }
-    h += "</p>";
-    const readingArrivalLayer = joinCleanSentences(
-      [f1.arrivalBehaviour, f1.essenceSentence]
-        .map((x) => clean(String(x || "")))
-        .filter(Boolean)
-        .map((x) => panelHumaniseExistingDynamic(panelFilterBanned(x))),
-    );
-    if (
-      clean(readingArrivalLayer) &&
-      normaliseForDedupe(readingArrivalLayer) !== normaliseForDedupe(panelField)
-    ) {
-      h += '<p class="tarot-tool__out-p">' + escHtml(formatBlockText(readingArrivalLayer)) + "</p>";
-    }
-    if (clean(f2.responseBehaviour)) {
-      const rspReading = cleanSentence(
-        panelHumaniseExistingDynamic(panelFilterBanned(String(f2.responseBehaviour))),
-      );
-      if (clean(rspReading) && !isGeneric(rspReading)) {
+
+    const signalTokens = [s1, s2, s3];
+    const card1ActiveKeywords = selectRelevantExtendedKeywords(f1.extendedKeywords || [], signalTokens, 4)
+      .map(scrubExtendedKeywordPhrase)
+      .filter((p) => clean(p));
+    const card2ActiveKeywords = selectRelevantExtendedKeywords(f2.extendedKeywords || [], signalTokens, 4)
+      .map(scrubExtendedKeywordPhrase)
+      .filter((p) => clean(p));
+    if (card1ActiveKeywords.length || card2ActiveKeywords.length) {
+      h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
+      h += '<h3 class="tarot-tool__out-h3">What\u2019s Actually in Play</h3>';
+      h += '<div class="tok2-prose tok2-inplay">';
+      h +=
+        '<p class="tarot-tool__out-p tok2-inplay-intro tok2-section-intro">' +
+        escHtml("These are the specific textures activated by the meeting.") +
+        "</p>";
+      if (card1ActiveKeywords.length) {
+        h += '<div class="tok2-inplay-block">';
         h +=
-          '<p class="tarot-tool__out-p">' +
-          escHtml(c2.name) +
-          " in this position also carries: " +
-          escHtml(formatBlockText(rspReading)) +
+          '<p class="tok2-inplay-label">' +
+          escHtml(c1.name + " is bringing:") +
           "</p>";
+        h += '<ul class="tok2-extended-kw-list">';
+        for (const phrase of card1ActiveKeywords) {
+          h += '<li>' + escHtml(phrase) + "</li>";
+        }
+        h += "</ul></div>";
       }
+      if (card2ActiveKeywords.length) {
+        h += '<div class="tok2-inplay-block">';
+        h +=
+          '<p class="tok2-inplay-label">' +
+          escHtml(c2.name + " is bringing:") +
+          "</p>";
+        h += '<ul class="tok2-extended-kw-list">';
+        for (const phrase of card2ActiveKeywords) {
+          h += '<li>' + escHtml(phrase) + "</li>";
+        }
+        h += "</ul></div>";
+      }
+      h += "</div></section>";
     }
 
-    h += '<p class="tarot-tool__out-p">';
-    h += "<strong>Underneath the surface:</strong> ";
-    h += escHtml(formatBlockText(clean(f1.coreMeaning))) + " ";
-    h += escHtml(formatBlockText(clean(f2.coreMeaning)));
-    h += "</p>";
-    h += "</div>";
+    if (clean(openingProse) || showSummary || showNote) {
+      h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
+      h += '<h3 class="tarot-tool__out-h3">The Interaction</h3>';
+      h += '<div class="tok2-prose tok2-interaction">';
+      h +=
+        '<p class="tok2-section-intro">' +
+        escHtml("This is what the two cards produce together.") +
+        "</p>";
+      if (clean(openingProse)) {
+        h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal">' + escHtml(openingProse) + "</p>";
+      }
+      if (showSummary) {
+        h += '<p class="tarot-tool__out-p">' + escHtml(interactionSummary) + "</p>";
+      }
+      if (showNote) {
+        h += '<p class="tarot-tool__out-p tarot-tool__out-p--note">' + escHtml(interactionNote) + "</p>";
+      }
+      h += "</div></section>";
+    }
 
-    h += "</section>";
+    const underneathForbidNorms = new Set();
+    [beforeCard2Out, theArrivalOut, humaniseReadingParagraph(panelField), openingProse, interactionSummary].forEach(
+      (block) => {
+        if (!clean(block)) return;
+        underneathForbidNorms.add(normaliseForDedupe(block));
+        splitMeaningSentences(block).forEach((s) => {
+          if (clean(s)) underneathForbidNorms.add(normaliseForDedupe(s));
+        });
+      },
+    );
+
+    const card1MeaningLines = selectRelevantMeaningSentences(f1.coreMeaning, signalTokens, 2).filter(
+      (ln) => clean(ln) && !underneathForbidNorms.has(normaliseForDedupe(ln)),
+    );
+    const card2MeaningLines = selectRelevantMeaningSentences(f2.coreMeaning, signalTokens, 2).filter(
+      (ln) => clean(ln) && !underneathForbidNorms.has(normaliseForDedupe(ln)),
+    );
+    const underneathSurfaceText = buildUnderneathSurfaceText(c1, c2, card1MeaningLines, card2MeaningLines);
+
+    if (clean(underneathSurfaceText)) {
+      h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
+      h += '<h3 class="tarot-tool__out-h3">Underneath the Surface</h3>';
+      h += '<div class="tok2-prose">';
+      h +=
+        '<p class="tok2-section-intro">' +
+        escHtml("This is the deeper pattern beneath the exchange.") +
+        "</p>";
+      h += '<p class="tarot-tool__out-p">' + escHtml(underneathSurfaceText) + "</p>";
+      h += "</div></section>";
+    }
 
     h +=
       '<section class="tarot-tool__out-block tok2-read-block tok2-out-section"><h3 class="tarot-tool__out-h3">What Wants to Shift</h3>';
-    if (!whenFirst1 && !whenSecond2) {
-      h += '<p class="tarot-tool__out-p">No combination logic lines are present in this interaction for this pair.</p>';
-    } else {
+    h +=
+      '<p class="tok2-section-intro">' +
+      escHtml("This is the practical movement the reading is pointing toward.") +
+      "</p>";
+    {
       let moveText = null;
 
       if (
@@ -1422,7 +2127,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         (p1 === "pressures" && p2 === "shatters")
       ) {
         moveText =
-          "Stop trying to recover this through more force. The second energy is not repairing the first condition; it is carrying it toward exhaustion, collapse, or finality.";
+          "Stop trying to recover this through more force. The second card is not repairing the first condition; it is carrying it toward exhaustion, collapse, or finality.";
       }
 
       if (
@@ -1432,7 +2137,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           (p1 === "binds" && p2 === "shatters"))
       ) {
         moveText =
-          "Stop trying to hold the structure together by force. The second energy is exposing what can no longer be contained, controlled, or repaired by maintaining the old frame.";
+          "Stop trying to hold the structure together by force. The second card is exposing what can no longer be contained, controlled, or repaired by maintaining the old frame.";
       }
 
       if (
@@ -1443,7 +2148,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           (p1 === "aligns" && p2 === "completes"))
       ) {
         moveText =
-          "Let the sequence complete before questioning it. The second energy is not fighting the first; it is giving direction, shape, or completion to what has already begun.";
+          "Let the sequence complete before questioning it. The second card is not fighting the first; it is giving direction, shape, or completion to what has already begun.";
       }
 
       if (
@@ -1453,7 +2158,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           (p1 === "stabilises" && p2 === "sustains"))
       ) {
         moveText =
-          "Let the connection develop instead of forcing a new question onto it. The second energy appears to confirm, complete, or stabilise what the first has already opened.";
+          "Let the connection develop instead of forcing a new question onto it. The second card appears to confirm, complete, or stabilise what the first has already opened.";
       }
 
       if (!moveText && p1 === "withholds" && p2 === "accelerates") {
@@ -1472,7 +2177,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           (p1 === "withholds" && p2 === "slows"))
       ) {
         moveText =
-          "Do not rush this into action. The useful move is to stay with what is being revealed, reduce the noise, and let the deeper signal become clear before deciding what comes next.";
+          "Do not rush this into action. Stay with what is being revealed, reduce the noise, and let the deeper signal become clear before deciding what comes next.";
       }
 
       if (
@@ -1481,7 +2186,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         ["deepens", "stills", "withholds", "draws", "reduces", "slows"].includes(p2)
       ) {
         moveText =
-          "This is not asking for immediate action. The useful move is to listen longer, reduce pressure, and let the real meaning surface before making a decision.";
+          "This is not asking for immediate action. Listen longer, reduce pressure, and let the real meaning surface before making a decision.";
       }
 
       if (!moveText) {
@@ -1490,26 +2195,26 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
       if (c2.id === "the-tower" || c2.name === "The Tower") {
         moveText =
-          "Do not try to stabilise this. The second energy is breaking something open that cannot be held together any longer. The useful move is to let what is collapsing fall, rather than trying to preserve it.";
+          "Do not try to stabilise this. The second card is breaking something open that cannot be held together any longer. Let what is collapsing fall, rather than trying to preserve it.";
       }
 
       h += '<div class="tok2-shift-stack">';
       if (whenFirst1) {
         h +=
-          '<div class="tok2-shift-row"><span class="tok2-shift-label">The room</span><span class="tok2-shift-value">' +
+          '<div class="tok2-shift-row"><div class="tok2-shift-label">The room</div><div class="tok2-shift-value">' +
           escHtml(formatBlockText(capitaliseFirst(whenFirstText))) +
-          "</span></div>";
+          "</div></div>";
       }
       if (whenSecond2) {
         h +=
-          '<div class="tok2-shift-row"><span class="tok2-shift-label">The entering energy</span><span class="tok2-shift-value">' +
+          '<div class="tok2-shift-row"><div class="tok2-shift-label">What enters</div><div class="tok2-shift-value">' +
           escHtml(formatBlockText(capitaliseFirst(whenSecondText))) +
-          "</span></div>";
+          "</div></div>";
       }
       h +=
-        '<div class="tok2-shift-row tok2-shift-row--move"><span class="tok2-shift-label">The move</span><span class="tok2-shift-value">' +
+        '<div class="tok2-shift-row tok2-shift-row--move"><div class="tok2-shift-label">The move</div><div class="tok2-shift-value">' +
         escHtml(formatBlockText(moveText)) +
-        "</span></div>";
+        "</div></div>";
       h += "</div>";
     }
     h += "</section>";
@@ -1528,7 +2233,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h +=
       "<p>" +
       escHtml(
-        "If this reading names something active between you and another person, the next layer is The Table Between Them. It explores what is spoken, what is unspoken, and what is waiting to emerge.",
+        "If this reading landed on something active between you and another person, the next layer is The Table Between Them. It explores what is spoken, what is unspoken, and what is waiting to emerge.",
       ) +
       "</p>";
     h += "</div>";
@@ -1575,7 +2280,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</div></div>";
 
     const supportP1 =
-      "This tool was built by Leigh Spencer — writer, intuitive guide, and fourth-generation Matakite. Matakite is a Māori term for those who carry inherited sight: the capacity to perceive what the visible world doesn't show. Leigh brings that lineage alongside 40+ years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reach. This work sits at that intersection.";
+      "This tool was built by Leigh Spencer, writer, intuitive guide, and fourth-generation Matakite. Matakite is a Māori term for those who carry inherited sight: the capacity to perceive what the visible world doesn't show. Leigh brings that lineage alongside 40+ years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reach. This work sits at that intersection.";
     const supportP2 = "If this reading gave you something useful, a coffee keeps the work going.";
 
     h += '<div class="support-block tok2-support">';
@@ -1857,72 +2562,23 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin: 0;
   }
 
-  #tok2-output .interaction-panel.interaction-stack {
-    margin: 36px 0;
-    border: none;
-    background: transparent;
-  }
-
-  #tok2-output .section-label {
+  #tok2-output .tok2-section-intro {
+    margin: 0 0 12px;
     font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
-    margin-bottom: 30px;
+    line-height: 1.55;
+    color: var(--tok-muted, #5a6a6e);
+    font-family: var(--font-nav, system-ui, sans-serif);
   }
 
-  #tok2-output .energy-block {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
-  }
-
-  #tok2-output .energy-block:last-child {
-    border-bottom: none;
-  }
-
-  #tok2-output .energy-tag {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #7f9498;
-    margin-bottom: 12px;
-  }
-
-  #tok2-output .energy-text {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.7;
-    color: var(--tok-ink, #1f2a2e);
-    text-align: left;
-  }
-
-  #tok2-output .energy-block.result {
-    background: rgba(198, 161, 74, 0.06);
-    border-radius: 8px;
-    padding: 24px 22px;
-    border: 1px solid rgba(198, 161, 74, 0.22);
-    margin-top: 10px;
-  }
-
-  #tok2-output .result-summary {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 22px;
-    font-weight: 500;
-    font-style: italic;
-    color: var(--tok-ink, #1f2a2e);
-    line-height: 1.4;
+  #tok2-output .signal-block .tok2-section-intro {
     margin-bottom: 10px;
-    text-align: left;
   }
 
-  #tok2-output .result-note {
+  #tok2-output .tok2-prose .tarot-tool__out-p--note {
     font-size: 14px;
     color: var(--tok-muted, #5a6a6e);
     line-height: 1.65;
-    text-align: left;
+    margin-top: 0.5rem;
   }
 
   #tok2-output .tok2-tools-card {
@@ -2035,42 +2691,39 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     color: var(--tok-ink, #1f2a2e);
   }
 
-  #tok2-output .tok2-keywords-summary {
-    display: flex;
-    gap: 1.5rem 2rem;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 0.5rem;
+  #tok2-output .tok2-inplay-intro {
+    margin: 0 0 0.75rem;
   }
 
-  #tok2-output .tok2-keywords-summary__col {
-    flex: 1 1 0;
-    min-width: 0;
+  #tok2-output .tok2-inplay-block {
+    margin-top: 1rem;
   }
 
-  #tok2-output .tok2-keywords-summary__head {
-    margin: 0 0 0.5rem;
+  #tok2-output .tok2-inplay-block:first-of-type {
+    margin-top: 0.35rem;
+  }
+
+  #tok2-output .tok2-inplay-label {
+    margin: 0 0 0.45rem;
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 1.08rem;
-    font-weight: 500;
+    font-size: 1.02rem;
+    font-weight: 600;
     line-height: 1.35;
     color: var(--tok-ink, #1f2a2e);
-    text-align: left;
   }
 
-  #tok2-output .tok2-keywords-summary__head strong {
-    font-weight: 600;
-    font-family: inherit;
-    color: inherit;
-  }
-
-  #tok2-output .tok2-keywords-summary__kw {
+  #tok2-output .tok2-extended-kw-list {
     margin: 0;
+    padding-left: 1.15rem;
+    list-style-type: disc;
+  }
+
+  #tok2-output .tok2-extended-kw-list li {
+    margin: 0.25rem 0;
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 1.05rem;
-    line-height: 1.65;
+    font-size: 1.02rem;
+    line-height: 1.55;
     color: var(--tok-ink, #1f2a2e);
-    text-align: left;
   }
 
   #tok2-output .tok2-shift-stack {
@@ -2083,11 +2736,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-shift-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
     padding: 14px 18px;
     border-top: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
-    align-items: flex-start;
   }
 
   #tok2-output .tok2-shift-row:first-child {
@@ -2100,8 +2753,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .tok2-shift-label {
-    flex: 0 0 38%;
-    max-width: 38%;
+    display: block;
+    margin-bottom: 6px;
+    flex: none;
+    max-width: 100%;
     font-family: var(--font-nav, system-ui, sans-serif);
     font-weight: 600;
     font-size: 0.65rem;
@@ -2111,7 +2766,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .tok2-shift-value {
-    flex: 1 1 55%;
+    display: block;
+    flex: none;
+    max-width: 100%;
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
     font-size: 1.05rem;
     line-height: 1.65;
@@ -2207,21 +2864,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       font-size: 24px;
     }
 
-    #tok2-output .result-summary {
-      font-size: 1.15rem;
-    }
-
-    #tok2-output .tok2-keywords-summary {
-      flex-direction: column;
-    }
-
-    #tok2-output .tok2-shift-row {
-      flex-direction: column;
-    }
-
     #tok2-output .tok2-shift-label,
     #tok2-output .tok2-shift-value {
-      flex: 1 1 auto;
+      flex: none;
       max-width: 100%;
     }
   }
@@ -2275,6 +2920,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--tok-ink, #1f2a2e);
+  }
+
+  #tok2-output .card-caption .caption-orient {
+    font-family: var(--font-nav, system-ui, sans-serif);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: capitalize;
+    color: rgba(31, 42, 46, 0.72);
   }
 
   #tok2-output .tarot-tool__card-img {

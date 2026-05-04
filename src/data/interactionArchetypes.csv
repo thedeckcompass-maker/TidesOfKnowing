@@ -1,0 +1,145 @@
+card1,card2,interaction
+giving,giving,Doubles the giving and saturates the exchange past usefulness.
+giving,conflict,Conflict reveals the imbalance inside the giving.
+giving,holding,Holding halts the giving mid-flow and pins it in place.
+giving,withdrawal,Withdrawal exposes the giving as one-sided once the receiver steps back.
+giving,expansion,Expansion scales the giving past what it can sustain.
+giving,dispersal,Dispersal scatters what the giving was directing toward a specific recipient.
+giving,pressure,Pressure compels the giving to declare its real terms.
+giving,alignment,Alignment redirects the giving toward what is actually needed.
+giving,shift,Shift redirects the giving before it completes its transfer.
+giving,focus,Focus reduces the giving to a single necessary exchange.
+giving,opening,Opening multiplies the channels the giving was already using.
+giving,closure,Closure halts the exchange and demands settlement.
+conflict,giving,Giving disarms the conflict without resolving what produced it.
+conflict,conflict,Conflict layers onto conflict and drives one position to break.
+conflict,holding,Holding contains the conflict and surfaces its real source.
+conflict,withdrawal,Withdrawal removes one party and leaves the conflict structurally intact.
+conflict,expansion,Expansion spreads the conflict beyond individual positions.
+conflict,dispersal,Dispersal fractures the conflict into smaller fights that no longer cohere.
+conflict,pressure,Pressure compresses the conflict and reveals its underlying terms.
+conflict,alignment,Alignment redirects the conflict into useful disagreement about direction.
+conflict,shift,Shift moves the conflict before resolution, leaving the disagreement intact.
+conflict,focus,Focus narrows the conflict to the one issue actually at stake.
+conflict,opening,Opening releases what the conflict had been holding under pressure.
+conflict,closure,Closure seals the conflict whether or not it has been resolved.
+holding,giving,Giving releases the holding back into circulation.
+holding,conflict,Conflict breaks the holding and drives what was contained into the open.
+holding,holding,Holding locks the structure and prevents further movement.
+holding,withdrawal,Withdrawal abandons the holding and collapses what was contained.
+holding,expansion,Expansion strains the holding past what it can carry.
+holding,dispersal,Dispersal undoes the holding and scatters what was being kept together.
+holding,pressure,Pressure loads the holding structure and reveals whether it carries.
+holding,alignment,Alignment turns the holding from a default into a deliberate stance.
+holding,shift,Shift changes the conditions the holding was built for.
+holding,focus,Focus refines the holding to what actually needs to be kept.
+holding,opening,Opening releases the holding and frees the contained material.
+holding,closure,Closure converts the holding into a final position.
+withdrawal,giving,Giving reaches into the withdrawal and presses it into visible engagement.
+withdrawal,conflict,Conflict pulls the withdrawal back into engagement against its will.
+withdrawal,holding,Holding seals the withdrawal and makes the absence permanent.
+withdrawal,withdrawal,Withdrawal compounds the absence and severs the connection.
+withdrawal,expansion,Expansion fills the gap and prevents restoration.
+withdrawal,dispersal,Dispersal scatters what the withdrawal was protecting.
+withdrawal,pressure,Pressure compels the withdrawal to declare itself or return.
+withdrawal,alignment,Alignment turns the withdrawal from a retreat into a deliberate position.
+withdrawal,shift,Shift changes the field while the withdrawal was looking elsewhere.
+withdrawal,focus,Focus sharpens the withdrawal into a clear refusal.
+withdrawal,opening,Opening offers the withdrawal a way back on revised terms.
+withdrawal,closure,Closure ends what the withdrawal had left unresolved.
+expansion,giving,Giving channels the expansion into specific recipients.
+expansion,conflict,Conflict interrupts the expansion and pushes it to defend its scale.
+expansion,holding,Holding contains the expansion before it loses coherence.
+expansion,withdrawal,Withdrawal removes the support the expansion was building on.
+expansion,expansion,Expansion overruns the structure and breaks its containing limits.
+expansion,dispersal,Dispersal fractures the expansion into pieces that cannot reconverge.
+expansion,pressure,Pressure compresses the expansion and pins it to a single direction.
+expansion,alignment,Alignment organises the expansion into directed growth.
+expansion,shift,Shift redirects the expansion mid-movement.
+expansion,focus,Focus narrows the expansion to the one branch worth pursuing.
+expansion,opening,Opening accelerates the expansion past where it intended to stop.
+expansion,closure,Closure halts the expansion and compels it to consolidate.
+dispersal,giving,Giving offers something coherent into the dispersal and gives it a landing point.
+dispersal,conflict,Conflict reorganises the dispersal around a single point of disagreement.
+dispersal,holding,Holding gathers the dispersal back into containable form.
+dispersal,withdrawal,Withdrawal abandons the dispersal and stops the recovery effort.
+dispersal,expansion,Expansion enlarges the dispersal and severs contact between the fragments.
+dispersal,dispersal,Dispersal multiplies the scatter and prevents reassembly.
+dispersal,pressure,Pressure compels the dispersal to consolidate around what is essential.
+dispersal,alignment,Alignment recovers the dispersal by giving the fragments a shared direction.
+dispersal,shift,Shift redirects the dispersal before the scatter completes.
+dispersal,focus,Focus pulls the dispersal back to a single workable point.
+dispersal,opening,Opening releases the dispersal and frees the fragments to find new positions.
+dispersal,closure,Closure ends the dispersal and writes off what cannot be recovered.
+pressure,giving,Giving releases the pressure by offering what it was demanding.
+pressure,conflict,Conflict converts the pressure into open opposition.
+pressure,holding,Holding contains the pressure and redirects it toward another exit.
+pressure,withdrawal,Withdrawal removes the load the pressure was acting on.
+pressure,expansion,Expansion absorbs the pressure by enlarging the container.
+pressure,dispersal,Dispersal splits the pressure across multiple points and disables its force.
+pressure,pressure,Pressure compounds the load and drives a structural break.
+pressure,alignment,Alignment converts the pressure into directed force.
+pressure,shift,Shift relocates the pressure before it can complete its work.
+pressure,focus,Focus concentrates the pressure into a single decisive point.
+pressure,opening,Opening releases the pressure into available space.
+pressure,closure,Closure seals the pressure inside a finished structure.
+alignment,giving,Giving extends the alignment outward into exchange.
+alignment,conflict,Conflict fractures the alignment against a position it had not accounted for.
+alignment,holding,Holding stabilises the alignment and prevents premature movement.
+alignment,withdrawal,Withdrawal removes a piece the alignment had organised around.
+alignment,expansion,Expansion scales the alignment beyond what it was calibrated for.
+alignment,dispersal,Dispersal splits the alignment into uncoordinated parts.
+alignment,pressure,Pressure loads the alignment and reveals whether it holds.
+alignment,alignment,Alignment locks the configuration and seals the working position.
+alignment,shift,Shift moves the ground the alignment was built on.
+alignment,focus,Focus narrows the alignment to its operative point.
+alignment,opening,Opening expands the alignment into a wider configuration.
+alignment,closure,Closure finalises the alignment as the working position.
+shift,giving,Giving offers a stable point inside the shift.
+shift,conflict,Conflict halts the shift and compels a decision before the move completes.
+shift,holding,Holding stops the shift and locks the new position before it has settled.
+shift,withdrawal,Withdrawal releases the shift and removes resistance to the move.
+shift,expansion,Expansion enlarges the shift past its intended endpoint.
+shift,dispersal,Dispersal splits the shift into multiple incomplete moves.
+shift,pressure,Pressure pins the shift to a single direction.
+shift,alignment,Alignment turns the shift into deliberate repositioning.
+shift,shift,Shift compounds the motion and removes clarity about direction.
+shift,focus,Focus narrows the shift to a specific change.
+shift,opening,Opening releases the shift into wider possibility.
+shift,closure,Closure stops the shift and fixes the new position.
+focus,giving,Giving extends the focus into directed action.
+focus,conflict,Conflict fractures the focus and disperses attention onto opposing demands.
+focus,holding,Holding sustains the focus past its useful point.
+focus,withdrawal,Withdrawal removes the object the focus was tracking.
+focus,expansion,Expansion widens the focus and dissolves its precision.
+focus,dispersal,Dispersal scatters the focus across too many points.
+focus,pressure,Pressure intensifies the focus into a cutting edge.
+focus,alignment,Alignment locks the focus as correctly directed.
+focus,shift,Shift moves the target the focus had locked onto.
+focus,focus,Focus narrows on itself and loses the peripheral signal.
+focus,opening,Opening releases the focus into a wider field of attention.
+focus,closure,Closure completes the focus into finished work.
+opening,giving,Giving moves into the opening and fills the available channel.
+opening,conflict,Conflict closes the opening and replaces possibility with opposition.
+opening,holding,Holding pauses the opening and screens what should be admitted.
+opening,withdrawal,Withdrawal abandons the opening before anything passes through.
+opening,expansion,Expansion enlarges the opening into wider access.
+opening,dispersal,Dispersal scatters what the opening had made available.
+opening,pressure,Pressure loads the opening and reveals whether it holds its width.
+opening,alignment,Alignment organises the opening into a deliberate channel.
+opening,shift,Shift redirects the opening toward an unintended destination.
+opening,focus,Focus narrows the opening to a single point of access.
+opening,opening,Opening expands beyond structure and removes the boundary entirely.
+opening,closure,Closure seals the opening and ends the available access.
+closure,giving,Giving reopens the closure by offering something the closed position cannot refuse.
+closure,conflict,Conflict fractures the closure and reopens what had been settled.
+closure,holding,Holding seals the closure and makes the ending permanent.
+closure,withdrawal,Withdrawal disengages from the closure and leaves the ending unattended.
+closure,expansion,Expansion stretches the closure and breaks the ending.
+closure,dispersal,Dispersal splits the closure into unfinished fragments.
+closure,pressure,Pressure loads the closure and reveals whether the ending holds.
+closure,alignment,Alignment orders the next configuration around the closure.
+closure,shift,Shift moves past the closure and starts new movement.
+closure,focus,Focus refines the closure to what specifically has ended.
+closure,opening,Opening reverses the closure and reopens what had been sealed.
+closure,closure,Closure reinforces the ending and prevents further movement.
