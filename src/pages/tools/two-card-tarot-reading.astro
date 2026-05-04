@@ -583,22 +583,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return "Shift";
   }
 
-  function interactionSignal(interactionLine) {
-    const line = String(interactionLine || "").toLowerCase();
-
-    if (line.includes("forward movement") || line.includes("rather than resistance")) return "Sequence";
-    if (line.includes("exhaustion") || line.includes("collapse") || line.includes("finality")) return "Collapse";
-    if (line.includes("confirms") || line.includes("completes") || line.includes("support")) return "Support";
-    if (line.includes("natural sequence") || line.includes("builds on")) return "Sequence";
-    if (line.includes("strain") || line.includes("forced movement")) return "Strain";
-    if (line.includes("reset")) return "Reset";
-    if (line.includes("breaks") || line.includes("overrides")) return "Rupture";
-    if (line.includes("reduces") || line.includes("drains")) return "Dissolution";
-    if (line.includes("tension")) return "Tension";
-
-    return "Shift";
-  }
-
   function clean(v) {
     return String(v || "").trim();
   }
@@ -705,24 +689,37 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return isGenericRelPanelCopy(s) ? "" : clean(s);
   }
 
+  function splitSignalRoles(signalLine) {
+    const parts = String(signalLine || "")
+      .split("+")
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    return {
+      first: parts[0] || "",
+      second: parts[1] || "",
+      interaction: parts[2] || "",
+    };
+  }
+
   function buildSynthesisSentence(c1, c2, signalLine, f1, f2) {
-    const signal = String(signalLine || "").trim().toLowerCase();
-    if (!signal) return "";
+    const roles = splitSignalRoles(signalLine);
+    const first = roles.first.toLowerCase();
+    const second = roles.second.toLowerCase();
+    const interaction = roles.interaction.toLowerCase();
+
+    if (first && second && interaction && interaction !== "shift") {
+      return cleanSentence(
+        `This interaction holds ${first} and ${second} in a ${interaction} pattern`,
+      );
+    }
+
+    if (first && second) {
+      return cleanSentence(`This interaction brings ${first} into contact with ${second}`);
+    }
 
     if (f2?.responseBehaviour && f1?.relationalEffect) {
-      return cleanSentence(
-        `${c2.name} brings ${signal}, shaping how ${c1.name} can continue through this interaction`,
-      );
-    }
-
-    if (f2?.responseBehaviour) {
-      return cleanSentence(
-        `${c2.name} introduces ${signal}, altering the direction already set`,
-      );
-    }
-
-    if (f1?.relationalEffect) {
-      return cleanSentence(`${c1.name} holds the pattern through ${signal}`);
+      return cleanSentence(`${c2.name} changes how ${c1.name} can continue`);
     }
 
     return "";
@@ -735,6 +732,26 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       t.startsWith("The interaction depends on how the second energy meets the first") ||
       t.includes("whether it supports, redirects, or resists what is already in motion")
     );
+  }
+
+  function interactionSignal(interactionLine) {
+    if (!interactionLine || isGenericInteractionLine(interactionLine) || isGeneric(interactionLine)) {
+      return "Shift";
+    }
+
+    const line = String(interactionLine || "").toLowerCase();
+
+    if (line.includes("forward movement") || line.includes("rather than resistance")) return "Sequence";
+    if (line.includes("exhaustion") || line.includes("collapse") || line.includes("finality")) return "Collapse";
+    if (line.includes("confirms") || line.includes("completes") || line.includes("support")) return "Support";
+    if (line.includes("natural sequence") || line.includes("builds on")) return "Sequence";
+    if (line.includes("strain") || line.includes("forced movement")) return "Strain";
+    if (line.includes("reset")) return "Reset";
+    if (line.includes("breaks") || line.includes("overrides")) return "Rupture";
+    if (line.includes("reduces") || line.includes("drains")) return "Dissolution";
+    if (line.includes("tension")) return "Tension";
+
+    return "Shift";
   }
 
   function extractOrientationText(text, orientation) {
@@ -876,11 +893,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       }
     }
     if (!clean(note) || isGeneric(note)) {
-      const sigTrim = String(signalLine || "").trim();
+      const roles = splitSignalRoles(signalLine);
+      const firstN = roles.first.toLowerCase();
+      const secondN = roles.second.toLowerCase();
       note = cleanSentence(
-        sigTrim
-          ? `The useful move is to notice how ${sigTrim.toLowerCase()} is being expressed between these two forces.`
-          : `The useful move is to notice whether ${c2.name} clarifies, deepens, or redirects what ${c1.name} has set in motion.`,
+        firstN && secondN
+          ? `The useful move is to notice where ${firstN} meets ${secondN}, and whether that contact restores clarity or increases distortion.`
+          : `The useful move is to notice what changes when ${c2.name} enters what ${c1.name} has already set in motion.`,
       );
     }
     if (normaliseForDedupe(note) === normaliseForDedupe(summary)) {
