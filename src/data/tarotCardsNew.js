@@ -83,6 +83,36 @@ export const tarotCardsNew = [
         "- With Death: Two thresholds meet, one of ending and one of beginning, producing radical reset rather than gradual transition.",
         "- With The Hierophant: Direct inversion; inherited structure is refused, creating friction over whether prior pattern applies."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "initiation",
+        "openness",
+        "invitation",
+        "innocence",
+        "threshold",
+        "possibility",
+        "entry",
+        "naivety",
+        "trust",
+        "momentum",
+        "potential",
+        "unanchored"
+      ],
+      "reversed": [
+        "recklessness",
+        "disruption",
+        "avoidance",
+        "naivety",
+        "resistance",
+        "stalling",
+        "disconnection",
+        "refusal",
+        "immaturity",
+        "unreliability",
+        "escapism",
+        "groundlessness"
+      ]
     }
   },
   {
@@ -163,6 +193,36 @@ export const tarotCardsNew = [
         "- With The High Priestess: Direct polarity; outward authorship meets inward knowing, producing either integrated expression or a split between what is done and what is sensed.",
         "- With The Fool: Unconditioned potential is given its first direction, converting openness into specific act.",
         "- With Seven of Swords: Capability is uncoupled from integrity, exposing manipulation rather than authorship."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "activation",
+        "agency",
+        "direction",
+        "channelling",
+        "initiative",
+        "orchestration",
+        "persuasion",
+        "shaping",
+        "focus",
+        "mastery",
+        "assertion",
+        "catalysing"
+      ],
+      "reversed": [
+        "manipulation",
+        "misdirection",
+        "overreach",
+        "deception",
+        "controlling",
+        "withholding",
+        "bluffing",
+        "undermining",
+        "deflection",
+        "hollow",
+        "coercion",
+        "sabotage"
       ]
     }
   },
@@ -245,6 +305,36 @@ export const tarotCardsNew = [
         "- With The Moon: Perception meets the unconscious, deepening either toward genuine insight or toward illusion and concealment.",
         "- With Eight of Wands: Rapid outward movement meets the demand for stillness, exposing whether speed is carrying signal or outrunning it."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "withholding",
+        "depth",
+        "asymmetry",
+        "mirroring",
+        "reserve",
+        "discernment",
+        "mystery",
+        "receptivity",
+        "witness",
+        "patience",
+        "knowing",
+        "threshold"
+      ],
+      "reversed": [
+        "concealment",
+        "inaccessibility",
+        "opacity",
+        "withdrawal",
+        "guardedness",
+        "absence",
+        "secrecy",
+        "evasion",
+        "suppression",
+        "distance",
+        "blocking",
+        "unknowability"
+      ]
     }
   },
   {
@@ -325,6 +415,36 @@ export const tarotCardsNew = [
         "- With The Emperor: Generative ground meets structural authority, producing either balanced creation or tension between organic development and imposed form.",
         "- With The High Priestess: Inward knowing is brought into embodied expression, converting perception into living form.",
         "- With Five of Pentacles: The absence of nourishment is exposed, showing what occurs when the conditions for growth are withdrawn."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "nurturing",
+        "generosity",
+        "abundance",
+        "embodiment",
+        "welcoming",
+        "sustaining",
+        "growth",
+        "warmth",
+        "cultivation",
+        "receptivity",
+        "fertility",
+        "enveloping"
+      ],
+      "reversed": [
+        "smothering",
+        "depletion",
+        "withholding",
+        "dependence",
+        "stagnation",
+        "over-giving",
+        "possessiveness",
+        "neglect",
+        "barrenness",
+        "control",
+        "enmeshment",
+        "draining"
       ]
     }
   },
@@ -407,6 +527,36 @@ export const tarotCardsNew = [
         "- With The Tower: The structure built is tested or destroyed, exposing whether it was load-bearing or held by force.",
         "- With Four of Pentacles: Structural holding repeats at the material level, amplifying either reliable containment or the collapse into possessive rigidity."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "structuring",
+        "authority",
+        "stabilising",
+        "protection",
+        "ordering",
+        "holding",
+        "establishing",
+        "grounding",
+        "boundary",
+        "governance",
+        "reliability",
+        "anchoring"
+      ],
+      "reversed": [
+        "rigidity",
+        "domination",
+        "inflexibility",
+        "control",
+        "tyranny",
+        "obstruction",
+        "suppression",
+        "overreach",
+        "resistance",
+        "imposition",
+        "unmovability",
+        "hardening"
+      ]
     }
   },
   {
@@ -487,6 +637,36 @@ export const tarotCardsNew = [
         "- With The Fool: Inherited structure meets unconditioned beginning, exposing whether tradition can be received or must be refused for genuine movement to occur.",
         "- With The Emperor: Structural authority is carried forward into transmissible form, converting power into continuity.",
         "- With Five of Pentacles: Failure of transmission appears at the material level, exposing absence of support or rejection of available structure."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "transmission",
+        "mediation",
+        "initiating",
+        "belonging",
+        "sanctioning",
+        "gatekeeping",
+        "formalising",
+        "guiding",
+        "contextualising",
+        "legitimising",
+        "bridging",
+        "consecrating"
+      ],
+      "reversed": [
+        "dogmatism",
+        "exclusion",
+        "conformity",
+        "restriction",
+        "gatekeeping",
+        "rigidity",
+        "suppression",
+        "orthodoxy",
+        "alienation",
+        "prohibition",
+        "hierarchy",
+        "entrenchment"
       ]
     }
   },
@@ -569,6 +749,36 @@ export const tarotCardsNew = [
         "- With Two of Cups: Relational union repeats at the personal level, amplifying either mutual recognition or, reversed, absorption that mimics meeting.",
         "- With The Hierophant: Inherited form is tested against personal choice, asking whether tradition can be entered consciously or must be refused."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "alignment",
+        "choosing",
+        "resonance",
+        "intimacy",
+        "integration",
+        "polarity",
+        "commitment",
+        "mirroring",
+        "attraction",
+        "bonding",
+        "discernment",
+        "wholeness"
+      ],
+      "reversed": [
+        "misalignment",
+        "avoidance",
+        "splitting",
+        "conflict",
+        "indecision",
+        "disconnection",
+        "incompatibility",
+        "projection",
+        "tension",
+        "ambivalence",
+        "fracture",
+        "estrangement"
+      ]
     }
   },
   {
@@ -649,6 +859,36 @@ export const tarotCardsNew = [
         "- With Strength: Outward drive meets inward composure, producing either integrated mastery or a split between force applied and force contained.",
         "- With The Lovers: Chosen alignment is tested by the demand for movement, converting commitment into sustained direction under pressure.",
         "- With Five of Wands: Failure to integrate opposition is exposed, showing how competing forces scatter when not driven toward a single aim."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "driving",
+        "overcoming",
+        "directing",
+        "propulsion",
+        "willpower",
+        "momentum",
+        "controlling",
+        "advancing",
+        "harnessing",
+        "conviction",
+        "determination",
+        "mastery"
+      ],
+      "reversed": [
+        "aggression",
+        "forcing",
+        "collision",
+        "stalling",
+        "overriding",
+        "bulldozing",
+        "loss-of-control",
+        "resistance",
+        "derailing",
+        "recklessness",
+        "rigidity",
+        "imposing"
       ]
     }
   },
@@ -731,6 +971,36 @@ export const tarotCardsNew = [
         "- With The Devil: Contained instinct meets unconscious binding, exposing the difference between integrated power and power that has captured the will.",
         "- With Seven of Wands: The test of holding ground under pressure repeats at the active level, amplifying either steady defence or the strain of force exercised without inward composure."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "steadying",
+        "patience",
+        "gentling",
+        "influencing",
+        "containing",
+        "endurance",
+        "compassion",
+        "persuasion",
+        "softening",
+        "resilience",
+        "taming",
+        "presence"
+      ],
+      "reversed": [
+        "dominance",
+        "suppression",
+        "fear",
+        "coercion",
+        "volatility",
+        "pushing",
+        "forcing",
+        "submission",
+        "overpower",
+        "brittleness",
+        "exhaustion",
+        "aggression"
+      ]
     }
   },
   {
@@ -811,6 +1081,36 @@ export const tarotCardsNew = [
         "- With The Star: Deliberate solitude meets restored hope, producing either integrated insight that returns to the world or contrast between distance and renewal.",
         "- With The Wheel of Fortune: Understanding distilled through solitude is tested against changing conditions, asking whether insight holds under movement.",
         "- With Eight of Wands: Deliberate slowness meets rapid movement, exposing whether speed carries signal or outruns necessary reflection."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "withdrawal",
+        "illuminating",
+        "guiding",
+        "reflecting",
+        "distancing",
+        "discerning",
+        "solitude",
+        "offering",
+        "witnessing",
+        "pointing",
+        "clarifying",
+        "separating"
+      ],
+      "reversed": [
+        "isolation",
+        "withholding",
+        "disconnection",
+        "hiding",
+        "exile",
+        "refusal",
+        "unavailability",
+        "retreat",
+        "avoidance",
+        "opacity",
+        "withdrawal",
+        "self-enclosure"
       ]
     }
   },
@@ -893,6 +1193,36 @@ export const tarotCardsNew = [
         "- With Justice: Impersonal turn is followed by impersonal reckoning, producing either integrated alignment with consequence or the collision between cycle and accountability.",
         "- With Eight of Pentacles: Slow accumulation of effort meets structural turn, exposing whether patient work aligns with the cycle or is reorganised against its own direction."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "turning",
+        "shifting",
+        "cyclicality",
+        "timing",
+        "fatedness",
+        "momentum",
+        "transition",
+        "chance",
+        "revolving",
+        "connecting",
+        "contextualising",
+        "arriving"
+      ],
+      "reversed": [
+        "stagnation",
+        "resistance",
+        "delay",
+        "misalignment",
+        "bad-timing",
+        "repetition",
+        "entrapment",
+        "missing",
+        "circling",
+        "obstruction",
+        "reversal",
+        "friction"
+      ]
     }
   },
   {
@@ -973,6 +1303,36 @@ export const tarotCardsNew = [
         "- With The Wheel of Fortune: Impersonal turn produces impersonal verdict, converting structural movement into rendered consequence.",
         "- With The Hanged Man: Rendered verdict meets suspension, producing either acceptance of consequence or the split between what has been weighed and what has been received.",
         "- With Seven of Swords: Structural reckoning meets deception, exposing whether evasion holds when weighed against what was actually done."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "equalising",
+        "accountability",
+        "weighing",
+        "clarifying",
+        "adjudicating",
+        "truth-telling",
+        "balancing",
+        "consequence",
+        "impartiality",
+        "deciding",
+        "aligning",
+        "discerning"
+      ],
+      "reversed": [
+        "bias",
+        "avoidance",
+        "evasion",
+        "imbalance",
+        "denial",
+        "distortion",
+        "unfairness",
+        "deflection",
+        "obscuring",
+        "complicity",
+        "inequity",
+        "blame"
       ]
     }
   },
@@ -1055,6 +1415,36 @@ export const tarotCardsNew = [
         "- With Death: Chosen suspension precedes structural ending, converting deliberate pause into the transformation it makes possible.",
         "- With Eight of Swords: Chosen release meets self-imposed restriction, exposing the difference between suspension that reorganises and binding that only appears to do so."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "suspending",
+        "surrendering",
+        "reframing",
+        "pausing",
+        "offering",
+        "waiting",
+        "releasing",
+        "shifting",
+        "yielding",
+        "witnessing",
+        "inversing",
+        "stillness"
+      ],
+      "reversed": [
+        "resistance",
+        "martyrdom",
+        "stalling",
+        "clinging",
+        "withholding",
+        "refusing",
+        "rigidity",
+        "sacrifice",
+        "blocking",
+        "inertia",
+        "avoidance",
+        "self-denial"
+      ]
     }
   },
   {
@@ -1135,6 +1525,36 @@ export const tarotCardsNew = [
         "- With The Hanged Man: Chosen suspension is followed by structural ending, converting deliberate pause into the transformation it makes possible.",
         "- With The Fool: Ending meets beginning, producing radical reset rather than gradual transition.",
         "- With Ten of Swords: Structural close repeats at the mental level, amplifying either definitive ending or refusal to release a finality that has already arrived."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "ending",
+        "transforming",
+        "releasing",
+        "clearing",
+        "severance",
+        "transition",
+        "composting",
+        "completing",
+        "stripping",
+        "closing",
+        "passing",
+        "unburdening"
+      ],
+      "reversed": [
+        "clinging",
+        "resistance",
+        "denial",
+        "stagnation",
+        "avoidance",
+        "prolonging",
+        "holding-on",
+        "suppression",
+        "fear",
+        "refusing",
+        "blocking",
+        "entrenchment"
       ]
     }
   },
@@ -1217,6 +1637,36 @@ export const tarotCardsNew = [
         "- With Death: Cleared ground is integrated through patient combination, converting release into synthesis.",
         "- With Two of Cups: Measured integration repeats at the relational level, amplifying mutual proportion or imbalance that mimics union."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "moderating",
+        "integrating",
+        "flowing",
+        "bridging",
+        "alchemising",
+        "harmonising",
+        "mediating",
+        "blending",
+        "adjusting",
+        "calibrating",
+        "tempering",
+        "patience"
+      ],
+      "reversed": [
+        "excess",
+        "imbalance",
+        "forcing",
+        "discord",
+        "disruption",
+        "clashing",
+        "rushing",
+        "rigidity",
+        "volatility",
+        "incompatibility",
+        "destabilising",
+        "friction"
+      ]
     }
   },
   {
@@ -1297,6 +1747,36 @@ export const tarotCardsNew = [
         "- With The Lovers: Conscious choice meets unconscious binding, exposing whether union is freely chosen or structurally held.",
         "- With Temperance: Measured integration meets bound excess, exposing the difference between proportion and attachment that cannot be balanced.",
         "- With The Tower: Binding is followed by collapse, converting attachment into the breaking of the structure that sustained it."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "binding",
+        "entangling",
+        "tempting",
+        "shadowing",
+        "revealing",
+        "exposing",
+        "entrapping",
+        "mirroring",
+        "seducing",
+        "compelling",
+        "magnetising",
+        "anchoring"
+      ],
+      "reversed": [
+        "releasing",
+        "breaking-free",
+        "exposing",
+        "facing",
+        "unbinding",
+        "clarity",
+        "detachment",
+        "liberation",
+        "confronting",
+        "naming",
+        "surfacing",
+        "refusing"
       ]
     }
   },
@@ -1379,6 +1859,36 @@ export const tarotCardsNew = [
         "- With The Devil: Binding converts to collapse; what was recognised but not released is forcibly broken.",
         "- With Five of Pentacles: Collapse repeats materially; structural failure manifests as loss or exposure in lived conditions."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "rupture",
+        "catalyst",
+        "exposure",
+        "destabilisation",
+        "confrontation",
+        "severance",
+        "disruption",
+        "revelation",
+        "collapse",
+        "shock",
+        "forcing",
+        "clearing"
+      ],
+      "reversed": [
+        "withholding",
+        "preemption",
+        "deflection",
+        "suppression",
+        "bracing",
+        "circling",
+        "avoiding",
+        "containing",
+        "delaying",
+        "resisting",
+        "internalising",
+        "absorbing"
+      ]
     }
   },
   {
@@ -1459,6 +1969,36 @@ export const tarotCardsNew = [
         "- With The Tower: Collapse resolves into renewal; forced clearing is followed by openness that allows restoration.",
         "- With The Hermit: Solitude meets replenishment; inward reflection integrates with renewed openness.",
         "- With Five of Cups: Loss meets restoration; grief either opens into renewal or remains closed against it."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "restoring",
+        "opening",
+        "offering",
+        "renewal",
+        "vulnerability",
+        "hope",
+        "reconnecting",
+        "healing",
+        "generosity",
+        "possibility",
+        "softening",
+        "trusting"
+      ],
+      "reversed": [
+        "withdrawal",
+        "closing",
+        "despair",
+        "disconnection",
+        "withholding",
+        "guarding",
+        "doubt",
+        "brittleness",
+        "contraction",
+        "pessimism",
+        "distancing",
+        "hardening"
       ]
     }
   },
@@ -1541,6 +2081,36 @@ export const tarotCardsNew = [
         "- With The Sun: Ambiguity meets clarity; the field resolves or exposes the contrast between what can and cannot be seen.",
         "- With Seven of Cups: Projection amplifies; multiple possibilities either require navigation or become illusion."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "distorting",
+        "projecting",
+        "amplifying",
+        "obscuring",
+        "dreaming",
+        "illuding",
+        "reflecting",
+        "unsettling",
+        "confusing",
+        "deepening",
+        "haunting",
+        "veiling"
+      ],
+      "reversed": [
+        "clarity",
+        "surfacing",
+        "facing",
+        "grounding",
+        "exposure",
+        "revealing",
+        "dispersing",
+        "sobering",
+        "unmasking",
+        "resolving",
+        "waking",
+        "demystifying"
+      ]
     }
   },
   {
@@ -1621,6 +2191,36 @@ export const tarotCardsNew = [
         "- With The Moon: Polarity resolved; ambiguity becomes clarity or the contrast between them is exposed.",
         "- With Judgement: Illumination becomes recognition; what is visible is now called forward into structural response.",
         "- With Nine of Cups: Visibility meets satisfaction; contentment is either fully realised or revealed as incomplete."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "illuminating",
+        "warming",
+        "radiating",
+        "energising",
+        "clarity",
+        "vitality",
+        "celebrating",
+        "affirming",
+        "opening",
+        "generosity",
+        "simplifying",
+        "revealing"
+      ],
+      "reversed": [
+        "overshadowing",
+        "overwhelming",
+        "burning",
+        "glaring",
+        "hiding",
+        "dimming",
+        "deflating",
+        "blinding",
+        "excess",
+        "cooling",
+        "obscuring",
+        "diminishing"
       ]
     }
   },
@@ -1703,6 +2303,36 @@ export const tarotCardsNew = [
         "- With The World: Awakening completes into integration; the call resolves into closure of the cycle.",
         "- With Five of Pentacles: Recognition meets exclusion; the call tests whether what is available can be received or remains unanswered."
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "summoning",
+        "awakening",
+        "calling",
+        "reckoning",
+        "transforming",
+        "releasing",
+        "rising",
+        "evaluating",
+        "responding",
+        "completing",
+        "answering",
+        "activating"
+      ],
+      "reversed": [
+        "avoidance",
+        "denial",
+        "suppression",
+        "self-judgement",
+        "resistance",
+        "ignoring",
+        "silencing",
+        "refusing",
+        "stagnation",
+        "guilt",
+        "blocking",
+        "inertia"
+      ]
     }
   },
   {
@@ -1783,6 +2413,36 @@ export const tarotCardsNew = [
         "- With The Fool: Completion returns to origin; the end becomes the beginning of the next cycle.",
         "- With Judgement: Awakening resolves into integration; recognition becomes completion.",
         "- With Ten of Pentacles: Completion echoes materially; structural wholeness manifests in sustained form or reveals instability in legacy."
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "completing",
+        "integrating",
+        "arriving",
+        "fulfilling",
+        "containing",
+        "enclosing",
+        "celebrating",
+        "synthesising",
+        "consolidating",
+        "closing",
+        "manifesting",
+        "wholeness"
+      ],
+      "reversed": [
+        "incompletion",
+        "withholding",
+        "resistance",
+        "stagnation",
+        "delay",
+        "fragmentation",
+        "avoidance",
+        "unfinished",
+        "scattering",
+        "blocking",
+        "circling",
+        "denial"
       ]
     }
   },
@@ -1865,6 +2525,36 @@ export const tarotCardsNew = [
         "- Three of Wands — ignition extends into forward-directed expansion",
         "- Two of Cups — creative impulse is slowed by relational exchange"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "igniting",
+        "initiating",
+        "inspiring",
+        "activating",
+        "offering",
+        "energising",
+        "catalysing",
+        "sparking",
+        "propelling",
+        "inviting",
+        "animating",
+        "awakening"
+      ],
+      "reversed": [
+        "withholding",
+        "blocking",
+        "dampening",
+        "resisting",
+        "stalling",
+        "suppressing",
+        "losing-momentum",
+        "hesitating",
+        "deflating",
+        "snuffing",
+        "withdrawing",
+        "inertia"
+      ]
     }
   },
   {
@@ -1945,6 +2635,36 @@ export const tarotCardsNew = [
         "- The Chariot — deliberate vision converts into directed movement",
         "- Three of Wands — surveyed horizon becomes active trajectory",
         "- Two of Cups — forward vision is redirected by relational exchange"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "anticipating",
+        "planning",
+        "projecting",
+        "holding",
+        "surveying",
+        "choosing",
+        "extending",
+        "considering",
+        "preparing",
+        "visioning",
+        "positioning",
+        "stretching"
+      ],
+      "reversed": [
+        "hesitation",
+        "stalling",
+        "fear",
+        "narrowing",
+        "retreating",
+        "indecision",
+        "clinging",
+        "shortsightedness",
+        "resistance",
+        "withholding",
+        "shrinking",
+        "limiting"
       ]
     }
   },
@@ -2027,6 +2747,36 @@ export const tarotCardsNew = [
         "- Ace of Wands — original ignition is revealed as the source of current movement",
         "- Five of Cups — returns register as loss against initial expectation"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "expanding",
+        "waiting",
+        "launching",
+        "extending",
+        "projecting",
+        "anticipating",
+        "committing",
+        "investing",
+        "outreaching",
+        "forethought",
+        "building",
+        "horizon-watching"
+      ],
+      "reversed": [
+        "delay",
+        "frustration",
+        "shortsightedness",
+        "retreating",
+        "obstruction",
+        "miscalculation",
+        "withdrawal",
+        "impatience",
+        "narrowing",
+        "halting",
+        "stalling",
+        "retreat"
+      ]
     }
   },
   {
@@ -2107,6 +2857,36 @@ export const tarotCardsNew = [
         "- The Sun — celebration is fully affirmed and radiates outward",
         "- Ten of Wands — stable pause contrasts with accumulated burden",
         "- Five of Swords — celebration is undermined by unresolved conflict"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "celebrating",
+        "welcoming",
+        "anchoring",
+        "consolidating",
+        "gathering",
+        "marking",
+        "affirming",
+        "grounding",
+        "uniting",
+        "stabilising",
+        "homecoming",
+        "completing"
+      ],
+      "reversed": [
+        "instability",
+        "conflict",
+        "disruption",
+        "displacement",
+        "tension",
+        "unsettled",
+        "withholding",
+        "friction",
+        "incompletion",
+        "disconnection",
+        "resistance",
+        "scattered"
       ]
     }
   },
@@ -2189,6 +2969,36 @@ export const tarotCardsNew = [
         "- Four of Wands — disruption breaks prior stability into contest",
         "- Five of Cups — conflict converts into emotional loss"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "contending",
+        "competing",
+        "disrupting",
+        "challenging",
+        "testing",
+        "stimulating",
+        "asserting",
+        "clashing",
+        "energising",
+        "friction",
+        "provoking",
+        "jostling"
+      ],
+      "reversed": [
+        "avoidance",
+        "suppression",
+        "internalising",
+        "peacekeeping",
+        "deflecting",
+        "capitulating",
+        "backing-down",
+        "tension",
+        "withholding",
+        "simmering",
+        "passivity",
+        "evasion"
+      ]
     }
   },
   {
@@ -2269,6 +3079,36 @@ export const tarotCardsNew = [
         "- The Chariot — recognised success is directed into continued movement",
         "- Five of Wands — contest resolves into visible victory",
         "- Two of Cups — triumph is reframed through relational connection"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "triumphing",
+        "leading",
+        "inspiring",
+        "receiving",
+        "advancing",
+        "affirming",
+        "modelling",
+        "acknowledging",
+        "raising",
+        "elevating",
+        "recognition",
+        "energising"
+      ],
+      "reversed": [
+        "arrogance",
+        "deflating",
+        "undermining",
+        "jealousy",
+        "overshadowing",
+        "comparison",
+        "collapsing",
+        "withdrawal",
+        "diminishing",
+        "self-doubt",
+        "exclusion",
+        "envy"
       ]
     }
   },
@@ -2351,6 +3191,36 @@ export const tarotCardsNew = [
         "- Six of Wands — victory is immediately tested through visible challenge",
         "- Ten of Cups — defended position is weighed against emotional fulfilment"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "defending",
+        "holding",
+        "persisting",
+        "asserting",
+        "standing-firm",
+        "resisting",
+        "maintaining",
+        "upholding",
+        "guarding",
+        "confronting",
+        "challenging",
+        "advocating"
+      ],
+      "reversed": [
+        "capitulating",
+        "overwhelm",
+        "exhaustion",
+        "backing-down",
+        "conceding",
+        "withdrawing",
+        "giving-in",
+        "vulnerability",
+        "exposure",
+        "collapse",
+        "submission",
+        "retreat"
+      ]
     }
   },
   {
@@ -2431,6 +3301,36 @@ export const tarotCardsNew = [
         "- The Magician — momentum is directed with precision",
         "- Two of Wands — prior vision converts into active movement",
         "- Four of Cups — incoming momentum meets withdrawal and is missed"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "accelerating",
+        "transmitting",
+        "propelling",
+        "advancing",
+        "arriving",
+        "communicating",
+        "directing",
+        "rushing",
+        "aligning",
+        "converging",
+        "delivering",
+        "activating"
+      ],
+      "reversed": [
+        "delay",
+        "scattering",
+        "misdirection",
+        "collision",
+        "halting",
+        "fragmenting",
+        "confusion",
+        "misalignment",
+        "obstruction",
+        "missing",
+        "overload",
+        "dispersion"
       ]
     }
   },
@@ -2513,6 +3413,36 @@ export const tarotCardsNew = [
         "- Ten of Wands — final reserves meet full burden",
         "- Nine of Swords — physical endurance meets mental strain"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "holding",
+        "bracing",
+        "enduring",
+        "guarding",
+        "persisting",
+        "vigilance",
+        "tenacity",
+        "protecting",
+        "wariness",
+        "resilience",
+        "defending",
+        "steadying"
+      ],
+      "reversed": [
+        "paranoia",
+        "rigidity",
+        "exhaustion",
+        "over-defending",
+        "fear",
+        "suspicion",
+        "closing",
+        "hypervigilance",
+        "brittleness",
+        "withdrawal",
+        "burnout",
+        "isolation"
+      ]
     }
   },
   {
@@ -2593,6 +3523,36 @@ export const tarotCardsNew = [
         "- The World — burden resolves into completed integration",
         "- Four of Wands — completion weight contrasts with prior stability",
         "- Ten of Swords — full burden meets total collapse"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "carrying",
+        "burdening",
+        "delivering",
+        "overextending",
+        "shouldering",
+        "persisting",
+        "completing",
+        "absorbing",
+        "struggling",
+        "transporting",
+        "labouring",
+        "driving"
+      ],
+      "reversed": [
+        "collapsing",
+        "dropping",
+        "refusing",
+        "delegating",
+        "releasing",
+        "surrendering",
+        "unburdening",
+        "avoidance",
+        "overwhelm",
+        "breaking",
+        "stagnation",
+        "resistance"
       ]
     }
   },
@@ -2675,6 +3635,36 @@ export const tarotCardsNew = [
         "- Knight of Wands — early energy meets committed action",
         "- Seven of Cups — enthusiasm disperses into illusion and excess possibility"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "exploring",
+        "messaging",
+        "probing",
+        "inspiring",
+        "questioning",
+        "adventuring",
+        "signalling",
+        "reporting",
+        "enthusiasm",
+        "animating",
+        "initiating",
+        "curious"
+      ],
+      "reversed": [
+        "recklessness",
+        "immaturity",
+        "misdirecting",
+        "scattered",
+        "unreliable",
+        "impulsive",
+        "disrupting",
+        "distracted",
+        "over-eager",
+        "rushing",
+        "superficial",
+        "losing-focus"
+      ]
     }
   },
   {
@@ -2755,6 +3745,36 @@ export const tarotCardsNew = [
         "- The Chariot — momentum is disciplined into directed arrival",
         "- Page of Wands — early exploration converts into full commitment",
         "- Eight of Cups — pursuit meets withdrawal and unresolved departure"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "charging",
+        "pursuing",
+        "energising",
+        "advancing",
+        "pioneering",
+        "propelling",
+        "inspiring",
+        "rushing",
+        "igniting",
+        "driving",
+        "adventuring",
+        "leading"
+      ],
+      "reversed": [
+        "recklessness",
+        "impulsiveness",
+        "burning",
+        "volatility",
+        "forcing",
+        "aggression",
+        "unsettling",
+        "scattering",
+        "overreach",
+        "disrupting",
+        "collision",
+        "abandoning"
       ]
     }
   },
@@ -2837,6 +3857,36 @@ export const tarotCardsNew = [
         "- King of Wands — complete creative polarity achieves full authority",
         "- Queen of Swords — warmth meets precision in dynamic tension"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "radiating",
+        "inspiring",
+        "magnetising",
+        "leading",
+        "energising",
+        "commanding",
+        "warming",
+        "encouraging",
+        "activating",
+        "embodying",
+        "holding-space",
+        "presence"
+      ],
+      "reversed": [
+        "dominance",
+        "intimidation",
+        "burning",
+        "volatility",
+        "overshadowing",
+        "controlling",
+        "demanding",
+        "exhausting",
+        "jealousy",
+        "imposing",
+        "withholding",
+        "manipulation"
+      ]
     }
   },
   {
@@ -2917,6 +3967,36 @@ export const tarotCardsNew = [
         "- The Emperor — visionary command integrates with structural authority",
         "- Queen of Wands — complete creative polarity achieves unified mastery",
         "- King of Cups — strategic vision meets emotional depth in tension"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "visioning",
+        "directing",
+        "commanding",
+        "inspiring",
+        "driving",
+        "leading",
+        "delegating",
+        "mobilising",
+        "energising",
+        "shaping",
+        "mentoring",
+        "catalysing"
+      ],
+      "reversed": [
+        "tyranny",
+        "recklessness",
+        "forcing",
+        "domination",
+        "volatility",
+        "impatience",
+        "overreach",
+        "controlling",
+        "burning",
+        "rigidity",
+        "dismissing",
+        "imposing"
       ]
     }
   },
@@ -2999,6 +4079,36 @@ export const tarotCardsNew = [
         "- Two of Cups — converts potential into mutual exchange",
         "- Five of Wands — disrupts emotional flow with competing forces"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "offering",
+        "opening",
+        "welcoming",
+        "receiving",
+        "overflow",
+        "invitation",
+        "depth",
+        "connection",
+        "vulnerability",
+        "love",
+        "renewal",
+        "beginning"
+      ],
+      "reversed": [
+        "withholding",
+        "closing",
+        "guarding",
+        "suppression",
+        "blocking",
+        "retreat",
+        "emotional-unavailability",
+        "denial",
+        "isolation",
+        "shutting",
+        "refusal",
+        "hardening"
+      ]
     }
   },
   {
@@ -3079,6 +4189,36 @@ export const tarotCardsNew = [
         "The Lovers: intensifies mutual exchange into structural bond",
         "Ace of Cups: directs emotional potential into shared exchange",
         "Five of Wands: disrupts exchange through competing forces"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "bonding",
+        "recognising",
+        "mirroring",
+        "aligning",
+        "connecting",
+        "committing",
+        "resonating",
+        "partnering",
+        "meeting",
+        "affirming",
+        "exchanging",
+        "equalising"
+      ],
+      "reversed": [
+        "misalignment",
+        "rupture",
+        "withdrawal",
+        "disconnection",
+        "conflict",
+        "incompatibility",
+        "rejection",
+        "estrangement",
+        "imbalance",
+        "pulling-away",
+        "severing",
+        "friction"
       ]
     }
   },
@@ -3161,6 +4301,36 @@ export const tarotCardsNew = [
         "Ten of Cups: stabilises collective field into sustained structure",
         "Seven of Wands: disrupts shared field through defensive stance"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "alliance",
+        "triangulation",
+        "witnessing",
+        "including",
+        "solidarity",
+        "amplifying",
+        "celebrating",
+        "gathering",
+        "communing",
+        "affirming",
+        "elevating",
+        "joy"
+      ],
+      "reversed": [
+        "exclusion",
+        "faction",
+        "rivalry",
+        "displacement",
+        "overcrowding",
+        "dilution",
+        "jealousy",
+        "isolation",
+        "clique",
+        "outsider",
+        "sidelining",
+        "competition"
+      ]
     }
   },
   {
@@ -3241,6 +4411,36 @@ export const tarotCardsNew = [
         "The Hermit: reinforces inward withdrawal into sustained isolation",
         "Ace of Cups: presents available input against non-engagement",
         "Eight of Wands: drives movement against suspended position"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "withdrawing",
+        "contemplating",
+        "ignoring",
+        "turning-inward",
+        "reassessing",
+        "resisting",
+        "withholding",
+        "considering",
+        "refusing",
+        "pausing",
+        "disconnecting",
+        "introspection"
+      ],
+      "reversed": [
+        "opening",
+        "receiving",
+        "re-engaging",
+        "returning",
+        "accepting",
+        "noticing",
+        "emerging",
+        "reconsidering",
+        "awakening",
+        "welcoming",
+        "reconnecting",
+        "softening"
       ]
     }
   },
@@ -3323,6 +4523,36 @@ export const tarotCardsNew = [
         "Four of Cups: reinforces inward contraction around absence",
         "Ace of Wands: introduces forward drive against fixation"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "grieving",
+        "lamenting",
+        "withdrawing",
+        "fixating",
+        "mourning",
+        "turning-away",
+        "loss",
+        "dwelling",
+        "regretting",
+        "receding",
+        "suffering",
+        "holding-absence"
+      ],
+      "reversed": [
+        "returning",
+        "recovering",
+        "noticing",
+        "emerging",
+        "redirecting",
+        "releasing",
+        "turning-toward",
+        "rebuilding",
+        "accepting",
+        "softening",
+        "reopening",
+        "healing"
+      ]
     }
   },
   {
@@ -3403,6 +4633,36 @@ export const tarotCardsNew = [
         "The Moon: distorts remembered feeling through unconscious pattern",
         "Two of Cups: grounds exchange in prior recognition",
         "Three of Wands: pulls expansion against remembered ground"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "offering",
+        "remembering",
+        "returning",
+        "gifting",
+        "reconnecting",
+        "evoking",
+        "sharing",
+        "nostalgising",
+        "innocence",
+        "generosity",
+        "revisiting",
+        "reviving"
+      ],
+      "reversed": [
+        "clinging",
+        "idealising",
+        "regressing",
+        "avoiding",
+        "sentimentalising",
+        "refusing",
+        "living-in-past",
+        "projecting",
+        "resisting",
+        "retreating",
+        "dependency",
+        "romanticising"
       ]
     }
   },
@@ -3485,6 +4745,36 @@ export const tarotCardsNew = [
         "Four of Cups: contrasts inward withdrawal with outward dispersion",
         "King of Wands: imposes direction against scattered projection"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "projecting",
+        "imagining",
+        "fantasising",
+        "multiplying",
+        "confusing",
+        "dreaming",
+        "dispersing",
+        "overwhelming",
+        "illusion",
+        "scattering",
+        "avoiding",
+        "dissolving"
+      ],
+      "reversed": [
+        "clarifying",
+        "grounding",
+        "choosing",
+        "focusing",
+        "sobering",
+        "committing",
+        "narrowing",
+        "deciding",
+        "reality-checking",
+        "anchoring",
+        "simplifying",
+        "concentrating"
+      ]
     }
   },
   {
@@ -3565,6 +4855,36 @@ export const tarotCardsNew = [
         "The Hermit: directs withdrawal into solitary seeking",
         "Two of Cups: removes position from established exchange",
         "Ace of Wands: introduces new direction against withdrawal"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "leaving",
+        "releasing",
+        "turning-away",
+        "withdrawing",
+        "searching",
+        "abandoning",
+        "seeking",
+        "walking-away",
+        "receding",
+        "departing",
+        "disengaging",
+        "questing"
+      ],
+      "reversed": [
+        "returning",
+        "clinging",
+        "staying",
+        "stagnating",
+        "avoiding",
+        "withholding-departure",
+        "entrapment",
+        "postponing",
+        "rationalising",
+        "suppressing",
+        "excusing",
+        "inability-to-leave"
       ]
     }
   },
@@ -3647,6 +4967,36 @@ export const tarotCardsNew = [
         "Seven of Cups: contrasts completion with prior projection",
         "Ten of Wands: opposes sufficiency with sustained burden"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "satisfying",
+        "completing",
+        "offering",
+        "fulfilling",
+        "holding",
+        "radiating",
+        "containing",
+        "self-sufficient",
+        "celebrating",
+        "resting",
+        "abundance",
+        "welcoming"
+      ],
+      "reversed": [
+        "withholding",
+        "smugness",
+        "self-satisfaction",
+        "over-indulgence",
+        "isolation",
+        "excluding",
+        "hoarding",
+        "complacency",
+        "gloating",
+        "closing",
+        "inflexibility",
+        "detachment"
+      ]
     }
   },
   {
@@ -3727,6 +5077,36 @@ export const tarotCardsNew = [
         "The World: reinforces full completion of cycle",
         "Three of Cups: extends collective field into sustained structure",
         "Five of Cups: contrasts shared completion with fixation on loss"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "fulfilling",
+        "completing",
+        "uniting",
+        "harmonising",
+        "celebrating",
+        "including",
+        "building",
+        "anchoring",
+        "affirming",
+        "sharing",
+        "belonging",
+        "radiating"
+      ],
+      "reversed": [
+        "disruption",
+        "facade",
+        "tension",
+        "fractured",
+        "idealising",
+        "excluding",
+        "hiding",
+        "pretending",
+        "fragmentation",
+        "underlying-conflict",
+        "disconnection",
+        "incompletion"
       ]
     }
   },
@@ -3809,6 +5189,36 @@ export const tarotCardsNew = [
         "Two of Cups: converts reception into mutual exchange",
         "Knight of Wands: opposes reception with directed momentum"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "receiving",
+        "offering",
+        "surprising",
+        "intuiting",
+        "dreaming",
+        "signalling",
+        "opening",
+        "sensing",
+        "imagining",
+        "conveying",
+        "vulnerability",
+        "curiosity"
+      ],
+      "reversed": [
+        "emotional-immaturity",
+        "manipulation",
+        "over-sensitivity",
+        "moodiness",
+        "deception",
+        "naivety",
+        "unreliability",
+        "avoidance",
+        "fantasising",
+        "clinginess",
+        "confusion",
+        "projection"
+      ]
     }
   },
   {
@@ -3889,6 +5299,36 @@ export const tarotCardsNew = [
         "The Lovers: directs movement into consequential choice",
         "Ace of Cups: aligns movement with emotional origin",
         "King of Wands: contrasts emotional direction with will-driven command"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "pursuing",
+        "offering",
+        "romancing",
+        "questing",
+        "following-feeling",
+        "approaching",
+        "proposing",
+        "inviting",
+        "advancing",
+        "opening",
+        "courting",
+        "offering"
+      ],
+      "reversed": [
+        "idealisation",
+        "disappointment",
+        "moodiness",
+        "withdrawal",
+        "manipulation",
+        "over-romanticising",
+        "avoidance",
+        "seduction",
+        "unreliability",
+        "escapism",
+        "projection",
+        "illusion"
       ]
     }
   },
@@ -3971,6 +5411,36 @@ export const tarotCardsNew = [
         "Knight of Cups: contrasts directed movement with contained presence",
         "Queen of Wands: contrasts internal containment with external command"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "holding",
+        "empathising",
+        "receiving",
+        "containing",
+        "witnessing",
+        "nurturing",
+        "mirroring",
+        "listening",
+        "sensing",
+        "offering-depth",
+        "compassion",
+        "sustaining"
+      ],
+      "reversed": [
+        "enmeshment",
+        "over-absorption",
+        "codependency",
+        "loss-of-self",
+        "manipulation",
+        "martyrdom",
+        "projection",
+        "smothering",
+        "blurring",
+        "vulnerability",
+        "over-sensitivity",
+        "suffocating"
+      ]
     }
   },
   {
@@ -4051,6 +5521,36 @@ export const tarotCardsNew = [
         "The Emperor: contrasts emotional governance with structural command",
         "Queen of Cups: aligns containment with authority",
         "Knight of Wands: opposes control with impulsive drive"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "containing",
+        "moderating",
+        "wisdom",
+        "steadying",
+        "holding-space",
+        "balancing",
+        "counselling",
+        "grounding-emotion",
+        "guiding",
+        "mediating",
+        "anchoring",
+        "compassion"
+      ],
+      "reversed": [
+        "emotional-manipulation",
+        "repression",
+        "volatility",
+        "withdrawal",
+        "coldness",
+        "controlling",
+        "distancing",
+        "suppression",
+        "passive-aggression",
+        "inaccessibility",
+        "disconnection",
+        "withholding"
       ]
     }
   },
@@ -4133,6 +5633,36 @@ export const tarotCardsNew = [
         "Three of Swords: defines the precise point of fracture",
         "Ace of Pentacles: imposes cognitive structure onto material inception"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "cutting",
+        "clarifying",
+        "offering-truth",
+        "breakthrough",
+        "penetrating",
+        "exposing",
+        "activating",
+        "incising",
+        "truth-telling",
+        "naming",
+        "assertion",
+        "revealing"
+      ],
+      "reversed": [
+        "confusion",
+        "misdirection",
+        "weaponising",
+        "harshness",
+        "blocking",
+        "denial",
+        "suppression",
+        "distorting",
+        "silencing",
+        "withholding-truth",
+        "muddying",
+        "overload"
+      ]
     }
   },
   {
@@ -4213,6 +5743,36 @@ export const tarotCardsNew = [
         "Justice: locks judgement into suspended balance",
         "Two of Cups: divides reciprocal exchange into opposition",
         "Four of Pentacles: compounds holding into reinforced stasis"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "stalling",
+        "deadlock",
+        "blocking",
+        "avoiding",
+        "balancing",
+        "holding-off",
+        "protecting",
+        "withdrawing",
+        "waiting",
+        "guarding",
+        "suspending",
+        "standoff"
+      ],
+      "reversed": [
+        "forcing",
+        "confronting",
+        "removing-blindfold",
+        "facing",
+        "exposing",
+        "deciding",
+        "breaking-impasse",
+        "imposing",
+        "rushing",
+        "disrupting",
+        "overriding",
+        "destabilising"
       ]
     }
   },
@@ -4295,6 +5855,36 @@ export const tarotCardsNew = [
         "Three of Cups: converts shared cohesion into defined loss",
         "Ace of Swords: fixes inception into immediate rupture"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "piercing",
+        "severing",
+        "exposing",
+        "clarifying",
+        "rupturing",
+        "naming-pain",
+        "truth-telling",
+        "cutting-through",
+        "wounding",
+        "releasing",
+        "confronting",
+        "separating"
+      ],
+      "reversed": [
+        "suppression",
+        "avoidance",
+        "prolonging",
+        "closing-over",
+        "holding-grief",
+        "internalising",
+        "denial",
+        "reopening",
+        "ruminating",
+        "festering",
+        "refusing",
+        "burying"
+      ]
     }
   },
   {
@@ -4375,6 +5965,36 @@ export const tarotCardsNew = [
         "The Hermit: compounds withdrawal into extended containment",
         "Four of Cups: reinforces disengagement through dual withdrawal",
         "Five of Swords: positions conflict immediately after suspension"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "resting",
+        "withdrawing",
+        "recovering",
+        "integrating",
+        "stillness",
+        "pausing",
+        "healing",
+        "containing",
+        "processing",
+        "retreating",
+        "incubating",
+        "waiting"
+      ],
+      "reversed": [
+        "forcing",
+        "resuming-prematurely",
+        "disrupting-rest",
+        "refusing-rest",
+        "stagnation",
+        "isolation",
+        "avoidance",
+        "withholding",
+        "suppression",
+        "restlessness",
+        "inertia",
+        "inability-to-pause"
       ]
     }
   },
@@ -4457,6 +6077,36 @@ export const tarotCardsNew = [
         "Five of Cups: compounds loss across parallel fields",
         "Six of Swords: positions transition after depletion"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "defeating",
+        "taking",
+        "winning-at-cost",
+        "humiliating",
+        "dominating",
+        "collecting",
+        "exposing",
+        "leaving-behind",
+        "conflict",
+        "overriding",
+        "claiming",
+        "dismissing"
+      ],
+      "reversed": [
+        "releasing",
+        "surrendering",
+        "reconciliation",
+        "acknowledging-cost",
+        "backing-down",
+        "restoring",
+        "repair",
+        "conceding",
+        "humility",
+        "returning",
+        "reconnecting",
+        "forgiving"
+      ]
     }
   },
   {
@@ -4537,6 +6187,36 @@ export const tarotCardsNew = [
         "The Star: directs transition toward stabilised restoration",
         "Five of Swords: positions departure from depleted conflict",
         "Six of Cups: carries prior emotional patterns into transition"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "transitioning",
+        "guiding",
+        "moving",
+        "releasing",
+        "crossing",
+        "carrying",
+        "leading-through",
+        "distancing",
+        "recovering",
+        "departing",
+        "supporting",
+        "navigating"
+      ],
+      "reversed": [
+        "stalling",
+        "resistance",
+        "clinging",
+        "unable-to-leave",
+        "returning",
+        "reverting",
+        "suppression",
+        "denial",
+        "avoidance",
+        "pulling-back",
+        "delaying",
+        "backtracking"
       ]
     }
   },
@@ -4619,6 +6299,36 @@ export const tarotCardsNew = [
         "Seven of Cups: compounds partial action through dispersed focus",
         "Knight of Swords: opposes direct force with concealed movement"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "evading",
+        "strategising",
+        "taking",
+        "withholding",
+        "scouting",
+        "testing",
+        "outsmarting",
+        "extracting",
+        "bypassing",
+        "manoeuvring",
+        "concealing",
+        "slipping-away"
+      ],
+      "reversed": [
+        "exposure",
+        "confrontation",
+        "returning",
+        "confession",
+        "accountability",
+        "being-caught",
+        "revealing",
+        "honesty",
+        "reckoning",
+        "transparency",
+        "admission",
+        "surfacing"
+      ]
     }
   },
   {
@@ -4699,6 +6409,36 @@ export const tarotCardsNew = [
         "The Devil: compounds restriction through reinforced limitation",
         "Two of Swords: deepens immobility through dual restriction",
         "Six of Wands: blocks reception of external validation"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "binding",
+        "trapping",
+        "limiting",
+        "blinding",
+        "isolating",
+        "confining",
+        "restricting",
+        "silencing",
+        "containing",
+        "paralysing",
+        "immobilising",
+        "blocking"
+      ],
+      "reversed": [
+        "releasing",
+        "liberating",
+        "removing-blindfold",
+        "breaking-free",
+        "questioning",
+        "empowering",
+        "expanding",
+        "clarity",
+        "escaping",
+        "unblocking",
+        "moving",
+        "confronting"
       ]
     }
   },
@@ -4781,6 +6521,36 @@ export const tarotCardsNew = [
         "Eight of Swords: compounds restriction within maximum pressure",
         "Nine of Cups: destabilises emotional satisfaction through internal distress"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "catastrophising",
+        "projecting",
+        "spiralling",
+        "awaken-in-fear",
+        "amplifying",
+        "disturbing",
+        "tormenting",
+        "isolating",
+        "feeding",
+        "haunting",
+        "perseverating",
+        "overwhelming"
+      ],
+      "reversed": [
+        "grounding",
+        "soothing",
+        "reality-checking",
+        "calming",
+        "releasing",
+        "dawn",
+        "lightening",
+        "reassurance",
+        "support",
+        "diminishing",
+        "context",
+        "comforting"
+      ]
     }
   },
   {
@@ -4861,6 +6631,36 @@ export const tarotCardsNew = [
         "Judgement: aligns collapse with structural renewal",
         "Nine of Swords: resolves internal pressure through termination",
         "Ace of Wands: transitions collapse into new initiation"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "ending",
+        "bottoming-out",
+        "completing",
+        "releasing",
+        "collapsing",
+        "clearing",
+        "surrendering",
+        "exhausting",
+        "finalising",
+        "exposing",
+        "culminating",
+        "breaking"
+      ],
+      "reversed": [
+        "avoiding",
+        "prolonging",
+        "refusing-end",
+        "dramatising",
+        "clinging",
+        "recovery",
+        "beginning",
+        "resisting-closure",
+        "repeating",
+        "denying",
+        "rebuilding",
+        "refusing-bottom"
       ]
     }
   },
@@ -4943,6 +6743,36 @@ export const tarotCardsNew = [
         "Knight of Swords: opposes commitment with observation",
         "Page of Cups: holds dual developing awareness without integration"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "questioning",
+        "investigating",
+        "probing",
+        "watching",
+        "alerting",
+        "signalling",
+        "testing",
+        "communicating",
+        "reporting",
+        "challenging",
+        "observing",
+        "scrutinising"
+      ],
+      "reversed": [
+        "gossiping",
+        "stirring",
+        "prying",
+        "misinformation",
+        "over-analysis",
+        "suspicion",
+        "mischief",
+        "spying",
+        "undermining",
+        "deflecting",
+        "manipulation",
+        "interference"
+      ]
     }
   },
   {
@@ -5023,6 +6853,36 @@ export const tarotCardsNew = [
         "The Chariot: compounds directed momentum into maximum velocity",
         "Page of Swords: opposes velocity with observation",
         "Knight of Cups: conflicts directional force across opposing elements"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "charging",
+        "cutting-through",
+        "advancing",
+        "confronting",
+        "asserting",
+        "challenging",
+        "driving",
+        "breaking-through",
+        "truth-seeking",
+        "rushing",
+        "exposing",
+        "disrupting"
+      ],
+      "reversed": [
+        "recklessness",
+        "aggression",
+        "haste",
+        "cruelty",
+        "over-cutting",
+        "forcing",
+        "collateral-damage",
+        "impulsiveness",
+        "harshness",
+        "blindness",
+        "volatility",
+        "overreaching"
       ]
     }
   },
@@ -5105,6 +6965,36 @@ export const tarotCardsNew = [
         "Three of Swords: links refined perception to originating rupture",
         "Queen of Cups: contrasts cognitive and emotional perception"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "discerning",
+        "perceiving",
+        "truth-telling",
+        "clarifying",
+        "cutting-through",
+        "deciding",
+        "witnessing",
+        "naming",
+        "independence",
+        "wisdom",
+        "sharpening",
+        "honest"
+      ],
+      "reversed": [
+        "coldness",
+        "harshness",
+        "cruelty",
+        "isolation",
+        "cutting-off",
+        "over-precision",
+        "detachment",
+        "withholding",
+        "severity",
+        "dismissiveness",
+        "brittleness",
+        "judgement"
+      ]
     }
   },
   {
@@ -5185,6 +7075,36 @@ export const tarotCardsNew = [
         "Justice: aligns governance with adjudicated structure",
         "Queen of Swords: reinforces discernment within authority",
         "King of Cups: contrasts cognitive and emotional governance"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "adjudicating",
+        "commanding",
+        "clarifying",
+        "directing",
+        "deciding",
+        "authorising",
+        "establishing",
+        "truth-holding",
+        "leading",
+        "structuring",
+        "ordering",
+        "pronouncing"
+      ],
+      "reversed": [
+        "tyranny",
+        "coldness",
+        "imposing",
+        "domination",
+        "rigidity",
+        "detachment",
+        "severity",
+        "inflexibility",
+        "overriding",
+        "harshness",
+        "judgement",
+        "authoritarianism"
       ]
     }
   },
@@ -5267,6 +7187,36 @@ export const tarotCardsNew = [
         "Ten of Pentacles: completes material cycle from origin",
         "Ace of Swords: slows cognitive charge into physical form"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "offering",
+        "grounding",
+        "seeding",
+        "manifesting",
+        "beginning",
+        "materialising",
+        "providing",
+        "establishing",
+        "anchoring",
+        "initiating",
+        "gifting",
+        "concretising"
+      ],
+      "reversed": [
+        "withholding",
+        "loss",
+        "instability",
+        "stalling",
+        "blocking",
+        "scarcity",
+        "missed-opportunity",
+        "hesitation",
+        "depletion",
+        "denial",
+        "suppression",
+        "ungrounded"
+      ]
     }
   },
   {
@@ -5347,6 +7297,36 @@ export const tarotCardsNew = [
         "The Wheel of Fortune: cycles material balance across change",
         "Ten of Pentacles: tensions origin against completion weight",
         "Two of Cups: aligns material duality with relational duality"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "balancing",
+        "juggling",
+        "adapting",
+        "managing",
+        "flexing",
+        "holding-tension",
+        "navigating",
+        "adjusting",
+        "mediating",
+        "prioritising",
+        "sustaining",
+        "modulating"
+      ],
+      "reversed": [
+        "dropping",
+        "overwhelm",
+        "losing-balance",
+        "rigidity",
+        "failing-to-prioritise",
+        "destabilising",
+        "scattering",
+        "collapse",
+        "chaos",
+        "avoidance",
+        "forcing",
+        "imbalance"
       ]
     }
   },
@@ -5429,6 +7409,36 @@ export const tarotCardsNew = [
         "Two of Pentacles: stabilises dual tension into structure",
         "Three of Swords: holds structure against mental disruption"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "collaborating",
+        "building",
+        "contributing",
+        "integrating",
+        "crafting",
+        "consulting",
+        "combining",
+        "planning",
+        "coordinating",
+        "acknowledging",
+        "co-creating",
+        "elevating"
+      ],
+      "reversed": [
+        "isolation",
+        "undermining",
+        "conflict",
+        "discord",
+        "rivalry",
+        "withholding",
+        "working-alone",
+        "dismissing",
+        "rejecting-input",
+        "ego",
+        "competition",
+        "fragmentation"
+      ]
     }
   },
   {
@@ -5509,6 +7519,36 @@ export const tarotCardsNew = [
         "The Devil: intensifies material attachment",
         "Three of Pentacles: restricts collaborative output",
         "Four of Cups: aligns containment with withdrawal"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "holding",
+        "protecting",
+        "securing",
+        "containing",
+        "maintaining",
+        "stabilising",
+        "guarding",
+        "preserving",
+        "anchoring",
+        "consolidating",
+        "hoarding",
+        "controlling"
+      ],
+      "reversed": [
+        "releasing",
+        "generosity",
+        "opening",
+        "sharing",
+        "loss",
+        "instability",
+        "scarcity",
+        "letting-go",
+        "vulnerability",
+        "displacement",
+        "insecurity",
+        "ungrounding"
       ]
     }
   },
@@ -5591,6 +7631,36 @@ export const tarotCardsNew = [
         "Six of Pentacles: contrasts scarcity with redistribution",
         "Five of Cups: aligns material and emotional deficit"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "exclusion",
+        "loss",
+        "struggle",
+        "isolating",
+        "lacking",
+        "withdrawing",
+        "hardship",
+        "passing-by",
+        "disconnection",
+        "suffering",
+        "marginalising",
+        "cold"
+      ],
+      "reversed": [
+        "receiving-help",
+        "inclusion",
+        "recovery",
+        "support",
+        "relief",
+        "returning",
+        "reconnecting",
+        "acceptance",
+        "rebuilding",
+        "resourcefulness",
+        "community",
+        "finding-shelter"
+      ]
     }
   },
   {
@@ -5671,6 +7741,36 @@ export const tarotCardsNew = [
         "Justice: balances distribution across structure",
         "Five of Pentacles: counteracts deprivation with flow",
         "Six of Swords: parallels transition through redistribution"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "giving",
+        "receiving",
+        "distributing",
+        "balancing",
+        "generosity",
+        "power-exchange",
+        "sharing",
+        "rewarding",
+        "offering",
+        "equalising",
+        "sustaining",
+        "measuring"
+      ],
+      "reversed": [
+        "withholding",
+        "imbalance",
+        "debt",
+        "exploitation",
+        "dependency",
+        "control",
+        "strings-attached",
+        "power-over",
+        "unequal",
+        "stinginess",
+        "manipulation",
+        "owing"
       ]
     }
   },
@@ -5753,6 +7853,36 @@ export const tarotCardsNew = [
         "Six of Pentacles: interrupts circulation with pause",
         "Seven of Wands: opposes pressure with suspension"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "assessing",
+        "waiting",
+        "reviewing",
+        "pausing",
+        "investing",
+        "tending",
+        "measuring",
+        "considering",
+        "patience",
+        "contemplating",
+        "reflecting",
+        "harvesting"
+      ],
+      "reversed": [
+        "impatience",
+        "abandoning",
+        "early-exit",
+        "undervaluing",
+        "dissatisfaction",
+        "giving-up",
+        "distraction",
+        "short-sightedness",
+        "abandonment",
+        "over-harvesting",
+        "rushing",
+        "poor-timing"
+      ]
     }
   },
   {
@@ -5833,6 +7963,36 @@ export const tarotCardsNew = [
         "The Magician: channels will into craft",
         "Seven of Pentacles: converts pause into effort",
         "Eight of Swords: binds focus within restriction"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "crafting",
+        "refining",
+        "dedicating",
+        "practising",
+        "building",
+        "improving",
+        "focusing",
+        "mastering",
+        "contributing",
+        "developing",
+        "concentrating",
+        "diligence"
+      ],
+      "reversed": [
+        "perfectionism",
+        "drudgery",
+        "isolating",
+        "narrow-focus",
+        "loss-of-meaning",
+        "obsession",
+        "missing-the-bigger-picture",
+        "withholding",
+        "over-specialising",
+        "burnout",
+        "rigidity",
+        "grinding"
       ]
     }
   },
@@ -5915,6 +8075,36 @@ export const tarotCardsNew = [
         "Eight of Pentacles: contrasts effort with completion",
         "Nine of Cups: aligns material and emotional sufficiency"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "enjoying",
+        "self-sufficiency",
+        "cultivating",
+        "achieving",
+        "abundance",
+        "independence",
+        "savouring",
+        "containing",
+        "refining",
+        "owning",
+        "completing",
+        "flourishing"
+      ],
+      "reversed": [
+        "isolation",
+        "over-dependence",
+        "precarity",
+        "losing",
+        "superficiality",
+        "showing-off",
+        "withholding",
+        "instability",
+        "loss",
+        "vulnerability",
+        "exclusion",
+        "fragility"
+      ]
     }
   },
   {
@@ -5995,6 +8185,36 @@ export const tarotCardsNew = [
         "The World: completes cycle within structure",
         "Nine of Pentacles: contrasts individual and collective sufficiency",
         "Ten of Swords: opposes material completion with collapse"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "completing",
+        "establishing",
+        "securing",
+        "building-legacy",
+        "gathering",
+        "connecting-generations",
+        "sustaining",
+        "rooting",
+        "including",
+        "affirming",
+        "consolidating",
+        "inheriting"
+      ],
+      "reversed": [
+        "disruption",
+        "conflict",
+        "loss",
+        "instability",
+        "fracture",
+        "inheritance-dispute",
+        "exclusion",
+        "breaking-tradition",
+        "displacement",
+        "undermining",
+        "fragmentation",
+        "disinheritance"
       ]
     }
   },
@@ -6077,6 +8297,36 @@ export const tarotCardsNew = [
         "Eight of Pentacles: develops study into practice",
         "Page of Swords: aligns study with inquiry"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "studying",
+        "grounding",
+        "initiating",
+        "signalling-opportunity",
+        "practical",
+        "planning",
+        "researching",
+        "beginning",
+        "tending",
+        "learning",
+        "focusing",
+        "observing"
+      ],
+      "reversed": [
+        "unreliability",
+        "impracticality",
+        "delay",
+        "unfocused",
+        "over-caution",
+        "slowness",
+        "missing-opportunity",
+        "daydreaming",
+        "stalling",
+        "avoidance",
+        "inertia",
+        "lacking-follow-through"
+      ]
     }
   },
   {
@@ -6157,6 +8407,36 @@ export const tarotCardsNew = [
         "The Emperor: enforces structured advancement",
         "Page of Pentacles: develops study into progression",
         "Knight of Cups: contrasts steady and emotional momentum"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "persisting",
+        "building",
+        "methodical",
+        "steady",
+        "reliable",
+        "delivering",
+        "committed",
+        "thorough",
+        "plodding",
+        "consistent",
+        "maintaining",
+        "practical"
+      ],
+      "reversed": [
+        "stubbornness",
+        "stagnation",
+        "inflexibility",
+        "drudgery",
+        "slowness",
+        "obsession",
+        "rigidity",
+        "boredom",
+        "over-caution",
+        "grinding",
+        "inability-to-pivot",
+        "resistance"
       ]
     }
   },
@@ -6239,6 +8519,36 @@ export const tarotCardsNew = [
         "Knight of Pentacles: balances momentum with maintenance",
         "Queen of Swords: contrasts care with analysis"
       ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "nurturing",
+        "providing",
+        "grounding",
+        "sustaining",
+        "managing",
+        "welcoming",
+        "practical-care",
+        "cultivating",
+        "containing",
+        "abundance",
+        "security",
+        "mothering"
+      ],
+      "reversed": [
+        "smothering",
+        "over-practicality",
+        "neglect",
+        "hoarding",
+        "over-involvement",
+        "material-focus",
+        "possessiveness",
+        "dependency",
+        "withholding",
+        "controlling",
+        "scarcity",
+        "depletion"
+      ]
     }
   },
   {
@@ -6319,6 +8629,36 @@ export const tarotCardsNew = [
         "The Emperor: aligns structural and material authority",
         "Queen of Pentacles: contrasts care with command",
         "King of Swords: contrasts material and mental authority"
+      ]
+    },
+    "relationalVocabulary": {
+      "upright": [
+        "providing",
+        "securing",
+        "leading",
+        "building",
+        "managing",
+        "sustaining",
+        "generating",
+        "anchoring",
+        "protecting",
+        "investing",
+        "mastering",
+        "consolidating"
+      ],
+      "reversed": [
+        "materialism",
+        "controlling",
+        "corruption",
+        "greed",
+        "stagnation",
+        "over-possession",
+        "misuse-of-resources",
+        "domination",
+        "inflexibility",
+        "withholding",
+        "hoarding",
+        "power-over"
       ]
     }
   }

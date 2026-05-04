@@ -508,37 +508,104 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   const signalWordMap = {
     accelerates: "Acceleration",
     aligns: "Alignment",
-    binds: "Binding",
+    binds: "Constraint",
     blocks: "Block",
     completes: "Completion",
-    constrains: "Constraint",
+    constrains: "Restriction",
+    cuts: "Severance",
+    deepens: "Depth",
     depletes: "Depletion",
-    drains: "Drain",
+    drains: "Depletion",
     drives: "Drive",
-    focuses: "Focus",
+    focuses: "Direction",
     introduces: "Introduction",
     nourishes: "Nurture",
     obscures: "Obscuring",
     opens: "Opening",
-    pairs: "Pairing",
-    shatters: "Break",
+    pairs: "Connection",
+    propels: "Momentum",
+    shatters: "Collapse",
+    slows: "Stillness",
     stabilises: "Stability",
     structures: "Structure",
     sustains: "Sustain",
     withholds: "Withholding",
   };
 
-  function signalWord(prefix) {
-    const p = String(prefix || "")
-      .trim()
-      .toLowerCase();
-    if (!p) return "Neutral";
-    return signalWordMap[p] || p.charAt(0).toUpperCase() + p.slice(1);
+  function normaliseSignalTerm(term) {
+    const value = String(term || "").toLowerCase();
+
+    const map = {
+      fulfilling: "completion",
+      accelerating: "acceleration",
+      driving: "momentum",
+      defeating: "conflict",
+      ending: "ending",
+      bonding: "connection",
+    };
+
+    return map[value] || value;
+  }
+
+  function vocabularyWord(card, isReversed) {
+    const vocab = card.relationalVocabulary;
+    if (!vocab) return null;
+
+    const list = isReversed ? vocab.reversed : vocab.upright;
+    if (!Array.isArray(list) || list.length === 0) return null;
+
+    const preferred = [
+      "threshold",
+      "momentum",
+      "connection",
+      "completion",
+      "depletion",
+      "collapse",
+      "rupture",
+      "concealment",
+      "acceleration",
+      "rigidity",
+      "support",
+      "stability",
+      "direction",
+      "opening",
+      "bonding",
+      "ending",
+      "conflict",
+      "alignment",
+      "pressure",
+      "release",
+      "clarity",
+      "withdrawal",
+      "reflection",
+    ];
+
+    const match = preferred.find((term) =>
+      list.some((item) => String(item).toLowerCase() === term),
+    );
+
+    if (match) return normaliseSignalTerm(match);
+
+    return normaliseSignalTerm(list[0]);
+  }
+
+  function signalWord(prefix, card, isReversed) {
+    const vocab = vocabularyWord(card, isReversed);
+    if (vocab) {
+      return vocab.charAt(0).toUpperCase() + vocab.slice(1);
+    }
+
+    if (signalWordMap[prefix]) {
+      return signalWordMap[prefix];
+    }
+
+    return "Shift";
   }
 
   function interactionSignal(interactionLine) {
     const line = String(interactionLine || "").toLowerCase();
 
+    if (line.includes("forward movement") || line.includes("rather than resistance")) return "Sequence";
     if (line.includes("exhaustion") || line.includes("collapse") || line.includes("finality")) return "Collapse";
     if (line.includes("confirms") || line.includes("completes") || line.includes("support")) return "Support";
     if (line.includes("natural sequence") || line.includes("builds on")) return "Sequence";
@@ -694,13 +761,74 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     const interactionLine = classifyInteraction(p1, p2);
-    const signal = [signalWord(p1), signalWord(p2), interactionSignal(interactionLine)].join(" + ");
+    const s1 = signalWord(p1, c1, rev1);
+    const s2 = signalWord(p2, c2, rev2);
+    const s3 = interactionSignal(interactionLine);
+
+    const signal = s1 + " + " + s2 + " + " + s3;
+
+    let verdictText =
+      "Pause before deciding. This interaction needs more observation before the useful move becomes clear.";
+
+    if (
+      (p1 === "depletes" && p2 === "drives") ||
+      (p1 === "drains" && p2 === "drives") ||
+      (p1 === "cuts" && p2 === "depletes") ||
+      (p1 === "pressures" && p2 === "shatters")
+    ) {
+      verdictText =
+        "This moves toward breakdown. Stop feeding the pattern and step back from escalation.";
+    }
+
+    if (
+      (p1 === "pairs" && p2 === "completes") ||
+      (p1 === "aligns" && p2 === "completes") ||
+      (p1 === "nourishes" && p2 === "sustains")
+    ) {
+      verdictText =
+        "This is stabilising. Let it develop without forcing a new problem onto it.";
+    }
+
+    if (
+      (p1 === "opens" && p2 === "drives") ||
+      (p1 === "opens" && p2 === "propels") ||
+      (p1 === "opens" && p2 === "focuses")
+    ) {
+      verdictText =
+        "This has forward motion. Let the opening become direction before interfering with it.";
+    }
+
+    if (p1 === "withholds" && p2 === "accelerates") {
+      verdictText =
+        "Do not confuse speed with resolution. Slow the exchange until what is hidden becomes clear.";
+    }
+
+    if (
+      (p1 === "deepens" && p2 === "slows") ||
+      (p1 === "withholds" && p2 === "slows") ||
+      (["deepens", "stills", "withholds", "draws", "reduces", "slows"].includes(p1) &&
+        ["deepens", "stills", "withholds", "draws", "reduces", "slows"].includes(p2))
+    ) {
+      verdictText =
+        "This needs reflection, not pressure. Let the deeper signal clarify before acting.";
+    }
+
+    if (
+      (p1 === "constrains" && p2 === "shatters") ||
+      (p1 === "structures" && p2 === "shatters") ||
+      (p1 === "binds" && p2 === "shatters") ||
+      c2.id === "the-tower" ||
+      c2.name === "The Tower"
+    ) {
+      verdictText = "This is breaking open. Stop trying to preserve what can no longer hold.";
+    }
 
     let h = "";
 
     h += '<section class="tarot-tool__signal-card">';
     h += '<h3 class="tarot-tool__signal-title">The Signal</h3>';
     h += '<p class="tarot-tool__signal-line">' + escHtml(signal) + "</p>";
+    h += '<p class="tarot-tool__signal-verdict">' + escHtml(verdictText) + "</p>";
     h += "</section>";
 
     h += '<section class="tarot-tool__out-block">';
@@ -1240,6 +1368,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: clamp(1.3rem, 3vw, 1.75rem);
     line-height: 1.35;
     color: var(--mountain-water);
+  }
+
+  .tarot-tool__signal-verdict {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink);
   }
 
   .tarot-tool__out-p:last-child {

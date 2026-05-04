@@ -1,0 +1,1134 @@
+{
+  "source": "src/data/tarotCardsNew.js",
+  "splitRule": "Clause/sentence units split on . ? ! ; plus following whitespace; units whose trim starts with It, it, They, or they.",
+  "count": 161,
+  "items": [
+    {
+      "card": "The Fool",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It carries no inherited pattern, no accumulated caution, no defined direction.",
+      "suggestedRewrite": "Movement carries no inherited pattern, no accumulated caution, no defined direction."
+    },
+    {
+      "card": "The Fool",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where prior rules do not yet apply, establishing potential rather than direction.",
+      "suggestedRewrite": "The space becomes one where prior rules do not yet apply, establishing potential rather than direction."
+    },
+    {
+      "card": "The Fool",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It refuses to absorb the weight of what is already present, redirecting interaction toward possibility rather than continuation.",
+      "suggestedRewrite": "The weight of what is already present is not absorbed; interaction redirects toward possibility rather than continuation."
+    },
+    {
+      "card": "The Fool",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through unfocused movement or visible reluctance, creating an opening register that signals a threshold without yielding one.",
+      "suggestedRewrite": "The space takes shape through unfocused movement or visible reluctance, creating an opening register that signals a threshold without yielding one."
+    },
+    {
+      "card": "The Fool",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either overcommits without sensing the field or withdraws from real engagement, leaving the interaction unresolved.",
+      "suggestedRewrite": "The response either overcommits without sensing the field or withdraws from real engagement, leaving the interaction unresolved."
+    },
+    {
+      "card": "The Fool",
+      "orient": "—",
+      "field": "combinationLogic.whenSecond",
+      "originalSentence": "It either reopens the situation to fresh movement or, reversed, exposes the prior card's momentum as misdirected.",
+      "suggestedRewrite": "The response either reopens the situation to fresh movement or, reversed, exposes the prior card's momentum as misdirected."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It does not generate from nothing;",
+      "suggestedRewrite": "Nothing is generated from nothing;"
+    },
+    {
+      "card": "The Magician",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it organises what is already present and applies it toward a chosen outcome.",
+      "suggestedRewrite": "What is already present is organised and applied toward a chosen outcome."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It is authorship in its functional state, the precise junction where will meets means.",
+      "suggestedRewrite": "Authorship appears here in its functional state, the precise junction where will meets means."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where action is conscious, structured, and purposeful.",
+      "suggestedRewrite": "The space becomes one where action is conscious, structured, and purposeful."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It aligns elements in the existing field to create coherence and direction, turning scattered potential into deliberate action.",
+      "suggestedRewrite": "Elements in the existing field align elements in the existing field to create coherence and direction, turning scattered potential into deliberate action."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through apparent capability that lacks alignment, creating a directed register whose guidance does not translate into coherent motion.",
+      "suggestedRewrite": "The space takes shape through apparent capability that lacks alignment, creating a directed register whose guidance does not translate into coherent motion."
+    },
+    {
+      "card": "The Magician",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either scatters the available energy or channels it toward distortion, producing motion without coherent result.",
+      "suggestedRewrite": "The response either scatters the available energy or channels it toward distortion, producing motion without coherent result."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it is recognised.",
+      "suggestedRewrite": "Recognition is present."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It is the structural pause that allows truth to surface on its own terms.",
+      "suggestedRewrite": "A structural pause appears that allows truth to surface on its own terms."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where surface activity is suspended and deeper signal can be registered.",
+      "suggestedRewrite": "The space becomes one where surface activity is suspended and deeper signal can be registered."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the existing field on its own terms but slows it, drawing attention to what has been overlooked or unspoken.",
+      "suggestedRewrite": "The prior card's material is not engaged at the existing field on its own terms but slows it, drawing attention to what has been overlooked or unspoken."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through unavailable signal, creating a register of withholding rather than receptivity.",
+      "suggestedRewrite": "The space takes shape through unavailable signal, creating a register of withholding rather than receptivity."
+    },
+    {
+      "card": "The High Priestess",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either ignores what is being offered or converts perception into concealment, producing distance rather than attunement.",
+      "suggestedRewrite": "The response either ignores what is being offered or converts perception into concealment, producing distance rather than attunement."
+    },
+    {
+      "card": "The Empress",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where development is possible, where what is offered will be received and held.",
+      "suggestedRewrite": "The space becomes one where development is possible, where what is offered will be received and held."
+    },
+    {
+      "card": "The Empress",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It supports the existing field through nourishment rather than redirection, allowing the prior card's material to develop on its own terms.",
+      "suggestedRewrite": "The existing field is supported the existing field through nourishment rather than redirection, allowing the prior card's material to develop on its own terms."
+    },
+    {
+      "card": "The Empress",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through care that distorts, creating conditions that appear supportive but do not allow development.",
+      "suggestedRewrite": "The space takes shape through care that distorts, creating conditions that appear supportive but do not allow development."
+    },
+    {
+      "card": "The Empress",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either floods the prior card with care it cannot use or refuses the support that was needed, producing stagnation rather than growth.",
+      "suggestedRewrite": "The response either floods the prior card with care it cannot use or refuses the support that was needed, producing stagnation rather than growth."
+    },
+    {
+      "card": "The Emperor",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where rules apply, where the frame is established, and where action takes place within recognisable form.",
+      "suggestedRewrite": "The space becomes one where rules apply, where the frame is established, and where action takes place within recognisable form."
+    },
+    {
+      "card": "The Emperor",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It organises what is present according to defined principles, providing the architecture that allows the prior card's energy to be held and directed.",
+      "suggestedRewrite": "What is present is organised what is present according to defined principles, providing the architecture that allows the prior card's energy to be held and directed."
+    },
+    {
+      "card": "The Emperor",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through structure that does not serve, creating an ordered register that operates through coercion or no longer holds at all.",
+      "suggestedRewrite": "The space takes shape through structure that does not serve, creating an ordered register that operates through coercion or no longer holds at all."
+    },
+    {
+      "card": "The Emperor",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either crushes the prior card's material under inflexible form or exposes the absence of frame, leaving energy without containment.",
+      "suggestedRewrite": "The response either crushes the prior card's material under inflexible form or exposes the absence of frame, leaving energy without containment."
+    },
+    {
+      "card": "The Hierophant",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where established practice applies, where meaning is held within recognised structure, and where the individual is positioned in relation to a larger frame.",
+      "suggestedRewrite": "The space becomes one where established practice applies, where meaning is held within recognised structure, and where the individual is positioned in relation to a larger frame."
+    },
+    {
+      "card": "The Hierophant",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It connects the prior card's material to recognised form, asking how what is present relates to what has been established, and offering the framework through which it can be understood.",
+      "suggestedRewrite": "The prior card's material connects the prior card's material to recognised form, asking how what is present relates to what has been established, and offering the framework through which it can be understood."
+    },
+    {
+      "card": "The Hierophant",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through inherited form that no longer functions, creating a formal register that either demands conformity without meaning or cannot establish continuity at all.",
+      "suggestedRewrite": "The space takes shape through inherited form that no longer functions, creating a formal register that either demands conformity without meaning or cannot establish continuity at all."
+    },
+    {
+      "card": "The Hierophant",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either forces the prior card's material into a frame that does not fit, or rejects the inherited structure that would have given it context, leaving the interaction unmoored.",
+      "suggestedRewrite": "The response either forces the prior card's material into a frame that does not fit, or rejects the inherited structure that would have given it context, leaving the interaction unmoored."
+    },
+    {
+      "card": "The Lovers",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as a place where values must be named, where commitment is being asked for, and where the meeting between distinct positions is structurally significant.",
+      "suggestedRewrite": "The space is framed as a place where values must be named, where commitment is being asked for, and where the meeting between distinct positions is structurally significant."
+    },
+    {
+      "card": "The Lovers",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It draws the prior card's material toward conscious commitment, exposing whether the situation can hold integrated union or whether the alignment is unstable.",
+      "suggestedRewrite": "The prior card's material is drawn the prior card's material toward conscious commitment, exposing whether the situation can hold integrated union or whether the alignment is unstable."
+    },
+    {
+      "card": "The Lovers",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through unresolved choice or compromised commitment, creating a register where union appears available but cannot hold without distortion.",
+      "suggestedRewrite": "The space takes shape through unresolved choice or compromised commitment, creating a register where union appears available but cannot hold without distortion."
+    },
+    {
+      "card": "The Lovers",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either avoids the alignment the prior card was moving toward, or accepts a union that requires the prior material to be absorbed rather than met.",
+      "suggestedRewrite": "The response either avoids the alignment the prior card was moving toward, or accepts a union that requires the prior material to be absorbed rather than met."
+    },
+    {
+      "card": "The Chariot",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where forward motion is required, where opposing forces must be integrated rather than resolved, and where commitment translates into visible drive.",
+      "suggestedRewrite": "The space becomes one where forward motion is required, where opposing forces must be integrated rather than resolved, and where commitment translates into visible drive."
+    },
+    {
+      "card": "The Chariot",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It gathers the prior card's tensions and converts them into direction, refusing to allow stagnation and pressing the interaction toward defined movement.",
+      "suggestedRewrite": "The prior card's tensions are gathered and converted into direction, refusing to allow stagnation and pressing the interaction toward defined movement."
+    },
+    {
+      "card": "The Chariot",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through movement that does not integrate, creating a directional register that either suppresses opposition or cannot hold its course.",
+      "suggestedRewrite": "The space takes shape through movement that does not integrate, creating a directional register that either suppresses opposition or cannot hold its course."
+    },
+    {
+      "card": "The Chariot",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either forces the prior card's material into a line it cannot sustain, or fragments under the tensions present, producing motion that does not arrive.",
+      "suggestedRewrite": "The response either forces the prior card's material into a line it cannot sustain, or fragments under the tensions present, producing motion that does not arrive."
+    },
+    {
+      "card": "Strength",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where intensity is present but does not destabilise, where force is held without being deployed, and where composure shapes the register more than action does.",
+      "suggestedRewrite": "The space becomes one where intensity is present but does not destabilise, where force is held without being deployed, and where composure shapes the register more than action does."
+    },
+    {
+      "card": "Strength",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It meets the prior card's force with composure rather than counter-force, transforming what was reactive or volatile into something the interaction can actually hold.",
+      "suggestedRewrite": "The prior card's force is met with composure rather than counter-force, transforming what was reactive or volatile into something the interaction can actually hold."
+    },
+    {
+      "card": "Strength",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through intensity that cannot be held cleanly, creating a register that appears composed but conceals overwhelm, or that has already given way to reactivity.",
+      "suggestedRewrite": "The space takes shape through intensity that cannot be held cleanly, creating a register that appears composed but conceals overwhelm, or that has already given way to reactivity."
+    },
+    {
+      "card": "Strength",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either denies the prior card's force, producing strain, or matches it reactively, producing escalation rather than containment.",
+      "suggestedRewrite": "The response either denies the prior card's force, producing strain, or matches it reactively, producing escalation rather than containment."
+    },
+    {
+      "card": "The Hermit",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where pace has slowed, where engagement has been suspended deliberately, and where attention is turned toward what has not yet been understood.",
+      "suggestedRewrite": "The space becomes one where pace has slowed, where engagement has been suspended deliberately, and where attention is turned toward what has not yet been understood."
+    },
+    {
+      "card": "The Hermit",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It steps back from the prior card's momentum or intensity, creating the space in which what was being acted on can instead be examined.",
+      "suggestedRewrite": "Distance opens from the the prior card's momentum or intensity, creating the space in which what was being acted on can instead be examined."
+    },
+    {
+      "card": "The Hermit",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through withdrawal that has lost its method, creating a reflective register that either refuses re-engagement or cannot move past circular self-examination.",
+      "suggestedRewrite": "The space takes shape through withdrawal that has lost its method, creating a reflective register that either refuses re-engagement or cannot move past circular self-examination."
+    },
+    {
+      "card": "The Hermit",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either pulls away from the prior card entirely, producing severance, or absorbs its material into rumination that does not return as understanding.",
+      "suggestedRewrite": "The response either pulls away from the prior card entirely, producing severance, or absorbs its material into rumination that does not return as understanding."
+    },
+    {
+      "card": "Wheel of Fortune",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where conditions are shifting through forces that did not originate in the present interaction, where the prior pattern is closing, and where a new configuration is forming.",
+      "suggestedRewrite": "The space becomes one where conditions are shifting through forces that did not originate in the present interaction, where the prior pattern is closing, and where a new configuration is forming."
+    },
+    {
+      "card": "Wheel of Fortune",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the prior card on its own terms but reorganises the conditions under which the interaction is taking place, exposing what has been operating beneath the surface and shifting the ground accordingly.",
+      "suggestedRewrite": "The prior card's material is not engaged at the prior card on its own terms but reorganises the conditions under which the interaction is taking place, exposing what has been operating beneath the surface and shifting the ground accordingly."
+    },
+    {
+      "card": "Wheel of Fortune",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through circumstance that should be turning but is not, creating a register where pattern persists without reorientation and where the underlying shape remains hidden.",
+      "suggestedRewrite": "The space takes shape through circumstance that should be turning but is not, creating a register where pattern persists without reorientation and where the underlying shape remains hidden."
+    },
+    {
+      "card": "Wheel of Fortune",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either holds the prior card's material in a configuration that should have closed, or introduces movement that cycles back to the same ground rather than producing genuine reorganisation.",
+      "suggestedRewrite": "The response either holds the prior card's material in a configuration that should have closed, or introduces movement that cycles back to the same ground rather than producing genuine reorganisation."
+    },
+    {
+      "card": "Justice",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where consequence is being rendered, where evidence determines outcome, and where personal preference does not adjust the result.",
+      "suggestedRewrite": "The space becomes one where consequence is being rendered, where evidence determines outcome, and where personal preference does not adjust the result."
+    },
+    {
+      "card": "Justice",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It examines the prior card's material against what has actually been produced, sorting what aligns from what does not and rendering the consequence that was already structurally present.",
+      "suggestedRewrite": "The prior card's material is examined the prior card's material against what has actually been produced, sorting what aligns from what does not and rendering the consequence that was already structurally present."
+    },
+    {
+      "card": "Justice",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through reckoning that has been deflected, creating a register where consequence is present but misaligned with cause, and where judgement does not proceed from evidence.",
+      "suggestedRewrite": "The space takes shape through reckoning that has been deflected, creating a register where consequence is present but misaligned with cause, and where judgement does not proceed from evidence."
+    },
+    {
+      "card": "Justice",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either refuses to render the verdict the prior card had earned, or applies it in a place that did not produce it, leaving the alignment between cause and effect unresolved.",
+      "suggestedRewrite": "The response either refuses to render the verdict the prior card had earned, or applies it in a place that did not produce it, leaving the alignment between cause and effect unresolved."
+    },
+    {
+      "card": "The Hanged Man",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where forward motion has been released deliberately, where the usual axis of action is inverted, and where the conditions for insight are being established through stillness rather than effort.",
+      "suggestedRewrite": "The space becomes one where forward motion has been released deliberately, where the usual axis of action is inverted, and where the conditions for insight are being established through stillness rather than effort."
+    },
+    {
+      "card": "The Hanged Man",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the prior card on its own momentum but releases the grip the situation was demanding, allowing the configuration to reorganise itself rather than being driven toward outcome.",
+      "suggestedRewrite": "The prior card's material is not engaged at the prior card on its own momentum but releases the grip the situation was demanding, allowing the configuration to reorganise itself rather than being driven toward outcome."
+    },
+    {
+      "card": "The Hanged Man",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through suspension that has lost its method, creating an inverted register that either refuses to release into reorganisation or holds itself in sacrifice that produces no structural result.",
+      "suggestedRewrite": "The space takes shape through suspension that has lost its method, creating an inverted register that either refuses to release into reorganisation or holds itself in sacrifice that produces no structural result."
+    },
+    {
+      "card": "The Hanged Man",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either refuses to release the prior card's material, producing prolonged stall, or absorbs it into sacrificial position that drains the interaction without producing the insight surrender was meant to bring.",
+      "suggestedRewrite": "The response either refuses to release the prior card's material, producing prolonged stall, or absorbs it into sacrificial position that drains the interaction without producing the insight surrender was meant to bring."
+    },
+    {
+      "card": "Death",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where what could not continue is being released, where the close is structural rather than negotiable, and where the ground is being prepared for what has not yet formed.",
+      "suggestedRewrite": "The space becomes one where what could not continue is being released, where the close is structural rather than negotiable, and where the ground is being prepared for what has not yet formed."
+    },
+    {
+      "card": "Death",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not adjust the prior card's material but removes the form it was operating within, clearing the configuration so that something other than continuation becomes possible.",
+      "suggestedRewrite": "The prior card's material is not adjusted at the prior card's material but removes the form it was operating within, clearing the configuration so that something other than continuation becomes possible."
+    },
+    {
+      "card": "Death",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through ending that has been refused or arrested, creating a register where form persists past its function and where the clearing that should have occurred has not arrived.",
+      "suggestedRewrite": "The space takes shape through ending that has been refused or arrested, creating a register where form persists past its function and where the clearing that should have occurred has not arrived."
+    },
+    {
+      "card": "Death",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either holds the prior card's material in form that has already lost coherence, or stalls the ending midway, producing decay rather than the definitive release transformation required.",
+      "suggestedRewrite": "The response either holds the prior card's material in form that has already lost coherence, or stalls the ending midway, producing decay rather than the definitive release transformation required."
+    },
+    {
+      "card": "Temperance",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where pacing matters, where extremes are being brought into proportion, and where synthesis is being formed through patient combination rather than imposed resolution.",
+      "suggestedRewrite": "The space becomes one where pacing matters, where extremes are being brought into proportion, and where synthesis is being formed through patient combination rather than imposed resolution."
+    },
+    {
+      "card": "Temperance",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not force the prior card's material into resolution but blends it with what is present, finding the proportion that allows previously disparate elements to function together.",
+      "suggestedRewrite": "The prior card's material is not forced into the prior card's material into resolution but blends it with what is present, finding the proportion that allows previously disparate elements to function together."
+    },
+    {
+      "card": "Temperance",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through measure that has been lost, creating a register where combination is being attempted without the pacing required for synthesis, or where excess in one direction has distorted the proportion of the whole.",
+      "suggestedRewrite": "The space takes shape through measure that has been lost, creating a register where combination is being attempted without the pacing required for synthesis, or where excess in one direction has distorted the proportion of the whole."
+    },
+    {
+      "card": "Temperance",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either rushes the prior card's material into combination before it can integrate, or allows one element to dominate, producing excess that strains rather than balances.",
+      "suggestedRewrite": "The response either rushes the prior card's material into combination before it can integrate, or allows one element to dominate, producing excess that strains rather than balances."
+    },
+    {
+      "card": "The Devil",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where attachment is operating beneath the surface, where the visible terms are not the real terms, and where compulsion is shaping movement more than choice.",
+      "suggestedRewrite": "The space becomes one where attachment is operating beneath the surface, where the visible terms are not the real terms, and where compulsion is shaping movement more than choice."
+    },
+    {
+      "card": "The Devil",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the prior card on its stated terms but reveals what has actually been holding the configuration in place, surfacing the attachment beneath the surface and changing what the interaction is actually about.",
+      "suggestedRewrite": "The prior card's material is not engaged at the prior card on its stated terms but reveals what has actually been holding the configuration in place, surfacing the attachment beneath the surface and changing what the interaction is actually about."
+    },
+    {
+      "card": "The Devil",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where attachment is being acknowledged, where compulsion is becoming examinable, and where binding is beginning to lose its automatic force.",
+      "suggestedRewrite": "The space becomes one where attachment is being acknowledged, where compulsion is becoming examinable, and where binding is beginning to lose its automatic force."
+    },
+    {
+      "card": "The Devil",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It surfaces the attachment holding the prior card's material in place, but in a register that allows recognition rather than continued capture, initiating structural release.",
+      "suggestedRewrite": "The attachment holding the prior card's material in place surfaces the attachment holding the prior card's material in place, but in a register that allows recognition rather than continued capture, initiating structural release."
+    },
+    {
+      "card": "The Tower",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where structure is failing under pressure it can no longer absorb, where what was held in place is being taken down, and where ground is being opened through rupture.",
+      "suggestedRewrite": "The space becomes one where structure is failing under pressure it can no longer absorb, where what was held in place is being taken down, and where ground is being opened through rupture."
+    },
+    {
+      "card": "The Tower",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not adjust the prior card but breaks the structure that was holding it, forcing the configuration into the clearing that voluntary release could not produce.",
+      "suggestedRewrite": "The prior card's material is not adjusted at the prior card but breaks the structure that was holding it, forcing the configuration into the clearing that voluntary release could not produce."
+    },
+    {
+      "card": "The Tower",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through collapse that has been delayed or partial, creating a register where structure is failing without falling and revelation is incomplete.",
+      "suggestedRewrite": "The space takes shape through collapse that has been delayed or partial, creating a register where structure is failing without falling and revelation is incomplete."
+    },
+    {
+      "card": "The Tower",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It strains the prior card's structure but does not break it, leaving the interaction in unresolved breakdown.",
+      "suggestedRewrite": "The prior card's structure is strained but does not break it, leaving the interaction in unresolved breakdown."
+    },
+    {
+      "card": "The Star",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where defence has been released, where trust is structurally available, and where renewal occurs through stillness rather than effort.",
+      "suggestedRewrite": "The space becomes one where defence has been released, where trust is structurally available, and where renewal occurs through stillness rather than effort."
+    },
+    {
+      "card": "The Star",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the prior card on defended terms but removes the need for defence, allowing what was strained or collapsed to begin restoring through openness.",
+      "suggestedRewrite": "The prior card's material is not engaged at the prior card on defended terms but removes the need for defence, allowing what was strained or collapsed to begin restoring through openness."
+    },
+    {
+      "card": "The Star",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through withheld openness or unavailable renewal, creating a register where restoration cannot land.",
+      "suggestedRewrite": "The space takes shape through withheld openness or unavailable renewal, creating a register where restoration cannot land."
+    },
+    {
+      "card": "The Star",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either refuses the renewal the prior card allows, or absorbs it into closure, preventing replenishment from completing.",
+      "suggestedRewrite": "The response either refuses the renewal the prior card allows, or absorbs it into closure, preventing replenishment from completing."
+    },
+    {
+      "card": "The Moon",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where unconscious material is surfacing, where perception cannot resolve what is present, and where the terrain itself does not hold steady.",
+      "suggestedRewrite": "The space becomes one where unconscious material is surfacing, where perception cannot resolve what is present, and where the terrain itself does not hold steady."
+    },
+    {
+      "card": "The Moon",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It does not engage the prior card on its stated terms but exposes what was beneath them, altering what the interaction is actually navigating.",
+      "suggestedRewrite": "The prior card's material is not engaged at the prior card on its stated terms but exposes what was beneath them, altering what the interaction is actually navigating."
+    },
+    {
+      "card": "The Moon",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through projection, where confusion is mistaken for insight and unconscious material shapes perception without being recognised.",
+      "suggestedRewrite": "The space takes shape through projection, where confusion is mistaken for insight and unconscious material shapes perception without being recognised."
+    },
+    {
+      "card": "The Moon",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It absorbs the prior card into projection, reshaping what is present into something that appears meaningful but is not grounded.",
+      "suggestedRewrite": "The prior card is absorbed the prior card into projection, reshaping what is present into something that appears meaningful but is not grounded."
+    },
+    {
+      "card": "The Sun",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where clarity is structurally present, where nothing requires concealment, and where vitality is expressed without defence.",
+      "suggestedRewrite": "The space becomes one where clarity is structurally present, where nothing requires concealment, and where vitality is expressed without defence."
+    },
+    {
+      "card": "The Sun",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It brings the prior card fully into visibility, removing distortion, concealment, or ambiguity, and allowing the interaction to resolve through clarity.",
+      "suggestedRewrite": "The prior card is brought the prior card fully into visibility, removing distortion, concealment, or ambiguity, and allowing the interaction to resolve through clarity."
+    },
+    {
+      "card": "The Sun",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through insufficient vitality or performed illumination, creating a register where presence is either weakened or overstated.",
+      "suggestedRewrite": "The space takes shape through insufficient vitality or performed illumination, creating a register where presence is either weakened or overstated."
+    },
+    {
+      "card": "The Sun",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either fails to fully illuminate the prior card, leaving it unresolved, or imposes clarity where it has not been earned, masking what remains unseen.",
+      "suggestedRewrite": "The response either fails to fully illuminate the prior card, leaving it unresolved, or imposes clarity where it has not been earned, masking what remains unseen."
+    },
+    {
+      "card": "Judgement",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where accumulated experience is converting into direction, where recognition is unavoidable, and where response is structurally required.",
+      "suggestedRewrite": "The space becomes one where accumulated experience is converting into direction, where recognition is unavoidable, and where response is structurally required."
+    },
+    {
+      "card": "Judgement",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It converts the prior card's material into directional clarity, requiring the interaction to recognise what it has become and respond accordingly.",
+      "suggestedRewrite": "The prior card's material converts the prior card's material into directional clarity, requiring the interaction to recognise what it has become and respond accordingly."
+    },
+    {
+      "card": "Judgement",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space through recognition that has not been acted on, creating a register where the call is present but not answered.",
+      "suggestedRewrite": "The space takes shape through recognition that has not been acted on, creating a register where the call is present but not answered."
+    },
+    {
+      "card": "Judgement",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either fails to convert the prior card's material into direction or absorbs it into self-evaluation, preventing action.",
+      "suggestedRewrite": "The response either fails to convert the prior card's material into direction or absorbs it into self-evaluation, preventing action."
+    },
+    {
+      "card": "The World",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where development has resolved, where all prior stages are contained, and where no further progression is structurally required.",
+      "suggestedRewrite": "The space becomes one where development has resolved, where all prior stages are contained, and where no further progression is structurally required."
+    },
+    {
+      "card": "The World",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It integrates the prior card's material into a resolved whole, converting the interaction into a state where development has finished and nothing further needs to be added.",
+      "suggestedRewrite": "The prior card's material integrates the prior card's material into a resolved whole, converting the interaction into a state where development has finished and nothing further needs to be added."
+    },
+    {
+      "card": "The World",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where resolution has not fully landed, creating a register of suspended fulfilment or incomplete closure.",
+      "suggestedRewrite": "The space becomes one where resolution has not fully landed, creating a register of suspended fulfilment or incomplete closure."
+    },
+    {
+      "card": "The World",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It either fails to integrate the prior card's material or forces a premature sense of closure, leaving the structure unresolved.",
+      "suggestedRewrite": "The response either fails to integrate the prior card's material or forces a premature sense of closure, leaving the structure unresolved."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It carries no history and no plan, only the raw generative charge that precedes every creative act.",
+      "suggestedRewrite": "Movement carries no history and no plan, only the raw generative charge that precedes every creative act."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where something new is entering and where existing conditions are about to be animated.",
+      "suggestedRewrite": "The space becomes one where something new is entering and where existing conditions are about to be animated."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It adds charge to whatever energy has come before, accelerating movement, intensifying latent creative tension, or reigniting what had begun to cool.",
+      "suggestedRewrite": "Charge is added to whatever energy has come before, accelerating movement, intensifying latent creative tension, or reigniting what had begun to cool."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Reversed",
+      "field": "coreMeaning",
+      "originalSentence": "it accumulates.",
+      "suggestedRewrite": "Pressure accumulates without discharge."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where creative potential is present but not yet able to move, creating a register of latent pressure and frustrated readiness.",
+      "suggestedRewrite": "The space becomes one where creative potential is present but not yet able to move, creating a register of latent pressure and frustrated readiness."
+    },
+    {
+      "card": "Ace of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It adds charge to prior material but cannot direct it cleanly, creating agitation, restarts, or energy that disperses before it can be used.",
+      "suggestedRewrite": "Charge is added to prior material without a channel that can direct it cleanly, creating agitation, restarts, or energy that disperses before it can be used."
+    },
+    {
+      "card": "Two of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where a position of existing power or achievement is being used as a vantage point, where the next move is being held rather than made.",
+      "suggestedRewrite": "The space becomes one where a position of existing power or achievement is being used as a vantage point, where the next move is being held rather than made."
+    },
+    {
+      "card": "Two of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It takes prior energy and elevates it to a strategic register, introducing the question of where this leads and what the view from here makes possible.",
+      "suggestedRewrite": "Prior energy is taken up and elevates it to a strategic register, introducing the question of where this leads and what the view from here makes possible."
+    },
+    {
+      "card": "Two of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where vision is present but movement is withheld, creating a register of stalled ambition or overcautious deliberation.",
+      "suggestedRewrite": "The space becomes one where vision is present but movement is withheld, creating a register of stalled ambition or overcautious deliberation."
+    },
+    {
+      "card": "Two of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives existing momentum and reintroduces doubt or hesitation, slowing committed movement or redirecting it into further planning.",
+      "suggestedRewrite": "Existing momentum is received, and reintroduces doubt or hesitation, slowing committed movement or redirecting it into further planning."
+    },
+    {
+      "card": "Three of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it is underway.",
+      "suggestedRewrite": "A threshold momentum is underway."
+    },
+    {
+      "card": "Three of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where investment has been committed and outcomes are developing beyond direct control, creating a register of forward momentum and purposeful anticipation.",
+      "suggestedRewrite": "The space becomes one where investment has been committed and outcomes are developing beyond direct control, creating a register of forward momentum and purposeful anticipation."
+    },
+    {
+      "card": "Three of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as already-committed, treating existing material as foundation rather than possibility, and turns attention toward what the existing movement will produce.",
+      "suggestedRewrite": "Prior energy is received as already-committed, treating existing material as foundation rather than possibility, and turns attention toward what the existing movement will produce."
+    },
+    {
+      "card": "Three of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where committed movement has not produced expected results, creating a register of strained anticipation or investment that has gone further than the foundation supports.",
+      "suggestedRewrite": "The space becomes one where committed movement has not produced expected results, creating a register of strained anticipation or investment that has gone further than the foundation supports."
+    },
+    {
+      "card": "Three of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives existing energy as already-spent and asks what has been produced, adding pressure or recalibration to the field.",
+      "suggestedRewrite": "Existing energy is received as already-spent and asks what has been produced, adding pressure or recalibration to the field."
+    },
+    {
+      "card": "Four of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It is the structured pause that fire earns when it has built something solid enough to gather beneath.",
+      "suggestedRewrite": "A structured pause emerges that fire earns when it has built something solid enough to gather beneath."
+    },
+    {
+      "card": "Four of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where something has been completed well enough to warrant gathering, creating a register of communal warmth, earned stability, and structured joy.",
+      "suggestedRewrite": "The space becomes one where something has been completed well enough to warrant gathering, creating a register of communal warmth, earned stability, and structured joy."
+    },
+    {
+      "card": "Four of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as worthy of celebration, converting momentum into arrival and integrating existing material into a shared moment of recognition.",
+      "suggestedRewrite": "Prior energy is received as worthy of celebration, converting momentum into arrival and integrating existing material into a shared moment of recognition."
+    },
+    {
+      "card": "Four of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where the conditions for celebration are present but the underlying stability has not fully formed, creating a register of unresolved tension beneath apparent warmth.",
+      "suggestedRewrite": "The space becomes one where the conditions for celebration are present but the underlying stability has not fully formed, creating a register of unresolved tension beneath apparent warmth."
+    },
+    {
+      "card": "Four of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as needing further grounding, revealing that what looked like arrival has not fully landed, and that the foundation requires more before it can hold.",
+      "suggestedRewrite": "Prior energy is received as needing further grounding, revealing that what looked like arrival has not fully landed, and that the foundation requires more before it can hold."
+    },
+    {
+      "card": "Five of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it presents it as the condition that must be moved through before the suit can continue.",
+      "suggestedRewrite": "The card presents that condition as something to be moved through before the suit can continue."
+    },
+    {
+      "card": "Five of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where multiple forces are active and in friction with each other, creating a register of productive disruption, competitive pressure, and unresolved contest that demands engagement rather than retreat.",
+      "suggestedRewrite": "The space becomes one where multiple forces are active and in friction with each other, creating a register of productive disruption, competitive pressure, and unresolved contest that demands engagement rather than retreat."
+    },
+    {
+      "card": "Five of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy and immediately brings it into contact with competing forces, disrupting settled or singular momentum and requiring the existing field to prove itself against resistance.",
+      "suggestedRewrite": "Prior energy is received, and immediately brings it into contact with competing forces, disrupting settled or singular momentum and requiring the existing field to prove itself against resistance."
+    },
+    {
+      "card": "Five of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where friction is present but not surfacing cleanly, creating a register of unacknowledged tension, misdirected energy, and conflict that has nowhere productive to go.",
+      "suggestedRewrite": "The space becomes one where friction is present but not surfacing cleanly, creating a register of unacknowledged tension, misdirected energy, and conflict that has nowhere productive to go."
+    },
+    {
+      "card": "Five of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy and turns it back on itself, converting forward momentum into circular struggle or introducing the sense that resistance is coming from within rather than without.",
+      "suggestedRewrite": "Prior energy is received, and turns it back on itself, converting forward momentum into circular struggle or introducing the sense that resistance is coming from within rather than without."
+    },
+    {
+      "card": "Six of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where effort has resolved into recognised success, creating a register of confident forward momentum, visible achievement, and the particular authority of someone who has been seen and found capable.",
+      "suggestedRewrite": "The space becomes one where effort has resolved into recognised success, creating a register of confident forward momentum, visible achievement, and the particular authority of someone who has been seen and found capable."
+    },
+    {
+      "card": "Six of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as having passed its test and now being publicly recognised, converting struggle or effort into visible achievement and giving the existing field the confidence of demonstrated capacity.",
+      "suggestedRewrite": "Prior energy is received as having passed its test and now being publicly recognised, converting struggle or effort into visible achievement and giving the existing field the confidence of demonstrated capacity."
+    },
+    {
+      "card": "Six of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where success is present or approaching but the confirming witness is missing or insufficient, creating a register of unvalidated confidence or premature claim.",
+      "suggestedRewrite": "The space becomes one where success is present or approaching but the confirming witness is missing or insufficient, creating a register of unvalidated confidence or premature claim."
+    },
+    {
+      "card": "Six of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as needing external confirmation and either finds that confirmation hollow or reveals that the confidence in the existing field rests on audience rather than capacity.",
+      "suggestedRewrite": "Prior energy is received as needing external confirmation and either finds that confirmation hollow or reveals that the confidence in the existing field rests on audience rather than capacity."
+    },
+    {
+      "card": "Seven of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where a position of achievement is being actively contested, creating a register of determined resistance, sustained effort under challenge, and the particular clarity of someone who knows exactly what they are protecting and why.",
+      "suggestedRewrite": "The space becomes one where a position of achievement is being actively contested, creating a register of determined resistance, sustained effort under challenge, and the particular clarity of someone who knows exactly what they are protecting and why."
+    },
+    {
+      "card": "Seven of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as a position that has attracted challenge and requires protection, converting existing achievement or confidence into something that must now be sustained against pressure rather than simply held.",
+      "suggestedRewrite": "Prior energy is received as a position that has attracted challenge and requires protection, converting existing achievement or confidence into something that must now be sustained against pressure rather than simply held."
+    },
+    {
+      "card": "Seven of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where sustained pressure has exceeded the available defence, creating a register of exhaustion, abandoned position, or the particular hollowness of someone who has stopped fighting before the outcome was clear.",
+      "suggestedRewrite": "The space becomes one where sustained pressure has exceeded the available defence, creating a register of exhaustion, abandoned position, or the particular hollowness of someone who has stopped fighting before the outcome was clear."
+    },
+    {
+      "card": "Seven of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as a position that is no longer being actively defended, allowing challenge to move through the field without meeting the opposition that would have held it.",
+      "suggestedRewrite": "Prior energy is received as a position that is no longer being actively defended, allowing challenge to move through the field without meeting the opposition that would have held it."
+    },
+    {
+      "card": "Eight of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where movement has been released from whatever was containing it, creating a register of rapid development, incoming information, and the particular momentum of multiple forces aligned toward a single point.",
+      "suggestedRewrite": "The space becomes one where movement has been released from whatever was containing it, creating a register of rapid development, incoming information, and the particular momentum of multiple forces aligned toward a single point."
+    },
+    {
+      "card": "Eight of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as having found its release point and carries it forward at speed, converting deliberation or accumulation into active, unimpeded movement and bringing existing material rapidly toward its destination.",
+      "suggestedRewrite": "Prior energy is received as having found its release point and carries it forward at speed, converting deliberation or accumulation into active, unimpeded movement and bringing existing material rapidly toward its destination."
+    },
+    {
+      "card": "Eight of Wands",
+      "orient": "Reversed",
+      "field": "coreMeaning",
+      "originalSentence": "they are no longer travelling in parallel toward the same point.",
+      "suggestedRewrite": "Those motions are no longer travelling in parallel toward the same point."
+    },
+    {
+      "card": "Eight of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where energy has been released without sufficient direction, creating a register of rushed or chaotic development, crossed signals, and momentum that is not arriving where it was aimed.",
+      "suggestedRewrite": "The space becomes one where energy has been released without sufficient direction, creating a register of rushed or chaotic development, crossed signals, and momentum that is not arriving where it was aimed."
+    },
+    {
+      "card": "Eight of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as moving but poorly aimed, introducing misdirection, communication failure, or the sense that what was building toward expression has released at the wrong moment or in the wrong direction.",
+      "suggestedRewrite": "Prior energy is received as moving but poorly aimed, introducing misdirection, communication failure, or the sense that what was building toward expression has released at the wrong moment or in the wrong direction."
+    },
+    {
+      "card": "Nine of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it is the refusal to stop when stopping would be easier.",
+      "suggestedRewrite": "A refusal to stop remains visible even when stopping would be easier."
+    },
+    {
+      "card": "Nine of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where significant effort has already been expended and what remains is held with careful, watchful determination, creating a register of earned wariness, sustained will, and the particular clarity of someone who has nothing left to prove but one more step to take.",
+      "suggestedRewrite": "The space becomes one where significant effort has already been expended and what remains is held with careful, watchful determination, creating a register of earned wariness, sustained will, and the particular clarity of someone who has nothing left to prove but one more step to take."
+    },
+    {
+      "card": "Nine of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as something that has been carried a long way and is now being held with deliberate care, adding the quality of hard-won persistence to the existing field and making whatever comes next feel like it must be worth the cost already paid.",
+      "suggestedRewrite": "Prior energy is received as something that has been carried a long way and is now being held with deliberate care, adding the quality of hard-won persistence to the existing field and making whatever comes next feel like it must be worth the cost already paid."
+    },
+    {
+      "card": "Nine of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where sustained effort has produced a posture of protection that can no longer modulate itself, creating a register of wary immobility, accumulated damage, and the particular difficulty of someone who cannot let their guard down even when doing so would allow them to finish.",
+      "suggestedRewrite": "The space becomes one where sustained effort has produced a posture of protection that can no longer modulate itself, creating a register of wary immobility, accumulated damage, and the particular difficulty of someone who cannot let their guard down even when doing so would allow them to finish."
+    },
+    {
+      "card": "Nine of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy through a lens of accumulated damage, treating incoming material as potential threat and adding caution or obstruction to whatever forward movement the existing field was building toward.",
+      "suggestedRewrite": "Prior energy is received through a lens of accumulated damage, treating incoming material as potential threat and adding caution or obstruction to whatever forward movement the existing field was building toward."
+    },
+    {
+      "card": "Ten of Wands",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "it is the consequence of sustained creative ambition that has accumulated beyond what one person can carry without strain.",
+      "suggestedRewrite": "A consequence emerges of sustained creative ambition that has accumulated beyond what one person can carry without strain."
+    },
+    {
+      "card": "Ten of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where accumulated effort and responsibility are being carried toward a visible finish, creating a register of strained forward movement, the particular determination of someone who will not stop because the end is in sight, and the weight of everything the journey has produced.",
+      "suggestedRewrite": "The space becomes one where accumulated effort and responsibility are being carried toward a visible finish, creating a register of strained forward movement, the particular determination of someone who will not stop because the end is in sight, and the weight of everything the journey has produced."
+    },
+    {
+      "card": "Ten of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as something that must now be carried rather than simply held, converting the existing field into a register of responsibility, overextension, or the final push that completion requires.",
+      "suggestedRewrite": "Prior energy is received as something that must now be carried rather than simply held, converting the existing field into a register of responsibility, overextension, or the final push that completion requires."
+    },
+    {
+      "card": "Ten of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where accumulated weight has exceeded the carrier's capacity, creating a register of exhausted breakdown, the inability to delegate or release, or the crushing pressure of responsibility that has nowhere to go.",
+      "suggestedRewrite": "The space becomes one where accumulated weight has exceeded the carrier's capacity, creating a register of exhausted breakdown, the inability to delegate or release, or the crushing pressure of responsibility that has nowhere to go."
+    },
+    {
+      "card": "Ten of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as something that has accumulated to the point of collapse, adding crushing pressure or the refusal to release to whatever the existing field was building toward.",
+      "suggestedRewrite": "Prior energy is received as something that has accumulated to the point of collapse, adding crushing pressure or the refusal to release to whatever the existing field was building toward."
+    },
+    {
+      "card": "Page of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where creative potential is present and being actively sensed rather than directed, creating a register of enthusiastic possibility, new information arriving, and the particular aliveness of someone at the beginning of something they do not yet fully understand.",
+      "suggestedRewrite": "The space becomes one where creative potential is present and being actively sensed rather than directed, creating a register of enthusiastic possibility, new information arriving, and the particular aliveness of someone at the beginning of something they do not yet fully understand."
+    },
+    {
+      "card": "Page of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior material as something to be explored and responded to with enthusiasm, bringing the quality of genuine curiosity and new perspective to whatever the existing field has established, without the weight of sustained commitment.",
+      "suggestedRewrite": "Prior material is received as something to be explored and responded to with enthusiasm, bringing the quality of genuine curiosity and new perspective to whatever the existing field has established, without the weight of sustained commitment."
+    },
+    {
+      "card": "Page of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where creative energy is present but cannot cohere into direction, creating a register of scattered enthusiasm, false starts, and the particular frustration of someone who feels the impulse strongly but cannot make it land.",
+      "suggestedRewrite": "The space becomes one where creative energy is present but cannot cohere into direction, creating a register of scattered enthusiasm, false starts, and the particular frustration of someone who feels the impulse strongly but cannot make it land."
+    },
+    {
+      "card": "Page of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior material with genuine interest but cannot sustain engagement long enough to develop it, adding energetic disruption rather than focused contribution to the existing field.",
+      "suggestedRewrite": "Prior material is met with genuine interest but cannot sustain engagement long enough to develop it, adding energetic disruption rather than focused contribution to the existing field."
+    },
+    {
+      "card": "Knight of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where direction has been chosen and is being pursued at speed, creating a register of bold, energised movement, magnetic confidence, and the particular force of someone who has committed completely and expects the world to respond to that commitment.",
+      "suggestedRewrite": "The space becomes one where direction has been chosen and is being pursued at speed, creating a register of bold, energised movement, magnetic confidence, and the particular force of someone who has committed completely and expects the world to respond to that commitment."
+    },
+    {
+      "card": "Knight of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as something to be met with full engagement and immediately moves it forward, bringing the existing field into a register of bold action and pursued direction, removing hesitation and replacing it with committed momentum.",
+      "suggestedRewrite": "Prior energy is received as something to be met with full engagement and immediately moves it forward, bringing the existing field into a register of bold action and pursued direction, removing hesitation and replacing it with committed momentum."
+    },
+    {
+      "card": "Knight of Wands",
+      "orient": "Reversed",
+      "field": "coreMeaning",
+      "originalSentence": "it becomes the problem.",
+      "suggestedRewrite": "The dynamic becomes the problem itself."
+    },
+    {
+      "card": "Knight of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where committed energy is moving at speed but without reliable direction, creating a register of reckless momentum, impulsive action, and the particular disruption of force that cannot moderate itself.",
+      "suggestedRewrite": "The space becomes one where committed energy is moving at speed but without reliable direction, creating a register of reckless momentum, impulsive action, and the particular disruption of force that cannot moderate itself."
+    },
+    {
+      "card": "Knight of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy and immediately accelerates it beyond the point of careful navigation, introducing recklessness into whatever the existing field was building toward and replacing considered movement with the force of momentum that has outrun its purpose.",
+      "suggestedRewrite": "Prior energy is received, and immediately accelerates it beyond the point of careful navigation, introducing recklessness into whatever the existing field was building toward and replacing considered movement with the force of momentum that has outrun its purpose."
+    },
+    {
+      "card": "Queen of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where creative authority is fully present and entirely at ease, creating a register of confident mastery, generous warmth, and the particular gravity of someone whose presence organises the field without requiring anything of it.",
+      "suggestedRewrite": "The space becomes one where creative authority is fully present and entirely at ease, creating a register of confident mastery, generous warmth, and the particular gravity of someone whose presence organises the field without requiring anything of it."
+    },
+    {
+      "card": "Queen of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy with full confidence, neither threatened by what came before nor requiring it to be different, bringing the existing field into a register of creative mastery and sustained warmth that makes everything around it more coherent and alive.",
+      "suggestedRewrite": "Prior energy is received with full confidence, neither threatened by what came before nor requiring it to be different, bringing the existing field into a register of creative mastery and sustained warmth that makes everything around it more coherent and alive."
+    },
+    {
+      "card": "Queen of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where authority is present but insecure, creating a register of conditional warmth, controlling presence, and the particular difficulty of someone whose creative confidence requires the diminishment of others to sustain itself.",
+      "suggestedRewrite": "The space becomes one where authority is present but insecure, creating a register of conditional warmth, controlling presence, and the particular difficulty of someone whose creative confidence requires the diminishment of others to sustain itself."
+    },
+    {
+      "card": "Queen of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as something to be measured against rather than warmly integrated, introducing competition or conditional acceptance into the existing field and replacing the generous centre of the upright position with a presence that must be the most significant thing in the room.",
+      "suggestedRewrite": "Prior energy is received as something to be measured against rather than warmly integrated, introducing competition or conditional acceptance into the existing field and replacing the generous centre of the upright position with a presence that must be the most significant thing in the room."
+    },
+    {
+      "card": "King of Wands",
+      "orient": "Upright",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where visionary authority is fully present and actively orienting the field toward a larger goal, creating a register of strategic clarity, inspired leadership, and the particular force of someone whose creative command is both earned and undeniable.",
+      "suggestedRewrite": "The space becomes one where visionary authority is fully present and actively orienting the field toward a larger goal, creating a register of strategic clarity, inspired leadership, and the particular force of someone whose creative command is both earned and undeniable."
+    },
+    {
+      "card": "King of Wands",
+      "orient": "Upright",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy as material to be organised and directed toward a larger vision, bringing the existing field into a register of purposeful, strategic movement and giving what came before the shape and direction that transforms creative force into lasting achievement.",
+      "suggestedRewrite": "Prior energy is received as material to be organised and directed toward a larger vision, bringing the existing field into a register of purposeful, strategic movement and giving what came before the shape and direction that transforms creative force into lasting achievement."
+    },
+    {
+      "card": "King of Wands",
+      "orient": "Reversed",
+      "field": "arrivalBehaviour",
+      "originalSentence": "It defines the space as one where authority is fully present but has become closed to input, creating a register of forced direction, creative domination, and the particular difficulty of a field organised entirely around a single vision that will not incorporate anything that challenges it.",
+      "suggestedRewrite": "The space becomes one where authority is fully present but has become closed to input, creating a register of forced direction, creative domination, and the particular difficulty of a field organised entirely around a single vision that will not incorporate anything that challenges it."
+    },
+    {
+      "card": "King of Wands",
+      "orient": "Reversed",
+      "field": "responseBehaviour",
+      "originalSentence": "It receives prior energy not as material to be developed but as something to be organised on its own terms, introducing the demand for conformity into whatever the existing field was building toward and replacing collaborative creative direction with unilateral assertion.",
+      "suggestedRewrite": "Prior energy is received not as material to be developed but as something to be organised on its own terms, introducing the demand for conformity into whatever the existing field was building toward and replacing collaborative creative direction with unilateral assertion."
+    },
+    {
+      "card": "Ace of Cups",
+      "orient": "Upright",
+      "field": "coreMeaning",
+      "originalSentence": "It marks the moment feeling becomes available, not yet formed into attachment, grief, or longing, simply present and offered.",
+      "suggestedRewrite": "A moment appears when feeling becomes available, not yet formed into attachment, grief, or longing, simply present and offered."
+    }
+  ]
+}
