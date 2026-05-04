@@ -6,6 +6,10 @@ const title = "Tarot Interpretation Tools | Tides of Knowing";
 const description =
   "Practise tarot card relationships, spread flow, and repeated pattern recognition with free interpretation tools from Tides of Knowing.";
 const ogUrl = new URL("/tools/", siteBase(Astro)).href;
+
+const threeCardInterpreterReady =
+  Object.keys(import.meta.glob("./three-card-tarot-spread-interpreter.astro")).length > 0;
+const threeCardInterpreterUrl = "/tools/three-card-tarot-spread-interpreter/";
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
@@ -17,34 +21,29 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 
     <ul class="tools-hub__grid" role="list">
       <li class="tools-hub__card">
-        <a class="tools-hub__card-link" href="/tools/tarot-combination-interpreter/">
-          <span class="tools-hub__card-name">Two-Card Tarot Combination Interpreter</span>
-        </a>
-        <p class="tools-hub__card-desc">
-          Explore how two tarot cards interact through imagery, keywords, arcana, suit, and rank relationships.
-        </p>
-        <p class="tools-hub__status tools-hub__status--live">Available now</p>
-      </li>
-      <li class="tools-hub__card">
         <a class="tools-hub__card-link" href="/tools/two-card-tarot-reading/">
-          <span class="tools-hub__card-name">Two-Card Tarot Reading Tool</span>
+          <span class="tools-hub__card-name">When Two Cards Meet</span>
         </a>
-        <p class="tools-hub__card-desc">When Two Cards Meet</p>
+        <p class="tools-hub__card-desc">Two-card relational reading: room and entering force.</p>
         <p class="tools-hub__status tools-hub__status--live">Available now</p>
       </li>
-      <li class="tools-hub__card tools-hub__card--soon">
-        <a class="tools-hub__card-link tools-hub__card-link--soon" href="/tools/three-card-tarot-spread-interpreter/">
-          <span class="tools-hub__card-name">Three-Card Tarot Spread Interpreter</span>
-        </a>
-        <p class="tools-hub__card-desc">
-          Read a three-card spread as movement, sequence, and story rather than three isolated meanings.
+      <li class:list={["tools-hub__card", { "tools-hub__card--soon": !threeCardInterpreterReady }]}>
+        {
+          threeCardInterpreterReady ? (
+            <a class="tools-hub__card-link" href={threeCardInterpreterUrl}>
+              <span class="tools-hub__card-name">The Table Between Them</span>
+            </a>
+          ) : (
+            <span class="tools-hub__card-name tools-hub__card-name--plain">The Table Between Them</span>
+          )
+        }
+        <p class="tools-hub__card-desc">Three-card interpreter: movement, sequence, and story.</p>
+        <p class:list={["tools-hub__status", threeCardInterpreterReady ? "tools-hub__status--live" : "tools-hub__status--next"]}>
+          {threeCardInterpreterReady ? "Available now" : "Coming next"}
         </p>
-        <p class="tools-hub__status tools-hub__status--next">Coming next</p>
       </li>
       <li class="tools-hub__card tools-hub__card--soon">
-        <a class="tools-hub__card-link tools-hub__card-link--soon" href="/tools/repeated-tarot-card-meaning/">
-          <span class="tools-hub__card-name">Repeated Tarot Card Meaning Tool</span>
-        </a>
+        <span class="tools-hub__card-name tools-hub__card-name--plain">Repeated Card Meaning Tool</span>
         <p class="tools-hub__card-desc">
           Explore why a card may keep appearing and what repeated patterns may be asking you to notice.
         </p>
@@ -132,6 +131,14 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
   .tools-hub__card-link--soon {
     color: var(--mountain-water);
     opacity: 0.92;
+  }
+
+  .tools-hub__card-name--plain {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--mountain-water);
   }
 
   .tools-hub__card-desc {
