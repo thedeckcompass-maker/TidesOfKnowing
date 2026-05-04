@@ -11,9 +11,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
   <article class="tarot-tool page-inner">
     <h1 class="tarot-tool__title">When Two Cards Meet</h1>
-    <p class="tarot-tool__subtitle">Two-Card Tarot Reading Tool</p>
+    <p class="tarot-tool__subtitle">Two cards. One relational field.</p>
     <p class="tarot-tool__intro">
-      This is a relationship dynamics tool. It does not assign cards to people. It reads what happens between two energies.
+      This isn't about who you are to each other. It's about what's alive between you right now.
     </p>
 
     <div id="tok2-tool" class="tarot-tool__tool-wrap">
@@ -628,6 +628,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
+  function toSentenceCase(str) {
+    const s = String(str ?? "").trim();
+    if (!s) return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function isGenericInteractionLine(line) {
+    const t = clean(line);
+    if (!t) return true;
+    return (
+      t.startsWith("The interaction depends on how the second energy meets the first") ||
+      t.includes("whether it supports, redirects, or resists what is already in motion")
+    );
+  }
+
   function extractOrientationText(text, orientation) {
     if (!text) return "";
 
@@ -685,9 +700,104 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return panelWordRange([rel, rsp].filter(Boolean).join(" "), effectLead, 8, 14);
   }
 
-  function panelInteractionResult(interactionLine, anchorText, outcomeLine) {
-    const merged = [clean(interactionLine), clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" ");
-    return panelWordRange(merged, "", 8, 14);
+  function panelInteractionResult(
+    interactionLine,
+    anchorText,
+    outcomeLine,
+    verdictText,
+    interactionTag,
+    f1,
+    f2,
+    c1,
+    c2,
+  ) {
+    const usefulLine = isGenericInteractionLine(interactionLine) ? "" : clean(interactionLine);
+
+    let derived = "";
+    if (usefulLine) {
+      derived = panelWordRange(
+        [usefulLine, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "),
+        "",
+        8,
+        14,
+      );
+    }
+
+    if (!clean(derived) || derived.toLowerCase().includes("the interaction depends")) {
+      const relBits = [humaniseEffect(f1.relationalEffect), humaniseEffect(f2.relationalEffect)]
+        .filter(Boolean)
+        .join(" ");
+      const tagBit =
+        interactionTag && interactionTag !== "Shift"
+          ? `The combined line resolves as ${interactionTag.toLowerCase()}.`
+          : "";
+      derived = panelWordRange(
+        [relBits, tagBit, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "),
+        clean(verdictText),
+        8,
+        18,
+      );
+    }
+
+    if (!clean(derived) || derived.toLowerCase().includes("the interaction depends")) {
+      derived = "";
+    }
+
+    const verdictSentence = clean(verdictText);
+    const namedFallback = `${c2.name} changes the direction of what ${c1.name} began.`;
+
+    const merged =
+      (clean(derived) && !derived.toLowerCase().includes("the interaction depends") ? derived : null) ||
+      verdictSentence ||
+      namedFallback;
+
+    return toSentenceCase(merged);
+  }
+
+  function keywordsHtmlFirst(arr, max) {
+    if (!Array.isArray(arr)) return "";
+    return keywordsHtml(arr.slice(0, Math.max(0, max)));
+  }
+
+  function reflectionQuestionForPair(c1, c2, p1, p2) {
+    const n1 = c1.name;
+    const n2 = c2.name;
+    if (p1 === "opens" && (p2 === "drives" || p2 === "propels" || p2 === "focuses")) {
+      return `What wants to land clearly once ${n2} gives direction to how ${n1} opened the situation?`;
+    }
+    if ((p1 === "pairs" && p2 === "completes") || (p1 === "aligns" && p2 === "completes")) {
+      return `What would deepen if you trusted what ${n1} and ${n2} are already settling into together?`;
+    }
+    if (
+      (p1 === "depletes" && p2 === "drives") ||
+      (p1 === "drains" && p2 === "drives") ||
+      (p1 === "cuts" && p2 === "depletes") ||
+      (p1 === "pressures" && p2 === "shatters")
+    ) {
+      return `Where might you still be adding force after ${n1} has already thinned the ground that ${n2} crosses?`;
+    }
+    if (p1 === "withholds" && p2 === "accelerates") {
+      return `What stays withheld that ${n2} could be outrunning before ${n1} has finished holding it back?`;
+    }
+    if ((p1 === "constrains" || p1 === "structures" || p1 === "binds") && p2 === "shatters") {
+      return `What are you bracing to keep upright that ${n2} is already taking down away from ${n1}'s frame?`;
+    }
+    if (p1 === "nourishes" && p2 === "sustains") {
+      return `What would grow more steadily if you let ${n1} and ${n2} keep feeding what they have started?`;
+    }
+    return `What is ${n2} trying to do with what ${n1} has already established?`;
+  }
+
+  function formatReadingDate() {
+    try {
+      return new Intl.DateTimeFormat("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date());
+    } catch {
+      return new Date().toLocaleDateString();
+    }
   }
 
   function renderReading() {
@@ -867,17 +977,34 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       verdictText = "This is breaking open. Stop trying to preserve what can no longer hold.";
     }
 
+    const verdictSentence = clean(verdictText);
+    const resolvedSignalSentence = "";
+    const signalSentence =
+      (resolvedSignalSentence && resolvedSignalSentence.length > 0 ? resolvedSignalSentence : null) ||
+      (verdictSentence && verdictSentence.length > 0 ? verdictSentence : null) ||
+      "Pause before deciding. This interaction needs more observation before the useful move becomes clear.";
+
     let h = "";
 
     h += '<section class="tarot-tool__signal-card">';
     h += '<h3 class="tarot-tool__signal-title">The Signal</h3>';
     h += '<p class="tarot-tool__signal-line">' + escHtml(signal) + "</p>";
-    h += '<p class="tarot-tool__signal-verdict">' + escHtml(verdictText) + "</p>";
+    h += '<p class="tarot-tool__signal-verdict">' + escHtml(toSentenceCase(signalSentence)) + "</p>";
     h += "</section>";
 
-    const panelField = panelFieldCondition(f1);
-    const panelIncoming = panelIncomingPressure(f2);
-    const panelResult = panelInteractionResult(interactionLine, anchorText, outcomeLine);
+    const panelField = toSentenceCase(panelFieldCondition(f1));
+    const panelIncoming = toSentenceCase(panelIncomingPressure(f2));
+    const panelResult = panelInteractionResult(
+      interactionLine,
+      anchorText,
+      outcomeLine,
+      verdictText,
+      s3,
+      f1,
+      f2,
+      c1,
+      c2,
+    );
 
     h += '<div class="interaction-panel">';
     h += '<div class="interaction-title">Relational Energies at Play</div>';
@@ -895,12 +1022,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       "</div></div>";
     h += "</div>";
 
-    h += '<section class="tarot-tool__out-block">';
-    h += '<h3 class="tarot-tool__out-h3">1. The Two Cards</h3>';
-
-    h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal">';
-    h += "The first card sets the tone of the space. The second enters and responds to it.";
-    h += "</p>";
+    h += '<section class="tarot-tool__out-block tok2-read-block">';
+    h += '<h3 class="tarot-tool__out-h3">The Two Cards</h3>';
 
     h += '<div class="tarot-tool__combo-images">';
     h += '<div class="card-block"><div class="tarot-tool__card-slot"><img class="' +
@@ -933,52 +1056,31 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     h += "</section>";
 
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">2. What Each Card Brings</h3>';
-    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c1.name) + " (" + escHtml(l1) + ")</strong></p>";
-    h += '<p class="tarot-tool__out-p">' + keywordsHtml(f1.keywords) + "</p>";
-    h += '<p class="tarot-tool__out-p"><strong>' + escHtml(c2.name) + " (" + escHtml(l2) + ")</strong></p>";
-    h += '<p class="tarot-tool__out-p">' + keywordsHtml(f2.keywords) + "</p></section>";
-
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">4. The Room Already Holds</h3>';
+    h += '<section class="tarot-tool__out-block tok2-read-block">';
+    h += '<h3 class="tarot-tool__out-h3">What Each Card Brings</h3>';
+    h += '<div class="tok2-keywords-summary">';
+    h += '<div class="tok2-keywords-summary__col">';
     h +=
-      '<p class="tarot-tool__out-p"><strong>' +
+      '<p class="tok2-keywords-summary__head"><strong>' +
       escHtml(c1.name) +
       " (" +
       escHtml(l1) +
-      ")</strong><br />" +
-      escHtml(String(f1.arrivalBehaviour || "").trim()) +
-      "</p></section>";
-
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">5. The Second Energy Enters</h3>';
+      ")</strong></p>";
+    h += '<p class="tok2-keywords-summary__kw">' + keywordsHtmlFirst(f1.keywords, 5) + "</p>";
+    h += "</div>";
+    h += '<div class="tok2-keywords-summary__col">';
     h +=
-      '<p class="tarot-tool__out-p"><strong>' +
+      '<p class="tok2-keywords-summary__head"><strong>' +
       escHtml(c2.name) +
       " (" +
       escHtml(l2) +
-      ")</strong><br />" +
-      escHtml(String(f2.responseBehaviour || "").trim()) +
-      "</p></section>";
+      ")</strong></p>";
+    h += '<p class="tok2-keywords-summary__kw">' + keywordsHtmlFirst(f2.keywords, 5) + "</p>";
+    h += "</div>";
+    h += "</div></section>";
 
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">6. What Each Card Does to the Other</h3>';
-    h +=
-      '<p class="tarot-tool__out-p"><strong>' +
-      escHtml(c1.name) +
-      " (" +
-      escHtml(l1) +
-      ")</strong><br />" +
-      escHtml(actioniseEffect(humaniseEffect(f1.relationalEffect))) +
-      "</p>";
-    h +=
-      '<p class="tarot-tool__out-p"><strong>' +
-      escHtml(c2.name) +
-      " (" +
-      escHtml(l2) +
-      ")</strong><br />" +
-      escHtml(actioniseEffect(humaniseEffect(f2.relationalEffect))) +
-      "</p></section>";
-
-    h += '<section class="tarot-tool__out-block">';
-    h += '<h3 class="tarot-tool__out-h3">7. The Conversation Beneath the Words</h3>';
+    h += '<section class="tarot-tool__out-block tok2-read-block">';
+    h += '<h3 class="tarot-tool__out-h3">The Reading</h3>';
 
     h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal">';
     h += escHtml(c1.name) + " has already set the tone by " + escHtml(humaniseEffect(f1.relationalEffect)) + ". ";
@@ -994,14 +1096,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     h += "</section>";
 
-    h += '<section class="tarot-tool__out-block">';
-    h += '<h3 class="tarot-tool__out-h3">8. Ease, Friction, or Avoidance</h3>';
-    h += '<p class="tarot-tool__out-p">';
-    h += escHtml(anchorText + " " + outcomeLine);
-    h += "</p>";
-    h += "</section>";
-
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">9. What Wants to Shift</h3>';
+    h += '<section class="tarot-tool__out-block tok2-read-block"><h3 class="tarot-tool__out-h3">What Wants to Shift</h3>';
     if (!whenFirst1 && !whenSecond2) {
       h += '<p class="tarot-tool__out-p">No combination logic lines are present in this interaction for this pair.</p>';
     } else {
@@ -1086,29 +1181,66 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           "Do not try to stabilise this. The second energy is breaking something open that cannot be held together any longer. The useful move is to let what is collapsing fall, rather than trying to preserve it.";
       }
 
+      h += '<div class="tok2-shift-stack">';
       if (whenFirst1) {
-        h += '<p class="tarot-tool__out-p"><strong>The room:</strong> ';
-        h += escHtml(capitaliseFirst(whenFirstText)) + "</p>";
+        h +=
+          '<div class="tok2-shift-row"><span class="tok2-shift-label">The room</span><span class="tok2-shift-value">' +
+          escHtml(capitaliseFirst(whenFirstText)) +
+          "</span></div>";
       }
       if (whenSecond2) {
-        h += '<p class="tarot-tool__out-p"><strong>The entering energy:</strong> ';
-        h += escHtml(capitaliseFirst(whenSecondText)) + "</p>";
+        h +=
+          '<div class="tok2-shift-row"><span class="tok2-shift-label">The entering energy</span><span class="tok2-shift-value">' +
+          escHtml(capitaliseFirst(whenSecondText)) +
+          "</span></div>";
       }
-      h += '<p class="tarot-tool__out-p tarot-tool__out-p--signal"><strong>The move:</strong> ';
-      h += escHtml(moveText);
-      h += "</p>";
+      h +=
+        '<div class="tok2-shift-row tok2-shift-row--move"><span class="tok2-shift-label">The move</span><span class="tok2-shift-value">' +
+        escHtml(moveText) +
+        "</span></div>";
+      h += "</div>";
     }
     h += "</section>";
 
-    h += '<section class="tarot-tool__out-block"><h3 class="tarot-tool__out-h3">10. Go Deeper</h3>';
+    const reflectionQ = reflectionQuestionForPair(c1, c2, p1, p2);
+    const readDate = formatReadingDate();
+
+    h += '<section class="tarot-tool__out-block tok2-read-block tok2-reflection-wrap">';
+    h += '<h3 class="tarot-tool__out-h3">Reflection Question</h3>';
+    h += '<div class="tok2-reflection-block">';
+    h += '<p class="tok2-reflection-lead">Before you leave this reading, ask:</p>';
+    h += '<p class="tok2-reflection-question">' + escHtml(reflectionQ) + "</p>";
+    h += '<p class="tok2-return-prompt">You read this on ' + escHtml(readDate) + ". Return in 7 days and ask what has shifted.</p>";
+    h += "</div>";
+    h += '<div class="tok2-deeper-invite">';
     h +=
-      '<p class="tarot-tool__out-p">' +
+      "<p>" +
       escHtml(
-        "This two-card reading identifies the dynamic. The next tool, The Table Between Them, will expand this into a three-layer conversation: what is spoken, what is unspoken, and what is waiting to emerge.",
+        "If this reading names something active between you and another person, the next layer is The Table Between Them. It explores what is spoken, what is unspoken, and what is waiting to emerge.",
       ) +
-      "</p></section>";
+      "</p>";
+    h += "</div>";
+
+    const supportP1 =
+      "This tool was built by Leigh Spencer — writer, intuitive guide, and fourth-generation Matakite. Matakite is a Māori term for those who carry inherited sight: the capacity to perceive what the visible world doesn't show. Leigh brings that lineage alongside 40+ years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reach. This work sits at that intersection.";
+    const supportP2 = "If this reading gave you something useful, a coffee keeps the work going.";
+
+    h += '<div class="support-block">';
+    h += "<p>" + escHtml(supportP1) + "</p>";
+    h += "<p>" + escHtml(supportP2) + "</p>";
+    h += '<div id="bmc-button-container"></div>';
+    h += "</div>";
+
+    h += "</section>";
 
     out.innerHTML = h;
+
+    const w = /** @type {any} */ (globalThis);
+    if (typeof w.__tok2EnsureBmcButton === "function") {
+      requestAnimationFrame(function () {
+        w.__tok2EnsureBmcButton();
+      });
+    }
   }
 
   const sel1 = document.getElementById("tok2-card-1");
@@ -1506,6 +1638,159 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
   }
 
+  #tok2-output .tok2-read-block {
+    margin-top: 1.65rem;
+    padding-top: 0.15rem;
+  }
+
+  #tok2-output .tok2-keywords-summary {
+    display: flex;
+    gap: 1.25rem 1.5rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 0.35rem;
+  }
+
+  #tok2-output .tok2-keywords-summary__col {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  #tok2-output .tok2-keywords-summary__head {
+    margin: 0 0 0.4rem;
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+
+  #tok2-output .tok2-keywords-summary__kw {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: rgba(13, 50, 77, 0.92);
+  }
+
+  #tok2-output .tok2-shift-stack {
+    margin-top: 0.35rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  #tok2-output .tok2-shift-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    padding: 10px 16px;
+    border-top: 1px solid #eee;
+    align-items: flex-start;
+  }
+
+  #tok2-output .tok2-shift-row:first-child {
+    border-top: none;
+  }
+
+  #tok2-output .tok2-shift-row--move {
+    background: #fafafa;
+    font-weight: 500;
+  }
+
+  #tok2-output .tok2-shift-label {
+    flex: 0 0 38%;
+    max-width: 38%;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #666;
+  }
+
+  #tok2-output .tok2-shift-value {
+    flex: 1 1 55%;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--ink, #1a1a1a);
+  }
+
+  #tok2-output .tok2-reflection-wrap .tok2-reflection-block {
+    margin-top: 0.35rem;
+    padding: 1rem 1.15rem 1.1rem;
+    border: 1px solid rgba(13, 50, 77, 0.12);
+    border-radius: 8px;
+    background: rgba(250, 250, 252, 0.95);
+  }
+
+  #tok2-output .tok2-reflection-lead {
+    margin: 0 0 0.45rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(13, 50, 77, 0.85);
+  }
+
+  #tok2-output .tok2-reflection-question {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.12rem;
+    line-height: 1.45;
+    font-style: italic;
+    color: var(--mountain-water, #0d324d);
+  }
+
+  #tok2-output .tok2-return-prompt {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: rgba(13, 50, 77, 0.78);
+  }
+
+  #tok2-output .tok2-deeper-invite {
+    margin-top: 1.35rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(13, 50, 77, 0.1);
+  }
+
+  #tok2-output .tok2-deeper-invite p {
+    margin: 0;
+    font-size: 1.01rem;
+    line-height: 1.65;
+    color: var(--ink, #1a1a1a);
+  }
+
+  #tok2-output .support-block {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #tok2-output .support-block p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  #tok2-output #bmc-button-container {
+    margin-top: 10px;
+  }
+
+  @media (max-width: 520px) {
+    #tok2-output .tok2-keywords-summary {
+      flex-direction: column;
+    }
+
+    #tok2-output .tok2-shift-row {
+      flex-direction: column;
+    }
+
+    #tok2-output .tok2-shift-label,
+    #tok2-output .tok2-shift-value {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+  }
+
   #tok2-output .tarot-tool__combo-images {
     display: flex;
     gap: 1.5rem;
@@ -1585,3 +1870,56 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     background: rgba(13, 50, 77, 0.04);
   }
 </style>
+
+<script is:inline>
+  (function () {
+    var BMC_SRC = "https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js";
+
+    function installBmcIntoDom() {
+      var container = document.getElementById("bmc-button-container");
+      if (!container || container.hasChildNodes() || !window.BMCButton) return;
+      var button = document.createElement("div");
+      button.setAttribute("data-name", "bmc-button");
+      button.setAttribute("data-slug", "tidesofknowing");
+      button.setAttribute("data-color", "#FFDD00");
+      button.setAttribute("data-emoji", "\u2615");
+      button.setAttribute("data-font", "Cookie");
+      button.setAttribute("data-text", "Buy me a coffee");
+      button.setAttribute("data-outline-color", "#000000");
+      button.setAttribute("data-font-color", "#000000");
+      button.setAttribute("data-coffee-color", "#ffffff");
+      container.appendChild(button);
+      window.BMCButton.init();
+    }
+
+    function ensureBmcScript() {
+      if (window.BMCButton) {
+        installBmcIntoDom();
+        return;
+      }
+      var existing = document.querySelector('script[src="' + BMC_SRC + '"]');
+      if (existing) {
+        var tries = 0;
+        function tick() {
+          if (window.BMCButton) {
+            installBmcIntoDom();
+            return;
+          }
+          if (tries++ < 50) setTimeout(tick, 40);
+        }
+        existing.addEventListener("load", tick, { once: true });
+        tick();
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = BMC_SRC;
+      script.async = true;
+      script.onload = function () {
+        installBmcIntoDom();
+      };
+      document.body.appendChild(script);
+    }
+
+    window.__tok2EnsureBmcButton = ensureBmcScript;
+  })();
+</script>
