@@ -615,6 +615,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return ensureTerminalPunctuation(sentenceCase(str));
   }
 
+  function lowerInitial(str) {
+    if (!str) return "";
+    const trimmed = String(str).trim();
+    return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
+  }
+
   function normaliseRelationalLanguage(str) {
     if (!str) return "";
 
@@ -723,6 +729,38 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     return "";
+  }
+
+  function buildInteractionConsequence(c1, c2, signalLine) {
+    const roles = splitSignalRoles(signalLine);
+    const first = roles.first ? roles.first.toLowerCase() : "";
+    const second = roles.second ? roles.second.toLowerCase() : "";
+
+    if (first && second) {
+      return cleanSentence(
+        `What ${c1.name} opens through ${first} is tested by the ${second} ${c2.name} brings into the situation`,
+      );
+    }
+
+    return cleanSentence(
+      `${c2.name} changes the consequences of what ${c1.name} has already set in motion`,
+    );
+  }
+
+  function buildMoveText(c1, c2, signalLine) {
+    const roles = splitSignalRoles(signalLine);
+    const first = roles.first ? roles.first.toLowerCase() : "";
+    const second = roles.second ? roles.second.toLowerCase() : "";
+
+    if (first && second) {
+      return cleanSentence(
+        `Look for the point where ${first} becomes affected by ${second}. That is where the next choice needs to be made`,
+      );
+    }
+
+    return cleanSentence(
+      `Look at what changes after ${c2.name} enters the situation ${c1.name} has opened`,
+    );
   }
 
   function isGenericInteractionLine(line) {
@@ -930,7 +968,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return keywordsHtml(arr.slice(0, Math.max(0, max)));
   }
 
-  function reflectionQuestionForPair(c1, c2, p1, p2) {
+  function reflectionQuestionForPair(c1, c2, p1, p2, signalLine) {
     const n1 = c1.name;
     const n2 = c2.name;
     if (p1 === "opens" && (p2 === "drives" || p2 === "propels" || p2 === "focuses")) {
@@ -956,7 +994,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (p1 === "nourishes" && p2 === "sustains") {
       return `What would grow more steadily if you let ${n1} and ${n2} keep feeding what they have started?`;
     }
-    return `What is ${n2} trying to do with what ${n1} has already established?`;
+    const roles = splitSignalRoles(signalLine || "");
+    const first = roles.first ? roles.first.toLowerCase() : "";
+    const second = roles.second ? roles.second.toLowerCase() : "";
+    if (first && second) {
+      return `Where is ${first} being changed by ${second}, and what does that reveal?`;
+    }
+    return `What changes when ${n2} enters what ${n1} has already established?`;
   }
 
   function formatReadingDate() {
@@ -1203,7 +1247,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
     h += "</div>";
 
-    const panelIx = panelInteractionResult(
+    let panelIx = panelInteractionResult(
       interactionLine,
       verdictText,
       f1,
@@ -1215,6 +1259,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       panelIncoming,
       verdictUsedInSignal,
     );
+
+    const sigNorm = normaliseForDedupe(formatBlockText(signalSentence));
+    const ixNorm = normaliseForDedupe(panelIx.summary);
+    if (sigNorm === ixNorm) {
+      const cons = formatBlockText(buildInteractionConsequence(c1, c2, signal));
+      let noteAdj = panelIx.note;
+      if (noteAdj && normaliseForDedupe(noteAdj) === normaliseForDedupe(cons)) {
+        noteAdj = "";
+      }
+      panelIx = {
+        summary: cons,
+        note: noteAdj,
+        full: joinCleanSentences([cons, noteAdj].filter(Boolean)),
+      };
+    }
 
     h += '<div class="interaction-panel interaction-stack">';
     h += '<div class="section-label">Relational Energies at Play</div>';
@@ -1299,12 +1358,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h +=
       escHtml(c1.name) +
       " has already set the tone by " +
-      escHtml(formatBlockText(humaniseEffect(f1.relationalEffect))) +
+      escHtml(lowerInitial(formatBlockText(humaniseEffect(f1.relationalEffect)))) +
       " ";
     h +=
       escHtml(c2.name) +
       " enters that room by " +
-      escHtml(formatBlockText(humaniseEffect(f2.relationalEffect))) +
+      escHtml(lowerInitial(formatBlockText(humaniseEffect(f2.relationalEffect)))) +
       " ";
     if (
       clean(interactionLine) &&
@@ -1426,8 +1485,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       }
 
       if (!moveText) {
-        moveText =
-          "Pay attention to what the second energy is doing to the first. That is where the decision sits.";
+        moveText = buildMoveText(c1, c2, signal);
       }
 
       if (c2.id === "the-tower" || c2.name === "The Tower") {
@@ -1456,7 +1514,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
     h += "</section>";
 
-    const reflectionQ = reflectionQuestionForPair(c1, c2, p1, p2);
+    const reflectionQ = reflectionQuestionForPair(c1, c2, p1, p2, signal);
     const readDate = formatReadingDate();
 
     h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section tok2-reflection-wrap">';
