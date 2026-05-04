@@ -68,9 +68,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       <p class="tarot-tool__crossnav-title">Tarot tools</p>
       <ul class="tarot-tool__crossnav-list">
         <li class="tarot-tool__crossnav-item">
-          <a class="tarot-tool__crossnav-link" href="/tools/tarot-combination-interpreter/">Two-Card Combination Interpreter</a>
-        </li>
-        <li class="tarot-tool__crossnav-item">
           <a
             class="tarot-tool__crossnav-link"
             href="/tools/two-card-tarot-reading/"
@@ -80,9 +77,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--current">Current</span>
         </li>
         <li class="tarot-tool__crossnav-item">
-          <a class="tarot-tool__crossnav-link tarot-tool__crossnav-link--soon" href="/tools/three-card-tarot-spread-interpreter/"
-            >Three-Card Spread Interpreter</a
-          >
+          <span class="tarot-tool__crossnav-static tarot-tool__crossnav-link--soon">The Table Between Them</span>
+          <span class="tarot-tool__crossnav-tool-sub">three-card interpreter</span>
           <span class="tarot-tool__crossnav-label tarot-tool__crossnav-label--soon">Coming next</span>
         </li>
         <li class="tarot-tool__crossnav-item">
@@ -661,13 +657,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return text;
   }
 
-  function panelSplitWords(s) {
-    return String(s || "")
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean);
-  }
-
   function panelFilterBanned(s) {
     return String(s || "")
       .replace(/\b(energy|journey|process|vibration)\b/gi, "")
@@ -675,29 +664,47 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       .trim();
   }
 
-  /** Keeps between minWords and maxWords inclusive by trimming or merging sources. */
-  function panelWordRange(primary, secondary, minWords, maxWords) {
-    const max = Math.max(minWords, maxWords);
-    const min = Math.min(minWords, maxWords);
-    let words = panelSplitWords(panelFilterBanned(primary));
-    if (words.length < min && secondary) {
-      words = panelSplitWords(panelFilterBanned([primary, secondary].filter(Boolean).join(" ")));
-    }
-    if (words.length > max) words = words.slice(0, max);
-    return words.join(" ");
+  /** Rewrites stock arrival phrasing into plain relational language (no "field" framing). */
+  function panelHumaniseExistingDynamic(text) {
+    let t = panelFilterBanned(String(text || "").trim());
+    if (!t) return "";
+
+    t = t.replace(
+      /^Sets the field as\s+(.+?)\.\s*It defines the space as one where\s+/i,
+      "This begins as $1, where ",
+    );
+    t = t.replace(
+      /^Sets the field as\s+(.+?)\.\s*It defines the space as a place where\s+/i,
+      "This begins as $1, where ",
+    );
+    t = t.replace(
+      /^Sets the field as\s+(.+?)\.\s*It defines the space through\s+/i,
+      "This begins as $1, through ",
+    );
+    t = t.replace(/^Sets the field as\s+/i, "This begins in a state of ");
+    t = t.replace(/\.\s*It defines the space as one where\s+/gi, ", where ");
+    t = t.replace(/\.\s*It defines the space as a place where\s+/gi, ", where ");
+    t = t.replace(/\.\s*It defines the space through\s+/gi, ", through ");
+    t = t.replace(/\.\s*Sets a field where\s+/gi, ". Here, ");
+    t = t.replace(/^Sets a field where\s+/i, "The situation opens where ");
+    t = t.replace(/\bthe field\b/gi, "the situation");
+    t = t.replace(/\ba field\b/gi, "a situation");
+    t = t.replace(/\s+/g, " ").trim();
+    return t;
   }
 
   function panelFieldCondition(f1) {
     const arrival = clean(f1.arrivalBehaviour);
     const essence = clean(f1.essenceSentence);
-    return panelWordRange(arrival || essence, arrival && essence && arrival !== essence ? essence : "", 8, 14);
+    const merged =
+      arrival && essence && arrival !== essence ? `${arrival} ${essence}`.trim() : arrival || essence;
+    return panelHumaniseExistingDynamic(merged);
   }
 
   function panelIncomingPressure(f2) {
     const rel = humaniseEffect(f2.relationalEffect);
     const rsp = clean(f2.responseBehaviour);
-    const effectLead = clean(String(f2.relationalEffect || "").split("\u2014")[0]);
-    return panelWordRange([rel, rsp].filter(Boolean).join(" "), effectLead, 8, 14);
+    return panelHumaniseExistingDynamic([rel, rsp].filter(Boolean).join(" "));
   }
 
   function panelInteractionResult(
@@ -715,12 +722,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     let derived = "";
     if (usefulLine) {
-      derived = panelWordRange(
-        [usefulLine, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "),
-        "",
-        8,
-        14,
-      );
+      derived = panelFilterBanned([usefulLine, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "));
     }
 
     if (!clean(derived) || derived.toLowerCase().includes("the interaction depends")) {
@@ -729,13 +731,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         .join(" ");
       const tagBit =
         interactionTag && interactionTag !== "Shift"
-          ? `The combined line resolves as ${interactionTag.toLowerCase()}.`
+          ? ` The combined line resolves as ${interactionTag.toLowerCase()}.`
           : "";
-      derived = panelWordRange(
-        [relBits, tagBit, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "),
-        clean(verdictText),
-        8,
-        18,
+      derived = panelFilterBanned(
+        [relBits + tagBit, clean(anchorText), clean(outcomeLine)].filter(Boolean).join(" "),
       );
     }
 
@@ -1009,7 +1008,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="interaction-panel">';
     h += '<div class="interaction-title">Relational Energies at Play</div>';
     h +=
-      '<div class="interaction-row"><div class="interaction-label">Field Condition</div><div class="interaction-value">' +
+      '<div class="interaction-row"><div class="interaction-label">Existing Dynamic</div><div class="interaction-value">' +
       escHtml(panelField) +
       "</div></div>";
     h +=
@@ -1227,20 +1226,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     h += '<div class="support-block">';
     h += "<p>" + escHtml(supportP1) + "</p>";
+    h +=
+      '<a href="https://www.buymeacoffee.com/tidesofknowing" target="_blank" rel="noopener noreferrer" class="bmc-image-link"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" class="bmc-image-button" loading="lazy" decoding="async" /></a>';
     h += "<p>" + escHtml(supportP2) + "</p>";
-    h += '<div id="bmc-button-container"></div>';
     h += "</div>";
 
     h += "</section>";
 
     out.innerHTML = h;
-
-    const w = /** @type {any} */ (globalThis);
-    if (typeof w.__tok2EnsureBmcButton === "function") {
-      requestAnimationFrame(function () {
-        w.__tok2EnsureBmcButton();
-      });
-    }
   }
 
   const sel1 = document.getElementById("tok2-card-1");
@@ -1355,6 +1348,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   .tarot-tool__crossnav-link--soon {
     color: var(--mountain-water);
     opacity: 0.88;
+  }
+
+  .tarot-tool__crossnav-static {
+    font-weight: 500;
+    color: var(--mountain-water);
+    opacity: 0.88;
+  }
+
+  .tarot-tool__crossnav-tool-sub {
+    flex: 1 0 100%;
+    margin: -0.05rem 0 0;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    color: rgba(13, 50, 77, 0.58);
   }
 
   .tarot-tool__crossnav-label {
@@ -1606,8 +1614,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .interaction-value {
     flex: 1 1 55%;
+    width: 65%;
     max-width: 65%;
+    min-width: 0;
     text-align: right;
+    white-space: normal;
+    word-break: break-word;
     font-size: 1.02rem;
     line-height: 1.55;
     color: var(--ink, #1a1a1a);
@@ -1635,6 +1647,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       max-width: 100%;
       width: 100%;
       text-align: left;
+      white-space: normal;
+      word-break: break-word;
     }
   }
 
@@ -1771,8 +1785,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin-bottom: 16px;
   }
 
-  #tok2-output #bmc-button-container {
-    margin-top: 10px;
+  #tok2-output .bmc-image-link {
+    display: inline-block;
+    margin: 14px 0 10px;
+  }
+
+  #tok2-output .bmc-image-button {
+    height: 60px !important;
+    width: 217px !important;
+    display: block;
   }
 
   @media (max-width: 520px) {
@@ -1870,56 +1891,3 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     background: rgba(13, 50, 77, 0.04);
   }
 </style>
-
-<script is:inline>
-  (function () {
-    var BMC_SRC = "https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js";
-
-    function installBmcIntoDom() {
-      var container = document.getElementById("bmc-button-container");
-      if (!container || container.hasChildNodes() || !window.BMCButton) return;
-      var button = document.createElement("div");
-      button.setAttribute("data-name", "bmc-button");
-      button.setAttribute("data-slug", "tidesofknowing");
-      button.setAttribute("data-color", "#FFDD00");
-      button.setAttribute("data-emoji", "\u2615");
-      button.setAttribute("data-font", "Cookie");
-      button.setAttribute("data-text", "Buy me a coffee");
-      button.setAttribute("data-outline-color", "#000000");
-      button.setAttribute("data-font-color", "#000000");
-      button.setAttribute("data-coffee-color", "#ffffff");
-      container.appendChild(button);
-      window.BMCButton.init();
-    }
-
-    function ensureBmcScript() {
-      if (window.BMCButton) {
-        installBmcIntoDom();
-        return;
-      }
-      var existing = document.querySelector('script[src="' + BMC_SRC + '"]');
-      if (existing) {
-        var tries = 0;
-        function tick() {
-          if (window.BMCButton) {
-            installBmcIntoDom();
-            return;
-          }
-          if (tries++ < 50) setTimeout(tick, 40);
-        }
-        existing.addEventListener("load", tick, { once: true });
-        tick();
-        return;
-      }
-      var script = document.createElement("script");
-      script.src = BMC_SRC;
-      script.async = true;
-      script.onload = function () {
-        installBmcIntoDom();
-      };
-      document.body.appendChild(script);
-    }
-
-    window.__tok2EnsureBmcButton = ensureBmcScript;
-  })();
-</script>
