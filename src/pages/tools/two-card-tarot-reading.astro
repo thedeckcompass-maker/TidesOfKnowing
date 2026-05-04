@@ -796,31 +796,19 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function buildUnderneathSurfaceText(c1, c2, card1Lines = [], card2Lines = []) {
-    const first = String(card1Lines[0] || "").trim();
-    const second = String(card2Lines[0] || "").trim();
-    const third = String(card1Lines[1] || "").trim();
-    const fourth = String(card2Lines[1] || "").trim();
+    const first = cleanCoreMeaningSentence(String(card1Lines[0] || "").trim());
+    const second = cleanCoreMeaningSentence(String(card2Lines[0] || "").trim());
 
     const parts = [];
 
     if (first && second) {
       parts.push(
-        `Underneath this pairing, ${c1.name} shows one side of the deeper pattern: ${sentenceCase(first)}. ${c2.name} shows the pressure point: ${sentenceCase(second)}.`,
+        `${c1.name} shows the deeper pattern: ${lowerInitial(first.replace(/\.+$/, ""))}. ${c2.name} shows the pressure point: ${lowerInitial(second.replace(/\.+$/, ""))}.`,
       );
     } else if (first) {
-      parts.push(`Underneath this pairing, ${c1.name} reveals the deeper pattern: ${sentenceCase(first)}.`);
+      parts.push(`${c1.name} shows the deeper pattern: ${lowerInitial(first.replace(/\.+$/, ""))}.`);
     } else if (second) {
-      parts.push(`Underneath this pairing, ${c2.name} reveals the pressure point: ${sentenceCase(second)}.`);
-    }
-
-    if (third || fourth) {
-      parts.push(
-        joinCleanSentences([
-          "Together they name what still lies beneath the surface.",
-          third,
-          fourth,
-        ].filter(Boolean)),
-      );
+      parts.push(`${c2.name} shows the pressure point: ${lowerInitial(second.replace(/\.+$/, ""))}.`);
     }
 
     return formatBlockText(joinCleanSentences(parts));
@@ -1499,71 +1487,133 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return selectStrongestSentence(joined);
   }
 
-  /** Card 1 arrival + essence, scene-scrubbed (not framed); used only in Before Card 2 Arrived. */
-  function sceneCard1EstablishedBody(f1) {
-    const arrival = clean(f1.arrivalBehaviour);
-    const essence = clean(f1.essenceSentence);
-    if (!arrival && !essence) return "";
-    let inner;
-    if (arrival && essence && arrival !== essence) {
-      inner = joinCleanSentences(
-        [arrival, essence].map((x) => panelHumaniseExistingDynamic(panelFilterBanned(x))),
-      );
-    } else {
-      inner = joinCleanSentences([panelHumaniseExistingDynamic(panelFilterBanned(arrival || essence))].filter(Boolean));
+  /** Strip procedural dataset leads so lines are not published as standalone fragments. */
+  function stripProceduralLeadForDisplay(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/^brings in\s+/i, "")
+      .replace(/^introduces\s+/i, "")
+      .replace(/^integrates what came before\.?\s*/i, "")
+      .replace(/^disrupts what is already moving\s+/i, "disrupts ")
+      .trim();
+  }
+
+  function extractArrivalVerbFromResponseBehaviour(f2) {
+    const r = clean(String(f2?.responseBehaviour || "")).toLowerCase();
+    if (!r) return "disrupts";
+    if (/^disrupts\b/.test(r)) return "disrupts";
+    if (/^redirects\b/.test(r)) return "redirects";
+    if (/^integrates\b/.test(r)) return "integrates";
+    if (/^distorts\b/.test(r)) return "distorts";
+    if (/^fragments\b/.test(r)) return "fractures";
+    if (/^circulates\b/.test(r)) return "recirculates";
+    if (/^opens\b/.test(r)) return "opens";
+    if (/^closes\b/.test(r)) return "closes";
+    if (/^holds\b/.test(r)) return "holds";
+    if (/^blocks\b/.test(r)) return "blocks";
+    if (/^releases\b/.test(r)) return "releases";
+    if (/^dissolves\b/.test(r)) return "dissolves";
+    if (/^deepens\b/.test(r)) return "deepens";
+    if (/^accelerates\b/.test(r)) return "accelerates";
+    const head = r.split(/\s+/)[0].replace(/\.$/, "");
+    if (head && /^[a-z]+$/.test(head)) return head;
+    return "disrupts";
+  }
+
+  function extractArrivalCoreNoun(c1, f1) {
+    const kw = Array.isArray(f1?.keywords) ? f1.keywords.map((k) => String(k).toLowerCase()) : [];
+    const prefer = [
+      "exchange",
+      "redistribution",
+      "circulation",
+      "generosity",
+      "distribution",
+      "equity",
+      "flow",
+      "connection",
+      "alignment",
+      "collaboration",
+      "structure",
+      "pattern",
+    ];
+    for (const term of prefer) {
+      if (kw.some((k) => k === term || k.includes(term))) {
+        if (term === "generosity") return "generosity";
+        if (term === "distribution") return "distribution";
+        return term;
+      }
     }
-    inner = cleanRelationalSceneLanguage(inner);
-    if (!clean(inner)) return "";
-    return humaniseReadingParagraph(inner);
+    const ess = String(f1?.essenceSentence || "").toLowerCase();
+    if (ess.includes("exchange")) return "exchange";
+    if (ess.includes("redistribution")) return "redistribution";
+    if (ess.includes("circulation")) return "circulation";
+    if (ess.includes("between") && ess.includes("deficit")) return "exchange";
+    return "pattern";
+  }
+
+  function extractArrivalStructureNoun(c2, f2) {
+    const kw = Array.isArray(f2?.keywords) ? f2.keywords.map((k) => String(k).toLowerCase()) : [];
+    const ess = String(f2?.essenceSentence || "").toLowerCase();
+    const ex = Array.isArray(f2?.extendedKeywords) ? f2.extendedKeywords.join(" ").toLowerCase() : "";
+    if (
+      kw.some((k) => /collab|craft|skill|contribut/.test(k)) ||
+      ess.includes("collaborative structure") ||
+      ex.includes("collaborative structure") ||
+      ex.includes("collective structure") ||
+      ex.includes("collective effort")
+    ) {
+      return "collective structure";
+    }
+    if (kw.some((k) => /struct|order|framework|foundation|boundary/.test(k))) return "structure";
+    if (c2?.suit === "Pentacles") return "material structure";
+    if (c2?.suit === "Cups") return "emotional structure";
+    if (c2?.suit === "Swords") return "mental structure";
+    if (c2?.suit === "Wands") return "creative structure";
+    return "structure";
+  }
+
+  function cleanCoreMeaningSentence(str) {
+    if (!str) return "";
+    let s = String(str)
+      .replace(/^establishes a condition of\s*/i, "")
+      .replace(/^establishes a field of\s*/i, "");
+    s = cleanRelationalSceneLanguage(s);
+    s = s.replace(/\s+/g, " ").trim();
+    s = s.replace(/\.+$/, "");
+    if (!s) return "";
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+    if (!/[.!?]$/.test(s)) s += ".";
+    return s.replace(/\.{2,}/g, ".").trim();
   }
 
   function buildBeforeCard2ArrivedProse(c1, c2, f1) {
-    const body = sceneCard1EstablishedBody(f1);
-    if (!clean(body)) return "";
-    const lead = `Before ${c2.name} arrived, ${c1.name} had already set what the room would be asked to hold.`;
-    return joinCleanSentences([lead, body]);
+    const essence = clean(f1.essenceSentence || "");
+    if (!essence) return "";
+    let e = panelHumaniseExistingDynamic(panelFilterBanned(essence));
+    e = cleanRelationalSceneLanguage(e);
+    e = stripProceduralLeadForDisplay(e);
+    e = humaniseReadingSentence(e);
+    if (!e || isGenericRelPanelCopy(e)) return "";
+    e = e.replace(/\.+$/, "").trim();
+    const clause = lowerInitial(e);
+    return cleanSentence(`${c1.name} had already established that ${clause}.`);
   }
 
-  function buildTheArrivalProse(c1, c2, f2, rev2, whenSecondText) {
-    const rspBase = scrubGenericRelPanelFragment(clean(f2.responseBehaviour));
-    let rsp = "";
-    if (rspBase) {
-      rsp = humaniseReadingSentence(
-        cleanRelationalSceneLanguage(panelHumaniseExistingDynamic(panelFilterBanned(rspBase))),
-      );
-      if (isGenericRelPanelCopy(rsp)) rsp = "";
-    }
+  function possessiveName(name) {
+    const n = String(name || "").trim();
+    if (!n) return "";
+    return /s$/i.test(n) ? `${n}'` : `${n}'s`;
+  }
 
-    let relH = "";
-    if (clean(String(f2.relationalEffect || ""))) {
-      relH = humaniseReadingSentence(
-        ensureCompleteSentence(humaniseEffect(f2.relationalEffect)),
-      );
-      relH = cleanRelationalSceneLanguage(relH);
-      if (!clean(relH)) relH = "";
-    }
-
-    let whenH = "";
-    const whenRaw = scrubGenericRelPanelFragment(clean(String(whenSecondText || "")));
-    if (
-      whenRaw &&
-      !isGeneric(whenRaw) &&
-      !isGenericInteractionLine(whenRaw) &&
-      !isGenericRelPanelCopy(whenRaw)
-    ) {
-      whenH = humaniseReadingSentence(
-        cleanRelationalSceneLanguage(panelHumaniseExistingDynamic(panelFilterBanned(whenRaw))),
-      );
-      if (isGenericRelPanelCopy(whenH)) whenH = "";
-    }
-
-    if (!rsp && !relH && !whenH) return "";
-
-    const orient = rev2 ? " reversed" : "";
-    const lead = `${c2.name} enters${orient} into what ${c1.name} had already set in motion in the room, and the two cards meet on those terms.`;
-    const details = joinCleanSentences([rsp, relH, whenH].filter(Boolean));
-    if (!details) return cleanSentence(lead);
-    return joinCleanSentences([lead, details]);
+  function buildTheArrivalProse(c1, c2, f1, f2) {
+    const rspBase = scrubGenericRelPanelFragment(clean(f2?.responseBehaviour || ""));
+    if (!clean(rspBase)) return "";
+    const verb = extractArrivalVerbFromResponseBehaviour(f2);
+    const structure = extractArrivalStructureNoun(c2, f2);
+    const core = extractArrivalCoreNoun(c1, f1);
+    return cleanSentence(
+      `${c2.name} ${verb} the ${structure} that would normally hold ${possessiveName(c1.name)} ${core} together.`,
+    );
   }
 
   function panelInteractionResult(
@@ -1901,18 +1951,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       signalSentence = shortSig || "";
     }
 
-    const card1Action = humaniseReadingSentence(
-      ensureCompleteSentence(humaniseEffect(f1.relationalEffect)),
-    );
-    const card2Action = humaniseReadingSentence(
-      ensureCompleteSentence(humaniseEffect(f2.relationalEffect)),
-    );
-    const openingProse = joinCleanSentences([
-      `${c1.name} sets the tone here`,
-      card1Action,
-      `When ${c2.name} enters, the pattern shifts`,
-      card2Action,
-    ]);
+    const openingProse = "";
 
     const interactionSummary = clean(panelIx.summary) ? String(panelIx.summary).trim() : "";
     const interactionNote = clean(panelIx.note) ? String(panelIx.note).trim() : "";
@@ -2001,7 +2040,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       h += "</section>";
     }
 
-    const theArrivalProse = buildTheArrivalProse(c1, c2, f2, rev2, whenSecondText);
+    const theArrivalProse = buildTheArrivalProse(c1, c2, f1, f2);
     const theArrivalOut = theArrivalProse
       ? formatBlockText(cleanRelationalSceneLanguage(theArrivalProse))
       : "";
