@@ -1380,6 +1380,314 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     );
   }
 
+  function scrubShiftParagraphCopy(str) {
+    let t = String(str || "");
+    t = t.replace(/\benters the room\b/gi, "arrives");
+    t = t.replace(/\bthe room\b/gi, "here");
+    t = t.replace(/\bpreceding charge\b/gi, "what came before");
+    t = t.replace(/\badjacent cards?\b/gi, "");
+    t = t.replace(/\bthe field\b/gi, "the situation");
+    t = t.replace(/\b(a|the) fields\b/gi, "$1 situations");
+    t = t.replace(/\b(a|the) field\b/gi, "$1 situation");
+    t = t.replace(/\bfields\b/gi, "situations");
+    t = t.replace(/\bfield\b/gi, "situation");
+    t = t.replace(/\bspreads\b/gi, "wider patterns");
+    t = t.replace(/\bspread\b/gi, "wider pattern");
+    t = t.replace(/\bprior card\b/gi, "what came before");
+    t = t.replace(/\bthe what came before\b/gi, "what came before");
+    t = t.replace(/\bestablished situation\b/gi, "established pattern");
+    t = t.replace(/\bthe existing situation\b/gi, "what is already happening");
+    t = t.replace(/\bcards\b/gi, "turns");
+    t = t.replace(/\bcard\b/gi, "turn");
+    t = t.replace(/\bpositions\b/gi, "places");
+    t = t.replace(/\bposition\b/gi, "place");
+    t = t.replace(/\bcharges\b/gi, "what had built up");
+    t = t.replace(/\bcharge\b/gi, "what had built up");
+    t = t.replace(/\bwithin a situation of\b/gi, "within");
+    t = t.replace(/\s{2,}/g, " ").trim();
+    return t;
+  }
+
+  /** Repairs that depend on scrub order (field→situation, existing field→what is already happening). */
+  function repairShiftParagraphAfterScrub(str) {
+    let t = String(str || "");
+    t = t.replace(/\bthe situation breaks what is already happening\b/gi, "the situation interrupts what is already happening");
+    t = t.replace(/\bit breaks what is already happening\b/gi, "it interrupts what is already happening");
+    t = t.replace(/\bthe situation divides what is already happening\b/gi, "the situation splits what is already happening");
+    t = t.replace(/\bit divides what is already happening\b/gi, "it splits what is already happening");
+    t = t.replace(/\bbreaks what is already happening\b/gi, "interrupts what is already happening");
+    t = t.replace(/\bdivides what is already happening\b/gi, "splits what is already happening");
+    t = t.replace(/\bmaterial situation\b/gi, "material ground");
+    t = t.replace(/\bthe situation sets a (.+?)\s+situation\s+that\b/gi, "the situation establishes a $1 base that");
+    t = t.replace(/\bthe situation is material ground at origin\b/gi, "the situation centres on material possibility at an early stage");
+    t = t.replace(/\bthe situation is a contained emotional situation\b/gi, "the situation holds emotional life in a tight frame");
+    t = t.replace(/\s{2,}/g, " ").trim();
+    return t;
+  }
+
+  function finalReadabilityPass(str) {
+    let t = String(str || "");
+
+    // reduce repeated “the situation … the situation …”
+    t = t.replace(/\bthe situation\b([^.]*)\bthe situation\b/gi, "the situation$1it");
+
+    // soften blunt termination phrasing
+    t = t.replace(/\bdrives ([^.]*) to termination\b/gi, "brings $1 to an end");
+
+    return t;
+  }
+
+  function truncateShiftContextClause(s, maxLen) {
+    const t = clean(String(s || ""));
+    if (!t) return "";
+    const cap = typeof maxLen === "number" && maxLen > 40 ? maxLen : 120;
+    let out =
+      t.length <= cap
+        ? t
+        : (() => {
+            const slice = t.slice(0, cap);
+            const cut = slice.lastIndexOf(" ");
+            return (cut > 40 ? slice.slice(0, cut) : slice).trim();
+          })();
+    while (/\b(toward|into|from|with)\s*$/i.test(out) && out.length > 55) {
+      const cut = out.lastIndexOf(" ", out.length - 1);
+      if (cut < 35) break;
+      out = out.slice(0, cut).trim();
+    }
+    return out;
+  }
+
+  /** Turn orientation snippets into short lived-language clauses (not raw dataset lines). */
+  function normalizeWhenLineForShiftContext(raw) {
+    let t = clean(String(raw || ""));
+    if (!t) return "";
+    t = t.replace(/\s+/g, " ").trim();
+    t = t.replace(/^(upright|reversed),?\s+/i, "");
+    let u = firstSentenceOnly(t) || t;
+    u = u.replace(/^(upright|reversed),?\s+/i, "").trim();
+
+    u = u.replace(/\bprior material\b/gi, "what came before");
+    u = u.replace(/\bprior momentum\b/gi, "what came before");
+    u = u.replace(/\bexisting material\b/gi, "what is already there");
+    u = u.replace(/\bexisting energy\b/gi, "what is already present");
+    u = u.replace(/\bexisting situation\b/gi, "what is already happening");
+    u = u.replace(/\binto a finished state\b/gi, "to completion");
+    u = u.replace(/\bmaterial situation\b/gi, "condition");
+    u = u.replace(/\bgoverned situation\b/gi, "governed emotional state");
+    u = u.replace(/\btransitional situation\b/gi, "transitional state");
+    u = u.replace(/\bexisting situation\b/gi, "what is already happening");
+    u = u.replace(/\bthe what is already there\b/gi, "what is already there");
+    u = u.replace(/\bthe field\b/gi, "what is already in play");
+    u = u.replace(/\b(a|the) fields\b/gi, "$1 situations in play");
+    u = u.replace(/\bprojection-saturated\b/gi, "full of projections");
+    u = u.replace(/\bcollaborative material\b/gi, "collaborative structure");
+    u = u.replace(/\bloss-weighted\b/gi, "shaped by loss");
+    u = u.replace(/\bprior turn\b/gi, "what came before");
+    u = u.replace(/\breceives\b/gi, "takes in");
+    u = u.replace(/\breceiving\b/gi, "taking in");
+
+    u = u.replace(/^defines the interaction as one\s+/i, "");
+    u = u.replace(/^defines the interaction as\s+/i, "");
+    u = u.replace(/^establishes\s+/i, "the situation is ");
+    u = u.replace(/^introduces\s+/i, "the situation introduces ");
+    u = u.replace(/^negotiates by\s+/i, "responding by ");
+    u = u.replace(/^it\s+/i, "the situation ");
+    u = u.replace(/^(draws|pulls|takes|adds|breaks|speeds|removes|reduces|applies|encloses|extends|slows|splits|reframes|stabilises|drives|subjects|divides|narrows|converts)\b/i, "the situation $1");
+
+    u = u.replace(/^adds\s+/i, "adds ");
+    u = u.replace(/^strips\s+/i, "pulls back from ");
+    u = u.replace(/^completes or delays\s+/i, "");
+    u = u.replace(/^collapses or fractures\s+/i, "breaks open ");
+    u = u.replace(/^accelerates and resolves\s+/i, "speeds toward resolution while ");
+    u = u.replace(/^accelerates and\s+/i, "speeds up while ");
+
+    u = u.replace(/\bestablishes\b/gi, "sets");
+    u = u.replace(/\bestablishing\b/gi, "setting");
+    u = u.replace(/\bintegrates\b/gi, "weaves together");
+    u = u.replace(/\bintegrating\b/gi, "weaving together");
+    u = u.replace(/\babsorbs\b/gi, "takes up");
+    u = u.replace(/\bstrips\b/gi, "pulls back from");
+    u = u.replace(/\bnegotiates by\b/gi, "responds by");
+    u = u.replace(/\bdepletes\b/gi, "empties out");
+    u = u.replace(/\bseals\b/gi, "closes around");
+    u = u.replace(/\bstills\b/gi, "quiets");
+    u = u.replace(/\bobscures\b/gi, "muddies");
+    u = u.replace(/\bdeepens\b/gi, "goes deeper into");
+    u = u.replace(/\bwithholds\b/gi, "holds back");
+    u = u.replace(/\bburdens\b/gi, "weighs on");
+    u = u.replace(/\bredirects\b/gi, "turns");
+    u = u.replace(/\brestricts\b/gi, "tightens");
+    u = u.replace(/\bdisrupts\b/gi, "unsettles");
+    u = u.replace(/\breleases\b/gi, "lets go of");
+    u = u.replace(/\bopens\b/gi, "opens up");
+    u = u.replace(/the situation\s+(?=(takes|adds|pulls|breaks|speeds|removes))/gi, "it ");
+
+    u = u.replace(/\s+/g, " ").trim();
+    u = u.replace(/\s+and\s+carries\s+/i, ", carrying ");
+
+    u = u.replace(/\s+/g, " ").trim();
+    u = u.replace(/\btakes up it\b/gi, "takes it up");
+    u = u.replace(/\b([A-Z])([a-z]+)\b/g, (m, a, b) => a.toLowerCase() + b);
+    u = u.replace(/\bthe situation is a ([a-z]+) situation\b/gi, "the situation is $1");
+    u = u.replace(/\bthe situation is an ([a-z]+) situation\b/gi, "the situation is $1");
+    u = u.replace(/\bthe situation is a ([a-z]+(?:\s+[a-z]+){0,2})\s+situation\b/gi, "the situation is $1");
+    u = u.replace(/\bthe situation is a field grounded in\b/gi, "the situation is grounded in");
+    u = u.replace(/\bthe situation is a field of\b/gi, "the situation centres on");
+    u = u.replace(/\bthe situation is a field\b/gi, "the situation is");
+    u = u.replace(/\bthe situation is a situation\b/gi, "the situation is");
+    u = u.replace(/\bthe situation is ([a-z]+)\s+([a-z]+)\s+field\b/gi, (_m, w1, w2) =>
+      w1 === "suspended" && w2 === "material"
+        ? "the situation holds material development in suspension"
+        : `the situation is ${w1} ${w2}`,
+    );
+    u = u.replace(/\bthe situation is an? ([a-z-]+)\s+field\b/gi, "the situation is $1");
+    u = u.replace(/\bwithin a situation of\b/gi, "within");
+    u = u.replace(/\binto the existing situation\b/gi, "into what is already happening");
+    u = u.replace(/\bestablished situation\b/gi, "established pattern");
+    u = u.replace(/\bthe situation is a full of projections (field|situation)\b/gi, "the situation is full of projections");
+    u = u.replace(/\bthe what came before\b/gi, "what came before");
+    u = truncateShiftContextClause(u, 180);
+    return u;
+  }
+
+  function polishShiftSentence(str) {
+    let t = String(str || "");
+
+    t = t.replace(/\backnowledges that binding and begins the structural release recognition allows\b/gi,
+      "acknowledges that binding exists and begins the structural release that recognition allows");
+
+    t = t.replace(/\breduces material availability of what came before\b/gi,
+      "reduces access to what was previously available");
+    t = t.replace(/\bthe situation reduces material availability of what came before\b/gi,
+      "the situation reduces access to what was previously available");
+    t = t.replace(/\breduces material availability of preceding charge\b/gi,
+      "reduces access to what was previously available");
+    t = t.replace(/\bthe situation reduces material availability of preceding charge\b/gi,
+      "the situation reduces access to what was previously available");
+
+    t = t.replace(/\bnot yet binding\b/gi,
+      "not yet fixed");
+
+    return t;
+  }
+
+  function repairShiftSentence(str) {
+    let t = String(str || "");
+
+    // Fix “sets a situation of …”
+    t = t.replace(/\bsets a situation of\b/gi, "establishes");
+    t = t.replace(/\bthe situation sets a situation of\b/gi, "the situation establishes");
+    t = t.replace(/\bthe situation sets a field of\b/gi, "the situation establishes");
+    t = t.replace(/\bsets a field of\b/gi, "establishes");
+
+    // Fix incomplete noun phrases (avoid re-matching already-repaired endings)
+    t = t.replace(
+      /\bthe situation is an?\s+(collective|observational|suspended|saturated)\b(?!\s+(dynamic|stance|state|condition)\b)/gi,
+      (m, a) => {
+        const map = {
+          collective: "collective dynamic",
+          observational: "observational stance",
+          suspended: "suspended state",
+          saturated: "saturated condition"
+        };
+        return "the situation is a " + map[a];
+      },
+    );
+
+    t = t.replace(/\bis a observational\b/gi, "is an observational");
+
+    // Fix truncated endings
+    t = t.replace(/\binto lasting\.\b/gi, "into lasting form.");
+    t = t.replace(/\binto lasting\b/gi, "into something lasting");
+
+    // Soften overly blunt conversions
+    t = t.replace(/\bbreaks what is already happening\b/gi,
+      "interrupts what is already happening");
+    t = t.replace(/\bdivides what is already happening\b/gi,
+      "splits what is already happening");
+
+    return t;
+  }
+
+  function buildShiftFallbackContextSentence(whenFirstText, whenSecondText) {
+    const a = normalizeWhenLineForShiftContext(whenFirstText);
+    const b = normalizeWhenLineForShiftContext(whenSecondText);
+    if (!a && !b) return "";
+
+    const fragA = a ? lowerInitial(a.replace(/[.!?]+$/, "")) : "";
+    const fragB = b ? lowerInitial(b.replace(/[.!?]+$/, "")) : "";
+
+    if (fragA && fragB) {
+      return cleanSentence(repairShiftSentence(polishShiftSentence(`This means ${fragA}, while ${fragB}.`)));
+    }
+    if (fragA) {
+      return cleanSentence(`This means ${fragA}.`);
+    }
+    return cleanSentence(`This means ${fragB}.`);
+  }
+
+  function countShiftAnchorSentences(anchorText) {
+    const t = clean(String(anchorText || ""));
+    if (!t) return 0;
+    const chunks = t.split(/(?<=[.!?])\s+/).map((x) => clean(x)).filter(Boolean);
+    return chunks.length > 0 ? chunks.length : 1;
+  }
+
+  function buildShiftParagraph(c1, c2, whenFirstText, whenSecondText, moveText) {
+    const anchorRaw = clean(moveText);
+    if (!anchorRaw) return "";
+
+    const anchorSentenceCount = countShiftAnchorSentences(anchorRaw);
+
+    const r1 = clean(whenFirstText).toLowerCase();
+    const r2 = clean(whenSecondText).toLowerCase();
+
+    const exchangeTone =
+      /\b(?:exchange|exchanges|exchanging|redistribut(?:e|es|ed|ing|ion|ive)|redistribution|receive|receives|receiving|received|giving|giver|givers|surplus|deficit|equity|equitable|circulat(?:e|es|ed|ing|ion)|dispens(?:e|es|ed|ing|ation)|allocat(?:e|es|ed|ing|ion)|imbalance|imbalanced|imbalances|uneven|unevenly)\b|material flow|restore flow|give-and-take/i.test(
+        r1,
+      );
+    const collabTone =
+      /\b(?:collaboration|collaborative|collaborate|collaborators|collaboratively|contributing|contribution|contributors?|contributes|contributed|co[- ]?creat(?:e|es|ed|ing|ion)|teamwork)\b|shared structure|collective (?:effort|output|work|form|project)/i.test(
+        r2,
+      );
+
+    const parts = [cleanSentence(anchorRaw)];
+
+    if (exchangeTone && collabTone) {
+      parts.push(
+        cleanSentence(
+          "The shift moves from exchange that has been uneven or conditional into something that requires clearer collaboration and shared structure.",
+        ),
+      );
+    } else if (exchangeTone) {
+      parts.push(
+        cleanSentence(
+          "What is already moving leans on uneven exchange and lopsided give-and-take before the next push.",
+        ),
+      );
+    } else if (collabTone) {
+      parts.push(
+        cleanSentence(
+          "What presses now asks for clearer agreement about how effort lines up and how stakes are shared.",
+        ),
+      );
+    }
+
+    if (parts.length === 1 && anchorSentenceCount === 1) {
+      const ctx = buildShiftFallbackContextSentence(whenFirstText, whenSecondText);
+      if (clean(ctx)) {
+        parts.push(ctx);
+      }
+    }
+
+    const joined = joinCleanSentences(parts.slice(0, 3));
+    return repairShiftParagraphAfterScrub(
+      finalReadabilityPass(
+        scrubShiftParagraphCopy(polishShiftSentence(repairShiftSentence(joined))),
+      ),
+    );
+  }
+
   function isGenericInteractionLine(line) {
     const t = clean(line);
     if (!t) return true;
@@ -2234,26 +2542,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
       if (c2.id === "the-tower" || c2.name === "The Tower") {
         moveText =
-          "Do not try to stabilise this. The second card is breaking something open that cannot be held together any longer. Let what is collapsing fall, rather than trying to preserve it.";
+          "Do not try to stabilise this. The second influence is breaking something open that cannot be held together any longer. Let what is collapsing fall, rather than trying to preserve it.";
       }
 
-      h += '<div class="tok2-shift-stack">';
-      if (whenFirst1) {
-        h +=
-          '<div class="tok2-shift-row"><div class="tok2-shift-label">The room</div><div class="tok2-shift-value">' +
-          escHtml(formatBlockText(capitaliseFirst(whenFirstText))) +
-          "</div></div>";
-      }
-      if (whenSecond2) {
-        h +=
-          '<div class="tok2-shift-row"><div class="tok2-shift-label">What enters</div><div class="tok2-shift-value">' +
-          escHtml(formatBlockText(capitaliseFirst(whenSecondText))) +
-          "</div></div>";
-      }
-      h +=
-        '<div class="tok2-shift-row tok2-shift-row--move"><div class="tok2-shift-label">The move</div><div class="tok2-shift-value">' +
-        escHtml(formatBlockText(moveText)) +
-        "</div></div>";
+      const shiftParagraph = buildShiftParagraph(c1, c2, whenFirstText, whenSecondText, moveText);
+      h += '<div class="tok2-prose tok2-shift-prose">';
+      h += '<p class="tarot-tool__out-p">' + escHtml(shiftParagraph) + "</p>";
       h += "</div>";
     }
     h += "</section>";
