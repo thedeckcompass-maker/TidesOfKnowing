@@ -70,9 +70,16 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         </div>
         <div class="tarot-tool__actions">
           <button class="tarot-tool__button" type="button" id="tok2-draw-btn">Draw Cards</button>
-          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read pair</button>
+          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read Pair</button>
+          <button class="tarot-tool__button" type="button" id="tok2-clear-btn">Clear</button>
         </div>
-        <p class="tarot-tool__actions-help">Draw Cards — let the cards choose<br/>Read Pair — interpret your selection</p>
+        <div id="tok2-clear-confirm" class="tarot-tool__actions-help" style="display:none;">
+          Are you sure?
+          <button class="tarot-tool__button" type="button" id="tok2-clear-yes">Yes</button>
+          <button class="tarot-tool__button" type="button" id="tok2-clear-cancel">Cancel</button>
+        </div>
+        <p class="tarot-tool__actions-help">Choose your own cards, or let the tool draw a pair for you.</p>
+        <p class="tarot-tool__actions-help">Draw Cards: let the tool choose.<br/>Read Pair: interpret your selection.</p>
         <div id="output"></div>
         <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
       </div>
@@ -2277,11 +2284,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     let h = "";
 
     h += '<div class="signal-block">';
-    h += '<div class="signal-label">The Signal</div>';
-    h +=
-      '<p class="tok2-section-intro">' +
-      escHtml("Two signals name the relationship between the cards.") +
-      "</p>";
+    h += '<div class="signal-label">What\u2019s Happening</div>';
+    h += '<div id="signal-info" class="info-text hidden">This shows what’s happening between the cards. It highlights the dynamic already in play.</div>';
     h += '<div class="signal-words">' + escHtml(signal) + "</div>";
     if (clean(formatBlockText(signalSentence))) {
       h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
@@ -2458,11 +2462,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     h +=
-      '<section class="tarot-tool__out-block tok2-read-block tok2-out-section"><h3 class="tarot-tool__out-h3">What Wants to Shift</h3>';
-    h +=
-      '<p class="tok2-section-intro">' +
-      escHtml("This is the practical movement the reading is pointing toward.") +
-      "</p>";
+      '<section class="tarot-tool__out-block tok2-read-block tok2-out-section"><h3 class="tarot-tool__out-h3">What Needs to Change</h3>';
+    h += '<div id="shift-info" class="info-text hidden">This points to what needs to change next. It shows the practical move the cards are guiding you toward.</div>';
     {
       let moveText = null;
 
@@ -2657,10 +2658,36 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     document.getElementById("output")?.scrollIntoView({ behavior: "smooth" });
   }
 
+  function clearReading() {
+    const sel1 = document.getElementById("tok2-card-1");
+    const sel2 = document.getElementById("tok2-card-2");
+    const out = document.getElementById("tok2-output");
+    if (sel1 instanceof HTMLSelectElement) sel1.value = "";
+    if (sel2 instanceof HTMLSelectElement) sel2.value = "";
+
+    const o1 = document.querySelector('input[name="tok2_orient_1"][value="upright"]');
+    const o2 = document.querySelector('input[name="tok2_orient_2"][value="upright"]');
+    if (o1 instanceof HTMLInputElement) o1.checked = true;
+    if (o2 instanceof HTMLInputElement) o2.checked = true;
+
+    if (out instanceof HTMLElement) out.innerHTML = "";
+  }
+
+  let showClearConfirm = false;
+  function syncClearConfirmUI() {
+    const confirm = document.getElementById("tok2-clear-confirm");
+    if (confirm instanceof HTMLElement) {
+      confirm.style.display = showClearConfirm ? "block" : "none";
+    }
+  }
+
   const sel1 = document.getElementById("tok2-card-1");
   const sel2 = document.getElementById("tok2-card-2");
   const drawBtn = document.getElementById("tok2-draw-btn");
   const btn = document.getElementById("tok2-read-btn");
+  const clearBtn = document.getElementById("tok2-clear-btn");
+  const clearYesBtn = document.getElementById("tok2-clear-yes");
+  const clearCancelBtn = document.getElementById("tok2-clear-cancel");
 
   if (sel1 instanceof HTMLSelectElement) fillSelect(sel1);
   if (sel2 instanceof HTMLSelectElement) fillSelect(sel2);
@@ -2670,6 +2697,25 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
   if (drawBtn instanceof HTMLButtonElement) {
     drawBtn.addEventListener("click", drawRandomPair);
+  }
+  if (clearBtn instanceof HTMLButtonElement) {
+    clearBtn.addEventListener("click", () => {
+      showClearConfirm = true;
+      syncClearConfirmUI();
+    });
+  }
+  if (clearYesBtn instanceof HTMLButtonElement) {
+    clearYesBtn.addEventListener("click", () => {
+      clearReading();
+      showClearConfirm = false;
+      syncClearConfirmUI();
+    });
+  }
+  if (clearCancelBtn instanceof HTMLButtonElement) {
+    clearCancelBtn.addEventListener("click", () => {
+      showClearConfirm = false;
+      syncClearConfirmUI();
+    });
   }
 </script>
 
