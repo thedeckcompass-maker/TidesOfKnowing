@@ -7,9 +7,8 @@ const description =
   "Practise tarot card relationships, spread flow, and repeated pattern recognition with free interpretation tools from Tides of Knowing.";
 const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 
-const threeCardInterpreterReady =
-  Object.keys(import.meta.glob("./three-card-tarot-spread-interpreter.astro")).length > 0;
-const threeCardInterpreterUrl = "/tools/three-card-tarot-spread-interpreter/";
+const tableBetweenThemUrl = "/tools/three-card-relationship-tarot-reading/";
+const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
@@ -27,27 +26,21 @@ const threeCardInterpreterUrl = "/tools/three-card-tarot-spread-interpreter/";
         <p class="tools-hub__card-desc">Two-card relational reading: room and entering force.</p>
         <p class="tools-hub__status tools-hub__status--live">Available now</p>
       </li>
-      <li class:list={["tools-hub__card", { "tools-hub__card--soon": !threeCardInterpreterReady }]}>
-        {
-          threeCardInterpreterReady ? (
-            <a class="tools-hub__card-link" href={threeCardInterpreterUrl}>
-              <span class="tools-hub__card-name">The Table Between Them</span>
-            </a>
-          ) : (
-            <span class="tools-hub__card-name tools-hub__card-name--plain">The Table Between Them</span>
-          )
-        }
+      <li class="tools-hub__card tools-hub__card--soon">
+        <a class="tools-hub__card-link tools-hub__card-link--soon" href={tableBetweenThemUrl}>
+          <span class="tools-hub__card-name">The Table Between Them</span>
+        </a>
         <p class="tools-hub__card-desc">Three-card interpreter: movement, sequence, and story.</p>
-        <p class:list={["tools-hub__status", threeCardInterpreterReady ? "tools-hub__status--live" : "tools-hub__status--next"]}>
-          {threeCardInterpreterReady ? "Available now" : "Coming next"}
-        </p>
+        <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
       <li class="tools-hub__card tools-hub__card--soon">
-        <span class="tools-hub__card-name tools-hub__card-name--plain">Repeated Card Meaning Tool</span>
+        <a class="tools-hub__card-link tools-hub__card-link--soon" href={repeatedCardMeaningUrl}>
+          <span class="tools-hub__card-name">Repeated Card Meaning Tool</span>
+        </a>
         <p class="tools-hub__card-desc">
           Explore why a card may keep appearing and what repeated patterns may be asking you to notice.
         </p>
-        <p class="tools-hub__status tools-hub__status--next">Coming next</p>
+        <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
     </ul>
   </article>

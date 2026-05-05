@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Three Card Tarot Reading for Relationships – The Table Between Them";
+const description =
+  "A deeper tarot tool for exploring the relational field between three cards. This tool is currently in development.";
+const ogUrl = new URL("/tools/three-card-relationship-tarot-reading/", siteBase(Astro)).href;
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="tool-holding page-inner">
+    <p class="tool-holding__eyebrow">Tarot Tool in Development</p>
+    <h1 class="tool-holding__title">The Table Between Them</h1>
+    <h2 class="tool-holding__h2-intent">
+      A three-card tarot reading for what is spoken, unspoken, and emerging between two people
+    </h2>
+    <p class="tool-holding__intro">
+      A three-card tarot tool for reading the relational field between two people: what is spoken, what is unspoken, and what is waiting to emerge.
+    </p>
+    <p class="tool-holding__body">
+      The Table Between Them is being developed as the next layer after When Two Cards Meet. It will help you explore the visible and hidden dynamics in a relationship, whether the connection is romantic, familial, professional, creative, or unresolved.
+    </p>
+    <p class="tool-holding__status">This tool is currently in development.</p>
+
+    <section class="tool-holding__signup" aria-labelledby="tool-updates-heading">
+      <h2 id="tool-updates-heading" class="tool-holding__signup-title">
+        Get notified when this tool is live
+      </h2>
+      <p class="tool-holding__signup-copy">
+        Join the Tides of Knowing list for new tarot tools, articles, and method notes.
+      </p>
+      <!-- TODO: Connect this signup form to the chosen email/newsletter provider. -->
+      <form class="tool-holding__form" action="/subscribe/" method="get">
+        <label class="tool-holding__label" for="holding-email-table">Email</label>
+        <input
+          class="tool-holding__input"
+          id="holding-email-table"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        />
+        <button class="tool-holding__button" type="submit">Notify Me</button>
+      </form>
+      <p class="tool-holding__privacy">No spam. Just new tools, articles, and occasional Tides of Knowing updates.</p>
+    </section>
+
+    <p class="tool-holding__back-wrap">
+      <a class="tool-holding__back" href="/tools/two-card-tarot-reading/">Return to When Two Cards Meet</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .tool-holding {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 38rem;
+  }
+
+  .tool-holding__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-nav);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .tool-holding__title {
+    margin: 0 0 0.8rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--mountain-water);
+  }
+
+  .tool-holding__h2-intent {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.62;
+    font-weight: 500;
+    color: var(--mountain-water);
+  }
+
+  .tool-holding__intro {
+    margin: 0 0 0.9rem;
+    font-size: 1.04rem;
+    line-height: 1.72;
+    color: var(--ink);
+  }
+
+  .tool-holding__body {
+    margin: 0 0 0.85rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .tool-holding__status {
+    margin: 0 0 1.45rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--mountain-water);
+  }
+
+  .tool-holding__signup {
+    border: 1px solid rgba(198, 161, 74, 0.4);
+    border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.45);
+    padding: 1rem 1.1rem 1.15rem;
+  }
+
+  .tool-holding__signup-title {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--mountain-water);
+  }
+
+  .tool-holding__signup-copy {
+    margin: 0 0 0.9rem;
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .tool-holding__form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem;
+    align-items: end;
+  }
+
+  .tool-holding__label {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-family: var(--font-nav);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+  }
+
+  .tool-holding__input {
+    border: 1px solid rgba(13, 50, 77, 0.28);
+    border-radius: 0.2rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.68rem 0.72rem;
+  }
+
+  .tool-holding__button {
+    padding: 0.78rem 1.1rem;
+    font-family: var(--font-nav);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .tool-holding__button:hover {
+    background: rgba(198, 161, 74, 0.14);
+  }
+
+  .tool-holding__privacy {
+    margin: 0.72rem 0 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink);
+    opacity: 0.9;
+  }
+
+  .tool-holding__back-wrap {
+    margin: 1.2rem 0 0;
+  }
+
+  .tool-holding__back {
+    color: var(--sky);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tool-holding__back:hover {
+    color: var(--mountain-water);
+  }
+
+  @media (max-width: 560px) {
+    .tool-holding__form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
