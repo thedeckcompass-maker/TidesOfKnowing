@@ -86,7 +86,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
             </div>
           </div>
         </div>
-        <div id="tok2-selection-panel-collapsed" class="tarot-tool__selection-panel tarot-tool__selection-panel--collapsed" style="display:none;">
+        <div id="tok2-selection-panel-collapsed" class="tarot-tool__selection-panel tarot-tool__selection-panel--collapsed" hidden>
           <p id="tok2-selected-summary" class="tarot-tool__selected-summary"></p>
           <button class="tarot-tool__change-cards" type="button" id="tok2-change-cards">Change cards</button>
         </div>
@@ -2361,9 +2361,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="signal-block">';
     h += '<div class="signal-label">What\u2019s Happening</div>';
     h += '<div id="signal-info" class="info-text hidden">This shows what’s happening between the cards. It highlights the dynamic already in play.</div>';
-    if (clean(formatBlockText(signalSentence))) {
-      h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
-    }
     h += '<div class="signal-words">' + escHtml(signal) + "</div>";
     h += "</div>";
 
@@ -2416,7 +2413,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="tarot-result__movement tarot-result__movement--pattern">';
     h += '<h2 class="tarot-result__movement-heading">The Pattern</h2>';
     h +=
-      '<p class="tarot-result__movement-intro">This is the deeper reading of the exchange: how the first card is shaped, disrupted, strengthened, or redirected by the second.</p>';
+      '<p class="tarot-result__movement-intro">This is the deeper reading of the exchange: how the first card is shaped, disrupted, strengthened, or redirected by the second. It shows what actually takes shape when these two meet, and what that tells you about the situation you are in.</p>';
 
     const beforeCard2Prose = buildBeforeCard2ArrivedProse(c1, c2, f1);
     const beforeCard2Out = beforeCard2Prose
@@ -2835,14 +2832,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (selectedSummary instanceof HTMLElement) {
       selectedSummary.textContent = buildSelectionSummary();
     }
-    selectionPanel.style.display = "none";
-    selectionPanelCollapsed.style.display = "flex";
+    selectionPanel.hidden = true;
+    selectionPanelCollapsed.hidden = false;
   }
 
   function expandSelectionPanel() {
     if (!(selectionPanel instanceof HTMLElement) || !(selectionPanelCollapsed instanceof HTMLElement)) return;
-    selectionPanel.style.display = "";
-    selectionPanelCollapsed.style.display = "none";
+    selectionPanel.hidden = false;
+    selectionPanelCollapsed.hidden = true;
   }
 
   function maybeRenderReading() {
@@ -3325,13 +3322,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .signal-words {
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 1.12rem;
+    font-size: 1.32rem;
     font-weight: 500;
     font-style: italic;
     color: var(--mountain-water, #0d324d);
-    line-height: 1.25;
+    line-height: 1.35;
     text-align: center;
-    margin: 0.42rem 0 0.95rem;
+    margin: 0.55rem 0 1.15rem;
   }
 
   #tok2-output .signal-note {
@@ -3489,6 +3486,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     padding-bottom: 0.25rem;
     border-bottom: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
     margin-bottom: 0.25rem;
+  }
+
+  #tok2-output .tarot-result__movement > .tok2-out-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0.55rem;
   }
 
   #tok2-output .tok2-reflection-wrap.tok2-out-section {
@@ -3723,7 +3725,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     #tok2-output .signal-words {
-      font-size: 1.03rem;
+      font-size: 1.14rem;
     }
 
     #tok2-output .tok2-shift-label,
