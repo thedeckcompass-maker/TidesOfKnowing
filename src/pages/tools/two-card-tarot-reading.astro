@@ -1371,13 +1371,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const whenSecond2 = c2.combinationLogic && String(c2.combinationLogic.whenSecond || "").trim();
     const whenFirstText = extractOrientationText(whenFirst1, o1);
     const whenSecondText = extractOrientationText(whenSecond2, o2);
-    const first = getShiftAnchorSignal(c1, o1, whenFirstText);
-    const second = getShiftAnchorSignal(c2, o2, whenSecondText);
+    const signal1 = getShiftAnchorSignal(c1, o1, whenFirstText);
+    const signal2 = getShiftAnchorSignal(c2, o2, whenSecondText);
 
-    if (first && second) {
-      return cleanSentence(
-        `Watch the point where ${first} meets ${second}, and name what has to change next.`,
-      );
+    if (signal1 && signal2) {
+      const shiftAnchorSentence =
+        `Watch the point where ${signal1} meets ${signal2}, and name what has to change next.`;
+      return cleanSentence(shiftAnchorSentence);
     }
 
     return cleanSentence(
@@ -1386,17 +1386,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function getShiftAnchorSignal(card, orientation, fallbackText) {
-    const text = clean(fallbackText || "");
-    const faceData = card && (orientation === "reversed" ? card.reversed : card.upright);
-    const effect = effectPrefix(faceData && faceData.relationalEffect);
-    const key = `${String(card && card.id || "").toLowerCase()}:${orientation}`;
+    const signal = card?.shiftSignal?.[orientation];
+    if (signal && typeof signal === "string") {
+      return signal;
+    }
 
-    const directMap = {
-      "seven-of-pentacles:upright": "assessment",
-      "ten-of-swords:reversed": "recovery after collapse",
-    };
-
-    if (directMap[key]) return directMap[key];
+    const text = fallbackText || "";
+    const lower = text.toLowerCase().trim();
 
     const signalMap = {
       propels: "momentum",
@@ -1410,9 +1406,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       seals: "containment",
     };
 
-    if (signalMap[effect]) return signalMap[effect];
-    if (signalMap[text.toLowerCase()]) return signalMap[text.toLowerCase()];
-    return text;
+    if (signalMap[lower]) return signalMap[lower];
+    return "change";
   }
 
   function scrubShiftParagraphCopy(str) {
