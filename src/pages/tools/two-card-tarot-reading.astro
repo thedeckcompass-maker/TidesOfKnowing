@@ -105,6 +105,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return null;
   }
 
+  function findCardById(cardId) {
+    for (let i = 0; i < tarotCardsNew.length; i++) {
+      if ((tarotCardsNew[i].cardId || tarotCardsNew[i].id) === cardId) return tarotCardsNew[i];
+    }
+    return null;
+  }
+
   function fillSelect(select) {
     for (let i = 0; i < tarotCardsNew.length; i++) {
       const opt = document.createElement("option");
@@ -2626,6 +2633,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</section>";
 
     out.innerHTML = h;
+
+    const params = new URLSearchParams({
+      c1: c1.cardId || c1.id,
+      o1: o1,
+      c2: c2.cardId || c2.id,
+      o2: o2
+    });
+    history.replaceState(null, "", `?${params.toString()}`);
   }
 
   function drawRandomPair() {
@@ -2716,6 +2731,30 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       showClearConfirm = false;
       syncClearConfirmUI();
     });
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const c1Id = params.get("c1");
+  const o1 = params.get("o1") || "upright";
+  const c2Id = params.get("c2");
+  const o2 = params.get("o2") || "upright";
+  const card1 = c1Id ? findCardById(c1Id) : null;
+  const card2 = c2Id ? findCardById(c2Id) : null;
+  const validO1 = o1 === "reversed" ? "reversed" : "upright";
+  const validO2 = o2 === "reversed" ? "reversed" : "upright";
+  if (
+    card1 &&
+    card2 &&
+    sel1 instanceof HTMLSelectElement &&
+    sel2 instanceof HTMLSelectElement
+  ) {
+    sel1.value = card1.name;
+    sel2.value = card2.name;
+    const o1Input = document.querySelector(`input[name="tok2_orient_1"][value="${validO1}"]`);
+    const o2Input = document.querySelector(`input[name="tok2_orient_2"][value="${validO2}"]`);
+    if (o1Input instanceof HTMLInputElement) o1Input.checked = true;
+    if (o2Input instanceof HTMLInputElement) o2Input.checked = true;
+    renderReading();
   }
 </script>
 
