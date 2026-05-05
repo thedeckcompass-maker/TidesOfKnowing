@@ -68,7 +68,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
             </fieldset>
           </div>
         </div>
-        <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read pair</button>
+        <div class="tarot-tool__actions">
+          <button class="tarot-tool__button" type="button" id="tok2-draw-btn">Draw Cards</button>
+          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read pair</button>
+        </div>
+        <p class="tarot-tool__actions-help">Draw Cards — let the cards choose<br/>Read Pair — interpret your selection</p>
+        <div id="output"></div>
         <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
       </div>
     </div>
@@ -1666,9 +1671,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function buildShiftParagraph(c1, c2, o1, o2, whenFirstText, whenSecondText, moveText) {
-    const anchorRaw = clean(buildMoveText(c1, c2, ""));
-    if (!anchorRaw) return "";
-
     const shiftSentence = buildShiftInstructionSentence(
       c1,
       c2,
@@ -1677,7 +1679,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       whenFirstText,
       whenSecondText
     );
-    const whatWantsToShiftText = `${cleanSentence(anchorRaw)} ${cleanSentence(shiftSentence)}`.trim();
+    const whatWantsToShiftText = cleanSentence(shiftSentence);
 
     const joined = joinCleanSentences([whatWantsToShiftText]);
     return repairShiftParagraphAfterScrub(
@@ -2625,8 +2627,39 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     out.innerHTML = h;
   }
 
+  function drawRandomPair() {
+    const sel1 = document.getElementById("tok2-card-1");
+    const sel2 = document.getElementById("tok2-card-2");
+    if (!(sel1 instanceof HTMLSelectElement) || !(sel2 instanceof HTMLSelectElement)) return;
+
+    const index1 = Math.floor(Math.random() * tarotCardsNew.length);
+    let index2 = Math.floor(Math.random() * tarotCardsNew.length);
+
+    while (index2 === index1) {
+      index2 = Math.floor(Math.random() * tarotCardsNew.length);
+    }
+
+    const card1 = tarotCardsNew[index1];
+    const card2 = tarotCardsNew[index2];
+
+    const orientation1 = Math.random() < 0.5 ? "upright" : "reversed";
+    const orientation2 = Math.random() < 0.5 ? "upright" : "reversed";
+
+    sel1.value = card1.name;
+    sel2.value = card2.name;
+
+    const o1 = document.querySelector(`input[name="tok2_orient_1"][value="${orientation1}"]`);
+    const o2 = document.querySelector(`input[name="tok2_orient_2"][value="${orientation2}"]`);
+    if (o1 instanceof HTMLInputElement) o1.checked = true;
+    if (o2 instanceof HTMLInputElement) o2.checked = true;
+
+    renderReading();
+    document.getElementById("output")?.scrollIntoView({ behavior: "smooth" });
+  }
+
   const sel1 = document.getElementById("tok2-card-1");
   const sel2 = document.getElementById("tok2-card-2");
+  const drawBtn = document.getElementById("tok2-draw-btn");
   const btn = document.getElementById("tok2-read-btn");
 
   if (sel1 instanceof HTMLSelectElement) fillSelect(sel1);
@@ -2634,6 +2667,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   if (btn instanceof HTMLButtonElement) {
     btn.addEventListener("click", renderReading);
+  }
+  if (drawBtn instanceof HTMLButtonElement) {
+    drawBtn.addEventListener("click", drawRandomPair);
   }
 </script>
 
