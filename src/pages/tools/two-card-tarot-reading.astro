@@ -2,10 +2,10 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
 
-const tableBetweenThemHref = "/tools/table-between-them/";
-const repeatedCardMeaningHref = "/tools/repeated-card-meaning/";
+const tableBetweenThemHref = "/tools/three-card-relationship-tarot-reading/";
+const repeatedCardMeaningHref = "/tools/repeating-tarot-cards-meaning/";
 
-const title = "When Two Cards Meet | Two-Card Tarot Reading | Tides of Knowing";
+const title = "Two Card Tarot Reading – Interpret the Dynamic Between Two People";
 const description =
   "Relationship dynamics between two tarot cards: room and entering force, using the structured Tides of Knowing this pairing only.";
 const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
@@ -14,9 +14,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
   <article class="tarot-tool page-inner">
     <h1 class="tarot-tool__title">When Two Cards Meet</h1>
+    <h2 class="tarot-tool__h2-intent">Two Card Tarot Reading for Relationships and Real-Time Dynamics</h2>
     <p class="tarot-tool__subtitle">Two cards. One relational field.</p>
     <p class="tarot-tool__intro">
-      This isn't about who you are to each other. It's about what's alive between you right now.
+      This tool helps you read the dynamic between you and another person — whether that’s a partner, friend, colleague, or family member.
+      Select your own cards or use the generator, then read what’s happening in the relational field between you right now.
     </p>
 
     <div
@@ -27,60 +29,66 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     >
       <div class="tarot-tool__panel" aria-labelledby="tok2-tool-heading">
         <h2 class="visually-hidden" id="tok2-tool-heading">Choose two cards</h2>
-        <div class="tarot-tool__fields">
-          <div class="tarot-tool__field">
-            <label class="tarot-tool__label" for="tok2-card-1">Card 1</label>
-            <select class="tarot-tool__select" id="tok2-card-1" name="card1" required aria-required="true">
-              <option value="">Select a card</option>
-            </select>
-            <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-1">
-              <legend class="tarot-tool__orient-legend">Orientation</legend>
-              <div class="tarot-tool__orient-row">
-                <label class="tarot-tool__orient-choice">
-                  <input type="radio" name="tok2_orient_1" value="upright" checked />
-                  Upright
-                </label>
-                <label class="tarot-tool__orient-choice">
-                  <input type="radio" name="tok2_orient_1" value="reversed" />
-                  Reversed
-                </label>
-              </div>
-            </fieldset>
+        <div id="tok2-selection-panel" class="tarot-tool__selection-panel">
+          <div class="tarot-tool__fields">
+            <div class="tarot-tool__field">
+              <label class="tarot-tool__label" for="tok2-card-1">Card 1</label>
+              <select class="tarot-tool__select" id="tok2-card-1" name="card1" required aria-required="true">
+                <option value="">Select a card</option>
+              </select>
+              <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-1">
+                <legend class="tarot-tool__orient-legend">Orientation</legend>
+                <div class="tarot-tool__orient-row">
+                  <label class="tarot-tool__orient-choice">
+                    <input type="radio" name="tok2_orient_1" value="upright" checked />
+                    Upright
+                  </label>
+                  <label class="tarot-tool__orient-choice">
+                    <input type="radio" name="tok2_orient_1" value="reversed" />
+                    Reversed
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="tarot-tool__field">
+              <label class="tarot-tool__label" for="tok2-card-2">Card 2</label>
+              <select class="tarot-tool__select" id="tok2-card-2" name="card2" required aria-required="true">
+                <option value="">Select a card</option>
+              </select>
+              <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-2">
+                <legend class="tarot-tool__orient-legend">Orientation</legend>
+                <div class="tarot-tool__orient-row">
+                  <label class="tarot-tool__orient-choice">
+                    <input type="radio" name="tok2_orient_2" value="upright" checked />
+                    Upright
+                  </label>
+                  <label class="tarot-tool__orient-choice">
+                    <input type="radio" name="tok2_orient_2" value="reversed" />
+                    Reversed
+                  </label>
+                </div>
+              </fieldset>
+            </div>
           </div>
-          <div class="tarot-tool__field">
-            <label class="tarot-tool__label" for="tok2-card-2">Card 2</label>
-            <select class="tarot-tool__select" id="tok2-card-2" name="card2" required aria-required="true">
-              <option value="">Select a card</option>
-            </select>
-            <fieldset class="tarot-tool__orient" id="tok2-orient-fieldset-2">
-              <legend class="tarot-tool__orient-legend">Orientation</legend>
-              <div class="tarot-tool__orient-row">
-                <label class="tarot-tool__orient-choice">
-                  <input type="radio" name="tok2_orient_2" value="upright" checked />
-                  Upright
-                </label>
-                <label class="tarot-tool__orient-choice">
-                  <input type="radio" name="tok2_orient_2" value="reversed" />
-                  Reversed
-                </label>
-              </div>
-            </fieldset>
+          <div class="tarot-tool__actions">
+            <div class="tarot-tool__action">
+              <button class="tarot-tool__button" type="button" id="draw-cards-btn">Draw Cards</button>
+              <div class="tarot-tool__helper">Let the cards choose.</div>
+            </div>
+            <div class="tarot-tool__action">
+              <button class="tarot-tool__button" type="button" id="read-pair-btn">Read Your Cards</button>
+              <div class="tarot-tool__helper">Read the cards you selected at home.</div>
+            </div>
+            <div class="tarot-tool__action">
+              <button class="tarot-tool__button" type="button" id="clear-btn">Clear</button>
+              <div class="tarot-tool__helper">Start again.</div>
+              <div id="tok2-clear-status" class="tarot-tool__helper tarot-tool__helper--status" aria-live="polite"></div>
+            </div>
           </div>
         </div>
-        <div class="tarot-tool__actions">
-          <div class="tarot-tool__action">
-            <button class="tarot-tool__button" type="button" id="draw-cards-btn">Draw Cards</button>
-            <div class="tarot-tool__helper">Let the cards choose.</div>
-          </div>
-          <div class="tarot-tool__action">
-            <button class="tarot-tool__button" type="button" id="read-pair-btn">Read Your Cards</button>
-            <div class="tarot-tool__helper">Read the cards you selected at home.</div>
-          </div>
-          <div class="tarot-tool__action">
-            <button class="tarot-tool__button" type="button" id="clear-btn">Clear</button>
-            <div class="tarot-tool__helper">Start again.</div>
-            <div id="tok2-clear-status" class="tarot-tool__helper tarot-tool__helper--status" aria-live="polite"></div>
-          </div>
+        <div id="tok2-selection-panel-collapsed" class="tarot-tool__selection-panel tarot-tool__selection-panel--collapsed" style="display:none;">
+          <p id="tok2-selected-summary" class="tarot-tool__selected-summary"></p>
+          <button class="tarot-tool__change-cards" type="button" id="tok2-change-cards">Change cards</button>
         </div>
         <div id="output"></div>
         <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
@@ -123,11 +131,54 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function fillSelect(select) {
+    const groups = {
+      major: [],
+      wands: [],
+      cups: [],
+      swords: [],
+      pentacles: [],
+    };
+
     for (let i = 0; i < tarotCardsNew.length; i++) {
-      const opt = document.createElement("option");
-      opt.value = tarotCardsNew[i].name;
-      opt.textContent = tarotCardsNew[i].name;
-      select.appendChild(opt);
+      const card = tarotCardsNew[i];
+      const arcana = String(card.arcana || "").toLowerCase();
+      const suit = String(card.suit || "").toLowerCase();
+
+      if (arcana === "major") {
+        groups.major.push(card);
+      } else if (suit === "wands") {
+        groups.wands.push(card);
+      } else if (suit === "cups") {
+        groups.cups.push(card);
+      } else if (suit === "swords") {
+        groups.swords.push(card);
+      } else if (suit === "pentacles") {
+        groups.pentacles.push(card);
+      }
+    }
+
+    const orderedGroups = [
+      { label: "Major Arcana", cards: groups.major },
+      { label: "Wands", cards: groups.wands },
+      { label: "Cups", cards: groups.cups },
+      { label: "Swords", cards: groups.swords },
+      { label: "Pentacles", cards: groups.pentacles },
+    ];
+
+    for (let i = 0; i < orderedGroups.length; i++) {
+      const group = orderedGroups[i];
+      if (!group.cards.length) continue;
+
+      const groupEl = document.createElement("optgroup");
+      groupEl.label = group.label;
+
+      for (let j = 0; j < group.cards.length; j++) {
+        const opt = document.createElement("option");
+        opt.value = group.cards[j].name;
+        opt.textContent = group.cards[j].name;
+        groupEl.appendChild(opt);
+      }
+      select.appendChild(groupEl);
     }
   }
 
@@ -1225,7 +1276,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (hasBoth) return authoredText;
     return formatBlockText(
       joinCleanSentences([
-        `${c1.name} and ${c2.name} name a pair-specific pattern here.`,
+        `${c1.name} and ${c2.name} create a specific dynamic in this reading.`,
         authoredText,
       ]),
     );
@@ -2068,7 +2119,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const first = roles.first ? roles.first.toLowerCase() : "";
     const second = roles.second ? roles.second.toLowerCase() : "";
     if (first && second) {
-      return `Where is ${first} being changed by ${second}, and what does that reveal?`;
+      return `Where in your situation is ${first} being changed by ${second}, and what does that reveal?`;
     }
     return `What changes when ${n2} enters the room ${n1} has created?`;
   }
@@ -2093,14 +2144,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     if (!sel1.value || !sel2.value) {
       out.innerHTML = '<p class="tarot-tool__out-p">Select both cards to continue.</p>';
-      return;
+      return false;
     }
 
     const c1 = findCardByName(sel1.value);
     const c2 = findCardByName(sel2.value);
     if (!c1 || !c2) {
       out.innerHTML = '<p class="tarot-tool__out-p">Could not load one or both cards from this interaction.</p>';
-      return;
+      return false;
     }
 
     const rev1 = readOrientReversed("tok2_orient_1");
@@ -2310,10 +2361,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="signal-block">';
     h += '<div class="signal-label">What\u2019s Happening</div>';
     h += '<div id="signal-info" class="info-text hidden">This shows what’s happening between the cards. It highlights the dynamic already in play.</div>';
-    h += '<div class="signal-words">' + escHtml(signal) + "</div>";
     if (clean(formatBlockText(signalSentence))) {
       h += '<div class="signal-note">' + escHtml(formatBlockText(signalSentence)) + "</div>";
     }
+    h += '<div class="signal-words">' + escHtml(signal) + "</div>";
     h += "</div>";
 
     h += '<section class="tarot-tool__out-block tok2-read-block tok2-out-section">';
@@ -2503,7 +2554,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
     h +=
       '<section class="tarot-tool__out-block tok2-read-block tok2-out-section"><h3 class="tarot-tool__out-h3">What Needs to Change</h3>';
-    h += '<div id="shift-info" class="info-text hidden">This points to what needs to change next. It shows the practical move the cards are guiding you toward.</div>';
     h +=
       '<p class="tarot-result__intro">' +
       escHtml(
@@ -2612,7 +2662,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h +=
       "<p>" +
       escHtml(
-        "If this reading landed on something active between you and another person, the next layer is The Table Between Them. It explores what is spoken, what is unspoken, and what is waiting to emerge.",
+        "If this reading has surfaced something active between you and another person, you can take it further. The Table Between Them opens a deeper layer — what is spoken, what is unspoken, and what is waiting to emerge. If the same card keeps appearing across your readings, Repeated Card Meaning helps you understand why it is returning and what it is asking you to see.",
       ) +
       "</p>";
     h += "</div>";
@@ -2642,12 +2692,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       escAttr(tableBetweenThemHref) +
       '" class="tok2-tool-title">The Table Between Them</a>';
     h += '<span class="tok2-tool-meta tok2-tool-meta--soon">COMING SOON</span>';
-    h += "</div>";
-    h +=
-      '<a href="' +
-      escAttr(tableBetweenThemHref) +
-      '" class="tok2-tool-subline">Open The Table Between Them</a>';
-    h += "</div>";
+    h += "</div></div>";
     h += '<div class="tok2-tool">';
     h += '<div class="tok2-tool-line">';
     h +=
@@ -2689,6 +2734,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       o2: o2
     });
     history.replaceState(null, "", `?${params.toString()}`);
+    return true;
   }
 
   function drawRandomPair() {
@@ -2717,7 +2763,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (o1 instanceof HTMLInputElement) o1.checked = true;
     if (o2 instanceof HTMLInputElement) o2.checked = true;
 
-    renderReading();
+    const rendered = renderReading();
+    if (rendered) collapseSelectionPanel();
     document.getElementById("output")?.scrollIntoView({ behavior: "smooth" });
   }
 
@@ -2734,11 +2781,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (o2 instanceof HTMLInputElement) o2.checked = true;
 
     if (out instanceof HTMLElement) out.innerHTML = "";
+    expandSelectionPanel();
     setClearStatusMessage("Cards cleared. Choose two new cards.");
   }
 
   function readPair() {
-    renderReading();
+    const rendered = renderReading();
+    if (rendered) collapseSelectionPanel();
   }
 
   let clearStatusTimer = null;
@@ -2764,11 +2813,37 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   const drawBtn = document.getElementById("draw-cards-btn");
   const btn = document.getElementById("read-pair-btn");
   const clearBtn = document.getElementById("clear-btn");
+  const selectionPanel = document.getElementById("tok2-selection-panel");
+  const selectionPanelCollapsed = document.getElementById("tok2-selection-panel-collapsed");
+  const selectedSummary = document.getElementById("tok2-selected-summary");
+  const changeCardsBtn = document.getElementById("tok2-change-cards");
   const debugTools = document.getElementById("tok2-debug-tools");
   const debugCopyBtn = document.getElementById("tok2-debug-copy-btn");
 
   if (sel1 instanceof HTMLSelectElement) fillSelect(sel1);
   if (sel2 instanceof HTMLSelectElement) fillSelect(sel2);
+
+  function buildSelectionSummary() {
+    if (!(sel1 instanceof HTMLSelectElement) || !(sel2 instanceof HTMLSelectElement)) return "";
+    const o1 = readOrientReversed("tok2_orient_1") ? "Reversed" : "Upright";
+    const o2 = readOrientReversed("tok2_orient_2") ? "Reversed" : "Upright";
+    return `${sel1.value} ${o1} + ${sel2.value} ${o2}`;
+  }
+
+  function collapseSelectionPanel() {
+    if (!(selectionPanel instanceof HTMLElement) || !(selectionPanelCollapsed instanceof HTMLElement)) return;
+    if (selectedSummary instanceof HTMLElement) {
+      selectedSummary.textContent = buildSelectionSummary();
+    }
+    selectionPanel.style.display = "none";
+    selectionPanelCollapsed.style.display = "flex";
+  }
+
+  function expandSelectionPanel() {
+    if (!(selectionPanel instanceof HTMLElement) || !(selectionPanelCollapsed instanceof HTMLElement)) return;
+    selectionPanel.style.display = "";
+    selectionPanelCollapsed.style.display = "none";
+  }
 
   function maybeRenderReading() {
     setClearStatusMessage("");
@@ -2802,6 +2877,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   });
   if (clearBtn instanceof HTMLButtonElement) {
     clearBtn.addEventListener("click", clearReading);
+  }
+  if (changeCardsBtn instanceof HTMLButtonElement) {
+    changeCardsBtn.addEventListener("click", () => {
+      expandSelectionPanel();
+      if (sel1 instanceof HTMLSelectElement) sel1.focus();
+    });
   }
 
   if (tokDebugMode && debugTools instanceof HTMLElement) {
@@ -2895,6 +2976,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     color: var(--gold);
   }
 
+  .tarot-tool__h2-intent {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: var(--mountain-water);
+  }
+
   .tarot-tool__intro {
     margin: 0 0 0.85rem;
     font-size: 1.06rem;
@@ -2924,6 +3014,49 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     border: 1px solid rgba(13, 50, 77, 0.22);
     border-radius: 0.2rem;
     background: rgba(255, 255, 255, 0.45);
+  }
+
+  .tarot-tool__selection-panel--collapsed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border-radius: 0.3rem;
+    background: rgba(243, 240, 234, 0.66);
+    padding: 0.65rem 0.75rem;
+  }
+
+  .tarot-tool__selected-summary {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--mountain-water);
+  }
+
+  .tarot-tool__change-cards {
+    padding: 0.44rem 0.62rem;
+    font-family: var(--font-nav);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mountain-water);
+    border: 1px solid rgba(13, 50, 77, 0.28);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .tarot-tool__change-cards:hover {
+    background: rgba(13, 50, 77, 0.06);
+  }
+
+  .tarot-tool__change-cards:focus-visible {
+    outline: 2px solid var(--mountain-water);
+    outline-offset: 2px;
   }
 
   .tarot-tool__fields {
@@ -2964,6 +3097,25 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: 1rem;
     line-height: 1.5;
     padding: 0.65rem 0.6rem;
+  }
+
+  .tarot-tool__select optgroup {
+    font-family: var(--font-nav);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(13, 50, 77, 0.72);
+  }
+
+  .tarot-tool__select optgroup:not(:first-of-type) {
+    padding-top: 0.35rem;
+  }
+
+  .tarot-tool__select option {
+    font-family: var(--font-body);
+    text-transform: none;
+    color: var(--ink);
   }
 
   .tarot-tool__orient {
@@ -3095,6 +3247,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     .tarot-tool__actions {
       grid-template-columns: 1fr;
     }
+
+    .tarot-tool__selection-panel--collapsed {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   .tarot-tool__output {
@@ -3168,12 +3325,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .signal-words {
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 1.12rem;
+    font-weight: 500;
     font-style: italic;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--mountain-water, #0d324d);
     line-height: 1.25;
-    margin: 0 0 10px;
+    text-align: center;
+    margin: 0.42rem 0 0.95rem;
   }
 
   #tok2-output .signal-note {
@@ -3192,10 +3350,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     color: var(--tok-muted, #5a6a6e);
     font-weight: 400;
     font-family: var(--font-nav, system-ui, sans-serif);
-  }
-
-  #tok2-output #shift-info {
-    display: none !important;
   }
 
   #tok2-output .tok2-prose .tarot-tool__out-p--note {
@@ -3343,15 +3497,16 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .tarot-tool__out-h3 {
-    margin: 0 0 14px;
+    margin: 0.7rem 0 0.42rem;
     font-family: var(--font-nav, system-ui, sans-serif);
-    font-size: 10px;
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--tok-gold, #c6a14a);
     line-height: 1.35;
     font-style: normal;
+    opacity: 0.95;
   }
 
   #tok2-output .tok2-prose {
@@ -3568,7 +3723,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     #tok2-output .signal-words {
-      font-size: 18px;
+      font-size: 1.03rem;
     }
 
     #tok2-output .tok2-shift-label,
