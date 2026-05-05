@@ -1407,6 +1407,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     };
 
     if (signalMap[lower]) return signalMap[lower];
+    if (/\b(field|charge|preceding|subsequent|operative|structural|adjacent cards|prior material|existing situation)\b/i.test(lower)) {
+      return "change";
+    }
     return "change";
   }
 
@@ -1660,7 +1663,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const instruction = c2?.shiftInstruction?.[o2];
 
     if (instruction && typeof instruction === "string") {
-      return instruction.charAt(0).toUpperCase() + instruction.slice(1) + ".";
+      return instruction.charAt(0).toUpperCase() + instruction.slice(1).replace(/\.*$/, ".");
     }
 
     // Fallback to existing system if missing
@@ -1685,27 +1688,20 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function buildShiftParagraph(c1, c2, o1, o2, whenFirstText, whenSecondText, moveText) {
-    const anchorRaw = clean(moveText);
+    const anchorRaw = clean(buildMoveText(c1, c2, ""));
     if (!anchorRaw) return "";
 
-    const anchorSentenceCount = countShiftAnchorSentences(anchorRaw);
+    const shiftSentence = buildShiftInstructionSentence(
+      c1,
+      c2,
+      o1,
+      o2,
+      whenFirstText,
+      whenSecondText
+    );
+    const whatWantsToShiftText = `${cleanSentence(anchorRaw)} ${cleanSentence(shiftSentence)}`.trim();
 
-    const parts = [cleanSentence(anchorRaw)];
-    if (anchorSentenceCount === 1) {
-      const shiftSentence = buildShiftInstructionSentence(
-        c1,
-        c2,
-        o1,
-        o2,
-        whenFirstText,
-        whenSecondText
-      );
-      if (clean(shiftSentence)) {
-        parts.push(cleanSentence(shiftSentence));
-      }
-    }
-
-    const joined = joinCleanSentences(parts.slice(0, 3));
+    const joined = joinCleanSentences([whatWantsToShiftText]);
     return repairShiftParagraphAfterScrub(
       finalReadabilityPass(
         scrubShiftParagraphCopy(polishShiftSentence(repairShiftSentence(joined))),
