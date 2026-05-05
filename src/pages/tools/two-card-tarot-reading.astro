@@ -2107,13 +2107,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const authoredInteractionText = getAuthoredInteractionText(c1, c2);
     const panelField = panelFieldCondition(f1);
     const panelIncoming = panelIncomingPressure(f2);
-    const s1 = signalWord(p1, c1, rev1);
-    const s2 = signalWord(p2, c2, rev2);
+    const s1 = c1?.shiftSignal?.[o1];
+    const s2 = c2?.shiftSignal?.[o2];
     const archetypeProse = getInteractionArchetype(s1, s2);
     const interactionLineForPanel = clean(archetypeProse) ? archetypeProse : classifyLine;
-    const s3 = interactionSignal(classifyLine);
-
-    const signal = s1 + " + " + s2 + " + " + s3;
+    const signal = s1 && s2 ? `${s1} + ${s2}` : "change + change";
 
     let verdictText = "";
 
@@ -2280,7 +2278,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<div class="signal-label">The Signal</div>';
     h +=
       '<p class="tok2-section-intro">' +
-      escHtml("Three signals name the movement between the cards.") +
+      escHtml("Two signals name the relationship between the cards.") +
       "</p>";
     h += '<div class="signal-words">' + escHtml(signal) + "</div>";
     if (clean(formatBlockText(signalSentence))) {
