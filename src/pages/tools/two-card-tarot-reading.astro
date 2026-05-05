@@ -70,7 +70,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
         </div>
         <div class="tarot-tool__actions">
           <button class="tarot-tool__button" type="button" id="tok2-draw-btn">Draw Cards</button>
-          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read Pair</button>
+          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read Your Cards</button>
           <button class="tarot-tool__button" type="button" id="tok2-clear-btn">Clear</button>
         </div>
         <div id="tok2-clear-confirm" class="tarot-tool__actions-help" style="display:none;">
@@ -78,8 +78,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           <button class="tarot-tool__button" type="button" id="tok2-clear-yes">Yes</button>
           <button class="tarot-tool__button" type="button" id="tok2-clear-cancel">Cancel</button>
         </div>
-        <p class="tarot-tool__actions-help">Choose your own cards, or let the tool draw a pair for you.</p>
-        <p class="tarot-tool__actions-help">Draw Cards: let the tool choose.<br/>Read Pair: interpret your selection.</p>
+        <p class="tarot-tool__actions-help">Draw Cards<br/>Let the cards choose.<br/><br/>Read Your Cards<br/>Read the cards you selected at home.<br/><br/>Clear<br/>Start again.</p>
         <div id="output"></div>
         <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
       </div>
@@ -2707,12 +2706,29 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   if (sel1 instanceof HTMLSelectElement) fillSelect(sel1);
   if (sel2 instanceof HTMLSelectElement) fillSelect(sel2);
 
+  function maybeRenderReading() {
+    if (!(sel1 instanceof HTMLSelectElement) || !(sel2 instanceof HTMLSelectElement)) return;
+    if (!sel1.value || !sel2.value) return;
+    renderReading();
+  }
+
   if (btn instanceof HTMLButtonElement) {
     btn.addEventListener("click", renderReading);
   }
   if (drawBtn instanceof HTMLButtonElement) {
     drawBtn.addEventListener("click", drawRandomPair);
   }
+  if (sel1 instanceof HTMLSelectElement) {
+    sel1.addEventListener("change", maybeRenderReading);
+  }
+  if (sel2 instanceof HTMLSelectElement) {
+    sel2.addEventListener("change", maybeRenderReading);
+  }
+  document.querySelectorAll('input[name="tok2_orient_1"], input[name="tok2_orient_2"]').forEach((el) => {
+    if (el instanceof HTMLInputElement) {
+      el.addEventListener("change", maybeRenderReading);
+    }
+  });
   if (clearBtn instanceof HTMLButtonElement) {
     clearBtn.addEventListener("click", () => {
       showClearConfirm = true;
