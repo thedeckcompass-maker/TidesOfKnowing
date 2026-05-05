@@ -62,6 +62,10 @@ export const tarotCardsNew = [
       "relationalEffect": "destabilises — introduces unfocused or evasive motion that prevents adjacent cards from settling",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "allow a new beginning without demanding certainty before movement can start",
+      "reversed": "separate genuine openness from avoidance, naivety, or refusal to recognise consequence"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Air",
@@ -172,6 +176,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by misapplying focus within the existing field. It either scatters the available energy or channels it toward distortion, producing motion without coherent result.",
       "relationalEffect": "distorts — misaligns adjacent cards and fragments their intended direction",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "bring attention, will, and available tools into deliberate action",
+      "reversed": "notice where intention is being misdirected, scattered, or used without integrity"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -284,6 +292,10 @@ export const tarotCardsNew = [
       "relationalEffect": "withholds — closes adjacent cards off from the deeper signal they were carrying",
       "interactionStyle": "internalised"
     },
+    "shiftInstruction": {
+      "upright": "listen before acting so the deeper pattern can become clear",
+      "reversed": "recognise where silence, secrecy, or inner uncertainty is blocking clear response"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Water",
@@ -394,6 +406,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by overextending or withdrawing within the existing field. It either floods the prior card with care it cannot use or refuses the support that was needed, producing stagnation rather than growth.",
       "relationalEffect": "smothers — overwhelms adjacent cards with distorted care or starves them of the support they need",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "give what is forming enough care, protection, and embodied support to grow",
+      "reversed": "notice where care has become overextension, dependence, or refusal to let something develop naturally"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -506,6 +522,10 @@ export const tarotCardsNew = [
       "relationalEffect": "constrains — locks adjacent cards into rigid form or strips them of the structure they needed",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "create order, boundaries, and structure strong enough to hold what must now be directed",
+      "reversed": "recognise where control, rigidity, or domination is replacing true leadership"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -616,6 +636,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by imposing dogma or refusing tradition within the existing field. It either forces the prior card's material into a frame that does not fit, or rejects the inherited structure that would have given it context, leaving the interaction unmoored.",
       "relationalEffect": "constrains — locks adjacent cards into hollow form or severs their connection to the meaning that would situate them",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "return to the teaching, tradition, or shared framework that can give the next step coherence",
+      "reversed": "question inherited rules when obedience is preventing direct understanding"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -728,6 +752,10 @@ export const tarotCardsNew = [
       "relationalEffect": "fractures — exposes misalignment in adjacent cards, separating what appeared joined or revealing union built on compromise",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "choose with enough honesty that desire, value, and consequence can stand together",
+      "reversed": "recognise where avoidance, divided desire, or misalignment is weakening the choice"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Air",
@@ -838,6 +866,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by overriding or losing direction within the existing field. It either forces the prior card's material into a line it cannot sustain, or fragments under the tensions present, producing motion that does not arrive.",
       "relationalEffect": "strains — pushes adjacent cards into forced direction or fractures their momentum into incoherent drive",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "keep direction, control, and momentum aligned so movement does not scatter",
+      "reversed": "recognise where force, pressure, or loss of control is distorting the direction of movement"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -950,6 +982,10 @@ export const tarotCardsNew = [
       "relationalEffect": "strains — meets intensity in adjacent cards with suppression or reactivity, preventing it from being properly held",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "meet the pressure directly without abandoning steadiness, patience, or self-control",
+      "reversed": "notice where fear, reactivity, or loss of composure is weakening your ability to hold steady"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -1060,6 +1096,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by withdrawing or refusing within the existing field. It either pulls away from the prior card entirely, producing severance, or absorbs its material into rumination that does not return as understanding.",
       "relationalEffect": "isolates — cuts adjacent cards off from the engagement or insight that solitude was meant to support",
       "interactionStyle": "internalised"
+    },
+    "shiftInstruction": {
+      "upright": "step back far enough to find clarity before continuing forward",
+      "reversed": "recognise where withdrawal or isolation is delaying necessary engagement"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -1172,6 +1212,10 @@ export const tarotCardsNew = [
       "relationalEffect": "loops — locks adjacent cards into repeating pattern, preventing the structural turn that would reorient them",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "adjust to the turn that is already happening instead of trying to hold the previous position",
+      "reversed": "recognise where resistance to change is increasing instability or delay"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -1282,6 +1326,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by deflecting or distorting consequence within the existing field. It either refuses to render the verdict the prior card had earned, or applies it in a place that did not produce it, leaving the alignment between cause and effect unresolved.",
       "relationalEffect": "distorts — separates adjacent cards from their actual consequence, producing reckoning that misaligns with what was done",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "bring the situation into balance by aligning action with consequence",
+      "reversed": "notice where avoidance, bias, or imbalance is distorting a fair outcome"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -1394,6 +1442,10 @@ export const tarotCardsNew = [
       "relationalEffect": "stalls — holds adjacent cards in suspension past the point where reorganisation could form",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "pause and allow a different perspective to emerge before acting",
+      "reversed": "recognise where delay has become avoidance or where perspective is being refused"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Water",
@@ -1504,6 +1556,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by refusing or arresting close within the existing field. It either holds the prior card's material in form that has already lost coherence, or stalls the ending midway, producing decay rather than the definitive release transformation required.",
       "relationalEffect": "arrests — prevents adjacent cards from completing the ending that was structurally required, leaving them in prolonged decay",
       "interactionStyle": "delayed"
+    },
+    "shiftInstruction": {
+      "upright": "let what has completed its function end so something new can begin cleanly",
+      "reversed": "stop holding on to something that has already ended and is preventing change"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -1616,6 +1672,10 @@ export const tarotCardsNew = [
       "relationalEffect": "strains — forces adjacent cards into combination without measure, producing excess or distortion rather than synthesis",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "blend opposing elements carefully so a stable middle ground can form",
+      "reversed": "recognise where imbalance or excess is preventing integration"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -1726,6 +1786,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by acknowledging binding within the existing field. It surfaces the attachment holding the prior card's material in place, but in a register that allows recognition rather than continued capture, initiating structural release.",
       "relationalEffect": "loosens — surfaces binding in adjacent cards in a way that allows it to be acknowledged and begin releasing",
       "interactionStyle": "integrating"
+    },
+    "shiftInstruction": {
+      "upright": "face the pattern of attachment or control that is shaping your behaviour",
+      "reversed": "begin loosening the grip of what has been holding you in place"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -1838,6 +1902,10 @@ export const tarotCardsNew = [
       "relationalEffect": "fractures — introduces structural strain in adjacent cards without producing the clearing that complete collapse would bring",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "allow what is unstable or false to break so it cannot continue as it was",
+      "reversed": "recognise where you are trying to prevent a necessary disruption"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -1948,6 +2016,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by withholding openness. It either refuses the renewal the prior card allows, or absorbs it into closure, preventing replenishment from completing.",
       "relationalEffect": "withholds — closes adjacent cards off from renewal by reintroducing defence",
       "interactionStyle": "internalised"
+    },
+    "shiftInstruction": {
+      "upright": "restore trust and allow a sense of possibility to guide the next step",
+      "reversed": "notice where doubt or loss of faith is closing off renewal"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -2060,6 +2132,10 @@ export const tarotCardsNew = [
       "relationalEffect": "distorts — captures adjacent cards in projection that mimics insight, preventing navigation through ambiguity",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "move carefully through uncertainty without forcing clarity too soon",
+      "reversed": "recognise where confusion, fear, or misinterpretation is distorting perception"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Water",
@@ -2170,6 +2246,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Negotiates by dimming or distorting visibility. It either fails to fully illuminate the prior card, leaving it unresolved, or imposes clarity where it has not been earned, masking what remains unseen.",
       "relationalEffect": "dims — prevents adjacent cards from reaching full visibility, leaving them partially concealed or falsely illuminated",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "step fully into clarity and allow what is visible to be seen and expressed",
+      "reversed": "notice where hesitation or doubt is limiting openness or confidence"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -2282,6 +2362,10 @@ export const tarotCardsNew = [
       "relationalEffect": "deflects — prevents adjacent cards from resolving into action by diverting recognition into hesitation or critique",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "respond to the call to act on what you now clearly recognise",
+      "reversed": "recognise where hesitation or self-doubt is delaying necessary action"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Fire",
@@ -2393,6 +2477,10 @@ export const tarotCardsNew = [
       "relationalEffect": "defers — holds adjacent cards just short of completion, preventing full integration",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "complete what has been building so it can close and make space for what follows",
+      "reversed": "recognise where something unfinished is preventing full completion or transition"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Earth",
@@ -2476,6 +2564,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Ace of Wands is the fire principle distilled to its point of origin. It carries no history and no plan, only the raw generative charge that precedes every creative act. Its function is ignition: the moment a dormant field is introduced to energy that will not remain contained. The wand is held from outside the frame, offered rather than possessed, indicating that this force arrives as invitation. Something is beginning that did not exist a moment ago, and it asks only for a hand willing to take hold.",
       "arrivalBehaviour": "Sets the field as charged and open. It defines the space as one where something new is entering and where existing conditions are about to be animated. The register is energised, expectant, and directional without yet being directed.",
       "responseBehaviour": "Negotiates by amplifying what is already present. It adds charge to whatever energy has come before, accelerating movement, intensifying latent creative tension, or reigniting what had begun to cool.",
+      "shiftInstruction": {
+        "upright": "act on the first real spark before hesitation turns possibility into delay",
+        "reversed": "notice where blocked desire, hesitation, or lack of follow-through is stopping movement before it begins"
+      },
       "relationalEffect": "ignites — accelerates latent movement in adjacent cards",
       "interactionStyle": "initiating"
     },
@@ -2501,6 +2593,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Ace of Wands carries its charge but cannot release it. The ignition fails to catch, or the energy is redirected inward, producing restlessness, frustration, or creative paralysis. The impulse is real but obstructed, whether by circumstance, timing, or an inability to commit to direction. The force does not disappear; it accumulates. What has not been allowed expression becomes pressure without purpose, generative energy cycling without a point of discharge.",
       "arrivalBehaviour": "Sets the field as energised but obstructed. It defines the space as one where creative potential is present but not yet able to move, creating a register of latent pressure and frustrated readiness.",
       "responseBehaviour": "Negotiates by introducing disruption without resolution. It adds charge to prior material but cannot direct it cleanly, creating agitation, restarts, or energy that disperses before it can be used.",
+      "shiftInstruction": {
+        "upright": "act on the first real spark before hesitation turns possibility into delay",
+        "reversed": "notice where blocked desire, hesitation, or lack of follow-through is stopping movement before it begins"
+      },
       "relationalEffect": "stalls — holds adjacent cards in charged non-release",
       "interactionStyle": "blocked"
     },
@@ -2587,6 +2683,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Two of Wands is the moment after ignition when the initial charge has stabilised into personal power and the figure turns outward to consider what comes next. One wand is fixed to the wall; the other is held in hand. What has been built is real, but the world beyond it is larger. The card carries the particular tension of someone who has already achieved something and now stands at the edge of it, looking further. Direction has not yet been chosen, but the capacity to choose is fully present. This is deliberate vision, not restless waiting.",
       "arrivalBehaviour": "Sets the field as poised and expansive. It defines the space as one where a position of existing power or achievement is being used as a vantage point, where the next move is being held rather than made. The register is steady, contemplative, and forward-facing.",
       "responseBehaviour": "Negotiates by widening the scope of what is present. It takes prior energy and elevates it to a strategic register, introducing the question of where this leads and what the view from here makes possible.",
+      "shiftInstruction": {
+        "upright": "turn initial desire into a clear direction before expansion begins",
+        "reversed": "recognise where indecision or fear of stepping beyond the familiar is keeping movement contained"
+      },
       "relationalEffect": "expands — opens adjacent cards toward larger possibility",
       "interactionStyle": "initiating"
     },
@@ -2612,6 +2712,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Two of Wands carries its vision but cannot convert it into departure. The figure sees what is possible and turns back. The capacity for expansion is present, but fear of leaving the known position, or an inability to commit to a single direction, keeps movement from beginning. Plans cycle rather than resolve. The wand held in hand becomes something gripped rather than wielded, and the world seen from the parapet remains a view rather than a destination.",
       "arrivalBehaviour": "Sets the field as suspended between possibility and retreat. It defines the space as one where vision is present but movement is withheld, creating a register of stalled ambition or overcautious deliberation.",
       "responseBehaviour": "Negotiates by pulling prior energy back toward reconsideration. It receives existing momentum and reintroduces doubt or hesitation, slowing committed movement or redirecting it into further planning.",
+      "shiftInstruction": {
+        "upright": "turn initial desire into a clear direction before expansion begins",
+        "reversed": "recognise where indecision or fear of stepping beyond the familiar is keeping movement contained"
+      },
       "relationalEffect": "withholds — holds adjacent cards at the threshold of expansion",
       "interactionStyle": "delayed"
     },
@@ -2698,6 +2802,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Three of Wands is the point past decision. Where the Two held the horizon under deliberation, the Three stands at the cliff edge having already sent something out into the world. The ships are visible on the water below, moving away. This is not waiting in uncertainty but watching in confidence, the particular stillness of someone whose investment is already in motion and who now tracks what it will bring back. Expansion is no longer potential; it is underway. The figure does not look back at what was left behind.",
       "arrivalBehaviour": "Sets the field as already in motion. It defines the space as one where investment has been committed and outcomes are developing beyond direct control, creating a register of forward momentum and purposeful anticipation.",
       "responseBehaviour": "Negotiates by confirming and extending what is present. It receives prior energy as already-committed, treating existing material as foundation rather than possibility, and turns attention toward what the existing movement will produce.",
+      "shiftInstruction": {
+        "upright": "look beyond the immediate moment and prepare for what your actions are now setting in motion",
+        "reversed": "notice where delay, narrow vision, or poor preparation is limiting what can develop next"
+      },
       "relationalEffect": "extends — carries adjacent cards beyond the point of decision",
       "interactionStyle": "initiating"
     },
@@ -2723,6 +2831,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Three of Wands carries the consequence of committed movement that has not resolved as expected. The ships went out but have not come back, or what returns is not what was sent for. Expansion has outpaced foundation. The foresight that drove the decision missed something, and the figure at the cliff edge now watches an empty horizon. This is not the paralysis of the reversed Two but the particular difficulty of someone who acted and finds the action has not held. Overextension, delays, or miscalculated reach are structurally present.",
       "arrivalBehaviour": "Sets the field as overextended or unreturned. It defines the space as one where committed movement has not produced expected results, creating a register of strained anticipation or investment that has gone further than the foundation supports.",
       "responseBehaviour": "Negotiates by introducing the weight of unmet expectation into prior material. It receives existing energy as already-spent and asks what has been produced, adding pressure or recalibration to the field.",
+      "shiftInstruction": {
+        "upright": "look beyond the immediate moment and prepare for what your actions are now setting in motion",
+        "reversed": "notice where delay, narrow vision, or poor preparation is limiting what can develop next"
+      },
       "relationalEffect": "strains — introduces tension of unreturned investment into adjacent cards",
       "interactionStyle": "reactive"
     },
@@ -2809,6 +2921,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Four of Wands is the first resting point in the suit, but it is not stillness. It is the structured pause that fire earns when it has built something solid enough to gather beneath. The four wands form a canopy hung with flowers; figures celebrate in the space they define. The foundation is real, the joy is earned, and the community is present. This card carries the particular quality of arrival that does not require what comes next to be meaningful. The moment is complete in itself, not as a stopping point but as a homecoming.",
       "arrivalBehaviour": "Sets the field as celebratory and grounded. It defines the space as one where something has been completed well enough to warrant gathering, creating a register of communal warmth, earned stability, and structured joy.",
       "responseBehaviour": "Negotiates by providing a stable, welcoming ground for what is present. It receives prior energy as worthy of celebration, converting momentum into arrival and integrating existing material into a shared moment of recognition.",
+      "shiftInstruction": {
+        "upright": "stabilise the progress that has been made so it can become something shared and recognised",
+        "reversed": "recognise where instability, exclusion, or lack of foundation is preventing celebration or belonging"
+      },
       "relationalEffect": "grounds — anchors adjacent cards in stable celebratory resolution",
       "interactionStyle": "stabilising"
     },
@@ -2834,6 +2950,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Four of Wands carries the form of celebration without its substance. The canopy is raised but something beneath it is unresolved. The gathering happens but the warmth does not land, or the homecoming is postponed, complicated by tension that the festivity cannot cover. The foundation exists but has not set fully; what was built holds the shape of stability without yet providing it. This is not collapse but incompletion, the particular discomfort of a moment that should feel like arrival but does not.",
       "arrivalBehaviour": "Sets the field as superficially festive but internally unsettled. It defines the space as one where the conditions for celebration are present but the underlying stability has not fully formed, creating a register of unresolved tension beneath apparent warmth.",
       "responseBehaviour": "Negotiates by introducing instability into what appears complete. It receives prior energy as needing further grounding, revealing that what looked like arrival has not fully landed, and that the foundation requires more before it can hold.",
+      "shiftInstruction": {
+        "upright": "stabilise the progress that has been made so it can become something shared and recognised",
+        "reversed": "recognise where instability, exclusion, or lack of foundation is preventing celebration or belonging"
+      },
       "relationalEffect": "unsettles — introduces instability into adjacent grounded structures",
       "interactionStyle": "distorted"
     },
@@ -2920,6 +3040,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Five of Wands is the disruption that follows the earned stability of the Four. Five figures raise their wands against each other, but no one is struck and no ground is clearly won. This is contest without conclusion, conflict that has not yet organised itself into opposition with clear sides. The energy is genuine and high; the problem is coordination, not power. Creative friction, competitive pressure, and the clash of differing wills occupy the same field simultaneously. The card does not resolve this; it presents it as the condition that must be moved through before the suit can continue.",
       "arrivalBehaviour": "Sets the field as contested and energised. It defines the space as one where multiple forces are active and in friction with each other, creating a register of productive disruption, competitive pressure, and unresolved contest that demands engagement rather than retreat.",
       "responseBehaviour": "Negotiates by introducing friction into what is present. It receives prior energy and immediately brings it into contact with competing forces, disrupting settled or singular momentum and requiring the existing field to prove itself against resistance.",
+      "shiftInstruction": {
+        "upright": "engage the conflict clearly enough to find out what each pressure is trying to prove",
+        "reversed": "notice where avoidance, suppressed tension, or scattered disagreement is preventing resolution"
+      },
       "relationalEffect": "disrupts — introduces competing forces into adjacent cards",
       "interactionStyle": "disrupting"
     },
@@ -2945,6 +3069,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Five of Wands carries its conflict without its vitality. The competing forces do not meet cleanly; instead, the contest goes underground, becomes passive, or turns inward. Disagreement that will not name itself, competition expressed through sabotage or avoidance, internal friction that produces no forward movement. The energy is still present but has lost its directness. What could have been a productive clash becomes a dispersal of force with no point of resolution, leaving the field drained rather than charged.",
       "arrivalBehaviour": "Sets the field as suppressed or internally conflicted. It defines the space as one where friction is present but not surfacing cleanly, creating a register of unacknowledged tension, misdirected energy, and conflict that has nowhere productive to go.",
       "responseBehaviour": "Negotiates by internalising the friction of what is present. It receives prior energy and turns it back on itself, converting forward momentum into circular struggle or introducing the sense that resistance is coming from within rather than without.",
+      "shiftInstruction": {
+        "upright": "engage the conflict clearly enough to find out what each pressure is trying to prove",
+        "reversed": "notice where avoidance, suppressed tension, or scattered disagreement is preventing resolution"
+      },
       "relationalEffect": "scatters — disperses adjacent card energy into internal friction",
       "interactionStyle": "internalised"
     },
@@ -3031,6 +3159,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Six of Wands is the resolution of the Five's contested ground into clear victory. The figure rides elevated above the crowd, wreathed and acknowledged, and those around carry wands upright rather than raised in contest. The conflict has produced a winner, and the winner is being seen. This is not arrogance but earned confidence, the particular quality of someone who went into the friction and came through it with their capacity confirmed. Public recognition functions here as structural validation, the external world reflecting back what the internal world already knew.",
       "arrivalBehaviour": "Sets the field as victorious and publicly confirmed. It defines the space as one where effort has resolved into recognised success, creating a register of confident forward momentum, visible achievement, and the particular authority of someone who has been seen and found capable.",
       "responseBehaviour": "Negotiates by elevating what is present into a register of confirmed success. It receives prior energy as having passed its test and now being publicly recognised, converting struggle or effort into visible achievement and giving the existing field the confidence of demonstrated capacity.",
+      "shiftInstruction": {
+        "upright": "let visible progress be recognised without losing the discipline that made it possible",
+        "reversed": "recognise where pride, self-doubt, or lack of acknowledgement is distorting progress"
+      },
       "relationalEffect": "elevates — lifts adjacent cards into confirmed achievement",
       "interactionStyle": "stabilising"
     },
@@ -3056,6 +3188,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Six of Wands carries its achievement but loses its grounding in genuine capacity. Recognition is withheld, arrives hollow, or is sought before it has been earned. Confidence that was structural becomes dependent, requiring external validation to maintain itself. The figure rides but the crowd is absent or unimpressed, and without the confirming witness the victory does not fully register. Alternatively, acclaim has arrived but the capacity beneath it is not as solid as the recognition suggests, and the gap between image and substance begins to show.",
       "arrivalBehaviour": "Sets the field as achievement-seeking or recognition-dependent. It defines the space as one where success is present or approaching but the confirming witness is missing or insufficient, creating a register of unvalidated confidence or premature claim.",
       "responseBehaviour": "Negotiates by introducing the question of legitimacy into what is present. It receives prior energy as needing external confirmation and either finds that confirmation hollow or reveals that the confidence in the existing field rests on audience rather than capacity.",
+      "shiftInstruction": {
+        "upright": "let visible progress be recognised without losing the discipline that made it possible",
+        "reversed": "recognise where pride, self-doubt, or lack of acknowledgement is distorting progress"
+      },
       "relationalEffect": "deflates — reduces adjacent cards to validation-seeking states",
       "interactionStyle": "reactive"
     },
@@ -3142,6 +3278,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Seven of Wands is the consequence of the Six. Having been seen, recognised, and elevated, the figure now faces the challenge that visibility invites. The high ground is real but it is contested; six wands rise from below against the one held above. This is not the chaotic friction of the Five but targeted pressure directed at someone who has something worth taking. The card carries the particular quality of someone who must fight to keep what they have earned, where retreat is not available and the defence must be active. The advantaged position is an asset only if it is held.",
       "arrivalBehaviour": "Sets the field as pressured and defensive. It defines the space as one where a position of achievement is being actively contested, creating a register of determined resistance, sustained effort under challenge, and the particular clarity of someone who knows exactly what they are protecting and why.",
       "responseBehaviour": "Negotiates by introducing the demand for active defence into what is present. It receives prior energy as a position that has attracted challenge and requires protection, converting existing achievement or confidence into something that must now be sustained against pressure rather than simply held.",
+      "shiftInstruction": {
+        "upright": "hold your ground where the pressure requires a clear and defensible stand",
+        "reversed": "notice where defensiveness, exhaustion, or uncertainty is weakening your ability to stand firm"
+      },
       "relationalEffect": "pressures — introduces sustained challenge into adjacent cards",
       "interactionStyle": "disrupting"
     },
@@ -3167,6 +3307,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Seven of Wands carries the same pressure but the capacity or will to meet it has failed. The figure steps back from the high ground, either overwhelmed by the sustained challenge or depleted before the contest was decided. This is not always defeat from without; sometimes the reversal marks a decision to stop defending, a surrender that feels like relief but costs the position. The challenge itself has not changed, but the one who must answer it has run out of the particular quality required to hold what they have.",
       "arrivalBehaviour": "Sets the field as depleted or conceding. It defines the space as one where sustained pressure has exceeded the available defence, creating a register of exhaustion, abandoned position, or the particular hollowness of someone who has stopped fighting before the outcome was clear.",
       "responseBehaviour": "Negotiates by withdrawing resistance from what is present. It receives prior energy as a position that is no longer being actively defended, allowing challenge to move through the field without meeting the opposition that would have held it.",
+      "shiftInstruction": {
+        "upright": "hold your ground where the pressure requires a clear and defensible stand",
+        "reversed": "notice where defensiveness, exhaustion, or uncertainty is weakening your ability to stand firm"
+      },
       "relationalEffect": "yields — removes active resistance from adjacent cards",
       "interactionStyle": "avoidant"
     },
@@ -3253,6 +3397,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Eight of Wands is the suit's moment of pure velocity. Eight wands cross the sky in parallel, angled downward, nothing in their path. There is no figure, no contest, no landscape of consequence, only the wands themselves in motion. What this card carries is the quality of release after accumulation, the particular force of something that has been building and has finally found its angle of departure. Movement is rapid, aligned, and unobstructed. Communication travels, decisions land, situations develop faster than the pace that preceded them. The energy is not scattered as in the Five but coherent and directional.",
       "arrivalBehaviour": "Sets the field as accelerating and unobstructed. It defines the space as one where movement has been released from whatever was containing it, creating a register of rapid development, incoming information, and the particular momentum of multiple forces aligned toward a single point.",
       "responseBehaviour": "Negotiates by accelerating what is present. It receives prior energy as having found its release point and carries it forward at speed, converting deliberation or accumulation into active, unimpeded movement and bringing existing material rapidly toward its destination.",
+      "shiftInstruction": {
+        "upright": "respond quickly because movement is accelerating and delay will change the outcome",
+        "reversed": "recognise where haste, blockage, or poor timing is disrupting movement"
+      },
       "relationalEffect": "accelerates — drives adjacent cards toward rapid resolution",
       "interactionStyle": "initiating"
     },
@@ -3278,6 +3426,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Eight of Wands carries its velocity but has lost its coherence. The wands are in motion but their angles have diverged; they are no longer travelling in parallel toward the same point. Release has happened before alignment was achieved, or the direction was miscalculated and the momentum is now carrying things the wrong way. Communication misfires, information arrives garbled or too late, plans that seemed ready to land overshoot or fall short. The speed is still present but it is working against resolution rather than toward it.",
       "arrivalBehaviour": "Sets the field as moving but misaligned. It defines the space as one where energy has been released without sufficient direction, creating a register of rushed or chaotic development, crossed signals, and momentum that is not arriving where it was aimed.",
       "responseBehaviour": "Negotiates by disrupting the trajectory of what is present. It receives prior energy as moving but poorly aimed, introducing misdirection, communication failure, or the sense that what was building toward expression has released at the wrong moment or in the wrong direction.",
+      "shiftInstruction": {
+        "upright": "respond quickly because movement is accelerating and delay will change the outcome",
+        "reversed": "recognise where haste, blockage, or poor timing is disrupting movement"
+      },
       "relationalEffect": "misdirects — pulls adjacent cards off established trajectory",
       "interactionStyle": "distorted"
     },
@@ -3364,6 +3516,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Nine of Wands is the suit's penultimate test, the moment just before the final effort when the accumulated cost of everything that came before is fully visible. The figure leans on one wand while eight stand behind them, a constructed barrier as much as a reserve. The bandaged head speaks to damage already taken. This is not the fresh courage of the Seven but the worn, clear-eyed readiness of someone who has been through the full sequence and is still present. Resilience here is not optimism; it is the refusal to stop when stopping would be easier.",
       "arrivalBehaviour": "Sets the field as battle-worn and guarded. It defines the space as one where significant effort has already been expended and what remains is held with careful, watchful determination, creating a register of earned wariness, sustained will, and the particular clarity of someone who has nothing left to prove but one more step to take.",
       "responseBehaviour": "Negotiates by introducing the weight of sustained effort into what is present. It receives prior energy as something that has been carried a long way and is now being held with deliberate care, adding the quality of hard-won persistence to the existing field and making whatever comes next feel like it must be worth the cost already paid.",
+      "shiftInstruction": {
+        "upright": "protect what remains while deciding whether continued effort is still necessary",
+        "reversed": "notice where exhaustion, suspicion, or overprotection is making it harder to continue wisely"
+      },
       "relationalEffect": "fortifies — reinforces adjacent cards with sustained endurance",
       "interactionStyle": "stabilising"
     },
@@ -3389,6 +3545,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Nine of Wands carries its damage past the point of useful wariness. The guard that was necessary has become a wall that prevents forward movement as much as it prevents harm. The figure cannot distinguish between genuine threat and the residue of old challenges, and so everything arriving is met with the same defensive posture that the actual battles required. Exhaustion has become indistinguishable from the position itself. The will has not broken but it has calcified, and what was resilience is now a refusal to acknowledge that the hardest part may already be behind.",
       "arrivalBehaviour": "Sets the field as defensively closed and exhausted. It defines the space as one where sustained effort has produced a posture of protection that can no longer modulate itself, creating a register of wary immobility, accumulated damage, and the particular difficulty of someone who cannot let their guard down even when doing so would allow them to finish.",
       "responseBehaviour": "Negotiates by introducing defensive resistance into what is present. It receives prior energy through a lens of accumulated damage, treating incoming material as potential threat and adding caution or obstruction to whatever forward movement the existing field was building toward.",
+      "shiftInstruction": {
+        "upright": "protect what remains while deciding whether continued effort is still necessary",
+        "reversed": "notice where exhaustion, suspicion, or overprotection is making it harder to continue wisely"
+      },
       "relationalEffect": "obstructs — introduces defensive rigidity into adjacent cards",
       "interactionStyle": "blocked"
     },
@@ -3475,6 +3635,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Ten of Wands closes the suit's numbered sequence at the point of maximum load. The figure hunches forward under ten bundled wands, face obscured by the weight, a settlement visible ahead. The destination exists and is close, but the burden is real and total. This is not failure; it is the consequence of sustained creative ambition that has accumulated beyond what one person can carry without strain. The fire that ignited in the Ace has produced, expanded, defended, and persisted until it has become this: everything arriving at once, all of it requiring transport, none of it able to be set down until the threshold is crossed.",
       "arrivalBehaviour": "Sets the field as heavily burdened and close to completion. It defines the space as one where accumulated effort and responsibility are being carried toward a visible finish, creating a register of strained forward movement, the particular determination of someone who will not stop because the end is in sight, and the weight of everything the journey has produced.",
       "responseBehaviour": "Negotiates by adding the full weight of accumulated effort to what is present. It receives prior energy as something that must now be carried rather than simply held, converting the existing field into a register of responsibility, overextension, or the final push that completion requires.",
+      "shiftInstruction": {
+        "upright": "name the burden clearly so responsibility can be carried without collapse",
+        "reversed": "recognise where overload, refusal to delegate, or the need to release pressure has become unavoidable"
+      },
       "relationalEffect": "burdens — adds accumulated weight to adjacent cards",
       "interactionStyle": "integrating"
     },
@@ -3500,6 +3664,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Ten of Wands carries its load past the breaking point. The figure does not make it to the settlement, or arrives there broken, or refuses to put the wands down even when the destination has been reached. Overextension has become collapse, or the accumulated responsibility has calcified into a weight that cannot be released because releasing it would require acknowledging that it should have been shared or shed long ago. The reversed card asks what is being carried that no longer needs to be, and why the carrier cannot stop.",
       "arrivalBehaviour": "Sets the field as collapsed or rigidly overburdened. It defines the space as one where accumulated weight has exceeded the carrier's capacity, creating a register of exhausted breakdown, the inability to delegate or release, or the crushing pressure of responsibility that has nowhere to go.",
       "responseBehaviour": "Negotiates by introducing the full weight of unsustainable burden into what is present. It receives prior energy as something that has accumulated to the point of collapse, adding crushing pressure or the refusal to release to whatever the existing field was building toward.",
+      "shiftInstruction": {
+        "upright": "name the burden clearly so responsibility can be carried without collapse",
+        "reversed": "recognise where overload, refusal to delegate, or the need to release pressure has become unavoidable"
+      },
       "relationalEffect": "crushes — collapses adjacent cards under unsustainable load",
       "interactionStyle": "reactive"
     },
@@ -3586,6 +3754,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Page of Wands carries the suit's generative charge at its earliest stage of embodiment. The figure holds the wand upright and studies it, absorbed in what it represents rather than what it can do. The landscape is desert and open; no path has been committed to. This is the fire principle at the point of discovery, present in a person who feels the creative impulse strongly but has not yet organised it into direction or sustained effort. The Page brings news, begins things, and explores possibilities with genuine enthusiasm. The limitation is not the energy but the experience to channel it.",
       "arrivalBehaviour": "Sets the field as open and exploratory. It defines the space as one where creative potential is present and being actively sensed rather than directed, creating a register of enthusiastic possibility, new information arriving, and the particular aliveness of someone at the beginning of something they do not yet fully understand.",
       "responseBehaviour": "Negotiates by introducing fresh creative energy into what is present. It receives prior material as something to be explored and responded to with enthusiasm, bringing the quality of genuine curiosity and new perspective to whatever the existing field has established, without the weight of sustained commitment.",
+      "shiftInstruction": {
+        "upright": "explore the new impulse with curiosity before it needs to become fully formed action",
+        "reversed": "notice where restlessness, immaturity, or lack of direction is scattering the first impulse"
+      },
       "relationalEffect": "animates — introduces fresh creative energy into adjacent cards",
       "interactionStyle": "initiating"
     },
@@ -3611,6 +3783,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Page of Wands carries the same creative charge but cannot organise it into even the beginning of direction. Enthusiasm ignites and disperses. New directions are sensed but none hold long enough to be followed. Messages arrive late, garbled, or not at all. The figure looks at the wand but cannot determine what it is for. This is not the earned wariness of the Nine or the collapse of the Ten but the simpler difficulty of creative energy that has not yet found the developmental stage that would allow it to focus. The fire is real; the capacity to hold it is not yet present.",
       "arrivalBehaviour": "Sets the field as restless and unfocused. It defines the space as one where creative energy is present but cannot cohere into direction, creating a register of scattered enthusiasm, false starts, and the particular frustration of someone who feels the impulse strongly but cannot make it land.",
       "responseBehaviour": "Negotiates by introducing creative restlessness into what is present. It receives prior material with genuine interest but cannot sustain engagement long enough to develop it, adding energetic disruption rather than focused contribution to the existing field.",
+      "shiftInstruction": {
+        "upright": "explore the new impulse with curiosity before it needs to become fully formed action",
+        "reversed": "notice where restlessness, immaturity, or lack of direction is scattering the first impulse"
+      },
       "relationalEffect": "scatters — disperses adjacent creative focus into unfocused energy",
       "interactionStyle": "distorted"
     },
@@ -3697,6 +3873,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Knight of Wands is the suit's creative energy at the point of full forward commitment. The horse rears, the figure leans into motion, the wand is raised not in defence but in the direction of travel. Where the Page sensed and explored, the Knight has chosen and departed. This is fire embodied in action, in pursuit, in the exhilaration of movement for its own sake as much as for the destination. The Knight brings intensity, speed, and magnetic force. The limitation is the same as the energy: total commitment to direction without the patience or perspective that sustained effort over time produces.",
       "arrivalBehaviour": "Sets the field as charged with forward momentum and passionate intent. It defines the space as one where direction has been chosen and is being pursued at speed, creating a register of bold, energised movement, magnetic confidence, and the particular force of someone who has committed completely and expects the world to respond to that commitment.",
       "responseBehaviour": "Negotiates by accelerating and intensifying what is present. It receives prior energy as something to be met with full engagement and immediately moves it forward, bringing the existing field into a register of bold action and pursued direction, removing hesitation and replacing it with committed momentum.",
+      "shiftInstruction": {
+        "upright": "move decisively while keeping enough awareness to avoid reckless force",
+        "reversed": "recognise where impulsiveness, volatility, or lack of restraint is turning movement into disruption"
+      },
       "relationalEffect": "propels — drives adjacent cards into forward commitment",
       "interactionStyle": "initiating"
     },
@@ -3722,6 +3902,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Knight of Wands carries its full speed into a field where the direction has failed or was never properly established. The momentum does not diminish; it becomes the problem. Recklessness, impulsivity, and the inability to course-correct while moving at speed are the characteristic difficulties. The charisma that attracted others now drives them away or drags them into the damage. Creative energy has not diminished but it has lost its alignment with any productive direction, and the force of the pursuit is now working against the outcome it was meant to achieve.",
       "arrivalBehaviour": "Sets the field as forcefully misdirected. It defines the space as one where committed energy is moving at speed but without reliable direction, creating a register of reckless momentum, impulsive action, and the particular disruption of force that cannot moderate itself.",
       "responseBehaviour": "Negotiates by overwhelming what is present with undirected speed. It receives prior energy and immediately accelerates it beyond the point of careful navigation, introducing recklessness into whatever the existing field was building toward and replacing considered movement with the force of momentum that has outrun its purpose.",
+      "shiftInstruction": {
+        "upright": "move decisively while keeping enough awareness to avoid reckless force",
+        "reversed": "recognise where impulsiveness, volatility, or lack of restraint is turning movement into disruption"
+      },
       "relationalEffect": "overwhelms — drives adjacent cards beyond sustainable pace",
       "interactionStyle": "distorted"
     },
@@ -3808,6 +3992,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The Queen of Wands is the suit's creative energy at the point of full maturation in the receptive mode. She sits with a sunflower in one hand and a wand in the other, the black cat at her feet, facing outward with complete composure. The fire is entirely hers; she does not pursue it or defend it or carry it as burden. She embodies it. The warmth she radiates is structural, a quality of being rather than a quality of doing, and it draws people and possibilities toward her without effort. Where the Knight pursued, the Queen holds the centre from which pursuit becomes unnecessary.",
       "arrivalBehaviour": "Sets the field as warm, magnetic, and self-contained. It defines the space as one where creative authority is fully present and entirely at ease, creating a register of confident mastery, generous warmth, and the particular gravity of someone whose presence organises the field without requiring anything of it.",
       "responseBehaviour": "Negotiates by centring and warming what is present. It receives prior energy with full confidence, neither threatened by what came before nor requiring it to be different, bringing the existing field into a register of creative mastery and sustained warmth that makes everything around it more coherent and alive.",
+      "shiftInstruction": {
+        "upright": "stand in visible confidence and let warmth, courage, and self-possession lead the movement",
+        "reversed": "notice where insecurity, jealousy, or diminished confidence is weakening your ability to lead from within"
+      },
       "relationalEffect": "draws — organises adjacent cards around a warm central presence",
       "interactionStyle": "stabilising"
     },
@@ -3833,6 +4021,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the Queen of Wands carries her creative authority but has lost its ease. The confidence that was structural becomes brittle, requiring maintenance through comparison or control. The warmth that drew others becomes conditional, offered only to those who confirm the Queen's centrality. Jealousy, possessiveness, or the need to be the most creatively visible person in any room replaces the generosity of the upright position. The fire still burns but it no longer knows how to warm without scorching, and the presence that organised the field now demands it.",
       "arrivalBehaviour": "Sets the field as demanding and creatively competitive. It defines the space as one where authority is present but insecure, creating a register of conditional warmth, controlling presence, and the particular difficulty of someone whose creative confidence requires the diminishment of others to sustain itself.",
       "responseBehaviour": "Negotiates by asserting dominance over what is present. It receives prior energy as something to be measured against rather than warmly integrated, introducing competition or conditional acceptance into the existing field and replacing the generous centre of the upright position with a presence that must be the most significant thing in the room.",
+      "shiftInstruction": {
+        "upright": "stand in visible confidence and let warmth, courage, and self-possession lead the movement",
+        "reversed": "notice where insecurity, jealousy, or diminished confidence is weakening your ability to lead from within"
+      },
       "relationalEffect": "dominates — asserts control over adjacent cards",
       "interactionStyle": "reactive"
     },
@@ -3919,6 +4111,10 @@ export const tarotCardsNew = [
       "coreMeaning": "The King of Wands is the suit's creative energy at its fullest expression of outward mastery. He sits forward on the throne, wand in hand, as if about to rise; the salamander on his robe completes its circle. This is not the stillness of integration but the readiness of someone who has mastered the fire and now directs it with strategic vision. Where the Queen holds the centre, the King extends outward, turning creative authority into something that builds, leads, and transforms the larger field. The inspiration he offers is not warmth but direction, and the direction is worth following because the one who gives it has already been where it leads.",
       "arrivalBehaviour": "Sets the field as commanded and purposefully directed. It defines the space as one where visionary authority is fully present and actively orienting the field toward a larger goal, creating a register of strategic clarity, inspired leadership, and the particular force of someone whose creative command is both earned and undeniable.",
       "responseBehaviour": "Negotiates by taking command of what is present. It receives prior energy as material to be organised and directed toward a larger vision, bringing the existing field into a register of purposeful, strategic movement and giving what came before the shape and direction that transforms creative force into lasting achievement.",
+      "shiftInstruction": {
+        "upright": "lead the direction with vision, conviction, and responsibility for what your fire sets in motion",
+        "reversed": "recognise where dominance, impatience, or unchecked ambition is distorting leadership"
+      },
       "relationalEffect": "commands — organises adjacent cards into directed purpose",
       "interactionStyle": "initiating"
     },
@@ -3944,6 +4140,10 @@ export const tarotCardsNew = [
       "coreMeaning": "Reversed, the King of Wands carries his full authority but has lost the quality that made it worth following. The strategic vision has become fixed; the command has become control; the leadership has become dominance. What distinguished the upright King was that his direction was worth following because it was genuinely visionary and genuinely earned. Reversed, the direction is asserted rather than demonstrated, and the fire that should inspire becomes the fire that burns away dissent, difference, and the input that would have kept the vision alive. The King still commands; he has simply stopped being worth commanding for.",
       "arrivalBehaviour": "Sets the field as autocratically controlled. It defines the space as one where authority is fully present but has become closed to input, creating a register of forced direction, creative domination, and the particular difficulty of a field organised entirely around a single vision that will not incorporate anything that challenges it.",
       "responseBehaviour": "Negotiates by taking control rather than command. It receives prior energy not as material to be developed but as something to be organised on its own terms, introducing the demand for conformity into whatever the existing field was building toward and replacing collaborative creative direction with unilateral assertion.",
+      "shiftInstruction": {
+        "upright": "lead the direction with vision, conviction, and responsibility for what your fire sets in motion",
+        "reversed": "recognise where dominance, impatience, or unchecked ambition is distorting leadership"
+      },
       "relationalEffect": "dominates — imposes unilateral direction on adjacent cards",
       "interactionStyle": "distorted"
     },
@@ -4058,6 +4258,10 @@ export const tarotCardsNew = [
       "relationalEffect": "seals adjacent cards from feeling",
       "interactionStyle": "blocked"
     },
+    "shiftInstruction": {
+      "upright": "allow the feeling to open without immediately trying to define or contain it",
+      "reversed": "notice where emotional closure, hesitation, or guardedness is preventing connection"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Water",
@@ -4168,6 +4372,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Exposes absence of return within existing interaction. Redirects attention to imbalance between positions.",
       "relationalEffect": "separates adjacent cards from exchange",
       "interactionStyle": "disrupting"
+    },
+    "shiftInstruction": {
+      "upright": "meet the connection directly so mutual recognition can form clearly",
+      "reversed": "recognise where imbalance, withdrawal, or misalignment is weakening the connection"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -4280,6 +4488,10 @@ export const tarotCardsNew = [
       "relationalEffect": "fragments adjacent cards from shared field",
       "interactionStyle": "distorting"
     },
+    "shiftInstruction": {
+      "upright": "share the moment with others so the experience becomes something collective",
+      "reversed": "notice where exclusion, overindulgence, or shallow connection is limiting real support"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Water",
@@ -4390,6 +4602,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Allows limited reception of existing input. Introduces movement without continuity.",
       "relationalEffect": "loosens adjacent cards from stasis",
       "interactionStyle": "delayed"
+    },
+    "shiftInstruction": {
+      "upright": "look again at what is being offered instead of remaining fixed on what is missing",
+      "reversed": "recognise where withdrawal, distraction, or emotional disengagement is closing off opportunity"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -4502,6 +4718,10 @@ export const tarotCardsNew = [
       "relationalEffect": "widens adjacent cards toward resource",
       "interactionStyle": "releasing"
     },
+    "shiftInstruction": {
+      "upright": "acknowledge what has been lost without ignoring what still remains",
+      "reversed": "notice where avoidance of grief or refusal to move on is keeping you fixed in disappointment"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Water",
@@ -4612,6 +4832,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Pulls existing energy toward prior emotional ground. Interrupts forward orientation through familiar pattern.",
       "relationalEffect": "anchors adjacent cards to prior pattern",
       "interactionStyle": "reactive"
+    },
+    "shiftInstruction": {
+      "upright": "allow past connection or memory to inform the present without replacing it",
+      "reversed": "recognise where idealising the past or holding onto it is limiting present experience"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -4724,6 +4948,10 @@ export const tarotCardsNew = [
       "relationalEffect": "contracts adjacent cards toward selection",
       "interactionStyle": "revealing"
     },
+    "shiftInstruction": {
+      "upright": "reduce the options enough to choose what is real and actionable",
+      "reversed": "notice where confusion is clearing and use that clarity to make a grounded choice"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Water",
@@ -4834,6 +5062,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Holds existing interaction in partial disengagement. Prevents full separation or return.",
       "relationalEffect": "suspends adjacent cards between engagement and withdrawal",
       "interactionStyle": "delayed"
+    },
+    "shiftInstruction": {
+      "upright": "leave what no longer satisfies so something more aligned can be found",
+      "reversed": "recognise where reluctance to move on is keeping you tied to what has already lost meaning"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -4946,6 +5178,10 @@ export const tarotCardsNew = [
       "relationalEffect": "undermines adjacent cards within completion",
       "interactionStyle": "distorting"
     },
+    "shiftInstruction": {
+      "upright": "recognise satisfaction without becoming complacent or self-contained",
+      "reversed": "notice where overindulgence or lack of fulfilment is distorting what should feel complete"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Water",
@@ -5056,6 +5292,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Exposes instability within shared structure. Prevents full cohesion across positions.",
       "relationalEffect": "fractures adjacent cards within shared structure",
       "interactionStyle": "distorting"
+    },
+    "shiftInstruction": {
+      "upright": "commit to what creates lasting emotional alignment rather than temporary satisfaction",
+      "reversed": "recognise where surface harmony is masking deeper imbalance or disconnection"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -5168,6 +5408,10 @@ export const tarotCardsNew = [
       "relationalEffect": "destabilises adjacent cards through uncontained input",
       "interactionStyle": "reactive"
     },
+    "shiftInstruction": {
+      "upright": "stay open to subtle feeling or intuitive signals before they become obvious",
+      "reversed": "notice where emotional immaturity, distraction, or avoidance is distorting perception"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Water",
@@ -5278,6 +5522,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Moves through existing conditions without stable aim. Disrupts coherence of direction.",
       "relationalEffect": "unsettles adjacent cards through unstable movement",
       "interactionStyle": "distorting"
+    },
+    "shiftInstruction": {
+      "upright": "follow what feels meaningful while staying aware of reality and consequence",
+      "reversed": "recognise where idealism, inconsistency, or emotional drift is weakening follow-through"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -5390,6 +5638,10 @@ export const tarotCardsNew = [
       "relationalEffect": "saturates adjacent cards through loss of boundary",
       "interactionStyle": "internalised"
     },
+    "shiftInstruction": {
+      "upright": "hold emotional awareness steady so others can be understood without losing yourself",
+      "reversed": "notice where over-sensitivity, emotional overwhelm, or lack of boundaries is affecting clarity"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Water",
@@ -5500,6 +5752,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Constrains existing interaction without stabilising it. Prevents genuine equilibrium.",
       "relationalEffect": "flattens adjacent cards through imposed control",
       "interactionStyle": "avoidant"
+    },
+    "shiftInstruction": {
+      "upright": "maintain emotional control while responding with fairness and understanding",
+      "reversed": "recognise where suppression, volatility, or imbalance is affecting emotional stability"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -5612,6 +5868,10 @@ export const tarotCardsNew = [
       "relationalEffect": "pressures adjacent cards without delivering resolution",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "name the truth clearly enough for action to follow from it",
+      "reversed": "recognise where confusion, distortion, or poor judgement is preventing a clean decision"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Air",
@@ -5722,6 +5982,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Destabilises the existing field. Releases held forces simultaneously. Disrupts coherence without forming structure.",
       "relationalEffect": "floods adjacent cards with uncontained opposing pressure",
       "interactionStyle": "reactive"
+    },
+    "shiftInstruction": {
+      "upright": "pause long enough to choose from clarity rather than pressure",
+      "reversed": "recognise where avoidance or indecision is making the choice more difficult"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -5834,6 +6098,10 @@ export const tarotCardsNew = [
       "relationalEffect": "holds adjacent cards within sustained rupture",
       "interactionStyle": "blocked"
     },
+    "shiftInstruction": {
+      "upright": "let the truth of the hurt be acknowledged so it can stop being hidden or denied",
+      "reversed": "recognise where pain is beginning to release, but only if it is faced honestly"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Air",
@@ -5944,6 +6212,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Releases contained energy into the existing field. Disrupts suspension. Reintroduces unstable activity.",
       "relationalEffect": "releases adjacent cards from incomplete suspension",
       "interactionStyle": "reactive"
+    },
+    "shiftInstruction": {
+      "upright": "step back from conflict or pressure long enough for the mind to recover",
+      "reversed": "recognise where restlessness or refusal to pause is preventing recovery"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -6056,6 +6328,10 @@ export const tarotCardsNew = [
       "relationalEffect": "saturates adjacent cards with unresolved conflict residue",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "look directly at what winning is costing before continuing the conflict",
+      "reversed": "recognise where the need to repair, withdraw, or stop escalating has become unavoidable"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Air",
@@ -6166,6 +6442,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Interrupts directional movement in the existing field. Holds energy between states. Prevents progression.",
       "relationalEffect": "suspends adjacent cards within incomplete transition",
       "interactionStyle": "blocked"
+    },
+    "shiftInstruction": {
+      "upright": "move away from what cannot be resolved from the place where it began",
+      "reversed": "recognise where resistance to transition is keeping you tied to difficulty"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -6278,6 +6558,10 @@ export const tarotCardsNew = [
       "relationalEffect": "exposes adjacent cards through forced visibility",
       "interactionStyle": "revealing"
     },
+    "shiftInstruction": {
+      "upright": "examine what is being avoided, hidden, or handled indirectly before acting further",
+      "reversed": "recognise where concealment is failing and a more honest approach is required"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Air",
@@ -6388,6 +6672,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Opens the existing field from contraction. Converts restriction into movement. Restores range without full stabilisation.",
       "relationalEffect": "releases adjacent cards from internal restriction",
       "interactionStyle": "revealing"
+    },
+    "shiftInstruction": {
+      "upright": "identify which limits are real and which are being maintained by fear or assumption",
+      "reversed": "notice where a way out is becoming possible because the restriction is no longer absolute"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -6500,6 +6788,10 @@ export const tarotCardsNew = [
       "relationalEffect": "reduces adjacent cards from peak saturation",
       "interactionStyle": "delayed"
     },
+    "shiftInstruction": {
+      "upright": "bring fear into the open before it turns thought into torment",
+      "reversed": "recognise where mental pressure can begin to ease once the fear is named clearly"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Air",
@@ -6610,6 +6902,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Extends deterioration within the existing field. Prevents closure. Maintains instability without reaching termination.",
       "relationalEffect": "suspends adjacent cards within incomplete collapse",
       "interactionStyle": "blocked"
+    },
+    "shiftInstruction": {
+      "upright": "accept that something has reached its limit and cannot be continued in the same form",
+      "reversed": "stop driving effort into what has already ended and begin recovering from the collapse"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -6722,6 +7018,10 @@ export const tarotCardsNew = [
       "relationalEffect": "destabilises adjacent cards through reactive observation",
       "interactionStyle": "reactive"
     },
+    "shiftInstruction": {
+      "upright": "ask the sharper question before rushing to conclusion or response",
+      "reversed": "recognise where suspicion, scattered thinking, or immature communication is distorting the exchange"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Air",
@@ -6832,6 +7132,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Drives through the existing field without engagement. Converts conditions into unstable momentum. Maintains force without direction.",
       "relationalEffect": "destabilises adjacent cards through uncontrolled velocity",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "move decisively, but make sure speed is serving truth rather than reaction",
+      "reversed": "recognise where haste, aggression, or mental force is creating unnecessary damage"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -6944,6 +7248,10 @@ export const tarotCardsNew = [
       "relationalEffect": "cuts adjacent cards through distorted discernment",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "separate truth from emotion so the next response can be clear and fair",
+      "reversed": "recognise where harshness, defensiveness, or emotional suppression is distorting judgement"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Air",
@@ -7054,6 +7362,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Imposes control onto the existing field. Converts conditions into manipulated structures. Maintains dominance without balance.",
       "relationalEffect": "corrupts adjacent cards through manipulative authority",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "make the decision from principle, clarity, and disciplined thought",
+      "reversed": "recognise where control, coldness, or misuse of authority is distorting the decision"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -7166,6 +7478,10 @@ export const tarotCardsNew = [
       "relationalEffect": "blocks adjacent cards from materialisation",
       "interactionStyle": "blocked"
     },
+    "shiftInstruction": {
+      "upright": "take the opportunity seriously enough to give it a real foundation",
+      "reversed": "recognise where hesitation or poor handling is causing a missed or weakened opportunity"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Earth",
@@ -7276,6 +7592,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Applies uneven weight across competing demands.",
       "relationalEffect": "destabilises adjacent cards through imbalance",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "manage competing demands with enough flexibility to keep everything moving",
+      "reversed": "recognise where imbalance or overload is making it difficult to sustain what you are handling"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -7388,6 +7708,10 @@ export const tarotCardsNew = [
       "relationalEffect": "fragments adjacent cards within collaboration",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "work with others in a way that builds something structured and functional",
+      "reversed": "recognise where poor coordination or lack of skill is weakening the outcome"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Earth",
@@ -7498,6 +7822,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Disrupts containment of incoming charge.",
       "relationalEffect": "releases adjacent cards from containment",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "hold what you have with enough control to maintain stability",
+      "reversed": "recognise where holding too tightly or too loosely is creating instability"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -7610,6 +7938,10 @@ export const tarotCardsNew = [
       "relationalEffect": "restores adjacent cards to resource flow",
       "interactionStyle": "resolving"
     },
+    "shiftInstruction": {
+      "upright": "face the reality of lack or difficulty so practical support can be found",
+      "reversed": "recognise where recovery is possible if you are willing to accept help or change approach"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Earth",
@@ -7720,6 +8052,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Distorts distribution of incoming charge.",
       "relationalEffect": "distorts adjacent cards through exchange",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "bring balance to giving and receiving so exchange becomes sustainable",
+      "reversed": "recognise where imbalance, dependency, or unfairness is distorting the exchange"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -7832,6 +8168,10 @@ export const tarotCardsNew = [
       "relationalEffect": "stalls adjacent cards within suspension",
       "interactionStyle": "blocked"
     },
+    "shiftInstruction": {
+      "upright": "pause long enough to decide whether the effort already invested is still producing something worth continuing",
+      "reversed": "notice where impatience, doubt, or avoidance is preventing an honest assessment of progress"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Earth",
@@ -7942,6 +8282,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Disperses incoming charge across applications.",
       "relationalEffect": "disperses adjacent cards through effort",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "focus on consistent effort so skill and quality can improve over time",
+      "reversed": "recognise where lack of focus or poor discipline is limiting progress"
     },
     "relationalProfile": {
       "archetypeWeight": "low",
@@ -8054,6 +8398,10 @@ export const tarotCardsNew = [
       "relationalEffect": "undermines adjacent cards through instability",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "stand in what has been built and allow independence to be fully lived",
+      "reversed": "recognise where dependence or lack of self-sufficiency is limiting stability"
+    },
     "relationalProfile": {
       "archetypeWeight": "medium",
       "element": "Earth",
@@ -8164,6 +8512,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Breaks incoming charge from structural permanence.",
       "relationalEffect": "dissolves adjacent cards from legacy",
       "interactionStyle": "distorted"
+    },
+    "shiftInstruction": {
+      "upright": "commit to what creates long-term stability and continuity beyond the present moment",
+      "reversed": "recognise where instability or short-term focus is weakening long-term security"
     },
     "relationalProfile": {
       "archetypeWeight": "high",
@@ -8276,6 +8628,10 @@ export const tarotCardsNew = [
       "relationalEffect": "disperses adjacent cards through distraction",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "approach the opportunity with focus and willingness to learn what is required",
+      "reversed": "recognise where distraction or lack of commitment is weakening the start"
+    },
     "relationalProfile": {
       "archetypeWeight": "low",
       "element": "Earth",
@@ -8386,6 +8742,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Halts incoming charge through resistance.",
       "relationalEffect": "blocks adjacent cards through stagnation",
       "interactionStyle": "blocked"
+    },
+    "shiftInstruction": {
+      "upright": "continue steady, reliable effort even when progress feels slow",
+      "reversed": "recognise where stagnation or resistance to change is preventing movement"
     },
     "relationalProfile": {
       "archetypeWeight": "medium",
@@ -8498,6 +8858,10 @@ export const tarotCardsNew = [
       "relationalEffect": "destabilises adjacent cards through neglect",
       "interactionStyle": "distorted"
     },
+    "shiftInstruction": {
+      "upright": "create practical stability while maintaining care for what depends on you",
+      "reversed": "recognise where overextension or neglect is disrupting stability"
+    },
     "relationalProfile": {
       "archetypeWeight": "high",
       "element": "Earth",
@@ -8608,6 +8972,10 @@ export const tarotCardsNew = [
       "responseBehaviour": "Dominates incoming charge through control.",
       "relationalEffect": "dominates adjacent cards through control",
       "interactionStyle": "reactive"
+    },
+    "shiftInstruction": {
+      "upright": "lead with practical authority and ensure what is built remains stable and secure",
+      "reversed": "recognise where control, rigidity, or misuse of resources is weakening long-term stability"
     },
     "relationalProfile": {
       "archetypeWeight": "high",

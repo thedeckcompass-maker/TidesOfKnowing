@@ -1365,9 +1365,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   function buildMoveText(c1, c2, signalLine) {
-    const roles = splitSignalRoles(signalLine);
-    const first = roles.first ? roles.first.toLowerCase() : "";
-    const second = roles.second ? roles.second.toLowerCase() : "";
+    const o1 = readOrientReversed("tok2_orient_1") ? "reversed" : "upright";
+    const o2 = readOrientReversed("tok2_orient_2") ? "reversed" : "upright";
+    const whenFirst1 = c1.combinationLogic && String(c1.combinationLogic.whenFirst || "").trim();
+    const whenSecond2 = c2.combinationLogic && String(c2.combinationLogic.whenSecond || "").trim();
+    const whenFirstText = extractOrientationText(whenFirst1, o1);
+    const whenSecondText = extractOrientationText(whenSecond2, o2);
+    const first = getShiftAnchorSignal(c1, o1, whenFirstText);
+    const second = getShiftAnchorSignal(c2, o2, whenSecondText);
 
     if (first && second) {
       return cleanSentence(
@@ -1378,6 +1383,36 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return cleanSentence(
       `Watch what changes after ${c2.name} enters the room ${c1.name} has created.`,
     );
+  }
+
+  function getShiftAnchorSignal(card, orientation, fallbackText) {
+    const text = clean(fallbackText || "");
+    const faceData = card && (orientation === "reversed" ? card.reversed : card.upright);
+    const effect = effectPrefix(faceData && faceData.relationalEffect);
+    const key = `${String(card && card.id || "").toLowerCase()}:${orientation}`;
+
+    const directMap = {
+      "seven-of-pentacles:upright": "assessment",
+      "ten-of-swords:reversed": "recovery after collapse",
+    };
+
+    if (directMap[key]) return directMap[key];
+
+    const signalMap = {
+      propels: "momentum",
+      suspends: "assessment",
+      ends: "ending",
+      opens: "beginning",
+      focuses: "focused intention",
+      separates: "imbalance",
+      stabilises: "steady effort",
+      contracts: "clarity after projection",
+      seals: "containment",
+    };
+
+    if (signalMap[effect]) return signalMap[effect];
+    if (signalMap[text.toLowerCase()]) return signalMap[text.toLowerCase()];
+    return text;
   }
 
   function scrubShiftParagraphCopy(str) {
@@ -1626,6 +1661,27 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return cleanSentence(`This means ${fragB}.`);
   }
 
+  function buildShiftInstructionSentence(c1, c2, o1, o2, whenFirstText, whenSecondText) {
+    const instruction = c2?.shiftInstruction?.[o2];
+
+    if (instruction && typeof instruction === "string") {
+      return instruction.charAt(0).toUpperCase() + instruction.slice(1) + ".";
+    }
+
+    // Fallback to existing system if missing
+    let fallback = normalizeWhenLineForShiftContext(
+      whenFirstText,
+      whenSecondText
+    );
+
+    fallback = repairShiftSentence(fallback);
+    fallback = polishShiftSentence(fallback);
+    fallback = repairShiftParagraphAfterScrub(fallback);
+    fallback = finalReadabilityPass(fallback);
+
+    return fallback;
+  }
+
   function countShiftAnchorSentences(anchorText) {
     const t = clean(String(anchorText || ""));
     if (!t) return 0;
@@ -1633,50 +1689,24 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     return chunks.length > 0 ? chunks.length : 1;
   }
 
-  function buildShiftParagraph(c1, c2, whenFirstText, whenSecondText, moveText) {
+  function buildShiftParagraph(c1, c2, o1, o2, whenFirstText, whenSecondText, moveText) {
     const anchorRaw = clean(moveText);
     if (!anchorRaw) return "";
 
     const anchorSentenceCount = countShiftAnchorSentences(anchorRaw);
 
-    const r1 = clean(whenFirstText).toLowerCase();
-    const r2 = clean(whenSecondText).toLowerCase();
-
-    const exchangeTone =
-      /\b(?:exchange|exchanges|exchanging|redistribut(?:e|es|ed|ing|ion|ive)|redistribution|receive|receives|receiving|received|giving|giver|givers|surplus|deficit|equity|equitable|circulat(?:e|es|ed|ing|ion)|dispens(?:e|es|ed|ing|ation)|allocat(?:e|es|ed|ing|ion)|imbalance|imbalanced|imbalances|uneven|unevenly)\b|material flow|restore flow|give-and-take/i.test(
-        r1,
-      );
-    const collabTone =
-      /\b(?:collaboration|collaborative|collaborate|collaborators|collaboratively|contributing|contribution|contributors?|contributes|contributed|co[- ]?creat(?:e|es|ed|ing|ion)|teamwork)\b|shared structure|collective (?:effort|output|work|form|project)/i.test(
-        r2,
-      );
-
     const parts = [cleanSentence(anchorRaw)];
-
-    if (exchangeTone && collabTone) {
-      parts.push(
-        cleanSentence(
-          "The shift moves from exchange that has been uneven or conditional into something that requires clearer collaboration and shared structure.",
-        ),
+    if (anchorSentenceCount === 1) {
+      const shiftSentence = buildShiftInstructionSentence(
+        c1,
+        c2,
+        o1,
+        o2,
+        whenFirstText,
+        whenSecondText
       );
-    } else if (exchangeTone) {
-      parts.push(
-        cleanSentence(
-          "What is already moving leans on uneven exchange and lopsided give-and-take before the next push.",
-        ),
-      );
-    } else if (collabTone) {
-      parts.push(
-        cleanSentence(
-          "What presses now asks for clearer agreement about how effort lines up and how stakes are shared.",
-        ),
-      );
-    }
-
-    if (parts.length === 1 && anchorSentenceCount === 1) {
-      const ctx = buildShiftFallbackContextSentence(whenFirstText, whenSecondText);
-      if (clean(ctx)) {
-        parts.push(ctx);
+      if (clean(shiftSentence)) {
+        parts.push(cleanSentence(shiftSentence));
       }
     }
 
@@ -2545,7 +2575,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           "Do not try to stabilise this. The second influence is breaking something open that cannot be held together any longer. Let what is collapsing fall, rather than trying to preserve it.";
       }
 
-      const shiftParagraph = buildShiftParagraph(c1, c2, whenFirstText, whenSecondText, moveText);
+      const shiftParagraph = buildShiftParagraph(c1, c2, o1, o2, whenFirstText, whenSecondText, moveText);
       h += '<div class="tok2-prose tok2-shift-prose">';
       h += '<p class="tarot-tool__out-p">' + escHtml(shiftParagraph) + "</p>";
       h += "</div>";
