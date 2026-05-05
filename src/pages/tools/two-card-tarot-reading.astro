@@ -69,16 +69,24 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
           </div>
         </div>
         <div class="tarot-tool__actions">
-          <button class="tarot-tool__button" type="button" id="tok2-draw-btn">Draw Cards</button>
-          <button class="tarot-tool__button" type="button" id="tok2-read-btn">Read Your Cards</button>
-          <button class="tarot-tool__button" type="button" id="tok2-clear-btn">Clear</button>
+          <div class="tarot-tool__action-group">
+            <button class="tarot-tool__button" type="button" id="draw-cards-btn">Draw Cards</button>
+            <p class="tarot-tool__action-helper">Let the cards choose.</p>
+          </div>
+          <div class="tarot-tool__action-group">
+            <button class="tarot-tool__button" type="button" id="read-pair-btn">Read Your Cards</button>
+            <p class="tarot-tool__action-helper">Read the cards you selected at home.</p>
+          </div>
+          <div class="tarot-tool__action-group">
+            <button class="tarot-tool__button" type="button" id="clear-btn">Clear</button>
+            <p class="tarot-tool__action-helper">Start again.</p>
+            <div id="tok2-clear-confirm" class="tarot-tool__action-helper" style="display:none;">
+              Are you sure?
+              <button class="tarot-tool__button" type="button" id="tok2-clear-yes">Yes</button>
+              <button class="tarot-tool__button" type="button" id="tok2-clear-cancel">Cancel</button>
+            </div>
+          </div>
         </div>
-        <div id="tok2-clear-confirm" class="tarot-tool__actions-help" style="display:none;">
-          Are you sure?
-          <button class="tarot-tool__button" type="button" id="tok2-clear-yes">Yes</button>
-          <button class="tarot-tool__button" type="button" id="tok2-clear-cancel">Cancel</button>
-        </div>
-        <p class="tarot-tool__actions-help">Draw Cards<br/>Let the cards choose.<br/><br/>Read Your Cards<br/>Read the cards you selected at home.<br/><br/>Clear<br/>Start again.</p>
         <div id="output"></div>
         <div class="tarot-tool__output tarot-tool__combo-copy" id="tok2-output" aria-live="polite"></div>
       </div>
@@ -2374,7 +2382,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       h += "</section>";
     }
 
-    const signalTokens = [s1, s2, s3];
+    const signalTokens = [s1, s2];
     const card1ActiveKeywords = selectRelevantExtendedKeywords(f1.extendedKeywords || [], signalTokens, 4)
       .map(scrubExtendedKeywordPhrase)
       .filter((p) => clean(p));
@@ -2687,7 +2695,15 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     if (out instanceof HTMLElement) out.innerHTML = "";
   }
 
+  function readPair() {
+    renderReading();
+  }
+
   let showClearConfirm = false;
+  function showClearConfirmation() {
+    showClearConfirm = true;
+    syncClearConfirmUI();
+  }
   function syncClearConfirmUI() {
     const confirm = document.getElementById("tok2-clear-confirm");
     if (confirm instanceof HTMLElement) {
@@ -2697,9 +2713,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   const sel1 = document.getElementById("tok2-card-1");
   const sel2 = document.getElementById("tok2-card-2");
-  const drawBtn = document.getElementById("tok2-draw-btn");
-  const btn = document.getElementById("tok2-read-btn");
-  const clearBtn = document.getElementById("tok2-clear-btn");
+  const drawBtn = document.getElementById("draw-cards-btn");
+  const btn = document.getElementById("read-pair-btn");
+  const clearBtn = document.getElementById("clear-btn");
   const clearYesBtn = document.getElementById("tok2-clear-yes");
   const clearCancelBtn = document.getElementById("tok2-clear-cancel");
 
@@ -2713,7 +2729,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   if (btn instanceof HTMLButtonElement) {
-    btn.addEventListener("click", renderReading);
+    btn.addEventListener("click", readPair);
   }
   if (drawBtn instanceof HTMLButtonElement) {
     drawBtn.addEventListener("click", drawRandomPair);
@@ -2730,10 +2746,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
   });
   if (clearBtn instanceof HTMLButtonElement) {
-    clearBtn.addEventListener("click", () => {
-      showClearConfirm = true;
-      syncClearConfirmUI();
-    });
+    clearBtn.addEventListener("click", showClearConfirmation);
   }
   if (clearYesBtn instanceof HTMLButtonElement) {
     clearYesBtn.addEventListener("click", () => {
@@ -2939,6 +2952,39 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   .tarot-tool__button:hover {
     background: rgba(198, 161, 74, 0.14);
+  }
+
+  .tarot-tool__actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+    align-items: start;
+  }
+
+  .tarot-tool__action-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  .tarot-tool__action-group .tarot-tool__button {
+    width: 100%;
+  }
+
+  .tarot-tool__action-helper {
+    margin: 0.45rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 700px) {
+    .tarot-tool__actions {
+      grid-template-columns: 1fr;
+    }
   }
 
   .tarot-tool__output {
