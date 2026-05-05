@@ -1367,12 +1367,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   function buildMoveText(c1, c2, signalLine) {
     const o1 = readOrientReversed("tok2_orient_1") ? "reversed" : "upright";
     const o2 = readOrientReversed("tok2_orient_2") ? "reversed" : "upright";
-    const whenFirst1 = c1.combinationLogic && String(c1.combinationLogic.whenFirst || "").trim();
-    const whenSecond2 = c2.combinationLogic && String(c2.combinationLogic.whenSecond || "").trim();
-    const whenFirstText = extractOrientationText(whenFirst1, o1);
-    const whenSecondText = extractOrientationText(whenSecond2, o2);
-    const signal1 = getShiftAnchorSignal(c1, o1, whenFirstText);
-    const signal2 = getShiftAnchorSignal(c2, o2, whenSecondText);
+    const signal1 = getShiftAnchorSignal(c1, o1);
+    const signal2 = getShiftAnchorSignal(c2, o2);
 
     if (signal1 && signal2) {
       const shiftAnchorSentence =
@@ -1385,31 +1381,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     );
   }
 
-  function getShiftAnchorSignal(card, orientation, fallbackText) {
+  function getShiftAnchorSignal(card, orientation) {
     const signal = card?.shiftSignal?.[orientation];
+
     if (signal && typeof signal === "string") {
       return signal;
     }
 
-    const text = fallbackText || "";
-    const lower = text.toLowerCase().trim();
-
-    const signalMap = {
-      propels: "momentum",
-      suspends: "assessment",
-      ends: "ending",
-      opens: "beginning",
-      focuses: "focused intention",
-      separates: "imbalance",
-      stabilises: "steady effort",
-      contracts: "clarity after projection",
-      seals: "containment",
-    };
-
-    if (signalMap[lower]) return signalMap[lower];
-    if (/\b(field|charge|preceding|subsequent|operative|structural|adjacent cards|prior material|existing situation)\b/i.test(lower)) {
-      return "change";
-    }
     return "change";
   }
 
