@@ -2,10 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
 
-const threeCardInterpreterHref =
-  Object.keys(import.meta.glob("./three-card-tarot-spread-interpreter.astro")).length > 0
-    ? "/tools/three-card-tarot-spread-interpreter/"
-    : "";
+const tableBetweenThemHref = "/tools/table-between-them/";
+const repeatedCardMeaningHref = "/tools/repeated-card-meaning/";
 
 const title = "When Two Cards Meet | Two-Card Tarot Reading | Tides of Knowing";
 const description =
@@ -24,7 +22,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     <div
       id="tok2-tool"
       class="tarot-tool__tool-wrap"
-      data-three-card-href={threeCardInterpreterHref}
+      data-table-between-them-href={tableBetweenThemHref}
+      data-repeated-card-meaning-href={repeatedCardMeaningHref}
     >
       <div class="tarot-tool__panel" aria-labelledby="tok2-tool-heading">
         <h2 class="visually-hidden" id="tok2-tool-heading">Choose two cards</h2>
@@ -82,8 +81,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
             <div class="tarot-tool__helper">Start again.</div>
             <div id="tok2-clear-confirm" class="tarot-tool__helper" style="display:none;">
               Are you sure?
-              <button class="tarot-tool__button" type="button" id="tok2-clear-yes">Yes</button>
-              <button class="tarot-tool__button" type="button" id="tok2-clear-cancel">Cancel</button>
+              <button class="tarot-tool__button tarot-tool__button--small" type="button" id="tok2-clear-yes">Yes</button>
+              <button class="tarot-tool__button tarot-tool__button--small" type="button" id="tok2-clear-cancel">Cancel</button>
             </div>
           </div>
         </div>
@@ -2310,7 +2309,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += '<h3 class="tarot-tool__out-h3">The Two Cards</h3>';
     h +=
       '<p class="tok2-section-intro">' +
-      escHtml(`${c1.name} holds the room. ${c2.name} enters.`) +
+      escHtml(
+        `${c1.name} holds the room. ${c2.name} enters. Read this as a meeting between what is already present and what arrives to change the field.`,
+      ) +
       "</p>";
 
     h += '<div class="tarot-tool__combo-images">';
@@ -2429,7 +2430,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       h += '<h3 class="tarot-tool__out-h3">The Interaction</h3>';
       h += '<div class="tok2-prose tok2-interaction">';
       h +=
-        '<p class="tok2-section-intro">' +
+        '<p class="tok2-section-intro tarot-result__intro">' +
         escHtml("This is what the two cards produce together.") +
         "</p>";
       if (clean(openingProse)) {
@@ -2468,7 +2469,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       h += '<h3 class="tarot-tool__out-h3">Underneath the Surface</h3>';
       h += '<div class="tok2-prose">';
       h +=
-        '<p class="tok2-section-intro">' +
+        '<p class="tok2-section-intro tarot-result__intro">' +
         escHtml("This is the deeper pattern beneath the exchange.") +
         "</p>";
       h += '<p class="tarot-tool__out-p">' + escHtml(underneathSurfaceText) + "</p>";
@@ -2478,6 +2479,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h +=
       '<section class="tarot-tool__out-block tok2-read-block tok2-out-section"><h3 class="tarot-tool__out-h3">What Needs to Change</h3>';
     h += '<div id="shift-info" class="info-text hidden">This points to what needs to change next. It shows the practical move the cards are guiding you toward.</div>';
+    h +=
+      '<p class="tok2-section-intro tarot-result__intro">' +
+      escHtml(
+        "This points to what needs to change next. It shows the practical move the cards are guiding you toward.",
+      ) +
+      "</p>";
     {
       let moveText = null;
 
@@ -2586,9 +2593,13 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</div>";
 
     const toolWrap = document.getElementById("tok2-tool");
-    const threeCardHref =
-      toolWrap instanceof HTMLElement && typeof toolWrap.dataset.threeCardHref === "string"
-        ? toolWrap.dataset.threeCardHref.trim()
+    const tableBetweenThemHref =
+      toolWrap instanceof HTMLElement && typeof toolWrap.dataset.tableBetweenThemHref === "string"
+        ? toolWrap.dataset.tableBetweenThemHref.trim()
+        : "";
+    const repeatedCardMeaningHref =
+      toolWrap instanceof HTMLElement && typeof toolWrap.dataset.repeatedCardMeaningHref === "string"
+        ? toolWrap.dataset.repeatedCardMeaningHref.trim()
         : "";
 
     h += '<div class="tok2-tools-card">';
@@ -2601,40 +2612,39 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</div></div>";
     h += '<div class="tok2-tool">';
     h += '<div class="tok2-tool-line">';
-    if (threeCardHref) {
-      h +=
-        '<a href="' +
-        escAttr(threeCardHref) +
-        '" class="tok2-tool-title">The Table Between Them</a>';
-      h += '<span class="tok2-tool-meta">three-card interpreter</span>';
-    } else {
-      h += '<span class="tok2-tool-title">The Table Between Them</span>';
-      h += '<span class="tok2-tool-meta">coming next</span>';
-    }
+    h +=
+      '<a href="' +
+      escAttr(tableBetweenThemHref) +
+      '" class="tok2-tool-title">The Table Between Them</a>';
+    h += '<span class="tok2-tool-meta">COMING SOON</span>';
     h += "</div>";
-    if (threeCardHref) {
-      h +=
-        '<a href="' +
-        escAttr(threeCardHref) +
-        '" class="tok2-tool-subline">Open the three-card interpreter</a>';
-    }
+    h +=
+      '<a href="' +
+      escAttr(tableBetweenThemHref) +
+      '" class="tok2-tool-subline">Open The Table Between Them</a>';
     h += "</div>";
     h += '<div class="tok2-tool">';
     h += '<div class="tok2-tool-line">';
-    h += '<span class="tok2-tool-title">Repeated Card Meaning Tool</span>';
-    h += '<span class="tok2-tool-meta">coming next</span>';
+    h +=
+      '<a href="' +
+      escAttr(repeatedCardMeaningHref) +
+      '" class="tok2-tool-title">Repeated Card Meaning Tool</a>';
+    h += '<span class="tok2-tool-meta">COMING SOON</span>';
     h += "</div></div>";
     h += "</div></div>";
 
     const supportP1 =
-      "This tool was built by Leigh Spencer, writer, intuitive guide, and fourth-generation Matakite. Matakite is a Māori term for those who carry inherited sight: the capacity to perceive what the visible world doesn't show. Leigh brings that lineage alongside 40+ years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reach. This work sits at that intersection.";
+      "Created by Leigh Spencer, writer, intuitive guide, and fourth-generation Matakite. Matakite is a Māori term for those who carry inherited sight: the capacity to perceive what the visible world doesn't show. Leigh brings that lineage alongside 40+ years of tarot practice and 30 years as a professional journalist. The journalist disciplines the intuitive. The intuitive reads what the facts alone cannot reach. This work sits at that intersection.";
     const supportP2 = "If this reading gave you something useful, a coffee keeps the work going.";
 
     h += '<div class="support-block tok2-support">';
-    h += "<p>" + escHtml(formatBlockText(supportP1)) + "</p>";
     h +=
       '<a href="https://www.buymeacoffee.com/tidesofknowing" target="_blank" rel="noopener noreferrer" class="bmc-image-link"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" class="bmc-image-button" loading="lazy" decoding="async" /></a>';
-    h += "<p>" + escHtml(formatBlockText(supportP2)) + "</p>";
+    h += '<p class="tok2-support-caption">' + escHtml(formatBlockText(supportP2)) + "</p>";
+    h += '<div class="tarot-tool__creator-note">';
+    h += '<div class="tarot-tool__creator-eyebrow">Created by Leigh Spencer</div>';
+    h += '<p class="tarot-tool__creator-copy">' + escHtml(formatBlockText(supportP1)) + "</p>";
+    h += "</div>";
     h += "</div>";
 
     h += "</section>";
@@ -2984,6 +2994,28 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin-right: auto;
   }
 
+  #tok2-clear-confirm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.6rem;
+    margin-top: 0.35rem;
+  }
+
+  #tok2-clear-confirm .tarot-tool__button {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .tarot-tool__button--small {
+    padding: 0.28rem 0.55rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    min-width: 0;
+  }
+
   @media (max-width: 700px) {
     .tarot-tool__actions {
       grid-template-columns: 1fr;
@@ -3047,7 +3079,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .signal-block {
-    margin: 0 0 36px;
+    margin: 0 0 26px;
   }
 
   #tok2-output .signal-label {
@@ -3061,20 +3093,20 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .signal-words {
     font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 28px;
-    font-weight: 300;
+    font-size: 20px;
+    font-weight: 400;
     font-style: italic;
     color: var(--tok-ink, #1f2a2e);
-    line-height: 1.2;
-    margin: 0 0 16px;
+    line-height: 1.25;
+    margin: 0 0 10px;
   }
 
   #tok2-output .signal-note {
-    font-size: 14px;
-    color: var(--tok-muted, #5a6a6e);
-    line-height: 1.65;
+    font-size: 1rem;
+    color: var(--tok-ink, #1f2a2e);
+    line-height: 1.6;
     border-left: 2px solid var(--tok-gold, #c6a14a);
-    padding-left: 14px;
+    padding-left: 12px;
     margin: 0;
   }
 
@@ -3086,8 +3118,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-family: var(--font-nav, system-ui, sans-serif);
   }
 
+  #tok2-output .tarot-result__intro {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--tok-muted, #5a6a6e);
+    font-weight: 400;
+    font-family: var(--font-nav, system-ui, sans-serif);
+  }
+
   #tok2-output .signal-block .tok2-section-intro {
-    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.45;
+    max-width: 48ch;
+    margin: 0 0 8px;
   }
 
   #tok2-output .tok2-prose .tarot-tool__out-p--note {
@@ -3344,31 +3389,59 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   #tok2-output .support-block.tok2-support,
   #tok2-output .tok2-support {
     margin-top: 36px;
-    padding: 28px 22px 8px;
+    padding: 22px 22px 10px;
     border-top: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
-    text-align: left;
+    text-align: center;
     max-width: none;
     margin-left: 0;
     margin-right: 0;
   }
 
-  #tok2-output .tok2-support p {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
-    font-size: 15px;
-    color: var(--tok-muted, #5a6a6e);
-    line-height: 1.68;
-    margin-bottom: 18px;
-  }
-
   #tok2-output .bmc-image-link {
     display: inline-block;
-    margin: 8px 0 12px;
+    margin: 2px 0 10px;
   }
 
   #tok2-output .bmc-image-button {
     height: 60px !important;
     width: 217px !important;
     display: block;
+    max-width: 100%;
+  }
+
+  #tok2-output .tok2-support-caption {
+    margin: 0 auto;
+    max-width: 38ch;
+    font-family: var(--font-body, Georgia, serif);
+    font-size: 0.94rem;
+    color: var(--tok-muted, #5a6a6e);
+    line-height: 1.58;
+  }
+
+  #tok2-output .tarot-tool__creator-note {
+    margin: 16px auto 0;
+    max-width: 56ch;
+    text-align: left;
+    border-top: 1px solid rgba(198, 161, 74, 0.35);
+    padding-top: 12px;
+  }
+
+  #tok2-output .tarot-tool__creator-eyebrow {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-nav, system-ui, sans-serif);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--tok-gold, #c6a14a);
+  }
+
+  #tok2-output .tarot-tool__creator-copy {
+    margin: 0;
+    font-family: var(--font-body, Georgia, serif);
+    font-size: 0.91rem;
+    color: var(--mountain-water, #0d324d);
+    line-height: 1.63;
   }
 
   @media (max-width: 520px) {
@@ -3377,13 +3450,27 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     }
 
     #tok2-output .signal-words {
-      font-size: 24px;
+      font-size: 18px;
     }
 
     #tok2-output .tok2-shift-label,
     #tok2-output .tok2-shift-value {
       flex: none;
       max-width: 100%;
+    }
+
+    #tok2-output .support-block.tok2-support,
+    #tok2-output .tok2-support {
+      padding: 20px 12px 10px;
+    }
+
+    #tok2-output .bmc-image-button {
+      width: min(217px, 100%) !important;
+      height: auto !important;
+    }
+
+    #tok2-output .tarot-tool__creator-note {
+      margin-top: 14px;
     }
   }
 
