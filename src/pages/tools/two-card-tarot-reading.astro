@@ -2788,7 +2788,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     const rendered = renderReading();
     if (rendered) {
       collapseSelectionPanel();
-      requestAnimationFrame(() => scrollToTok2ReadingStart());
+      setTimeout(() => {
+        scrollToReadingStart();
+      }, 80);
     }
   }
 
@@ -2841,13 +2843,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     selectionPanelCollapsed.hidden = false;
   }
 
-  function scrollToTok2ReadingStart() {
-    const target =
-      document.getElementById("tok2-selection-panel-collapsed") ||
-      document.getElementById("tok2-output");
+  function scrollToReadingStart() {
+    const target = document.getElementById("tok2-selection-panel-collapsed");
     if (!(target instanceof HTMLElement)) return;
 
-    const headerOffset = 90;
+    const headerOffset = 100;
     const y = target.getBoundingClientRect().top + window.scrollY - headerOffset;
 
     window.scrollTo({
