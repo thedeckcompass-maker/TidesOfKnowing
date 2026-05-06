@@ -230,18 +230,11 @@ a:focus-visible {
   margin: 0.75rem 0 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 26px;
-  line-height: 1.45;
+  font-size: 1em;
+  line-height: inherit;
   text-align: center;
   color: var(--ink);
   opacity: 0.6;
-}
-
-@media (max-width: 767px) {
-  .article-prose figure.article-section-image figcaption,
-  .article-prose figure.tok-inline-figure figcaption {
-    font-size: 20px;
-  }
 }
 
 /* Lone markdown image in a paragraph — same as section image */
@@ -309,17 +302,11 @@ a:focus-visible {
   margin: 0.75rem 0 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 26px;
-  line-height: 1.45;
+  font-size: 1em;
+  line-height: inherit;
   text-align: center;
   color: var(--ink);
   opacity: 0.6;
-}
-
-@media (max-width: 767px) {
-  .article-prose .article-wide-bleed figcaption {
-    font-size: 20px;
-  }
 }
 
 .article-prose a {
