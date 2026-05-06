@@ -4,9 +4,11 @@ import BaseLayout from "./BaseLayout.astro";
 import ArticleHeader from "../components/ArticleHeader.astro";
 import ShareButtons from "../components/share/ShareButtons.astro";
 import ShareSidebar from "../components/share/ShareSidebar.astro";
+import ArticleAudio from "../components/ArticleAudio.astro";
 import ArticleSeries from "../components/ArticleSeries.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { getArticleAudio } from "../lib/articleAudio";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { siteBase } from "../lib/site";
 import { slugify } from "../utils/slugify";
@@ -71,6 +73,11 @@ const jsonLdCombined = [
 ];
 
 const canonicalUrl = ogUrl;
+
+const articleAudio = getArticleAudio({
+  slug: d.slug,
+  frontmatterAudio: d.audio,
+});
 ---
 
 <BaseLayout
@@ -105,6 +112,18 @@ const canonicalUrl = ogUrl;
         />
 
         <article class="article tok-articles-article">
+          {
+            articleAudio ? (
+              <div class="tok-articles-audio-wrap">
+                <ArticleAudio
+                  idPrefix={d.slug}
+                  src={articleAudio.src}
+                  duration={articleAudio.duration}
+                  transcript={articleAudio.transcript}
+                />
+              </div>
+            ) : null
+          }
           <div class="article-prose article__body tok-articles-body">
             <slot />
           </div>
@@ -148,5 +167,11 @@ const canonicalUrl = ogUrl;
     max-width: 65ch;
     margin: 0 auto;
     padding: 0 1rem 2rem;
+  }
+
+  .tok-articles-audio-wrap {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 </style>

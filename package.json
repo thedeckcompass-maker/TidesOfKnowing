@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "prebuild": "node scripts/generate-article-audio-manifest.mjs",
+    "predev": "node scripts/generate-article-audio-manifest.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

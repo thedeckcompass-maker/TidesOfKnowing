@@ -37,4 +37,15 @@ export const articlesSchema = z.object({
   readingTime: z.number().optional(),
   primaryKeyword: z.string().optional(),
   secondaryKeywords: z.array(z.string()).optional(),
+  /**
+   * Optional author-read audio. Omit entirely when no recording exists.
+   * `src` is optional if the default file exists at `public/audio/articles/[slug]/article.mp3`.
+   */
+  audio: z
+    .object({
+      src: z.string().optional(),
+      duration: z.string().optional(),
+      transcript: z.string().optional(),
+    })
+    .optional(),
 });
