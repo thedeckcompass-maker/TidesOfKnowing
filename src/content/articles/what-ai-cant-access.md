@@ -27,6 +27,11 @@ secondaryKeywords:
 
 There is a small piece of driftwood on my desk. It fits in the palm of my hand. I picked it up on a beach, not because I was looking for anything, not because it seemed significant in any way I could have articulated at the time. It caught my eye. That was enough.
 
+<figure class="article-section-image">
+  <img src="/images/articles/what-ai-cant-access/zoomorphic-driftwood.png" alt="Small piece of salt-bleached driftwood held between thumb and finger; the grain and a dark knot suggest the face of a small canine, snout pointed left." />
+  <figcaption>The desk piece: pareidolia (seeing faces or patterns in something ordinary, like wood grain) before it is named.</figcaption>
+</figure>
+
 It sat on my desk for weeks. During that time, without deliberately looking, without sitting down to examine it, I began to notice things in it. Animal faces, mostly. Eventually I counted twelve distinct ones. A human finger. Other forms I haven't named yet. The wood didn't change. What changed was what I was able to perceive in it, over time, at no particular pace, on no particular schedule, without any intention to extract meaning from it.
 
 Then one day I was in the middle of a reading for a client. Something in the session drew my eye to the driftwood sitting on the corner of my desk. I picked it up. One of the animals I had noticed weeks earlier was suddenly, specifically relevant: to what the spread was showing, to the dynamic the client was navigating, and to the particular quality of support that the moment called for.
