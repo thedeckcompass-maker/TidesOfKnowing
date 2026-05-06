@@ -2975,22 +2975,22 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   .tarot-tool__title {
     margin: 0 0 0.35rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.15;
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
   }
 
   .tarot-tool__subtitle {
     margin: 0 0 0.85rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1.1rem, 2.5vw, 1.35rem);
     line-height: 1.3;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .tarot-tool__h2-intent {
@@ -2999,24 +2999,18 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: 1.02rem;
     line-height: 1.6;
     font-weight: 500;
-    color: var(--mountain-water);
+    color: var(--tok-text-light-soft);
   }
 
   .tarot-tool__intro {
     margin: 0 0 0.85rem;
     font-size: 1.06rem;
     line-height: 1.72;
+    color: var(--tok-text-light-soft);
   }
 
   #tok2-tool {
     scroll-margin-top: 5.5rem;
-    --tok-cream: #f3f0ea;
-    --tok-panel: #fbfaf7;
-    --tok-ink: #1f2a2e;
-    --tok-muted: #5a6a6e;
-    --tok-gold: #c6a14a;
-    --tok-line-gold: rgba(198, 161, 74, 0.25);
-    --tok-line-soft: rgba(31, 42, 46, 0.1);
   }
 
   .tarot-tool__tool-wrap {
@@ -3028,9 +3022,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     gap: 1rem;
     margin-bottom: 0;
     padding: clamp(1rem, 3vw, 1.35rem);
-    border: 1px solid rgba(13, 50, 77, 0.22);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 22%, transparent);
     border-radius: 0.2rem;
-    background: rgba(255, 255, 255, 0.45);
+    background: color-mix(in srgb, var(--tok-surface-reading) 45%, transparent);
+    color: var(--tok-text-dark);
   }
 
   .tarot-tool__selection-panel--collapsed {
@@ -3038,9 +3033,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
-    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
     border-radius: 0.3rem;
-    background: rgba(243, 240, 234, 0.66);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 66%, var(--tok-surface-reading));
     padding: 0.65rem 0.75rem;
   }
 
@@ -3049,18 +3044,18 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-family: var(--font-body);
     font-size: 0.95rem;
     line-height: 1.45;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .tarot-tool__change-cards {
     padding: 0.44rem 0.62rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--mountain-water);
-    border: 1px solid rgba(13, 50, 77, 0.28);
+    color: var(--tok-water);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
     border-radius: 2px;
     background: transparent;
     cursor: pointer;
@@ -3068,11 +3063,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   .tarot-tool__change-cards:hover {
-    background: rgba(13, 50, 77, 0.06);
+    background: color-mix(in srgb, var(--tok-water) 6%, transparent);
   }
 
   .tarot-tool__change-cards:focus-visible {
-    outline: 2px solid var(--mountain-water);
+    outline: 2px solid var(--tok-water);
     outline-offset: 2px;
   }
 
@@ -3095,21 +3090,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   .tarot-tool__label {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .tarot-tool__select {
     width: 100%;
     max-width: 100%;
-    border: 1px solid rgba(13, 50, 77, 0.28);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
     border-radius: 0.2rem;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
     font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.5;
@@ -3117,12 +3112,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   .tarot-tool__select optgroup {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.7rem;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(13, 50, 77, 0.72);
+    color: color-mix(in srgb, var(--tok-water) 72%, var(--tok-surface-reading));
   }
 
   .tarot-tool__select optgroup:not(:first-of-type) {
@@ -3132,7 +3127,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   .tarot-tool__select option {
     font-family: var(--font-body);
     text-transform: none;
-    color: var(--ink);
+    color: var(--tok-text-dark);
   }
 
   .tarot-tool__orient {
@@ -3144,12 +3139,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   .tarot-tool__orient-legend {
     padding: 0;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-water);
     margin: 0 0 0.35rem;
   }
 
@@ -3166,59 +3161,59 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     gap: 0.35rem;
     font-family: var(--font-body);
     font-size: 0.92rem;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     cursor: pointer;
   }
 
   .tarot-tool__orient-choice input {
-    accent-color: var(--mountain-water);
+    accent-color: var(--tok-water);
   }
 
   .tarot-tool__button {
     justify-self: start;
     padding: 0.8rem 1.6rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--mountain-water);
-    border: 2px solid var(--gold);
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
     border-radius: 2px;
     background: transparent;
     cursor: pointer;
   }
 
   .tarot-tool__button:hover {
-    background: rgba(198, 161, 74, 0.14);
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
   }
 
   #read-pair-btn {
-    color: var(--paper);
-    background: var(--mountain-water);
-    border-color: var(--mountain-water);
+    color: var(--tok-text-light-strong);
+    background: var(--tok-water);
+    border-color: var(--tok-water);
   }
 
   #read-pair-btn:hover {
-    background: #174565;
-    border-color: #174565;
+    background: var(--tok-surface-panel);
+    border-color: var(--tok-surface-panel);
   }
 
   #draw-cards-btn {
-    color: var(--mountain-water);
+    color: var(--tok-water);
     background: transparent;
-    border-color: var(--gold);
+    border-color: var(--tok-gold);
   }
 
   #clear-btn {
-    color: rgba(13, 50, 77, 0.72);
-    border-color: rgba(13, 50, 77, 0.26);
+    color: color-mix(in srgb, var(--tok-water) 72%, var(--tok-surface-reading));
+    border-color: color-mix(in srgb, var(--tok-water) 26%, transparent);
     background: transparent;
   }
 
   #clear-btn:hover {
-    background: rgba(13, 50, 77, 0.06);
-    border-color: rgba(13, 50, 77, 0.34);
+    background: color-mix(in srgb, var(--tok-water) 6%, transparent);
+    border-color: color-mix(in srgb, var(--tok-water) 34%, transparent);
   }
 
   .tarot-tool__actions {
@@ -3256,7 +3251,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin-top: 0.28rem;
     font-size: 0.73rem;
     line-height: 1.35;
-    color: rgba(13, 50, 77, 0.62);
+    color: color-mix(in srgb, var(--tok-water) 62%, var(--tok-surface-reading));
     opacity: 1;
   }
 
@@ -3274,7 +3269,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   .tarot-tool__output {
     margin: 0;
     padding: 0.75rem 0 0;
-    border-top: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.28));
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
     font-size: 1.02rem;
     line-height: 1.75;
     white-space: normal;
@@ -3291,11 +3286,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   .tarot-tool__out-h3 {
     margin: 0 0 0.5rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.12rem;
     font-weight: 600;
     font-style: normal;
-    color: var(--mountain-water);
+    color: var(--tok-water);
     line-height: 1.3;
   }
 
@@ -3307,7 +3302,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   .tarot-tool__out-p--signal {
     font-style: italic;
-    color: rgba(13, 50, 77, 0.92);
+    color: color-mix(in srgb, var(--tok-water) 92%, var(--tok-surface-reading));
   }
 
   .tarot-tool__out-p:last-child {
@@ -3320,11 +3315,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     box-sizing: border-box;
     max-width: 100%;
     overflow-x: hidden;
-    background: var(--tok-panel, #fbfaf7);
-    border: 1px solid rgba(198, 161, 74, 0.28);
+    background: var(--tok-surface-reading);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
     border-radius: 10px;
     padding: 28px;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
   }
 
   #tok2-output .signal-block {
@@ -3336,16 +3331,16 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     margin-bottom: 10px;
   }
 
   #tok2-output .signal-words {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.32rem;
     font-weight: 500;
     font-style: italic;
-    color: var(--mountain-water, #0d324d);
+    color: var(--tok-water);
     line-height: 1.35;
     text-align: center;
     margin: 0.55rem 0 1.15rem;
@@ -3353,9 +3348,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .signal-note {
     font-size: 1rem;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
     line-height: 1.6;
-    border-left: 2px solid var(--tok-gold, #c6a14a);
+    border-left: 2px solid var(--tok-gold);
     padding-left: 12px;
     margin: 0;
   }
@@ -3364,14 +3359,14 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin: 0 0 12px;
     font-size: 14px;
     line-height: 1.55;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
     font-weight: 400;
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
   }
 
   #tok2-output .tok2-prose .tarot-tool__out-p--note {
     font-size: 14px;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
     line-height: 1.65;
     margin-top: 0.5rem;
   }
@@ -3379,9 +3374,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   #tok2-output .tok2-tools-card {
     margin: 32px 0 28px;
     padding: 18px 20px;
-    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
     border-radius: 10px;
-    background: var(--tok-cream, #f3f0ea);
+    background: var(--tok-surface-reading-soft);
   }
 
   #tok2-output .tok2-tools-card .tools-eyebrow {
@@ -3389,7 +3384,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     font-weight: 600;
   }
 
@@ -3407,12 +3402,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-tool-title {
     font-weight: 600;
-    color: var(--mountain-water, #0d324d);
+    color: var(--tok-water);
     text-decoration: none;
   }
 
   #tok2-output a.tok2-tool-title:hover {
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
@@ -3421,17 +3416,17 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
     font-weight: 600;
   }
 
   #tok2-output .tok2-tool-meta--current {
-    color: var(--mountain-water, #0d324d);
+    color: var(--tok-water);
     opacity: 0.95;
   }
 
   #tok2-output .tok2-tool-meta--soon {
-    color: rgba(13, 50, 77, 0.48);
+    color: color-mix(in srgb, var(--tok-water) 48%, var(--tok-surface-reading));
     opacity: 0.82;
     font-weight: 500;
   }
@@ -3440,12 +3435,12 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     display: block;
     margin-top: 4px;
     font-size: 14px;
-    color: var(--mountain-water, #0d324d);
+    color: var(--tok-water);
     text-decoration: none;
   }
 
   #tok2-output a.tok2-tool-subline:hover {
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
@@ -3458,7 +3453,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   #tok2-output .tarot-result__movement {
     margin-top: 1.7rem;
     padding-top: 1.35rem;
-    border-top: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.12));
+    border-top: 1px solid color-mix(in srgb, var(--tok-text-dark) 12%, transparent);
   }
 
   #tok2-output .tarot-result__movement:first-child {
@@ -3469,21 +3464,21 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tarot-result__movement-heading {
     margin: 0 0 0.4rem;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.34rem;
     font-weight: 500;
     letter-spacing: 0.015em;
     line-height: 1.2;
-    color: rgba(31, 42, 46, 0.92);
+    color: color-mix(in srgb, var(--tok-text-dark) 92%, var(--tok-surface-reading));
   }
 
   #tok2-output .tarot-result__movement-intro {
     margin: 0 0 1rem;
     max-width: 64ch;
-    font-family: var(--font-body, Georgia, serif);
+    font-family: var(--font-body);
     font-size: 0.97rem;
     line-height: 1.58;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
   }
 
   #tok2-output .tarot-result__movement .signal-block,
@@ -3504,7 +3499,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-out-section {
     padding-bottom: 0.25rem;
-    border-bottom: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-text-dark) 10%, transparent);
     margin-bottom: 0.25rem;
   }
 
@@ -3520,22 +3515,22 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tarot-tool__out-h3 {
     margin: 0.7rem 0 0.42rem;
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     line-height: 1.35;
     font-style: normal;
     opacity: 0.95;
   }
 
   #tok2-output .tok2-prose {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.08rem;
     line-height: 1.72;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
     text-align: left;
   }
 
@@ -3548,7 +3543,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-prose .tarot-tool__out-p--signal {
     font-style: italic;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
   }
 
   #tok2-output .tok2-inplay-block {
@@ -3561,11 +3556,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-inplay-label {
     margin: 0 0 0.45rem;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.02rem;
     font-weight: 600;
     line-height: 1.35;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
   }
 
   #tok2-output .tok2-extended-kw-list {
@@ -3576,18 +3571,18 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
 
   #tok2-output .tok2-extended-kw-list li {
     margin: 0.25rem 0;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.02rem;
     line-height: 1.55;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
   }
 
   #tok2-output .tok2-shift-stack {
     margin-top: 0.5rem;
-    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
     border-radius: 10px;
     overflow: hidden;
-    background: var(--tok-cream, #f3f0ea);
+    background: var(--tok-surface-reading-soft);
   }
 
   #tok2-output .tok2-shift-row {
@@ -3596,7 +3591,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     align-items: stretch;
     gap: 0.25rem;
     padding: 14px 18px;
-    border-top: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
+    border-top: 1px solid color-mix(in srgb, var(--tok-text-dark) 10%, transparent);
   }
 
   #tok2-output .tok2-shift-row:first-child {
@@ -3604,7 +3599,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .tok2-shift-row--move {
-    background: rgba(255, 255, 255, 0.55);
+    background: color-mix(in srgb, var(--tok-text-light-strong) 55%, transparent);
     font-weight: 500;
   }
 
@@ -3613,48 +3608,48 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin-bottom: 6px;
     flex: none;
     max-width: 100%;
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
   }
 
   #tok2-output .tok2-shift-value {
     display: block;
     flex: none;
     max-width: 100%;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.05rem;
     line-height: 1.65;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
     text-align: left;
   }
 
   #tok2-output .tok2-reflection-wrap .tok2-reflection-block {
     margin-top: 0.7rem;
     padding: 1.2rem 1.3rem 1.1rem;
-    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
     border-radius: 10px;
-    background: rgba(243, 240, 234, 0.82);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 82%, var(--tok-surface-reading));
   }
 
   #tok2-output .tok2-reflection-lead {
     margin: 0 0 0.5rem;
     font-size: 0.95rem;
     line-height: 1.55;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
     text-align: left;
   }
 
   #tok2-output .tok2-reflection-question {
     margin: 0;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.3rem;
     line-height: 1.45;
     font-style: italic;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
     text-align: left;
   }
 
@@ -3662,22 +3657,22 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin: 0.85rem 0 0;
     font-size: 0.82rem;
     line-height: 1.5;
-    color: rgba(90, 106, 110, 0.82);
+    color: color-mix(in srgb, var(--tok-text-muted) 82%, var(--tok-surface-reading));
     text-align: center;
   }
 
   #tok2-output .tok2-deeper-invite {
     margin-top: 1.2rem;
     padding-top: 1.1rem;
-    border-top: 1px solid var(--tok-line-soft, rgba(31, 42, 46, 0.1));
+    border-top: 1px solid color-mix(in srgb, var(--tok-text-dark) 10%, transparent);
   }
 
   #tok2-output .tok2-deeper-invite p {
     margin: 0;
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.05rem;
     line-height: 1.72;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
     text-align: left;
   }
 
@@ -3685,7 +3680,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   #tok2-output .tok2-support {
     margin-top: 36px;
     padding: 22px 22px 10px;
-    border-top: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
     text-align: center;
     max-width: none;
     margin-left: 0;
@@ -3707,9 +3702,9 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   #tok2-output .tok2-support-caption {
     margin: 0 auto;
     max-width: 38ch;
-    font-family: var(--font-body, Georgia, serif);
+    font-family: var(--font-body);
     font-size: 0.94rem;
-    color: var(--tok-muted, #5a6a6e);
+    color: var(--tok-text-muted);
     line-height: 1.58;
   }
 
@@ -3717,25 +3712,25 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin: 22px auto 0;
     max-width: 56ch;
     text-align: left;
-    border-top: 1px solid rgba(198, 161, 74, 0.42);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
     padding-top: 16px;
   }
 
   #tok2-output .tarot-tool__creator-eyebrow {
     margin: 0 0 0.45rem;
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
   }
 
   #tok2-output .tarot-tool__creator-copy {
     margin: 0;
-    font-family: var(--font-body, Georgia, serif);
+    font-family: var(--font-body);
     font-size: 0.91rem;
-    color: var(--mountain-water, #0d324d);
+    color: var(--tok-water);
     line-height: 1.63;
   }
 
@@ -3820,8 +3815,8 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     align-self: stretch;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid var(--tok-line-gold, rgba(198, 161, 74, 0.25));
-    background: var(--tok-cream, #f3f0ea);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
+    background: var(--tok-surface-reading-soft);
   }
 
   #tok2-output .card-caption {
@@ -3832,11 +3827,11 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .card-caption .caption-label {
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--tok-gold, #c6a14a);
+    color: var(--tok-gold);
     font-weight: 600;
   }
 
@@ -3845,18 +3840,18 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-output .card-caption .caption-card {
-    font-family: "Cormorant Garamond", var(--font-display, Georgia, serif);
+    font-family: var(--font-accent);
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--tok-ink, #1f2a2e);
+    color: var(--tok-text-dark);
   }
 
   #tok2-output .card-caption .caption-orient {
-    font-family: var(--font-nav, system-ui, sans-serif);
+    font-family: var(--font-body);
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: capitalize;
-    color: rgba(31, 42, 46, 0.72);
+    color: color-mix(in srgb, var(--tok-text-dark) 72%, var(--tok-surface-reading));
   }
 
   #tok2-output .tarot-tool__card-img {
@@ -3889,10 +3884,10 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     text-align: center;
     font-size: 0.88rem;
     line-height: 1.45;
-    color: rgba(13, 50, 77, 0.65);
-    border: 1px dashed rgba(13, 50, 77, 0.22);
+    color: color-mix(in srgb, var(--tok-water) 65%, var(--tok-surface-reading));
+    border: 1px dashed color-mix(in srgb, var(--tok-water) 22%, transparent);
     border-radius: 0.2rem;
-    background: rgba(13, 50, 77, 0.04);
+    background: color-mix(in srgb, var(--tok-water) 4%, transparent);
   }
 
   .tok2-debug-tools {

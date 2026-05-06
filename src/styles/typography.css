@@ -1,0 +1,20 @@
+/* TOK Brand System v1.4 — typography (tokens only) */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.tok-type-heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+.tok-type-body {
+  font-family: var(--font-body);
+}
+
+.tok-type-accent {
+  font-family: var(--font-accent);
+}

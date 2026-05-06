@@ -205,6 +205,7 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   .compass {
     padding: clamp(2rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
     max-width: 62rem;
+    color: var(--tok-text-light);
   }
 
   .compass__hero {
@@ -222,10 +223,12 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   }
 
   .compass__panel {
-    background: linear-gradient(180deg, var(--paper) 0%, rgba(216, 219, 241, 0.24) 100%);
-    border: 1px solid rgba(198, 161, 74, 0.35);
+    background: var(--tok-surface-panel);
+    border: 1px solid var(--tok-border-system);
     border-radius: 0.25rem;
     padding: clamp(1rem, 3vw, 1.5rem);
+    color: var(--tok-text-light);
+    box-shadow: var(--shadow-sys-sm);
   }
 
   .compass__hero-figure {
@@ -238,37 +241,37 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     max-width: 600px;
     height: auto;
     border-radius: 0.2rem;
-    border: 1px solid rgba(198, 161, 74, 0.4);
-    box-shadow: 0 12px 32px rgba(13, 50, 77, 0.12);
+    border: 1px solid var(--tok-border-system);
+    box-shadow: var(--shadow-sys-md);
   }
 
   .compass__eyebrow {
     margin: 0 0 0.5rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.64rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .compass__h1 {
     margin: 0 0 0.9rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.15;
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
   }
 
   .compass__h2 {
     margin: 0 0 0.85rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(1.35rem, 2.8vw, 1.65rem);
     font-weight: 600;
     font-style: normal;
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
     line-height: 1.25;
   }
 
@@ -280,6 +283,11 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     margin: 0 0 0.9rem;
     font-size: 1.06rem;
     line-height: 1.72;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass__panel .compass__p {
+    color: var(--tok-text-light-soft);
   }
 
   .compass__pillars {
@@ -294,15 +302,15 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     align-items: center;
     justify-content: center;
     padding: 0.42rem 0.68rem;
-    border: 1px solid rgba(116, 179, 206, 0.45);
+    border: 1px solid color-mix(in srgb, var(--tok-teal-light) 45%, transparent);
     border-radius: 999px;
-    background: rgba(116, 179, 206, 0.1);
-    font-family: var(--font-nav);
+    background: color-mix(in srgb, var(--tok-teal) 10%, transparent);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
   }
 
   .compass__list {
@@ -310,18 +318,32 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     padding-left: 1.35rem;
     font-size: 1.06rem;
     line-height: 1.7;
+    color: var(--tok-text-light-soft);
   }
 
   .compass__list li {
     margin-bottom: 0.4rem;
   }
 
+  .compass__section--soft .compass__list,
+  .compass__section--warm .compass__list {
+    color: var(--tok-text-dark);
+  }
+
   .compass__list--card {
     margin-bottom: 0;
     padding: 0.85rem 1.1rem 0.45rem 2.1rem;
-    background: var(--shore);
-    border: 1px solid rgba(198, 161, 74, 0.3);
+    background: var(--tok-surface-panel);
+    border: 1px solid var(--tok-border-system);
     border-radius: 0.25rem;
+    color: var(--tok-text-light);
+  }
+
+  .compass__section--soft .compass__list--card,
+  .compass__section--warm .compass__list--card {
+    background: var(--tok-surface-reading-soft);
+    border: 1px solid var(--tok-border-light);
+    color: var(--tok-text-dark);
   }
 
   .compass__process-intro {
@@ -337,7 +359,7 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__faq-item {
     padding: 1rem 0;
-    border-top: 1px solid rgba(116, 179, 206, 0.28);
+    border-top: 1px solid color-mix(in srgb, var(--tok-teal-light) 28%, transparent);
   }
 
   .compass__faq-item:first-of-type {
@@ -347,28 +369,29 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__faq-q {
     margin: 0 0 0.45rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.05rem;
     font-weight: 600;
     line-height: 1.35;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .compass__faq-a {
     margin: 0;
     font-size: 1.06rem;
     line-height: 1.72;
+    color: var(--tok-text-dark);
   }
 
   .compass__faq-link {
-    color: var(--mountain-water);
+    color: var(--tok-water);
     font-weight: 600;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.15em;
   }
 
   .compass__faq-link:hover {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .compass__section {
@@ -377,48 +400,61 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   }
 
   .compass__section--soft {
-    background: linear-gradient(180deg, rgba(216, 219, 241, 0.22) 0%, rgba(243, 240, 234, 0.9) 100%);
-    border: 1px solid rgba(116, 179, 206, 0.25);
+    background: var(--tok-surface-reading-soft);
+    border: 1px solid var(--tok-border-light);
+    color: var(--tok-text-dark);
+  }
+
+  .compass__section--soft .compass__h2,
+  .compass__section--soft .compass__p,
+  .compass__section--soft .compass__list {
+    color: var(--tok-text-dark);
   }
 
   .compass__section--warm {
-    background: linear-gradient(180deg, rgba(198, 161, 74, 0.12) 0%, rgba(243, 240, 234, 0.95) 100%);
-    border: 1px solid rgba(198, 161, 74, 0.3);
+    background: color-mix(in srgb, var(--tok-gold) 8%, var(--tok-surface-reading));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    color: var(--tok-text-dark);
+  }
+
+  .compass__section--warm .compass__h2,
+  .compass__section--warm .compass__p {
+    color: var(--tok-text-dark);
   }
 
   .compass__section--final {
-    background: var(--near-black);
-    border: 1px solid rgba(198, 161, 74, 0.45);
+    background: var(--tok-deep-ocean);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
   }
 
   .compass__section--final .compass__h2,
   .compass__section--final .compass__p,
   .compass__section--final .compass__list {
-    color: var(--paper);
+    color: var(--tok-text-light);
   }
 
   .compass__section--final .compass__eyebrow {
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .compass__section--final .compass__cta {
-    color: var(--paper);
-    border-color: var(--gold);
+    color: var(--tok-text-light);
+    border-color: var(--tok-gold);
   }
 
   .compass__sub-link {
     margin-top: 0.25rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--mountain-water);
+    color: var(--tok-teal-light);
   }
 
   .compass__sub-link:hover {
-    color: var(--sky);
+    color: var(--tok-text-light-strong);
   }
 
   .compass__cta {
@@ -427,14 +463,14 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     justify-content: center;
     margin-top: 1.25rem;
     padding: 0.85rem 1.75rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--mountain-water);
-    border: 2px solid var(--gold);
+    color: var(--tok-text-light);
+    border: 2px solid var(--tok-gold);
     border-radius: 2px;
     background: transparent;
   }
@@ -448,18 +484,28 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
   }
 
   .compass__cta:hover {
-    background: rgba(198, 161, 74, 0.14);
-    color: var(--mountain-water);
-    border-color: var(--gold);
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
+    color: var(--tok-text-light-strong);
+    border-color: var(--tok-gold);
+  }
+
+  .compass__section--soft .compass__cta,
+  .compass__section--warm .compass__cta {
+    color: var(--tok-water);
+  }
+
+  .compass__section--soft .compass__cta:hover,
+  .compass__section--warm .compass__cta:hover {
+    color: var(--tok-water);
   }
 
   .compass__section--final .compass__cta:hover {
-    color: var(--paper);
-    background: rgba(198, 161, 74, 0.2);
+    color: var(--tok-text-light-strong);
+    background: color-mix(in srgb, var(--tok-gold) 20%, transparent);
   }
 
   .compass__cta:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--tok-gold);
     outline-offset: 4px;
   }
 

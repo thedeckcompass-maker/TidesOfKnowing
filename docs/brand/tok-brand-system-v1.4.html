@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tides of Knowing — Brand System v1.4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Core identity ── */
+  --tok-deep-ocean:          #0B1F3A;
+  --tok-gold:                #C6A85A;
+  --tok-gold-light:          #D9BC7A;
+  --tok-fire:                #E3B23C;
+
+  /* ── Surface A: Editorial / Reading ── */
+  --tok-surface-reading:     #F2EFE9;
+  --tok-surface-reading-soft:#E8E3DB;
+  --tok-text-dark:           #1A1A1A;
+  --tok-text-muted:          #4B5563;
+  --tok-border-light:        #CEC9C1;
+
+  /* ── Surface B: System / Blue ── */
+  --tok-surface-system:      #0B1F3A;
+  --tok-surface-panel:       #17324F;
+  --tok-surface-panel-alt:   #1E3A5F;
+  --tok-text-light:          #F5F7FA;
+  --tok-text-light-strong:   #FFFFFF;
+  --tok-text-light-soft:     #EAF1F8;
+  --tok-border-system:       rgba(255,255,255,0.10);
+
+  /* ── Teal (live site continuity) ── */
+  --tok-teal:                #0891b2;
+  --tok-teal-light:          #67C6E0;
+  --tok-teal-dim:            #065e73;
+
+  /* ── Elemental (semantic only) ── */
+  --tok-water:               #1E3A5F;
+  --tok-air:                 #AFCBFF;
+  --tok-earth:               #4F7A5A;
+
+  /* ── Neutrals ── */
+  --tok-slate:               #D6DCE5;
+  --tok-slate-mid:           #8E9BAD;
+
+  /* ── Typography ── */
+  --font-heading:  'Playfair Display', Georgia, serif;
+  --font-body:     'Inter', system-ui, sans-serif;
+  --font-accent:   'Cormorant Garamond', Georgia, serif;
+
+  /* ── Spacing ── */
+  --space-xs:  4px;   --space-sm:  8px;
+  --space-md:  16px;  --space-lg:  32px;
+  --space-xl:  64px;  --space-2xl: 96px;
+
+  /* ── Layout ── */
+  --max-width:     1160px;
+  --reading-width:  720px;
+
+  /* ── Motion ── */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:  150ms;
+  --dur-base:  220ms;
+  --dur-slow:  400ms;
+
+  /* ── Elevation ── */
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-sys-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sys-md: 0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-gold: 0 0 24px rgba(198,168,90,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: #F2EFE9;
+  color: var(--tok-text-dark);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GUIDE CHROME — the document wrapper itself is white/editorial
+═══════════════════════════════════════════════════════════════ */
+.guide-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--tok-deep-ocean);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 var(--space-lg);
+  display: flex; align-items: center; justify-content: space-between;
+  height: 52px;
+}
+.guide-nav-brand {
+  font-family: var(--font-heading);
+  font-size: 15px; font-style: italic;
+  color: var(--tok-text-light);
+}
+.guide-nav-brand span { color: var(--tok-gold); }
+.guide-nav-version {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tok-gold);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COVER — Blue identity surface
+═══════════════════════════════════════════════════════════════ */
+.cover {
+  background: var(--tok-deep-ocean);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: var(--space-xl) var(--space-lg);
+  position: relative; overflow: hidden;
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(198,168,90,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(198,168,90,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+.cover-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, var(--tok-deep-ocean) 85%);
+  pointer-events: none;
+}
+.cover-content { position: relative; z-index: 1; text-align: center; }
+
+.cover-eyebrow {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--tok-gold);
+  margin-bottom: var(--space-lg);
+}
+.cover-title {
+  font-family: var(--font-heading);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 400; line-height: 1.0;
+  color: var(--tok-text-light);
+  margin-bottom: var(--space-md);
+}
+.cover-title em { font-style: italic; color: var(--tok-gold); }
+.cover-subtitle {
+  font-family: var(--font-accent);
+  font-size: clamp(18px, 2vw, 24px);
+  font-style: italic; font-weight: 300;
+  color: var(--tok-slate-mid);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-xl);
+}
+.cover-principle {
+  font-family: var(--font-accent);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-style: italic; font-weight: 300;
+  color: rgba(245,247,250,0.55);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-xl);
+}
+.cover-meta {
+  display: flex; gap: var(--space-lg);
+  align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--tok-slate-mid);
+}
+.cover-meta-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--tok-gold); opacity: 0.6;
+}
+
+/* Version badge */
+.v-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(8,145,178,0.12);
+  border: 1px solid rgba(8,145,178,0.25);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 11px; color: var(--tok-teal-light);
+  margin-bottom: var(--space-lg);
+}
+.v-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--tok-teal);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.8); }
+}
+
+/* Cover animation */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.cover-content > * { animation: fadeUp 0.5s var(--ease-out) both; }
+.cover-content > *:nth-child(1) { animation-delay:0ms; }
+.cover-content > *:nth-child(2) { animation-delay:80ms; }
+.cover-content > *:nth-child(3) { animation-delay:160ms; }
+.cover-content > *:nth-child(4) { animation-delay:240ms; }
+.cover-content > *:nth-child(5) { animation-delay:310ms; }
+.cover-content > *:nth-child(6) { animation-delay:380ms; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION WRAPPERS — alternate white / blue per guide section
+═══════════════════════════════════════════════════════════════ */
+.guide-section {
+  padding: var(--space-xl) 0;
+}
+.guide-section.white {
+  background: #F2EFE9;
+  color: var(--tok-text-dark);
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.guide-section.soft {
+  background: var(--tok-surface-reading-soft);
+  color: var(--tok-text-dark);
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.guide-section.blue {
+  background: var(--tok-deep-ocean);
+  color: var(--tok-text-light);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+/* ── Section labels ── */
+.section-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tok-gold);
+  margin-bottom: var(--space-md);
+  display: flex; align-items: center; gap: var(--space-md);
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+}
+.white .section-label::after,
+.soft .section-label::after {
+  background: linear-gradient(90deg, rgba(198,168,90,0.3), transparent);
+}
+.blue .section-label::after {
+  background: linear-gradient(90deg, rgba(198,168,90,0.3), transparent);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400; line-height: 1.15;
+  margin-bottom: var(--space-md);
+}
+.white .section-title, .soft .section-title { color: var(--tok-text-dark); }
+.blue .section-title { color: var(--tok-text-light); }
+
+.section-desc {
+  font-size: 15px; font-weight: 300;
+  line-height: 1.75;
+  max-width: 580px;
+  margin-bottom: var(--space-xl);
+}
+.white .section-desc, .soft .section-desc { color: var(--tok-text-muted); }
+.blue .section-desc { color: var(--tok-slate-mid); }
+
+/* ═══════════════════════════════════════════════════════════════
+   01 POSITIONING — white
+═══════════════════════════════════════════════════════════════ */
+.positioning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.pos-card {
+  background: var(--tok-surface-reading-soft);
+  border: 1px solid var(--tok-border-light);
+  border-radius: 4px;
+  padding: var(--space-lg);
+}
+.pos-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--tok-gold);
+  margin-bottom: 10px;
+}
+.pos-value {
+  font-family: var(--font-heading);
+  font-size: 22px; font-weight: 400;
+  color: var(--tok-text-dark);
+  line-height: 1.25;
+}
+.pos-value em { font-style: italic; color: var(--tok-deep-ocean); }
+
+.core-principle {
+  background: var(--tok-deep-ocean);
+  border-radius: 4px;
+  padding: var(--space-xl);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.core-principle::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--tok-gold), transparent);
+}
+.core-principle-text {
+  font-family: var(--font-accent);
+  font-size: clamp(22px, 3vw, 32px);
+  font-style: italic; font-weight: 300;
+  color: var(--tok-text-light);
+  letter-spacing: 0.04em;
+}
+.core-principle-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--tok-gold);
+  margin-top: var(--space-md);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   02 DUAL SURFACE — split white / blue demo
+═══════════════════════════════════════════════════════════════ */
+.dual-surface-intro {
+  background: var(--tok-deep-ocean);
+  border: 2px solid rgba(198,168,90,0.2);
+  border-radius: 6px;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-xl);
+  display: flex; gap: var(--space-lg);
+  align-items: flex-start;
+}
+.dual-surface-intro-item { flex: 1; }
+.dsi-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--tok-gold); margin-bottom: 8px;
+}
+.dsi-rule {
+  font-size: 14px; color: var(--tok-text-light-soft);
+  line-height: 1.65;
+}
+.dsi-rule strong { color: var(--tok-gold); }
+.dsi-divider {
+  width: 1px;
+  background: rgba(198,168,90,0.2);
+  align-self: stretch;
+}
+
+/* The big split surface demo */
+.surface-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 6px; overflow: hidden;
+  border: 1px solid var(--tok-border-light);
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+
+/* Surface A panel */
+.surface-a-panel {
+  background: #F2EFE9;
+  padding: var(--space-xl) var(--space-lg);
+  border-right: 2px solid var(--tok-border-light);
+}
+.sa-tag {
+  display: inline-block;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  background: var(--tok-surface-reading-soft);
+  border: 1px solid var(--tok-border-light);
+  color: var(--tok-text-muted);
+  padding: 4px 10px; border-radius: 2px;
+  margin-bottom: var(--space-lg);
+}
+.sa-heading {
+  font-family: var(--font-heading);
+  font-size: 28px; font-weight: 400;
+  color: var(--tok-text-dark);
+  line-height: 1.15; margin-bottom: var(--space-md);
+}
+.sa-heading em { font-style: italic; color: var(--tok-deep-ocean); }
+.sa-body {
+  font-size: 15px; font-weight: 400;
+  color: var(--tok-text-muted);
+  line-height: 1.8; margin-bottom: var(--space-lg);
+}
+.sa-gold-rule {
+  display: flex; align-items: flex-start; gap: var(--space-md);
+  border-left: 2px solid var(--tok-gold);
+  padding-left: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.sa-gold-rule p {
+  font-family: var(--font-accent);
+  font-size: 17px; font-style: italic; font-weight: 300;
+  color: var(--tok-text-dark); line-height: 1.6;
+}
+.sa-meta {
+  font-size: 13px; color: var(--tok-text-muted);
+  letter-spacing: 0.05em;
+}
+.sa-inline-link {
+  color: var(--tok-teal);
+  text-decoration: underline;
+  text-decoration-color: rgba(8,145,178,0.3);
+  font-size: 15px;
+}
+
+/* Surface B panel */
+.surface-b-panel {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-xl) var(--space-lg);
+}
+.sb-tag {
+  display: inline-block;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  background: rgba(198,168,90,0.1);
+  border: 1px solid rgba(198,168,90,0.25);
+  color: var(--tok-gold);
+  padding: 4px 10px; border-radius: 2px;
+  margin-bottom: var(--space-lg);
+}
+.sb-heading {
+  font-family: var(--font-heading);
+  font-size: 28px; font-weight: 400;
+  color: var(--tok-text-light);
+  line-height: 1.15; margin-bottom: var(--space-md);
+}
+.sb-heading em { font-style: italic; color: var(--tok-gold); }
+.sb-body {
+  font-size: 14px;
+  color: var(--tok-text-light-soft);
+  line-height: 1.75; margin-bottom: var(--space-lg);
+}
+.sb-card {
+  background: var(--tok-surface-panel);
+  border: 1px solid var(--tok-border-system);
+  border-radius: 4px;
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+.sb-card-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--tok-gold);
+  margin-bottom: 6px;
+}
+.sb-card-title {
+  font-family: var(--font-heading);
+  font-size: 17px; font-weight: 500;
+  color: var(--tok-text-light);
+}
+.sb-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--tok-gold);
+  color: var(--tok-text-dark);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 10px 22px; border-radius: 3px;
+  border: none; cursor: pointer;
+  margin-top: var(--space-md);
+}
+
+/* Surface specs table */
+.surface-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+.spec-panel {
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--tok-border-light);
+}
+.spec-header {
+  padding: var(--space-md) var(--space-lg);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.spec-header.a {
+  background: var(--tok-surface-reading-soft);
+  color: var(--tok-text-muted);
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.spec-header.b {
+  background: var(--tok-surface-panel);
+  color: var(--tok-slate-mid);
+  border-bottom: 1px solid var(--tok-border-system);
+}
+.spec-row {
+  display: flex; align-items: center;
+  gap: var(--space-md);
+  padding: 10px var(--space-lg);
+  border-bottom: 1px solid;
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-row.a { background: #F2EFE9; border-color: #DDD8D0; }
+.spec-row.b { background: var(--tok-deep-ocean); border-color: rgba(255,255,255,0.05); }
+.spec-swatch {
+  width: 28px; height: 28px; border-radius: 3px;
+  flex-shrink: 0;
+}
+.spec-swatch.a { border: 1px solid var(--tok-border-light); }
+.spec-swatch.b { border: 1px solid rgba(255,255,255,0.1); }
+.spec-name { font-size: 12px; font-weight: 500; flex: 1; }
+.spec-name.a { color: var(--tok-text-dark); }
+.spec-name.b { color: var(--tok-text-light); }
+.spec-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 11px; letter-spacing: 0.05em;
+}
+.spec-hex.a { color: var(--tok-text-muted); }
+.spec-hex.b { color: var(--tok-slate-mid); }
+.spec-role { font-size: 11px; font-style: italic; }
+.spec-role.a { color: var(--tok-text-muted); }
+.spec-role.b { color: var(--tok-gold); }
+
+/* ═══════════════════════════════════════════════════════════════
+   03 PAGE MAP — white section with blue and white cards
+═══════════════════════════════════════════════════════════════ */
+.page-map-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.page-map-card {
+  border-radius: 4px;
+  border: 1px solid var(--tok-border-light);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base);
+}
+.page-map-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.pmc-header {
+  padding: var(--space-md) var(--space-lg);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.pmc-header.blue-h {
+  background: var(--tok-deep-ocean);
+}
+.pmc-header.white-h {
+  background: var(--tok-surface-reading-soft);
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.pmc-header.hybrid-h {
+  background: linear-gradient(135deg, var(--tok-deep-ocean) 50%, #fff 50%);
+}
+.pmc-title {
+  font-family: var(--font-heading);
+  font-size: 14px; font-weight: 500;
+}
+.pmc-title.light { color: var(--tok-text-light); }
+.pmc-title.dark { color: var(--tok-text-dark); }
+.pmc-pill {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+}
+.pmc-pill.blue-p { background: rgba(198,168,90,0.15); color: var(--tok-gold); }
+.pmc-pill.white-p { background: #F2EFE9; color: var(--tok-text-muted); border: 1px solid var(--tok-border-light); }
+.pmc-pill.hybrid-p { background: rgba(8,145,178,0.12); color: var(--tok-teal-light); }
+  .pmc-body-placeholder {
+  background: #F2EFE9;
+  padding: var(--space-md) var(--space-lg);
+}
+.pmc-body-blue {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-md) var(--space-lg);
+}
+.pmc-route {
+  font-family: 'Courier New', monospace;
+  font-size: 12px; color: var(--tok-teal-dim);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.pmc-desc {
+  font-size: 13px; color: var(--tok-text-muted);
+  line-height: 1.65; margin-bottom: var(--space-md);
+}
+.pmc-desc.light { color: #9AAFC4; }
+.pmc-surface-strip {
+  display: flex; gap: 4px;
+  flex-wrap: wrap;
+}
+.pmc-chip {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 2px;
+}
+.chip-blue { background: rgba(11,31,58,0.08); color: var(--tok-deep-ocean); border: 1px solid rgba(11,31,58,0.15); }
+.chip-white { background: var(--tok-surface-reading-soft); color: var(--tok-text-muted); border: 1px solid var(--tok-border-light); }
+.chip-blue-on-blue { background: rgba(198,168,90,0.12); color: var(--tok-gold); border: 1px solid rgba(198,168,90,0.2); }
+.chip-white-on-blue { background: rgba(245,247,250,0.1); color: var(--tok-text-light); border: 1px solid rgba(255,255,255,0.12); }
+
+/* Homepage mockup */
+.homepage-mockup {
+  border: 1px solid var(--tok-border-light);
+  border-radius: 6px; overflow: hidden;
+  margin-bottom: var(--space-xl);
+  box-shadow: var(--shadow-md);
+}
+.hm-hero {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hm-hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(198,168,90,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(198,168,90,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hm-hero-content { position: relative; z-index: 1; }
+.hm-kicker { font-size: 10px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--tok-gold); margin-bottom: 12px; }
+.hm-h1 { font-family: var(--font-heading); font-size: clamp(24px, 3vw, 36px); font-weight: 400; color: var(--tok-text-light); margin-bottom: 12px; line-height: 1.1; }
+.hm-h1 em { font-style: italic; color: var(--tok-gold); }
+.hm-sub { font-family: var(--font-accent); font-size: 15px; font-style: italic; font-weight: 300; color: var(--tok-slate-mid); margin-bottom: var(--space-lg); line-height: 1.6; max-width: 380px; margin-left: auto; margin-right: auto; }
+.hm-cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.hm-btn-primary { background: var(--tok-gold); color: var(--tok-text-dark); font-size: 12px; font-weight: 500; padding: 9px 20px; border-radius: 3px; border: none; cursor: pointer; letter-spacing: 0.04em; }
+.hm-btn-sec { background: transparent; color: var(--tok-text-light); font-size: 12px; font-weight: 400; padding: 9px 20px; border-radius: 3px; border: 1px solid rgba(198,168,90,0.35); cursor: pointer; }
+
+.hm-white-section {
+  background: #F2EFE9;
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.hm-section-label {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--tok-gold);
+  margin-bottom: var(--space-md);
+}
+.hm-body-text { font-size: 15px; color: var(--tok-text-muted); line-height: 1.75; margin-bottom: var(--space-lg); max-width: 560px; }
+.hm-card-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.hm-article-card {
+  background: var(--tok-surface-reading-soft);
+  border: 1px solid var(--tok-border-light);
+  border-radius: 4px; padding: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.hm-article-card:hover { border-color: rgba(198,168,90,0.3); box-shadow: var(--shadow-sm); }
+.hm-card-kicker { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tok-gold); margin-bottom: 6px; }
+.hm-card-title { font-family: var(--font-heading); font-size: 14px; font-weight: 500; color: var(--tok-text-dark); line-height: 1.25; margin-bottom: 8px; }
+.hm-card-body { font-size: 12px; color: var(--tok-text-muted); line-height: 1.6; }
+
+.hm-cta-band {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-lg);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg); flex-wrap: wrap;
+}
+.hm-cta-band-text { font-family: var(--font-heading); font-size: 20px; font-weight: 400; color: var(--tok-text-light); }
+.hm-cta-band-text em { font-style: italic; color: var(--tok-gold); }
+.hm-band-btn { background: var(--tok-gold); color: var(--tok-text-dark); font-size: 12px; font-weight: 600; padding: 10px 22px; border-radius: 3px; border: none; cursor: pointer; white-space: nowrap; }
+
+.hm-footer {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-lg);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hm-footer-brand { font-family: var(--font-heading); font-style: italic; font-size: 18px; color: #FFFFFF; }
+.hm-footer-brand span { color: var(--tok-gold); }
+.hm-footer-meta { font-size: 11px; color: rgba(255,255,255,0.65); letter-spacing: 0.08em; }
+
+/* ═══════════════════════════════════════════════════════════════
+   04 COLOUR SYSTEM
+═══════════════════════════════════════════════════════════════ */
+.colour-mega-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.colour-card {
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--tok-border-light);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base);
+}
+.colour-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.colour-swatch { height: 72px; position: relative; }
+.colour-swatch::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+}
+.colour-info { background: #F2EFE9; padding: 10px 14px; }
+.colour-name { font-size: 12px; font-weight: 500; color: var(--tok-text-dark); margin-bottom: 2px; }
+.colour-hex { font-family: 'Courier New', monospace; font-size: 11px; color: var(--tok-text-muted); margin-bottom: 3px; }
+.colour-role { font-size: 12px; color: #7A6535; font-style: italic; font-weight: 500; }
+.colour-group-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--tok-text-muted);
+  margin-bottom: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--tok-border-light);
+}
+.colour-group-label:first-child { margin-top: 0; }
+
+.elemental-strip {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-radius: 4px; overflow: hidden;
+  margin-bottom: var(--space-xl);
+  border: 1px solid var(--tok-border-light);
+}
+.el-block {
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+.el-symbol { font-family: var(--font-heading); font-size: 26px; font-style: italic; display: block; margin-bottom: 6px; }
+.el-name { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+.el-hex { font-family: 'Courier New', monospace; font-size: 12px; font-weight: 500; display: block; margin-bottom: 4px; }
+.el-use { font-size: 13px; margin-top: 6px; font-style: italic; }
+
+.note-box {
+  border-radius: 4px; padding: var(--space-md) var(--space-lg);
+  font-size: 13px; line-height: 1.65;
+  margin-bottom: var(--space-lg);
+}
+.note-box.warning {
+  background: rgba(227,178,60,0.06);
+  border: 1px solid rgba(227,178,60,0.2);
+  border-left: 3px solid var(--tok-fire);
+  color: var(--tok-text-muted);
+}
+.note-box.info {
+  background: rgba(8,145,178,0.05);
+  border: 1px solid rgba(8,145,178,0.15);
+  border-left: 3px solid var(--tok-teal);
+  color: var(--tok-text-muted);
+}
+.note-box strong { color: var(--tok-text-dark); }
+
+/* ═══════════════════════════════════════════════════════════════
+   05 TYPOGRAPHY
+═══════════════════════════════════════════════════════════════ */
+.type-scale-white {
+  background: #F2EFE9;
+  border: 1px solid var(--tok-border-light);
+  border-radius: 4px;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+.type-scale-blue {
+  background: var(--tok-deep-ocean);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+.ts-row {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid;
+  display: flex; align-items: baseline; gap: var(--space-lg);
+}
+.ts-row:last-child { border-bottom: none; }
+.ts-row.white-row { border-color: #DDD8D0; }
+.ts-row.blue-row { border-color: rgba(255,255,255,0.05); }
+.ts-tag { font-family: 'Courier New', monospace; font-size: 12px; min-width: 48px; font-weight: 500; }
+.ts-tag.white-tag { color: var(--tok-teal); }
+.ts-tag.blue-tag { color: var(--tok-teal-light); }
+
+.type-role-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg); margin-bottom: var(--space-xl);
+}
+.type-role-card {
+  border-radius: 4px; padding: var(--space-lg);
+  border: 1px solid;
+}
+.type-role-card.white-card {
+  background: #F2EFE9; border-color: var(--tok-border-light);
+}
+.type-role-card.blue-card {
+  background: var(--tok-surface-panel);
+  border-color: var(--tok-border-system);
+}
+.trc-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--tok-gold); margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md); border-bottom: 1px solid;
+}
+.white-card .trc-label { border-color: var(--tok-border-light); }
+.blue-card .trc-label { border-color: rgba(255,255,255,0.08); }
+.trc-row { display: flex; gap: var(--space-md); align-items: baseline; margin-bottom: 10px; }
+.trc-face { font-size: 11px; font-weight: 600; min-width: 80px; }
+.white-card .trc-face { color: var(--tok-text-muted); }
+.blue-card .trc-face { color: var(--tok-slate-mid); }
+.trc-use { font-size: 12px; }
+.white-card .trc-use { color: var(--tok-text-dark); }
+.blue-card .trc-use { color: var(--tok-text-light-soft); }
+
+/* ═══════════════════════════════════════════════════════════════
+   06 COMPONENTS — shown on correct surfaces
+═══════════════════════════════════════════════════════════════ */
+.component-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg); margin-bottom: var(--space-xl);
+}
+.comp-panel {
+  border-radius: 4px; overflow: hidden;
+  border: 1px solid;
+}
+.comp-panel.white-comp { border-color: var(--tok-border-light); }
+.comp-panel.blue-comp { border-color: var(--tok-border-system); }
+.comp-header {
+  padding: 10px var(--space-lg);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+}
+.white-comp .comp-header { background: var(--tok-surface-reading-soft); color: var(--tok-text-muted); border-bottom: 1px solid var(--tok-border-light); }
+.blue-comp .comp-header { background: var(--tok-surface-panel); color: #9AAFC4; border-bottom: 1px solid var(--tok-border-system); }
+.comp-body { padding: var(--space-lg); }
+.white-comp .comp-body { background: #F2EFE9; }
+.blue-comp .comp-body { background: var(--tok-deep-ocean); }
+
+/* Buttons */
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: var(--space-md); align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; padding: 10px 22px; border-radius: 3px; cursor: pointer; border: none; transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-base); }
+.btn:hover { transform: translateY(-1px); }
+
+/* On white surface */
+.btn-primary-w { background: var(--tok-gold); color: var(--tok-text-dark); }
+.btn-primary-w:hover { background: var(--tok-gold-light); box-shadow: var(--shadow-gold); }
+.btn-secondary-w { background: transparent; color: var(--tok-deep-ocean); border: 1px solid var(--tok-deep-ocean); }
+.btn-secondary-w:hover { background: rgba(11,31,58,0.05); }
+.btn-ghost-w { background: transparent; color: var(--tok-text-muted); border: 1px solid var(--tok-border-light); }
+.btn-ghost-w:hover { color: var(--tok-text-dark); border-color: #B0BAC5; }
+.btn-arrow-w { background: none; border: none; color: var(--tok-teal); font-size: 14px; font-weight: 400; padding: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: gap var(--dur-base); }
+.btn-arrow-w:hover { gap: 10px; }
+
+/* On blue surface */
+.btn-primary-b { background: var(--tok-gold); color: var(--tok-text-dark); }
+.btn-primary-b:hover { background: var(--tok-gold-light); box-shadow: var(--shadow-gold); }
+.btn-secondary-b { background: transparent; color: var(--tok-gold); border: 1px solid rgba(198,168,90,0.4); }
+.btn-secondary-b:hover { background: rgba(198,168,90,0.06); border-color: var(--tok-gold); }
+.btn-ghost-b { background: transparent; color: var(--tok-slate-mid); border: 1px solid rgba(214,220,229,0.12); }
+.btn-ghost-b:hover { color: var(--tok-text-light); border-color: rgba(214,220,229,0.3); }
+
+/* Cards on white */
+.card-white {
+  background: var(--tok-surface-reading-soft);
+  border: 1px solid var(--tok-border-light);
+  border-radius: 4px; padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  transition: border-color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base) var(--ease-out);
+}
+.card-white:hover { border-color: rgba(198,168,90,0.3); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.cw-kicker { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tok-gold); margin-bottom: 8px; }
+.cw-title { font-family: var(--font-heading); font-size: 17px; font-weight: 500; color: var(--tok-text-dark); margin-bottom: 8px; line-height: 1.25; }
+.cw-body { font-size: 13px; color: var(--tok-text-muted); line-height: 1.65; }
+
+/* Cards on blue */
+.card-blue {
+  background: var(--tok-surface-panel);
+  border: 1px solid var(--tok-border-system);
+  border-radius: 4px; padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  transition: border-color var(--dur-base), box-shadow var(--dur-base), transform var(--dur-base) var(--ease-out);
+}
+.card-blue:hover { border-color: rgba(198,168,90,0.2); box-shadow: var(--shadow-sys-md); transform: translateY(-2px); }
+.cb-kicker { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tok-gold); margin-bottom: 8px; }
+.cb-title { font-family: var(--font-heading); font-size: 17px; font-weight: 500; color: var(--tok-text-light); margin-bottom: 8px; line-height: 1.25; }
+.cb-body { font-size: 13px; color: var(--tok-text-light-soft); line-height: 1.65; }
+
+/* Inputs on white */
+.label-w { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tok-text-muted); margin-bottom: 6px; }
+.input-w { width: 100%; background: #F2EFE9; border: 1px solid var(--tok-border-light); border-radius: 3px; padding: 10px var(--space-md); color: var(--tok-text-dark); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color var(--dur-base), box-shadow var(--dur-base); }
+.input-w::placeholder { color: #8A8880; }
+.input-w:focus { border-color: rgba(198,168,90,0.5); box-shadow: 0 0 0 3px rgba(198,168,90,0.08); }
+
+/* Inputs on blue */
+.label-b { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tok-slate-mid); margin-bottom: 6px; }
+.input-b { width: 100%; background: rgba(11,31,58,0.6); border: 1px solid rgba(214,220,229,0.15); border-radius: 3px; padding: 10px var(--space-md); color: var(--tok-text-light); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color var(--dur-base), box-shadow var(--dur-base); }
+.input-b::placeholder { color: rgba(214,220,229,0.55); }
+.input-b:focus { border-color: rgba(198,168,90,0.5); box-shadow: 0 0 0 3px rgba(198,168,90,0.08); }
+
+/* Quote / pull-quote variants */
+.quote-white {
+  border-left: 2px solid var(--tok-gold);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
+}
+.quote-white p { font-family: var(--font-accent); font-size: 19px; font-style: italic; font-weight: 300; color: var(--tok-text-dark); line-height: 1.6; margin-bottom: 10px; }
+.quote-white cite { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7A6535; }
+
+.quote-blue {
+  border-left: 2px solid var(--tok-gold);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--space-lg) 0;
+}
+.quote-blue p { font-family: var(--font-accent); font-size: 19px; font-style: italic; font-weight: 300; color: var(--tok-text-light); line-height: 1.6; margin-bottom: 10px; }
+.quote-blue cite { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tok-gold); }
+
+/* Tags */
+.tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-right: 6px; margin-bottom: 6px; }
+.tag-gold-w { background: rgba(198,168,90,0.1); color: #8A6820; border: 1px solid rgba(198,168,90,0.25); }
+.tag-navy-w { background: rgba(11,31,58,0.07); color: var(--tok-deep-ocean); border: 1px solid rgba(11,31,58,0.15); }
+.tag-teal-w { background: rgba(8,145,178,0.08); color: var(--tok-teal-dim); border: 1px solid rgba(8,145,178,0.2); }
+.tag-gold-b { background: rgba(198,168,90,0.12); color: var(--tok-gold); border: 1px solid rgba(198,168,90,0.25); }
+.tag-air-b { background: rgba(30,58,95,0.6); color: var(--tok-air); border: 1px solid rgba(175,203,255,0.2); }
+.tag-teal-b { background: rgba(8,145,178,0.15); color: var(--tok-teal-light); border: 1px solid rgba(8,145,178,0.3); }
+
+/* COMPASS pillar strip */
+.compass-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin-bottom: var(--space-lg); }
+.cp { background: var(--tok-surface-panel); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; padding: 16px 8px; text-align: center; transition: background var(--dur-base), border-color var(--dur-base); cursor: default; }
+.cp:hover { background: rgba(30,58,95,0.9); border-color: rgba(198,168,90,0.35); }
+.cp-letter { font-family: var(--font-heading); font-size: 26px; font-weight: 500; color: var(--tok-gold); display: block; margin-bottom: 6px; line-height: 1; }
+.cp-name { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #C8D5E4; }
+
+/* Trust strip on white */
+.trust-strip-w { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--tok-border-light); border: 1px solid var(--tok-border-light); border-radius: 4px; overflow: hidden; margin-bottom: var(--space-lg); }
+.ti-w { background: #F2EFE9; padding: var(--space-md) var(--space-lg); text-align: center; }
+.ti-num-w { font-family: var(--font-heading); font-size: 26px; font-weight: 400; color: var(--tok-deep-ocean); display: block; line-height: 1; margin-bottom: 4px; }
+.ti-label-w { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tok-text-muted); }
+
+/* Trust strip on blue */
+.trust-strip-b { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; margin-bottom: var(--space-lg); }
+.ti-b { background: var(--tok-surface-panel); padding: var(--space-md) var(--space-lg); text-align: center; }
+.ti-num-b { font-family: var(--font-heading); font-size: 26px; font-weight: 400; color: var(--tok-gold); display: block; line-height: 1; margin-bottom: 4px; }
+.ti-label-b { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #A8BAC8; }
+
+/* Nav demo */
+.nav-demo { background: var(--tok-deep-ocean); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 0 var(--space-lg); display: flex; align-items: center; justify-content: space-between; height: 56px; margin-bottom: var(--space-xl); }
+.nav-brand { font-family: var(--font-heading); font-size: 15px; font-style: italic; color: var(--tok-text-light); }
+.nav-brand span { color: var(--tok-gold); }
+.nav-links { display: flex; gap: var(--space-lg); list-style: none; align-items: center; }
+.nav-links a { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tok-slate-mid); text-decoration: none; transition: color var(--dur-fast); }
+.nav-links a:hover { color: var(--tok-text-light); }
+.nav-links a.active { color: var(--tok-gold); }
+
+/* ═══════════════════════════════════════════════════════════════
+   07 MOTION + SPACING
+═══════════════════════════════════════════════════════════════ */
+.motion-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-md); margin-bottom: var(--space-xl); }
+.motion-card-w { background: #F2EFE9; border: 1px solid var(--tok-border-light); border-radius: 4px; padding: var(--space-lg); }
+.motion-title-w { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tok-text-dark); margin-bottom: 6px; }
+.motion-bar { height: 2px; background: var(--tok-gold); border-radius: 2px; margin: var(--space-md) 0; transform-origin: left; animation: bar-loop 3s var(--ease-out) infinite; }
+@keyframes bar-loop { 0%,100%{transform:scaleX(0);opacity:0} 10%{opacity:1} 50%{transform:scaleX(1);opacity:1} 85%{transform:scaleX(1);opacity:0} }
+.motion-spec-w { font-size: 12px; color: var(--tok-text-muted); }
+.motion-spec-w strong { color: var(--tok-teal); }
+
+.spacing-demo { display: flex; flex-direction: column; gap: var(--space-md); margin-bottom: var(--space-xl); }
+.space-row { display: flex; align-items: center; gap: var(--space-lg); }
+.space-token { font-family: 'Courier New', monospace; font-size: 11px; color: var(--tok-teal); min-width: 60px; }
+.space-bar-wrap { flex: 1; height: 20px; display: flex; align-items: center; }
+.space-bar { height: 100%; background: linear-gradient(90deg, rgba(198,168,90,0.4), rgba(198,168,90,0.08)); border-radius: 2px; }
+.space-value { font-size: 11px; color: var(--tok-text-muted); min-width: 40px; text-align: right; }
+
+/* ═══════════════════════════════════════════════════════════════
+   08 CSS TOKENS
+═══════════════════════════════════════════════════════════════ */
+.token-block { background: #1a2e45; border: 1px solid rgba(255,255,255,0.07); border-radius: 4px; padding: var(--space-lg); font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.9; overflow-x: auto; margin-bottom: var(--space-xl); }
+.tk-comment { color: rgba(214,220,229,0.3); }
+.tk-prop { color: var(--tok-teal-light); }
+.tk-val { color: var(--tok-gold); }
+.tk-val-b { color: #AFCBFF; }
+.tk-punct { color: rgba(214,220,229,0.4); }
+
+/* ═══════════════════════════════════════════════════════════════
+   09 NON-NEGOTIABLES
+═══════════════════════════════════════════════════════════════ */
+.rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-xl); }
+.rule-card-w { background: #F2EFE9; border: 1px solid var(--tok-border-light); border-radius: 4px; padding: var(--space-lg); }
+.rule-num { font-family: var(--font-heading); font-size: 32px; font-weight: 400; font-style: italic; color: rgba(11,31,58,0.18); line-height: 1; margin-bottom: 8px; }
+.rule-title { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tok-gold); margin-bottom: 6px; }
+.rule-body { font-size: 13px; color: var(--tok-text-muted); line-height: 1.65; }
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════ */
+.brand-footer {
+  background: var(--tok-deep-ocean);
+  padding: var(--space-xl) 0;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-wordmark { font-family: var(--font-heading); font-size: 38px; font-style: italic; font-weight: 400; color: rgba(255,255,255,0.65); margin-bottom: var(--space-md); }
+.footer-wordmark em { color: rgba(198,168,90,0.85); }
+.footer-meta { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .positioning-grid, .surface-spec-grid, .page-map-grid,
+  .component-grid, .type-role-grid, .rules-grid,
+  .motion-grid { grid-template-columns: 1fr; }
+  .surface-split { grid-template-columns: 1fr; }
+  .surface-a-panel { border-right: none; border-bottom: 2px solid var(--tok-border-light); }
+  .elemental-strip { grid-template-columns: 1fr 1fr; }
+  .compass-strip { grid-template-columns: repeat(4, 1fr); }
+  .trust-strip-w, .trust-strip-b { grid-template-columns: repeat(2,1fr); }
+  .hm-card-row { grid-template-columns: 1fr; }
+  .dual-surface-intro { flex-direction: column; }
+  .nav-links { display: none; }
+  .cover-meta { flex-direction: column; gap: 8px; }
+  .cover-meta-dot { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="guide-nav">
+  <div class="guide-nav-brand"><em>Tides of</em> <span>Knowing</span></div>
+  <div class="guide-nav-version">Brand System v1.4</div>
+</nav>
+
+<!-- ══════ COVER (Blue) ══════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-vignette"></div>
+  <div class="cover-content">
+    <div class="v-badge"><div class="v-dot"></div>Version 1.4 — Paper White Reading Surface</div>
+    <p class="cover-eyebrow">Brand System</p>
+    <h1 class="cover-title">Tides of<br><em>Knowing</em></h1>
+    <p class="cover-subtitle">Interpretive System &nbsp;·&nbsp; Structured Perception Engine</p>
+    <p class="cover-principle">Clarity is the aesthetic.</p>
+    <div class="cover-meta">
+      <span>Playfair Display</span>
+      <span class="cover-meta-dot"></span>
+      <span>Inter</span>
+      <span class="cover-meta-dot"></span>
+      <span>Cormorant Garamond</span>
+      <span class="cover-meta-dot"></span>
+      <span>White · Navy · Gold</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 01 POSITIONING (White) ══════ -->
+<div class="guide-section white">
+  <div class="container">
+    <p class="section-label">01 &nbsp; Brand Positioning</p>
+    <div class="positioning-grid">
+      <div class="pos-card">
+        <div class="pos-label">Category</div>
+        <div class="pos-value">Interpretive<br><em>System</em></div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-label">Function</div>
+        <div class="pos-value">Structured<br><em>Perception Engine</em></div>
+      </div>
+      <div class="pos-card">
+        <div class="pos-label">Tone</div>
+        <div class="pos-value">Precise · Calm<br><em>Authoritative</em></div>
+      </div>
+    </div>
+    <div class="core-principle">
+      <p class="core-principle-text">Clarity is the aesthetic.</p>
+      <p class="core-principle-label">Core Principle</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 02 DUAL SURFACE (Soft — neutral bridge) ══════ -->
+<div class="guide-section soft">
+  <div class="container">
+    <p class="section-label">02 &nbsp; The Dual-Surface System</p>
+    <h2 class="section-title">White reads. Blue contains.</h2>
+    <p class="section-desc">TOK is a white-first editorial authority site, contained within a deep-blue interpretive system. Every surface decision follows one question.</p>
+
+    <div class="dual-surface-intro">
+      <div class="dual-surface-intro-item">
+        <div class="dsi-label">Surface A — Editorial</div>
+        <div class="dsi-rule">Is the user here to <strong>read, learn, and understand?</strong><br>Use white. Long-form cognition requires it.</div>
+      </div>
+      <div class="dsi-divider"></div>
+      <div class="dual-surface-intro-item">
+        <div class="dsi-label">Surface B — System</div>
+        <div class="dsi-rule">Is the user here to <strong>interact, choose, interpret, apply, or enter the symbolic system?</strong><br>Use blue. This is the interpretive environment.</div>
+      </div>
+    </div>
+
+    <!-- Live split demo -->
+    <div class="surface-split">
+      <!-- SURFACE A -->
+      <div class="surface-a-panel">
+        <div class="sa-tag">Surface A · Editorial</div>
+        <h2 class="sa-heading">Why meaning is the wrong<br><em>battleground</em></h2>
+        <p class="sa-body">Most tarot training focuses on what the cards mean. The COMPASS Method focuses on what the reader is doing. These are not the same problem, and resolving one does not resolve the other.</p>
+        <div class="sa-gold-rule">
+          <p>The practitioner's durable edge sits upstream — where soft eyes and field-level noticing begin.</p>
+        </div>
+        <p class="sa-meta">Leigh Spencer &nbsp;·&nbsp; 3 May 2026 &nbsp;·&nbsp; <a class="sa-inline-link" href="#">Read more →</a></p>
+      </div>
+
+      <!-- SURFACE B -->
+      <div class="surface-b-panel">
+        <div class="sb-tag">Surface B · System</div>
+        <h2 class="sb-heading">The <em>COMPASS</em> Method</h2>
+        <p class="sb-body">Seven conditions of attention that stabilise intuitive signal, reduce projection, and make readings more precise — without relying on memorised meanings.</p>
+        <div class="sb-card">
+          <div class="sb-card-label">COMPASS · Pillar III</div>
+          <div class="sb-card-title">Map — The shape of what is present</div>
+        </div>
+        <div class="sb-card">
+          <div class="sb-card-label">COMPASS · Pillar IV</div>
+          <div class="sb-card-title">Perceive — What is actually here</div>
+        </div>
+        <button class="sb-btn">Apply for COMPASS →</button>
+      </div>
+    </div>
+
+    <!-- Spec tables -->
+    <div class="surface-spec-grid">
+      <!-- Surface A spec -->
+      <div class="spec-panel">
+        <div class="spec-header a">Surface A — Editorial / Reading</div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#F2EFE9;"></div><span class="spec-name a">Paper White</span><span class="spec-hex a">#F2EFE9</span><span class="spec-role a">Primary bg</span></div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#E8E3DB;"></div><span class="spec-name a">Paper Soft</span><span class="spec-hex a">#E8E3DB</span><span class="spec-role a">Cards, sections</span></div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#1A1A1A;"></div><span class="spec-name a">Near Black</span><span class="spec-hex a">#1A1A1A</span><span class="spec-role a">Body text</span></div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#4B5563;"></div><span class="spec-name a">Dark Grey</span><span class="spec-hex a">#4B5563</span><span class="spec-role a">Secondary text</span></div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#C6A85A;"></div><span class="spec-name a">Muted Gold</span><span class="spec-hex a">#C6A85A</span><span class="spec-role a">Inline accent</span></div>
+        <div class="spec-row a"><div class="spec-swatch a" style="background:#CEC9C1;"></div><span class="spec-name a">Warm Border</span><span class="spec-hex a">#CEC9C1</span><span class="spec-role a">Dividers, borders</span></div>
+      </div>
+      <!-- Surface B spec -->
+      <div class="spec-panel">
+        <div class="spec-header b">Surface B — System / Blue</div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#0B1F3A;"></div><span class="spec-name b">Deep Ocean</span><span class="spec-hex b">#0B1F3A</span><span class="spec-role b">Primary bg</span></div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#17324F;"></div><span class="spec-name b">Panel</span><span class="spec-hex b">#17324F</span><span class="spec-role b">Cards, panels</span></div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#1E3A5F;"></div><span class="spec-name b">Panel Alt</span><span class="spec-hex b">#1E3A5F</span><span class="spec-role b">Hover, alt panels</span></div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#F5F7FA;"></div><span class="spec-name b">Mist</span><span class="spec-hex b">#F5F7FA</span><span class="spec-role b">Primary text</span></div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#EAF1F8;"></div><span class="spec-name b">Light Soft</span><span class="spec-hex b">#EAF1F8</span><span class="spec-role b">Panel body text</span></div>
+        <div class="spec-row b"><div class="spec-swatch b" style="background:#C6A85A;"></div><span class="spec-name b">Gold</span><span class="spec-hex b">#C6A85A</span><span class="spec-role b">CTAs, labels</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 03 PAGE MAP (White) ══════ -->
+<div class="guide-section white">
+  <div class="container">
+    <p class="section-label">03 &nbsp; Page-by-Page Surface Map</p>
+    <h2 class="section-title">Which surface, where</h2>
+    <p class="section-desc">Every page has a defined primary surface. Blue appears within white pages as contained bands — never as a full-page override for reading content.</p>
+
+    <div class="page-map-grid">
+
+      <!-- Homepage -->
+      <div class="page-map-card">
+        <div class="pmc-header hybrid-h">
+          <span class="pmc-title light">Homepage</span>
+          <span class="pmc-pill hybrid-p">Hybrid</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/</div>
+          <div class="pmc-desc">Blue hero → White body → Blue system band → Blue footer. Introduces atmosphere, becomes navigable.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White body</span>
+            <span class="pmc-chip chip-blue">Blue CTA</span>
+            <span class="pmc-chip chip-blue">Blue footer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Articles index -->
+      <div class="page-map-card">
+        <div class="pmc-header white-h">
+          <span class="pmc-title dark">Articles</span>
+          <span class="pmc-pill white-p">White primary</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/articles/</div>
+          <div class="pmc-desc">Editorial browsing. Blue only for top hero band and footer. Archive must not feel like an app interface.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White body</span>
+            <span class="pmc-chip chip-blue">Blue footer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Individual article -->
+      <div class="page-map-card">
+        <div class="pmc-header white-h">
+          <span class="pmc-title dark">Article</span>
+          <span class="pmc-pill white-p">White primary</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/articles/...</div>
+          <div class="pmc-desc">Never place article body on dark blue. Pull quotes use white with gold rule. Related reading: blue band.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-white">White body</span>
+            <span class="pmc-chip chip-blue">Blue related</span>
+            <span class="pmc-chip chip-blue">Blue footer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPASS method -->
+      <div class="page-map-card">
+        <div class="pmc-header hybrid-h">
+          <span class="pmc-title light">COMPASS</span>
+          <span class="pmc-pill hybrid-p">Hybrid</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/articles/compass-method/</div>
+          <div class="pmc-desc">Framework first, system second. Blue hero + pillars + CTA bands. White for explanatory body.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White body</span>
+            <span class="pmc-chip chip-blue">Blue pillars</span>
+            <span class="pmc-chip chip-blue">Blue CTA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Training -->
+      <div class="page-map-card">
+        <div class="pmc-header hybrid-h">
+          <span class="pmc-title light">Training</span>
+          <span class="pmc-pill hybrid-p">Hybrid · leans blue</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/compass/</div>
+          <div class="pmc-desc">Commercial + instructional. Blue for system panels and enrolment. White for trust and credibility copy.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White trust</span>
+            <span class="pmc-chip chip-blue">Blue enrol</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="page-map-card">
+        <div class="pmc-header blue-h">
+          <span class="pmc-title light">Tools</span>
+          <span class="pmc-pill blue-p">Blue primary</span>
+        </div>
+        <div class="pmc-body-blue">
+          <div class="pmc-route" style="color:var(--tok-teal-light);">/tools/...</div>
+          <div class="pmc-desc light">Interpretive space, not editorial. Full blue. White only for long-form help text below the tool interface.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue-on-blue">Blue interface</span>
+            <span class="pmc-chip chip-blue-on-blue">Blue results</span>
+            <span class="pmc-chip chip-white-on-blue">White help</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="page-map-card">
+        <div class="pmc-header white-h">
+          <span class="pmc-title dark">About</span>
+          <span class="pmc-pill white-p">White primary</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/about/</div>
+          <div class="pmc-desc">Trust architecture. Human, readable, credible. Blue for opening hero, author block, and footer only.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White body</span>
+            <span class="pmc-chip chip-blue">Blue footer</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice / Deck Compass -->
+      <div class="page-map-card">
+        <div class="pmc-header white-h">
+          <span class="pmc-title dark">Practice</span>
+          <span class="pmc-pill white-p">White primary</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/practice/</div>
+          <div class="pmc-desc">Bridge page for The Deck Compass. Orientation, not sales. White for explanation, blue for CTA band.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-blue">Blue hero</span>
+            <span class="pmc-chip chip-white">White orient.</span>
+            <span class="pmc-chip chip-blue">Blue CTA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apply / Forms -->
+      <div class="page-map-card">
+        <div class="pmc-header white-h">
+          <span class="pmc-title dark">Apply / Forms</span>
+          <span class="pmc-pill white-p">White primary</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-route">/compass/apply/</div>
+          <div class="pmc-desc">Forms need clarity and low friction. White primary. Blue only for form header and submit confirmation.</div>
+          <div class="pmc-surface-strip">
+            <span class="pmc-chip chip-white">White form</span>
+            <span class="pmc-chip chip-blue">Blue submit</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Homepage mockup -->
+    <p style="font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);">Homepage Surface Composition — Live Preview</p>
+    <div class="homepage-mockup">
+      <!-- Blue hero -->
+      <div class="hm-hero">
+        <div class="hm-hero-grid"></div>
+        <div class="hm-hero-content">
+          <p class="hm-kicker">Tides of Knowing</p>
+          <h1 class="hm-h1">You know the cards.<br>The readings still <em>aren't holding.</em></h1>
+          <p class="hm-sub">A structured body of work on perception, interpretation, and the disciplined use of intuition through tarot, oracle, and Lenormand.</p>
+          <div class="hm-cta-row">
+            <button class="hm-btn-primary">Explore the Method</button>
+            <button class="hm-btn-sec">Try a Tool</button>
+            <button class="hm-btn-sec">See the Training</button>
+          </div>
+        </div>
+      </div>
+      <!-- White body -->
+      <div class="hm-white-section">
+        <p class="hm-section-label">One system. Four ways in.</p>
+        <p class="hm-body-text">Tides of Knowing is the intellectual foundation of a three-layer system that redefines symbolic interpretation as a structured cognitive process.</p>
+        <div class="hm-card-row">
+          <div class="hm-article-card">
+            <div class="hm-card-kicker">Pre-Verbal Knowing</div>
+            <div class="hm-card-title">What AI Can't Access</div>
+            <div class="hm-card-body">The layer that makes intuitive reading work.</div>
+          </div>
+          <div class="hm-article-card">
+            <div class="hm-card-kicker">COMPASS Method</div>
+            <div class="hm-card-title">Why Meaning Is the Wrong Battleground</div>
+            <div class="hm-card-body">Your durable edge sits upstream.</div>
+          </div>
+          <div class="hm-article-card">
+            <div class="hm-card-kicker">Foundation</div>
+            <div class="hm-card-title">Reading as Relationship, Not Performance</div>
+            <div class="hm-card-body">When the reading becomes a performance, it loses the slack it needs.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Blue CTA band -->
+      <div class="hm-cta-band">
+        <div class="hm-cta-band-text">Build this as a <em>real skill.</em></div>
+        <button class="hm-band-btn">Apply for COMPASS Training →</button>
+      </div>
+      <!-- Blue footer -->
+      <div class="hm-footer">
+        <div class="hm-footer-brand"><em>Tides of</em> <span>Knowing</span></div>
+        <div class="hm-footer-meta">© 2026 Leigh Spencer &nbsp;·&nbsp; coaching@tidesofknowing.com</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ 04 COLOUR (White) ══════ -->
+<div class="guide-section soft">
+  <div class="container">
+    <p class="section-label">04 &nbsp; Colour System</p>
+    <h2 class="section-title">Palette</h2>
+    <p class="section-desc">A white reading foundation. Deep navy for containment. Restrained gold for authority. Elemental colours carry semantic meaning only.</p>
+
+    <p class="colour-group-label">Identity — always present</p>
+    <div class="colour-mega-grid">
+      <div class="colour-card"><div class="colour-swatch" style="background:#0B1F3A;"></div><div class="colour-info"><div class="colour-name">Deep Ocean</div><div class="colour-hex">#0B1F3A</div><div class="colour-role">System bg · Nav · Footer</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#C6A85A;"></div><div class="colour-info"><div class="colour-name">Muted Gold</div><div class="colour-hex">#C6A85A</div><div class="colour-role">CTAs · Labels · Authority</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#E3B23C;"></div><div class="colour-info"><div class="colour-name">Fire</div><div class="colour-hex">#E3B23C</div><div class="colour-role">Primary CTA bg alt</div></div></div>
+    </div>
+
+    <p class="colour-group-label">Surface A — Editorial / Paper</p>
+    <div class="colour-mega-grid">
+      <div class="colour-card"><div class="colour-swatch" style="background:#F2EFE9;border-bottom:1px solid #CEC9C1;"></div><div class="colour-info"><div class="colour-name">Paper White</div><div class="colour-hex">#F2EFE9</div><div class="colour-role">Reading surface</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#E8E3DB;border-bottom:1px solid #CEC9C1;"></div><div class="colour-info"><div class="colour-name">Paper Soft</div><div class="colour-hex">#E8E3DB</div><div class="colour-role">Cards on paper</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#1A1A1A;"></div><div class="colour-info"><div class="colour-name">Near Black</div><div class="colour-hex">#1A1A1A</div><div class="colour-role">Body text</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#4B5563;"></div><div class="colour-info"><div class="colour-name">Dark Grey</div><div class="colour-hex">#4B5563</div><div class="colour-role">Secondary text</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#CEC9C1;border-bottom:1px solid #CEC9C1;"></div><div class="colour-info"><div class="colour-name">Warm Border</div><div class="colour-hex">#CEC9C1</div><div class="colour-role">Dividers on paper</div></div></div>
+    </div>
+
+    <p class="colour-group-label">Surface B — System / Blue</p>
+    <div class="colour-mega-grid">
+      <div class="colour-card"><div class="colour-swatch" style="background:#17324F;"></div><div class="colour-info"><div class="colour-name">Panel</div><div class="colour-hex">#17324F</div><div class="colour-role">Cards on blue</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#1E3A5F;"></div><div class="colour-info"><div class="colour-name">Panel Alt</div><div class="colour-hex">#1E3A5F</div><div class="colour-role">Hover / alt panels</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#F5F7FA;"></div><div class="colour-info"><div class="colour-name">Mist</div><div class="colour-hex">#F5F7FA</div><div class="colour-role">Primary text on blue</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#EAF1F8;"></div><div class="colour-info"><div class="colour-name">Light Soft</div><div class="colour-hex">#EAF1F8</div><div class="colour-role">Panel body text</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#8E9BAD;"></div><div class="colour-info"><div class="colour-name">Slate Mid</div><div class="colour-hex">#8E9BAD</div><div class="colour-role">Meta / tertiary</div></div></div>
+    </div>
+
+    <p class="colour-group-label">Navigation Accent (live site)</p>
+    <div class="colour-mega-grid">
+      <div class="colour-card"><div class="colour-swatch" style="background:#0891b2;"></div><div class="colour-info"><div class="colour-name">Teal</div><div class="colour-hex">#0891b2</div><div class="colour-role">Links · Nav active</div></div></div>
+      <div class="colour-card"><div class="colour-swatch" style="background:#67C6E0;"></div><div class="colour-info"><div class="colour-name">Teal Light</div><div class="colour-hex">#67C6E0</div><div class="colour-role">Hover states</div></div></div>
+    </div>
+
+    <p class="colour-group-label">Elemental — semantic only, never decorative</p>
+    <div class="elemental-strip">
+      <div class="el-block" style="background:#1E3A5F;">
+        <span class="el-symbol" style="color:#AFCBFF;">∿</span>
+        <span class="el-name" style="color:#AFCBFF;">Water</span>
+        <span class="el-hex" style="color:#D4E4F0;">#1E3A5F</span>
+        <div class="el-use" style="color:#D4E4F0;">Depth · Intuition · Deep panels</div>
+      </div>
+      <div class="el-block" style="background:rgba(175,203,255,0.2);">
+        <span class="el-symbol" style="color:#3B6CB5;">◌</span>
+        <span class="el-name" style="color:#3B6CB5;">Air</span>
+        <span class="el-hex" style="color:#2C4F8A;">#AFCBFF</span>
+        <div class="el-use" style="color:#2C4F8A;">Thought · Clarity · Tags</div>
+      </div>
+      <div class="el-block" style="background:rgba(79,122,90,0.2);">
+        <span class="el-symbol" style="color:#3A6644;">⊕</span>
+        <span class="el-name" style="color:#3A6644;">Earth</span>
+        <span class="el-hex" style="color:#2E5238;">#4F7A5A</span>
+        <div class="el-use" style="color:#2E5238;">Grounding · Stability</div>
+      </div>
+      <div class="el-block" style="background:rgba(227,178,60,0.15);">
+        <span class="el-symbol" style="color:#9A6B00;">△</span>
+        <span class="el-name" style="color:#9A6B00;">Fire</span>
+        <span class="el-hex" style="color:#7A5200;">#E3B23C</span>
+        <div class="el-use" style="color:#7A5200;">Action · CTAs · Urgency</div>
+      </div>
+    </div>
+
+    <div class="note-box warning">
+      <strong>Contrast rule:</strong> Gold (#C6A85A) on Paper White (#F2EFE9) = 3.1:1 — use only for labels and accents at large size, never for body text. Gold on Deep Ocean (#0B1F3A) = 4.8:1 — meets WCAG AA for UI components. Body text always uses Near Black on paper or Mist on blue.
+    </div>
+    <div class="note-box info">
+      <strong>v1.3 change:</strong> Paper White (#F2EFE9) replaces neutral white as the primary reading surface — matching the live site's warm parchment tone. Deep Ocean (#0B1F3A) remains the primary system surface. All warm-surface borders updated to Warm Border (#CEC9C1).
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ 05 TYPOGRAPHY (White + Blue demo) ══════ -->
+<div class="guide-section white">
+  <div class="container">
+    <p class="section-label">05 &nbsp; Typography</p>
+    <h2 class="section-title">Type on both surfaces</h2>
+    <p class="section-desc">Three typefaces. Each with a defined role. Typography defines authority — shown here on both editorial and system surfaces.</p>
+
+    <!-- Type on white -->
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);">On Surface A — Editorial</p>
+    <div class="type-scale-white">
+      <div class="ts-row white-row"><span class="ts-tag white-tag">H1</span><span style="font-family:var(--font-heading);font-size:clamp(30px,4vw,48px);font-weight:400;color:var(--tok-text-dark);line-height:1.05;">The Tide Recedes</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">H1i</span><span style="font-family:var(--font-heading);font-size:clamp(26px,3.5vw,40px);font-style:italic;font-weight:400;color:var(--tok-deep-ocean);line-height:1.1;">into Knowing</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">H2</span><span style="font-family:var(--font-heading);font-size:clamp(20px,2.5vw,30px);font-weight:500;color:var(--tok-text-dark);line-height:1.2;">Perception before interpretation</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">Body</span><span style="font-family:var(--font-body);font-size:16px;font-weight:400;color:var(--tok-text-muted);line-height:1.8;max-width:540px;">The deeper value of working with cards is not confined to the reading table. These skills shape how you read people, how you recognise what is and is not yours to carry.</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">Sm</span><span style="font-family:var(--font-body);font-size:13px;font-weight:400;color:#9CA3AF;">Secondary text — metadata, dates, captions</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">Label</span><span style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-gold);">Section Label · Category</span></div>
+      <div class="ts-row white-row"><span class="ts-tag white-tag">Accent</span><span style="font-family:var(--font-accent);font-size:clamp(18px,2vw,24px);font-style:italic;font-weight:300;color:var(--tok-text-dark);line-height:1.55;">"If it can be explained, it can be followed."</span></div>
+    </div>
+
+    <!-- Type on blue -->
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);margin-top:var(--space-lg);">On Surface B — System</p>
+    <div class="type-scale-blue">
+      <div class="ts-row blue-row"><span class="ts-tag blue-tag">H1</span><span style="font-family:var(--font-heading);font-size:clamp(30px,4vw,48px);font-weight:400;color:var(--tok-text-light);line-height:1.05;">The COMPASS Method</span></div>
+      <div class="ts-row blue-row"><span class="ts-tag blue-tag">H1i</span><span style="font-family:var(--font-heading);font-size:clamp(26px,3.5vw,40px);font-style:italic;font-weight:400;color:var(--tok-gold);line-height:1.1;">Build Intuition. Trust the Reading.</span></div>
+      <div class="ts-row blue-row"><span class="ts-tag blue-tag">Body</span><span style="font-family:var(--font-body);font-size:15px;font-weight:400;color:var(--tok-text-light-soft);line-height:1.75;max-width:520px;">Seven conditions of attention that stabilise intuitive signal and make readings more precise without relying on memorised meanings.</span></div>
+      <div class="ts-row blue-row"><span class="ts-tag blue-tag">Label</span><span style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-gold);">COMPASS · Pillar IV · Perceive</span></div>
+    </div>
+
+    <div class="type-role-grid">
+      <div class="type-role-card white-card">
+        <div class="trc-label">Surface A — Typeface Roles</div>
+        <div class="trc-row"><span class="trc-face">Playfair</span><span class="trc-use">All H1–H3. Italic for emphasis, wordmark.</span></div>
+        <div class="trc-row"><span class="trc-face">Inter</span><span class="trc-use">All body, UI, labels, captions, navigation.</span></div>
+        <div class="trc-row"><span class="trc-face">Cormorant</span><span class="trc-use">Pull-quotes, hero sublines, poetic moments. Use sparingly.</span></div>
+      </div>
+      <div class="type-role-card blue-card">
+        <div class="trc-label">Surface B — Typeface Roles</div>
+        <div class="trc-row"><span class="trc-face">Playfair</span><span class="trc-use">All H1–H3. Italic in gold for hero emphasis.</span></div>
+        <div class="trc-row"><span class="trc-face">Inter</span><span class="trc-use">All body, labels, buttons, controls, navigation.</span></div>
+        <div class="trc-row"><span class="trc-face">Cormorant</span><span class="trc-use">Only for ceremonial or poetic moments. Never in tool UI.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 06 COMPONENTS (White section, panels on each surface) ══════ -->
+<div class="guide-section soft">
+  <div class="container">
+    <p class="section-label">06 &nbsp; Components</p>
+    <h2 class="section-title">UI on both surfaces</h2>
+    <p class="section-desc">Every component exists in two forms — one for each surface. The correct version is always determined by the surface it appears on.</p>
+
+    <!-- Nav -->
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);">Navigation — always blue regardless of page surface</p>
+    <div class="nav-demo">
+      <div class="nav-brand"><em>Tides of</em> <span>Knowing</span></div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Method</a></li>
+        <li><a href="#">Tools</a></li>
+        <li><a href="#">Practice</a></li>
+        <li><a href="#">Articles</a></li>
+        <li><a href="#">Training</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+
+    <!-- Buttons -->
+    <div class="component-grid">
+      <div class="comp-panel white-comp">
+        <div class="comp-header">Buttons — On White Surface</div>
+        <div class="comp-body">
+          <div class="btn-row">
+            <button class="btn btn-primary-w">Explore the Method</button>
+            <button class="btn btn-secondary-w">Learn More</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost-w">Browse Articles</button>
+            <button class="btn-arrow-w">Read more →</button>
+          </div>
+          <div style="margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid var(--tok-border-light);font-size:12px;color:var(--tok-text-muted);line-height:1.6;">
+            Primary: Gold bg, dark text. Secondary: navy outline, navy text. Ghost: light border. Arrow: teal, no border.
+          </div>
+        </div>
+      </div>
+      <div class="comp-panel blue-comp">
+        <div class="comp-header">Buttons — On Blue Surface</div>
+        <div class="comp-body">
+          <div class="btn-row">
+            <button class="btn btn-primary-b">Apply for COMPASS</button>
+            <button class="btn btn-secondary-b">See the Method</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost-b">Browse</button>
+          </div>
+          <div style="margin-top:var(--space-md);padding-top:var(--space-md);border-top:1px solid rgba(255,255,255,0.07);font-size:12px;color:var(--tok-slate-mid);line-height:1.6;">
+            Primary: same Gold bg. Secondary: gold outline, gold text. Ghost: faint border, slate text.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="component-grid">
+      <div class="comp-panel white-comp">
+        <div class="comp-header">Content Card — On White</div>
+        <div class="comp-body">
+          <div class="card-white">
+            <div class="cw-kicker">COMPASS · Pre-Verbal Knowing</div>
+            <div class="cw-title">What AI Can't Access: The Layer That Makes Intuitive Reading Work</div>
+            <div class="cw-body">Large language models operate on encoded language, not on the pre-symbolic layer where intuitive reading begins.</div>
+          </div>
+        </div>
+      </div>
+      <div class="comp-panel blue-comp">
+        <div class="comp-header">Content Card — On Blue</div>
+        <div class="comp-body">
+          <div class="card-blue">
+            <div class="cb-kicker">COMPASS · Pillar IV</div>
+            <div class="cb-title">Perceive — What is actually present</div>
+            <div class="cb-body">Before reaching for meaning, notice what you actually see. That gap is where the COMPASS Method begins.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs -->
+    <div class="component-grid">
+      <div class="comp-panel white-comp">
+        <div class="comp-header">Form Input — On White</div>
+        <div class="comp-body">
+          <div style="margin-bottom:var(--space-md);">
+            <label class="label-w">Email address</label>
+            <input class="input-w" type="email" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="label-w">Reading question</label>
+            <input class="input-w" type="text" placeholder="What is this reading about?">
+          </div>
+        </div>
+      </div>
+      <div class="comp-panel blue-comp">
+        <div class="comp-header">Form Input — On Blue</div>
+        <div class="comp-body">
+          <div style="margin-bottom:var(--space-md);">
+            <label class="label-b">Email address</label>
+            <input class="input-b" type="email" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="label-b">Reading question</label>
+            <input class="input-b" type="text" placeholder="What is this reading about?">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pull quotes -->
+    <div class="component-grid">
+      <div class="comp-panel white-comp">
+        <div class="comp-header">Pull-Quote — On White</div>
+        <div class="comp-body">
+          <blockquote class="quote-white">
+            <p>The moment of recognition is the same thing this work develops: the ability to notice what is true, and follow it.</p>
+            <cite>Leigh Spencer · Tides of Knowing</cite>
+          </blockquote>
+        </div>
+      </div>
+      <div class="comp-panel blue-comp">
+        <div class="comp-header">Pull-Quote — On Blue</div>
+        <div class="comp-body">
+          <blockquote class="quote-blue">
+            <p>If it's real, it can be explained. And if it can be explained, it can be followed.</p>
+            <cite>Leigh Spencer · Tides of Knowing</cite>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="component-grid">
+      <div class="comp-panel white-comp">
+        <div class="comp-header">Tags — On White</div>
+        <div class="comp-body">
+          <span class="tag tag-gold-w">COMPASS Method</span>
+          <span class="tag tag-navy-w">Lenormand</span>
+          <span class="tag tag-teal-w">New</span>
+        </div>
+      </div>
+      <div class="comp-panel blue-comp">
+        <div class="comp-header">Tags — On Blue</div>
+        <div class="comp-body">
+          <span class="tag tag-gold-b">COMPASS Method</span>
+          <span class="tag tag-air-b">Lenormand</span>
+          <span class="tag tag-teal-b">New</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust strip both surfaces -->
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);margin-top:var(--space-lg);">Authority Strip — On White</p>
+    <div class="trust-strip-w">
+      <div class="ti-w"><span class="ti-num-w">40+</span><span class="ti-label-w">Years · Tarot</span></div>
+      <div class="ti-w"><span class="ti-num-w">30</span><span class="ti-label-w">Years · Journalism</span></div>
+      <div class="ti-w"><span class="ti-num-w">4th</span><span class="ti-label-w">Generation · Matakite</span></div>
+      <div class="ti-w"><span class="ti-num-w">7</span><span class="ti-label-w">Pillars · COMPASS</span></div>
+    </div>
+
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);">Authority Strip — On Blue</p>
+    <div style="background:var(--tok-deep-ocean);padding:var(--space-lg);border-radius:4px;">
+      <div class="trust-strip-b">
+        <div class="ti-b"><span class="ti-num-b">40+</span><span class="ti-label-b">Years · Tarot</span></div>
+        <div class="ti-b"><span class="ti-num-b">30</span><span class="ti-label-b">Years · Journalism</span></div>
+        <div class="ti-b"><span class="ti-num-b">4th</span><span class="ti-label-b">Generation · Matakite</span></div>
+        <div class="ti-b"><span class="ti-num-b">7</span><span class="ti-label-b">Pillars · COMPASS</span></div>
+      </div>
+    </div>
+
+    <!-- COMPASS strip -->
+    <p style="font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--tok-text-muted);margin-bottom:var(--space-md);margin-top:var(--space-xl);">COMPASS Pillar Framework — always on blue surface</p>
+    <div style="background:var(--tok-deep-ocean);padding:var(--space-lg);border-radius:4px;">
+      <div class="compass-strip">
+        <div class="cp"><span class="cp-letter">C</span><span class="cp-name">Center</span></div>
+        <div class="cp"><span class="cp-letter">O</span><span class="cp-name">Open</span></div>
+        <div class="cp"><span class="cp-letter">M</span><span class="cp-name">Map</span></div>
+        <div class="cp"><span class="cp-letter">P</span><span class="cp-name">Perceive</span></div>
+        <div class="cp"><span class="cp-letter">A</span><span class="cp-name">Align</span></div>
+        <div class="cp"><span class="cp-letter">S</span><span class="cp-name">Sense</span></div>
+        <div class="cp"><span class="cp-letter">S</span><span class="cp-name">Seal</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════ 07 SPACING & MOTION (White) ══════ -->
+<div class="guide-section white">
+  <div class="container">
+    <p class="section-label">07 &nbsp; Layout, Spacing & Motion</p>
+    <h2 class="section-title">Grid & Rhythm</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-bottom:var(--space-xl);">
+      <div style="background:var(--tok-surface-reading-soft);border:1px solid var(--tok-border-light);border-radius:4px;padding:var(--space-lg);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-gold);margin-bottom:var(--space-md);">Layout Widths</div>
+        <div style="font-size:13px;color:var(--tok-text-muted);line-height:2.1;">
+          <div><span style="font-family:monospace;color:var(--tok-teal);">--max-width</span> &nbsp;&nbsp; 1160px</div>
+          <div><span style="font-family:monospace;color:var(--tok-teal);">--reading-width</span> &nbsp;&nbsp; 720px</div>
+          <div style="font-size:12px;margin-top:8px;color:#9CA3AF;">Wide margins. Content never fills the full viewport. Whitespace is structural, not decoration.</div>
+        </div>
+      </div>
+      <div style="background:var(--tok-surface-reading-soft);border:1px solid var(--tok-border-light);border-radius:4px;padding:var(--space-lg);">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:var(--tok-gold);margin-bottom:var(--space-md);">Elevation System</div>
+        <div style="font-size:13px;line-height:2.5;">
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:16px;border-radius:2px;background:#F2EFE9;border:1px solid #CEC9C1;"></div><span style="font-family:monospace;font-size:11px;color:var(--tok-teal);">Level 0</span><span style="font-size:12px;color:var(--tok-text-muted);">Base reading surface</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:16px;border-radius:2px;background:#E8E3DB;border:1px solid #CEC9C1;box-shadow:var(--shadow-sm);"></div><span style="font-family:monospace;font-size:11px;color:var(--tok-teal);">Level 1</span><span style="font-size:12px;color:var(--tok-text-muted);">Cards on white</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:16px;border-radius:2px;background:#17324F;box-shadow:var(--shadow-sys-sm);"></div><span style="font-family:monospace;font-size:11px;color:var(--tok-teal);">Level 2</span><span style="font-size:12px;color:var(--tok-text-muted);">Blue panels (system)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacing-demo">
+      <div class="space-row"><span class="space-token">--xs</span><div class="space-bar-wrap"><div class="space-bar" style="width:4px;height:8px;"></div></div><span class="space-value">4px</span></div>
+      <div class="space-row"><span class="space-token">--sm</span><div class="space-bar-wrap"><div class="space-bar" style="width:8px;height:10px;"></div></div><span class="space-value">8px</span></div>
+      <div class="space-row"><span class="space-token">--md</span><div class="space-bar-wrap"><div class="space-bar" style="width:16px;height:12px;"></div></div><span class="space-value">16px</span></div>
+      <div class="space-row"><span class="space-token">--lg</span><div class="space-bar-wrap"><div class="space-bar" style="width:32px;height:14px;"></div></div><span class="space-value">32px</span></div>
+      <div class="space-row"><span class="space-token">--xl</span><div class="space-bar-wrap"><div class="space-bar" style="width:64px;height:16px;"></div></div><span class="space-value">64px</span></div>
+      <div class="space-row"><span class="space-token">--2xl</span><div class="space-bar-wrap"><div class="space-bar" style="width:96px;height:18px;"></div></div><span class="space-value">96px</span></div>
+    </div>
+
+    <div class="motion-grid">
+      <div class="motion-card-w">
+        <div class="motion-title-w">Page Load</div>
+        <div class="motion-bar"></div>
+        <div class="motion-spec-w">Staggered fade-up · Delay <strong>0–320ms</strong> · Duration <strong>400ms</strong></div>
+      </div>
+      <div class="motion-card-w">
+        <div class="motion-title-w">Hover / Interactive</div>
+        <div class="motion-bar" style="background:var(--tok-teal);animation-duration:2s;"></div>
+        <div class="motion-spec-w">translateY −1 to −3px · Duration <strong>150–220ms</strong> · No bounce</div>
+      </div>
+      <div class="motion-card-w">
+        <div class="motion-title-w">Scroll</div>
+        <div class="motion-bar" style="background:#AFCBFF;animation-duration:5s;"></div>
+        <div class="motion-spec-w">Smooth scroll only · No parallax · No scroll-triggered entrance animations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 08 CSS TOKENS (Blue) ══════ -->
+<div class="guide-section blue">
+  <div class="container">
+    <p class="section-label">08 &nbsp; Implementation</p>
+    <h2 class="section-title">CSS Tokens v1.2</h2>
+    <p class="section-desc">Complete token set. Dual-surface values are clearly separated. Use these as the single source of truth in the Astro codebase.</p>
+
+    <div class="token-block">
+<span class="tk-comment">/* ── Tides of Knowing · CSS Custom Properties v1.2 ── */</span><br>
+<span class="tk-punct">:root {</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Identity (always present) ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-deep-ocean</span><span class="tk-punct">:</span>           <span class="tk-val">#0B1F3A</span><span class="tk-punct">;</span>  <span class="tk-comment">/* System bg, nav, footer */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-gold</span><span class="tk-punct">:</span>                 <span class="tk-val">#C6A85A</span><span class="tk-punct">;</span>  <span class="tk-comment">/* CTAs, labels, authority */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-gold-light</span><span class="tk-punct">:</span>           <span class="tk-val">#D9BC7A</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Gold hover */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-fire</span><span class="tk-punct">:</span>                 <span class="tk-val">#E3B23C</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Primary CTA alt, fire element */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Surface A: Editorial / Reading ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-surface-reading</span><span class="tk-punct">:</span>      <span class="tk-val">#F2EFE9</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Paper white — articles, blog, about */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-surface-reading-soft</span><span class="tk-punct">:</span> <span class="tk-val">#E8E3DB</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Cards on paper */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-text-dark</span><span class="tk-punct">:</span>            <span class="tk-val">#1A1A1A</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Body text on paper */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-text-muted</span><span class="tk-punct">:</span>           <span class="tk-val">#4B5563</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Secondary text on paper */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-border-light</span><span class="tk-punct">:</span>         <span class="tk-val">#CEC9C1</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Warm borders/dividers on paper */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Surface B: System / Blue ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-surface-panel</span><span class="tk-punct">:</span>        <span class="tk-val">#17324F</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Cards on blue */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-surface-panel-alt</span><span class="tk-punct">:</span>    <span class="tk-val">#1E3A5F</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Alt panels, hover state */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-text-light</span><span class="tk-punct">:</span>           <span class="tk-val">#F5F7FA</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Primary text on blue */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-text-light-strong</span><span class="tk-punct">:</span>    <span class="tk-val">#FFFFFF</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Max contrast on blue */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-text-light-soft</span><span class="tk-punct">:</span>      <span class="tk-val">#EAF1F8</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Panel body text on blue */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-border-system</span><span class="tk-punct">:</span>        <span class="tk-val-b">rgba(255,255,255,0.10)</span><span class="tk-punct">;</span> <span class="tk-comment">/* Borders on blue */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Teal (live site continuity) ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-teal</span><span class="tk-punct">:</span>                 <span class="tk-val">#0891b2</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Links, nav active on white */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-teal-light</span><span class="tk-punct">:</span>           <span class="tk-val">#67C6E0</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Links on blue */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-teal-dim</span><span class="tk-punct">:</span>             <span class="tk-val">#065e73</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Active/pressed */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Elemental (semantic only) ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-water</span><span class="tk-punct">:</span>                <span class="tk-val">#1E3A5F</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Depth, intuition */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-air</span><span class="tk-punct">:</span>                  <span class="tk-val">#AFCBFF</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Thought, clarity */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-earth</span><span class="tk-punct">:</span>                <span class="tk-val">#4F7A5A</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Grounding, structure */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Neutrals ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-slate</span><span class="tk-punct">:</span>                <span class="tk-val">#D6DCE5</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--tok-slate-mid</span><span class="tk-punct">:</span>            <span class="tk-val">#8E9BAD</span><span class="tk-punct">;</span>  <span class="tk-comment">/* Meta on blue */</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Typography ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--font-heading</span><span class="tk-punct">:</span>  <span class="tk-val-b">'Playfair Display'</span><span class="tk-punct">, Georgia, serif;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--font-body</span><span class="tk-punct">:</span>     <span class="tk-val-b">'Inter'</span><span class="tk-punct">, system-ui, sans-serif;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--font-accent</span><span class="tk-punct">:</span>   <span class="tk-val-b">'Cormorant Garamond'</span><span class="tk-punct">, Georgia, serif;</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Spacing ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--space-xs</span><span class="tk-punct">:</span> <span class="tk-val">4px</span><span class="tk-punct">;</span>   <span class="tk-prop">--space-sm</span><span class="tk-punct">:</span>  <span class="tk-val">8px</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--space-md</span><span class="tk-punct">:</span> <span class="tk-val">16px</span><span class="tk-punct">;</span>  <span class="tk-prop">--space-lg</span><span class="tk-punct">:</span>  <span class="tk-val">32px</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--space-xl</span><span class="tk-punct">:</span> <span class="tk-val">64px</span><span class="tk-punct">;</span>  <span class="tk-prop">--space-2xl</span><span class="tk-punct">:</span> <span class="tk-val">96px</span><span class="tk-punct">;</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Layout ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--max-width</span><span class="tk-punct">:</span>      <span class="tk-val">1160px</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--reading-width</span><span class="tk-punct">:</span>  <span class="tk-val">720px</span><span class="tk-punct">;</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Motion ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--ease-out</span><span class="tk-punct">:</span>  <span class="tk-val-b">cubic-bezier(0.16, 1, 0.3, 1)</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--dur-fast</span><span class="tk-punct">:</span>  <span class="tk-val">150ms</span><span class="tk-punct">;</span>  <span class="tk-prop">--dur-base</span><span class="tk-punct">:</span> <span class="tk-val">220ms</span><span class="tk-punct">;</span>  <span class="tk-prop">--dur-slow</span><span class="tk-punct">:</span> <span class="tk-val">400ms</span><span class="tk-punct">;</span><br>
+<br>
+&nbsp;&nbsp;<span class="tk-comment">/* ── Elevation ── */</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--shadow-sm</span><span class="tk-punct">:</span>      <span class="tk-val-b">0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--shadow-md</span><span class="tk-punct">:</span>      <span class="tk-val-b">0 4px 16px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--shadow-sys-sm</span><span class="tk-punct">:</span>  <span class="tk-val-b">0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--shadow-sys-md</span><span class="tk-punct">:</span>  <span class="tk-val-b">0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25)</span><span class="tk-punct">;</span><br>
+&nbsp;&nbsp;<span class="tk-prop">--shadow-gold</span><span class="tk-punct">:</span>    <span class="tk-val-b">0 0 24px rgba(198,168,90,0.15)</span><span class="tk-punct">;</span><br>
+<span class="tk-punct">}</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 09 NON-NEGOTIABLES (White) ══════ -->
+<div class="guide-section white">
+  <div class="container">
+    <p class="section-label">09 &nbsp; Non-Negotiables</p>
+    <h2 class="section-title">The Rules</h2>
+    <p class="section-desc">These are not preferences. Violating any one of them degrades the authority of the whole.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card-w">
+        <div class="rule-num">01</div>
+        <div class="rule-title">White reads. Blue contains.</div>
+        <div class="rule-body">Article body copy never sits on deep blue. Long-form reading always happens on a white surface. Blue is reserved for system interfaces, heroes, tools, footers, and conversion moments.</div>
+      </div>
+      <div class="rule-card-w">
+        <div class="rule-num">02</div>
+        <div class="rule-title">Gold is restraint</div>
+        <div class="rule-body">Gold appears on labels, CTAs, and authority markers only. It never appears as a background or fill. Its power comes from scarcity. One diluted use weakens every other.</div>
+      </div>
+      <div class="rule-card-w">
+        <div class="rule-num">03</div>
+        <div class="rule-title">Typography defines authority</div>
+        <div class="rule-body">Playfair Display is for headings only. Cormorant Garamond is for poetry, sublines, and pull-quotes only. Inter handles everything functional. Never mix roles.</div>
+      </div>
+      <div class="rule-card-w">
+        <div class="rule-num">04</div>
+        <div class="rule-title">Elemental colours are semantic</div>
+        <div class="rule-body">Water, Air, Earth, Fire map to specific content types and states. They are never used as decorative accents or interchanged arbitrarily.</div>
+      </div>
+      <div class="rule-card-w">
+        <div class="rule-num">05</div>
+        <div class="rule-title">UI must remain clean and precise</div>
+        <div class="rule-body">No gradients on buttons. No border-radius above 6px. No drop shadows as decoration. Shadows convey elevation only. The surface transition (blue-to-white) must feel architectural — not accidental.</div>
+      </div>
+      <div class="rule-card-w">
+        <div class="rule-num">06</div>
+        <div class="rule-title">Every sentence must carry meaning</div>
+        <div class="rule-body">No filler language. No generic tarot phrasing. No "journey," "transformation," "vibration." The brand's credibility lives in its precision. One weak sentence undermines the whole page.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER (Blue) -->
+<div class="brand-footer">
+  <div class="footer-wordmark"><em>Tides of</em> Knowing</div>
+  <div class="footer-meta">Brand System v1.4 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Paper reads. Blue contains. Gold signals.</div>
+</div>
+
+</body>
+</html>

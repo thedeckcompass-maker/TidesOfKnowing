@@ -5,12 +5,12 @@
 
 .tok-share__label {
   margin: 0 0 0.35rem;
-  font-family: var(--font-nav);
+  font-family: var(--font-body);
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--mountain-water);
+  color: var(--tok-teal-dim);
   opacity: 0.85;
 }
 
@@ -44,10 +44,10 @@
   height: var(--tok-share-size);
   padding: 0;
   margin: 0;
-  border: 1px solid var(--shore);
+  border: 1px solid var(--tok-surface-reading-soft);
   border-radius: 0.2rem;
-  background: color-mix(in srgb, var(--paper) 92%, var(--shore));
-  color: var(--mountain-water);
+  background: color-mix(in srgb, var(--tok-surface-reading) 92%, var(--tok-surface-reading-soft));
+  color: var(--tok-teal-dim);
   cursor: pointer;
   text-decoration: none;
   transition:
@@ -58,9 +58,9 @@
 }
 
 .tok-share__btn:hover {
-  color: var(--ink);
-  border-color: color-mix(in srgb, var(--gold) 45%, var(--shore));
-  background: color-mix(in srgb, var(--paper) 70%, var(--shore));
+  color: var(--tok-text-dark);
+  border-color: color-mix(in srgb, var(--tok-gold) 45%, var(--tok-surface-reading-soft));
+  background: color-mix(in srgb, var(--tok-surface-reading) 70%, var(--tok-surface-reading-soft));
 }
 
 .tok-share__btn:focus {
@@ -68,7 +68,7 @@
 }
 
 .tok-share__btn:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--tok-gold);
   outline-offset: 2px;
 }
 
@@ -81,11 +81,11 @@
 .tok-share__status {
   margin: 0.35rem 0 0;
   min-height: 1.15em;
-  font-family: var(--font-nav);
+  font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--mountain-water);
+  color: var(--tok-teal-dim);
 }
 
 .tok-share--sidebar .tok-share__status {
@@ -104,7 +104,7 @@
   margin-top: 2rem;
   padding: 0 1rem;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--shore);
+  border-top: 1px solid var(--tok-surface-reading-soft);
   max-width: 65ch;
   margin-left: auto;
   margin-right: auto;
@@ -170,9 +170,9 @@
     z-index: 40;
     padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom))
       max(1rem, env(safe-area-inset-left));
-    background: color-mix(in srgb, var(--paper) 94%, var(--shore));
-    border-top: 1px solid var(--shore);
-    box-shadow: 0 -4px 20px color-mix(in srgb, var(--near-black) 6%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 94%, var(--tok-surface-reading-soft));
+    border-top: 1px solid var(--tok-surface-reading-soft);
+    box-shadow: 0 -4px 20px color-mix(in srgb, var(--tok-deep-ocean) 6%, transparent);
   }
 
   .tok-share-mobile-bar .tok-share {

@@ -1,0 +1,68 @@
+---
+interface Props {
+  id?: string;
+  name?: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  class?: string;
+  label?: string;
+}
+
+const {
+  id,
+  name,
+  type = "text",
+  placeholder,
+  required = false,
+  class: className = "",
+  label,
+} = Astro.props;
+const inputId = id ?? name ?? undefined;
+---
+
+<div class:list={["tok-ui-field-w", className]}>
+  {
+    label && inputId && (
+      <label class="tok-ui-field-w__label" for={inputId}>
+        {label}
+      </label>
+    )
+  }
+  <input
+    class="tok-ui-field-w__input"
+    id={inputId}
+    name={name}
+    type={type}
+    placeholder={placeholder}
+    required={required}
+  />
+</div>
+
+<style>
+  .tok-ui-field-w__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--tok-text-muted);
+    margin-bottom: var(--space-xs);
+  }
+  .tok-ui-field-w__input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--tok-text-dark);
+    background: var(--tok-surface-reading);
+    border: 1px solid var(--tok-border-light);
+    border-radius: 3px;
+    padding: var(--space-sm) var(--space-md);
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .tok-ui-field-w__input:focus {
+    outline: none;
+    border-color: var(--tok-teal);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--tok-teal) 35%, transparent);
+  }
+</style>

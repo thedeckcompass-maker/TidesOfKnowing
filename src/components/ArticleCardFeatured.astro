@@ -72,8 +72,8 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     height: 100%;
     text-decoration: none;
     color: inherit;
-    background: rgba(255, 255, 255, 0.45);
-    border: 1px solid rgba(198, 161, 74, 0.45);
+    background: color-mix(in srgb, var(--tok-surface-reading) 45%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
     border-radius: 0.5rem;
     overflow: hidden;
     transition:
@@ -83,15 +83,15 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .feat-card__link:hover {
-    border-color: var(--gold);
-    box-shadow: 0 12px 36px rgba(13, 50, 77, 0.12);
+    border-color: var(--tok-gold);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
 
   .feat-card__media {
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: var(--shore);
+    background: var(--tok-surface-reading-soft);
   }
 
   .feat-card__img {
@@ -110,28 +110,28 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .feat-card__badge {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .feat-card__title {
     margin: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(1.35rem, 2.5vw, 1.65rem);
     font-weight: 600;
     line-height: 1.2;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .feat-card__subtitle {
     margin: 0;
     font-size: 0.98rem;
     line-height: 1.45;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     font-style: italic;
     opacity: 0.92;
   }
@@ -140,7 +140,7 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     margin: 0;
     font-size: 1rem;
     line-height: 1.65;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     opacity: 0.9;
     flex: 1;
   }
@@ -149,32 +149,32 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem 0.75rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .feat-card__cta {
     margin-top: 0.35rem;
     display: inline-flex;
     align-self: flex-start;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     padding: 0.55rem 1rem;
-    background: var(--navy);
-    color: var(--lavender);
+    background: var(--tok-surface-panel);
+    color: var(--tok-text-light-soft);
     border-radius: 0.25rem;
     transition: background 0.2s ease, color 0.2s ease;
   }
 
   .feat-card__link:hover .feat-card__cta {
-    background: var(--mountain-water);
-    color: #fff;
+    background: var(--tok-teal-dim);
+    color: var(--tok-text-light-strong);
   }
 </style>

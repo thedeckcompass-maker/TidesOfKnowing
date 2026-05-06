@@ -81,16 +81,16 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
   .tok-tags-index__head {
     margin-bottom: 2rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--tok-gold);
   }
 
   .tok-tags-index__title {
     margin: 0 0 0.5rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4vw, 2.5rem);
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-tags-index__lede {
@@ -122,28 +122,28 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
     text-decoration: none;
     color: inherit;
     padding: 0.65rem 0;
-    border-bottom: 1px solid rgba(198, 161, 74, 0.3);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
   }
 
   .tok-tags-index__link:hover .tok-tags-index__label {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-tags-index__label {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.2rem;
     font-style: italic;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     transition: color 0.2s ease;
   }
 
   .tok-tags-index__count {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
     flex-shrink: 0;
   }
 </style>

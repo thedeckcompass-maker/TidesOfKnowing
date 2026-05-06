@@ -34,17 +34,17 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
   .tok-subscribe__head {
     margin-bottom: 2.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
   .tok-subscribe__title {
     margin: 0 0 1rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.5rem);
     line-height: 1.15;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .tok-subscribe__lede {
@@ -52,7 +52,7 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
     font-family: var(--font-body);
     font-size: 1.08rem;
     line-height: 1.75;
-    color: var(--ink);
+    color: var(--tok-text-dark);
   }
 
   .tok-subscribe__form-wrap {

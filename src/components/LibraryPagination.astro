@@ -55,7 +55,7 @@ const { prevHref, nextHref, pages } = Astro.props;
     gap: 0.75rem 1rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(198, 161, 74, 0.35);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
   .lib-pager__list {
@@ -75,7 +75,7 @@ const { prevHref, nextHref, pages } = Astro.props;
     height: 2.25rem;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 600;
     border-radius: 0.25rem;
@@ -83,36 +83,36 @@ const { prevHref, nextHref, pages } = Astro.props;
 
   .lib-pager__link {
     text-decoration: none;
-    color: var(--sky);
-    border: 1px solid rgba(116, 179, 206, 0.45);
+    color: var(--tok-teal);
+    border: 1px solid color-mix(in srgb, var(--tok-teal-light) 45%, transparent);
   }
 
   .lib-pager__link:hover {
-    color: var(--mountain-water);
-    border-color: var(--mountain-water);
+    color: var(--tok-teal-dim);
+    border-color: var(--tok-teal-dim);
   }
 
   .lib-pager__current {
-    background: var(--navy);
-    color: var(--lavender);
+    background: var(--tok-surface-panel);
+    color: var(--tok-text-light-soft);
   }
 
   .lib-pager__edge {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .lib-pager__edge:hover {
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .lib-pager__edge--disabled {
-    color: rgba(30, 77, 107, 0.35);
+    color: color-mix(in srgb, var(--tok-teal-dim) 35%, var(--tok-surface-reading));
     cursor: not-allowed;
   }
 </style>

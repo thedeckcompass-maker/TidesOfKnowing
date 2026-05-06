@@ -134,16 +134,16 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
   .tok-series-index__head {
     margin-bottom: 2rem;
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--tok-gold);
   }
 
   .tok-series-index__title {
     margin: 0 0 0.5rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4vw, 2.5rem);
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-series-index__lede {
@@ -176,11 +176,11 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
     text-decoration: none;
     color: inherit;
     padding-bottom: 0.35rem;
-    border-bottom: 1px solid rgba(198, 161, 74, 0.35);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
   .tok-series-index__link:hover .tok-series-index__name {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-series-index__sub {
@@ -189,9 +189,9 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-series-index__overview {
-    color: var(--sky);
+    color: var(--tok-teal);
     text-decoration: none;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -203,27 +203,27 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-series-index__name {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.35rem;
     font-style: italic;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     transition: color 0.2s ease;
   }
 
   .tok-series-index__meta {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .tok-series-index__latest {
     margin: 0.35rem 0 0;
     font-size: 0.95rem;
     line-height: 1.55;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     opacity: 0.9;
   }
 </style>

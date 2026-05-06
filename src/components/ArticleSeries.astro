@@ -110,8 +110,8 @@ const seriesArticles = all
   .tok-series {
     margin-top: 3.5rem;
     padding: 2rem 1rem;
-    border-top: 2px solid var(--shore);
-    border-bottom: 2px solid var(--shore);
+    border-top: 2px solid var(--tok-surface-reading-soft);
+    border-bottom: 2px solid var(--tok-surface-reading-soft);
     max-width: 65ch;
     margin-left: auto;
     margin-right: auto;
@@ -123,18 +123,18 @@ const seriesArticles = all
   }
 
   .tok-series__name {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     margin: 0 0 0.5rem 0;
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--ink);
+    color: var(--tok-text-dark);
   }
 
   .tok-series__progress {
     margin: 0;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     font-size: 0.875rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
   }
 
   .tok-series__nav {
@@ -153,19 +153,19 @@ const seriesArticles = all
 
   .tok-series__link {
     padding: 0.75rem 1.25rem;
-    background: var(--shore);
+    background: var(--tok-surface-reading-soft);
     border-radius: 0.375rem;
     text-decoration: none;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     font-weight: 600;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.9375rem;
     transition: background 0.2s ease, color 0.2s ease;
   }
 
   .tok-series__link:hover {
-    background: var(--pale-horizon);
-    color: var(--navy);
+    background: color-mix(in srgb, var(--tok-slate) 65%, var(--tok-surface-reading-soft));
+    color: var(--tok-teal-dim);
   }
 
   .tok-series__list-wrap {
@@ -188,18 +188,18 @@ const seriesArticles = all
   }
 
   .tok-series__item--current .tok-series__current {
-    color: var(--ink);
+    color: var(--tok-text-dark);
     font-weight: 600;
   }
 
   .tok-series__here {
     font-weight: 500;
     font-style: italic;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     opacity: 0.85;
   }
 
   .tok-series__item:not(.tok-series__item--current) a {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 </style>

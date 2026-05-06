@@ -54,12 +54,12 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
 
   .tools-hub__title {
     margin: 0 0 0.75rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.15;
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
   }
 
   .tools-hub__intro {
@@ -67,6 +67,7 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
     font-size: 1.05rem;
     line-height: 1.72;
     max-width: 40rem;
+    color: var(--tok-text-light-soft);
   }
 
   .tools-hub__grid {
@@ -95,34 +96,34 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
     flex-direction: column;
     gap: 0.4rem;
     padding: 0.85rem 1rem;
-    border: 1px solid rgba(198, 161, 74, 0.45);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
     border-radius: 0.35rem;
-    background: rgba(255, 255, 255, 0.4);
+    background: color-mix(in srgb, var(--tok-surface-reading) 40%, transparent);
     min-height: 0;
   }
 
   .tools-hub__card--soon {
     border-style: dashed;
-    border-color: rgba(13, 50, 77, 0.22);
-    background: rgba(13, 50, 77, 0.03);
+    border-color: color-mix(in srgb, var(--tok-water) 22%, transparent);
+    background: color-mix(in srgb, var(--tok-water) 3%, transparent);
   }
 
   .tools-hub__card-link {
     text-decoration: none;
-    color: var(--sky);
+    color: var(--tok-teal-light);
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.35;
   }
 
   .tools-hub__card-link:hover {
-    color: var(--mountain-water);
+    color: var(--tok-water);
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
   .tools-hub__card-link--soon {
-    color: var(--mountain-water);
+    color: var(--tok-water);
     opacity: 0.92;
   }
 
@@ -131,20 +132,20 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.35;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .tools-hub__card-desc {
     margin: 0;
     font-size: 0.92rem;
     line-height: 1.62;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     flex: 1;
   }
 
   .tools-hub__status {
     margin: 0.15rem 0 0;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -152,10 +153,10 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
   }
 
   .tools-hub__status--live {
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .tools-hub__status--next {
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 </style>

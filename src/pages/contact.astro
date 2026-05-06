@@ -94,12 +94,12 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
 
   .contact__title {
     margin: 0 0 0.5rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.15;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .contact__intro {
@@ -114,21 +114,21 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
   }
 
   .contact__label {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .contact__input,
   .contact__textarea {
     width: 100%;
-    border: 1px solid rgba(13, 50, 77, 0.28);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
     border-radius: 0.2rem;
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
     font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.5;
@@ -144,20 +144,20 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
     margin-top: 0.4rem;
     justify-self: start;
     padding: 0.8rem 1.6rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--mountain-water);
-    border: 2px solid var(--gold);
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
     border-radius: 2px;
     background: transparent;
     cursor: pointer;
   }
 
   .contact__button:hover {
-    background: rgba(198, 161, 74, 0.14);
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
   }
 
   .contact__status {
@@ -174,12 +174,12 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
   }
 
   .contact__fallback a {
-    color: var(--sky);
+    color: var(--tok-teal);
     text-decoration: underline;
     text-underline-offset: 0.12em;
   }
 
   .contact__fallback a:hover {
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 </style>

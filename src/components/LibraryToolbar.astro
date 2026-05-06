@@ -111,29 +111,29 @@ const sortChoices: { id: "newest" | "oldest" | "series"; label: string; href: st
   }
 
   .lib-toolbar__label {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .lib-toolbar__select {
     font-family: var(--font-body);
     font-size: 0.95rem;
     padding: 0.5rem 0.65rem;
-    border: 1px solid rgba(198, 161, 74, 0.5);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 50%, transparent);
     border-radius: 0.35rem;
-    background: rgba(255, 255, 255, 0.6);
-    color: var(--ink);
+    background: color-mix(in srgb, var(--tok-surface-reading) 60%, transparent);
+    color: var(--tok-text-dark);
   }
 
   .lib-toolbar__hint {
     margin: 0;
     font-size: 0.88rem;
     line-height: 1.5;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     max-width: 28ch;
   }
 </style>

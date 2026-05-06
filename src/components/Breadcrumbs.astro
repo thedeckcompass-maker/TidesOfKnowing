@@ -48,12 +48,12 @@ const { items } = Astro.props;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem 0.5rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .breadcrumbs__item {
@@ -63,16 +63,16 @@ const { items } = Astro.props;
   }
 
   .breadcrumbs__link {
-    color: var(--sky);
+    color: var(--tok-teal);
     text-decoration: none;
   }
 
   .breadcrumbs__link:hover {
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .breadcrumbs__current {
-    color: var(--ink);
+    color: var(--tok-text-dark);
     max-width: min(100%, 28rem);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,7 +80,7 @@ const { items } = Astro.props;
   }
 
   .breadcrumbs__sep {
-    color: rgba(30, 77, 107, 0.45);
+    color: color-mix(in srgb, var(--tok-teal-dim) 45%, var(--tok-surface-reading));
     user-select: none;
   }
 </style>

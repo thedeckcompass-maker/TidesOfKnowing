@@ -144,22 +144,22 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
 
   .compass-apply__eyebrow {
     margin: 0 0 0.5rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.64rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .compass-apply__title {
     margin: 0 0 0.75rem;
-    font-family: var(--font-display);
+    font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.8vw, 2.75rem);
     line-height: 1.16;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .compass-apply__subtext {
@@ -171,8 +171,12 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
   .compass-apply__panel {
     padding: clamp(1rem, 3vw, 1.45rem);
     border-radius: 0.25rem;
-    border: 1px solid rgba(198, 161, 74, 0.35);
-    background: linear-gradient(180deg, rgba(216, 219, 241, 0.2) 0%, var(--paper) 100%);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tok-air) 20%, transparent) 0%,
+      var(--tok-surface-reading) 100%
+    );
   }
 
   .compass-apply__intro {
@@ -198,12 +202,12 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
   }
 
   .compass-apply__field > span {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.64rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-water);
   }
 
   .compass-apply__field input,
@@ -213,9 +217,9 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     font: inherit;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid rgba(116, 179, 206, 0.55);
+    color: var(--tok-text-dark);
+    background: var(--tok-surface-reading);
+    border: 1px solid color-mix(in srgb, var(--tok-teal-light) 55%, transparent);
     border-radius: 0.2rem;
     padding: 0.62rem 0.7rem;
   }
@@ -228,7 +232,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
   .compass-apply__field input:focus-visible,
   .compass-apply__field select:focus-visible,
   .compass-apply__field textarea:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--tok-gold);
     outline-offset: 1px;
   }
 
@@ -241,20 +245,20 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     align-items: center;
     justify-content: center;
     padding: 0.85rem 1.75rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--mountain-water);
-    border: 2px solid var(--gold);
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
     border-radius: 2px;
     background: transparent;
     cursor: pointer;
   }
 
   .compass-apply__submit:hover {
-    background: rgba(198, 161, 74, 0.14);
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
   }
 
   .compass-apply__submit:disabled {
@@ -273,8 +277,8 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
   .compass-apply__success {
     margin: 1.1rem 0 0;
     padding: 0.85rem 1rem;
-    border-left: 3px solid var(--gold);
-    background: rgba(198, 161, 74, 0.12);
+    border-left: 3px solid var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
     font-size: 1rem;
     line-height: 1.65;
   }

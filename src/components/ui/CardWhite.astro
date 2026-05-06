@@ -1,0 +1,22 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class:list={["tok-ui-card-w", className]}>
+  <slot />
+</div>
+
+<style>
+  .tok-ui-card-w {
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    border: 1px solid var(--tok-border-light);
+    border-radius: 3px;
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+  }
+</style>

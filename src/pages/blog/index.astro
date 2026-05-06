@@ -153,16 +153,16 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
   .tok-blog-index-head {
     margin-bottom: 2.25rem;
     padding-bottom: 1.35rem;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--tok-gold);
   }
 
   .tok-blog-index-title {
     margin: 0 0 0.65rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2.25rem, 5vw, 2.85rem);
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-index-lede {
@@ -190,7 +190,7 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-feed__article {
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(198, 161, 74, 0.28);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
   }
 
   .tok-blog-feed__item:last-child .tok-blog-feed__article {
@@ -200,12 +200,12 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-feed__meta {
     margin: 0 0 0.45rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .tok-blog-feed__sep {
@@ -219,12 +219,12 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-feed__cat:hover {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-blog-feed__title {
     margin: 0 0 0.65rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(1.45rem, 3.5vw, 1.85rem);
@@ -232,12 +232,12 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-feed__title a {
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     text-decoration: none;
   }
 
   .tok-blog-feed__title a:hover {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-blog-feed__excerpt {
@@ -252,16 +252,16 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-feed__more {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-blog-feed__more:hover {
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 </style>

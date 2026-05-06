@@ -69,8 +69,8 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     height: 100%;
     text-decoration: none;
     color: inherit;
-    background: rgba(255, 255, 255, 0.35);
-    border: 1px solid rgba(198, 161, 74, 0.35);
+    background: color-mix(in srgb, var(--tok-surface-reading) 35%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
     border-radius: 0.375rem;
     overflow: hidden;
     transition:
@@ -79,14 +79,14 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .article-card__link:hover {
-    border-color: var(--sky);
-    box-shadow: 0 8px 24px rgba(13, 50, 77, 0.08);
+    border-color: var(--tok-teal);
+    box-shadow: var(--shadow-sm);
   }
 
   .article-card__media {
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: var(--shore);
+    background: var(--tok-surface-reading-soft);
   }
 
   .article-card__img {
@@ -105,32 +105,32 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .article-card__badge {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .article-card__title {
     margin: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.2rem;
     font-weight: 600;
     line-height: 1.25;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .article-card__link:hover .article-card__title {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .article-card__excerpt {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.55;
-    color: var(--ink);
+    color: var(--tok-text-dark);
     opacity: 0.88;
     flex: 1;
   }
@@ -139,16 +139,16 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem 0.75rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     margin-top: 0.25rem;
   }
 
   .article-card__read {
-    color: rgba(30, 77, 107, 0.75);
+    color: color-mix(in srgb, var(--tok-teal-dim) 75%, var(--tok-surface-reading));
   }
 </style>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  class?: string;
+  alt?: boolean;
+}
+
+const { class: className = "", alt = false } = Astro.props;
+---
+
+<div class:list={["tok-ui-card-b", alt && "tok-ui-card-b--alt", className]}>
+  <slot />
+</div>
+
+<style>
+  .tok-ui-card-b {
+    background: var(--tok-surface-panel);
+    color: var(--tok-text-light);
+    border: 1px solid var(--tok-border-system);
+    border-radius: 3px;
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sys-sm);
+  }
+  .tok-ui-card-b--alt {
+    background: var(--tok-surface-panel-alt);
+  }
+</style>

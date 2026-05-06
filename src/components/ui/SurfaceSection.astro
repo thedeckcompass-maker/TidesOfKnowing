@@ -1,0 +1,32 @@
+---
+type Surface = "reading" | "reading-soft" | "system" | "panel" | "panel-alt";
+
+interface Props {
+  surface: Surface;
+  class?: string;
+  id?: string;
+}
+
+const { surface, class: className = "", id } = Astro.props;
+
+const surfaceClass =
+  surface === "reading"
+    ? "surface-reading"
+    : surface === "reading-soft"
+      ? "surface-reading-soft"
+      : surface === "system"
+        ? "surface-system"
+        : surface === "panel"
+          ? "surface-panel"
+          : "surface-panel-alt";
+---
+
+<section class:list={["tok-ui-surface-section", surfaceClass, className]} id={id}>
+  <slot />
+</section>
+
+<style>
+  .tok-ui-surface-section {
+    padding: var(--space-lg) var(--space-md);
+  }
+</style>

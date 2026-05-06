@@ -93,7 +93,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
   <div class="tok-library page-inner">
     <Breadcrumbs items={crumbs} />
 
-    <header class="tok-library__hero" data-reveal>
+    <header class="tok-library__hero tok-library__hero--brand surface-system" data-reveal>
       <h1 class="tok-library__title">Articles</h1>
       <p class="tok-library__lede">{PAGE_DESCRIPTION}</p>
     </header>
@@ -208,17 +208,38 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-library__hero {
     margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--gold);
+    padding: var(--space-lg) 0;
+    border-radius: 0;
+  }
+
+  .tok-library__hero--brand {
+    margin-left: calc(-1 * var(--space-md));
+    margin-right: calc(-1 * var(--space-md));
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+    border-bottom: 1px solid var(--tok-border-system);
+  }
+
+  @media (min-width: 768px) {
+    .tok-library__hero--brand {
+      margin-left: calc(-1 * var(--space-lg));
+      margin-right: calc(-1 * var(--space-lg));
+      padding-left: var(--space-lg);
+      padding-right: var(--space-lg);
+    }
   }
 
   .tok-library__title {
     margin: 0 0 0.75rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2.25rem, 5vw, 2.85rem);
-    color: var(--mountain-water);
+    color: var(--tok-text-light);
+  }
+
+  .tok-library__hero--brand .tok-library__title {
+    color: var(--tok-text-light);
   }
 
   .tok-library__lede {
@@ -226,6 +247,11 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
     max-width: 42rem;
     font-size: 1.08rem;
     line-height: 1.75;
+    color: var(--tok-text-light-soft);
+  }
+
+  .tok-library__hero--brand .tok-library__lede a {
+    color: var(--tok-teal-light);
   }
 
   .tok-library__section {
@@ -234,10 +260,10 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-library__h2 {
     margin: 0 0 1.25rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(1.5rem, 3vw, 1.85rem);
     font-weight: 600;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-library__feat-grid {
@@ -256,7 +282,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
     margin: 0;
     font-size: 1.05rem;
     line-height: 1.7;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-library__series {
@@ -266,15 +292,15 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
   }
 
   .tok-series-acc {
-    border: 1px solid rgba(198, 161, 74, 0.4);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
     border-radius: 0.35rem;
-    background: rgba(255, 255, 255, 0.25);
+    background: color-mix(in srgb, var(--tok-surface-reading) 25%, transparent);
     padding: 0 1rem 0.75rem;
   }
 
   .tok-series-acc__summary {
     cursor: pointer;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -284,7 +310,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    color: var(--ink);
+    color: var(--tok-text-dark);
   }
 
   .tok-series-acc__summary::-webkit-details-marker {
@@ -293,17 +319,17 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-series-acc__name {
     flex: 1;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 1.15rem;
     font-style: italic;
     font-weight: 400;
     letter-spacing: 0.02em;
     text-transform: none;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-series-acc__count {
-    color: var(--gold);
+    color: var(--tok-gold);
     font-size: 0.65rem;
   }
 
@@ -315,7 +341,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-series-acc__part {
     font-size: 0.88rem;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-series-acc__more {

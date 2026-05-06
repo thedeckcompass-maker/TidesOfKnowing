@@ -213,37 +213,37 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-post-cat {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .tok-blog-post-cat:hover {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-blog-post-title {
     margin: 0 0 0.65rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.18;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-post-meta {
     margin: 0 0 1.5rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(31, 42, 46, 0.55);
+    color: color-mix(in srgb, var(--tok-text-dark) 55%, var(--tok-surface-reading));
   }
 
   .tok-blog-post-meta-sep {
@@ -263,7 +263,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
     gap: 1rem;
     margin: 2rem 0 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(198, 161, 74, 0.35);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
   @media (min-width: 520px) {
@@ -293,7 +293,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-adj__link:hover .tok-blog-adj__title {
-    color: var(--sky);
+    color: var(--tok-teal);
   }
 
   .tok-blog-adj__link--next {
@@ -301,37 +301,37 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-adj__label {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .tok-blog-adj__title {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-size: 1.05rem;
     line-height: 1.35;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
     transition: color 0.2s ease;
   }
 
   .tok-blog-related {
     margin-top: 1rem;
     padding: 1.5rem 1.25rem;
-    background: var(--shore);
-    border-left: 3px solid var(--gold);
+    background: var(--tok-surface-reading-soft);
+    border-left: 3px solid var(--tok-gold);
   }
 
   .tok-blog-related__title {
     margin: 0 0 0.85rem;
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: 1.35rem;
-    color: var(--mountain-water);
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-related__list {

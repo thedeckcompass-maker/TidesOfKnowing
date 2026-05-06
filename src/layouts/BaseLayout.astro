@@ -25,6 +25,8 @@ interface Props {
   /** When `before-footer`, renders the TDC block above the site footer. Use `none` when TDC is placed inside the page (e.g. home mid-page or article layout). */
   tdcPlacement?: "none" | "before-footer";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Appended to automatic body surface classes (TOK brand). */
+  bodyClass?: string;
 }
 
 const {
@@ -40,6 +42,7 @@ const {
   sequentialLinks,
   tdcPlacement = "before-footer",
   jsonLd,
+  bodyClass: bodyClassProp,
 } = Astro.props;
 
 const trimmedOg = typeof ogUrl === "string" ? ogUrl.trim() : "";
@@ -63,6 +66,15 @@ const jsonLdArray = jsonLd
 const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
 
 const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
+
+const pathname = Astro.url.pathname;
+const isToolsRoute = pathname.startsWith("/tools");
+const isCompassApplyRoute = pathname.startsWith("/compass/apply");
+const isCompassBlueRoute =
+  pathname.startsWith("/compass") && !isCompassApplyRoute;
+const baseBodySurface =
+  isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
+const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 ---
 
 <!doctype html>
@@ -111,7 +123,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -121,7 +133,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
       <script type="application/ld+json" set:html={raw} />
     ))}
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
@@ -169,7 +181,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
     <footer class="site-footer">
       <div class="page-inner site-footer__inner">
         <div class="site-footer__col">
-          <p class="site-footer__copy" style="text-align: center;">
+          <p class="site-footer__copy site-footer__copy--center">
             © 2026 Tides of Knowing · Leigh Spencer. All rights reserved. Original content.
           </p>
           <nav class="site-footer__discover" aria-label="Sections">
@@ -242,8 +254,8 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
     left: 0;
     right: 0;
     z-index: 50;
-    background: var(--near-black);
-    border-bottom: 1px solid var(--navy);
+    background: var(--tok-deep-ocean);
+    border-bottom: 1px solid var(--tok-border-system);
   }
 
   .site-header__inner {
@@ -256,17 +268,17 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-logo {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-style: italic;
     font-weight: 400;
     font-size: 1.35rem;
-    color: var(--lavender);
+    color: var(--tok-text-light-soft);
     text-decoration: none;
     letter-spacing: 0.02em;
   }
 
   .site-logo:hover {
-    color: var(--pale-horizon);
+    color: var(--tok-teal-light);
   }
 
   .site-nav {
@@ -276,32 +288,32 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-nav__link {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(217, 219, 241, 0.65);
+    color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
   }
 
   .site-nav__link:hover {
-    color: var(--lavender);
+    color: var(--tok-text-light);
   }
 
   .site-nav__link--tools {
-    color: rgba(198, 161, 74, 0.92);
+    color: color-mix(in srgb, var(--tok-gold) 92%, transparent);
     font-weight: 700;
   }
 
   .site-nav__link--tools:hover {
-    color: var(--gold);
+    color: var(--tok-gold);
   }
 
   .site-nav__link--tools[aria-current="page"] {
-    color: var(--gold);
+    color: var(--tok-gold);
     text-decoration: underline;
-    text-decoration-color: rgba(198, 161, 74, 0.55);
+    text-decoration-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
     text-underline-offset: 0.18em;
   }
 
@@ -310,12 +322,12 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-nav__dropdown-summary {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(217, 219, 241, 0.65);
+    color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
     list-style: none;
     cursor: pointer;
   }
@@ -326,7 +338,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
 
   .site-nav__dropdown[open] .site-nav__dropdown-summary,
   .site-nav__dropdown-summary:hover {
-    color: var(--lavender);
+    color: var(--tok-text-light);
   }
 
   .site-nav__dropdown-list {
@@ -337,28 +349,28 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
     padding: 0.5rem 0;
     min-width: 11rem;
     list-style: none;
-    background: var(--near-black);
-    border: 1px solid var(--navy);
+    background: var(--tok-deep-ocean);
+    border: 1px solid var(--tok-border-system);
     border-radius: 0.25rem;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-sys-md);
     z-index: 60;
   }
 
   .site-nav__dropdown-link {
     display: block;
     padding: 0.45rem 1rem;
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(217, 219, 241, 0.75);
+    color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
   }
 
   .site-nav__dropdown-link:hover {
-    color: var(--sky);
-    background: rgba(13, 50, 77, 0.45);
+    color: var(--tok-teal-light);
+    background: color-mix(in srgb, var(--tok-surface-panel) 45%, transparent);
   }
 
   #main-content {
@@ -366,11 +378,15 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-footer {
-    background: var(--near-black);
-    color: var(--lavender);
-    border-top: 2px solid var(--gold);
+    background: var(--tok-deep-ocean);
+    color: var(--tok-text-light-soft);
+    border-top: 2px solid var(--tok-gold);
     padding: 2rem 0 2.5rem;
     margin-top: 0;
+  }
+
+  .site-footer__copy--center {
+    text-align: center;
   }
 
   .site-footer__inner {
@@ -394,17 +410,17 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-footer__discover-link {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(217, 219, 241, 0.55);
+    color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
     text-decoration: none;
   }
 
   .site-footer__discover-link:hover {
-    color: var(--sky);
+    color: var(--tok-teal-light);
   }
 
   .site-footer__copy {
@@ -415,16 +431,16 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
   }
 
   .site-footer__email {
-    font-family: var(--font-nav);
+    font-family: var(--font-body);
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(217, 219, 241, 0.75);
+    color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
     text-decoration: none;
   }
 
   .site-footer__email:hover {
-    color: var(--sky);
+    color: var(--tok-teal-light);
   }
 </style>

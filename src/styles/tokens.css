@@ -1,0 +1,64 @@
+:root {
+  /* ── Core identity ── */
+  --tok-deep-ocean:          #0B1F3A;
+  --tok-gold:                #C6A85A;
+  --tok-gold-light:          #D9BC7A;
+  --tok-fire:                #E3B23C;
+
+  /* ── Surface A: Editorial / Reading ── */
+  --tok-surface-reading:     #F2EFE9;
+  --tok-surface-reading-soft:#E8E3DB;
+  --tok-text-dark:           #1A1A1A;
+  --tok-text-muted:          #4B5563;
+  --tok-border-light:        #CEC9C1;
+
+  /* ── Surface B: System / Blue ── */
+  --tok-surface-system:      #0B1F3A;
+  --tok-surface-panel:       #17324F;
+  --tok-surface-panel-alt:   #1E3A5F;
+  --tok-text-light:          #F5F7FA;
+  --tok-text-light-strong:   #FFFFFF;
+  --tok-text-light-soft:     #EAF1F8;
+  --tok-border-system:       rgba(255,255,255,0.10);
+
+  /* ── Teal (live site continuity) ── */
+  --tok-teal:                #0891b2;
+  --tok-teal-light:          #67C6E0;
+  --tok-teal-dim:            #065e73;
+
+  /* ── Elemental (semantic only) ── */
+  --tok-water:               #1E3A5F;
+  --tok-air:                 #AFCBFF;
+  --tok-earth:               #4F7A5A;
+
+  /* ── Neutrals ── */
+  --tok-slate:               #D6DCE5;
+  --tok-slate-mid:           #8E9BAD;
+
+  /* ── Typography ── */
+  --font-heading:  'Playfair Display', Georgia, serif;
+  --font-body:     'Inter', system-ui, sans-serif;
+  --font-accent:   'Cormorant Garamond', Georgia, serif;
+
+  /* ── Spacing ── */
+  --space-xs:  4px;   --space-sm:  8px;
+  --space-md:  16px;  --space-lg:  32px;
+  --space-xl:  64px;  --space-2xl: 96px;
+
+  /* ── Layout ── */
+  --max-width:     1160px;
+  --reading-width:  720px;
+
+  /* ── Motion ── */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:  150ms;
+  --dur-base:  220ms;
+  --dur-slow:  400ms;
+
+  /* ── Elevation ── */
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-sys-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sys-md: 0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-gold: 0 0 24px rgba(198,168,90,0.15);
+}

@@ -1,0 +1,52 @@
+/* TOK Brand System v1.4 — surfaces (tokens only) */
+
+.surface-reading {
+  background: var(--tok-surface-reading);
+  color: var(--tok-text-dark);
+}
+
+.surface-reading-soft {
+  background: var(--tok-surface-reading-soft);
+  color: var(--tok-text-dark);
+}
+
+.surface-system {
+  background: var(--tok-surface-system);
+  color: var(--tok-text-light);
+}
+
+.surface-panel {
+  background: var(--tok-surface-panel);
+  color: var(--tok-text-light);
+  border: 1px solid var(--tok-border-system);
+  box-shadow: var(--shadow-sys-sm);
+}
+
+.surface-panel-alt {
+  background: var(--tok-surface-panel-alt);
+  color: var(--tok-text-light);
+  border: 1px solid var(--tok-border-system);
+}
+
+/* Body-level page modes (set on <body> in BaseLayout) */
+.tok-body--reading {
+  background: var(--tok-surface-reading);
+  color: var(--tok-text-dark);
+}
+
+.tok-body--system {
+  background: var(--tok-surface-system);
+  color: var(--tok-text-light);
+}
+
+.tok-body--system #main-content a {
+  color: var(--tok-teal-light);
+}
+
+.tok-body--system #main-content a:hover {
+  color: var(--tok-text-light-strong);
+}
+
+.tok-body--system #main-content a:focus-visible {
+  outline-color: var(--tok-gold);
+}

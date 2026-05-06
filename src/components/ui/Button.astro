@@ -1,0 +1,172 @@
+---
+/**
+ * TOK buttons (Brand System v1.4). Use surface "white" on Surface A, "blue" on Surface B.
+ */
+interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "arrow";
+  surface?: "white" | "blue";
+  href?: string;
+  type?: "button" | "submit";
+  class?: string;
+}
+
+const {
+  variant = "primary",
+  surface = "white",
+  href,
+  type = "button",
+  class: className = "",
+} = Astro.props;
+
+const mod =
+  surface === "blue"
+    ? `tok-ui-btn--${variant}-b`
+    : `tok-ui-btn--${variant}-w`;
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class:list={["tok-ui-btn", "tok-ui-btn--btn", mod, className]}
+  {...href ? { href } : { type }}
+>
+  <slot />
+</Tag>
+
+<style>
+  .tok-ui-btn--btn {
+    font-family: var(--font-body);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      gap var(--dur-base) var(--ease-out);
+  }
+
+  .tok-ui-btn--primary-w {
+    background: var(--tok-gold);
+    color: var(--tok-text-dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    border: none;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--primary-w:hover {
+    background: var(--tok-gold-light);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .tok-ui-btn--secondary-w {
+    background: transparent;
+    color: var(--tok-deep-ocean);
+    border: 1px solid var(--tok-deep-ocean);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--secondary-w:hover {
+    background: color-mix(in srgb, var(--tok-deep-ocean) 5%, transparent);
+  }
+
+  .tok-ui-btn--ghost-w {
+    background: transparent;
+    color: var(--tok-text-muted);
+    border: 1px solid var(--tok-border-light);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--ghost-w:hover {
+    color: var(--tok-text-dark);
+    border-color: var(--tok-slate-mid);
+  }
+
+  .tok-ui-btn--arrow-w {
+    background: none;
+    border: none;
+    color: var(--tok-teal);
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0;
+    gap: 6px;
+  }
+  .tok-ui-btn--arrow-w:hover {
+    gap: 10px;
+  }
+
+  .tok-ui-btn--primary-b {
+    background: var(--tok-gold);
+    color: var(--tok-text-dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    border: none;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--primary-b:hover {
+    background: var(--tok-gold-light);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .tok-ui-btn--secondary-b {
+    background: transparent;
+    color: var(--tok-gold);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--secondary-b:hover {
+    background: color-mix(in srgb, var(--tok-gold) 6%, transparent);
+    border-color: var(--tok-gold);
+  }
+
+  .tok-ui-btn--ghost-b {
+    background: transparent;
+    color: var(--tok-slate-mid);
+    border: 1px solid color-mix(in srgb, var(--tok-slate) 12%, transparent);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tok-ui-btn--ghost-b:hover {
+    color: var(--tok-text-light);
+    border-color: color-mix(in srgb, var(--tok-slate) 30%, transparent);
+  }
+
+  .tok-ui-btn--arrow-b {
+    background: none;
+    border: none;
+    color: var(--tok-teal-light);
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0;
+    gap: 6px;
+  }
+  .tok-ui-btn--arrow-b:hover {
+    gap: 10px;
+    color: var(--tok-text-light-strong);
+  }
+
+  .tok-ui-btn--btn:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+</style>
