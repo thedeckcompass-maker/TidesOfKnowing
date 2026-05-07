@@ -39,7 +39,7 @@ Only after everyone in the group had shared their readings did she reveal what t
 
 The woman who had posted the question was herself an established and experienced tarot practitioner and trainer. Her response to what the group had shared was unambiguous, and her response to this reading in particular was, in her own word: amazing. That is not a detail I include for effect. It matters because she had the knowledge and the standing to recognise what had been reached, and because the question had been presented without context. Nobody in that group knew whose father it was, or that there were three daughters, or that there was a secret. The card was the same for everyone. What each person activated from it was not.
 
-She asked what systems I had studied under. I told her I was self-taught. What I had studied, over four decades, was not esoteric literature or formal symbolic tradition. It was the practice of attending. Intuition, like any capacity, gets stronger with use. What she was responding to was not accumulated knowledge of systems. It was the result of a perceptual muscle that had been exercised consistently, over a very long time.
+She asked what systems I had studied under. I told her I was self-taught. What I had studied, over four decades, was not esoteric literature or formal symbolic tradition. It was the practice of attending. Intuition, like any capacity, gets stronger with use. What I was responding to was not accumulated knowledge of systems. It was the result of a perceptual muscle that had been exercised consistently, over a very long time.
 
 All of that from one card. Not from its textbook meaning. From what the card, in that moment, with that question present, activated.
 
@@ -85,7 +85,7 @@ The established meaning of the Three of Pentacles involves mastery, collaboratio
 
 That is not what arrived.
 
-What arrived came from the image directly, from the specific visual elements of Place's rendering, encountered in the context of a specific question about a specific family. The structural window with its three-part composition. The absorbed attention of the figure as he renders someone else's likeness. The finger at the lips, which in isolation might mean many things, but in this configuration meant one thing with unmistakable clarity: a private arrangement, a confidence requested, a secret kept between unequal parties.
+What arrived came from the image directly, from the specific visual elements of Place's rendering, encountered in the context of a specific question about a specific family. The structural window with its three-part composition. The absorbed attention of the figure as he renders someone else's likeness. The finger at the lips, which in isolation might mean many things, but in this configuration meant one thing with unmistakable clarity: a private arrangement, a confidence requested, a secret kept between unequal parties. (It also related to how one of the daughters looked a lot like her father.)
 
 This is the interface model in operation. The card provided the symbolic trigger. The pre-verbal processing system did the work that produced the reading. The meaning was not extracted from the card. It was activated by the card, and it arose from within the practitioner's own perceptual engagement with the image.
 
