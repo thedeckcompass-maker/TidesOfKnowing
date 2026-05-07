@@ -140,7 +140,15 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     <header class="site-header">
       <div class="page-inner site-header__inner">
         <a class="site-logo" href="/">Tides of Knowing</a>
-        <nav class="site-nav" aria-label="Primary">
+        <button
+          class="site-nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-primary-nav"
+        >
+          Menu
+        </button>
+        <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
           <a class="site-nav__link" href="/articles/compass-method/">Method</a>
           <a
             class="site-nav__link site-nav__link--tools"
@@ -196,6 +204,38 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
     <script is:inline>
       (function () {
+        var toggle = document.querySelector(".site-nav-toggle");
+        var nav = document.getElementById("site-primary-nav");
+        if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) return;
+
+        function closeMenu() {
+          nav.classList.remove("site-nav--open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        toggle.addEventListener("click", function () {
+          var isOpen = nav.classList.toggle("site-nav--open");
+          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+
+        nav.addEventListener("click", function (event) {
+          var target = event.target;
+          if (target instanceof Element && target.closest("a")) {
+            closeMenu();
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") closeMenu();
+        });
+
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 900) closeMenu();
+        });
+      })();
+    </script>
+    <script is:inline>
+      (function () {
         var nodes = document.querySelectorAll("[data-reveal]");
         if (!nodes.length || !("IntersectionObserver" in window)) {
           nodes.forEach(function (el) {
@@ -245,6 +285,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
 <style>
   .site-header {
+    --site-header-height: 4.25rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -281,6 +322,10 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     display: flex;
     gap: clamp(1rem, 4vw, 2rem);
     align-items: center;
+  }
+
+  .site-nav-toggle {
+    display: none;
   }
 
   .site-nav__link {
@@ -370,7 +415,68 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   }
 
   #main-content {
-    padding-top: 4.25rem;
+    padding-top: var(--site-header-height);
+  }
+
+  @media (max-width: 900px) {
+    .site-header__inner {
+      flex-wrap: nowrap;
+      min-height: var(--site-header-height);
+    }
+
+    .site-nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      padding: 0.45rem 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tok-text-light);
+      background: transparent;
+      border: 1px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+      border-radius: 0.2rem;
+      cursor: pointer;
+    }
+
+    .site-nav-toggle:hover {
+      background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+    }
+
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.4rem 1.25rem 0.9rem;
+      background: var(--tok-deep-ocean);
+      border-top: 1px solid var(--tok-border-system);
+      border-bottom: 1px solid var(--tok-border-system);
+      max-height: calc(100dvh - var(--site-header-height));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .site-nav.site-nav--open {
+      display: flex;
+    }
+
+    .site-nav__link {
+      display: block;
+      padding: 0.72rem 0;
+      border-top: 1px solid color-mix(in srgb, var(--tok-border-system) 75%, transparent);
+    }
+
+    .site-nav__link:first-child {
+      border-top: none;
+    }
   }
 
   .site-footer {
