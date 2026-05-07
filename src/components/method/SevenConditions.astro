@@ -1,0 +1,123 @@
+---
+import PullQuote from "../typography/PullQuote.astro";
+
+interface ConditionItem {
+  key: string;
+  letter: string;
+  name: string;
+  tagline: string;
+  body: string;
+  icon: string;
+}
+
+interface Props {
+  heading: string;
+  intro: string;
+  items: ConditionItem[];
+  closingQuote: string;
+}
+
+const { heading, intro, items, closingQuote } = Astro.props;
+---
+
+<section class="seven-conditions" aria-labelledby="seven-conditions-heading">
+  <h2 id="seven-conditions-heading" class="seven-conditions__title">{heading}</h2>
+  <p class="seven-conditions__intro">{intro}</p>
+
+  <div class="seven-conditions__list">
+    {
+      items.map((item, index) => (
+        <article class="seven-conditions__item" aria-labelledby={`condition-${item.key}`}>
+          <img
+            class="seven-conditions__icon"
+            src={item.icon}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+          />
+          <h3 id={`condition-${item.key}`} class="seven-conditions__name">
+            {item.letter} · {item.name}
+          </h3>
+          <p class="seven-conditions__tagline">{item.tagline}</p>
+          <p class="seven-conditions__body">{item.body}</p>
+          {index < items.length - 1 && <hr class="seven-conditions__rule" aria-hidden="true" />}
+        </article>
+      ))
+    }
+  </div>
+
+  <PullQuote quote={closingQuote} />
+</section>
+
+<style>
+  .seven-conditions {
+    margin: 0 0 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .seven-conditions__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+    line-height: 1.24;
+    color: var(--tok-water);
+  }
+
+  .seven-conditions__intro {
+    margin: 0 0 clamp(2.25rem, 6vw, 3.5rem);
+    max-width: 66ch;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.68;
+    color: var(--tok-water);
+  }
+
+  .seven-conditions__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 8vw, 4.5rem);
+  }
+
+  .seven-conditions__item {
+    max-width: 66ch;
+  }
+
+  .seven-conditions__icon {
+    width: clamp(5rem, 9vw, 6rem);
+    height: auto;
+    margin: 0 0 0.85rem;
+    display: block;
+  }
+
+  .seven-conditions__name {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.8vw, 1.55rem);
+    line-height: 1.22;
+    color: var(--tok-water);
+  }
+
+  .seven-conditions__tagline {
+    margin: 0.45rem 0 0.75rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.02rem;
+    color: var(--tok-text-muted);
+  }
+
+  .seven-conditions__body {
+    margin: 0;
+    font-size: 1.03rem;
+    line-height: 1.74;
+    color: var(--tok-text-dark);
+  }
+
+  .seven-conditions__rule {
+    margin: clamp(2.25rem, 6vw, 3.5rem) 0 0;
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+</style>

@@ -23,6 +23,20 @@ interface Props {
   headerSubtitle?: string | null;
   /** When true, omits the global "Continue through the system" block (e.g. COMPASS Method hub has its own pathways). */
   hideSystemPathway?: boolean;
+  /** Optional per-page override for the author attribution line shown above article body. */
+  authorBioOverride?: string;
+  /** Hide top share buttons in article header for specific pages. */
+  hideTopShare?: boolean;
+  /** Hide mobile sticky share bar for specific pages. */
+  hideMobileShareBar?: boolean;
+  /** Optional overrides for the conversion CTA copy. */
+  conversionBlockCopy?: {
+    kicker?: string;
+    heading?: string;
+    description?: string;
+    ctaLabel?: string;
+    ctaHref?: string;
+  };
 }
 
 const {
@@ -31,6 +45,10 @@ const {
   headerTitle,
   headerSubtitle,
   hideSystemPathway = false,
+  authorBioOverride,
+  hideTopShare = false,
+  hideMobileShareBar = false,
+  conversionBlockCopy,
 } = Astro.props;
 const d = article.data;
 const resolvedHeaderTitle = headerTitle ?? d.title;
@@ -140,6 +158,7 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
           heroImageFit={d.heroImageFit}
           author={d.author}
           shareUrl={canonicalUrl}
+          hideTopShare={hideTopShare}
         />
 
         <article class="article tok-articles-article">
@@ -157,7 +176,9 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
           }
           <p class="tok-article-trust" data-reveal>
             {
-              isLeighSpencer ? (
+              authorBioOverride ? (
+                <>{authorBioOverride}</>
+              ) : isLeighSpencer ? (
                 <>
                   By Leigh Spencer · {articleAuthorAttribution}
                 </>
@@ -214,13 +235,21 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
         }
 
         <div data-reveal>
-          <TdcConversionBlock />
+          <TdcConversionBlock
+            kicker={conversionBlockCopy?.kicker}
+            heading={conversionBlockCopy?.heading}
+            description={conversionBlockCopy?.description}
+            ctaLabel={conversionBlockCopy?.ctaLabel}
+            ctaHref={conversionBlockCopy?.ctaHref}
+          />
         </div>
       </div>
     </div>
-    <div class="tok-share-mobile-bar" aria-label="Share this article">
-      <ShareButtons title={d.title} url={canonicalUrl} placement="mobile" />
-    </div>
+    {!hideMobileShareBar && (
+      <div class="tok-share-mobile-bar" aria-label="Share this article">
+        <ShareButtons title={d.title} url={canonicalUrl} placement="mobile" />
+      </div>
+    )}
   </div>
 </BaseLayout>
 

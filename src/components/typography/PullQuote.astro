@@ -1,0 +1,45 @@
+---
+interface Props {
+  quote: string;
+  attribution?: string;
+  className?: string;
+}
+
+const { quote, attribution, className } = Astro.props;
+---
+
+<figure class:list={["tok-pullquote", className]}>
+  <blockquote class="tok-pullquote__quote">
+    <p>{quote}</p>
+  </blockquote>
+  {attribution && <figcaption class="tok-pullquote__attribution">{attribution}</figcaption>}
+</figure>
+
+<style>
+  .tok-pullquote {
+    margin: clamp(2rem, 6vw, 3.25rem) 0;
+    padding: clamp(1.15rem, 3.5vw, 1.75rem) 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tok-pullquote__quote {
+    margin: 0;
+  }
+
+  .tok-pullquote__quote p {
+    margin: 0;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.35rem, 3vw, 1.7rem);
+    line-height: 1.5;
+    color: var(--tok-water);
+  }
+
+  .tok-pullquote__attribution {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    color: var(--tok-text-muted);
+  }
+</style>

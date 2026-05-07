@@ -8,9 +8,22 @@ interface Props {
   variant?: "default" | "subtle" | "inline";
   /** Required when multiple blocks exist on one page (unique `aria-labelledby`). */
   headingId?: string;
+  kicker?: string;
+  heading?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
-const { variant = "default", headingId = "tdc-heading" } = Astro.props;
+const {
+  variant = "default",
+  headingId = "tdc-heading",
+  kicker = "Stay close to the work",
+  heading = "Get new articles and early access",
+  description = "This work develops over time. Join the list to stay close to it.",
+  ctaLabel = "Join the list →",
+  ctaHref = "/subscribe/",
+} = Astro.props;
 ---
 
 <section
@@ -24,18 +37,16 @@ const { variant = "default", headingId = "tdc-heading" } = Astro.props;
   <div
     class:list={["tdc__inner", { "page-inner": variant !== "inline" }]}
   >
-    <p class="tdc__kicker">Stay close to the work</p>
+    {kicker && <p class="tdc__kicker">{kicker}</p>}
     {
       variant === "inline" ? (
-        <p id={headingId} class="tdc__heading">Get new articles and early access</p>
+        <p id={headingId} class="tdc__heading">{heading}</p>
       ) : (
-        <h2 id={headingId} class="tdc__heading">Get new articles and early access</h2>
+        <h2 id={headingId} class="tdc__heading">{heading}</h2>
       )
     }
-    <p class="tdc__sub">
-      This work develops over time. Join the list to stay close to it.
-    </p>
-    <a class="tdc__btn" href="/subscribe/">Join the list →</a>
+    <p class="tdc__sub">{description}</p>
+    <a class="tdc__btn" href={ctaHref}>{ctaLabel}</a>
   </div>
 </section>
 

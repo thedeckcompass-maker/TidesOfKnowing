@@ -13,6 +13,7 @@ interface Props {
   heroImageFit?: "cover" | "contain";
   author?: string;
   shareUrl: string;
+  hideTopShare?: boolean;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   heroImageFit = "cover",
   author = "Leigh Spencer",
   shareUrl,
+  hideTopShare = false,
 } = Astro.props;
 
 const resolvedShareTitle = shareTitle ?? title;
@@ -73,7 +75,7 @@ const iso = publishDate.toISOString();
     <p class="tok-article-header__byline">
       <a class="tok-article-header__byline-link" href="/about">{author}</a>
     </p>
-    <ShareButtons title={resolvedShareTitle} url={shareUrl} placement="top" />
+    {!hideTopShare && <ShareButtons title={resolvedShareTitle} url={shareUrl} placement="top" />}
   </div>
 </header>
 

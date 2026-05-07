@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import PullQuote from "../../components/typography/PullQuote.astro";
+import SevenConditions from "../../components/method/SevenConditions.astro";
 
 const articles = await getCollection("articles");
 const article = articles.find((entry) => entry.data.slug === "compass-method");
@@ -11,55 +13,61 @@ if (!article) {
 
 const readingMinutes = article.data.readingTime;
 
-const pillars = [
+const conditions = [
   {
     key: "center",
     letter: "C",
     name: "Center",
-    text: "Presence before perception",
+    tagline: "Presence before perception.",
+    body: "Center is the condition of being fully arrived before the reading begins. Without it, attention is still tangled in whatever preceded the moment: the previous client, the unread message, the held opinion. That residue colours everything that follows. Center is what prevents a reading from becoming an extension of the reader's own unsettled state. It is the first condition because nothing downstream of it can stay clean if it is skipped.",
     icon: "/images/compass/icons/center/center-transparent.svg",
-    featured: true,
   },
   {
     key: "open",
     letter: "O",
     name: "Open",
-    text: "Receptivity without agenda",
+    tagline: "Receptivity without agenda.",
+    body: "Open is the condition of meeting what arrives rather than reaching for what is expected. It is the difference between perception and projection, between letting a card speak and arriving with the meaning already decided. Without Open, the reader will find what they brought with them and call it intuition. This condition prevents the most common form of interpretive drift: confirming a hypothesis instead of perceiving a signal.",
     icon: "/images/compass/icons/open/open-transparent.svg",
   },
   {
     key: "map",
     letter: "M",
     name: "Map",
-    text: "Observation before interpretation",
+    tagline: "Observation before interpretation.",
+    body: "Map is the condition of seeing what is actually present before assigning meaning to it. Position, orientation, sequence, repetition, absence: these are observable facts of the spread, and they hold information that interpretation will overwrite if it moves too quickly. Map prevents the reader from leaping to story before the structure has been read. It is the discipline that keeps interpretation accountable to what is in front of you.",
     icon: "/images/compass/icons/map/map-transparent.svg",
   },
   {
     key: "perceive",
     letter: "P",
     name: "Perceive",
-    text: "Signal clarity",
+    tagline: "Signal clarity.",
+    body: "Perceive is the condition of distinguishing what is genuinely registering from what is noise, association, or memory. Not every impression that arises during a reading is a perception. Some are echoes of past readings, some are emotional weather, some are the mind filling silence. Perceive prevents these from being mistaken for symbolic information. It is the condition that protects the reading from its own static.",
     icon: "/images/compass/icons/perceive/perceive-transparent.svg",
   },
   {
     key: "align",
     letter: "A",
     name: "Align",
-    text: "Checking for distortion",
+    tagline: "Checking for distortion.",
+    body: "Align is the condition of testing perception against the spread before speaking it. It is the moment of asking whether what is forming actually fits what is present, or whether something has bent: by hope, by fear, by the reader's investment in a particular outcome. Align prevents distortion from passing into language unchecked. It is the condition that separates a reading the reader believes from a reading the reader can stand behind.",
     icon: "/images/compass/icons/align/align-transparent.svg",
   },
   {
     key: "sense",
     letter: "S",
     name: "Sense",
-    text: "Integrating the whole",
+    tagline: "Integrating the whole.",
+    body: "Sense is the condition of holding the full reading as a single coherent field rather than a sequence of separate cards. Meaning in tarot is rarely located in any one position; it emerges from how the conditions speak to each other across the spread. Sense prevents the fragmented reading, the one where each card was interpreted accurately but the whole never came together. It is the condition that produces coherence instead of inventory.",
     icon: "/images/compass/icons/sense/sense-transparent.svg",
   },
   {
     key: "seal",
     letter: "S",
     name: "Seal",
-    text: "Final condition",
+    tagline: "Containment after speaking.",
+    body: "Seal is the condition of closing the reading cleanly so that what was opened does not stay open. Without it, material from the reading continues to move through the reader after the session has ended, affecting attention, energy, and the next reading that follows. Seal prevents that bleed. It is the condition that protects the reader's clarity over time and lets the practice remain sustainable across hundreds of readings, not just one.",
     icon: "/images/compass/icons/seal/seal-transparent.svg",
   },
 ];
@@ -68,27 +76,31 @@ const pathways = [
   {
     href: "/articles/",
     label: "Read the applied essays",
-    support: "Editorial and research environment",
+    support: "The editorial and research environment.",
+    cta: "Articles →",
     step: "01",
   },
   {
     href: "/tools/",
     label: "Enter controlled practice",
-    support: "Use tools to train signal tracking",
+    support: "Tools that train signal tracking in isolation.",
+    cta: "Tools →",
     step: "02",
   },
   {
     href: "/practice/",
     label: "Stabilise in live conditions",
-    support: "Move from insight to repeatable habit",
+    support: "Move from insight into repeatable habit.",
+    cta: "Practice →",
     step: "03",
   },
   {
     href: "/compass/",
     label: "Train with the method directly",
-    support: "Live methodology teaching environment",
+    support: "Live methodology teaching with The Deck Compass.",
+    cta: "Train with the method →",
     step: "04",
-    dataCompass: true,
+    featured: true,
   },
 ] as const;
 ---
@@ -97,8 +109,19 @@ const pathways = [
   article={article}
   readingMinutes={readingMinutes}
   headerTitle="The COMPASS Method"
-  headerSubtitle="A seven-pillar framework for moving from memorised meanings into reliable symbolic perception."
+  headerSubtitle="A framework of seven conditions under which symbolic perception stays clear, coherent, and trustworthy."
   hideSystemPathway={true}
+  authorBioOverride="By Leigh Spencer. Fourth-generation Matakite. Forty years of tarot practice and thirty years of professional journalism. Two disciplines that converge into The COMPASS Method™."
+  hideTopShare={true}
+  hideMobileShareBar={true}
+  conversionBlockCopy={{
+    kicker: "",
+    heading: "Stay close to the work",
+    description:
+      "The method develops in public. New essays, working notes, and early access to The Deck Compass go out to the list first.",
+    ctaLabel: "Join the list →",
+    ctaHref: "/subscribe/",
+  }}
 >
   <div class="method-hub" slot="prepend">
     <section class="method-hub__manifesto" aria-labelledby="method-manifesto-heading">
@@ -106,68 +129,19 @@ const pathways = [
         A framework for perception under pressure
       </h2>
       <p class="method-hub__manifesto-lede">
-        The COMPASS Method treats reading as a perceptual discipline. It is not a memorisation
-        system, not a dictionary, and not a rigid procedural script. It is a way of organising
-        attention so meaning can form clearly, stay coherent, and be spoken without distortion.
+        The COMPASS Method™ treats reading as a perceptual discipline. It is not a memorisation
+        system or a procedural script. It is a way of organising attention so meaning can form
+        clearly, stay coherent, and be spoken without distortion. The method names the conditions
+        under which that becomes possible.
       </p>
       <p class="method-hub__manifesto-note">
         The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
       </p>
     </section>
 
-    <section class="method-hub__pillars" aria-labelledby="method-pillars-heading">
-      <h2 id="method-pillars-heading" class="method-hub__pillars-title">The seven pillars</h2>
-      <div class="method-pillars">
-        {
-          pillars
-            .filter((p) => p.featured)
-            .map((p) => (
-              <article class="method-pillar-card method-pillar-card--featured">
-                <img
-                  class="method-pillar-card__icon"
-                  src={p.icon}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <h3 class="method-pillar-card__title">
-                  {p.letter} · {p.name}
-                </h3>
-                <p class="method-pillar-card__text">{p.text}</p>
-              </article>
-            ))
-        }
-        <ul class="method-pillars__grid">
-          {
-            pillars
-              .filter((p) => !p.featured)
-              .map((p) => (
-                <li class="method-pillars__item">
-                  <article class="method-pillar-card">
-                    <img
-                      class="method-pillar-card__icon"
-                      src={p.icon}
-                      alt=""
-                      aria-hidden="true"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <h3 class="method-pillar-card__title">
-                      {p.letter} · {p.name}
-                    </h3>
-                    <p class="method-pillar-card__text">{p.text}</p>
-                  </article>
-                </li>
-              ))
-          }
-        </ul>
-      </div>
-    </section>
-
     <section class="method-hub__solve" aria-labelledby="method-solve-heading">
       <h2 id="method-solve-heading" class="method-hub__section-title">
-        What the method is actually solving
+        The threshold the method addresses
       </h2>
       <p class="method-hub__section-lede">
         Most experienced readers do not fail from lack of vocabulary. They destabilise when pressure
@@ -186,6 +160,13 @@ const pathways = [
       </p>
     </section>
 
+    <SevenConditions
+      heading="The Seven Conditions of Attention"
+      intro="The method names seven conditions under which symbolic perception stays clear. Each prevents a specific failure mode. Together they form the architecture of a reading."
+      items={conditions}
+      closingQuote="Held together, these are the conditions under which a reading can be trusted."
+    />
+
     <section class="method-hub__origin" aria-labelledby="method-origin-heading">
       <h2 id="method-origin-heading" class="method-hub__section-title">Origin and method</h2>
       <p class="method-hub__section-lede">
@@ -193,9 +174,7 @@ const pathways = [
         years of professional journalism. One trains symbolic perception. The other trains disciplined
         observation and language under pressure.
       </p>
-      <blockquote class="method-hub__pull">
-        If it can be seen clearly, it can be said clearly.
-      </blockquote>
+      <PullQuote quote="If it can be seen clearly, it can be said clearly." />
       <p class="method-hub__section-lede">
         COMPASS is where those disciplines converge into a teachable architecture for reading.
       </p>
@@ -205,21 +184,23 @@ const pathways = [
       <h2 id="method-ecosystem-heading" class="method-hub__section-title">The working ecosystem</h2>
       <div class="method-hub__ecosystem-grid">
         <article class="method-hub__ecosystem-card">
-          <h3 class="method-hub__ecosystem-title">The COMPASS Method</h3>
+          <h3 class="method-hub__ecosystem-title">The COMPASS Method™</h3>
           <p class="method-hub__ecosystem-text">
-            The framework itself: seven perceptual conditions that organise interpretation.
+            The framework. Seven conditions of attention that organise interpretation.
           </p>
         </article>
         <article class="method-hub__ecosystem-card">
           <h3 class="method-hub__ecosystem-title">Tides of Knowing</h3>
           <p class="method-hub__ecosystem-text">
-            The editorial and research environment where the method is developed in public.
+            The editorial environment. Where the method is developed in public through long-form
+            research and applied essays.
           </p>
         </article>
         <article class="method-hub__ecosystem-card">
           <h3 class="method-hub__ecosystem-title">The Deck Compass</h3>
           <p class="method-hub__ecosystem-text">
-            The teaching and training environment where the method is applied in live practice.
+            The training environment. Where the method is applied in live practice with structured
+            progression and feedback.
           </p>
         </article>
       </div>
@@ -228,20 +209,23 @@ const pathways = [
 
   <div class="method-hub-next" slot="append">
     <section class="method-hub-next__inner" aria-labelledby="method-next-heading">
-      <h2 id="method-next-heading" class="method-hub-next__title">Enter the system</h2>
+      <h2 id="method-next-heading" class="method-hub-next__title">Working with the method</h2>
       <ul class="method-hub-next__list">
         {
           pathways.map((p) => (
             <li class="method-hub-next__item">
-              <a
-                class="method-hub-next__card"
-                href={p.href}
-                {...("dataCompass" in p && p.dataCompass ? { "data-link": "compass" } : {})}
-              >
+              <article class:list={["method-hub-next__card", { "method-hub-next__card--featured": !!p.featured }]}>
                 <span class="method-hub-next__step">{p.step}</span>
-                <span class="method-hub-next__label">{p.label}</span>
-                <span class="method-hub-next__support">{p.support}</span>
-              </a>
+                <h3 class="method-hub-next__label">{p.label}</h3>
+                <p class="method-hub-next__support">{p.support}</p>
+                <a
+                  class="method-hub-next__cta"
+                  href={p.href}
+                  {...("featured" in p && p.featured ? { "data-link": "compass" } : {})}
+                >
+                  {p.cta}
+                </a>
+              </article>
             </li>
           ))
         }
@@ -287,86 +271,6 @@ const pathways = [
     letter-spacing: 0.01em;
   }
 
-  .method-hub__pillars {
-    margin: 0 0 2rem;
-  }
-
-  .method-hub__pillars-title {
-    margin: 0 0 1rem;
-    font-family: var(--font-heading);
-    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
-    font-weight: 600;
-    font-style: normal;
-    line-height: 1.25;
-    color: var(--tok-water);
-  }
-
-  .method-pillars {
-    display: grid;
-    gap: 0.95rem;
-  }
-
-  .method-pillars__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.95rem;
-    grid-template-columns: 1fr;
-  }
-
-  .method-pillars__item {
-    margin: 0;
-  }
-
-  @media (min-width: 640px) {
-    .method-pillars__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  .method-pillar-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: 100%;
-    padding: clamp(1.1rem, 2.8vw, 1.45rem) clamp(1rem, 2.5vw, 1.25rem);
-    background: color-mix(in srgb, var(--tok-surface-reading) 94%, var(--tok-surface-reading-soft));
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, var(--tok-border-light));
-    border-radius: 0.35rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .method-pillar-card--featured {
-    max-width: min(100%, 44rem);
-    margin-inline: auto;
-    width: 100%;
-  }
-
-  .method-pillar-card__icon {
-    width: clamp(4.3rem, 9vw, 5.3rem);
-    height: auto;
-    margin: 0 0 0.65rem;
-  }
-
-  .method-pillar-card__title {
-    margin: 0;
-    font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 2.8vw, 1.55rem);
-    line-height: 1.22;
-    font-weight: 600;
-    color: var(--tok-water);
-  }
-
-  .method-pillar-card__text {
-    margin: 0.45rem 0 0;
-    font-family: var(--font-body);
-    font-size: 0.98rem;
-    line-height: 1.6;
-    color: var(--tok-text-dark);
-  }
-
   .method-hub__solve,
   .method-hub__origin,
   .method-hub__ecosystem {
@@ -403,17 +307,6 @@ const pathways = [
 
   .method-hub__solve-list li {
     margin-bottom: 0.35rem;
-  }
-
-  .method-hub__pull {
-    margin: 0.9rem 0 1rem;
-    padding: 0.35rem 0 0.35rem 1rem;
-    border-left: 3px solid var(--tok-gold);
-    font-family: var(--font-accent);
-    font-style: italic;
-    font-size: clamp(1.2rem, 2.4vw, 1.38rem);
-    line-height: 1.55;
-    color: var(--tok-water);
   }
 
   .method-hub__ecosystem-grid {
@@ -477,14 +370,8 @@ const pathways = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.8rem;
+    gap: 0.9rem;
     grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 640px) {
-    .method-hub-next__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   .method-hub-next__item {
@@ -493,29 +380,24 @@ const pathways = [
 
   .method-hub-next__card {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.4rem;
     height: 100%;
     padding: 1rem 1.1rem;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.55;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--tok-water);
     background: var(--tok-surface-reading-soft);
     border: 1px solid var(--tok-border-light);
-    border-left: 3px solid var(--tok-gold);
-    border-radius: 0 0.2rem 0.2rem 0;
+    border-left: 2px solid var(--tok-gold);
+    border-radius: 0.28rem;
     transition:
       background var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
+      color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
   }
 
-  .method-hub-next__card:hover {
-    background: var(--tok-surface-reading);
-    border-left-color: var(--tok-teal);
-    color: var(--tok-teal-dim);
+  .method-hub-next__card--featured {
+    border-color: color-mix(in srgb, var(--tok-gold) 55%, var(--tok-border-light));
+    border-left-width: 3px;
+    box-shadow: var(--shadow-sm);
   }
 
   .method-hub-next__step {
@@ -528,17 +410,37 @@ const pathways = [
   }
 
   .method-hub-next__label {
+    margin: 0;
     font-family: var(--font-heading);
-    font-size: 1.12rem;
+    font-size: 1.1rem;
     line-height: 1.24;
     color: var(--tok-water);
   }
 
   .method-hub-next__support {
+    margin: 0;
     font-family: var(--font-body);
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--tok-text-dark);
     opacity: 0.9;
+  }
+
+  .method-hub-next__cta {
+    margin-top: 0.35rem;
+    display: inline-flex;
+    width: fit-content;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    text-decoration-thickness: 1px;
+  }
+
+  .method-hub-next__cta:hover {
+    color: var(--tok-teal-dim);
   }
 </style>
