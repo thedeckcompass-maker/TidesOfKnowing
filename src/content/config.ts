@@ -33,6 +33,7 @@ export const articlesSchema = z.object({
   nextArticle: z.string().nullable().optional(),
   heroImage: z.string(),
   heroImageAlt: z.string(),
+  heroImageFit: z.enum(["cover", "contain"]).optional(),
   excerpt: z.string(),
   tags: z.array(z.string()),
   author: z.string().default("Leigh Spencer"),

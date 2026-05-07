@@ -10,6 +10,7 @@ interface Props {
   readingTime?: number;
   heroImage: string;
   heroImageAlt: string;
+  heroImageFit?: "cover" | "contain";
   author?: string;
   shareUrl: string;
 }
@@ -22,6 +23,7 @@ const {
   readingTime,
   heroImage,
   heroImageAlt,
+  heroImageFit = "cover",
   author = "Leigh Spencer",
   shareUrl,
 } = Astro.props;
@@ -42,7 +44,10 @@ const iso = publishDate.toISOString();
       <img
         src={heroImage}
         alt={heroImageAlt}
-        class="tok-article-header__hero"
+        class:list={[
+          "tok-article-header__hero",
+          { "tok-article-header__hero--contain": heroImageFit === "contain" },
+        ]}
         width="1200"
         height="630"
         loading="eager"
@@ -82,8 +87,15 @@ const iso = publishDate.toISOString();
     height: auto;
     max-height: 500px;
     object-fit: cover;
+    object-position: center;
     display: block;
     margin-bottom: 1.75rem;
+  }
+
+  .tok-article-header__hero--contain {
+    object-fit: contain;
+    object-position: top center;
+    max-height: none;
   }
 
   .tok-article-header__inner {
