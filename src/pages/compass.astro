@@ -43,6 +43,24 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
       </figure>
     </section>
 
+    <section
+      class="compass__section compass__section--distinction"
+      aria-labelledby="compass-training-practice-heading"
+    >
+      <h2 id="compass-training-practice-heading" class="compass__h2">
+        Training and practice are not the same thing
+      </h2>
+      <p class="compass__p">Training installs the method. Practice stabilises the method.</p>
+      <p class="compass__p">
+        The COMPASS programme is where the framework is taught directly. The Deck Compass is where
+        repeated live practice and reflection help the habits take root.
+      </p>
+      <p class="compass__p">
+        On Tides of Knowing, <a class="compass__distinction-link" href="/practice/">Practice</a> is the
+        hub for ongoing live work with The Deck Compass.
+      </p>
+    </section>
+
     <section class="compass__section compass__section--soft">
       <p class="compass__eyebrow">Problem fit</p>
       <h2 class="compass__h2">If This Sounds Like You</h2>
@@ -183,6 +201,15 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     </section>
 
     <section class="compass__section compass__section--final">
+      <!-- Ask: "What was one moment in your reading practice, after COMPASS, where you noticed something had actually changed?" -->
+      <!-- TODO: Replace this placeholder with a specific practice-based testimonial from a past COMPASS participant. -->
+      <blockquote class="compass__testimonial-placeholder">
+        <p>
+          Testimonial placeholder: add one specific before-and-after account from a COMPASS participant
+          here.
+        </p>
+      </blockquote>
+
       <p class="compass__eyebrow">Apply</p>
       <h2 class="compass__h2">Apply</h2>
       <p class="compass__p">
@@ -277,6 +304,44 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__section + .compass__section {
     margin-top: 1.25rem;
+  }
+
+  .compass__section--distinction {
+    margin-bottom: 0.25rem;
+    background: var(--tok-surface-panel);
+    border: 1px solid var(--tok-border-system);
+    box-shadow: var(--shadow-sys-sm);
+  }
+
+  .compass__section--distinction .compass__h2 {
+    color: var(--tok-text-light);
+  }
+
+  .compass__distinction-link {
+    color: var(--tok-teal-light);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    text-decoration-thickness: 1px;
+  }
+
+  .compass__distinction-link:hover {
+    color: var(--tok-text-light-strong);
+  }
+
+  .compass__testimonial-placeholder {
+    margin: 0 0 1.35rem;
+    padding: 0.35rem 0 0.35rem 1.1rem;
+    border-left: 3px solid var(--tok-gold);
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 92%, transparent);
+  }
+
+  .compass__testimonial-placeholder p {
+    margin: 0;
   }
 
   .compass__p {

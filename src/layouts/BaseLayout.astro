@@ -69,6 +69,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
 
 const pathname = Astro.url.pathname;
 const isToolsRoute = pathname.startsWith("/tools");
+const isPracticeRoute = pathname.startsWith("/practice");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
@@ -140,26 +141,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       <div class="page-inner site-header__inner">
         <a class="site-logo" href="/">Tides of Knowing</a>
         <nav class="site-nav" aria-label="Primary">
-          <a class="site-nav__link" href="/articles/">Articles</a>
-          <a class="site-nav__link" href="/compass/" data-link="compass">Training</a>
-          <a class="site-nav__link" href="/articles/compass-method/">COMPASS Method</a>
-          <details class="site-nav__dropdown">
-            <summary class="site-nav__dropdown-summary">Browse</summary>
-            <ul class="site-nav__dropdown-list">
-              <li>
-                <a class="site-nav__dropdown-link" href="/articles/"
-                  >All articles</a
-                >
-              </li>
-              <li>
-                <a class="site-nav__dropdown-link" href="/series/">Series</a>
-              </li>
-              <li>
-                <a class="site-nav__dropdown-link" href="/tags/">Topics</a>
-              </li>
-            </ul>
-          </details>
-          <a class="site-nav__link" href="/blog/">Blog</a>
+          <a class="site-nav__link" href="/articles/compass-method/">Method</a>
           <a
             class="site-nav__link site-nav__link--tools"
             href="/tools/"
@@ -167,7 +149,16 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           >
             Tools
           </a>
-          <a class="site-nav__link" href="/about">About</a>
+          <a class="site-nav__link" href="/articles/">Articles</a>
+          <a
+            class="site-nav__link"
+            href="/practice/"
+            aria-current={isPracticeRoute ? "page" : undefined}
+          >
+            Practice
+          </a>
+          <a class="site-nav__link" href="/compass/" data-link="compass">Training</a>
+          <a class="site-nav__link" href="/about/">About</a>
         </nav>
       </div>
     </header>

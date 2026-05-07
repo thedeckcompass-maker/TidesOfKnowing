@@ -1,0 +1,220 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import { estimateReadingMinutes } from "../../lib/readingTime";
+
+const articles = await getCollection("articles");
+const article = articles.find((entry) => entry.data.slug === "compass-method");
+
+if (!article) {
+  return Astro.redirect("/articles/");
+}
+
+const { Content } = await render(article);
+const body = article.body ?? "";
+const readingMinutes =
+  article.data.readingTime ?? estimateReadingMinutes(body);
+
+const pillars: { line: string }[] = [
+  { line: "C · Center: Presence before perception" },
+  { line: "O · Open: Receptivity without agenda" },
+  { line: "M · Map: Observation before interpretation" },
+  { line: "P · Perceive: Signal clarity" },
+  { line: "A · Align: Checking for distortion" },
+  { line: "S · Sense: Integrating the whole" },
+  { line: "S · Seal: Final condition" },
+];
+
+const pathways = [
+  { href: "/articles/", label: "Read the articles that apply this" },
+  { href: "/tools/", label: "Try it in the tools" },
+  { href: "/practice/", label: "Practise it with others" },
+  { href: "/compass/", label: "Train with it directly", dataCompass: true },
+] as const;
+---
+
+<ArticlesLayout
+  article={article}
+  readingMinutes={readingMinutes}
+  headerTitle="The COMPASS Method"
+  headerSubtitle="A seven-pillar framework for moving from memorised meanings into reliable symbolic perception."
+  hideSystemPathway={true}
+>
+  <div class="method-hub" slot="prepend">
+    <section class="method-hub__pillars" aria-labelledby="method-pillars-heading">
+      <h2 id="method-pillars-heading" class="method-hub__pillars-title">The seven pillars</h2>
+      <ul class="method-hub__pillar-grid">
+        {
+          pillars.map((p) => (
+            <li class="method-hub__pillar-item">
+              <div class="method-hub__pillar-card">{p.line}</div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <p class="method-hub__bridge">
+      COMPASS is not a list of meanings. It is a discipline of attention: a way to enter a reading,
+      notice what is present, test the signal, integrate the whole, and close the reading cleanly.
+    </p>
+  </div>
+
+  <Content />
+
+  <div class="method-hub-next" slot="append">
+    <section class="method-hub-next__inner" aria-labelledby="method-next-heading">
+      <h2 id="method-next-heading" class="method-hub-next__title">Where to go next</h2>
+      <ul class="method-hub-next__list">
+        {
+          pathways.map((p) => (
+            <li class="method-hub-next__item">
+              <a
+                class="method-hub-next__card"
+                href={p.href}
+                {...("dataCompass" in p && p.dataCompass ? { "data-link": "compass" } : {})}
+              >
+                {p.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</ArticlesLayout>
+
+<style>
+  .method-hub {
+    margin-bottom: 1.75rem;
+  }
+
+  .method-hub__pillars {
+    margin: 0 0 1.5rem;
+  }
+
+  .method-hub__pillars-title {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .method-hub__pillar-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 560px) {
+    .method-hub__pillar-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .method-hub__pillar-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .method-hub__pillar-item {
+    margin: 0;
+  }
+
+  .method-hub__pillar-card {
+    height: 100%;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    background: var(--tok-surface-reading-soft);
+    border: 1px solid var(--tok-border-light);
+    border-radius: 0.2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .method-hub__bridge {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--tok-text-dark);
+    padding: 0.15rem 0 0;
+    border-top: 1px solid var(--tok-border-light);
+    padding-top: 1.25rem;
+  }
+
+  .method-hub-next {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem 2.5rem;
+  }
+
+  .method-hub-next__inner {
+    margin: 0;
+    padding: clamp(1.75rem, 4vw, 2.25rem) 0 0;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .method-hub-next__title {
+    margin: 0 0 1.15rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2.8vw, 1.6rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.2;
+    color: var(--tok-water);
+  }
+
+  .method-hub-next__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .method-hub-next__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .method-hub-next__item {
+    margin: 0;
+  }
+
+  .method-hub-next__card {
+    display: block;
+    height: 100%;
+    padding: 1rem 1.1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.55;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--tok-water);
+    background: var(--tok-surface-reading-soft);
+    border: 1px solid var(--tok-border-light);
+    border-left: 3px solid var(--tok-gold);
+    border-radius: 0 0.2rem 0.2rem 0;
+    transition:
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .method-hub-next__card:hover {
+    background: var(--tok-surface-reading);
+    border-left-color: var(--tok-teal);
+    color: var(--tok-teal-dim);
+  }
+</style>

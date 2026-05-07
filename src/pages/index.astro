@@ -22,7 +22,7 @@ const websiteLd = {
   name: "Tides of Knowing",
   url: homeUrl,
   description:
-    "Tides of Knowing is a long-form publication about practical intuition, perception and interpretation through tarot, oracle and Lenormand for personal growth and grounded guidance.",
+    "Tides of Knowing is a long-form publication about practical intuition, perception and interpretation through tarot and oracle for personal growth and grounded guidance.",
   publisher: {
     "@type": "Organization",
     name: "Tides of Knowing",
@@ -32,19 +32,57 @@ const websiteLd = {
 ---
 
 <BaseLayout
-  title="Tides of Knowing | Practical intuition through tarot, oracle and Lenormand"
-  description="Long-form writing on practical intuition, perception and interpretation through tarot, oracle and Lenormand for personal growth, clearer boundaries and grounded guidance."
+  title="Tides of Knowing | Practical intuition through tarot and oracle"
+  description="Long-form writing on practical intuition, perception and interpretation through tarot and oracle for personal growth, clearer boundaries and grounded guidance."
   ogUrl={homeUrl}
   tdcPlacement="none"
   jsonLd={websiteLd}
 >
-  <section class="hero surface-system tok-home-hero">
-    <div class="page-inner hero__inner">
-      <h1 class="hero__title" data-reveal>Tides of Knowing</h1>
-      <p class="hero__lead" data-reveal>
-        If you read tarot, oracle, or Lenormand — and want to trust what you're seeing, not
-        second-guess it — this is for you.
+  <section class="home-gate surface-system tok-home-hero" aria-labelledby="home-gate-heading">
+    <div class="page-inner home-gate__inner">
+      <h1 id="home-gate-heading" class="home-gate__h1" data-reveal>
+        For readers who know the meanings but still lose the thread.
+      </h1>
+      <p class="home-gate__support" data-reveal>
+        Tides of Knowing helps tarot and oracle readers move beyond memorised meanings into clearer
+        symbolic perception through the COMPASS Method, applied tools, guided practice, and training.
       </p>
+      <p class="home-gate__trust" data-reveal>
+        40+ years tarot practice · 30 years as a professional journalist · Fourth-generation Matakite
+        · Founder of the COMPASS Method
+      </p>
+    </div>
+  </section>
+
+  <section class="home-pathways surface-reading-soft" aria-labelledby="home-pathways-heading">
+    <div class="page-inner home-pathways__inner">
+      <h2 id="home-pathways-heading" class="home-pathways__vh">Ways into the work</h2>
+      <ul class="home-pathways__list">
+        <li class="home-pathways__item" data-reveal>
+          <a class="home-pathways__card" href="/articles/compass-method/">
+            <span class="home-pathways__context">Your readings feel close, but not quite held</span>
+            <span class="home-pathways__action">Explore the Method</span>
+          </a>
+        </li>
+        <li class="home-pathways__item" data-reveal>
+          <a class="home-pathways__card" href="/tools/">
+            <span class="home-pathways__context">You want to experience the framework directly</span>
+            <span class="home-pathways__action">Try a Tool</span>
+          </a>
+        </li>
+        <li class="home-pathways__item" data-reveal>
+          <a class="home-pathways__card" href="/practice/">
+            <span class="home-pathways__context">You want somewhere to practise with others</span>
+            <span class="home-pathways__action">Enter the Practice Space</span>
+          </a>
+        </li>
+        <li class="home-pathways__item" data-reveal>
+          <a class="home-pathways__card" href="/compass/" data-link="compass">
+            <span class="home-pathways__context">You're ready to build this as a real skill</span>
+            <span class="home-pathways__action">See the Training</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -55,10 +93,9 @@ const websiteLd = {
         disciplined use of intuition through the cards.
       </p>
       <p class="intro__text" data-reveal>
-        It is written for tarot, oracle, and Lenormand readers who want more than card meanings
-        alone. Some read for themselves. Some read for others. Many do both. What matters is the
-        desire to work more deeply, more accurately, and with greater trust in what is actually being
-        shown.
+        It is written for tarot and oracle readers who want more than card meanings alone. Some read
+        for themselves. Some read for others. Many do both. What matters is the desire to work more
+        deeply, more accurately, and with greater trust in what is actually being shown.
       </p>
       <p class="intro__text" data-reveal>
         This site is not built around collecting endless interpretations.
@@ -129,6 +166,44 @@ const websiteLd = {
     </div>
   </section>
 
+  <section class="home-arch surface-reading-soft" aria-labelledby="home-arch-heading">
+    <div class="page-inner home-arch__inner">
+      <h2 id="home-arch-heading" class="home-arch__title" data-reveal>How this work is organised</h2>
+      <ul class="home-arch__list">
+        <li class="home-arch__item" data-reveal>
+          <a class="home-arch__card" href="/articles/compass-method/">
+            <span class="home-arch__label">Method</span>
+            <span class="home-arch__desc">Understand the framework</span>
+          </a>
+        </li>
+        <li class="home-arch__item" data-reveal>
+          <a class="home-arch__card" href="/tools/">
+            <span class="home-arch__label">Tools</span>
+            <span class="home-arch__desc">Experience it directly</span>
+          </a>
+        </li>
+        <li class="home-arch__item" data-reveal>
+          <a class="home-arch__card" href="/articles/">
+            <span class="home-arch__label">Articles</span>
+            <span class="home-arch__desc">Deepen the thinking</span>
+          </a>
+        </li>
+        <li class="home-arch__item" data-reveal>
+          <a class="home-arch__card" href="/practice/">
+            <span class="home-arch__label">Practice</span>
+            <span class="home-arch__desc">Build the habit through The Deck Compass</span>
+          </a>
+        </li>
+        <li class="home-arch__item" data-reveal>
+          <a class="home-arch__card" href="/compass/" data-link="compass">
+            <span class="home-arch__label">Training</span>
+            <span class="home-arch__desc">Learn the system in a guided cohort</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <div class="tok-home-cta-band surface-system" data-reveal>
     <div class="page-inner tok-home-cta-band__inner">
       <TdcConversionBlock />
@@ -177,7 +252,7 @@ const websiteLd = {
         Latest in the library
       </h2>
       <p class="methodology__intro" data-reveal>
-        Long-form methodology pieces, series, and topics —{" "}
+        Long-form methodology pieces, series, and topics.{" "}
         <a class="methodology__hub-link" href="/articles/">Browse the full article library</a>
       </p>
       {
@@ -214,8 +289,212 @@ const websiteLd = {
 </BaseLayout>
 
 <style>
-  .hero {
+  .home-gate {
     padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 5vw, 3rem);
+  }
+
+  .home-gate__inner {
+    max-width: 46rem;
+  }
+
+  .home-gate__h1 {
+    margin: 0 0 1.15rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    line-height: 1.12;
+    color: var(--tok-text-light);
+  }
+
+  .home-gate__support {
+    margin: 0 0 1.35rem;
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+    line-height: 1.68;
+    color: var(--tok-text-light-soft);
+    opacity: 0.96;
+    max-width: 42rem;
+  }
+
+  .home-gate__trust {
+    margin: 0;
+    max-width: 44rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--tok-gold) 88%, var(--tok-text-light-soft));
+  }
+
+  .home-pathways {
+    padding: clamp(1.75rem, 5vw, 2.75rem) 0;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .home-pathways__inner {
+    max-width: 48rem;
+  }
+
+  .home-pathways__vh {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .home-pathways__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .home-pathways__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
+
+  .home-pathways__item {
+    margin: 0;
+  }
+
+  .home-pathways__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    height: 100%;
+    padding: 1.1rem 1.2rem 1.15rem;
+    text-decoration: none;
+    color: inherit;
+    background: var(--tok-surface-reading);
+    border: 1px solid var(--tok-border-light);
+    border-left: 3px solid var(--tok-gold);
+    border-radius: 0 0.2rem 0.2rem 0;
+    transition:
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .home-pathways__card:hover {
+    background: color-mix(in srgb, var(--tok-surface-reading) 88%, var(--tok-surface-reading-soft));
+    border-left-color: var(--tok-teal);
+  }
+
+  .home-pathways__context {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+  }
+
+  .home-pathways__action {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+  }
+
+  .home-pathways__card:hover .home-pathways__action {
+    color: var(--tok-teal);
+  }
+
+  .home-arch {
+    padding: clamp(2.25rem, 6vw, 3.5rem) 0;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .home-arch__inner {
+    max-width: 52rem;
+  }
+
+  .home-arch__title {
+    margin: 0 0 1.35rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.65rem, 3.5vw, 2.1rem);
+    line-height: 1.2;
+    color: var(--tok-water);
+    max-width: 40rem;
+  }
+
+  .home-arch__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 560px) {
+    .home-arch__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .home-arch__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .home-arch__item {
+    margin: 0;
+  }
+
+  .home-arch__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    height: 100%;
+    min-height: 5.5rem;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    background: var(--tok-surface-reading);
+    border: 1px solid var(--tok-border-light);
+    border-radius: 0.2rem;
+    box-shadow: var(--shadow-sm);
+    transition:
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .home-arch__card:hover {
+    border-color: color-mix(in srgb, var(--tok-teal) 35%, var(--tok-border-light));
+    background: color-mix(in srgb, var(--tok-surface-reading) 92%, var(--tok-surface-reading-soft));
+  }
+
+  .home-arch__label {
+    font-family: var(--font-heading);
+    font-size: 1.12rem;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--tok-teal-dim);
+  }
+
+  .home-arch__desc {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    opacity: 0.9;
   }
 
   .tok-home-cta-band {
@@ -226,29 +505,6 @@ const websiteLd = {
 
   .tok-home-cta-band__inner {
     max-width: var(--reading-width);
-  }
-
-  .hero__inner {
-    max-width: 42rem;
-  }
-
-  .hero__title {
-    margin: 0 0 1rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2.75rem, 8vw, 4rem);
-    line-height: 1.08;
-    color: var(--tok-text-light);
-  }
-
-  .hero__lead {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
-    line-height: 1.65;
-    color: var(--tok-text-light-soft);
-    opacity: 0.95;
   }
 
   .tok-home-hero a {

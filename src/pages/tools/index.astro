@@ -13,6 +13,15 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
   <article class="tools-hub page-inner">
+    <div class="tools-hub__frame">
+      <p class="tools-hub__frame-label">The COMPASS Method in practice</p>
+      <p class="tools-hub__frame-lede">
+        These tools are not here to give you more meanings to memorise. They are controlled practice
+        spaces for noticing how symbolic information behaves, how patterns form, and where your
+        attention begins to stabilise.
+      </p>
+    </div>
+
     <h1 class="tools-hub__title">Tarot Interpretation Tools</h1>
     <p class="tools-hub__intro">
       These tools help tarot readers practise card relationships, spread flow, and repeated pattern recognition—so readings stay relational instead of collapsing into isolated keywords.
@@ -24,6 +33,10 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
           <span class="tools-hub__card-name">When Two Cards Meet</span>
         </a>
         <p class="tools-hub__card-desc">Two-card relational reading: room and entering force.</p>
+        <p class="tools-hub__compass">
+          This tool trains Map and Sense: noticing the relationship between two cards before forcing
+          them into a fixed interpretation.
+        </p>
         <p class="tools-hub__status tools-hub__status--live">Available now</p>
       </li>
       <li class="tools-hub__card tools-hub__card--soon">
@@ -43,6 +56,26 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
         <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
     </ul>
+
+    <section class="tools-hub__prompt" aria-labelledby="tools-prompt-heading">
+      <h2 id="tools-prompt-heading" class="tools-hub__prompt-title">Practice Prompt of the Week</h2>
+      <p class="tools-hub__prompt-lead">
+        Before you interpret, name the first relationship you notice between the cards.
+      </p>
+      <p class="tools-hub__prompt-support">
+        A short weekly exercise for strengthening perception before explanation.
+      </p>
+    </section>
+
+    <p class="tools-hub__bridge">
+      If this helps in isolation, The Deck Compass is where the practice stabilises with other readers
+      and seekers.{" "}
+      <a class="tools-hub__bridge-link" href="/practice/">Practice the Method</a>
+    </p>
+
+    <p class="tools-hub__notify">
+      <a class="tools-hub__notify-link" href="/subscribe/">Get notified when The Table Between Them launches.</a>
+    </p>
   </article>
 </BaseLayout>
 
@@ -50,6 +83,31 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
   .tools-hub {
     padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
     max-width: 48rem;
+  }
+
+  .tools-hub__frame {
+    margin: 0 0 clamp(1.5rem, 4vw, 2rem);
+    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tools-hub__frame-label {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .tools-hub__frame-lede {
+    margin: 0;
+    max-width: 42rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--tok-text-light-soft);
+    opacity: 0.96;
   }
 
   .tools-hub__title {
@@ -141,6 +199,83 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
     line-height: 1.62;
     color: var(--tok-text-dark);
     flex: 1;
+  }
+
+  .tools-hub__compass {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.58;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+    padding-top: 0.35rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 12%, transparent);
+  }
+
+  .tools-hub__prompt {
+    margin: clamp(2rem, 5vw, 2.75rem) 0 0;
+    padding: clamp(1.35rem, 4vw, 1.85rem) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tools-hub__prompt-title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--tok-text-light);
+  }
+
+  .tools-hub__prompt-lead {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--tok-text-light-soft);
+    max-width: 40rem;
+  }
+
+  .tools-hub__prompt-support {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 88%, transparent);
+    max-width: 38rem;
+  }
+
+  .tools-hub__bridge {
+    margin: clamp(1.75rem, 4vw, 2.25rem) 0 0;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: var(--tok-text-light-soft);
+    max-width: 42rem;
+  }
+
+  .tools-hub__bridge-link {
+    font-weight: 600;
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+  }
+
+  .tools-hub__bridge-link:hover {
+    color: var(--tok-text-light-strong);
+  }
+
+  .tools-hub__notify {
+    margin: 1.15rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .tools-hub__notify-link {
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tools-hub__notify-link:hover {
+    color: var(--tok-text-light-strong);
   }
 
   .tools-hub__status {

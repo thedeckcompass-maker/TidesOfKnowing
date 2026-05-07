@@ -3,6 +3,8 @@ import ShareButtons from "./share/ShareButtons.astro";
 
 interface Props {
   title: string;
+  /** Text used for share buttons; defaults to `title` (frontmatter title when header title is overridden). */
+  shareTitle?: string;
   subtitle?: string;
   publishDate: Date;
   readingTime?: number;
@@ -14,6 +16,7 @@ interface Props {
 
 const {
   title,
+  shareTitle,
   subtitle,
   publishDate,
   readingTime,
@@ -22,6 +25,8 @@ const {
   author = "Leigh Spencer",
   shareUrl,
 } = Astro.props;
+
+const resolvedShareTitle = shareTitle ?? title;
 
 const displayDate = publishDate.toLocaleDateString("en-US", {
   year: "numeric",
@@ -63,7 +68,7 @@ const iso = publishDate.toISOString();
     <p class="tok-article-header__byline">
       <a class="tok-article-header__byline-link" href="/about">{author}</a>
     </p>
-    <ShareButtons title={title} url={shareUrl} placement="top" />
+    <ShareButtons title={resolvedShareTitle} url={shareUrl} placement="top" />
   </div>
 </header>
 

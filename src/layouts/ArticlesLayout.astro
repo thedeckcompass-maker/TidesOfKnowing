@@ -16,10 +16,25 @@ import { slugify } from "../utils/slugify";
 interface Props {
   article: CollectionEntry<"articles">;
   readingMinutes?: number;
+  /** When set, used for the visible article H1 instead of frontmatter title. */
+  headerTitle?: string;
+  /** When set (including empty string), overrides frontmatter subtitle for the header. */
+  headerSubtitle?: string | null;
+  /** When true, omits the global "Continue through the system" block (e.g. COMPASS Method hub has its own pathways). */
+  hideSystemPathway?: boolean;
 }
 
-const { article, readingMinutes } = Astro.props;
+const {
+  article,
+  readingMinutes,
+  headerTitle,
+  headerSubtitle,
+  hideSystemPathway = false,
+} = Astro.props;
 const d = article.data;
+const resolvedHeaderTitle = headerTitle ?? d.title;
+const resolvedHeaderSubtitle =
+  headerSubtitle !== undefined ? headerSubtitle : d.subtitle;
 const base = siteBase(Astro);
 const canonicalPath = `/articles/${d.slug}/`;
 const ogUrl = new URL(canonicalPath, base).href;
@@ -78,6 +93,19 @@ const articleAudio = getArticleAudio({
   slug: d.slug,
   frontmatterAudio: d.audio,
 });
+
+const isLeighSpencer = d.author.trim() === "Leigh Spencer";
+
+/*
+ * TODO: Optional frontmatter-driven article pathways (e.g. custom link labels and hrefs per article).
+ * TODO: Optional per-article "Apply this" callout copy via frontmatter or manual MDX, not a global generic block.
+ */
+const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
+  { href: "/articles/compass-method/", label: "Understand the framework" },
+  { href: "/tools/", label: "Practise the relationship" },
+  { href: "/practice/", label: "Build the habit" },
+  { href: "/compass/", label: "Train with COMPASS", dataCompass: true },
+];
 ---
 
 <BaseLayout
@@ -101,8 +129,9 @@ const articleAudio = getArticleAudio({
       <ShareSidebar title={d.title} url={canonicalUrl} />
       <div class="article-main tok-articles-main surface-reading">
         <ArticleHeader
-          title={d.title}
-          subtitle={d.subtitle}
+          title={resolvedHeaderTitle}
+          shareTitle={d.title}
+          subtitle={resolvedHeaderSubtitle}
           publishDate={d.publishDate}
           readingTime={readingMinutes}
           heroImage={d.heroImage}
@@ -124,9 +153,49 @@ const articleAudio = getArticleAudio({
               </div>
             ) : null
           }
+          <p class="tok-article-trust" data-reveal>
+            {
+              isLeighSpencer ? (
+                <>
+                  By Leigh Spencer · Fourth-generation Matakite, tarot practitioner of 40+ years,
+                  professional journalist of 30 years, and founder of the COMPASS Method.
+                </>
+              ) : (
+                <>By {d.author}.</>
+              )
+            }
+          </p>
           <div class="article-prose article__body tok-articles-body">
+            <slot name="prepend" />
             <slot />
           </div>
+          <slot name="append" />
+          {
+            !hideSystemPathway && (
+              <section
+                class="tok-article-pathway"
+                aria-labelledby="article-pathway-heading"
+                data-reveal
+              >
+                <h2 id="article-pathway-heading" class="tok-article-pathway__title">
+                  Continue through the system
+                </h2>
+                <ul class="tok-article-pathway__list" role="list">
+                  {pathwayLinks.map((item) => (
+                    <li class="tok-article-pathway__item">
+                      <a
+                        class="tok-article-pathway__link"
+                        href={item.href}
+                        {...(item.dataCompass ? { "data-link": "compass" } : {})}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
           <ShareButtons title={d.title} url={canonicalUrl} placement="bottom" />
         </article>
 
@@ -173,5 +242,71 @@ const articleAudio = getArticleAudio({
     max-width: 65ch;
     margin: 0 auto;
     padding: 0 1rem;
+  }
+
+  .tok-article-trust {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem 1.15rem;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.62;
+    font-weight: 400;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-article-pathway {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem 1.75rem;
+    border-top: 1px solid var(--tok-border-light);
+    padding-top: clamp(1.35rem, 3.5vw, 1.85rem);
+  }
+
+  .tok-article-pathway__title {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .tok-article-pathway__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  @media (min-width: 640px) {
+    .tok-article-pathway__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+  }
+
+  .tok-article-pathway__item {
+    margin: 0;
+  }
+
+  .tok-article-pathway__link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    text-decoration-thickness: 1px;
+  }
+
+  .tok-article-pathway__link:hover {
+    color: var(--tok-teal-dim);
   }
 </style>
