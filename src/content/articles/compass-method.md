@@ -4,7 +4,7 @@ subtitle: "How attention, not card knowledge, stabilises perception in tarot and
 slug: "compass-method"
 listBadge: "Method"
 publishDate: 2026-04-10
-heroImage: "/images/compass/system/compass-method-light.png"
+heroImage: "/images/articles/compass-method/compass-method-light.png"
 heroImageAlt: "The COMPASS Method framework graphic showing Center, Open, Map, Perceive, Align, Sense, and Seal."
 heroImageFit: "contain"
 excerpt: "The COMPASS Method names seven conditions of attention, Center, Open, Map, Perceive, Align, Sense, and Seal, that help intuitive reading stay clear, grounded, and trustworthy under pressure."
