@@ -9,6 +9,7 @@ import ArticleSeries from "../components/ArticleSeries.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { getArticleAudio } from "../lib/articleAudio";
+import { articleAuthorAttribution } from "../lib/authorProfile";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { siteBase } from "../lib/site";
 import { slugify } from "../utils/slugify";
@@ -157,8 +158,7 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
             {
               isLeighSpencer ? (
                 <>
-                  By Leigh Spencer · Fourth-generation Matakite, tarot practitioner of 40+ years,
-                  professional journalist of 30 years, and founder of the COMPASS Method.
+                  By Leigh Spencer · {articleAuthorAttribution}
                 </>
               ) : (
                 <>By {d.author}.</>
