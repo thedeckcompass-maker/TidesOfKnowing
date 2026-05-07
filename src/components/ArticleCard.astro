@@ -15,7 +15,10 @@ const {
   heroImage,
   heroImageAlt,
   seriesName,
+  listBadge,
 } = article.data;
+
+const cardBadge = seriesName?.trim() || listBadge?.trim();
 
 const maxExcerpt = 120;
 const shortExcerpt =
@@ -43,8 +46,8 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     </div>
     <div class="article-card__body">
       {
-        seriesName && (
-          <span class="article-card__badge">{seriesName}</span>
+        cardBadge && (
+          <span class="article-card__badge">{cardBadge}</span>
         )
       }
       <h3 class="article-card__title">{title}</h3>

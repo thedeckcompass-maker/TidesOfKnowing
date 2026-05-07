@@ -10,18 +10,18 @@ import {
   blogCategorySlugFromLabel,
 } from "../../lib/blogCategories";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map((post) => {
-    const slug = post.slug ?? post.id;
-    return {
-      params: { slug },
-      props: { post },
-    };
-  });
+const paramSlug = Astro.params.slug;
+if (!paramSlug) {
+  return Astro.redirect("/blog/");
 }
 
-const { post } = Astro.props;
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const post = allPosts.find((p) => (p.slug ?? p.id) === paramSlug);
+
+if (!post) {
+  return Astro.redirect("/blog/");
+}
+
 const slug = post.slug ?? post.id;
 const rendered = await render(post);
 const { Content } = rendered;
@@ -41,7 +41,6 @@ const ogImageAbsolute = heroImage
 const ogUrl = new URL(`/blog/${slug}/`, base).href;
 const related = getRelatedForSlug(slug);
 
-const allPosts = await getCollection("blog", ({ data }) => !data.draft);
 const sidebarCategories = blogCategoryIndex(allPosts);
 
 const categoryLabel = blogCategoryLabel(post);
@@ -65,7 +64,6 @@ const nextPost =
         title: byDateAsc[idx + 1].data.title,
       }
     : null;
-
 ---
 
 <BlogPostLayout

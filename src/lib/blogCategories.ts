@@ -1,13 +1,21 @@
 import { slugify } from "../utils/slugify";
 
-export const DEFAULT_BLOG_CATEGORY = "Journal";
+/** Public label for posts without `category` in frontmatter. */
+export const DEFAULT_BLOG_CATEGORY_DISPLAY = "Field Notes";
+
+/**
+ * Stable URL slug for uncategorised posts (matches historical slugify("Journal")).
+ * Do not rename without redirects.
+ */
+export const DEFAULT_BLOG_CATEGORY_SLUG = "journal";
 
 export function blogCategoryLabel(post: { data: { category?: string } }): string {
   const c = post.data.category?.trim();
-  return c && c.length > 0 ? c : DEFAULT_BLOG_CATEGORY;
+  return c && c.length > 0 ? c : DEFAULT_BLOG_CATEGORY_DISPLAY;
 }
 
 export function blogCategorySlugFromLabel(label: string): string {
+  if (label === DEFAULT_BLOG_CATEGORY_DISPLAY) return DEFAULT_BLOG_CATEGORY_SLUG;
   return slugify(label);
 }
 

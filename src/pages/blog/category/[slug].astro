@@ -11,34 +11,31 @@ import {
 } from "../../../lib/blogCategories";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
-  const rows = blogCategoryIndex(posts);
-  return rows.map((r) => ({
-    params: { slug: r.slug },
-    props: { categoryLabel: r.label },
-  }));
+const paramSlug = Astro.params.slug;
+if (!paramSlug) {
+  return Astro.redirect("/blog/");
 }
-
-interface Props {
-  categoryLabel: string;
-}
-
-const { categoryLabel } = Astro.props;
-const { slug } = Astro.params;
 
 const allPosts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
+const categoryRows = blogCategoryIndex(allPosts);
+const row = categoryRows.find((r) => r.slug === paramSlug);
+
+if (!row) {
+  return Astro.redirect("/blog/");
+}
+
+const slug = paramSlug;
+const categoryLabel = row.label;
+
 const posts = allPosts.filter(
   (p) => blogCategorySlugFromLabel(blogCategoryLabel(p)) === slug,
 );
 
-const categoryRows = blogCategoryIndex(allPosts);
-
-const PAGE_TITLE = `${categoryLabel} — Blog | Tides of Knowing`;
-const PAGE_DESCRIPTION = `Journal posts in “${categoryLabel}” on the Tides of Knowing blog.`;
+const PAGE_TITLE = `${categoryLabel} — Field Notes | Tides of Knowing`;
+const PAGE_DESCRIPTION = `Field Notes in “${categoryLabel}” from Tides of Knowing.`;
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -46,7 +43,7 @@ const canonical = new URL(`/blog/category/${slug}/`, base).href;
 
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
-  { label: "Blog", url: "/blog/" },
+  { label: "Field Notes", url: "/blog/" },
   { label: categoryLabel, url: null },
 ];
 
@@ -79,8 +76,8 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
         <header class="tok-blog-index-head" data-reveal>
           <h1 class="tok-blog-index-title">{categoryLabel}</h1>
           <p class="tok-blog-index-lede">
-            Posts in this category.{" "}
-            <a href="/blog/">All blog posts</a>
+            Field Notes in this category.{" "}
+            <a href="/blog/">All Field Notes</a>
             ·{" "}
             <a href="/articles/">Articles</a>
           </p>
@@ -89,8 +86,8 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
         {
           posts.length === 0 ? (
             <p class="tok-blog-index-empty" data-reveal>
-              No posts in this category yet.{" "}
-              <a href="/blog/">Back to the blog</a>.
+              No Field Notes in this category yet.{" "}
+              <a href="/blog/">Back to Field Notes</a>.
             </p>
           ) : (
             <ul class="tok-blog-feed">
@@ -134,7 +131,7 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
         }
       </div>
 
-      <BlogSidebar categories={categoryRows} activeCategorySlug={slug ?? null} />
+      <BlogSidebar categories={categoryRows} activeCategorySlug={slug} />
     </div>
   </div>
 </BaseLayout>

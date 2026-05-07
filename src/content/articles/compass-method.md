@@ -2,6 +2,7 @@
 title: "The COMPASS Method: Seven conditions for clear intuitive reading"
 subtitle: "How attention — not card knowledge — stabilises perception in tarot and related intuitive work"
 slug: "compass-method"
+listBadge: "Method"
 publishDate: 2026-04-10
 heroImage: "/images/articles/compass-method/compass-method-hero.png"
 heroImageAlt: "Soft light over a tarot spread suggesting calm, structured attention before interpretation"

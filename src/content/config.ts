@@ -1,11 +1,11 @@
 import { z } from "astro:content";
 
-/** Blog post frontmatter — used by `src/content.config.ts`. */
+/** Blog collection (public label: Field Notes) — used by `src/content.config.ts`. */
 export const blogSchema = z.object({
   title: z.string(),
   description: z.string(),
   date: z.coerce.date(),
-  /** Broad bucket for the journal (e.g. Announcements, Reflections, Site updates). */
+  /** Broad bucket for Field Notes (e.g. Announcements, Reflections, Site updates). */
   category: z.string().optional(),
   tags: z.array(z.string()),
   draft: z.boolean().default(false),
@@ -25,6 +25,8 @@ export const articlesSchema = z.object({
   publishDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
   seriesName: z.string().optional(),
+  /** Optional gold badge on library cards when the piece is not part of a series (e.g. Method hub). */
+  listBadge: z.string().optional(),
   seriesOrder: z.number().optional(),
   seriesTotal: z.number().optional(),
   previousArticle: z.string().nullable().optional(),

@@ -45,7 +45,7 @@ const {
   nextPost,
 } = Astro.props;
 
-const pageTitle = `${title} — Tides of Knowing`;
+const pageTitle = `${title} | Field Notes — Tides of Knowing`;
 const isoDate = date.toISOString();
 const displayDate = date.toLocaleDateString("en-AU", {
   year: "numeric",
@@ -58,7 +58,7 @@ const siteHref = base.href;
 
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
-  { label: "Blog", url: "/blog/" },
+  { label: "Field Notes", url: "/blog/" },
   { label: title, url: null },
 ];
 
@@ -131,11 +131,11 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
           </div>
         </article>
 
-        <nav class="tok-blog-adj" aria-label="Adjacent posts" data-reveal>
+        <nav class="tok-blog-adj" aria-label="Adjacent Field Notes" data-reveal>
           {
             prevPost ? (
               <a class="tok-blog-adj__link tok-blog-adj__link--prev" href={`/blog/${prevPost.slug}/`}>
-                <span class="tok-blog-adj__label">Previous post</span>
+                <span class="tok-blog-adj__label">Previous Field Note</span>
                 <span class="tok-blog-adj__title">{prevPost.title}</span>
               </a>
             ) : (
@@ -145,7 +145,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
           {
             nextPost ? (
               <a class="tok-blog-adj__link tok-blog-adj__link--next" href={`/blog/${nextPost.slug}/`}>
-                <span class="tok-blog-adj__label">Next post</span>
+                <span class="tok-blog-adj__label">Next Field Note</span>
                 <span class="tok-blog-adj__title">{nextPost.title}</span>
               </a>
             ) : (

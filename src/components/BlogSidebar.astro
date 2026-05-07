@@ -10,12 +10,12 @@ interface Props {
 const { categories, activeCategorySlug = null } = Astro.props;
 ---
 
-<aside class="tok-blog-sidebar" aria-label="About this journal">
+<aside class="tok-blog-sidebar" aria-label="Field Notes sidebar">
   <section class="tok-blog-sidebar__block" data-reveal>
     <h2 class="tok-blog-sidebar__h">About the author</h2>
     <p class="tok-blog-sidebar__p">
       <strong>Leigh Spencer</strong> writes Tides of Knowing — methodology articles for intuitive
-      tarot readers, and this journal for timely notes, announcements, and shorter reflections.
+      tarot readers, and Field Notes for timely observations, announcements, and shorter reflections.
       <a class="tok-blog-sidebar__inline-link" href="/about/">Read more</a>
     </p>
   </section>
@@ -23,7 +23,7 @@ const { categories, activeCategorySlug = null } = Astro.props;
   <section class="tok-blog-sidebar__block" data-reveal>
     <h2 class="tok-blog-sidebar__h">Newsletter</h2>
     <p class="tok-blog-sidebar__p tok-blog-sidebar__p--tight">
-      New articles and occasional journal notes, in your inbox.
+      New articles and occasional Field Notes, in your inbox.
     </p>
     <div class="tok-blog-sidebar__form ml-embedded" data-form="6Tmwkx"></div>
   </section>
@@ -32,7 +32,7 @@ const { categories, activeCategorySlug = null } = Astro.props;
     <h2 class="tok-blog-sidebar__h">Categories</h2>
     {
       categories.length === 0 ? (
-        <p class="tok-blog-sidebar__p tok-blog-sidebar__muted">Categories will appear as posts are added.</p>
+        <p class="tok-blog-sidebar__p tok-blog-sidebar__muted">Categories will appear as Field Notes are added.</p>
       ) : (
         <ul class="tok-blog-sidebar__cats">
           {categories.map((c) => (

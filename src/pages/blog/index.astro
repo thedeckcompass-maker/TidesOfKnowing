@@ -17,9 +17,9 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
 
 const categoryRows = blogCategoryIndex(posts);
 
-const PAGE_TITLE = "Blog — Tides of Knowing | Journal & announcements";
+const PAGE_TITLE = "Field Notes — Tides of Knowing | Observations & shorter writing";
 const PAGE_DESCRIPTION =
-  "Journal entries, announcements, and shorter reflections from Tides of Knowing. For evergreen methodology and series, browse the articles index.";
+  "Field Notes: practitioner observations, shorter reflections, and timely writing from Tides of Knowing. For evergreen methodology and series, browse the articles index.";
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -27,7 +27,7 @@ const canonical = new URL("/blog/", base).href;
 
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
-  { label: "Blog", url: null },
+  { label: "Field Notes", url: null },
 ];
 
 const blogPostSummaries = posts.map((p) => {
@@ -43,7 +43,7 @@ const blogPostSummaries = posts.map((p) => {
 const blogLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
-  name: "Tides of Knowing — Blog",
+  name: "Tides of Knowing — Field Notes",
   description: PAGE_DESCRIPTION,
   url: canonical,
   blogPost: blogPostSummaries,
@@ -68,10 +68,10 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
     <div class="tok-blog-index-grid">
       <div class="tok-blog-index-main">
         <header class="tok-blog-index-head" data-reveal>
-          <h1 class="tok-blog-index-title">Blog</h1>
+          <h1 class="tok-blog-index-title">Field Notes</h1>
           <p class="tok-blog-index-lede">
-            Timely notes, announcements, and reflections. Evergreen methodology and teaching
-            articles live in the{" "}
+            The living observational layer of this site: practitioner notes, reflections, and
+            shorter pieces. Evergreen methodology and teaching articles live in the{" "}
             <a href="/articles/">articles</a> index.
           </p>
         </header>
