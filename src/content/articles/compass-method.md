@@ -1,13 +1,13 @@
 ---
-title: "The COMPASS Method: Seven conditions for clear intuitive reading"
+title: "The COMPASS Method™: Seven conditions for clear intuitive reading"
 subtitle: "How attention, not card knowledge, stabilises perception in tarot and related intuitive work"
 slug: "compass-method"
 listBadge: "Method"
 publishDate: 2026-04-10
 heroImage: "/images/articles/compass-method/compass-method-light.png"
-heroImageAlt: "The COMPASS Method framework graphic showing Center, Open, Map, Perceive, Align, Sense, and Seal."
+heroImageAlt: "The COMPASS Method™ framework graphic showing Center, Open, Map, Perceive, Align, Sense, and Seal."
 heroImageFit: "contain"
-excerpt: "The COMPASS Method names seven conditions of attention, Center, Open, Map, Perceive, Align, Sense, and Seal, that help intuitive reading stay clear, grounded, and trustworthy under pressure."
+excerpt: "The COMPASS Method™ names seven conditions of attention, Center, Open, Map, Perceive, Align, Sense, and Seal, that help intuitive reading stay clear, grounded, and trustworthy under pressure."
 tags:
   - compass-method
   - intuitive-reading
@@ -16,14 +16,14 @@ tags:
   - reader-development
 author: "Leigh Spencer"
 readingTime: 12
-primaryKeyword: "COMPASS Method tarot"
+primaryKeyword: "COMPASS Method™ tarot"
 secondaryKeywords:
   - "intuitive reading framework"
   - "structured tarot practice"
   - "attention in tarot reading"
 ---
 
-The COMPASS Method is a framework for **conditions of attention**, not a new dictionary of card meanings. It describes what has to be present, in you, before and during a reading, for intuition to stay stable when stakes, emotion, or ambiguity run high.
+The COMPASS Method™ is a framework for **conditions of attention**, not a new dictionary of card meanings. It describes what has to be present, in you, before and during a reading, for intuition to stay stable when stakes, emotion, or ambiguity run high.
 
 I developed it over decades of reading and of working as a journalist: two practices that both reward observation without distortion, patience with ambiguity, and the discipline of not deciding the story before the facts (or the spread) are actually in view.
 
@@ -64,7 +64,7 @@ It sits alongside the broader questions the [methodology series](/articles/) add
 
 **The Deck Compass** is the structured teaching environment where this framework is <a href="/compass/" data-link="compass">worked with in practice</a> through feedback, repetition, and real-world reading conditions. **Tides of Knowing** is where the ideas are published and argued with in the open. The method and the publication are related but not identical: one is a named framework; the other is the editorial home for the wider conversation around precision, ethics, and craft.
 
-For a personal account of how this framework developed over time, see [The origin of the COMPASS Method](/blog/origin-of-the-compass-method/).
+For a personal account of how this framework developed over time, see [The origin of The COMPASS Method™](/blog/origin-of-the-compass-method/).
 
 ---
 

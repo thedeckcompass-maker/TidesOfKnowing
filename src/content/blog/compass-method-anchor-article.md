@@ -1,6 +1,6 @@
 ---
-title: "The COMPASS Method: A framework for precise intuitive reading"
-description: "The COMPASS Method defines seven conditions of attention that stabilise intuitive signal, reduce projection, and make tarot, oracle, and Lenormand readings more precise without relying on memorised meanings."
+title: "The COMPASS Method™: A framework for precise intuitive reading"
+description: "The COMPASS Method™ defines seven conditions of attention that stabilise intuitive signal, reduce projection, and make tarot, oracle, and Lenormand readings more precise without relying on memorised meanings."
 date: 2026-04-12
 category: "Methodology"
 tags:
@@ -12,7 +12,7 @@ draft: true
 ---
 
 **© 2026 Leigh Spencer. All rights reserved.**  
-The COMPASS Method and The Deck Compass methodology are original frameworks developed by Leigh Spencer. No part of this system may be reproduced, taught, or adapted for commercial use without written permission.
+The COMPASS Method™ and The Deck Compass methodology are original frameworks developed by Leigh Spencer. No part of this system may be reproduced, taught, or adapted for commercial use without written permission.
 
 ---
 
@@ -38,9 +38,9 @@ The reading hasn't failed. The conditions that make reading possible have collap
 
 ---
 
-## What the COMPASS Method is
+## What The COMPASS Method™ is
 
-The COMPASS Method is a framework I developed for stabilising attention during intuitive reading so signal can emerge with clarity and minimal distortion.
+The COMPASS Method™ is a framework I developed for stabilising attention during intuitive reading so signal can emerge with clarity and minimal distortion.
 
 It does not replace intuition. It makes intuition structurally usable.
 
@@ -56,7 +56,7 @@ Where traditional approaches focus on what cards mean, COMPASS focuses on the co
 
 ## The Deck Compass methodology
 
-The COMPASS Method forms the structural foundation of The Deck Compass methodology.
+The COMPASS Method™ forms the structural foundation of The Deck Compass methodology.
 
 The articles on this site explore how reading works in practice, how meaning forms under real conditions, how structure influences interpretation, and how clarity is maintained when readings become complex or pressured.
 
@@ -64,7 +64,7 @@ COMPASS defines the conditions that make that process consistent.
 
 Together, they describe not just what intuitive reading is, but how it becomes reliable across time, context, and uncertainty.
 
-Both the COMPASS Method and The Deck Compass methodology are my original work, developed and refined over decades of practice and teaching.
+Both The COMPASS Method™ and The Deck Compass methodology are my original work, developed and refined over decades of practice and teaching.
 
 ---
 
@@ -189,7 +189,7 @@ This is not about reading differently. It is about reading from a different grou
 
 ## What this is not
 
-The COMPASS Method is not:
+The COMPASS Method™ is not:
 
 - a shortcut to certainty or infallibility  
 - a prediction system or outcome guarantee  
@@ -225,9 +225,9 @@ This is the deeper function of the work.
 
 ## About the method's development
 
-I developed the COMPASS Method over more than four decades of reading practice, beginning with the tarot deck I carried to primary school and continuing through years of professional practice, client work, and formal research.
+I developed The COMPASS Method™ over more than four decades of reading practice, beginning with the tarot deck I carried to primary school and continuing through years of professional practice, client work, and formal research.
 
-As a tertiary educator, I have taught intuitive reading within structured learning environments where precision, consistency, and pedagogical integrity matter. The COMPASS Method emerged from that intersection: the need for a framework that could be taught, practiced, and refined, not just experienced.
+As a tertiary educator, I have taught intuitive reading within structured learning environments where precision, consistency, and pedagogical integrity matter. The COMPASS Method™ emerged from that intersection: the need for a framework that could be taught, practiced, and refined, not just experienced.
 
 This is original work. It is not derived from existing tarot systems, psychological models, or spiritual traditions. It is a synthesis of direct observation about how perception actually functions when reading cards under real conditions.
 
@@ -241,7 +241,7 @@ This article defines the framework.
 
 The methodology articles explore how reading works in practice, how meaning forms, how structure stabilises interpretation, and how clarity is maintained across different reading contexts.
 
-The COMPASS Method itself is taught through guided application, where these conditions are developed into embodied skill rather than theoretical knowledge.
+The COMPASS Method™ itself is taught through guided application, where these conditions are developed into embodied skill rather than theoretical knowledge.
 
 Understanding the structure is not the same as being able to apply it reliably under pressure.
 
@@ -262,7 +262,7 @@ That is where clarity lives, or collapses.
 
 **About this work**
 
-The COMPASS Method and The Deck Compass methodology are original frameworks created by Leigh Spencer.
+The COMPASS Method™ and The Deck Compass methodology are original frameworks created by Leigh Spencer.
 
 © 2026 Leigh Spencer. All rights reserved.
 

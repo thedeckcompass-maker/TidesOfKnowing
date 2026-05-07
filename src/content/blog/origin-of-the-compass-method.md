@@ -1,6 +1,6 @@
 ---
-title: "The origin of the COMPASS Method"
-description: "Leigh Spencer reflects on how the COMPASS Method emerged over decades of intuitive reading practice, and why attention, not knowledge, became the defining factor in clarity."
+title: "The origin of The COMPASS Method™"
+description: "Leigh Spencer reflects on how The COMPASS Method™ emerged over decades of intuitive reading practice, and why attention, not knowledge, became the defining factor in clarity."
 date: 2026-04-12
 category: "Announcements"
 tags:
@@ -56,7 +56,7 @@ There was no fear clouding the signal. No wishful thinking. No urgency to make t
 
 Just signal. And I learned to trust it.
 
-That's where the first stirrings of what would eventually become [the COMPASS Method](/articles/compass-method/) came from.
+That's where the first stirrings of what would eventually become [The COMPASS Method™](/articles/compass-method/) came from.
 
 ## What journalism taught me about intuition
 
@@ -86,7 +86,7 @@ They stayed coherent when I did the opposite: when I was centred before starting
 
 Those patterns weren't random. They echoed what I'd learned in newsrooms, and they slowly converged into something I could name.
 
-That structure became the COMPASS Method.
+That structure became The COMPASS Method™.
 
 ## Why I finally formalised it
 
