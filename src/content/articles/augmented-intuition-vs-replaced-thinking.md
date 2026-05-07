@@ -10,7 +10,7 @@ previousArticle: "meaning-wrong-battleground"
 nextArticle: "practitioners-edge-perceptual-capacity"
 heroImage: "/images/articles/augmented-intuition-vs-replaced-thinking/hero.png"
 heroImageAlt: "Three cards and human hand suggesting sequence: perception before overlay"
-excerpt: "Augmentation and replacement are not different tools—they are different orders of operations. When perception leads and AI extends it, the reading keeps specificity; when meaning leads, the pre-verbal stage is bypassed."
+excerpt: "Augmentation and replacement are not different tools, they are different orders of operations. When perception leads and AI extends it, the reading keeps specificity; when meaning leads, the pre-verbal stage is bypassed."
 tags:
   - AI and intuition
   - augmented intuition
@@ -53,7 +53,7 @@ But it will be general where it could have been specific. It will be plausible w
 
 Over time, the practitioner who consistently bypasses the perceptual stage in favour of the interpretive one is not just producing thinner readings. They are allowing a capacity to weaken from disuse. The neural pathways involved in pre-verbal processing are trainable. They are also prunable. What is not exercised does not stay static.
 
-For a structured drill on how two cards *relate* after you have done this structural pass, see the [Tarot Combination Interpreter](/tools/tarot-combination-interpreter/)—it belongs after your own noticing, not before it.
+For a structured drill on how two cards *relate* after you have done this structural pass, see the [Tarot Combination Interpreter](/tools/tarot-combination-interpreter/), it belongs after your own noticing, not before it.
 
 ---
 
@@ -63,7 +63,7 @@ Reading for yourself is where the tension between augmentation and replacement b
 
 It is very human to have hopes and dreams. To want a particular outcome, to be drawn toward a certain future, to carry a preference into a reading that shapes what you are able to perceive. This is not a character flaw. It is a condition of being human. But wanting something does not mean you have done the work, in the present or in the accumulation of the past, to bring it into being. Hope and readiness are not the same thing. Desire and alignment are not the same thing. The cards will show what is actually present. What the seeker wants to be present is a different matter entirely.
 
-When you read for yourself, personal bias does not announce itself. It operates silently, shaping what you notice and what you overlook, what you emphasise and what you explain away. It is one of the hardest things to escape, and escaping it is one of the most important skills a practitioner can develop. This is sufficiently distinct and demanding a practice that it forms its own area of advanced training, beyond the foundational conditions of attention that anchor any reliable reading—as described in the [COMPASS method](/articles/compass-method/).
+When you read for yourself, personal bias does not announce itself. It operates silently, shaping what you notice and what you overlook, what you emphasise and what you explain away. It is one of the hardest things to escape, and escaping it is one of the most important skills a practitioner can develop. This is sufficiently distinct and demanding a practice that it forms its own area of advanced training, beyond the foundational conditions of attention that anchor any reliable reading, as described in the [COMPASS method](/articles/compass-method/).
 
 This is precisely where AI, used correctly, becomes genuinely valuable in a personal reading.
 

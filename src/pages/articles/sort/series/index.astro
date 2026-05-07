@@ -18,7 +18,7 @@ import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../lib/breadcrum
 import { siteBase } from "../../../../lib/site";
 
 const PAGE_DESCRIPTION =
-  "Browse all articles grouped by series — tarot methodology and intuition development from Tides of Knowing.";
+  "Browse all articles grouped by series, tarot methodology and intuition development from Tides of Knowing.";
 
 const articles = await getCollection("articles");
 const sorted = sortArticles(articles, "series");
@@ -30,7 +30,7 @@ const siteHref = base.href;
 const canonical = new URL("/articles/sort/series/", base).href;
 
 const PAGE_TITLE =
-  "Articles — by series — Tides of Knowing | Tarot Methodology & Intuition Development";
+  "Articles, by series | Tides of Knowing | Tarot Methodology & Intuition Development";
 
 const seriesOpts = seriesOptionsFromArticles(articles);
 
@@ -41,7 +41,7 @@ const minutesById = new Map(
 const collectionLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Tides of Knowing Articles — by series",
+  name: "Tides of Knowing Articles, by series",
   description: PAGE_DESCRIPTION,
   url: canonical,
 };

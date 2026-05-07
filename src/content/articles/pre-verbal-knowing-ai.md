@@ -9,8 +9,8 @@ seriesTotal: 7
 previousArticle: "myth-ai-intuition-simulation"
 nextArticle: "tarot-pre-symbolic-interface"
 heroImage: "/images/articles/pre-verbal-knowing-ai/hero.png"
-heroImageAlt: "Conceptual field suggesting signal before words — attention and cognition"
-excerpt: "Most intuitive work spends its energy at the translation stage. The reception and recognition stages that come before language are trainable—and they are precisely where AI does not operate."
+heroImageAlt: "Conceptual field suggesting signal before words, attention and cognition"
+excerpt: "Most intuitive work spends its energy at the translation stage. The reception and recognition stages that come before language are trainable, and they are precisely where AI does not operate."
 tags:
   - AI and intuition
   - pre-verbal cognition

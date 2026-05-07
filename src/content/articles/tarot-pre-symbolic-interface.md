@@ -10,7 +10,7 @@ previousArticle: "pre-verbal-knowing-ai"
 nextArticle: "meaning-wrong-battleground"
 heroImage: "/images/articles/tarot-pre-symbolic-interface/hero.png"
 heroImageAlt: "Tarot imagery suggesting activation and attention before fixed definitions"
-excerpt: "Tarot behaves like an interface: dense images trigger pre-verbal processing before dictionary meanings arrive. That model explains precision in live readings—and why automation stops where perception begins."
+excerpt: "Tarot behaves like an interface: dense images trigger pre-verbal processing before dictionary meanings arrive. That model explains precision in live readings, and why automation stops where perception begins."
 tags:
   - tarot methodology
   - AI and intuition
@@ -95,7 +95,7 @@ The question had been presented blind, with no personal connection disclosed, no
 
 ## Why AI Cannot Replicate Activation
 
-The previous articles in this series—[What AI Can't Access](/articles/what-ai-cant-access/), [The Myth of AI Intuition](/articles/myth-ai-intuition-simulation/), and [Pre-Verbal Knowing](/articles/pre-verbal-knowing-ai/)—have established why AI enters cognition at the encoded layer, after pre-verbal processing has already occurred. Applied specifically to tarot: when an AI system processes the Three of Pentacles, it accesses documented meanings and generates output that reflects the statistical weight of those meanings in context. It does not look at the card and feel something shift. It does not notice the finger at the lips before it knows what that means. It processes representations of the card, not the experience of encountering it.
+The previous articles in this series: [What AI Can't Access](/articles/what-ai-cant-access/), [The Myth of AI Intuition](/articles/myth-ai-intuition-simulation/), and [Pre-Verbal Knowing](/articles/pre-verbal-knowing-ai/), have established why AI enters cognition at the encoded layer, after pre-verbal processing has already occurred. Applied specifically to tarot: when an AI system processes the Three of Pentacles, it accesses documented meanings and generates output that reflects the statistical weight of those meanings in context. It does not look at the card and feel something shift. It does not notice the finger at the lips before it knows what that means. It processes representations of the card, not the experience of encountering it.
 
 This is a structural distinction, not a gap awaiting a more sophisticated model. The activation that occurs when a practitioner encounters a symbolically dense image is a pre-verbal event. It is precisely the stage that AI enters after. What AI can assist with is the translation stage, once signal has already been received and is being converted into language. That is a real and legitimate contribution. It is not a replacement for what precedes it.
 

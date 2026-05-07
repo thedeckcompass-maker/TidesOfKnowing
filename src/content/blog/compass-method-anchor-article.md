@@ -44,13 +44,13 @@ The COMPASS Method is a framework I developed for stabilising attention during i
 
 It does not replace intuition. It makes intuition structurally usable.
 
-I created this system after more than 40 years of reading — beginning when I took my first tarot deck to primary school and continuing through decades of professional practice, teaching, and research into how perception actually functions under pressure.
+I created this system after more than 40 years of reading, beginning when I took my first tarot deck to primary school and continuing through decades of professional practice, teaching, and research into how perception actually functions under pressure.
 
 COMPASS operates on a single premise: **precision in reading is determined by how attention is held, not by how much you know.**
 
 This shifts reading from performance and recall toward direct perception.
 
-Where traditional approaches focus on what cards mean, COMPASS focuses on the conditions that allow meaning to form reliably — before interpretation begins, while it is forming, and after it consolidates.
+Where traditional approaches focus on what cards mean, COMPASS focuses on the conditions that allow meaning to form reliably, before interpretation begins, while it is forming, and after it consolidates.
 
 ---
 
@@ -58,7 +58,7 @@ Where traditional approaches focus on what cards mean, COMPASS focuses on the co
 
 The COMPASS Method forms the structural foundation of The Deck Compass methodology.
 
-The articles on this site explore how reading works in practice — how meaning forms under real conditions, how structure influences interpretation, and how clarity is maintained when readings become complex or pressured.
+The articles on this site explore how reading works in practice, how meaning forms under real conditions, how structure influences interpretation, and how clarity is maintained when readings become complex or pressured.
 
 COMPASS defines the conditions that make that process consistent.
 
@@ -76,7 +76,8 @@ They are not steps to follow.
 They are not a linear sequence.  
 They are qualities of awareness that must be present for signal to remain stable.
 
-### C — Center  
+### C: Center
+
 **Presence before perception**
 
 Attention is already active before a reading begins.
@@ -87,7 +88,8 @@ Without center, everything that follows is reactive.
 
 ---
 
-### O — Open  
+### O: Open
+
 **Receptivity without agenda**
 
 Open allows the question to remain wider than the answer you expect.
@@ -98,7 +100,8 @@ This is not passivity. It is deliberate restraint against the pressure to resolv
 
 ---
 
-### M — Map  
+### M: Map
+
 **Observation before interpretation**
 
 Map is the act of registering what is present before meaning is assigned.
@@ -109,7 +112,8 @@ Most readers skip this. That is why their readings shift under pressure.
 
 ---
 
-### P — Perceive  
+### P: Perceive
+
 **Signal before story**
 
 Perceive is where pattern begins to register:
@@ -125,7 +129,8 @@ Signal precedes meaning. Perceive identifies what is signalling before deciding 
 
 ---
 
-### A — Align  
+### A: Align
+
 **Checking for distortion**
 
 Align asks whether what is forming is grounded in clarity or influenced by pressure, projection, wishful thinking, or fear.
@@ -138,7 +143,8 @@ Without this, readings become storytelling.
 
 ---
 
-### S — Sense  
+### S: Sense
+
 **Integration without forcing language**
 
 Sense allows understanding to consolidate without rushing it into explanation.
@@ -152,7 +158,8 @@ This is where meaning stabilises.
 
 ---
 
-### S — Seal  
+### S: Seal
+
 **Closure and containment**
 
 Seal completes the reading.
@@ -220,7 +227,7 @@ This is the deeper function of the work.
 
 I developed the COMPASS Method over more than four decades of reading practice, beginning with the tarot deck I carried to primary school and continuing through years of professional practice, client work, and formal research.
 
-As a tertiary educator, I have taught intuitive reading within structured learning environments where precision, consistency, and pedagogical integrity matter. The COMPASS Method emerged from that intersection: the need for a framework that could be taught, practiced, and refined — not just experienced.
+As a tertiary educator, I have taught intuitive reading within structured learning environments where precision, consistency, and pedagogical integrity matter. The COMPASS Method emerged from that intersection: the need for a framework that could be taught, practiced, and refined, not just experienced.
 
 This is original work. It is not derived from existing tarot systems, psychological models, or spiritual traditions. It is a synthesis of direct observation about how perception actually functions when reading cards under real conditions.
 
@@ -232,7 +239,7 @@ The method is protected intellectual property and may not be reproduced, taught,
 
 This article defines the framework.
 
-The methodology articles explore how reading works in practice — how meaning forms, how structure stabilises interpretation, and how clarity is maintained across different reading contexts.
+The methodology articles explore how reading works in practice, how meaning forms, how structure stabilises interpretation, and how clarity is maintained across different reading contexts.
 
 The COMPASS Method itself is taught through guided application, where these conditions are developed into embodied skill rather than theoretical knowledge.
 
@@ -249,7 +256,7 @@ Not whether you are right.
 
 Notice the quality of your attention before interpretation begins.
 
-That is where clarity lives — or collapses.
+That is where clarity lives, or collapses.
 
 ---
 

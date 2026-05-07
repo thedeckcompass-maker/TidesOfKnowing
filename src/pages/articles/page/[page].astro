@@ -44,8 +44,8 @@ const canonical = new URL(canonicalPath, base).href;
 
 const PAGE_TITLE =
   pageNum <= 1
-    ? "Articles — Tides of Knowing | Tarot Methodology & Intuition Development"
-    : `Articles — page ${pageNum} — Tides of Knowing`;
+    ? "Articles | Tides of Knowing | Tarot Methodology & Intuition Development"
+    : `Articles, page ${pageNum} | Tides of Knowing`;
 
 const seriesOpts = seriesOptionsFromArticles(articles);
 
@@ -56,7 +56,7 @@ const minutesById = new Map(
 const collectionLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: `Tides of Knowing Articles — page ${pageNum}`,
+  name: `Tides of Knowing Articles, page ${pageNum}`,
   description: PAGE_DESCRIPTION,
   url: canonical,
   isPartOf: {

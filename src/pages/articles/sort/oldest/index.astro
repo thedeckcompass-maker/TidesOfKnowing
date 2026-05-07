@@ -18,7 +18,7 @@ import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../lib/breadcrum
 import { siteBase } from "../../../../lib/site";
 
 const PAGE_DESCRIPTION =
-  "Articles on tarot methodology, precision reading, and intuition development — oldest first.";
+  "Articles on tarot methodology, precision reading, and intuition development, oldest first.";
 
 const articles = await getCollection("articles");
 const sorted = sortArticlesLibraryOldest(articles);
@@ -30,7 +30,7 @@ const siteHref = base.href;
 const canonical = new URL("/articles/sort/oldest/", base).href;
 
 const PAGE_TITLE =
-  "Articles — oldest first — Tides of Knowing | Tarot Methodology & Intuition Development";
+  "Articles, oldest first | Tides of Knowing | Tarot Methodology & Intuition Development";
 
 const seriesOpts = seriesOptionsFromArticles(articles);
 
@@ -41,7 +41,7 @@ const minutesById = new Map(
 const collectionLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Tides of Knowing Articles — oldest first",
+  name: "Tides of Knowing Articles, oldest first",
   description: PAGE_DESCRIPTION,
   url: canonical,
 };

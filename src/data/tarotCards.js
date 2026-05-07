@@ -1,5 +1,5 @@
 /**
- * Tides of Knowing — Rider–Waite–Smith deck meanings for on-site tools.
+ * Tides of Knowing, Rider–Waite–Smith deck meanings for on-site tools.
  * Original interpretive copy (not encyclopaedic). Slugs match /public/images/tarot/rws/*.jpg
  */
 
@@ -675,7 +675,7 @@ const MAJORS = [
     shadowExpression:
       "Harsh judgment, shame spirals, or noisy rebirth without integration or changed conditions.",
     readingFunction:
-      "Sounds the bell: decisions that echo beyond the moment—legacy, vocation, or closure.",
+      "Sounds the bell: decisions that echo beyond the moment, legacy, vocation, or closure.",
     compassPrompt:
       "What answer, if accepted, would reorganise how you spend the next season?",
     extendedKeywords: [
@@ -725,7 +725,7 @@ const MAJORS = [
       "earned ending",
     ],
     essenceSentence:
-      "A cycle is willing to close with dignity, and what you carry forward—versus what you finally set down—decides how clean the next doorway feels.",
+      "A cycle is willing to close with dignity, and what you carry forward, versus what you finally set down, decides how clean the next doorway feels.",
   },
 ];
 
@@ -744,7 +744,7 @@ const RANK_LAYER = {
     compass: "What is honestly new here, and what is only dressed as new?",
   },
   Two: {
-    stem: "a pair of pulls negotiating tone—mirror, fork, or quiet standoff",
+    stem: "a pair of pulls negotiating tone, mirror, fork, or quiet standoff",
     kw: ["pairing", "tension", "choice", "balance", "dialogue", "polarity"],
     light: "You let two truths share air without forcing premature collapse into one winner.",
     shadow: "You split, stall, or perform diplomacy while the real decision leaks sideways.",
@@ -765,7 +765,7 @@ const RANK_LAYER = {
     light: "You build a container strong enough for honesty to speak without being chased off.",
     shadow: "You fortify against change, confuse comfort with truth, or freeze into routine.",
     reading: "Stabilises: home base, rules, recovery, or the need to catch breath on purpose.",
-    compass: "What is this stability protecting—and what is it postponing?",
+    compass: "What is this stability protecting, and what is it postponing?",
   },
   Five: {
     stem: "friction, rivalry, or strain where the suit's costs become audible",
@@ -816,7 +816,7 @@ const RANK_LAYER = {
     compass: "What is ready to be finished so the next cycle does not start poisoned?",
   },
   Page: {
-    stem: "a learner's signal—message, curiosity, or early style testing the waters",
+    stem: "a learner's signal, message, curiosity, or early style testing the waters",
     kw: ["study", "message", "curiosity", "beginner", "probe", "youthful signal"],
     light: "You ask sincere questions and risk looking new instead of pretending mastery.",
     shadow: "You perform cleverness, scatter attention, or treat gossip as intimacy.",
@@ -829,7 +829,7 @@ const RANK_LAYER = {
     light: "You aim energy with purpose and accept the cost of being seen moving.",
     shadow: "You charge past context, burn bridges, or confuse intensity with truth.",
     reading: "Accelerates plot: pursuit, argument, travel, or a push that changes tempo fast.",
-    compass: "What are you rushing toward—and what are you rushing away from?",
+    compass: "What are you rushing toward, and what are you rushing away from?",
   },
   Queen: {
     stem: "mature holding: discernment, care, and inward authority in the suit",

@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 }
 
 const PAGE_DESCRIPTION =
-  "Articles on tarot methodology, precision reading, and intuition development — oldest first.";
+  "Articles on tarot methodology, precision reading, and intuition development, oldest first.";
 
 const pageNum = Number.parseInt(Astro.params.page ?? "2", 10);
 const articles = await getCollection("articles");
@@ -43,7 +43,7 @@ const canonical = new URL(
   base,
 ).href;
 
-const PAGE_TITLE = `Articles — oldest first — page ${pageNum} — Tides of Knowing`;
+const PAGE_TITLE = `Articles, oldest first, page ${pageNum} | Tides of Knowing`;
 
 const seriesOpts = seriesOptionsFromArticles(articles);
 
@@ -54,7 +54,7 @@ const minutesById = new Map(
 const collectionLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: `Tides of Knowing Articles — oldest first — page ${pageNum}`,
+  name: `Tides of Knowing Articles, oldest first, page ${pageNum}`,
   description: PAGE_DESCRIPTION,
   url: canonical,
 };

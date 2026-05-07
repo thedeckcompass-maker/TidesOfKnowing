@@ -41,7 +41,7 @@ const base = siteBase(Astro);
 const siteHref = base.href;
 const canonical = new URL(`/series/${slug}/`, base).href;
 
-const PAGE_TITLE = `${seriesTitle} — Series — Tides of Knowing`;
+const PAGE_TITLE = `${seriesTitle} | Series | Tides of Knowing`;
 
 const minutesById = new Map(
   articles.map((a) => [a.id, readingMinutesForArticle(a)]),

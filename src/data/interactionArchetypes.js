@@ -1,5 +1,5 @@
 /**
- * Generated from src/data/interactionArchetypes.csv — do not edit by hand.
+ * Generated from src/data/interactionArchetypes.csv, do not edit by hand.
  * Regenerate: node scripts/gen-interaction-archetypes.mjs
  */
 export const interactionArchetypeMap = {

@@ -17,7 +17,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
 
 const categoryRows = blogCategoryIndex(posts);
 
-const PAGE_TITLE = "Field Notes — Tides of Knowing | Observations & shorter writing";
+const PAGE_TITLE = "Field Notes | Tides of Knowing | Observations & shorter writing";
 const PAGE_DESCRIPTION =
   "Field Notes: practitioner observations, shorter reflections, and timely writing from Tides of Knowing. For evergreen methodology and series, browse the articles index.";
 
@@ -43,7 +43,7 @@ const blogPostSummaries = posts.map((p) => {
 const blogLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
-  name: "Tides of Knowing — Field Notes",
+  name: "Tides of Knowing | Field Notes",
   description: PAGE_DESCRIPTION,
   url: canonical,
   blogPost: blogPostSummaries,

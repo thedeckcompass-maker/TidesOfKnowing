@@ -115,7 +115,7 @@ The seeker sitting across from you, whether in person or at a distance, does not
 
 That is a different service entirely. And it is not one that can be replicated by any system that begins with the encoded layer.
 
-The [COMPASS method](/articles/compass-method/) names the attentional conditions—Center through Seal—that keep that upstream work honest when pressure rises.
+The [COMPASS method](/articles/compass-method/) names the attentional conditions, Center through Seal, that keep that upstream work honest when pressure rises.
 
 ---
 

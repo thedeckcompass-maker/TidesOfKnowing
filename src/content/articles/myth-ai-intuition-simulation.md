@@ -10,7 +10,7 @@ previousArticle: "what-ai-cant-access"
 nextArticle: "pre-verbal-knowing-ai"
 heroImage: "/images/articles/myth-ai-intuition-simulation/hero.png"
 heroImageAlt: "High-country landscape and built form suggesting sensing before design"
-excerpt: "AI outputs feel intuitive because of compression, familiar pattern, and projection—not because the system perceives. This essay names that illusion and what it costs when practitioners misplace their edge."
+excerpt: "AI outputs feel intuitive because of compression, familiar pattern, and projection, not because the system perceives. This essay names that illusion and what it costs when practitioners misplace their edge."
 tags:
   - AI and intuition
   - intuitive reading

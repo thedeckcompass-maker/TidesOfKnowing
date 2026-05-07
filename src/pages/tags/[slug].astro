@@ -30,13 +30,13 @@ const tagLabel =
   tagged[0]?.data.tags.find((t) => slugify(t) === tagSlug) ??
   tagSlug!.replace(/-/g, " ");
 
-const PAGE_DESCRIPTION = `Articles tagged “${tagLabel}” — Tides of Knowing.`;
+const PAGE_DESCRIPTION = `Articles tagged “${tagLabel}” on Tides of Knowing.`;
 
 const base = siteBase(Astro);
 const siteHref = base.href;
 const canonical = new URL(`/tags/${tagSlug}/`, base).href;
 
-const PAGE_TITLE = `${tagLabel} — Topics — Tides of Knowing`;
+const PAGE_TITLE = `${tagLabel} | Topics | Tides of Knowing`;
 
 const minutesById = new Map(
   articles.map((a) => [a.id, readingMinutesForArticle(a)]),
@@ -45,7 +45,7 @@ const minutesById = new Map(
 const itemListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: `${tagLabel} — topics`,
+  name: `${tagLabel}, topics`,
   description: PAGE_DESCRIPTION,
   numberOfItems: tagged.length,
   itemListElement: tagged.map((a, i) => ({

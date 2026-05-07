@@ -10,7 +10,7 @@ previousArticle: "augmented-intuition-vs-replaced-thinking"
 nextArticle: null
 heroImage: "/images/articles/practitioners-edge-perceptual-capacity/hero.png"
 heroImageAlt: "Driftwood and shore light suggesting readiness and long accumulation"
-excerpt: "The edge is not more card meanings or fluent interpretation—both are increasingly automatable. It is perceptual readiness: receiving signal before it becomes language, then translating with accuracy."
+excerpt: "The edge is not more card meanings or fluent interpretation, both are increasingly automatable. It is perceptual readiness: receiving signal before it becomes language, then translating with accuracy."
 tags:
   - AI and intuition
   - intuitive reading
@@ -65,7 +65,7 @@ It is not interpretive fluency. The ability to construct coherent, well-articula
 
 It is not experience alone. Years in practice without deliberate development of the pre-verbal stage produces a practitioner who is experienced at the interpretive layer. That is not the same as a practitioner who has spent those years cultivating perceptual accuracy. The two can look similar from the outside. They are structurally different.
 
-The edge is perceptual. It is the capacity to receive signal before it has been encoded, to stay with that signal long enough for its specificity to emerge, and to translate it into language with accuracy rather than with approximation. It is what allowed a single card in a blind reading, from a Facebook group where no personal context had been disclosed, to yield the story of three daughters, a secret, and the face of a father recognised in his child, verified in detail by the practitioner who had posted the question—as told in [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/). It is what allowed a piece of driftwood picked up for no articulable reason to arrive with precise relevance months later in a live reading.
+The edge is perceptual. It is the capacity to receive signal before it has been encoded, to stay with that signal long enough for its specificity to emerge, and to translate it into language with accuracy rather than with approximation. It is what allowed a single card in a blind reading, from a Facebook group where no personal context had been disclosed, to yield the story of three daughters, a secret, and the face of a father recognised in his child, verified in detail by the practitioner who had posted the question, as told in [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/). It is what allowed a piece of driftwood picked up for no articulable reason to arrive with precise relevance months later in a live reading.
 
 Neither of those outcomes was produced by knowledge of systems. Both were produced by the capacity that knowledge serves, when it is in its correct position.
 
@@ -111,7 +111,7 @@ The science of pre-verbal knowing establishes that the stage AI cannot access is
 
 Tarot, used as a pre-symbolic interface rather than a meaning system, activates that stage. The card is a trigger, not a source. The same card, encountered by different perceptual systems with different implicit histories and different conditions of attention, produces different activations. The meaning that emerges is not retrieved from the card. It is generated in the encounter between the image and the practitioner who has developed the capacity to receive what that encounter produces.
 
-Meaning is not the battleground. It is the layer AI covers most effectively and most completely, and the practitioner who competes there is working against a system that has structural advantages at that layer. Moving upstream, into the perceptual stage that precedes meaning, is not a retreat. It is where the practitioner holds every advantage—as argued in [Why Meaning Is the Wrong Battleground](/articles/meaning-wrong-battleground/).
+Meaning is not the battleground. It is the layer AI covers most effectively and most completely, and the practitioner who competes there is working against a system that has structural advantages at that layer. Moving upstream, into the perceptual stage that precedes meaning, is not a retreat. It is where the practitioner holds every advantage, as argued in [Why Meaning Is the Wrong Battleground](/articles/meaning-wrong-battleground/).
 
 The future tension between augmented intuition and replaced thinking is resolved by a single decision about sequence. Human perception leads. AI extends what has already been received. That order, maintained with discipline across every reading and every session, is what keeps the edge sharp and keeps the practitioner operating in the territory that is genuinely and permanently theirs, as [Augmented Intuition vs Replaced Thinking](/articles/augmented-intuition-vs-replaced-thinking/) laid out.
 

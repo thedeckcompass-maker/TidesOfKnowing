@@ -55,7 +55,7 @@ const listPage = slicePage(sorted, pageNum, LIBRARY_PER_PAGE);
 const seriesTitle =
   sorted[0]?.data.seriesName ?? (seriesParam ?? "").replace(/-/g, " ");
 
-const PAGE_DESCRIPTION = `Articles in the “${seriesTitle}” series — Tides of Knowing.`;
+const PAGE_DESCRIPTION = `Articles in the “${seriesTitle}” series on Tides of Knowing.`;
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -64,7 +64,7 @@ const canonical = new URL(
   base,
 ).href;
 
-const PAGE_TITLE = `${seriesTitle} — Articles — page ${pageNum} — Tides of Knowing`;
+const PAGE_TITLE = `${seriesTitle} | Articles, page ${pageNum} | Tides of Knowing`;
 
 const seriesOpts = seriesOptionsFromArticles(articles);
 
@@ -75,7 +75,7 @@ const minutesById = new Map(
 const collectionLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: `${seriesTitle} — page ${pageNum}`,
+  name: `${seriesTitle}, page ${pageNum}`,
   description: PAGE_DESCRIPTION,
   url: canonical,
 };
