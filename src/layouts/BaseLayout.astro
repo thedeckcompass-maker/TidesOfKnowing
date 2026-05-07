@@ -188,10 +188,8 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         <a class="site-footer__email" href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>
       </div>
       <div class="page-inner site-footer__proprietary-wrap">
-        <p class="site-footer__proprietary">
-          The COMPASS Method™ © Leigh Spencer, established 7 April 2026. Original intellectual property.
-          Prohibited uses include AI training, dataset ingestion, derivative system creation, and
-          unauthorised commercial teaching.
+        <p class="site-footer__proprietary tok-ip-attribution">
+          The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
         </p>
       </div>
     </footer>
@@ -450,13 +448,6 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-footer__proprietary {
     margin: 0;
-    max-width: 60ch;
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 500;
-    line-height: 1.65;
-    letter-spacing: 0.01em;
     color: color-mix(in srgb, var(--tok-text-light-soft) 82%, transparent);
-    text-wrap: balance;
   }
 </style>

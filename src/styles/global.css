@@ -376,3 +376,15 @@ a:focus-visible {
   color: var(--tok-water) !important;
   border-color: var(--tok-gold) !important;
 }
+
+.tok-ip-attribution {
+  margin: 0.85rem 0 0;
+  max-width: 68ch;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, currentColor 76%, transparent);
+  text-wrap: pretty;
+}
