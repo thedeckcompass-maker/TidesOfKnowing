@@ -43,6 +43,7 @@ function addPages(
 
 export const GET: APIRoute = async () => {
   const articles = await getCollection("articles");
+  /** Field Notes — Astro collection id `blog`; sitemap paths stay `/blog/…` for compatibility. */
   const blog = await getCollection("blog", ({ data }) => !data.draft);
 
   const rows: Row[] = [];

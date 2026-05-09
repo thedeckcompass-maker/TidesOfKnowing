@@ -17,7 +17,7 @@ I am Leigh Spencer. I write as a guide and as someone who has lived with tarot f
 
 ## The journal and the articles
 
-**Tides of Knowing** is the public home for this work. **The Deck Compass** is the subscription space, structure, community, and courses for readers who want to go deeper with cohort support. On this site, the long-form **articles** carry methodology and teaching; this **blog** is where shorter notes, announcements, and reflections will land. Same voice, different tempo. Think of the articles as the shelf you return to between lessons, and the blog as the hallway conversation on the way there.
+**Tides of Knowing** is the public home for this work. **The Deck Compass** is the subscription space, structure, community, and courses for readers who want to go deeper with cohort support. On this site, the long-form **articles** carry methodology and teaching; **Field Notes** is where shorter notes, announcements, and reflections will land. Same voice, different tempo. Think of the articles as the shelf you return to between lessons, and Field Notes as the hallway conversation on the way there.
 
 Neither space replaces the other. The Compass is where you learn alongside others, with feedback loops and curricula designed to hold skill over time. The site is where ideas stay visible to anyone still deciding, revising, or arguing in good faith. I want both to feel respectful of your intelligence, and unwilling to rush you past your own thresholds.
 
@@ -29,11 +29,11 @@ Readers who call themselves intuitive sometimes worry that technique will flatte
 
 The Deck Compass teaches spreads, narrative skill, and ethical framing in a held container. These pages orbit that work: pieces for when one card keeps returning, a boundary feels blurry, or you need permission to read slowly in a culture built on hot takes. Tarot deserves seriousness without turning solemn for its own sake. Humour belongs when it serves honesty.
 
-If you are newer to the split between “intuitive” and “technical” reading, here is the shorthand I use: intuition is not absence of method; it is the capacity to notice what method opens up once your body trusts the container. The articles tend to that trust explicitly. The blog will name what is shifting in the field, platform changes, ethical debates, small craft observations, without pretending every post is a full curriculum.
+If you are newer to the split between “intuitive” and “technical” reading, here is the shorthand I use: intuition is not absence of method; it is the capacity to notice what method opens up once your body trusts the container. The articles tend to that trust explicitly. Field Notes will name what is shifting in the field, platform changes, ethical debates, small craft observations, without pretending every post is a full curriculum.
 
 ## How to move through the site
 
-Start wherever your question is sharpest. Browse [articles](/articles/) when you want depth and sequence; check the blog when you want what is timely. If a sentence refuses to let you go, scribble it in a journal and let a three-card spread answer it the next day, that loop costs nothing and turns reading into craft.
+Start wherever your question is sharpest. Browse [articles](/articles/) when you want depth and sequence; open [Field Notes](/blog/) when you want what is timely. If a sentence refuses to let you go, scribble it in a journal and let a three-card spread answer it the next day, that loop costs nothing and turns reading into craft.
 
 Bookmark what stings slightly; friction often marks a growing edge. Save pieces that irritate you as well as the ones that soothe, sometimes the essay you resist is working on a question you have not yet named. If you teach elsewhere, link here as a companion rather than a competitor; the web still needs slow resources that assume adults can hold ambiguity.
 

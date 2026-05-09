@@ -1,4 +1,8 @@
 ---
+/**
+ * Field Notes index — public section label: "Field Notes".
+ * URLs stay under `/blog/` for compatibility (collection id `blog`, files in `src/content/blog/`).
+ */
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BlogSidebar from "../../components/BlogSidebar.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
@@ -81,7 +85,7 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
         {
           posts.length === 0 ? (
             <p class="tok-blog-index-empty" data-reveal>
-              The first posts are on their way. Browse the{" "}
+              The first Field Notes are on their way. Browse the{" "}
               <a href="/articles/">articles</a> or learn more{" "}
               <a href="/about/">about this publication</a>.
             </p>

@@ -26,7 +26,7 @@ Journalism shaped me as much as lineage did: thirty years of asking whether a st
 
 ## Why a classroom and a public shelf both exist
 
-The Deck Compass exists as a subscription platform because sustainable teaching needs boundaries: moderated space, curated curricula, and fair compensation for the people who hold the container. These **articles** stay public so ideas can travel, indexed, cited, argued with, improved. The **blog** will carry shorter updates and reflections that orbit the same ethic without pretending every note belongs in a methodology essay.
+The Deck Compass exists as a subscription platform because sustainable teaching needs boundaries: moderated space, curated curricula, and fair compensation for the people who hold the container. These **articles** stay public so ideas can travel, indexed, cited, argued with, improved. **Field Notes** will carry shorter updates and reflections that orbit the same ethic without pretending every note belongs in a methodology essay.
 
 Paywalls and public archives are not opposites in spirit, both can be ethical when the trade-offs are named. A classroom charges fairly for time, containment, and feedback; a public archive refuses to lock baseline ideas behind novelty. I am uninterested in gatekeeping the sentence “tarot can be practised with rigour.” I am very interested in building containers where rigour is actually trained, because training requires repetition, correction, and rest, all of which are hard to sustain in a comment thread. The point is coherence, not purity: each venue has a job, and readers deserve to know which one they have walked into.
 

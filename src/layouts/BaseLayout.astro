@@ -73,6 +73,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
 
 const pathname = Astro.url.pathname;
 const isToolsRoute = pathname.startsWith("/tools");
+const isFieldNotesRoute = pathname.startsWith("/blog");
 const isPracticeRoute = pathname.startsWith("/practice");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
@@ -173,6 +174,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
             Tools
           </a>
           <a class="site-nav__link" href="/articles/">Articles</a>
+          <a
+            class="site-nav__link"
+            href="/blog/"
+            aria-current={isFieldNotesRoute ? "page" : undefined}
+          >
+            Field Notes
+          </a>
           <a
             class="site-nav__link"
             href="/practice/"

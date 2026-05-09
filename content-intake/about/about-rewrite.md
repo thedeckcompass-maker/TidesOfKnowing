@@ -7,7 +7,7 @@ Tides of Knowing
 Articles
 COMPASS Method
 Browse
-Blog
+Field Notes
 About
 
 # About — Tides of Knowing
@@ -177,5 +177,5 @@ This work develops over time. Join the list to stay close to it.
 Articles
 Series
 Topics
-Blog
+Field Notes
 hello@tidesofknowing.com

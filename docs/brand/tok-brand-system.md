@@ -16,7 +16,7 @@ Code source of truth for values: `src/styles/tokens.css` (verbatim `:root` from 
 
 ## 2. Dual-surface rule: “White reads. Blue contains.”
 
-- **Surface A (reading):** long-form text, learning, articles, blog, about body copy. Default background `--tok-surface-reading`. Body text `--tok-text-dark`.
+- **Surface A (reading):** long-form text, learning, articles, Field Notes, about body copy. Default background `--tok-surface-reading`. Body text `--tok-text-dark`.
 - **Surface B (system):** tools, interactive flows, symbolic workspaces, primary CTAs, nav, footer. Background `--tok-surface-system` / panels `--tok-surface-panel`. Light text tokens.
 - **Article bodies must never sit on dark blue.** Blue may appear on editorial routes only as **bands, panels, footers, or CTAs**, not as the main reading column.
 

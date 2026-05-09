@@ -8,7 +8,7 @@ Use it as the **single place** to drop raw editorial work before it is publish-r
 
 | Path | Purpose |
 |------|---------|
-| `blog/` | Weekly (or ad hoc) blog drafts: `.md`, notes, exports. |
+| `blog/` | Weekly (or ad hoc) **Field Notes** drafts (folder name legacy): `.md`, notes, exports. |
 | `articles/` | Long-form / series article drafts and co-located hero images for `npm run publish-article`. |
 | `images/` | Shared or in-progress assets (exports, alternates, batches) before they are named and placed for publish. |
 | `processed/blog/` · `processed/articles/` | **Archive only** — move (or copy) material here **after** it has been published and verified, so the inbox stays clear. Add dated subfolders under these as you like. |
@@ -17,9 +17,9 @@ Use it as the **single place** to drop raw editorial work before it is publish-r
 
 | Content type | Source after publish | Site location |
 |--------------|----------------------|---------------|
-| Blog posts | `src/content/blog/*.md` | Astro `blog` collection |
+| Field Notes posts | `src/content/blog/*.md` | Astro `blog` collection (public label “Field Notes”; URLs `/blog/…`) |
 | Articles | `src/content/articles/*.md` | Astro `articles` collection |
-| Blog images | `public/images/blog/<post-slug>/` | Referenced from markdown |
+| Field Notes images | `public/images/blog/<post-slug>/` | Referenced from markdown (`/images/blog/…`) |
 | Article images | `public/images/articles/<article-slug>/` | `heroImage` + body in frontmatter |
 
 Schemas live in `src/content/config.ts` — match frontmatter there before copying into `src/content/`.
@@ -28,14 +28,14 @@ Schemas live in `src/content/config.ts` — match frontmatter there before copyi
 
 ## Workflow
 
-### a) Raw blog drafts
+### a) Raw Field Notes drafts
 
-1. Add files under `content-intake/blog/` (any naming you like while drafting).
+1. Add files under `content-intake/blog/` (any naming you like while drafting; folder name is legacy).
 2. When ready to publish: create or update `src/content/blog/<slug>.md` with valid frontmatter (`title`, `description`, `date`, `tags`, optional `category`, etc.).
 3. Put final images in `public/images/blog/<slug>/` and reference them from the markdown.
 4. **After** the post is live and correct: move the draft folder/file from `blog/` into `processed/blog/` (e.g. `processed/blog/2026-04-12-my-post/`) so `blog/` stays a clean inbox.
 
-There is **no** automated blog publisher yet; intake keeps drafts out of `src/content` until you deliberately promote them.
+There is **no** automated Field Notes publisher yet; intake keeps drafts out of `src/content` until you deliberately promote them.
 
 ### b) Raw article drafts (series / long-form)
 
@@ -54,7 +54,7 @@ There is **no** automated blog publisher yet; intake keeps drafts out of `src/co
 ### c) Images
 
 - **Article pipeline:** prefer `content-intake/articles/` co-located `slug-*` files for `publish-article`, or stage large sets under `content-intake/images/` until renamed.
-- **Blog:** organise under `content-intake/images/` while editing, then copy finals into `public/images/blog/<slug>/` when publishing.
+- **Field Notes:** organise under `content-intake/images/` while editing, then copy finals into `public/images/blog/<slug>/` when publishing.
 - **Do not** put intake paths in frontmatter — production URLs must stay under `/images/...` in `public/`.
 
 ### d) After publication (processed/)

@@ -1,4 +1,4 @@
-/** Manual related-reading links keyed by blog slug. Add entries as you publish posts. */
+/** Manual related-reading links keyed by Field Notes slug (`/blog/...`). Add entries as you publish posts. */
 export type RelatedLink = { title: string; href: string };
 
 export const relatedReadingBySlug: Record<string, RelatedLink[]> = {

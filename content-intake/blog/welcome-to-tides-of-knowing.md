@@ -14,7 +14,7 @@ Tides of Knowing is the editorial home of The Deck Compass methodology — a fra
 
 These pieces are written for working readers, long-term students, and anyone who has moved past the beginner stage and discovered that more knowledge doesn't automatically produce better readings. They address the gap between what you know and how you use what you know under the pressure of a real question, with a real person, who needs an actual answer.
 
-**Blog** is where the practice breathes. This is the space for shorter reflections, ethical questions, lineage conversations, and the kind of writing you return to when your practice feels thin or the world feels loud. Blog posts won't try to solve everything at once. They'll stay with one question long enough to let it unfold.
+**Field Notes** is where the practice breathes. This is the space for shorter reflections, ethical questions, lineage conversations, and the kind of writing you return to when your practice feels thin or the world feels loud. These pieces won't try to solve everything at once. They'll stay with one question long enough to let it unfold.
 
 Both spaces share a premise: tarot is worthy of seriousness without becoming solemn for its own sake. Humour belongs here too, when it serves honesty.
 
@@ -24,7 +24,7 @@ The Deck Compass is a subscription platform for intuitive readers who want struc
 
 Tides of Knowing sits alongside it — not as a sales funnel, but as the public-facing work that moves at its own pace. This site stays open and slow, partly for search, partly for the reader at midnight who needs a thoughtful companion, and partly because some ideas simply need room.
 
-If you're already certain tarot will stay central to your life, subscribing to The Deck Compass is one way to stay close to what we build. If you're still testing the depth of your commitment, these articles and blog posts will remain here, ungated, as long as I'm able to tend them.
+If you're already certain tarot will stay central to your life, subscribing to The Deck Compass is one way to stay close to what we build. If you're still testing the depth of your commitment, these articles and Field Notes will remain here, ungated, as long as I'm able to tend them.
 
 Think of this site as the shelf you return to between lessons: not a replacement for practice, but a place where the why and the how can breathe together.
 
@@ -38,7 +38,7 @@ This isn't a rejection of depth. It's an insistence on it. It's a refusal to set
 
 The methodology articles trace that shift across four dimensions: meaning, context, flow, and timing. Each one builds on the last. Each one addresses a breakdown point that separates competent card knowledge from fluent reading practice.
 
-The blog holds the edges of those lessons: the reflections that arrive when a single card keeps returning, when a boundary feels blurry, when you need permission to read slowly in a culture that rewards hot takes.
+Field Notes hold the edges of those lessons: the reflections that arrive when a single card keeps returning, when a boundary feels blurry, when you need permission to read slowly in a culture that rewards hot takes.
 
 ## How to Use This Library
 
@@ -58,4 +58,4 @@ May this library give you a steadier place to stand — and may your practice, w
 
 ---
 
-*Start with the Deck Compass Methodology Series in Articles, or browse Blog for shorter reflections on practice, ethics, and the long work of staying trustworthy to what the cards actually show.*
+*Start with the Deck Compass Methodology Series in Articles, or browse [Field Notes](/blog/) for shorter reflections on practice, ethics, and the long work of staying trustworthy to what the cards actually show.*

@@ -1,5 +1,5 @@
 /**
- * Blog listing order: featured posts first (newest among featured), then
+ * Field Notes listing order (`blog` collection): featured posts first (newest among featured), then
  * non-featured (newest first).
  */
 export function sortBlogPostsForListing<

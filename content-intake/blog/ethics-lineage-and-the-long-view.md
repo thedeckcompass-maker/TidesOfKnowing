@@ -60,4 +60,4 @@ May your practice, wherever it leads, stay honest, embodied, and kind. May you r
 
 ---
 
-*This is part of an ongoing series of reflections on practice, ethics, and the long work of staying trustworthy to what the cards actually show. For the structural methodology behind precision reading, see the Deck Compass Methodology Series in Articles.*
+*This is part of an ongoing series of reflections on practice, ethics, and the long work of staying trustworthy to what the cards actually show. For the structural methodology behind precision reading, see The Deck Compass Methodology Series in the [Tides of Knowing articles library](/articles/).*
