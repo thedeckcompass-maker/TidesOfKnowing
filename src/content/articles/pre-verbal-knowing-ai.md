@@ -105,7 +105,9 @@ The practitioner reaches for meaning before the signal has stabilised. What they
 
 ## Building the Platform
 
-What the Tree of Life gave me as an anchor was not a belief system or a religious framework. It was a stable symbolic structure inside a stretch of attention that does not yet have fixed edges. A place to stand before the attending began. This is the same logic that sits underneath remote viewing's coordinate protocol, and underneath every reliable practice that asks the practitioner to enter a pre-symbolic space deliberately rather than by accident. You need something to walk in with. You also need to be willing to put it down once you arrive.
+What the Tree of Life gave me as an anchor was not a belief system or a religious framework. It was a stable symbolic structure inside a stretch of attention that does not yet have fixed edges. A place to stand before the attending began. This is the same logic that sits underneath remote viewing's coordinate protocol, and underneath every reliable practice that asks the practitioner to enter a pre-symbolic space deliberately rather than by accident.
+
+> You need something to walk in with. You also need to be willing to put it down once you arrive.
 
 This is what any reliable pre-verbal practice requires. Not a technique for extracting answers, but a structure for remaining present in a space where answers have not yet formed. The structure must be stable enough to provide orientation without being so rigid that it constrains what can arrive. Remote viewing solves this by giving the viewer a coordinate and nothing else. I solved it by giving myself a map I trust and treating the map itself as the threshold rather than the destination.
 
