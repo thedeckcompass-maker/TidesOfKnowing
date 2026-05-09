@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "publish-article": "node scripts/add-article.mjs",
     "astro": "astro",
-    "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing"
+    "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
+    "diag:headers": "node scripts/diag-fetch-headers.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",

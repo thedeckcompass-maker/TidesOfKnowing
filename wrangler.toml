@@ -1,0 +1,4 @@
+# Used by `wrangler pages dev` / deploy. Keeps compatibility_date within the
+# Workers binary supported range (avoids "newest date supported is …" errors).
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
