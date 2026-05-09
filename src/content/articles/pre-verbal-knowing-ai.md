@@ -32,7 +32,14 @@ This is remote viewing, and it was not developed in a spiritual retreat or an al
 
 The programme was declassified in 1995. Its results remain contested. What is not contested is what the protocol demands of the person attempting it: the complete suspension of interpretation, assumption, and expectation before a clear impression is allowed to form.
 
-I came to remote viewing recently, in the last five years, as part of an ongoing exploration of how to enter states that resist naming. What drew me was not the intelligence history, though that context is clarifying, and not a settled belief about what was or was not achieved in the programme's operational claims. I was interested in the method: how practitioners were taught to work before the label lands. It was the discipline at the centre of the practice: learning to enter a pre-symbolic space, to attend without agenda, and to receive what arises before the analytical mind reaches in to explain it. I think of that territory as the part of cognition that has not yet picked a word, where a perception is still forming and can still be noticed without being flattened. It is, in the most precise sense I can offer, what this entire article is about.
+What interests me is not the certainty of its claims, but the discipline embedded within the protocol itself: the attempt to encounter perception before explanation arrives.
+
+<figure class="article-section-image">
+  <img src="/images/articles/pre-verbal-knowing-ai/gateway-research-desk.jpg" alt="Declassified Gateway Process and remote viewing research documents on desk beside keyboard" />
+  <figcaption>Research materials exploring remote viewing, perception, and pre-verbal cognition.</figcaption>
+</figure>
+
+I began exploring remote viewing methodologies more seriously in the last five years, as part of an ongoing exploration of how to enter states that resist naming. What drew me was not the intelligence history, though that context is clarifying, and not a settled belief about what was or was not achieved in the programme's operational claims. I was interested in the method: how practitioners were taught to work before the label lands. It was the discipline at the centre of the practice: learning to enter a pre-symbolic space, to attend without agenda, and to receive what arises before the analytical mind reaches in to explain it. I think of that territory as the part of cognition that has not yet picked a word, where a perception is still forming and can still be noticed without being flattened. It is, in the most precise sense I can offer, what this entire article is about.
 
 I did not follow the protocol as given. I retrofitted it.
 
