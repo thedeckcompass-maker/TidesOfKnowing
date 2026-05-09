@@ -10,6 +10,7 @@ import {
   blogCategorySlugFromLabel,
 } from "../../lib/blogCategories";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -46,6 +47,7 @@ const blogLd = {
   name: "Tides of Knowing | Field Notes",
   description: PAGE_DESCRIPTION,
   url: canonical,
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
   blogPost: blogPostSummaries,
 };
 

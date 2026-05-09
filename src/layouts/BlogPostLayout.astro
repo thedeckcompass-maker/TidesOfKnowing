@@ -6,6 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { RelatedLink } from "../data/relatedPosts";
 import type { BlogCategoryRow } from "../lib/blogCategories";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 
 interface NavPost {
@@ -70,16 +71,8 @@ const blogPostingLd: Record<string, unknown> = {
   image: ogImageAbsolute,
   datePublished: isoDate,
   dateModified: isoDate,
-  author: {
-    "@type": "Person",
-    name: "Leigh Spencer",
-    url: "https://www.tidesofknowing.com/about/",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Tides of Knowing",
-    url: "https://www.tidesofknowing.com/",
-  },
+  author: { "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
   url: ogUrl,
   mainEntityOfPage: {
     "@type": "WebPage",

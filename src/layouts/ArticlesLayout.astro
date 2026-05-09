@@ -11,6 +11,7 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { getArticleAudio } from "../lib/articleAudio";
 import { articleAuthorAttribution } from "../lib/authorProfile";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 import { slugify } from "../utils/slugify";
 
@@ -75,6 +76,11 @@ if (d.seriesName) {
 }
 crumbs.push({ label: d.title, url: null });
 
+const authorStructured =
+  d.author.trim() === "Leigh Spencer"
+    ? { "@id": ENTITY_IDS.person }
+    : { "@type": "Person", name: d.author };
+
 const articleLd: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
@@ -83,16 +89,8 @@ const articleLd: Record<string, unknown> = {
   image: heroAbsolute,
   datePublished: publishedISO,
   dateModified: modifiedISO ?? publishedISO,
-  author: {
-    "@type": "Person",
-    name: d.author,
-    url: "https://www.tidesofknowing.com/about/",
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Tides of Knowing",
-    url: "https://www.tidesofknowing.com/",
-  },
+  author: authorStructured,
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
   url: ogUrl,
   mainEntityOfPage: {
     "@type": "WebPage",

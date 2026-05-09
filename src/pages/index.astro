@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import { getCollection } from "astro:content";
+import { ENTITY_IDS, TIDES_OF_KNOWING_ORIGIN } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 import { sortArticlesLibraryNewest } from "../lib/articleLibraryOrder";
 import { sortBlogPostsForListing } from "../lib/sortBlogPosts";
@@ -16,18 +17,16 @@ const latestMethodology = sortArticlesLibraryNewest(
 
 const homeUrl = new URL("/", siteBase(Astro)).href;
 
+/** Same @id as ecosystem graph; adds home-specific description without a second publisher object. */
 const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Tides of Knowing",
-  url: homeUrl,
+  "@id": ENTITY_IDS.tidesWebSite,
+  name: "Tides of Knowing™",
+  url: TIDES_OF_KNOWING_ORIGIN,
   description:
     "Tides of Knowing is a long-form publication about practical intuition, perception and interpretation through tarot and oracle for personal growth and grounded guidance.",
-  publisher: {
-    "@type": "Organization",
-    name: "Tides of Knowing",
-    url: homeUrl,
-  },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
 };
 ---
 
