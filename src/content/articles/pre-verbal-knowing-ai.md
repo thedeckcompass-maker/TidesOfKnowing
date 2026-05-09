@@ -3,6 +3,7 @@ title: "Pre-Verbal Knowing: The Stage of Intuition AI Cannot Reach"
 subtitle: "What happens in the space before intuition becomes language, and why practitioners who neglect it are building on a narrowing foundation"
 slug: pre-verbal-knowing-ai
 publishDate: 2026-05-03
+readingTime: 11
 seriesName: "The AI and Intuition Series"
 seriesOrder: 3
 seriesTotal: 7
@@ -25,25 +26,25 @@ secondaryKeywords:
   - "intuition before language"
 ---
 
-The protocol is deceptively simple. You are given a lexicon: a string of random numbers that corresponds to a target, a person, a place, or a situation you have been given no information about. Your task is to perceive what is there. Not to think about it, not to analyse it, not to construct a plausible answer from available evidence. To perceive it, from a space that operates outside the ordinary constraints of time, distance, and expectation.
+The protocol is deceptively simple. You are given a lexicon: a string of random numbers that corresponds to a target, a person, a place, or a situation you have been given no information about. Your task is to perceive what is there. Not to think about it, not to analyse it, not to construct a plausible answer from available evidence. To perceive it while the usual pull of time, distance, and expectation is held deliberately light, so interpretation does not arrive early and overwrite what you are trying to notice.
 
-This is remote viewing, and it was not developed in a spiritual retreat or an alternative therapy practice. It originated in a classified US government programme. The Stargate Project was established in 1977 at Fort Meade, Maryland, by the Defense Intelligence Agency and Stanford Research Institute, to investigate whether psychic phenomena might have practical applications for military intelligence. The underlying protocol, known as Coordinate Remote Viewing, was designed to access information that had no conventional path of transmission. A viewer, given only a set of coordinates and no other context, was trained to perceive what those coordinates referenced.
+This is remote viewing, and it was not developed in a spiritual retreat or an alternative therapy practice. It originated in a classified US government programme. The Stargate Project was established in 1977 at Fort Meade, Maryland, by the Defense Intelligence Agency and Stanford Research Institute, to investigate whether certain trainable forms of perception might have practical applications for military intelligence when conventional collection could not close a gap. The underlying protocol, known as Coordinate Remote Viewing, was designed to work with targets presented so minimally that ordinary inference offered little purchase. A viewer, given only a set of coordinates and no other context, was trained to report what those coordinates referenced. The internal CIA assessments of this work, including the *Analysis and Assessment of the Gateway Process* and its companion paper on the human use of altered states of consciousness, were released through declassification in the mid-1990s. They sit in the CIA's online reading room now, and anyone can read them.
 
-The programme was declassified in 1995. Its results remain contested. What is not contested is what the protocol demands of the person attempting it: the complete suspension of interpretation, assumption, and expectation before the signal can be received.
+The programme was declassified in 1995. Its results remain contested. What is not contested is what the protocol demands of the person attempting it: the complete suspension of interpretation, assumption, and expectation before a clear impression is allowed to form.
 
-I have been training in remote viewing for some years. What drew me to it was not the intelligence history, though that context is clarifying. It was the discipline at the centre of the practice: learning to enter a pre-symbolic space, to attend without agenda, and to receive what arises before the analytical mind reaches in to explain it. I think of that space as the quantum, the field where information exists before it has taken form. It is, in the most precise sense I can offer, the territory this entire article is about.
+I came to remote viewing recently, in the last five years, as part of an ongoing exploration of how to enter states that resist naming. What drew me was not the intelligence history, though that context is clarifying, and not a settled belief about what was or was not achieved in the programme's operational claims. I was interested in the method: how practitioners were taught to work before the label lands. It was the discipline at the centre of the practice: learning to enter a pre-symbolic space, to attend without agenda, and to receive what arises before the analytical mind reaches in to explain it. I think of that territory as the part of cognition that has not yet picked a word, where a perception is still forming and can still be noticed without being flattened. It is, in the most precise sense I can offer, what this entire article is about.
 
-But I did not follow the protocol as given. I reverse-engineered it.
+I did not follow the protocol as given. I retrofitted it.
 
-In standard remote viewing, the lexicon is assigned: a coordinate that leads to an unknown target. I created my own lexicon that leads to a known interior space, a platform I built and return to, structured around the Kabbalistic Tree of Life. I chose the Tree of Life deliberately, partly because it is a framework I have long worked with, and partly because it is referenced in a number of tarot methodologies, making it a map that already has meaning for practitioners working in the symbolic space. Using it as an anchor in the quantum gave me somewhere stable to stand before the attending began.
+In standard remote viewing, the lexicon is assigned. A coordinate leads to an unknown target, and the viewer's job is to perceive what is there without knowing anything in advance. I built a different version of the same discipline. I created my own lexicon, one that leads to a known interior space rather than an unknown external one, and I structured that space around the Kabbalistic Tree of Life. The Tree of Life is a framework I have worked with for decades, and it appears in a number of tarot methodologies, which made it a map already meaningful to practitioners in the symbolic space. It is a stabilising symbolic scaffold, not a claim about metaphysics: a familiar grid I could step onto so the attending had somewhere to begin. Using it as an anchor in that interior work gave me somewhere stable to stand before the attending began. The structure was not the point. The structure was what allowed me to be in the space without grasping at it.
 
-> What I was building, through this practice, was not a technique. It was a capacity.
+What I was building was not a technique. It was a capacity. Remote viewing was the closest material framework I had found to what I was already doing. It gave the work a vocabulary and a method, while still insisting on the letting-go the work itself requires.
 
-The capacity to enter a space that has no language, no timeline, no expectation, and to remain there long enough for something to form. That is not mystical language. It is a precise description of what pre-verbal knowing requires.
+> “Remote viewing gives you a structure for entering the space, then asks you to forget everything you think you know once you arrive.”
+
+The capacity to enter a stretch of attention that has not yet fixed a timeline or a verdict, and to remain there long enough for something to form. That is not mystical language. It is a precise description of what pre-verbal knowing requires, and it is the part of the practice that the published research on remote viewing tends to leave at the edges, because it cannot be scored the way a target hit can be scored. The viewer's interior conditions, the quality of attention they brought to the session, the way they held expectation, are what make the perception accurate or thin. The written protocol and session instructions assume as much. Most of the public discussion around remote viewing does not stay there for long.
 
 The problem this article addresses is specific: most practitioners in the intuitive space are operating almost entirely at the translation stage of the signal, where meaning is expressed in language, while the two stages that precede it, reception and recognition, receive almost no deliberate attention. That imbalance is not neutral. It has consequences.
-
----
 
 ## What the Research Actually Shows
 
@@ -51,15 +52,13 @@ The science of pre-verbal cognition is more developed than most people realise, 
 
 Cognitive neuroscience has established that a significant proportion of human mental processing occurs below the threshold of conscious awareness. This is not fringe science. It is foundational to how memory, perception, and decision-making are now understood.
 
-Implicit memory is one dimension of this. Unlike explicit memory, which stores facts and events we can consciously recall, implicit memory holds knowledge that influences behaviour without conscious retrieval. Skills, habits, conditioned responses, and pattern recognition built over years of experience are all stored implicitly. When an experienced practitioner looks at a spread and immediately senses something is wrong, or notices that one card is pulling the energy of the entire reading before they can explain why, they are drawing on implicit memory. The knowing precedes the language for it.
+Implicit memory is one dimension of this. Unlike explicit memory, which stores facts and events we can consciously recall, implicit memory holds knowledge that influences behaviour without conscious retrieval. Skills, habits, conditioned responses, and pattern recognition built over years of experience are all stored implicitly. When an experienced practitioner looks at a spread and immediately senses something is wrong, or notices that one card is commanding attention across the spread before they can explain why, they are drawing on implicit memory. The knowing precedes the language for it.
 
 Somatic processing is another. The body registers information before the conscious mind categorises it. Research in interoception, the perception of internal bodily states, shows that the body responds to stimuli before conscious awareness catches up. In a reading context, the physical sensation of something shifting, a tightening, a relaxation, a change in attention, is not imagination. It is the body processing signal before the analytical mind has engaged.
 
 Non-linear associative processing describes the brain's capacity to connect information across contexts without following a sequential logical path. This is what produces the experience of suddenly knowing something without being able to trace the reasoning. The connection was made below the threshold of conscious processing and surfaced as a result.
 
 Taken together, these describe what happens in the space before thought becomes language. It is not a gap in cognition. It is a specific and trainable stage of cognition that operates prior to symbolic encoding. Pre-verbal knowing is not the absence of intelligence. It is intelligence running at a level that has not yet been translated into words.
-
----
 
 ## Where AI Sits in the Chain
 
@@ -68,8 +67,6 @@ The first two essays in this series, [What AI Can't Access](/articles/what-ai-ca
 By the time information is available to an AI system, the pre-verbal stage has already completed. The felt sense has become a sentence. The somatic signal has become a description. The immediate impression has become an interpretation. AI belongs at the translation stage, the third stage of the signal, and nowhere earlier.
 
 The problem arises when practitioners reach for AI before that translation has occurred: using it for the initial impression, the first sensing of what a spread is showing, the receptive stage that has not yet resolved into language. The tool cannot do that work. And the capacity that can do it, if it is not exercised, does not stay static. It atrophies.
-
----
 
 ## The Paradox of Expectation
 
@@ -85,8 +82,6 @@ Developing this capacity is not a passive process. It is a practice, in the same
 
 What does not improve them is bypassing them.
 
----
-
 ## The Three Stages of the Signal
 
 It is useful to map what is actually happening when pre-verbal knowing moves toward articulation, because understanding the stages clarifies where the practitioner's skill is most needed and where errors are most likely to enter.
@@ -97,25 +92,21 @@ The second stage is recognition. The practitioner notices what has arrived. They
 
 The third stage is translation. The pre-verbal signal is converted into language. This is where meaning is articulated, where the reading becomes communicable, where the practitioner can engage with AI usefully, if it is to be used at all. AI belongs here, in the translation and refinement of what has already been received, not in the stages that preceded it.
 
-> Most of the errors in intuitive practice occur at the boundary between the first and second stages: the moment when the raw signal is met with interpretation before it has been properly received.
+Most of the errors in intuitive practice occur at the boundary between the first and second stages: the moment when the raw signal is met with interpretation before it has been properly received.
 
 The practitioner reaches for meaning before the signal has stabilised. What they produce is not wrong exactly, but it is thinner than it could have been. It carries less of what was actually there.
 
----
-
 ## Building the Platform
 
-What the Kabbalistic Tree of Life gave me as an anchor in the quantum was not a belief system or a religious framework. It was a stable structure in an inherently unstructured space. A place to stand before the attending began.
+What the Tree of Life gave me as an anchor was not a belief system or a religious framework. It was a stable symbolic structure inside a stretch of attention that does not yet have fixed edges. A place to stand before the attending began. This is the same logic that sits underneath remote viewing's coordinate protocol, and underneath every reliable practice that asks the practitioner to enter a pre-symbolic space deliberately rather than by accident. You need something to walk in with. You also need to be willing to put it down once you arrive.
 
-This is what any reliable pre-verbal practice requires: not a technique for extracting answers, but a structure for remaining present in a space where answers have not yet formed. The structure must be stable enough to provide orientation without being so rigid that it constrains what can arrive.
+This is what any reliable pre-verbal practice requires. Not a technique for extracting answers, but a structure for remaining present in a space where answers have not yet formed. The structure must be stable enough to provide orientation without being so rigid that it constrains what can arrive. Remote viewing solves this by giving the viewer a coordinate and nothing else. I solved it by giving myself a map I trust and treating the map itself as the threshold rather than the destination.
 
-The Tree of Life serves this function precisely because it is itself a map of how the unmanifest becomes manifest, how formless potential moves through increasingly defined stages until it reaches the material world. Working with it in the quantum is not a metaphor. It is a description of what pre-verbal knowing actually does: it moves from the formless toward form, from signal toward language, from the quantum toward the readable.
+The Tree of Life serves this function because it is already a working map in symbolic practice: a way of tracking how diffuse possibility narrows into pattern, and pattern into something you can name and work with in the material situation in front of you. Using it in this interior work is not decorative. It tracks what pre-verbal knowing actually does: it moves from what is not yet fixed in shape toward language you can stand behind, from raw impression toward what can be shared.
 
 Understanding that movement is what makes the practitioner's capacity reliable rather than occasional. Pre-verbal knowing that is cultivated systematically, that has a structure to support it and a method for moving its signal toward articulation, is not the same as the occasional flash of insight that arrives unbidden and cannot be repeated.
 
 It is a discipline. And disciplines, unlike flashes, can be trained.
-
----
 
 ## What This Means for Practice in an AI-Saturated World
 
@@ -125,7 +116,7 @@ The science is clear on what happens to capacities that are not exercised. Neura
 
 A practitioner who has spent years reading card meanings, studying archetypal systems, refining their interpretive vocabulary, and who now adds AI to that interpretive toolkit, is operating almost entirely at the third stage of the signal. Translation. Articulation. The expression of meaning in language.
 
-> The first two stages, reception and recognition, the stages that make the translation worth anything, may be receiving almost no attention at all.
+The first two stages, reception and recognition, the stages that make the translation worth anything, may be receiving almost no attention at all.
 
 That is the actual problem. Not AI's presence in the practice, but the practitioner's absence from the stages AI cannot reach.
 
@@ -138,5 +129,3 @@ The next article, [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbol
 ---
 
 *Leigh Spencer is the founder of Tides of Knowing and founder of [The COMPASS Method™](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
-
----
