@@ -358,21 +358,6 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     align-items: center;
   }
 
-  @media (min-width: 901px) {
-    .site-header__inner {
-      flex-wrap: nowrap;
-    }
-
-    .site-nav {
-      margin-left: auto;
-      flex-wrap: nowrap;
-    }
-
-    .site-nav-toggle {
-      display: none;
-    }
-  }
-
   .site-nav-toggle {
     display: none;
   }
@@ -525,6 +510,21 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
     .site-nav__link:first-child {
       border-top: none;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .site-header__inner {
+      flex-wrap: nowrap;
+    }
+
+    .site-nav {
+      margin-left: auto;
+      flex-wrap: nowrap;
+    }
+
+    .site-nav-toggle {
+      display: none;
     }
   }
 
