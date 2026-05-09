@@ -7,18 +7,19 @@
     "predev": "node scripts/generate-article-audio-manifest.mjs",
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "publish-article": "node scripts/add-article.mjs",
     "astro": "astro",
     "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
-    "diag:headers": "node scripts/diag-fetch-headers.mjs"
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/cloudflare": "12",
     "astro": "^5.7.0",
     "resend": "^6.12.2"
   },
   "devDependencies": {
-    "wrangler": "^4.54.0"
+    "wrangler": "^4.90.0"
   }
 }
