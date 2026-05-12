@@ -40,6 +40,8 @@
   --font-heading:  'Playfair Display', Georgia, serif;
   --font-body:     'Inter', system-ui, sans-serif;
   --font-accent:   'Cormorant Garamond', Georgia, serif;
+  /* Default reading size (matches global `body` 16px) */
+  --tok-text-body-size: 1rem;
 
   /* ── Spacing ── */
   --space-xs:  4px;   --space-sm:  8px;

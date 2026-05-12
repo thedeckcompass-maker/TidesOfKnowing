@@ -268,10 +268,14 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-size: 1rem;
-    line-height: 1.55;
     color: var(--tok-text-dark);
     cursor: pointer;
+  }
+
+  .compass-apply__radio > span:last-child {
+    font-family: var(--font-body);
+    font-size: var(--tok-text-body-size);
+    line-height: 1.55;
   }
 
   .compass-apply__radio input[type="radio"] {
