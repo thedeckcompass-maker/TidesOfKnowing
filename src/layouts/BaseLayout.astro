@@ -211,7 +211,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       <slot />
     </main>
 
-    {tdcPlacement === "before-footer" && <TdcConversionBlock />}
+    {tdcPlacement === "before-footer" && (
+      <TdcConversionBlock subscribePlacement="site-footer-conversion" />
+    )}
 
     <footer class="site-footer">
       <div class="page-inner site-footer__inner">

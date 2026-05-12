@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
+import { withSubscribeSourceAttribution } from "../../lib/subscribeAttribution";
 
 const title = "Tarot Interpretation Tools | Tides of Knowing";
 const description =
@@ -9,6 +10,11 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 
 const tableBetweenThemUrl = "/tools/three-card-relationship-tarot-reading/";
 const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
+
+const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
+  pagePathname: Astro.url.pathname,
+  sourceComponent: "tools-hub-notify-link",
+});
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
@@ -74,7 +80,9 @@ const repeatedCardMeaningUrl = "/tools/repeating-tarot-cards-meaning/";
     </p>
 
     <p class="tools-hub__notify">
-      <a class="tools-hub__notify-link" href="/subscribe/">Get notified when The Table Between Them launches.</a>
+      <a class="tools-hub__notify-link" href={notifySubscribeHref}>
+        Get notified when The Table Between Them launches.
+      </a>
     </p>
   </article>
 </BaseLayout>

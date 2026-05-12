@@ -1,11 +1,17 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
+import { getSubscribeFormHiddenFields } from "../../lib/subscribeAttribution";
 
 const title = "Three Card Tarot Reading for Relationships – The Table Between Them";
 const description =
   "A deeper tarot tool for exploring the relational field between three cards. This tool is currently in development.";
 const ogUrl = new URL("/tools/three-card-relationship-tarot-reading/", siteBase(Astro)).href;
+
+const subscribeHidden = getSubscribeFormHiddenFields({
+  pagePathname: Astro.url.pathname,
+  sourceComponent: "tool-holding-page",
+});
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
@@ -38,6 +44,11 @@ const ogUrl = new URL("/tools/three-card-relationship-tarot-reading/", siteBase(
       </p>
       <!-- TODO: Connect this signup form to the chosen email/newsletter provider. -->
       <form class="tool-holding__form" action="/subscribe/" method="get">
+        {
+          Object.entries(subscribeHidden).map(([name, value]) => (
+            <input type="hidden" name={name} value={value} />
+          ))
+        }
         <label class="tool-holding__label" for="holding-email-table">Email</label>
         <input
           class="tool-holding__input"

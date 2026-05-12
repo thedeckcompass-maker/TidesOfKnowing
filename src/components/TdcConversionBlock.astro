@@ -1,4 +1,6 @@
 ---
+import { isSubscribeHref, withSubscribeSourceAttribution } from "../lib/subscribeAttribution";
+
 interface Props {
   /**
    * default: full navy band (home / footer).
@@ -13,6 +15,11 @@ interface Props {
   description?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  /**
+   * Query `source_component` / default `utm_content` for /subscribe/ links (placement id).
+   * Defaults to `tdc-conversion-block` when omitted.
+   */
+  subscribePlacement?: string;
 }
 
 const {
@@ -23,7 +30,15 @@ const {
   description = "This work develops over time. Join the list to stay close to it.",
   ctaLabel = "Join the list →",
   ctaHref = "/subscribe/",
+  subscribePlacement = "tdc-conversion-block",
 } = Astro.props;
+
+const resolvedCtaHref = isSubscribeHref(ctaHref)
+  ? withSubscribeSourceAttribution(ctaHref, {
+      pagePathname: Astro.url.pathname,
+      sourceComponent: subscribePlacement,
+    })
+  : ctaHref;
 ---
 
 <section
@@ -46,7 +61,7 @@ const {
       )
     }
     <p class="tdc__sub">{description}</p>
-    <a class="tdc__btn" href={ctaHref}>{ctaLabel}</a>
+    <a class="tdc__btn" href={resolvedCtaHref}>{ctaLabel}</a>
   </div>
 </section>
 

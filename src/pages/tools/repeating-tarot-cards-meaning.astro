@@ -1,11 +1,17 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
+import { getSubscribeFormHiddenFields } from "../../lib/subscribeAttribution";
 
 const title = "Repeating Tarot Cards Meaning – Why the Same Card Keeps Appearing";
 const description =
   "A tarot tool for understanding why the same card keeps appearing across readings. This tool is currently in development.";
 const ogUrl = new URL("/tools/repeating-tarot-cards-meaning/", siteBase(Astro)).href;
+
+const subscribeHidden = getSubscribeFormHiddenFields({
+  pagePathname: Astro.url.pathname,
+  sourceComponent: "tool-holding-page",
+});
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
@@ -39,6 +45,11 @@ const ogUrl = new URL("/tools/repeating-tarot-cards-meaning/", siteBase(Astro)).
       </p>
       <!-- TODO: Connect this signup form to the chosen email/newsletter provider. -->
       <form class="tool-holding__form" action="/subscribe/" method="get">
+        {
+          Object.entries(subscribeHidden).map(([name, value]) => (
+            <input type="hidden" name={name} value={value} />
+          ))
+        }
         <label class="tool-holding__label" for="holding-email-repeated">Email</label>
         <input
           class="tool-holding__input"

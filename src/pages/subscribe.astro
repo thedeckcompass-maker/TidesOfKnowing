@@ -19,11 +19,25 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
       </p>
     </header>
 
+    {/*
+      MailerLite embedded form 6Tmwkx has one manually configured hidden segmentation value:
+      source_component = ml-6Tmwkx-main-subscribe (fixed in the MailerLite dashboard).
+      Dynamic page-level attribution is preserved in incoming query parameters and sessionStorage
+      (see subscribePageAttribution.ts) but is not guaranteed to be stored on the MailerLite subscriber
+      unless a future first-party subscribe endpoint or separate MailerLite forms are introduced.
+    */}
+
     <div class="tok-subscribe__form-wrap">
       <div class="ml-embedded" data-form="6Tmwkx"></div>
     </div>
   </article>
 </BaseLayout>
+
+<script>
+  import { initSubscribePageAttribution } from "../scripts/subscribePageAttribution";
+
+  initSubscribePageAttribution();
+</script>
 
 <style>
   .tok-subscribe {
