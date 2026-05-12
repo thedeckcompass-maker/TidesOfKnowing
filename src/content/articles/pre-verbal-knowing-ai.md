@@ -83,7 +83,7 @@ The viewer must enter the session without expectation. No assumption about what 
 
 Because even the intention to have no expectation is itself a form of expectation. The moment you set out to be open, you have already formed a concept of what openness looks like, and that concept is already filtering what you are able to receive. The training is not in achieving a pure state of no-expectation. It is in learning to notice when expectation has arrived, without reacting to it, without trying to suppress it, and without following it. Noticing, and returning.
 
-This is precisely the same discipline required in a reading. [The COMPASS Method™](/articles/compass-method/) names one of its foundational conditions as Open: holding the question without constraining it, without already knowing the answer, without needing the spread to confirm what the practitioner or seeker already believes. Open does not mean blank. It means available, without agenda.
+This is precisely the same discipline required in a reading. [the COMPASS Method](/articles/compass-method/) names one of its foundational conditions as Open: holding the question without constraining it, without already knowing the answer, without needing the spread to confirm what the practitioner or seeker already believes. Open does not mean blank. It means available, without agenda.
 
 Developing this capacity is not a passive process. It is a practice, in the same sense that a musician practises scales or a surgeon practises technique. The neural pathways involved in pre-verbal processing are trainable. Attention itself is trainable. The ability to receive signal before reaching for interpretation, to tolerate ambiguity without collapsing it prematurely into language, to remain in the pre-symbolic space long enough for something to form: all of these improve with deliberate, sustained practice.
 
@@ -137,4 +137,4 @@ The next article, [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbol
 
 ---
 
-*Leigh Spencer is the founder of Tides of Knowing and founder of [The COMPASS Method™](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
+*Leigh Spencer is the founder of Tides of Knowing and founder of [the COMPASS Method](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*

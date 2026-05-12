@@ -1,12 +1,12 @@
 # Ecosystem structured data (JSON-LD)
 
-This site emits a shared Schema.org graph so search engines and other consumers can relate **Tides of Knowing**, **The Deck Compass**, **The COMPASS Method™**, and **Leigh Spencer** as one ecosystem instead of unrelated pages.
+This site emits a shared Schema.org graph so search engines and other consumers can relate **Tides of Knowing**, **The Deck Compass**, **the COMPASS Method**, and **Leigh Spencer** as one ecosystem instead of unrelated pages.
 
 ## Roles
 
 - **Tides of Knowing** — Editorial and methodology authority: long-form articles, conceptual foundations, and public methodology series.
 - **The Deck Compass** — Live practice and reflection environment: cohort work, repetition, containment, and applied skill-building.
-- **The COMPASS Method™** — Shared interpretive framework published from Tides and practised within The Deck Compass; one creative work entity in schema.
+- **the COMPASS Method** — Shared interpretive framework published from Tides and practised within The Deck Compass; one creative work entity in schema.
 - **Leigh Spencer** — Founder, creator, and author: single `Person` node referenced by organisations, the method, and authorship on articles and Field Notes where applicable.
 
 ## Stable `@id` values
@@ -16,7 +16,7 @@ These fragment URLs are the canonical identity of each entity. **They must stay 
 | Entity | `@id` |
 |--------|--------|
 | Leigh Spencer (Person) | `https://www.tidesofknowing.com/#leigh-spencer` |
-| The COMPASS Method™ (CreativeWork) | `https://www.tidesofknowing.com/#the-compass-method` |
+| the COMPASS Method (CreativeWork) | `https://www.tidesofknowing.com/#the-compass-method` |
 | Tides of Knowing (Organization) | `https://www.tidesofknowing.com/#organization` |
 | Tides of Knowing (WebSite) | `https://www.tidesofknowing.com/#website` |
 | The Deck Compass (Organization) | `https://www.thedeckcompass.com/#organization` |

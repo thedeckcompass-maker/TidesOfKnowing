@@ -137,6 +137,6 @@ Develop it accordingly.
 
 ---
 
-*Leigh Spencer is the founder of Tides of Knowing and founder of [The COMPASS Method™](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
+*Leigh Spencer is the founder of Tides of Knowing and founder of [the COMPASS Method](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
 
 ---

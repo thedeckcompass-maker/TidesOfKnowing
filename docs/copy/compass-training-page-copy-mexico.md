@@ -24,7 +24,7 @@ The problem is what happens when you are in the middle of a reading. You see som
 
 COMPASS training is where that changes.
 
-[Apply for COMPASS](#apply) [Read The COMPASS Method™ article](/articles/compass-method/)
+[Apply for COMPASS](#apply) [Read the COMPASS Method article](/articles/compass-method/)
 
 ---
 
@@ -57,13 +57,13 @@ Students complete training and move directly into The Deck Compass with three mo
 ## SECTION: Method
 
 **Label:** Method
-**Heading:** The COMPASS Method™
+**Heading:** the COMPASS Method
 
 *Center · Open · Map · Perceive · Align · Sense · Seal*
 
 This is not about learning more tarot. It is about learning how to read.
 
-The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
+the COMPASS Method is an original interpretive framework created by Tides of Knowing.
 
 ---
 
@@ -288,7 +288,7 @@ If accepted, your place will be held for 48 hours.
 
 ## FOOTER NOTE (page-level, above site footer)
 
-*The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.*
+*the COMPASS Method is an original interpretive framework created by Tides of Knowing.*
 
 ---
 

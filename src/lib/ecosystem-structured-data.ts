@@ -25,12 +25,12 @@ export function leighSpencerPersonNode() {
     url: `${DECK_COMPASS_ORIGIN}/about`,
     jobTitle: "Founder",
     description:
-      "Founder of Tides of Knowing™ and The Deck Compass™, journalist, and creator of The COMPASS Method™.",
+      "Founder of Tides of Knowing™ and The Deck Compass™, journalist, and creator of the COMPASS Method.",
     worksFor: [{ "@id": IDS.tidesOrg }, { "@id": IDS.deckOrg }],
     knowsAbout: [
       "Intuitive tarot and oracle reading",
       "Symbolic perception",
-      "The COMPASS Method™",
+      "the COMPASS Method",
     ],
   };
 }
@@ -39,7 +39,7 @@ export function compassMethodCreativeWorkNode() {
   return {
     "@type": "CreativeWork",
     "@id": IDS.compassMethod,
-    name: "The COMPASS Method™",
+    name: "the COMPASS Method",
     alternateName: "COMPASS Method",
     description:
       "A shared interpretive framework for relational tarot and oracle reading, organised as seven pillars of attention for live practice.",
@@ -70,7 +70,7 @@ export function tidesOfKnowingWebSiteNode() {
     name: "Tides of Knowing™",
     url: TIDES_OF_KNOWING_ORIGIN,
     description:
-      "Essays, research, and conceptual foundations for intuitive reading and The COMPASS Method™.",
+      "Essays, research, and conceptual foundations for intuitive reading and the COMPASS Method.",
     publisher: { "@id": IDS.tidesOrg },
     about: { "@id": IDS.compassMethod },
   };
@@ -96,7 +96,7 @@ export function deckCompassWebSiteNode() {
     name: "The Deck Compass™",
     url: DECK_COMPASS_ORIGIN,
     description:
-      "Where The COMPASS Method™ is practised: participation, ethics, training interest, and reflective reader development.",
+      "Where the COMPASS Method is practised: participation, ethics, training interest, and reflective reader development.",
     publisher: { "@id": IDS.deckOrg },
     about: { "@id": IDS.compassMethod },
   };

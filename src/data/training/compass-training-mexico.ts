@@ -39,7 +39,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
   },
   method: {
     label: "Method",
-    heading: "The COMPASS Method™",
+    heading: "the COMPASS Method",
     pillars: [
       "Center",
       "Open",
@@ -51,7 +51,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     ],
     paragraphs: [
       "This is not about learning more tarot. It is about learning how to read.",
-      "The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.",
+      "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
     ],
   },
   learningOutcomes: {
@@ -244,5 +244,5 @@ export const compassTrainingMexico: CompassTrainingPage = {
     ctaHref: "/compass/apply/",
   },
   footerAttribution:
-    "The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.",
+    "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
 };
