@@ -7,11 +7,26 @@ type ContactPayload = {
   name?: string;
   email?: string;
   message?: string;
+  /** When `"media"`, optional inquiry fields are included and the email subject is adjusted. */
+  form?: string;
+  organization?: string;
+  website?: string;
+  inquiryType?: string;
+  topic?: string;
+  timeline?: string;
+  backgroundLink?: string;
 };
 
 function clean(value: unknown): string {
   if (typeof value !== "string") return "";
   return value.trim();
+}
+
+const MAX_FIELD = 12_000;
+
+function clipField(value: string, max = MAX_FIELD): string {
+  if (value.length <= max) return value;
+  return `${value.slice(0, max)}\n…(truncated)`;
 }
 
 function isValidEmail(email: string): boolean {
@@ -42,6 +57,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const name = clean(payload.name);
     const email = clean(payload.email);
     const message = clean(payload.message);
+    const isMediaForm = clean(payload.form).toLowerCase() === "media";
 
     if (!name || !email || !message) {
       return new Response(
@@ -69,21 +85,46 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const resend = new Resend(apiKey);
 
+    const organization = clipField(clean(payload.organization));
+    const website = clipField(clean(payload.website));
+    const inquiryType = clipField(clean(payload.inquiryType));
+    const topic = clipField(clean(payload.topic));
+    const timeline = clipField(clean(payload.timeline));
+    const backgroundLink = clipField(clean(payload.backgroundLink));
+
+    const mediaExtras: string[] = [];
+    if (isMediaForm) {
+      mediaExtras.push("Form: Media / podcast or editorial enquiry");
+      if (organization) mediaExtras.push(`Show, publication, group, or organisation: ${organization}`);
+      if (website) mediaExtras.push(`Website or platform link: ${website}`);
+      if (inquiryType) mediaExtras.push(`Inquiry type: ${inquiryType}`);
+      if (topic) mediaExtras.push(`Topic or angle: ${topic}`);
+      if (timeline) mediaExtras.push(`Timeline or publication date: ${timeline}`);
+      if (backgroundLink) {
+        mediaExtras.push(`Link to brief, questions, media kit, or background material: ${backgroundLink}`);
+      }
+    }
+
     const textBody = [
-      "New website enquiry received.",
+      isMediaForm
+        ? "New media enquiry received (podcast, editorial, or related)."
+        : "New website enquiry received.",
       "",
       `Name: ${name}`,
       `Email: ${email}`,
+      ...(mediaExtras.length ? ["", ...mediaExtras] : []),
       "",
       "Message:",
-      message,
+      clipField(message),
     ].join("\n");
 
-    console.log("Sending website enquiry email", { name, email });
+    const subject = isMediaForm ? "Media / podcast enquiry" : "Website enquiry";
+
+    console.log("Sending website enquiry email", { name, email, isMediaForm });
     const sendResult = await resend.emails.send({
       from: "Tides of Knowing <hello@tidesofknowing.com>",
       to: "hello@tidesofknowing.com",
-      subject: "Website enquiry",
+      subject,
       text: textBody,
       replyTo: email,
     });

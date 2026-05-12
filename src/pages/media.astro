@@ -1,0 +1,549 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
+
+const title = "Let's Talk Tarot: On Air and On the Page | Tides of Knowing";
+const description =
+  "Invite Leigh Spencer for podcast interviews, editorial contributions, and authority conversations on tarot, intuition, AI, The COMPASS Method, and decision-making.";
+const ogTitle = "Let's Talk Tarot: On Air and On the Page";
+const ogDescription =
+  "Forty years of intuitive practice, thirty years of journalism, and a clear voice on tarot, AI, intuition, and structured knowing.";
+const ogUrl = new URL("/media/", siteBase(Astro)).href;
+const profilePath = "/images/about/leigh-spencer-profile.png";
+const ogImage = new URL(profilePath, siteBase(Astro)).href;
+
+const mediaPageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  url: ogUrl,
+  description,
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={ogUrl}
+  ogImage={ogImage}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  jsonLd={mediaPageLd}
+>
+  <article class="media page-inner">
+    <header class="media__hero">
+      <p class="media__eyebrow">Podcast guest · Editorial contributor · Authority conversations</p>
+      <h1 class="media__h1">Let's Talk Tarot: On Air and On the Page</h1>
+    </header>
+
+    <section class="media__section media__section--opening" aria-labelledby="media-opening-heading">
+      <h2 id="media-opening-heading" class="media__visually-hidden">Introduction</h2>
+      <p class="media__lede">
+        Forty years of intuitive practice. Thirty years of journalism. One very clear voice.
+      </p>
+      <p class="media__p">
+        Leigh Spencer sits at a rare intersection. She has spent four decades reading tarot and oracle within a family lineage of intuitive practice, and three decades as a working journalist and editor trained to take complex ideas and make them land.
+      </p>
+      <p class="media__p">
+        Add a background in adult education, animal communication, and running her own businesses since her mid-twenties, and what you get is a guest who can hold depth without losing the room.
+      </p>
+      <p class="media__p">
+        She is available for podcast recordings worldwide and open to contributing written content to newsletters, group publications, and curated communities.
+      </p>
+    </section>
+
+    <section class="media__section" aria-labelledby="media-topics-heading">
+      <h2 id="media-topics-heading" class="media__h2">What She Talks About</h2>
+      <div class="media__cards">
+        <div class="media__card">
+          <h3 class="media__card-title">AI and the limits of artificial intuition</h3>
+          <p class="media__card-text">
+            This is the conversation the tarot world is having right now, and Leigh has been inside it longer than most. Her
+            <a href="/series/the-ai-and-intuition-series/">seven-part article series</a>
+            examines what AI can and cannot do in intuitive practice, and why the answer is more nuanced than either the enthusiasts or the sceptics want to admit.
+          </p>
+          <p class="media__card-text">
+            This topic crosses cleanly into technology, creativity, consciousness, and the nature of human knowing. It works for spiritual audiences and general ones alike.
+          </p>
+        </div>
+        <div class="media__card">
+          <h3 class="media__card-title">What forty years actually teaches you</h3>
+          <p class="media__card-text">
+            Not about the cards. About people. About how we make decisions, avoid truth, and return to the same questions at different stages of life.
+          </p>
+          <p class="media__card-text">Leigh brings the practitioner's long view without the mysticism performance.</p>
+        </div>
+        <div class="media__card">
+          <h3 class="media__card-title">The structure underneath intuition</h3>
+          <p class="media__card-text">
+            Leigh developed The COMPASS Method™ as a systematic framework for intuitive reading.
+          </p>
+          <p class="media__card-text">
+            The conversation around why structure and intuition are not opposites, and why the best readers have both, is one she can take anywhere from spiritual communities to business and leadership audiences.
+          </p>
+        </div>
+        <div class="media__card">
+          <h3 class="media__card-title">Reading for business and decision-making</h3>
+          <p class="media__card-text">
+            Leigh has been a business mentor and owner since 26. She works with founders, consultants, and leaders who use oracle practice as a thinking tool, not a belief system.
+          </p>
+          <p class="media__card-text">
+            This angle crosses into strategy, risk, and how high-performers make calls under uncertainty.
+          </p>
+        </div>
+        <div class="media__card">
+          <h3 class="media__card-title">Animal communication and expanded intuitive practice</h3>
+          <p class="media__card-text">
+            For audiences interested in the broader spectrum of intuitive work, Leigh brings a grounded, experience-based perspective on interspecies communication, without woo and without performance.
+          </p>
+          <p class="media__card-text">
+            She was also Editor of Dogs Life magazine in Sydney, Australia, giving this part of her work an editorial and communication foundation alongside her long parallel intuitive practice.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="media__section" aria-labelledby="media-podcast-heading">
+      <h2 id="media-podcast-heading" class="media__h2">For Podcast Hosts</h2>
+      <p class="media__p">
+        Leigh is a former radio news editor and has been communicating complex ideas to general audiences her entire career.
+      </p>
+      <p class="media__p">
+        She is direct, prepared, and easy to work with. She does not require questions in advance, though she welcomes them. She records remotely with a good audio setup and is available across time zones.
+      </p>
+      <p class="media__p">She is not pitching a product in every sentence. She is here to make your episode worth listening to.</p>
+      <p class="media__p">
+        If you host a show touching on intuition, personal development, AI and human capability, business decision-making, or the broader territory of how people know what they know, reach out.
+      </p>
+      <p class="media__inline-cta">
+        <a class="media__cta" href="#media-contact">Send an enquiry</a>
+        <span class="media__cta-sep" aria-hidden="true">·</span>
+        <a class="media__cta" href="/contact/">General contact</a>
+      </p>
+    </section>
+
+    <section class="media__section" aria-labelledby="media-newsletter-heading">
+      <h2 id="media-newsletter-heading" class="media__h2">For Newsletter Editors and Group Moderators</h2>
+      <p class="media__p">
+        If you run a tarot or oracle community, a Facebook group, a Substack, a curated newsletter, or a membership, and you want a considered, well-written piece on a topic your audience is wrestling with, Leigh is open to contributing.
+      </p>
+      <p class="media__p">
+        There is no pitch hidden inside the article. What you get is a piece written specifically for your audience, by someone who has been a working writer for thirty years and a practitioner for forty.
+      </p>
+      <p class="media__p">Tell her what your community needs. She will write it.</p>
+      <p class="media__inline-cta">
+        <a class="media__cta" href="#media-contact">Request a written contribution</a>
+      </p>
+    </section>
+
+    <section class="media__section media__section--contact" id="media-contact" aria-labelledby="media-contact-heading">
+      <h2 id="media-contact-heading" class="media__h2">Contact</h2>
+      <h3 class="media__h3">For podcast bookings and content contributions</h3>
+      <p class="media__p">
+        Send a short note with your show, publication, group, or community details, the topic or angle you have in mind, and your timeline if relevant.
+      </p>
+
+      <form class="media__form" id="media-inquiry-form" novalidate>
+        <label class="media__label" for="media-name">Name</label>
+        <input class="media__input" id="media-name" name="name" type="text" autocomplete="name" required />
+
+        <label class="media__label" for="media-organization">Show, publication, group, or organisation</label>
+        <input class="media__input" id="media-organization" name="organization" type="text" autocomplete="organization" />
+
+        <label class="media__label" for="media-email">Email</label>
+        <input class="media__input" id="media-email" name="email" type="email" autocomplete="email" required />
+
+        <label class="media__label" for="media-website">Website or platform link</label>
+        <input class="media__input" id="media-website" name="website" type="url" inputmode="url" />
+
+        <label class="media__label" for="media-inquiry-type">Inquiry type</label>
+        <select class="media__select" id="media-inquiry-type" name="inquiryType" required>
+          <option value="" disabled selected hidden>Select one</option>
+          <option value="Podcast">Podcast</option>
+          <option value="Written contribution">Written contribution</option>
+          <option value="Interview">Interview</option>
+          <option value="Community feature">Community feature</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label class="media__label" for="media-topic">Topic or angle</label>
+        <textarea class="media__textarea" id="media-topic" name="topic" rows="3" required></textarea>
+
+        <label class="media__label" for="media-timeline">Timeline or publication date</label>
+        <input class="media__input" id="media-timeline" name="timeline" type="text" autocomplete="off" />
+
+        <label class="media__label" for="media-background-link">Link to brief, questions, media kit, or background material</label>
+        <input class="media__input" id="media-background-link" name="backgroundLink" type="url" inputmode="url" />
+
+        <label class="media__label" for="media-message">Message</label>
+        <textarea class="media__textarea" id="media-message" name="message" rows="5" required></textarea>
+
+        <button class="media__button" type="submit">Send enquiry</button>
+        <p class="media__status" id="media-inquiry-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="media__fallback">
+        Prefer email? Write to <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> with the same details, or use the
+        <a href="/contact/">contact page</a>.
+      </p>
+    </section>
+
+    <p class="media__closing">
+      Leigh is selective. She works with hosts and editors who take their audience seriously. If that is you, she would like to hear from you.
+    </p>
+  </article>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById("media-inquiry-form");
+    const status = document.getElementById("media-inquiry-status");
+    if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement)) return;
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const nameInput = form.querySelector("#media-name");
+      const emailInput = form.querySelector("#media-email");
+      const messageInput = form.querySelector("#media-message");
+      const orgInput = form.querySelector("#media-organization");
+      const websiteInput = form.querySelector("#media-website");
+      const typeSelect = form.querySelector("#media-inquiry-type");
+      const topicInput = form.querySelector("#media-topic");
+      const timelineInput = form.querySelector("#media-timeline");
+      const backgroundInput = form.querySelector("#media-background-link");
+
+      if (
+        !(nameInput instanceof HTMLInputElement) ||
+        !(emailInput instanceof HTMLInputElement) ||
+        !(messageInput instanceof HTMLTextAreaElement) ||
+        !(orgInput instanceof HTMLInputElement) ||
+        !(websiteInput instanceof HTMLInputElement) ||
+        !(typeSelect instanceof HTMLSelectElement) ||
+        !(topicInput instanceof HTMLTextAreaElement) ||
+        !(timelineInput instanceof HTMLInputElement) ||
+        !(backgroundInput instanceof HTMLInputElement)
+      ) {
+        return;
+      }
+
+      const payload = {
+        form: "media",
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        organization: orgInput.value.trim(),
+        website: websiteInput.value.trim(),
+        inquiryType: typeSelect.value.trim(),
+        topic: topicInput.value.trim(),
+        timeline: timelineInput.value.trim(),
+        backgroundLink: backgroundInput.value.trim(),
+        message: messageInput.value.trim(),
+      };
+
+      if (!payload.name || !payload.email || !payload.message || !payload.inquiryType || !payload.topic) {
+        status.textContent = "Please complete all required fields.";
+        return;
+      }
+
+      status.textContent = "Sending...";
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result || !result.ok) {
+          status.textContent = "Something went wrong. Please try again.";
+          return;
+        }
+
+        form.reset();
+        status.textContent = "Your enquiry has been sent.\nI'll come back to you shortly.";
+      } catch (_err) {
+        status.textContent = "Something went wrong. Please try again.";
+      }
+    });
+  })();
+</script>
+
+<style>
+  .media {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  .media__hero {
+    padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+    border-bottom: 1px solid var(--tok-border-light);
+  }
+
+  .media__eyebrow {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .media__h1 {
+    margin: 0;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.8vw, 2.75rem);
+    line-height: 1.12;
+    color: var(--tok-teal-dim);
+  }
+
+  .media__section {
+    margin-top: clamp(2.25rem, 5vw, 3rem);
+  }
+
+  .media__section--opening {
+    margin-top: 0;
+  }
+
+  .media__section--contact {
+    padding-top: clamp(1.5rem, 4vw, 2rem);
+    border-top: 1px solid var(--tok-border-light);
+    margin-top: clamp(2.5rem, 6vw, 3.25rem);
+  }
+
+  .media__h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .media__h3 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .media__lede {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    line-height: 1.55;
+    color: var(--tok-water);
+    padding-left: 1rem;
+    border-left: 3px solid var(--tok-gold);
+  }
+
+  .media__p {
+    margin: 0 0 1.1rem;
+    font-size: 1.06rem;
+    line-height: 1.75;
+    color: var(--tok-text-dark);
+  }
+
+  .media__p:last-child {
+    margin-bottom: 0;
+  }
+
+  .media__inline-cta {
+    margin: 1.15rem 0 0;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .media__cta {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    text-decoration-thickness: 1px;
+  }
+
+  .media__cta:hover {
+    color: var(--tok-teal-dim);
+  }
+
+  .media__cta-sep {
+    color: var(--tok-text-muted);
+    padding: 0 0.35rem;
+  }
+
+  .media__cards {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    margin-top: 1.15rem;
+  }
+
+  @media (min-width: 640px) {
+    .media__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .media__card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .media__card {
+    padding: 1.1rem 1.15rem 1.05rem;
+    background: var(--tok-surface-reading-soft);
+    border: 1px solid var(--tok-border-light);
+    border-radius: 0.2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .media__card-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--tok-teal-dim);
+  }
+
+  .media__card-text {
+    margin: 0 0 0.75rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+  }
+
+  .media__card-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .media__card-text a {
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .media__card-text a:hover {
+    color: var(--tok-water);
+  }
+
+  .media__form {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1.25rem;
+    max-width: 42rem;
+  }
+
+  .media__label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+  }
+
+  .media__input,
+  .media__textarea,
+  .media__select {
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
+    border-radius: 0.2rem;
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .media__select {
+    cursor: pointer;
+    appearance: auto;
+  }
+
+  .media__textarea {
+    resize: vertical;
+    min-height: 5rem;
+  }
+
+  .media__button {
+    margin-top: 0.4rem;
+    justify-self: start;
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .media__button:hover {
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
+  }
+
+  .media__status {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    min-height: 1.25rem;
+    white-space: pre-line;
+  }
+
+  .media__fallback {
+    margin: 1.25rem 0 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+  }
+
+  .media__fallback a {
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .media__fallback a:hover {
+    color: var(--tok-water);
+  }
+
+  .media__closing {
+    margin: clamp(2rem, 5vw, 2.75rem) 0 0;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--tok-water);
+    text-align: center;
+    padding: 1.25rem 0.5rem 0;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .media__visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

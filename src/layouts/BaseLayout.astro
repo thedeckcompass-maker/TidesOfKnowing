@@ -17,6 +17,10 @@ interface Props {
   articleModifiedTime?: string;
   /** Absolute URL for social preview (Open Graph / Twitter). */
   ogImage?: string;
+  /** When set, used for Open Graph and Twitter title only (page `<title>` stays `title`). */
+  ogTitle?: string;
+  /** When set, used for Open Graph and Twitter description only (`description` remains the meta description). */
+  ogDescription?: string;
   /** For `article` type, emits `article:tag` meta tags. */
   articleTags?: string[];
   /** Sets `<meta name="author">` when provided. */
@@ -38,6 +42,8 @@ const {
   articlePublishedTime,
   articleModifiedTime,
   ogImage,
+  ogTitle,
+  ogDescription,
   articleTags,
   metaAuthor,
   sequentialLinks,
@@ -57,6 +63,13 @@ const canonical = effectiveOgUrl.startsWith("http")
       effectiveOgUrl.startsWith("/") ? effectiveOgUrl : `/${effectiveOgUrl}`,
       base
     ).href;
+
+const socialTitle =
+  typeof ogTitle === "string" && ogTitle.trim() !== "" ? ogTitle.trim() : title;
+const socialDescription =
+  typeof ogDescription === "string" && ogDescription.trim() !== ""
+    ? ogDescription.trim()
+    : description;
 
 const pageJsonLd = jsonLd
   ? Array.isArray(jsonLd)
@@ -78,6 +91,7 @@ const isPracticeRoute = pathname.startsWith("/practice");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
+const isCompassTrainingSection = pathname.startsWith("/compass");
 const baseBodySurface =
   isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
 const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
@@ -100,8 +114,8 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       <link rel="next" href={sequentialLinks.next} />
     )}
 
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={socialDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Tides of Knowing™" />
@@ -123,8 +137,8 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       name="twitter:card"
       content={ogImage ? "summary_large_image" : "summary"}
     />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={socialDescription} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -167,7 +181,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
           <a class="site-nav__link" href="/articles/compass-method/">Method</a>
           <a
-            class="site-nav__link site-nav__link--tools"
+            class="site-nav__link"
             href="/tools/"
             aria-current={isToolsSection ? "page" : undefined}
           >
@@ -188,7 +202,14 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           >
             Practice
           </a>
-          <a class="site-nav__link" href="/compass/" data-link="compass">Training</a>
+          <a
+            class="site-nav__link site-nav__link--training"
+            href="/compass/"
+            data-link="compass"
+            aria-current={isCompassTrainingSection ? "page" : undefined}
+          >
+            Training
+          </a>
           <a class="site-nav__link" href="/about/">About</a>
         </nav>
       </div>
@@ -212,6 +233,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
             <a class="site-footer__discover-link" href="/tags/">Topics</a>
             <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
             <a class="site-footer__discover-link" href="/contact/">Contact</a>
+            <a class="site-footer__discover-link" href="/media/">Media</a>
             <a class="site-footer__discover-link" href="/privacy/">Privacy Policy</a>
             <a class="site-footer__discover-link" href="/terms/">Terms of Use</a>
           </nav>
@@ -389,19 +411,27 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     color: var(--tok-text-light);
   }
 
-  .site-nav__link--tools {
+  .site-nav__link--training {
     color: color-mix(in srgb, var(--tok-gold) 92%, transparent);
     font-weight: 700;
   }
 
-  .site-nav__link--tools:hover {
+  .site-nav__link--training:hover {
     color: var(--tok-gold);
   }
 
-  .site-nav__link--tools[aria-current="page"] {
+  .site-nav__link--training[aria-current="page"] {
     color: var(--tok-gold);
     text-decoration: underline;
     text-decoration-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    text-underline-offset: 0.18em;
+  }
+
+  /* Tools: standard nav by default; underline when on /tools/ */
+  .site-nav__link[href="/tools/"][aria-current="page"] {
+    color: var(--tok-text-light);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
     text-underline-offset: 0.18em;
   }
 
