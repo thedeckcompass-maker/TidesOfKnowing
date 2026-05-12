@@ -1,27 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteBase } from "../lib/site";
+import { activeCompassTraining as T } from "../data/training/active-training";
 
-const title = "COMPASS: Build Intuition. Trust the Reading.";
-const description =
-  "A 6-week live programme for tarot, oracle, and Lenormand readers who want to move beyond meanings and learn how to trust the reading.";
+const title = T.meta.title;
+const description = T.meta.description;
 const ogUrl = new URL("/compass/", siteBase(Astro)).href;
+
+const cs = T.cohortSchedule;
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
   <article class="compass page-inner">
     <section class="compass__hero">
       <div class="compass__hero-copy compass__panel">
-        <p class="compass__eyebrow">6-week live programme</p>
-        <h1 class="compass__h1">COMPASS: Build Intuition. Trust the Reading.</h1>
-
-        <p class="compass__p">
-          You already know the cards. That is not the problem.
-        </p>
-
-        <p class="compass__p">
-          The problem is what happens when you’re in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.
-        </p>
+        <p class="compass__eyebrow">{T.hero.eyebrow}</p>
+        <h1 class="compass__h1">{T.hero.heading}</h1>
+        {T.hero.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
 
         <a class="compass__cta compass__cta--primary" href="/compass/apply/">
           Apply for COMPASS
@@ -48,186 +43,234 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
       aria-labelledby="compass-training-practice-heading"
     >
       <h2 id="compass-training-practice-heading" class="compass__h2">
-        Training and practice are not the same thing
+        {T.trainingPractice.heading}
       </h2>
-      <p class="compass__p">Training installs the method. Practice stabilises the method.</p>
-      <p class="compass__p">
-        The COMPASS programme is where the framework is taught directly. The Deck Compass is where
-        repeated live practice and reflection help the habits take root.
-      </p>
-      <p class="compass__p">
-        On Tides of Knowing, <a class="compass__distinction-link" href="/practice/">Practice</a> is the
-        hub for ongoing live work with The Deck Compass.
-      </p>
+      {T.trainingPractice.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
     </section>
 
     <section class="compass__section compass__section--soft">
-      <p class="compass__eyebrow">Problem fit</p>
-      <h2 class="compass__h2">If This Sounds Like You</h2>
+      <p class="compass__eyebrow">{T.problemFit.label}</p>
+      <h2 class="compass__h2">{T.problemFit.heading}</h2>
       <ul class="compass__list compass__list--card">
-        <li>You know the meanings, but your readings still feel uncertain</li>
-        <li>You start strong, then lose the thread halfway through</li>
-        <li>You over-explain instead of saying what you actually see</li>
-        <li>You feel intuitive hits, then immediately doubt them</li>
-        <li>
-          You keep looking for the “right” meaning instead of trusting your read
-        </li>
-        <li>
-          You finish readings and think: that wasn’t as clear as it should have been
-        </li>
+        {T.problemFit.bullets.map((item) => <li>{item}</li>)}
       </ul>
     </section>
 
     <section class="compass__section">
-      <p class="compass__eyebrow">Method</p>
-      <h2 class="compass__h2">The COMPASS Method™</h2>
+      <p class="compass__eyebrow">{T.method.label}</p>
+      <h2 class="compass__h2">{T.method.heading}</h2>
       <p class="compass__pillars">
-        <span>Center</span>
-        <span>Open</span>
-        <span>Map</span>
-        <span>Perceive</span>
-        <span>Align</span>
-        <span>Sense</span>
-        <span>Seal</span>
+        {T.method.pillars.map((pillar) => <span>{pillar}</span>)}
       </p>
-      <p class="compass__p">
-        This is not about learning more tarot. It is about learning how to read.
-      </p>
-      <p class="tok-ip-attribution">
-        The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
-      </p>
+      {T.method.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
     </section>
 
     <section class="compass__section compass__section--soft">
-      <p class="compass__eyebrow">Learning outcomes</p>
-      <h2 class="compass__h2">What You’ll Learn</h2>
-      <p class="compass__p">
-        Most tarot training focuses on what the cards mean.
-        COMPASS focuses on what the reader is doing.
-      </p>
+      <p class="compass__eyebrow">{T.learningOutcomes.label}</p>
+      <h2 class="compass__h2">{T.learningOutcomes.heading}</h2>
+      <p class="compass__p">{T.learningOutcomes.intro}</p>
       <ul class="compass__list compass__list--card">
-        <li>Trust your own perception in a reading</li>
-        <li>Stay with what is actually unfolding</li>
-        <li>Communicate what you see clearly and cleanly</li>
+        {T.learningOutcomes.bullets.map((item) => <li>{item}</li>)}
       </ul>
     </section>
 
     <section class="compass__section">
-      <p class="compass__eyebrow">Process</p>
-      <h2 class="compass__h2">How It Works</h2>
-      <p class="compass__p compass__process-intro">
-        This is a 6-week live programme for a small group of readers.
-      </p>
+      <p class="compass__eyebrow">{T.howItWorks.label}</p>
+      <h2 class="compass__h2">{T.howItWorks.heading}</h2>
+      <p class="compass__p compass__process-intro">{T.howItWorks.intro}</p>
       <ul class="compass__list compass__list--card">
-        <li>Weekly live sessions</li>
-        <li>Guided practice readings</li>
-        <li>Direct feedback and correction</li>
-        <li>Real application, not theory</li>
+        {T.howItWorks.bullets.map((item) => <li>{item}</li>)}
       </ul>
+      {T.howItWorks.closingParagraphs.map((p) => <p class="compass__p">{p}</p>)}
 
       <a class="compass__cta compass__cta--secondary" href="/compass/apply/">
         Apply for COMPASS
       </a>
     </section>
 
+    <section class="compass__section compass__section--schedule" aria-labelledby="compass-cohort-heading">
+      <p class="compass__eyebrow">{cs.label}</p>
+      <h2 id="compass-cohort-heading" class="compass__h2">{cs.heading}</h2>
+
+      {
+        cs.variant === "nz" && (
+          <>
+            {cs.introParagraphs.map((p) => (
+              <p class="compass__p">{p}</p>
+            ))}
+
+            <div class="compass__cohort-cards">
+              {cs.cohortCards.map((c) => (
+                <div class="compass__cohort-card compass__panel">
+                  <p class="compass__cohort-card-title">{c.title}</p>
+                  <p class="compass__cohort-card-status">{c.status}</p>
+                </div>
+              ))}
+            </div>
+
+            <h3 class="compass__h3">{cs.sessionWindowsSubheading}</h3>
+
+            <div class="compass__schedule-window-grid">
+              {cs.sessionWindowCards.map((w) => (
+                <div class="compass__schedule-window-card compass__panel">
+                  <p class="compass__schedule-window-title">{w.title}</p>
+                  <ul class="compass__schedule-window-list">
+                    {w.lines.map((line) => (
+                      <li>{line}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div class="compass__from-august compass__panel">
+              <h3 class="compass__h3 compass__from-august-heading">{cs.fromAugustHeading}</h3>
+              <p class="compass__p compass__from-august-lead">{cs.fromAugustLead}</p>
+              <ul class="compass__list compass__from-august-list">
+                {cs.fromAugustBullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+
+            <p class="compass__p">{cs.usWaitParagraph}</p>
+
+            <a class="compass__cta compass__cta--secondary" href={cs.registerInterest.href}>
+              {cs.registerInterest.text}
+            </a>
+          </>
+        )
+      }
+
+      {
+        cs.variant === "mexico" && (
+          <>
+            {cs.introParagraphs.map((p) => (
+              <p class="compass__p">{p}</p>
+            ))}
+
+            <div class="compass__tz-block">
+              <h3 class="compass__h3">{cs.morning.title}</h3>
+              <p class="compass__p compass__tz-range">{cs.morning.note}</p>
+              <div class="compass__table-wrap">
+                <table class="compass__data-table">
+                  <thead>
+                    <tr>
+                      {cs.morning.headers.map((h) => (
+                        <th scope="col">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cs.morning.rows.map((row) => (
+                      <tr>
+                        {row.map((cell) => (
+                          <td>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="compass__tz-block">
+              <h3 class="compass__h3">{cs.afternoon.title}</h3>
+              <p class="compass__p compass__tz-range">{cs.afternoon.note}</p>
+              <div class="compass__table-wrap">
+                <table class="compass__data-table">
+                  <thead>
+                    <tr>
+                      {cs.afternoon.headers.map((h) => (
+                        <th scope="col">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cs.afternoon.rows.map((row) => (
+                      <tr>
+                        {row.map((cell) => (
+                          <td>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <p class="compass__p compass__tz-footnote">{cs.timezoneNoteAfterTables}</p>
+
+            <h3 class="compass__h3">{cs.whichWindowHeading}</h3>
+            <ul class="compass__list compass__which-window-list">
+              {cs.whichWindowLines.map((line) => (
+                <li set:html={`<strong>${line.lead}</strong> ${line.detail}`} />
+              ))}
+            </ul>
+
+            <p class="compass__p">{cs.closingParagraph}</p>
+          </>
+        )
+      }
+    </section>
+
+    <section class="compass__section compass__section--investment" aria-labelledby="compass-investment-heading">
+      <p class="compass__eyebrow">{T.investment.label}</p>
+      <h2 id="compass-investment-heading" class="compass__h2">{T.investment.heading}</h2>
+      <p class="compass__p">{T.investment.intro}</p>
+
+      <div class="compass__pricing-grid">
+        {
+          T.investment.tiers.map((tier) => (
+            <div class="compass__pricing-card compass__panel">
+              <h3 class="compass__pricing-tier-title">{tier.title}</h3>
+              {tier.body.map((para) => (
+                <p class="compass__pricing-tier-p">{para}</p>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <h3 class="compass__h3">{T.investment.afterHeading}</h3>
+      {T.investment.afterParagraphs.map((p) => <p class="compass__p">{p}</p>)}
+    </section>
+
     <section class="compass__section compass__section--warm">
-      <p class="compass__eyebrow">Authority</p>
-      <h2 class="compass__h2">About Leigh Spencer</h2>
-      <p class="compass__p">
-        I’ve been reading tarot and oracle cards for over 40 years.
-        Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.
-      </p>
-      <p class="compass__p">
-        COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.
-      </p>
-    </section>
-
-    <section class="compass__section">
-      <p class="compass__eyebrow">Programme details</p>
-      <h2 class="compass__h2">Enrollment</h2>
-      <ul class="compass__list">
-        <li>Limited to 6 participants</li>
-        <li>Minimum 2 participants to run</li>
-        <li>Live only, not replay-based delivery</li>
-      </ul>
-      <p class="compass__p">
-        You are asked to apply because fit matters.
-      </p>
-      <p class="compass__p">
-        This is a small live programme where direct feedback and outcome matter more than filling places.
-      </p>
-    </section>
-
-    <section class="compass__section">
-      <p class="compass__eyebrow">Investment</p>
-      <h2 class="compass__h2">Investment</h2>
-      <p class="compass__p">
-        USD $197
-      </p>
+      <p class="compass__eyebrow">{T.about.label}</p>
+      <h2 class="compass__h2">{T.about.heading}</h2>
+      {T.about.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
     </section>
 
     <section class="compass__section compass__section--soft" aria-labelledby="compass-faq-heading">
-      <p class="compass__eyebrow">FAQ</p>
-      <h2 id="compass-faq-heading" class="compass__h2">Common questions</h2>
+      <p class="compass__eyebrow">{T.faq.label}</p>
+      <h2 id="compass-faq-heading" class="compass__h2">{T.faq.heading}</h2>
       <dl class="compass__faq">
-        <div class="compass__faq-item">
-          <dt class="compass__faq-q">What level do I need to be at?</dt>
-          <dd class="compass__faq-a">
-            You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read, not learning meanings from scratch.
-          </dd>
-        </div>
-        <div class="compass__faq-item">
-          <dt class="compass__faq-q">How is this delivered?</dt>
-          <dd class="compass__faq-a">
-            COMPASS is a small, live programme with weekly sessions, guided practice, and direct feedback. It is not pre-recorded or self-paced.
-          </dd>
-        </div>
-        <div class="compass__faq-item">
-          <dt class="compass__faq-q">What if I’m not confident yet?</dt>
-          <dd class="compass__faq-a">
-            That’s exactly what this is designed for. The focus is on helping you trust what you are seeing and communicate it clearly, not on performing or being “right.”
-          </dd>
-        </div>
-        <div class="compass__faq-item">
-          <dt class="compass__faq-q">What happens after I apply?</dt>
-          <dd class="compass__faq-a">
-            I review each application to ensure the group is aligned. If it’s a good fit, you’ll receive a payment link to secure your place.
-          </dd>
-        </div>
-        <div class="compass__faq-item">
-          <dt class="compass__faq-q">What if I’m unsure?</dt>
-          <dd class="compass__faq-a">
-            You’re welcome to <a class="compass__faq-link" href="/contact/">reach out</a> before applying if you want to check whether it’s right for you.
-          </dd>
-        </div>
+        {
+          T.faq.items.map((item) => (
+            <div class="compass__faq-item">
+              <dt class="compass__faq-q">{item.q}</dt>
+              <dd class="compass__faq-a" set:html={item.a} />
+            </div>
+          ))
+        }
       </dl>
     </section>
 
-    <section class="compass__section compass__section--final">
-      <!-- Ask: "What was one moment in your reading practice, after COMPASS, where you noticed something had actually changed?" -->
-      <!-- TODO: Replace this placeholder with a specific practice-based testimonial from a past COMPASS participant. -->
-      <blockquote class="compass__testimonial-placeholder">
-        <p>
-          Testimonial placeholder: add one specific before-and-after account from a COMPASS participant
-          here.
-        </p>
-      </blockquote>
-
-      <p class="compass__eyebrow">Apply</p>
-      <h2 class="compass__h2">Apply</h2>
-      <p class="compass__p">
-        Send a short message with:
-      </p>
+    <section class="compass__section compass__section--final" id="apply" aria-labelledby="compass-apply-heading">
+      <p class="compass__eyebrow">{T.apply.label}</p>
+      <h2 id="compass-apply-heading" class="compass__h2">{T.apply.heading}</h2>
+      <p class="compass__p">{T.apply.intro}</p>
       <ul class="compass__list">
-        <li>Your experience level</li>
-        <li>What’s not working in your readings</li>
-        <li>Why you want to join</li>
+        {T.apply.checklist.map((item) => <li>{item}</li>)}
       </ul>
-      <p class="compass__p">
-        If accepted, your place will be held for 48 hours.
-      </p>
-      <a class="compass__cta" href="/compass/apply/">Apply Now</a>
+      <p class="compass__p">{T.apply.note}</p>
+      <a class="compass__cta" href={T.apply.ctaHref}>
+        {T.apply.ctaLabel}
+      </a>
     </section>
+
+    <p class="compass__page-attribution tok-ip-attribution">{T.footerAttribution}</p>
   </article>
 </BaseLayout>
 
@@ -305,6 +348,19 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     line-height: 1.25;
   }
 
+  .compass__h3 {
+    margin: 1.25rem 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    font-weight: 600;
+    color: var(--tok-text-light);
+    line-height: 1.3;
+  }
+
+  .compass__section--schedule .compass__h3:first-of-type {
+    margin-top: 0.5rem;
+  }
+
   .compass__section + .compass__section {
     margin-top: 1.25rem;
   }
@@ -318,33 +374,6 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__section--distinction .compass__h2 {
     color: var(--tok-text-light);
-  }
-
-  .compass__distinction-link {
-    color: var(--tok-teal-light);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.14em;
-    text-decoration-thickness: 1px;
-  }
-
-  .compass__distinction-link:hover {
-    color: var(--tok-text-light-strong);
-  }
-
-  .compass__testimonial-placeholder {
-    margin: 0 0 1.35rem;
-    padding: 0.35rem 0 0.35rem 1.1rem;
-    border-left: 3px solid var(--tok-gold);
-    font-family: var(--font-accent);
-    font-style: italic;
-    font-size: 1.02rem;
-    line-height: 1.6;
-    color: color-mix(in srgb, var(--tok-text-light-soft) 92%, transparent);
-  }
-
-  .compass__testimonial-placeholder p {
-    margin: 0;
   }
 
   .compass__p {
@@ -416,6 +445,168 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
   .compass__process-intro {
     margin-bottom: 0.7rem;
+  }
+
+  .compass__cohort-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.85rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .compass__cohort-card {
+    margin: 0;
+  }
+
+  .compass__cohort-card-title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--tok-text-light);
+  }
+
+  .compass__cohort-card-status {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass__schedule-window-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 0.85rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .compass__schedule-window-card {
+    margin: 0;
+    height: 100%;
+  }
+
+  .compass__schedule-window-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--tok-text-light);
+  }
+
+  .compass__schedule-window-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass__schedule-window-list li {
+    margin-bottom: 0.35rem;
+  }
+
+  .compass__from-august {
+    margin: 0 0 1rem;
+  }
+
+  .compass__from-august-heading {
+    margin-top: 0;
+  }
+
+  .compass__from-august-lead {
+    margin-bottom: 0.5rem;
+  }
+
+  .compass__from-august-list {
+    margin-bottom: 0;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass__pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.25rem;
+  }
+
+  .compass__pricing-card {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    height: 100%;
+  }
+
+  .compass__pricing-tier-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: var(--tok-text-light);
+    line-height: 1.3;
+  }
+
+  .compass__pricing-tier-p {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass__section--investment .compass__h3 {
+    margin-top: 1.5rem;
+  }
+
+  .compass__table-wrap {
+    margin: 0.5rem 0 0;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 0.2rem;
+    border: 1px solid var(--tok-border-system);
+  }
+
+  .compass__data-table {
+    width: 100%;
+    min-width: 36rem;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    background: var(--tok-surface-panel);
+    color: var(--tok-text-light);
+  }
+
+  .compass__data-table th,
+  .compass__data-table td {
+    padding: 0.45rem 0.55rem;
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-border-system) 80%, transparent);
+  }
+
+  .compass__data-table th {
+    font-weight: 600;
+    color: var(--tok-gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .compass__tz-block + .compass__tz-block {
+    margin-top: 1.25rem;
+  }
+
+  .compass__tz-range {
+    margin-bottom: 0.35rem;
+  }
+
+  .compass__tz-footnote {
+    margin-top: 0.75rem;
+    font-size: 0.98rem;
+    font-style: italic;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 95%, transparent);
+  }
+
+  .compass__which-window-list {
+    margin-top: 0.35rem;
   }
 
   .compass__faq {
@@ -510,6 +701,13 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     border-color: var(--tok-gold);
   }
 
+  .compass__page-attribution {
+    margin: 2rem 0 0;
+    text-align: center;
+    font-style: italic;
+    max-width: none;
+  }
+
   .compass__sub-link {
     margin-top: 0.25rem;
     font-family: var(--font-body);
@@ -567,6 +765,14 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     color: var(--tok-water);
   }
 
+  .compass__section--schedule .compass__cta--secondary {
+    color: var(--tok-text-light);
+  }
+
+  .compass__section--schedule .compass__cta--secondary:hover {
+    color: var(--tok-text-light-strong);
+  }
+
   .compass__section--final .compass__cta:hover {
     color: var(--tok-text-light-strong);
     background: color-mix(in srgb, var(--tok-gold) 20%, transparent);
@@ -597,4 +803,3 @@ const ogUrl = new URL("/compass/", siteBase(Astro)).href;
     }
   }
 </style>
-
