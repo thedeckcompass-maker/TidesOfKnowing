@@ -91,6 +91,11 @@ const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
 const isCompassTrainingSection = pathname.startsWith("/compass");
+const isCompassMethodRoute = pathname.startsWith("/articles/compass-method");
+const isArticlesSection =
+  (pathname === "/articles" || pathname.startsWith("/articles/")) &&
+  !isCompassMethodRoute;
+const isAboutRoute = pathname.startsWith("/about");
 const baseBodySurface =
   isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
 const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
@@ -178,7 +183,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           Menu
         </button>
         <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
-          <a class="site-nav__link" href="/articles/compass-method/">Method</a>
+          <a
+            class="site-nav__link"
+            href="/articles/compass-method/"
+            aria-current={isCompassMethodRoute ? "page" : undefined}
+          >
+            Method
+          </a>
           <a
             class="site-nav__link"
             href="/tools/"
@@ -186,7 +197,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           >
             Tools
           </a>
-          <a class="site-nav__link" href="/articles/">Articles</a>
+          <a
+            class="site-nav__link"
+            href="/articles/"
+            aria-current={isArticlesSection ? "page" : undefined}
+          >
+            Articles
+          </a>
           <a
             class="site-nav__link"
             href="/practice/"
@@ -202,7 +219,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           >
             Training
           </a>
-          <a class="site-nav__link" href="/about/">About</a>
+          <a
+            class="site-nav__link"
+            href="/about/"
+            aria-current={isAboutRoute ? "page" : undefined}
+          >
+            About
+          </a>
         </nav>
       </div>
     </header>
@@ -333,8 +356,12 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     left: 0;
     right: 0;
     z-index: 50;
-    background: var(--tok-deep-ocean);
-    border-bottom: 1px solid var(--tok-border-system);
+    background-color: var(--tok-surface-reading);
+    background-image: url("/images/brand/tok-landscape-bluff-hill-narrow.svg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 14%, transparent);
   }
 
   .site-header__inner {
@@ -351,13 +378,19 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-style: italic;
     font-weight: 400;
     font-size: 1.35rem;
-    color: var(--tok-text-light-soft);
+    color: var(--tok-deep-ocean);
     text-decoration: none;
     letter-spacing: 0.02em;
   }
 
   .site-logo:hover {
-    color: var(--tok-teal-light);
+    color: var(--tok-water);
+  }
+
+  .site-logo:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   .site-brand {
@@ -398,35 +431,51 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
-    color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
+    color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
+    border-bottom: 2px solid transparent;
+    padding-bottom: 0.15rem;
   }
 
   .site-nav__link:hover {
-    color: var(--tok-text-light);
+    color: var(--tok-deep-ocean);
+  }
+
+  .site-nav__link:hover:not([aria-current="page"]) {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--tok-gold) 48%, transparent);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+
+  .site-nav__link:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .site-nav__link[aria-current="page"] {
+    color: var(--tok-deep-ocean);
+    border-bottom-color: var(--tok-gold);
+    text-decoration: none;
   }
 
   .site-nav__link--training {
-    color: color-mix(in srgb, var(--tok-gold) 92%, transparent);
-    font-weight: 700;
+    color: var(--tok-gold-deep);
+    font-weight: 800;
+    background: transparent;
+    box-shadow: none;
   }
 
-  .site-nav__link--training:hover {
-    color: var(--tok-gold);
+  .site-nav__link--training:hover:not([aria-current="page"]) {
+    color: var(--tok-deep-ocean);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--tok-gold) 65%, transparent);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
   }
 
   .site-nav__link--training[aria-current="page"] {
-    color: var(--tok-gold);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
-    text-underline-offset: 0.18em;
-  }
-
-  /* Tools: standard nav by default; underline when on /tools/ */
-  .site-nav__link[href="/tools/"][aria-current="page"] {
-    color: var(--tok-text-light);
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
-    text-underline-offset: 0.18em;
+    color: var(--tok-deep-ocean);
   }
 
   .site-nav__dropdown {
@@ -439,7 +488,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
+    color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
     list-style: none;
     cursor: pointer;
   }
@@ -450,7 +499,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav__dropdown[open] .site-nav__dropdown-summary,
   .site-nav__dropdown-summary:hover {
-    color: var(--tok-text-light);
+    color: var(--tok-deep-ocean);
   }
 
   .site-nav__dropdown-list {
@@ -506,15 +555,20 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--tok-text-light);
+      color: var(--tok-deep-ocean);
       background: transparent;
-      border: 1px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+      border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 28%, transparent);
       border-radius: 0.2rem;
       cursor: pointer;
     }
 
     .site-nav-toggle:hover {
-      background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+      background: color-mix(in srgb, var(--tok-gold) 22%, transparent);
+    }
+
+    .site-nav-toggle:focus-visible {
+      outline: 2px solid var(--tok-gold);
+      outline-offset: 3px;
     }
 
     .site-nav {
@@ -543,10 +597,52 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       display: block;
       padding: 0.72rem 0;
       border-top: 1px solid color-mix(in srgb, var(--tok-border-system) 75%, transparent);
+      color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
+      border-bottom: 2px solid transparent;
     }
 
     .site-nav__link:first-child {
       border-top: none;
+    }
+
+    /* Drawer sits on solid navy; light link treatment */
+    .site-nav__link:hover {
+      color: var(--tok-text-light);
+    }
+
+    .site-nav__link:hover:not([aria-current="page"]) {
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--tok-gold) 45%, transparent);
+      text-underline-offset: 0.22em;
+      text-decoration-thickness: 1px;
+    }
+
+    .site-nav__link[aria-current="page"] {
+      color: var(--tok-text-light);
+      border-bottom-color: var(--tok-gold);
+      text-decoration: none;
+    }
+
+    .site-nav__link--training {
+      display: block;
+      width: auto;
+      color: var(--tok-gold);
+      font-weight: 800;
+      background: transparent;
+      border-left: none;
+      border-right: none;
+    }
+
+    .site-nav__link--training:hover:not([aria-current="page"]) {
+      color: var(--tok-gold-light);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
+      text-underline-offset: 0.22em;
+      text-decoration-thickness: 1px;
+    }
+
+    .site-nav__link--training[aria-current="page"] {
+      color: var(--tok-text-light);
     }
   }
 
