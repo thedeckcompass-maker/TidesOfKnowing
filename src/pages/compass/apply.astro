@@ -19,11 +19,9 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     </header>
 
     <section class="compass-apply__panel">
-      <p class="compass-apply__intro">
-        This is a short application, reviewed personally. You can expect a response within 48 hours.
-      </p>
-      <p class="tok-ip-attribution">
-        An original interpretive framework created by Tides of Knowing: the COMPASS Method.
+      <p class="compass-apply__form-note">
+        This is a short application, reviewed personally. You can expect a response within 48 hours. The
+        COMPASS Method is an original interpretive framework created by Tides of Knowing.
       </p>
 
       <form id="compass-application-form" class="compass-apply__form">
@@ -37,6 +35,37 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
             <span>Email *</span>
             <input name="email" type="email" autocomplete="email" required />
           </label>
+
+          <fieldset
+            class="compass-apply__fieldset compass-apply__fieldset--full"
+            aria-describedby="compass-intake-hint"
+          >
+            <legend class="compass-apply__legend">Which intake are you applying for? *</legend>
+            <div class="compass-apply__intake-options">
+              <label class="compass-apply__radio">
+                <input
+                  type="radio"
+                  name="intakePreference"
+                  value="June Foundation Cohort"
+                  required
+                />
+                <span>June Foundation Cohort</span>
+              </label>
+              <label class="compass-apply__radio">
+                <input type="radio" name="intakePreference" value="July Foundation Cohort" />
+                <span>July Foundation Cohort</span>
+              </label>
+              <label class="compass-apply__radio">
+                <input type="radio" name="intakePreference" value="Future COMPASS Training" />
+                <span>Future COMPASS Training</span>
+              </label>
+            </div>
+            <p id="compass-intake-hint" class="compass-apply__field-hint compass-apply__field-hint--intake">
+              June and July are the Foundation Cohorts offered at early foundation pricing. Choose Future
+              COMPASS Training if you are interested in August onward or are not sure which timing is right
+              for you.
+            </p>
+          </fieldset>
 
           <label class="compass-apply__field">
             <span>Location</span>
@@ -182,10 +211,15 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     );
   }
 
-  .compass-apply__intro {
-    margin: 0 0 1rem;
-    font-size: 1.02rem;
-    line-height: 1.7;
+  .compass-apply__form-note {
+    margin: 0 0 0.85rem;
+    max-width: 70ch;
+    padding: 0.55rem 0 0.55rem 0.65rem;
+    border-left: 2px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    background: color-mix(in srgb, var(--tok-gold) 5%, transparent);
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--tok-text-dark) 82%, transparent);
   }
 
   .compass-apply__form {
@@ -197,6 +231,88 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.9rem;
+  }
+
+  .compass-apply__fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .compass-apply__fieldset--full {
+    grid-column: 1 / -1;
+  }
+
+  .compass-apply__legend {
+    padding: 0;
+    font-family: var(--font-body);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+  }
+
+  .compass-apply__intake-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+  }
+
+  .compass-apply__radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    cursor: pointer;
+  }
+
+  .compass-apply__radio input[type="radio"] {
+    width: auto;
+    min-width: 1rem;
+    margin: 0;
+    accent-color: var(--tok-gold);
+    cursor: pointer;
+  }
+
+  .compass-apply__radio input:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 2px;
+  }
+
+  .compass-apply__field-hint {
+    margin: 0.15rem 0 0;
+    max-width: 70ch;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--tok-text-dark) 78%, transparent);
+  }
+
+  .compass-apply__field-hint--intake {
+    margin-top: 0.35rem;
+  }
+
+  @media (max-width: 640px) {
+    .compass-apply__intake-options {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .compass-apply__radio {
+      align-items: flex-start;
+    }
+
+    .compass-apply__radio input[type="radio"] {
+      margin-top: 0.2rem;
+    }
   }
 
   .compass-apply__field {

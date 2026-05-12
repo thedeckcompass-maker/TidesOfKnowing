@@ -3,9 +3,18 @@ import { Resend } from "resend";
 
 export const prerender = false;
 
+const INTAKE_PREFERENCE_VALUES = [
+  "June Foundation Cohort",
+  "July Foundation Cohort",
+  "Future COMPASS Training",
+] as const;
+
+type IntakePreference = (typeof INTAKE_PREFERENCE_VALUES)[number];
+
 type ApplicationPayload = {
   name?: string;
   email?: string;
+  intakePreference?: string;
   location?: string;
   experience_level?: string;
   current_situation?: string;
@@ -20,6 +29,10 @@ function clean(value: unknown): string {
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidIntakePreference(value: string): value is IntakePreference {
+  return (INTAKE_PREFERENCE_VALUES as readonly string[]).includes(value);
 }
 
 async function parsePayload(request: Request): Promise<ApplicationPayload> {
@@ -46,6 +59,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const name = clean(payload.name);
     const email = clean(payload.email);
+    const intakePreferenceRaw = clean(payload.intakePreference);
     const location = clean(payload.location);
     const experienceLevel = clean(payload.experience_level);
     const currentSituation = clean(payload.current_situation);
@@ -55,6 +69,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (
       !name ||
       !email ||
+      !intakePreferenceRaw ||
       !experienceLevel ||
       !currentSituation ||
       !desiredOutcome ||
@@ -65,6 +80,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
         { status: 400, headers: { "content-type": "application/json" } },
       );
     }
+
+    if (!isValidIntakePreference(intakePreferenceRaw)) {
+      return new Response(
+        JSON.stringify({ ok: false, error: "Please select a valid intake option." }),
+        { status: 400, headers: { "content-type": "application/json" } },
+      );
+    }
+
+    const intakePreference = intakePreferenceRaw;
 
     if (!isValidEmail(email)) {
       return new Response(
@@ -91,6 +115,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       "",
       `Name: ${name}`,
       `Email: ${email}`,
+      `Intake preference: ${intakePreference}`,
       `Location: ${location || "Not provided"}`,
       `Experience Level: ${experienceLevel}`,
       "",
