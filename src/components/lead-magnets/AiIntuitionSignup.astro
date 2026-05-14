@@ -1,0 +1,148 @@
+---
+/**
+ * MailerLite universal script is loaded once in BaseLayout.astro (no duplicate here).
+ * Form ID oh85cP: AI + Intuition field guide list.
+ */
+interface Props {
+  /** On the field guide landing page, omit the duplicate heading and tighten spacing. */
+  compactHeading?: boolean;
+}
+
+const { compactHeading = false } = Astro.props;
+
+const sectionClass = [
+  "tok-ai-field-guide-signup",
+  compactHeading ? "tok-ai-field-guide-signup--compact" : "",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<section
+  class={sectionClass}
+  aria-labelledby={compactHeading ? undefined : "tok-ai-field-guide-signup-heading"}
+  aria-label={compactHeading
+    ? "Request the compiled field guide and weekly field notes by email"
+    : undefined}
+>
+  {
+    !compactHeading && (
+      <h2 id="tok-ai-field-guide-signup-heading" class="tok-ai-field-guide-signup__heading">
+        Field guide and notes
+      </h2>
+    )
+  }
+  <p class="tok-ai-field-guide-signup__intro">
+    If you would like the compiled series edition (with the closing essay) and the short weekly field notes by
+    email, use the form below. The same list carries both.
+  </p>
+  <div class="tok-ai-field-guide-signup__embed-frame">
+    <div class="tok-ai-field-guide-signup__embed">
+      <div class="ml-embedded" data-form="oh85cP"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tok-ai-field-guide-signup {
+    margin: 2.25rem auto 0;
+    max-width: 36rem;
+    padding: 1.35rem 1.25rem 1.5rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: 2px;
+    background: var(--tok-surface-reading-soft);
+  }
+
+  .tok-ai-field-guide-signup--compact {
+    margin-top: 1.25rem;
+    padding: 0.85rem 1rem 1.1rem;
+  }
+
+  .tok-ai-field-guide-signup__heading {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-ai-field-guide-signup__intro {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+  }
+
+  .tok-ai-field-guide-signup--compact .tok-ai-field-guide-signup__intro {
+    margin-bottom: 0.65rem;
+    font-size: 0.95rem;
+  }
+
+  /* TOK editorial frame: MailerLite may use iframe or closed shadow trees; outer styling stays reliable. */
+  .tok-ai-field-guide-signup__embed-frame {
+    margin-top: 0.15rem;
+    padding: 1rem 0.95rem 1.05rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 85%, var(--tok-text-dark));
+    border-radius: 2px;
+    background: var(--tok-surface-reading);
+  }
+
+  .tok-ai-field-guide-signup--compact .tok-ai-field-guide-signup__embed-frame {
+    padding: 0.75rem 0.8rem 0.85rem;
+  }
+
+  .tok-ai-field-guide-signup__embed {
+    min-height: 4.5rem;
+  }
+
+  /* Light-touch overrides when MailerLite renders in open DOM under .ml-embedded */
+  .tok-ai-field-guide-signup :global(.ml-embedded) {
+    font-family: var(--font-body);
+    color: var(--tok-text-dark);
+  }
+
+  .tok-ai-field-guide-signup :global(.ml-embedded input[type="email"]),
+  .tok-ai-field-guide-signup :global(.ml-embedded input[type="text"]) {
+    font-family: var(--font-body);
+    color: var(--tok-text-dark);
+    background-color: var(--tok-surface-reading);
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 88%, var(--tok-text-dark));
+    border-radius: 2px;
+    box-shadow: none;
+  }
+
+  .tok-ai-field-guide-signup :global(.ml-embedded button),
+  .tok-ai-field-guide-signup :global(.ml-embedded input[type="submit"]) {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+    background: transparent;
+    border: 2px solid var(--tok-gold);
+    border-radius: 2px;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .tok-ai-field-guide-signup :global(.ml-embedded button:hover),
+  .tok-ai-field-guide-signup :global(.ml-embedded input[type="submit"]:hover) {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  .tok-ai-field-guide-signup :global(.ml-embedded .ml-form-success),
+  .tok-ai-field-guide-signup :global(.ml-embedded [class*="success"]) {
+    margin-top: 0.65rem;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    background: color-mix(in srgb, var(--tok-gold) 7%, var(--tok-surface-reading));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: 2px;
+  }
+</style>

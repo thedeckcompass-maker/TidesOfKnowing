@@ -51,6 +51,11 @@ export const GET: APIRoute = async () => {
   rows.push({ path: "/", changefreq: "weekly", priority: "1.0" });
   rows.push({ path: "/about/", changefreq: "monthly", priority: "0.8" });
   rows.push({ path: "/subscribe/", changefreq: "weekly", priority: "0.75" });
+  rows.push({
+    path: "/ai-and-intuition-field-guide/",
+    changefreq: "monthly",
+    priority: "0.72",
+  });
   rows.push({ path: "/blog/", changefreq: "weekly", priority: "0.7" });
   rows.push({ path: "/series/", changefreq: "monthly", priority: "0.75" });
   rows.push({ path: "/tags/", changefreq: "monthly", priority: "0.65" });

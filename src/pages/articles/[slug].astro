@@ -1,7 +1,19 @@
 ---
 import { getCollection, render } from "astro:content";
 import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
+import AiIntuitionSignup from "../../components/lead-magnets/AiIntuitionSignup.astro";
 import { estimateReadingMinutes } from "../../lib/readingTime";
+
+/** Seven-part AI and Intuition series only (lead magnet placements are not site-wide). */
+const AI_INTUITION_SERIES_SLUGS = new Set([
+  "what-ai-cant-access",
+  "myth-ai-intuition-simulation",
+  "pre-verbal-knowing-ai",
+  "tarot-pre-symbolic-interface",
+  "meaning-wrong-battleground",
+  "augmented-intuition-vs-replaced-thinking",
+  "practitioners-edge-perceptual-capacity",
+]);
 
 const slug = Astro.params.slug;
 const articles = await getCollection("articles");
@@ -15,8 +27,16 @@ const { Content } = await render(article);
 const body = article.body ?? "";
 const readingMinutes =
   article.data.readingTime ?? estimateReadingMinutes(body);
+const isAiIntuitionSeriesArticle = AI_INTUITION_SERIES_SLUGS.has(article.data.slug);
 ---
 
 <ArticlesLayout article={article} readingMinutes={readingMinutes}>
   <Content />
+  {
+    isAiIntuitionSeriesArticle ? (
+      <div class="tok-article-ai-signup-wrap" slot="append">
+        <AiIntuitionSignup />
+      </div>
+    ) : null
+  }
 </ArticlesLayout>

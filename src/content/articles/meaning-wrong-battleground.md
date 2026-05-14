@@ -31,6 +31,10 @@ I have been doing this regularly and deliberately. It is not a test designed to 
 
 What I consistently find is this. AI's ability to work with meaning is strong, and it is getting stronger. As more practitioners use these systems, as more knowledge is shared and encoded, the large language models that underpin them become increasingly sophisticated in their handling of symbolic interpretation. The meanings, the traditional associations, the archetypal frameworks, the contextual variations: AI handles all of this with growing fluency.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 > But there is a layer it does not reach. And that layer is where the reading actually begins.
 
 ---

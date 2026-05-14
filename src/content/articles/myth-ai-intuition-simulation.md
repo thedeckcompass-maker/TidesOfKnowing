@@ -33,6 +33,10 @@ I found out later how it had come to be. Before the architect drew a single line
 
 The building that resulted was not just well-designed. It was the physical realisation of something that had first existed in a pre-symbolic space, in the attending and the sensing before the drafting. The architect used every structural skill he had. But those skills served something that had already formed before a single technical decision was made.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 > That is the distinction this article is about. And it is the distinction that gets lost every time someone describes AI as intuitive.
 
 ---

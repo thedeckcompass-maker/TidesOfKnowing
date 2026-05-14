@@ -388,3 +388,26 @@ a:focus-visible {
   color: color-mix(in srgb, currentColor 76%, transparent);
   text-wrap: pretty;
 }
+
+/* AI + Intuition series: restrained note embedded in article markdown */
+.tok-ai-series-inline-note {
+  margin: 1.35rem 0 1.5rem;
+  padding: 0.75rem 0.85rem 0.85rem;
+  border-left: 2px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+  background: color-mix(in srgb, var(--tok-gold) 6%, var(--tok-surface-reading));
+}
+
+.tok-ai-series-inline-note__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  line-height: 1.58;
+  color: color-mix(in srgb, var(--tok-text-dark) 88%, transparent);
+}
+
+.tok-ai-series-inline-note__text a {
+  font-weight: 600;
+  color: var(--tok-teal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}

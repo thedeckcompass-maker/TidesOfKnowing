@@ -1,0 +1,233 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AiIntuitionSignup from "../components/lead-magnets/AiIntuitionSignup.astro";
+import { siteBase } from "../lib/site";
+
+const title = "The AI and Intuition Field Guide | Tides of Knowing";
+const description =
+  "A curated field guide to the seven-part Tides of Knowing series on tarot, oracle work, symbolic perception, and what stays human as machine fluency spreads.";
+const ogUrl = new URL("/ai-and-intuition-field-guide/", siteBase(Astro)).href;
+
+/** Host the file at public/downloads/ai-and-intuition-series-field-guide.pdf (same URL in MailerLite delivery emails). */
+const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf";
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
+  <article class="tok-field-guide-page page-inner">
+    <header class="tok-field-guide-page__hero">
+      <p class="tok-field-guide-page__eyebrow">Field guide</p>
+      <h1 class="tok-field-guide-page__title">The AI and Intuition Series</h1>
+      <div class="tok-field-guide-page__lede">
+        <p>
+          A curated field guide exploring tarot, oracle work, symbolic perception, and what remains distinctly
+          human in the age of artificial intelligence.
+        </p>
+        <p>
+          This edition gathers the complete seven-part Tides of Knowing series into a single downloadable artifact,
+          including a subscriber-only closing essay written for readers thinking seriously about intuitive practice
+          and machine fluency.
+        </p>
+      </div>
+    </header>
+
+    <section class="tok-field-guide-page__download" aria-labelledby="tok-field-guide-dl-heading">
+      <div class="tok-field-guide-page__download-card">
+        <div class="tok-field-guide-page__cover" aria-hidden="true">
+          <span class="tok-field-guide-page__cover-label">Cover</span>
+        </div>
+        <div class="tok-field-guide-page__download-copy">
+          {/*
+            Delivery / MailerLite: link downloads to the same absolute path on production, e.g.
+            https://www.tidesofknowing.com/downloads/ai-and-intuition-series-field-guide.pdf
+          */}
+          <h2 id="tok-field-guide-dl-heading" class="tok-field-guide-page__h2">Download</h2>
+          <p class="tok-field-guide-page__p">
+            Single PDF: full series layout for reading offline or printing. The file will be attached to the same
+            email flow as the field notes once it is published.
+          </p>
+          <a
+            class="tok-field-guide-page__dl"
+            href={FIELD_GUIDE_PDF_HREF}
+            aria-describedby="tok-field-guide-dl-note"
+          >
+            Download the field guide
+          </a>
+          <p class="tok-field-guide-page__dl-note" id="tok-field-guide-dl-note">
+            PDF coming shortly (file not yet on the server). The link above is the final URL.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tok-field-guide-page__notes" aria-labelledby="tok-field-guide-notes-heading">
+      <h2 id="tok-field-guide-notes-heading" class="tok-field-guide-page__h2">Field notes</h2>
+      <p class="tok-field-guide-page__p">
+        Subscribers to the field guide also receive seven accompanying field notes delivered weekly. These short
+        companion essays extend observations, tensions, and threads from each article in the series.
+      </p>
+      <p class="tok-field-guide-page__p">
+        They are written in the same editorial voice as the published essays themselves: reflective, precise, and
+        practice-aware.
+      </p>
+    </section>
+
+    <footer class="tok-field-guide-page__closing">
+      <p>
+        Tides of Knowing is an ongoing exploration of symbolic perception, intuitive structure, and the conditions
+        under which meaning becomes visible.
+      </p>
+    </footer>
+
+    <AiIntuitionSignup compactHeading={true} />
+  </article>
+</BaseLayout>
+
+<style>
+  .tok-field-guide-page {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 42rem;
+  }
+
+  .tok-field-guide-page__hero {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .tok-field-guide-page__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-field-guide-page__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.55rem);
+    line-height: 1.15;
+    color: var(--tok-water);
+  }
+
+  .tok-field-guide-page__lede p {
+    margin: 0 0 0.85rem;
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--tok-text-dark);
+  }
+
+  .tok-field-guide-page__lede p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tok-field-guide-page__h2 {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.2vw, 1.35rem);
+    font-weight: 600;
+    color: var(--tok-water);
+  }
+
+  .tok-field-guide-page__p {
+    margin: 0 0 0.75rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--tok-text-dark);
+  }
+
+  .tok-field-guide-page__p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tok-field-guide-page__download {
+    margin-bottom: 2.25rem;
+  }
+
+  .tok-field-guide-page__download-card {
+    display: grid;
+    grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem 1.2rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: 2px;
+    background: var(--tok-surface-reading-soft);
+  }
+
+  .tok-field-guide-page__cover {
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed color-mix(in srgb, var(--tok-text-muted) 45%, var(--tok-border-light));
+    border-radius: 2px;
+    background: var(--tok-surface-reading);
+  }
+
+  .tok-field-guide-page__cover-label {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-field-guide-page__dl {
+    display: inline-flex;
+    margin-top: 0.35rem;
+    padding: 0.72rem 1.35rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
+    border-radius: 2px;
+  }
+
+  .tok-field-guide-page__dl:hover {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  .tok-field-guide-page__dl-note {
+    margin: 0.5rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-field-guide-page__notes {
+    margin-bottom: 2rem;
+  }
+
+  .tok-field-guide-page__closing {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .tok-field-guide-page__closing p {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.68;
+    color: var(--tok-text-muted);
+  }
+
+  @media (max-width: 520px) {
+    .tok-field-guide-page__download-card {
+      grid-template-columns: 1fr;
+    }
+
+    .tok-field-guide-page__cover {
+      max-width: 8rem;
+    }
+  }
+</style>

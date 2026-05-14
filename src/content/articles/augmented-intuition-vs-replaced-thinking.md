@@ -37,6 +37,10 @@ What happens when those two things combine is genuinely powerful. My perception 
 
 That is augmentation working correctly. And it is one decision away from becoming something else entirely.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 ---
 
 ## The Same Tool, Two Outcomes

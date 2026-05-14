@@ -34,6 +34,10 @@ The programme was declassified in 1995. Its results remain contested. What is no
 
 What interests me is not the certainty of its claims, but the discipline embedded within the protocol itself: the attempt to encounter perception before explanation arrives.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 <figure class="article-section-image">
   <img src="/images/articles/pre-verbal-knowing-ai/gateway-research-desk.jpg" alt="Declassified Gateway Process and remote viewing research documents on desk beside keyboard" />
   <figcaption>Research materials exploring remote viewing, perception, and pre-verbal cognition.</figcaption>

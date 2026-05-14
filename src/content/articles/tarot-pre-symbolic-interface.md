@@ -43,6 +43,10 @@ She asked what systems I had studied under. I told her I was self-taught. What I
 
 All of that from one card. Not from its textbook meaning. From what the card, in that moment, with that question present, activated.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 > This is what tarot actually is. Not a dictionary of meanings. An interface.
 
 ---

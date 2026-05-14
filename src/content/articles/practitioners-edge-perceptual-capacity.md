@@ -37,6 +37,10 @@ That piece of driftwood is still on my desk. It is small enough to fit in the pa
 
 > This is what the practitioner's edge actually is. Not a technique. Not a body of knowledge. The capacity to receive what arrives, formed by forces beyond your control, and to know what to do with it at the moment it is needed.
 
+<aside class="tok-ai-series-inline-note" aria-label="Series context">
+<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+</aside>
+
 ---
 
 ## The Barista and the Beans
