@@ -220,7 +220,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
     border-bottom: 1px solid var(--tok-border-system);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: var(--bp-md)) {
     .tok-library__hero--brand {
       margin-left: calc(-1 * var(--space-lg));
       margin-right: calc(-1 * var(--space-lg));
@@ -293,7 +293,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-series-acc {
     border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
-    border-radius: 0.35rem;
+    border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--tok-surface-reading) 25%, transparent);
     padding: 0 1rem 0.75rem;
   }

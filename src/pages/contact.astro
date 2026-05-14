@@ -126,7 +126,7 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
   .contact__textarea {
     width: 100%;
     border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: var(--tok-surface-reading);
     color: var(--tok-text-dark);
     font-family: var(--font-body);
@@ -151,7 +151,7 @@ const ogUrl = new URL("/contact/", siteBase(Astro)).href;
     text-transform: uppercase;
     color: var(--tok-water);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: transparent;
     cursor: pointer;
   }

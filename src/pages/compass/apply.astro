@@ -200,7 +200,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
 
   .compass-apply__panel {
     padding: clamp(1rem, 3vw, 1.45rem);
-    border-radius: 0.25rem;
+    border-radius: var(--radius-control);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
     background: linear-gradient(
       180deg,
@@ -341,7 +341,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     color: var(--tok-text-dark);
     background: var(--tok-surface-reading);
     border: 1px solid color-mix(in srgb, var(--tok-teal-light) 55%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     padding: 0.62rem 0.7rem;
   }
 
@@ -373,7 +373,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
     text-transform: uppercase;
     color: var(--tok-water);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: transparent;
     cursor: pointer;
   }

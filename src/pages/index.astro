@@ -380,7 +380,7 @@ const websiteLd = {
     background: var(--tok-surface-reading);
     border: 1px solid var(--tok-border-light);
     border-left: 3px solid var(--tok-gold);
-    border-radius: 0 0.2rem 0.2rem 0;
+    border-radius: 0 var(--radius-soft) var(--radius-soft) 0;
     transition:
       background var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out);
@@ -447,7 +447,7 @@ const websiteLd = {
     }
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: var(--bp-nav-min)) {
     .home-arch__list {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -462,13 +462,13 @@ const websiteLd = {
     flex-direction: column;
     gap: 0.35rem;
     height: 100%;
-    min-height: 5.5rem;
+    min-height: var(--tok-sticky-under-header);
     padding: 1rem 1.1rem;
     text-decoration: none;
     color: inherit;
     background: var(--tok-surface-reading);
     border: 1px solid var(--tok-border-light);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     box-shadow: var(--shadow-sm);
     transition:
       background var(--dur-base) var(--ease-out),
@@ -627,7 +627,7 @@ const websiteLd = {
     color: inherit;
     background: var(--tok-surface-reading-soft);
     border-left: 3px solid var(--tok-gold);
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 var(--radius-2) var(--radius-2) 0;
     transition:
       background var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out);

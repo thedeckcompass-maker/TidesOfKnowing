@@ -1,4 +1,8 @@
-/* TOK Brand System v1.4 — typography (tokens only) */
+/* TOK Brand System v1.4 — typography (tokens + global heading defaults)
+ *
+ * Font stacks: --font-heading, --font-body, --font-accent (see tokens.css).
+ * UI and meta sizes: --tok-type-* and letter-spacing tokens in tokens.css.
+ */
 
 h1,
 h2,

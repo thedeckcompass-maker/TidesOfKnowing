@@ -6,9 +6,9 @@
 .tok-share__label {
   margin: 0 0 0.35rem;
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: var(--tok-type-nav-dropdown);
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tok-letter-upper-tight);
   text-transform: uppercase;
   color: var(--tok-teal-dim);
   opacity: 0.85;
@@ -45,15 +45,15 @@
   padding: 0;
   margin: 0;
   border: 1px solid var(--tok-surface-reading-soft);
-  border-radius: 0.2rem;
+  border-radius: var(--radius-soft);
   background: color-mix(in srgb, var(--tok-surface-reading) 92%, var(--tok-surface-reading-soft));
   color: var(--tok-teal-dim);
   cursor: pointer;
   text-decoration: none;
   transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+    background var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
   box-sizing: border-box;
 }
 
@@ -82,7 +82,7 @@
   margin: 0.35rem 0 0;
   min-height: 1.15em;
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: var(--tok-type-nav);
   font-weight: 600;
   letter-spacing: 0.06em;
   color: var(--tok-teal-dim);
@@ -123,7 +123,7 @@
   display: block;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: var(--bp-lg)) {
   .tok-articles-share-layout {
     display: grid;
     grid-template-columns: minmax(2.75rem, 3.25rem) minmax(0, 1fr);
@@ -134,7 +134,7 @@
   .tok-share-sidebar {
     display: block;
     position: sticky;
-    top: 5.5rem;
+    top: var(--tok-sticky-under-header);
     align-self: start;
     padding-top: 0.25rem;
   }
@@ -160,14 +160,14 @@
   display: none;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: calc(var(--bp-lg) - 1px)) {
   .tok-share-mobile-bar {
     display: block;
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 40;
+    z-index: var(--z-share-mobile);
     padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom))
       max(1rem, env(safe-area-inset-left));
     background: color-mix(in srgb, var(--tok-surface-reading) 94%, var(--tok-surface-reading-soft));
@@ -181,6 +181,6 @@
   }
 
   .tok-article-share-shell {
-    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--tok-header-height) + env(safe-area-inset-bottom));
   }
 }

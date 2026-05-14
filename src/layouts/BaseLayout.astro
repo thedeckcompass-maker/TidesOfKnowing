@@ -84,6 +84,12 @@ const structuredScripts = jsonLdArray.map((obj) => JSON.stringify(obj));
 
 const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
 
+/**
+ * Body surface (TOK dual-surface):
+ * - Reading (`tok-body--reading`): default; long-form, tools index exception handled below, COMPASS apply, practice, articles, home, etc.
+ * - System (`tok-body--system`): `/tools/*` interactive tools and `/compass/*` except `/compass/apply` (apply stays reading for form-first UX per brand map).
+ * Hybrid bands (blue on reading routes) are section-level, not body class changes.
+ */
 const pathname = Astro.url.pathname;
 const isToolsRoute = pathname.startsWith("/tools");
 const isPracticeRoute = pathname.startsWith("/practice");
@@ -346,16 +352,12 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 </html>
 
 <style>
-  :root {
-    --site-header-height: 4.25rem;
-  }
-
   .site-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 50;
+    z-index: var(--z-header);
     background-color: var(--tok-surface-reading);
     background-image: url("/images/brand/tok-landscape-bluff-hill-narrow.svg");
     background-size: cover;
@@ -390,7 +392,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   .site-logo:focus-visible {
     outline: 2px solid var(--tok-gold);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius-2);
   }
 
   .site-brand {
@@ -426,9 +428,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav__link {
     font-family: var(--font-body);
-    font-size: 0.7rem;
+    font-size: var(--tok-type-nav);
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
     text-decoration: none;
     color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
@@ -450,7 +452,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   .site-nav__link:focus-visible {
     outline: 2px solid var(--tok-gold);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius-2);
   }
 
   .site-nav__link[aria-current="page"] {
@@ -484,9 +486,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav__dropdown-summary {
     font-family: var(--font-body);
-    font-size: 0.7rem;
+    font-size: var(--tok-type-nav);
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
     color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
     list-style: none;
@@ -512,18 +514,18 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     list-style: none;
     background: var(--tok-deep-ocean);
     border: 1px solid var(--tok-border-system);
-    border-radius: 0.25rem;
+    border-radius: var(--radius-control);
     box-shadow: var(--shadow-sys-md);
-    z-index: 60;
+    z-index: var(--z-dropdown);
   }
 
   .site-nav__dropdown-link {
     display: block;
     padding: 0.45rem 1rem;
     font-family: var(--font-body);
-    font-size: 0.65rem;
+    font-size: var(--tok-type-nav-dropdown);
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
     text-decoration: none;
     color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
@@ -535,13 +537,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   }
 
   #main-content {
-    padding-top: var(--site-header-height, 4.25rem);
+    padding-top: var(--tok-header-height);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: var(--bp-nav)) {
     .site-header__inner {
       flex-wrap: nowrap;
-      min-height: var(--site-header-height);
+      min-height: var(--tok-header-height);
     }
 
     .site-nav-toggle {
@@ -551,14 +553,14 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       margin-left: auto;
       padding: 0.45rem 0.75rem;
       font-family: var(--font-body);
-      font-size: 0.64rem;
+      font-size: var(--tok-type-nav-compact);
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: var(--tok-letter-upper-tdc);
       text-transform: uppercase;
       color: var(--tok-deep-ocean);
       background: transparent;
       border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 28%, transparent);
-      border-radius: 0.2rem;
+      border-radius: var(--radius-soft);
       cursor: pointer;
     }
 
@@ -584,7 +586,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       background: var(--tok-deep-ocean);
       border-top: 1px solid var(--tok-border-system);
       border-bottom: 1px solid var(--tok-border-system);
-      max-height: calc(100dvh - var(--site-header-height));
+      max-height: calc(100dvh - var(--tok-header-height));
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
@@ -646,7 +648,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     }
   }
 
-  @media (min-width: 901px) {
+  @media (min-width: var(--bp-nav-min)) {
     .site-header__inner {
       flex-wrap: nowrap;
     }
@@ -661,7 +663,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: var(--bp-sm)) {
     .site-brand__icon {
       width: 28px;
       height: 28px;
@@ -702,9 +704,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-footer__discover-link {
     font-family: var(--font-body);
-    font-size: 0.62rem;
+    font-size: var(--tok-type-footer);
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
     color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
     text-decoration: none;
@@ -723,9 +725,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-footer__email {
     font-family: var(--font-body);
-    font-size: 0.72rem;
+    font-size: var(--tok-type-footer-email);
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--tok-letter-upper-tight);
     text-transform: uppercase;
     color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
     text-decoration: none;

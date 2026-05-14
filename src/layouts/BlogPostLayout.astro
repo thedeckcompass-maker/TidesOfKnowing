@@ -259,7 +259,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
     border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
-  @media (min-width: 520px) {
+  @media (min-width: var(--bp-xs)) {
     .tok-blog-adj {
       grid-template-columns: 1fr 1fr;
     }
@@ -269,7 +269,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
     display: none;
   }
 
-  @media (min-width: 520px) {
+  @media (min-width: var(--bp-xs)) {
     .tok-blog-adj__spacer {
       display: block;
     }

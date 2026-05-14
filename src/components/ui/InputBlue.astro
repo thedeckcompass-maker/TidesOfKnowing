@@ -43,7 +43,7 @@ const inputId = id ?? name ?? undefined;
   .tok-ui-field-b__label {
     display: block;
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: var(--tok-type-label);
     font-weight: 500;
     color: var(--tok-text-light-soft);
     margin-bottom: var(--space-xs);
@@ -56,7 +56,7 @@ const inputId = id ?? name ?? undefined;
     color: var(--tok-text-dark);
     background: var(--tok-surface-reading-soft);
     border: 1px solid var(--tok-border-system);
-    border-radius: 3px;
+    border-radius: var(--radius-3);
     padding: var(--space-sm) var(--space-md);
     transition: border-color var(--dur-base) var(--ease-out);
   }

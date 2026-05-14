@@ -3010,7 +3010,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
   }
 
   #tok2-tool {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: var(--tok-sticky-under-header);
   }
 
   .tarot-tool__tool-wrap {
@@ -3023,7 +3023,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     margin-bottom: 0;
     padding: clamp(1rem, 3vw, 1.35rem);
     border: 1px solid color-mix(in srgb, var(--tok-water) 22%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: color-mix(in srgb, var(--tok-surface-reading) 45%, transparent);
     color: var(--tok-text-dark);
   }
@@ -3056,7 +3056,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     text-transform: uppercase;
     color: var(--tok-water);
     border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: transparent;
     cursor: pointer;
     white-space: nowrap;
@@ -3076,7 +3076,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     gap: 0.85rem;
   }
 
-  @media (min-width: 520px) {
+  @media (min-width: var(--bp-xs)) {
     .tarot-tool__fields {
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
@@ -3102,7 +3102,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     width: 100%;
     max-width: 100%;
     border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: var(--tok-surface-reading);
     color: var(--tok-text-dark);
     font-family: var(--font-body);
@@ -3179,7 +3179,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     text-transform: uppercase;
     color: var(--tok-water);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: transparent;
     cursor: pointer;
   }
@@ -3734,7 +3734,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     line-height: 1.63;
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: var(--bp-xs)) {
     #tok2-output {
       padding: 20px 18px;
     }
@@ -3860,7 +3860,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     height: auto;
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: var(--bp-xs)) {
     #tok2-output .tarot-tool__combo-images {
       flex-direction: column;
     }
@@ -3886,7 +3886,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     line-height: 1.45;
     color: color-mix(in srgb, var(--tok-water) 65%, var(--tok-surface-reading));
     border: 1px dashed color-mix(in srgb, var(--tok-water) 22%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: color-mix(in srgb, var(--tok-water) 4%, transparent);
   }
 

@@ -82,9 +82,9 @@ const resolvedCtaHref = isSubscribeHref(ctaHref)
   .tdc__kicker {
     margin: 0 0 0.5rem;
     font-family: var(--font-body);
-    font-size: 0.68rem;
+    font-size: var(--tok-type-meta);
     font-weight: 600;
-    letter-spacing: 0.16em;
+    letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
     color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
   }
@@ -102,7 +102,7 @@ const resolvedCtaHref = isSubscribeHref(ctaHref)
     margin: 0 0 1.75rem;
     font-family: var(--font-body);
     font-size: 1.05rem;
-    line-height: 1.65;
+    line-height: var(--tok-line-body);
     opacity: 0.92;
   }
 
@@ -112,14 +112,14 @@ const resolvedCtaHref = isSubscribeHref(ctaHref)
     justify-content: center;
     padding: 0.85rem 1.75rem;
     font-family: var(--font-body);
-    font-size: 0.72rem;
+    font-size: var(--tok-type-ml-cta);
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--tok-letter-upper-tdc);
     text-transform: uppercase;
     text-decoration: none;
     color: var(--tok-text-light);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     transition:
       background var(--dur-base) var(--ease-out),
       color var(--dur-base) var(--ease-out),
@@ -188,7 +188,7 @@ const resolvedCtaHref = isSubscribeHref(ctaHref)
   .tdc--inline .tdc__sub {
     margin: 0 0 1rem;
     font-size: 1.02rem;
-    line-height: 1.65;
+    line-height: var(--tok-line-body);
     opacity: 0.9;
     color: var(--tok-text-dark);
   }

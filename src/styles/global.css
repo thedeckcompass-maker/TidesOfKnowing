@@ -1,5 +1,4 @@
 @import "./tokens.css";
-@import "./tokens-compat.css";
 @import "./typography.css";
 @import "./surfaces.css";
 
@@ -18,7 +17,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: var(--tok-line-body);
   color: var(--tok-text-dark);
   background-color: var(--tok-surface-reading);
   -webkit-font-smoothing: antialiased;
@@ -62,13 +61,13 @@ a:focus-visible {
   position: absolute;
   left: -9999px;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-skip-link);
   padding: 0.75rem 1rem;
   background: var(--tok-surface-reading);
   color: var(--tok-text-dark);
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  font-size: var(--tok-type-label);
+  letter-spacing: var(--tok-letter-upper-tight);
   text-transform: uppercase;
 }
 
@@ -86,12 +85,12 @@ a:focus-visible {
 /* --- Long-form article prose (editorial column) --- */
 .article-prose {
   font-size: 1rem;
-  line-height: 1.9;
+  line-height: var(--tok-line-prose);
   max-width: var(--reading-width);
   margin-inline: auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: var(--bp-md)) {
   .article-prose {
     font-size: 1.125rem;
   }
@@ -113,7 +112,7 @@ a:focus-visible {
   color: var(--tok-water);
   margin-top: 3rem;
   margin-bottom: 0.85rem;
-  scroll-margin-top: 80px;
+  scroll-margin-top: var(--tok-scroll-anchor-offset);
 }
 
 .article-prose h3 {
@@ -125,7 +124,7 @@ a:focus-visible {
   color: var(--tok-text-dark);
   margin-top: 2rem;
   margin-bottom: 0.65rem;
-  scroll-margin-top: 80px;
+  scroll-margin-top: var(--tok-scroll-anchor-offset);
 }
 
 .article-prose p {
@@ -207,7 +206,7 @@ a:focus-visible {
   border-bottom: 2px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
 }
 
-@media (max-width: 767px) {
+@media (max-width: calc(var(--bp-md) - 1px)) {
   .article-prose figure.article-section-image img,
   .article-prose figure.tok-inline-figure img {
     max-height: 280px;
@@ -248,7 +247,7 @@ a:focus-visible {
   border-bottom: 2px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
 }
 
-@media (max-width: 767px) {
+@media (max-width: calc(var(--bp-md) - 1px)) {
   .article-prose p:has(> img:only-child) img {
     max-height: 280px;
   }
@@ -269,7 +268,7 @@ a:focus-visible {
   clear: both;
 }
 
-@media (max-width: 767px) {
+@media (max-width: calc(var(--bp-md) - 1px)) {
   .article-prose .article-wide-bleed {
     margin-left: 0;
     margin-right: 0;
@@ -338,7 +337,7 @@ a:focus-visible {
   border: 1px solid var(--tok-teal) !important;
   color: var(--tok-text-dark) !important;
   font-family: var(--font-body) !important;
-  border-radius: 0.25rem;
+  border-radius: var(--radius-control);
 }
 
 .tok-subscribe .ml-embedded input::placeholder,
@@ -356,17 +355,17 @@ a:focus-visible {
   color: var(--tok-text-dark) !important;
   border: 1px solid var(--tok-gold) !important;
   font-family: var(--font-body) !important;
-  font-size: 0.72rem !important;
+  font-size: var(--tok-type-ml-cta) !important;
   font-weight: 600 !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: var(--tok-letter-upper) !important;
   text-transform: uppercase !important;
-  border-radius: 2px;
+  border-radius: var(--radius-2);
   padding: 0.75rem 1.5rem !important;
   cursor: pointer;
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+    background var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
 }
 
 .tok-subscribe .ml-embedded button:hover,
@@ -383,7 +382,7 @@ a:focus-visible {
   font-family: var(--font-body);
   font-size: 0.84rem;
   font-weight: 500;
-  line-height: 1.65;
+  line-height: var(--tok-line-body);
   letter-spacing: 0.01em;
   color: color-mix(in srgb, currentColor 76%, transparent);
   text-wrap: pretty;

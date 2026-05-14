@@ -1056,14 +1056,14 @@ const faqJsonLd = {
   #how-combinations-work,
   #common-mistakes,
   #faq {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: var(--tok-sticky-under-header);
   }
 
   .tarot-tool__crossnav {
     margin: 0 0 1rem;
     padding: 0.55rem 0.75rem;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
-    border-radius: 0.25rem;
+    border-radius: var(--radius-control);
     background: color-mix(in srgb, var(--tok-surface-reading) 65%, transparent);
     color: var(--tok-text-dark);
   }
@@ -1136,7 +1136,7 @@ const faqJsonLd = {
     margin: 0 0 1.25rem;
     padding: 0.85rem 1rem;
     border: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
     font-size: 1.02rem;
     line-height: 1.72;
@@ -1151,7 +1151,7 @@ const faqJsonLd = {
     margin: 0 0 1.1rem;
     padding: 0.55rem 0.75rem;
     border: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: color-mix(in srgb, var(--tok-water) 6%, transparent);
     color: var(--tok-text-light-soft);
   }
@@ -1198,7 +1198,7 @@ const faqJsonLd = {
     margin-bottom: 0;
     padding: clamp(1rem, 3vw, 1.35rem);
     border: 1px solid color-mix(in srgb, var(--tok-water) 22%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: color-mix(in srgb, var(--tok-surface-reading) 45%, transparent);
     color: var(--tok-text-dark);
   }
@@ -1208,7 +1208,7 @@ const faqJsonLd = {
     gap: 0.85rem;
   }
 
-  @media (min-width: 520px) {
+  @media (min-width: var(--bp-xs)) {
     .tarot-tool__fields {
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
@@ -1234,7 +1234,7 @@ const faqJsonLd = {
     width: 100%;
     max-width: 100%;
     border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
-    border-radius: 0.2rem;
+    border-radius: var(--radius-soft);
     background: var(--tok-surface-reading);
     color: var(--tok-text-dark);
     font-family: var(--font-body);
@@ -1292,7 +1292,7 @@ const faqJsonLd = {
     text-transform: uppercase;
     color: var(--tok-water);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: transparent;
     cursor: pointer;
   }
@@ -1443,7 +1443,7 @@ const faqJsonLd = {
     height: auto;
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: var(--bp-xs)) {
     #output .tarot-tool__combo-images {
       flex-direction: column;
     }

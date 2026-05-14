@@ -151,7 +151,7 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
     align-items: start;
     padding: 1.25rem 1.2rem;
     border: 1px solid var(--tok-border-light);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: var(--tok-surface-reading-soft);
   }
 
@@ -161,7 +161,7 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
     align-items: center;
     justify-content: center;
     border: 1px dashed color-mix(in srgb, var(--tok-text-muted) 45%, var(--tok-border-light));
-    border-radius: 2px;
+    border-radius: var(--radius-2);
     background: var(--tok-surface-reading);
   }
 
@@ -186,7 +186,7 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
     text-decoration: none;
     color: var(--tok-water);
     border: 2px solid var(--tok-gold);
-    border-radius: 2px;
+    border-radius: var(--radius-2);
   }
 
   .tok-field-guide-page__dl:hover {
@@ -217,7 +217,7 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
     color: var(--tok-text-muted);
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: var(--bp-xs)) {
     .tok-field-guide-page__download-card {
       grid-template-columns: 1fr;
     }

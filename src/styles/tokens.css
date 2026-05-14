@@ -1,5 +1,6 @@
 :root {
   /* ── Core identity ── */
+  /* Identity / deep blue: same hex as --tok-surface-system; use deep-ocean for brand chrome (header, footer) and surface-system for page body system mode. */
   --tok-deep-ocean:          #0B1F3A;
   --tok-gold:                #C6A85A;
   --tok-gold-deep:           #8A6A1F;
@@ -28,6 +29,7 @@
   --tok-teal-dim:            #065e73;
 
   /* ── Elemental (semantic only) ── */
+  /* Semantic water / editorial accent: same hex as --tok-surface-panel-alt; use water for prose and panel-alt for layered panels. */
   --tok-water:               #1E3A5F;
   --tok-air:                 #AFCBFF;
   --tok-earth:               #4F7A5A;
@@ -42,6 +44,64 @@
   --font-accent:   'Cormorant Garamond', Georgia, serif;
   /* Default reading size (matches global `body` 16px) */
   --tok-text-body-size: 1rem;
+  /* UI / meta scale (rem; root 16px) */
+  --tok-type-ui-button: 0.75rem; /* 12px; TOK primitive buttons */
+  --tok-type-ui-button-arrow: 0.875rem; /* 14px */
+  --tok-type-label: 0.8rem; /* form labels, skip link */
+  --tok-type-meta: 0.68rem; /* kickers, compact uppercase labels */
+  --tok-type-ml-cta: 0.72rem; /* MailerLite / band CTAs */
+  --tok-type-nav: 0.7rem; /* primary nav link size */
+  --tok-type-nav-compact: 0.64rem; /* mobile menu toggle */
+  --tok-type-nav-dropdown: 0.65rem; /* dropdown items */
+  --tok-type-footer: 0.62rem; /* footer discover links */
+  --tok-type-footer-email: 0.72rem;
+  --tok-letter-upper-tight: 0.1em;
+  --tok-letter-upper: 0.12em; /* subscribe-style uppercase */
+  --tok-letter-upper-nav: 0.16em; /* site nav */
+  --tok-letter-upper-tdc: 0.14em;
+  --tok-line-prose: 1.9; /* article column */
+  --tok-line-body: 1.65; /* default body / UI paragraphs */
+
+  /* ── UI chrome (header, sticky, anchors) ── */
+  --tok-header-height: 4.25rem;
+  /* Back-compat: layout previously used this name in BaseLayout only */
+  --site-header-height: var(--tok-header-height);
+  --tok-sticky-under-header: 5.5rem; /* sticky sidebars below fixed header */
+  --tok-scroll-anchor-offset: 80px; /* article headings under fixed header */
+
+  /* ── Border radius (canonical; use instead of repeating literals) ── */
+  --radius-2: 2px;
+  --radius-3: 3px;
+  --radius-soft: 0.2rem;
+  --radius-control: 0.25rem;
+  --radius-md: 0.35rem; /* toolbars, dense cards */
+  --radius-lg: 0.375rem; /* article cards */
+  --radius-xl: 0.4rem; /* tool panels */
+  --radius-promo: 0.5rem; /* featured cards */
+  --radius-pill: 999px;
+
+  /* ── Z-index layers ── */
+  --z-share-mobile: 40;
+  --z-header: 50;
+  --z-dropdown: 60;
+  --z-skip-link: 100;
+
+  /* ── Breakpoints (px; use in @media with var()) ── */
+  --bp-xs: 520px;
+  --bp-sm: 720px; /* brand icon tighten */
+  --bp-md: 768px; /* article prose scale */
+  --bp-blog-sticky: 960px; /* Field Notes sidebar */
+  --bp-nav: 900px; /* mobile nav drawer */
+  --bp-nav-min: 901px;
+  --bp-lg: 1024px; /* article share sidebar */
+
+  /* ── Primitive button metrics (TOK UI Button) ── */
+  --tok-ui-btn-pad-y: 9px;
+  --tok-ui-btn-pad-x: 20px;
+  --tok-ui-btn-font-weight: 500;
+  --tok-ui-btn-letter-spacing: 0.04em;
+  --tok-ui-arrow-gap: 6px;
+  --tok-ui-arrow-gap-hover: 10px;
 
   /* ── Spacing ── */
   --space-xs:  4px;   --space-sm:  8px;

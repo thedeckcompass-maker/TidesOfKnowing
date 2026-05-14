@@ -66,10 +66,10 @@ const { categories, activeCategorySlug = null } = Astro.props;
     gap: 1.75rem;
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: var(--bp-blog-sticky)) {
     .tok-blog-sidebar {
       position: sticky;
-      top: 5.5rem;
+      top: var(--tok-sticky-under-header);
       align-self: start;
     }
   }
@@ -87,9 +87,9 @@ const { categories, activeCategorySlug = null } = Astro.props;
   .tok-blog-sidebar__h {
     margin: 0 0 0.65rem;
     font-family: var(--font-body);
-    font-size: 0.65rem;
+    font-size: var(--tok-type-nav-dropdown);
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--tok-letter-upper-tdc);
     text-transform: uppercase;
     color: var(--tok-teal-dim);
   }
@@ -97,7 +97,7 @@ const { categories, activeCategorySlug = null } = Astro.props;
   .tok-blog-sidebar__p {
     margin: 0;
     font-size: 0.98rem;
-    line-height: 1.65;
+    line-height: var(--tok-line-body);
   }
 
   .tok-blog-sidebar__p--tight {

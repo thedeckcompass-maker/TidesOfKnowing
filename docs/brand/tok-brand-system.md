@@ -2,7 +2,9 @@
 
 Authoritative visual source: `tok-brand-system-v1.4.html` (copy of the packaged guide; do not edit that HTML for site code).
 
-Code source of truth for values: `src/styles/tokens.css` (verbatim `:root` from the guide).
+**Implementation map:** `docs/brand/design-system.md` (tokens, surfaces, primitives, and what not to do).
+
+Code source of truth for values: `src/styles/tokens.css` (verbatim `:root` from the guide, extended with layout and typography tokens used across the site).
 
 ---
 
@@ -35,7 +37,7 @@ Defined in `tokens.css`. Groups:
 - **Elemental (semantic):** `--tok-water`, `--tok-air`, `--tok-earth`
 - **Neutrals:** `--tok-slate`, `--tok-slate-mid`
 
-Legacy aliases (incremental migration): `src/styles/tokens-compat.css` maps older names (e.g. `--paper`, `--ink`) to TOK tokens.
+Legacy compatibility variables (`--paper`, `--ink`, `--gold`, etc.) were removed from the build. Use `--tok-*` and `--font-*` only. See `docs/brand/design-system.md` for semantic alias pairs that share hex values by design (`--tok-deep-ocean` / `--tok-surface-system`, `--tok-water` / `--tok-surface-panel-alt`).
 
 ---
 

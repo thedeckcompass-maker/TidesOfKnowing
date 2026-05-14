@@ -52,12 +52,12 @@ const Tag = href ? "a" : "button";
   .tok-ui-btn--primary-w {
     background: var(--tok-gold);
     color: var(--tok-text-dark);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
     border: none;
-    letter-spacing: 0.04em;
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--primary-w:hover {
     background: var(--tok-gold-light);
@@ -68,11 +68,11 @@ const Tag = href ? "a" : "button";
     background: transparent;
     color: var(--tok-deep-ocean);
     border: 1px solid var(--tok-deep-ocean);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--secondary-w:hover {
     background: color-mix(in srgb, var(--tok-deep-ocean) 5%, transparent);
@@ -82,11 +82,11 @@ const Tag = href ? "a" : "button";
     background: transparent;
     color: var(--tok-text-muted);
     border: 1px solid var(--tok-border-light);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--ghost-w:hover {
     color: var(--tok-text-dark);
@@ -97,24 +97,24 @@ const Tag = href ? "a" : "button";
     background: none;
     border: none;
     color: var(--tok-teal);
-    font-size: 14px;
+    font-size: var(--tok-type-ui-button-arrow);
     font-weight: 400;
     padding: 0;
-    gap: 6px;
+    gap: var(--tok-ui-arrow-gap);
   }
   .tok-ui-btn--arrow-w:hover {
-    gap: 10px;
+    gap: var(--tok-ui-arrow-gap-hover);
   }
 
   .tok-ui-btn--primary-b {
     background: var(--tok-gold);
     color: var(--tok-text-dark);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
     border: none;
-    letter-spacing: 0.04em;
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--primary-b:hover {
     background: var(--tok-gold-light);
@@ -125,11 +125,11 @@ const Tag = href ? "a" : "button";
     background: transparent;
     color: var(--tok-gold);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--secondary-b:hover {
     background: color-mix(in srgb, var(--tok-gold) 6%, transparent);
@@ -140,11 +140,11 @@ const Tag = href ? "a" : "button";
     background: transparent;
     color: var(--tok-slate-mid);
     border: 1px solid color-mix(in srgb, var(--tok-slate) 12%, transparent);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 9px 20px;
-    border-radius: 3px;
-    letter-spacing: 0.04em;
+    font-size: var(--tok-type-ui-button);
+    font-weight: var(--tok-ui-btn-font-weight);
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-3);
+    letter-spacing: var(--tok-ui-btn-letter-spacing);
   }
   .tok-ui-btn--ghost-b:hover {
     color: var(--tok-text-light);
@@ -155,13 +155,13 @@ const Tag = href ? "a" : "button";
     background: none;
     border: none;
     color: var(--tok-teal-light);
-    font-size: 14px;
+    font-size: var(--tok-type-ui-button-arrow);
     font-weight: 400;
     padding: 0;
-    gap: 6px;
+    gap: var(--tok-ui-arrow-gap);
   }
   .tok-ui-btn--arrow-b:hover {
-    gap: 10px;
+    gap: var(--tok-ui-arrow-gap-hover);
     color: var(--tok-text-light-strong);
   }
 

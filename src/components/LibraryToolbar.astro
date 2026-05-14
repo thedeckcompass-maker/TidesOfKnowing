@@ -112,9 +112,9 @@ const sortChoices: { id: "newest" | "oldest" | "series"; label: string; href: st
 
   .lib-toolbar__label {
     font-family: var(--font-body);
-    font-size: 0.65rem;
+    font-size: var(--tok-type-nav-dropdown);
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--tok-letter-upper-tdc);
     text-transform: uppercase;
     color: var(--tok-teal-dim);
   }
@@ -124,7 +124,7 @@ const sortChoices: { id: "newest" | "oldest" | "series"; label: string; href: st
     font-size: 0.95rem;
     padding: 0.5rem 0.65rem;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 50%, transparent);
-    border-radius: 0.35rem;
+    border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--tok-surface-reading) 60%, transparent);
     color: var(--tok-text-dark);
   }
