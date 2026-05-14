@@ -91,6 +91,10 @@ When the interpretive layer arrives first, the perceptual work that follows is n
 
 It reveals whether the practitioner is using AI in the position that serves the reading, or in the position that substitutes for its most important stage.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## The Drift and How It Happens

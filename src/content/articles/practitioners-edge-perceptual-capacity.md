@@ -89,6 +89,10 @@ The daily practice of attending without immediately explaining, of noticing befo
 
 The practitioner who consistently honours the pre-verbal stage keeps that muscle developed. The one who consistently bypasses it does not.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## Operating Where AI Cannot Follow

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import AiIntuitionSignup from "../components/lead-magnets/AiIntuitionSignup.astro";
 import { siteBase } from "../lib/site";
 
 const title = "The AI and Intuition Field Guide | Tides of Knowing";
@@ -42,8 +41,8 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
           */}
           <h2 id="tok-field-guide-dl-heading" class="tok-field-guide-page__h2">Download</h2>
           <p class="tok-field-guide-page__p">
-            Single PDF: full series layout for reading offline or printing. The file will be attached to the same
-            email flow as the field notes once it is published.
+            Single PDF: the full series for offline reading or printing. If you arrived from a delivery email, use
+            the button below when the file is live.
           </p>
           <a
             class="tok-field-guide-page__dl"
@@ -62,12 +61,11 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
     <section class="tok-field-guide-page__notes" aria-labelledby="tok-field-guide-notes-heading">
       <h2 id="tok-field-guide-notes-heading" class="tok-field-guide-page__h2">Field notes</h2>
       <p class="tok-field-guide-page__p">
-        Subscribers to the field guide also receive seven accompanying field notes delivered weekly. These short
-        companion essays extend observations, tensions, and threads from each article in the series.
+        Subscribers to the field guide also receive seven accompanying field notes delivered weekly.
       </p>
       <p class="tok-field-guide-page__p">
-        They are written in the same editorial voice as the published essays themselves: reflective, precise, and
-        practice-aware.
+        Each note expands on one of the pieces in the series, extending ideas, observations, and questions that sit
+        around the original essay.
       </p>
     </section>
 
@@ -77,8 +75,6 @@ const FIELD_GUIDE_PDF_HREF = "/downloads/ai-and-intuition-series-field-guide.pdf
         under which meaning becomes visible.
       </p>
     </footer>
-
-    <AiIntuitionSignup compactHeading={true} />
   </article>
 </BaseLayout>
 

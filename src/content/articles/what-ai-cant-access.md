@@ -104,6 +104,10 @@ Here is what that means specifically in a reading. A practitioner sits with a sp
 
 AI enters the process after that translation. It has no presence in the stage before it. This is not a gap that more sophisticated training will close. The pre-symbolic stage produces nothing that can be fed into any system until the practitioner has already done the work of bringing it forward.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## The Illusion of AI Knowing

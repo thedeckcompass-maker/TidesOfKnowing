@@ -81,6 +81,10 @@ I had to reorientate. To rebalance what the framework could show me with what co
 
 This is not a criticism of the tool. It did what it was built to do. The error was in allowing the tool's domain to gradually expand into territory it was never designed to reach. When that happens, it is not the tool that loses something. It is the practitioner.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## The Architect in the Tent

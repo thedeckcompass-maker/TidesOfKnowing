@@ -95,6 +95,10 @@ This is the interface model in operation. The card provided the symbolic trigger
 
 The question had been presented blind, with no personal connection disclosed, no emotional context offered, no information that could have shaped what arrived. What was activated was not constructed from available cues. It was not assembled from plausible interpretations of established meanings. It was accurate. And accuracy of that specificity, reached without the context that would usually anchor it, does not come from a dictionary.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## Why AI Cannot Replicate Activation

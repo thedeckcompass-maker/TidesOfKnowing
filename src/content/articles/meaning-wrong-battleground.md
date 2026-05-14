@@ -89,6 +89,10 @@ The practitioner who has built their value primarily on interpretive knowledge, 
 
 The question is not whether to know meanings. Of course meanings matter. The question is whether meaning is where the practitioner's primary differentiation lives. And increasingly, it is not.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ---
 
 ## The Illusion of Going Deeper

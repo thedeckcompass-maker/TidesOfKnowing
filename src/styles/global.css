@@ -411,3 +411,26 @@ a:focus-visible {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.14em;
 }
+
+/* Mid-article reference to the field guide delivery page (no form; subscribers only). */
+.tok-ai-series-mid-ref {
+  margin: 1.5rem 0 1.6rem;
+  padding: 0.65rem 0 0.7rem;
+  border-top: 1px solid color-mix(in srgb, var(--tok-border-light) 92%, var(--tok-text-dark));
+  border-bottom: 1px solid color-mix(in srgb, var(--tok-border-light) 92%, var(--tok-text-dark));
+}
+
+.tok-ai-series-mid-ref__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.58;
+  color: color-mix(in srgb, var(--tok-text-dark) 86%, transparent);
+}
+
+.tok-ai-series-mid-ref__text a {
+  font-weight: 600;
+  color: var(--tok-teal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}

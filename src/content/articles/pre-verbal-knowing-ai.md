@@ -79,6 +79,10 @@ By the time information is available to an AI system, the pre-verbal stage has a
 
 The problem arises when practitioners reach for AI before that translation has occurred: using it for the initial impression, the first sensing of what a spread is showing, the receptive stage that has not yet resolved into language. The tool cannot do that work. And the capacity that can do it, if it is not exercised, does not stay static. It atrophies.
 
+<aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
+<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+</aside>
+
 ## The Paradox of Expectation
 
 Return to the remote viewing protocol, and to the specific discipline it demands.
