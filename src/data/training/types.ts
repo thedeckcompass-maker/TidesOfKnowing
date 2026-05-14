@@ -40,13 +40,11 @@ export type CohortScheduleMexico = {
   label: string;
   heading: string;
   introParagraphs: string[];
-  morning: { title: string; headers: string[]; rows: string[][]; note: string };
-  afternoon: { title: string; headers: string[]; rows: string[][]; note: string };
-  whichWindowHeading: string;
-  whichWindowLines: { lead: string; detail: string }[];
-  closingParagraph: string;
-  /** Shown under the time-zone tables when the Mexico City version is live. */
-  timezoneNoteAfterTables: string;
+  /** Month or period label and factual status (e.g. booked, unavailable). */
+  availabilityItems: { period: string; status: string }[];
+  timezoneParagraphs: string[];
+  /** Optional closing line after schedule context. */
+  closingParagraph?: string;
 };
 
 export type CohortScheduleContent = CohortScheduleNz | CohortScheduleMexico;

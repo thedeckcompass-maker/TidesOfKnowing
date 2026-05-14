@@ -1,20 +1,21 @@
 import type { CompassTrainingPage } from "./types";
 
-/** Mexico City (from August 2026) — source: docs/copy/compass-training-page-copy-mexico.md — not published until switched in active-training. */
+/** Mexico City COMPASS page data (source of truth). Editorial mirror: docs/copy/compass-training-page-copy-mexico.md */
 export const compassTrainingMexico: CompassTrainingPage = {
   id: "mexico",
   meta: {
     title: "COMPASS Training: Build Intuition. Work Live.",
     description:
-      "A 4-week live training programme for tarot and oracle readers. Small cohorts, direct founder access, and real practice inside The Deck Compass platform.",
+      "Structured 4-week live training in the COMPASS Method for tarot and oracle readers. Small, mentorship-led cohorts on Central Time (Mexico City), with practice inside The Deck Compass.",
   },
   hero: {
     eyebrow: "4-week live programme",
     heading: "COMPASS Training: Build Intuition. Work Live.",
     paragraphs: [
-      "You already know the cards. That is not the problem.",
-      "The problem is what happens when you are in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.",
-      "COMPASS training is where that changes.",
+      "You already know the cards. The harder work is perceptual: staying with what is actually occurring in a spread, naming it cleanly, and trusting the thread before doubt or over-explanation takes over.",
+      "For readers who know something real is happening in their readings and want a clearer way to work with it.",
+      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation — the seven conditions of attention in the COMPASS Method, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
+      "The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work — not a performance, and not theory for its own sake.",
     ],
   },
   trainingPractice: {
@@ -29,12 +30,14 @@ export const compassTrainingMexico: CompassTrainingPage = {
     label: "Problem fit",
     heading: "If This Sounds Like You",
     bullets: [
-      "You know the meanings, but your readings still feel uncertain",
+      "You sense something real in the spread, but lack a framework for working with it step by step",
+      "You read naturally, but want more structure, consistency, and confidence from session to session",
+      "You know the meanings, yet your readings still feel uncertain or hard to articulate for clients",
       "You start strong, then lose the thread halfway through",
       "You over-explain instead of saying what you actually see",
       "You feel intuitive hits, then immediately doubt them",
       "You keep looking for the right meaning instead of trusting your read",
-      "You finish readings and think: that wasn't as clear as it should have been",
+      "You finish readings and think: that was not as clear as it could have been",
     ],
   },
   method: {
@@ -50,25 +53,26 @@ export const compassTrainingMexico: CompassTrainingPage = {
       "Seal",
     ],
     paragraphs: [
-      "This is not about learning more tarot. It is about learning how to read.",
-      "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
+      "This is not about collecting more card meanings. It is about practical intuitive development: how attention is held before interpretation, while it forms, and when the reading closes.",
+      "An original interpretive framework created by Tides of Knowing: the COMPASS Method — structured symbolic perception you can use under the pressure of live work.",
     ],
   },
   learningOutcomes: {
     label: "Learning outcomes",
     heading: "What You Will Learn",
     intro:
-      "Most tarot training focuses on what the cards mean. COMPASS focuses on what the reader is doing.",
+      "Most tarot training focuses on what the cards mean. COMPASS focuses on what the reader is doing with perception, language, and discernment.",
     bullets: [
-      "Trust your own perception in a reading",
-      "Stay with what is actually unfolding",
-      "Communicate what you see clearly and cleanly",
+      "Trust and articulate intuitive signal without collapsing into performance or guesswork",
+      "Strengthen discernment between projection, habit, and what the spread is actually doing",
+      "Stay with what is unfolding and communicate it clearly for clients and for yourself",
     ],
   },
   howItWorks: {
     label: "Process",
     heading: "How It Works",
-    intro: "This is a 4-week live programme for a small cohort of readers.",
+    intro:
+      "This is a four-week, live, discussion-based programme in a deliberately small cohort so mentorship and direct feedback stay central.",
     bullets: [
       "Weeks one and two: the COMPASS Method and the seven conditions of attention, taught in alternate-day sessions",
       "Weeks three and four: live practice and guided integration inside The Deck Compass platform",
@@ -77,71 +81,32 @@ export const compassTrainingMexico: CompassTrainingPage = {
       "Live only, not replay-based",
     ],
     closingParagraphs: [
-      "You are asked to apply because fit matters. This is a small programme where direct feedback and outcome matter more than filling places.",
+      "Intake moves in measured cycles so each group can stay coherent. The next intake window is approaching; registering interest simply starts a conversation when timing and fit are right.",
     ],
   },
   cohortSchedule: {
     variant: "mexico",
-    label: "Cohort schedule",
-    heading: "When Cohorts Run",
+    label: "Availability",
+    heading: "Current Availability",
     introParagraphs: [
-      "New cohorts open at the beginning of each month. The programme is based in Mexico City (CST, UTC−6) and sessions are offered across two daily windows to serve readers in the UK, Europe, and across North America.",
+      "Operational dates are listed plainly so you can plan without noise.",
     ],
-    morning: {
-      title: "Morning sessions",
-      headers: ["Mexico City", "UK / Ireland", "US East", "US Central", "US West"],
-      rows: [
-        ["8:00am", "2:00pm", "9:00am", "8:00am", "6:00am"],
-        ["9:00am", "3:00pm", "10:00am", "9:00am", "7:00am"],
-        ["10:00am", "4:00pm", "11:00am", "10:00am", "8:00am"],
-        ["11:00am", "5:00pm", "12:00pm", "11:00am", "9:00am"],
-      ],
-      note: "8am–11am Mexico City time (CST). This is the primary window for UK and Irish readers (afternoon their time) and US East and Central morning sessions.",
-    },
-    afternoon: {
-      title: "Afternoon sessions",
-      headers: ["Mexico City", "UK / Ireland", "US East", "US Central", "US West"],
-      rows: [
-        ["4:00pm", "10:00pm", "5:00pm", "4:00pm", "2:00pm"],
-        ["5:00pm", "11:00pm", "6:00pm", "5:00pm", "3:00pm"],
-        ["6:00pm", "midnight", "7:00pm", "6:00pm", "4:00pm"],
-        ["7:00pm", "1:00am", "8:00pm", "7:00pm", "5:00pm"],
-      ],
-      note: "4pm–7pm Mexico City time (CST). This is the primary window for US East, Central, and West Coast readers (after-work hours). UK readers are not served by the afternoon window.",
-    },
-    whichWindowHeading: "Which window is right for you",
-    whichWindowLines: [
-      {
-        lead: "UK and Ireland:",
-        detail: "morning window only (8am–11am CST / 2pm–5pm your time)",
-      },
-      {
-        lead: "US East and Central:",
-        detail: "either window works; most choose afternoon",
-      },
-      {
-        lead: "US West Coast:",
-        detail: "afternoon window (2pm–5pm your time)",
-      },
-      {
-        lead: "Canada:",
-        detail: "follows the same pattern as the equivalent US time zone",
-      },
-      {
-        lead: "Australia and New Zealand:",
-        detail:
-          'not served by current cohort windows for live sessions; <a class="compass__faq-link" href="/contact/">Register interest</a> in future scheduling',
-      },
+    availabilityItems: [
+      { period: "June", status: "Booked" },
+      { period: "July", status: "Booked" },
+      { period: "August", status: "Unavailable due to relocation" },
+      { period: "Next available cohort", status: "Interest opens in August" },
+    ],
+    timezoneParagraphs: [
+      "From the next available cohort onward, sessions will run on Central Time (Mexico City). Two cohort windows will be offered where possible to support readers across regions. Exact session times will be confirmed before enrolment opens.",
     ],
     closingParagraph:
-      "You will indicate your preferred window in your application. Sessions are confirmed once the cohort is formed.",
-    timezoneNoteAfterTables:
-      "Local equivalents may shift during seasonal clock changes in the UK and US. Confirmed session times are provided during enrolment.",
+      "Each cohort stays small on purpose: discussion-based work, minimum two participants to run, maximum six, so attention stays practical and mentorship-led.",
   },
   investment: {
     label: "Investment",
     heading: "Investment",
-    intro: "Three ways to join, depending on how much direct support you want.",
+    intro: "Three participation levels.",
     tiers: [
       {
         title: "Course · USD $697",
@@ -176,6 +141,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     heading: "About Leigh Spencer",
     paragraphs: [
       "I have been reading tarot and oracle cards for over 40 years. Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.",
+      "COMPASS grew out of systematically refining my own intuitive process in live work — and teaching others to work more clearly with what they already sense.",
       "COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.",
     ],
   },
@@ -185,7 +151,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     items: [
       {
         q: "What level do I need to be at?",
-        a: "You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read, not learning meanings from scratch.",
+        a: "You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read — structure, discernment, and language — not learning meanings from scratch.",
       },
       {
         q: "How is this delivered?",
@@ -204,43 +170,39 @@ export const compassTrainingMexico: CompassTrainingPage = {
         a: "I join your live reading environment and observe a session with a real client. Afterwards I provide written or voice feedback directly. You book these via open calendar at a time that suits both you and your client. Observer sessions are available to Mentor Access and Ongoing Mentorship tier students only.",
       },
       {
-        q: "I am in the UK. Which window should I choose?",
-        a: "The morning window is your only viable option for live sessions. Your sessions will fall between 2pm and 5pm UK time, which suits most self-employed readers. Please select the morning window in your application.",
-      },
-      {
-        q: "I am on the US West Coast. Can I join?",
-        a: "Yes. The afternoon window places your sessions between 2pm and 5pm Pacific Time, which works well for most readers. Select the afternoon window in your application.",
+        q: "How will session timing work in my time zone?",
+        a: "Live sessions run on Central Time (Mexico City). Where possible, two cohort windows are offered. Exact times are confirmed before enrolment opens. When you register interest, include your region and any timing constraints so we can place you thoughtfully.",
       },
       {
         q: "I am in Australia or New Zealand. Can I join?",
-        a: "Current cohort windows do not serve Australasia for live sessions. If you would like to be notified if a suitable window becomes available, you are welcome to register your interest using the application form.",
+        a: 'Current cohort windows are not designed for Australasia for live sessions. You are welcome to <a class="compass__faq-link" href="/contact/">register interest</a> if a future window might suit.',
       },
       {
-        q: "When do cohorts run?",
-        a: "Monthly, with weekly cohorts introduced as demand grows. Apply now to be considered for the next available cohort.",
+        q: "When does the next intake open?",
+        a: "June and July cohorts are fully booked. August is unavailable due to relocation. Interest for the next cohort opens in August, with enrolment details shared once session times are set.",
       },
       {
-        q: "What happens after I apply?",
-        a: "I review each application to ensure the group is aligned. If it is a good fit, you will receive a payment link to secure your place.",
+        q: "What happens after I register interest?",
+        a: "I read each submission personally. When enrolment opens for the next cohort, if the fit looks right, you will receive the details and a payment link to secure your place.",
       },
       {
         q: "What if I am unsure?",
-        a: 'You are welcome to <a class="compass__faq-link" href="/contact/">reach out</a> before applying if you want to check whether it is right for you.',
+        a: 'You are welcome to <a class="compass__faq-link" href="/contact/">reach out</a> before registering interest if you want to check whether it is right for you.',
       },
     ],
   },
   apply: {
-    label: "Apply",
-    heading: "Apply",
-    intro: "Send a short message with:",
+    label: "Next cohort",
+    heading: "Register interest for the next cohort",
+    intro: "Share a short note so I understand where your practice is now:",
     checklist: [
       "Your experience level with tarot or oracle cards",
       "What is not working in your readings right now",
-      "Which tier you are interested in",
-      "Your location and preferred session window (morning or afternoon, Mexico City time)",
+      "Which tier you are considering",
+      "Your location and any timing constraints (sessions are on Central Time, Mexico City)",
     ],
-    note: "If accepted, your place will be held for 48 hours.",
-    ctaLabel: "Apply Now",
+    note: "Registering interest does not obligate you to enrol. When the next cycle opens, I will follow up personally if the programme looks like a strong match.",
+    ctaLabel: "Register Interest for the Next Cohort",
     ctaHref: "/compass/apply/",
   },
   footerAttribution:

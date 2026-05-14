@@ -1,14 +1,20 @@
 # COMPASS Training Page — Full Website Copy
 ## Tides of Knowing · tidesofknowing.com/compass/
-### Version: Mexico City (from August 2026)
+### Version: Mexico City · Central Time (Mexico City) · live data: `src/data/training/compass-training-mexico.ts`
+
+This document mirrors the strings in `compass-training-mexico.ts`. When copy changes, update the TypeScript first, then align this file.
+
 ---
 
 ## META
 
 **Page title:** COMPASS Training: Build Intuition. Work Live.
-**Meta description:** A 4-week live training programme for tarot and oracle readers. Small cohorts, direct founder access, and real practice inside The Deck Compass platform.
+
+**Meta description:** Structured 4-week live training in the COMPASS Method for tarot and oracle readers. Small, mentorship-led cohorts on Central Time (Mexico City), with practice inside The Deck Compass.
+
 **OG title:** COMPASS Training: Build Intuition. Work Live.
-**OG description:** A 4-week live training programme for tarot and oracle readers. Small cohorts, direct founder access, and real practice inside The Deck Compass platform.
+
+**OG description:** Structured 4-week live training in the COMPASS Method for tarot and oracle readers. Small, mentorship-led cohorts on Central Time (Mexico City), with practice inside The Deck Compass.
 
 ---
 
@@ -18,13 +24,15 @@
 
 # COMPASS Training: Build Intuition. Work Live.
 
-You already know the cards. That is not the problem.
+You already know the cards. The harder work is perceptual: staying with what is actually occurring in a spread, naming it cleanly, and trusting the thread before doubt or over-explanation takes over.
 
-The problem is what happens when you are in the middle of a reading. You see something, then hesitate. You feel a clear thread, then second-guess it. You start explaining instead of interpreting. You reach for meanings instead of staying with what is actually unfolding.
+For readers who know something real is happening in their readings and want a clearer way to work with it.
 
-COMPASS training is where that changes.
+COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation — the seven conditions of attention in the COMPASS Method, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.
 
-[Apply for COMPASS](#apply) [Read the COMPASS Method article](/articles/compass-method/)
+The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work — not a performance, and not theory for its own sake.
+
+[Register Interest for the Next Cohort](/compass/apply/) · [Read the COMPASS Method article](/articles/compass-method/)
 
 ---
 
@@ -42,50 +50,52 @@ Students complete training and move directly into The Deck Compass with three mo
 
 ## SECTION: Problem fit
 
-**Label:** Problem fit
+**Label:** Problem fit  
 **Heading:** If This Sounds Like You
 
-- You know the meanings, but your readings still feel uncertain
+- You sense something real in the spread, but lack a framework for working with it step by step
+- You read naturally, but want more structure, consistency, and confidence from session to session
+- You know the meanings, yet your readings still feel uncertain or hard to articulate for clients
 - You start strong, then lose the thread halfway through
 - You over-explain instead of saying what you actually see
 - You feel intuitive hits, then immediately doubt them
 - You keep looking for the right meaning instead of trusting your read
-- You finish readings and think: that wasn't as clear as it should have been
+- You finish readings and think: that was not as clear as it could have been
 
 ---
 
 ## SECTION: Method
 
-**Label:** Method
+**Label:** Method  
 **Heading:** the COMPASS Method
 
 *Center · Open · Map · Perceive · Align · Sense · Seal*
 
-This is not about learning more tarot. It is about learning how to read.
+This is not about collecting more card meanings. It is about practical intuitive development: how attention is held before interpretation, while it forms, and when the reading closes.
 
-the COMPASS Method is an original interpretive framework created by Tides of Knowing.
+An original interpretive framework created by Tides of Knowing: the COMPASS Method — structured symbolic perception you can use under the pressure of live work.
 
 ---
 
 ## SECTION: Learning outcomes
 
-**Label:** Learning outcomes
+**Label:** Learning outcomes  
 **Heading:** What You Will Learn
 
-Most tarot training focuses on what the cards mean. COMPASS focuses on what the reader is doing.
+Most tarot training focuses on what the cards mean. COMPASS focuses on what the reader is doing with perception, language, and discernment.
 
-- Trust your own perception in a reading
-- Stay with what is actually unfolding
-- Communicate what you see clearly and cleanly
+- Trust and articulate intuitive signal without collapsing into performance or guesswork
+- Strengthen discernment between projection, habit, and what the spread is actually doing
+- Stay with what is unfolding and communicate it clearly for clients and for yourself
 
 ---
 
 ## SECTION: How it works
 
-**Label:** Process
+**Label:** Process  
 **Heading:** How It Works
 
-This is a 4-week live programme for a small cohort of readers.
+This is a four-week, live, discussion-based programme in a deliberately small cohort so mentorship and direct feedback stay central.
 
 - Weeks one and two: the COMPASS Method and the seven conditions of attention, taught in alternate-day sessions
 - Weeks three and four: live practice and guided integration inside The Deck Compass platform
@@ -93,67 +103,38 @@ This is a 4-week live programme for a small cohort of readers.
 - Minimum two participants to run
 - Live only, not replay-based
 
-You are asked to apply because fit matters. This is a small programme where direct feedback and outcome matter more than filling places.
+Intake moves in measured cycles so each group can stay coherent. The next intake window is approaching; registering interest simply starts a conversation when timing and fit are right.
 
-[Apply for COMPASS](#apply)
-
----
-
-## SECTION: Cohort schedule
-
-**Label:** Cohort schedule
-**Heading:** When Cohorts Run
-
-New cohorts open at the beginning of each month. The programme is based in Mexico City (CST, UTC−6) and sessions are offered across two daily windows to serve readers in the UK, Europe, and across North America.
-
-### Session windows
-
-**Morning sessions**
-8am–11am Mexico City time (CST)
-
-| Mexico City | UK / Ireland | US East | US Central | US West |
-|---|---|---|---|---|
-| 8:00am | 2:00pm | 9:00am | 8:00am | 6:00am |
-| 9:00am | 3:00pm | 10:00am | 9:00am | 7:00am |
-| 10:00am | 4:00pm | 11:00am | 10:00am | 8:00am |
-| 11:00am | 5:00pm | 12:00pm | 11:00am | 9:00am |
-
-This is the primary window for UK and Irish readers (afternoon their time) and US East and Central morning sessions.
+[Register Interest for the Next Cohort](/compass/apply/)
 
 ---
 
-**Afternoon sessions**
-4pm–7pm Mexico City time (CST)
+## SECTION: Current Availability
 
-| Mexico City | UK / Ireland | US East | US Central | US West |
-|---|---|---|---|---|
-| 4:00pm | 10:00pm | 5:00pm | 4:00pm | 2:00pm |
-| 5:00pm | 11:00pm | 6:00pm | 5:00pm | 3:00pm |
-| 6:00pm | midnight | 7:00pm | 6:00pm | 4:00pm |
-| 7:00pm | 1:00am | 8:00pm | 7:00pm | 5:00pm |
+**Label:** Availability  
+**Heading:** Current Availability
 
-This is the primary window for US East, Central, and West Coast readers (after-work hours). UK readers are not served by the afternoon window.
+Operational dates are listed plainly so you can plan without noise.
 
----
+| Period | Status |
+|--------|--------|
+| June | Booked |
+| July | Booked |
+| August | Unavailable due to relocation |
+| Next available cohort | Interest opens in August |
 
-### Which window is right for you
+From the next available cohort onward, sessions will run on Central Time (Mexico City). Two cohort windows will be offered where possible to support readers across regions. Exact session times will be confirmed before enrolment opens.
 
-**UK and Ireland:** morning window only (8am–11am CST / 2pm–5pm your time)
-**US East and Central:** either window works; most choose afternoon
-**US West Coast:** afternoon window (2pm–5pm your time)
-**Canada:** follows the same pattern as the equivalent US time zone
-**Australia and New Zealand:** not served by current cohort windows for live sessions; contact us to register interest in future scheduling
-
-You will indicate your preferred window in your application. Sessions are confirmed once the cohort is formed.
+Each cohort stays small on purpose: discussion-based work, minimum two participants to run, maximum six, so attention stays practical and mentorship-led.
 
 ---
 
 ## SECTION: Investment
 
-**Label:** Investment
+**Label:** Investment  
 **Heading:** Investment
 
-Three ways to join, depending on how much direct support you want.
+Three participation levels.
 
 ---
 
@@ -191,112 +172,102 @@ After that, platform access continues at USD $39 per month.
 
 ## SECTION: About
 
-**Label:** Authority
+**Label:** Authority  
 **Heading:** About Leigh Spencer
 
 I have been reading tarot and oracle cards for over 40 years. Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.
+
+COMPASS grew out of systematically refining my own intuitive process in live work — and teaching others to work more clearly with what they already sense.
 
 COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.
 
 ---
 
-## SECTION: Testimonial
-
-*[Place one specific before-and-after account from a COMPASS participant here.]*
-
----
-
 ## SECTION: FAQ
 
-**Label:** FAQ
+**Label:** FAQ  
 **Heading:** Common Questions
 
 ---
 
-**What level do I need to be at?**
-You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read, not learning meanings from scratch.
+**What level do I need to be at?**  
+You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read — structure, discernment, and language — not learning meanings from scratch.
 
 ---
 
-**How is this delivered?**
+**How is this delivered?**  
 COMPASS is a small, live programme with alternate-day sessions across four weeks, guided practice, and direct feedback. It is not pre-recorded or self-paced.
 
 ---
 
-**What if I am not confident yet?**
+**What if I am not confident yet?**  
 That is exactly what this is designed for. The focus is on helping you trust what you are seeing and communicate it clearly, not on performing or being right.
 
 ---
 
-**What is The Deck Compass?**
+**What is The Deck Compass?**  
 The Deck Compass is the practice platform built specifically around the COMPASS Method. It is where you log readings, work with reflection prompts, and build the habit of structured intuitive practice over time. Training gives you the method. The Deck Compass gives you the environment to make it stick.
 
 ---
 
-**What does a mentor observer session involve?**
+**What does a mentor observer session involve?**  
 I join your live reading environment and observe a session with a real client. Afterwards I provide written or voice feedback directly. You book these via open calendar at a time that suits both you and your client. Observer sessions are available to Mentor Access and Ongoing Mentorship tier students only.
 
 ---
 
-**I am in the UK. Which window should I choose?**
-The morning window is your only viable option for live sessions. Your sessions will fall between 2pm and 5pm UK time, which suits most self-employed readers. Please select the morning window in your application.
+**How will session timing work in my time zone?**  
+Live sessions run on Central Time (Mexico City). Where possible, two cohort windows are offered. Exact times are confirmed before enrolment opens. When you register interest, include your region and any timing constraints so we can place you thoughtfully.
 
 ---
 
-**I am on the US West Coast. Can I join?**
-Yes. The afternoon window places your sessions between 2pm and 5pm Pacific Time, which works well for most readers. Select the afternoon window in your application.
+**I am in Australia or New Zealand. Can I join?**  
+Current cohort windows are not designed for Australasia for live sessions. You are welcome to [register interest](/contact/) if a future window might suit.
 
 ---
 
-**I am in Australia or New Zealand. Can I join?**
-Current cohort windows do not serve Australasia for live sessions. If you would like to be notified if a suitable window becomes available, you are welcome to register your interest using the application form.
+**When does the next intake open?**  
+June and July cohorts are fully booked. August is unavailable due to relocation. Interest for the next cohort opens in August, with enrolment details shared once session times are set.
 
 ---
 
-**When do cohorts run?**
-Monthly, with weekly cohorts introduced as demand grows. Apply now to be considered for the next available cohort.
+**What happens after I register interest?**  
+I read each submission personally. When enrolment opens for the next cohort, if the fit looks right, you will receive the details and a payment link to secure your place.
 
 ---
 
-**What happens after I apply?**
-I review each application to ensure the group is aligned. If it is a good fit, you will receive a payment link to secure your place.
+**What if I am unsure?**  
+You are welcome to [reach out](/contact/) before registering interest if you want to check whether it is right for you.
 
 ---
 
-**What if I am unsure?**
-You are welcome to reach out before applying if you want to check whether it is right for you. [Contact page link]
+## SECTION: Next cohort (apply / interest)
 
----
+**Label:** Next cohort  
+**Heading:** Register interest for the next cohort
 
-## SECTION: Apply
-
-**Label:** Apply
-**Heading:** Apply
-
-Send a short message with:
+Share a short note so I understand where your practice is now:
 
 - Your experience level with tarot or oracle cards
 - What is not working in your readings right now
-- Which tier you are interested in
-- Your location and preferred session window (morning or afternoon, Mexico City time)
+- Which tier you are considering
+- Your location and any timing constraints (sessions are on Central Time, Mexico City)
 
-If accepted, your place will be held for 48 hours.
+Registering interest does not obligate you to enrol. When the next cycle opens, I will follow up personally if the programme looks like a strong match.
 
-[Apply Now](/compass/apply/)
+[Register Interest for the Next Cohort](/compass/apply/)
 
 ---
 
 ## FOOTER NOTE (page-level, above site footer)
 
-*the COMPASS Method is an original interpretive framework created by Tides of Knowing.*
+An original interpretive framework created by Tides of Knowing: the COMPASS Method.
 
 ---
 
 ## COPY NOTES FOR IMPLEMENTATION
 
-- This version replaces the NZ cohort version from 1 August 2026 onwards.
-- The morning/afternoon session windows are fixed by Mexico City CST. No seasonal adjustment needed: Mexico City does not observe daylight saving time. UK and US clocks do shift seasonally, so the local equivalents in the tables will vary by one hour in spring and autumn. Consider a note on the page or in the application confirmation email flagging this for students booking across seasons.
-- Standard pricing applies from this version: Course $697, Mentor $997, Ongoing Mentorship $1,497.
-- The Australasia note in the FAQ is a holding position. If demand warrants an early-morning CST window (which would be NZ/AU evening), add a third session window and update the schedule section and FAQ accordingly.
-- Testimonial placeholder: replace with a real account as soon as one is available from the foundation cohorts. One specific, named, before-and-after account will do more work than multiple vague endorsements.
-- If weekly cohorts are introduced, update the FAQ entry on cadence and consider adding a cohort calendar or waitlist mechanic to the apply section.
+- **Source of truth:** `src/data/training/compass-training-mexico.ts` (consumed via `active-training.ts` for `/compass/`). FAQ answers that use HTML in production use `compass__faq-link` classes on those anchors; this markdown uses plain `[text](url)` for the same destinations.
+- **Pricing:** Course USD $697; Course + Mentor Access USD $997; Course + Ongoing Mentorship USD $1,497; USD $39/month platform access after the included three months (all tiers).
+- **Availability model:** Operational rows (June booked, July booked, August relocation, next cohort interest in August) plus concise Central Time (Mexico City) copy; detailed multi-region session tables are intentionally not in the live data.
+- **Intake:** Primary CTA copy: “Register Interest for the Next Cohort”; interest form intake values are defined in `src/pages/compass/apply.astro` and `src/pages/api/compass-apply.ts`.
+- **Testimonials:** Not part of the page data object; add a testimonial block in the layout only if product wants one, and keep copy out of `compass-training-mexico.ts` unless the schema is extended.

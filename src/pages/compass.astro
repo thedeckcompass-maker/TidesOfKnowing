@@ -18,8 +18,8 @@ const cs = T.cohortSchedule;
         <h1 class="compass__h1">{T.hero.heading}</h1>
         {T.hero.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
 
-        <a class="compass__cta compass__cta--primary" href="/compass/apply/">
-          Apply for COMPASS
+        <a class="compass__cta compass__cta--primary" href={T.apply.ctaHref}>
+          {T.apply.ctaLabel}
         </a>
 
         <a class="compass__sub-link" href="/articles/compass-method/">
@@ -83,8 +83,8 @@ const cs = T.cohortSchedule;
       </ul>
       {T.howItWorks.closingParagraphs.map((p) => <p class="compass__p">{p}</p>)}
 
-      <a class="compass__cta compass__cta--secondary" href="/compass/apply/">
-        Apply for COMPASS
+      <a class="compass__cta compass__cta--secondary" href={T.apply.ctaHref}>
+        {T.apply.ctaLabel}
       </a>
     </section>
 
@@ -149,66 +149,20 @@ const cs = T.cohortSchedule;
               <p class="compass__p">{p}</p>
             ))}
 
-            <div class="compass__tz-block">
-              <h3 class="compass__h3">{cs.morning.title}</h3>
-              <p class="compass__p compass__tz-range">{cs.morning.note}</p>
-              <div class="compass__table-wrap">
-                <table class="compass__data-table">
-                  <thead>
-                    <tr>
-                      {cs.morning.headers.map((h) => (
-                        <th scope="col">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cs.morning.rows.map((row) => (
-                      <tr>
-                        {row.map((cell) => (
-                          <td>{cell}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="compass__tz-block">
-              <h3 class="compass__h3">{cs.afternoon.title}</h3>
-              <p class="compass__p compass__tz-range">{cs.afternoon.note}</p>
-              <div class="compass__table-wrap">
-                <table class="compass__data-table">
-                  <thead>
-                    <tr>
-                      {cs.afternoon.headers.map((h) => (
-                        <th scope="col">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cs.afternoon.rows.map((row) => (
-                      <tr>
-                        {row.map((cell) => (
-                          <td>{cell}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p class="compass__p compass__tz-footnote">{cs.timezoneNoteAfterTables}</p>
-
-            <h3 class="compass__h3">{cs.whichWindowHeading}</h3>
-            <ul class="compass__list compass__which-window-list">
-              {cs.whichWindowLines.map((line) => (
-                <li set:html={`<strong>${line.lead}</strong> ${line.detail}`} />
+            <div class="compass__cohort-cards">
+              {cs.availabilityItems.map((row) => (
+                <div class="compass__cohort-card compass__panel">
+                  <p class="compass__cohort-card-title">{row.period}</p>
+                  <p class="compass__cohort-card-status">{row.status}</p>
+                </div>
               ))}
-            </ul>
+            </div>
 
-            <p class="compass__p">{cs.closingParagraph}</p>
+            {cs.timezoneParagraphs.map((p) => (
+              <p class="compass__p">{p}</p>
+            ))}
+
+            {cs.closingParagraph && <p class="compass__p">{cs.closingParagraph}</p>}
           </>
         )
       }

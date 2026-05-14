@@ -4,9 +4,8 @@ import { Resend } from "resend";
 export const prerender = false;
 
 const INTAKE_PREFERENCE_VALUES = [
-  "June Foundation Cohort",
-  "July Foundation Cohort",
-  "Future COMPASS Training",
+  "Next cohort — Central Time (Mexico City)",
+  "General COMPASS interest (timing to be discussed)",
 ] as const;
 
 type IntakePreference = (typeof INTAKE_PREFERENCE_VALUES)[number];
@@ -111,7 +110,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const resend = new Resend(apiKey);
 
     const textBody = [
-      "New COMPASS application received.",
+      "New COMPASS interest registration received.",
       "",
       `Name: ${name}`,
       `Email: ${email}`,
@@ -132,7 +131,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     await resend.emails.send({
       from: "Tides of Knowing <hello@tidesofknowing.com>",
       to: [toEmail],
-      subject: "New COMPASS Application",
+      subject: "New COMPASS interest registration",
       text: textBody,
       replyTo: email,
     });
