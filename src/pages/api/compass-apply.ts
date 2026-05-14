@@ -4,7 +4,7 @@ import { Resend } from "resend";
 export const prerender = false;
 
 const INTAKE_PREFERENCE_VALUES = [
-  "Next cohort — Central Time (Mexico City)",
+  "Next cohort (Central Time, Mexico City)",
   "General COMPASS interest (timing to be discussed)",
 ] as const;
 

@@ -14,8 +14,8 @@ export const compassTrainingMexico: CompassTrainingPage = {
     paragraphs: [
       "You already know the cards. The harder work is perceptual: staying with what is actually occurring in a spread, naming it cleanly, and trusting the thread before doubt or over-explanation takes over.",
       "For readers who know something real is happening in their readings and want a clearer way to work with it.",
-      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation — the seven conditions of attention in the COMPASS Method, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
-      "The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work — not a performance, and not theory for its own sake.",
+      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation: the seven conditions of attention in the COMPASS Method, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
+      "The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work (not a performance, and not theory for its own sake).",
     ],
   },
   trainingPractice: {
@@ -54,7 +54,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     ],
     paragraphs: [
       "This is not about collecting more card meanings. It is about practical intuitive development: how attention is held before interpretation, while it forms, and when the reading closes.",
-      "An original interpretive framework created by Tides of Knowing: the COMPASS Method — structured symbolic perception you can use under the pressure of live work.",
+      "An original interpretive framework created by Tides of Knowing: the COMPASS Method (structured symbolic perception you can use under the pressure of live work).",
     ],
   },
   learningOutcomes: {
@@ -141,7 +141,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     heading: "About Leigh Spencer",
     paragraphs: [
       "I have been reading tarot and oracle cards for over 40 years. Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.",
-      "COMPASS grew out of systematically refining my own intuitive process in live work — and teaching others to work more clearly with what they already sense.",
+      "COMPASS grew out of systematically refining my own intuitive process in live work and teaching others to work more clearly with what they already sense.",
       "COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.",
     ],
   },
@@ -151,7 +151,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     items: [
       {
         q: "What level do I need to be at?",
-        a: "You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read — structure, discernment, and language — not learning meanings from scratch.",
+        a: "You should already be reading tarot or oracle cards and understand the basics. This work is about improving how you read (structure, discernment, and language), not learning meanings from scratch.",
       },
       {
         q: "How is this delivered?",
