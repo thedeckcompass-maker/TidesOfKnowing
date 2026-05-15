@@ -6,13 +6,30 @@
  */
 import AiIntuitionModal from "./AiIntuitionModal.astro";
 
+interface Props {
+  /** When false, omits the duplicate series heading (e.g. field guide page already has H1). */
+  showHeading?: boolean;
+}
+
+const { showHeading = true } = Astro.props;
+
 const modalId = "tok-ai-intuition-field-modal";
 const titleId = "tok-ai-intuition-cta-heading";
 ---
 
 <div class="tok-ai-cta-root" data-ai-intuition-cta-root>
-  <section class="tok-ai-cta" aria-labelledby={titleId}>
-    <h2 id={titleId} class="tok-ai-cta__heading">The AI and Intuition Series</h2>
+  <section
+    class:list={["tok-ai-cta", !showHeading && "tok-ai-cta--integrated"]}
+    aria-labelledby={showHeading ? titleId : undefined}
+    aria-label={showHeading ? undefined : "Request the field guide edition by email"}
+  >
+    {
+      showHeading && (
+        <h2 id={titleId} class="tok-ai-cta__heading">
+          The AI and Intuition Series
+        </h2>
+      )
+    }
     <p class="tok-ai-cta__body">
       Receive the complete field guide edition of the series for slower reflection and reference, including an
       additional unpublished closing essay and seven private field notes that deepen the ideas and perceptual
@@ -132,6 +149,10 @@ const titleId = "tok-ai-intuition-cta-heading";
     padding: 1.25rem 0 0.25rem;
     border-top: 1px solid color-mix(in srgb, var(--tok-border-light) 92%, var(--tok-text-dark));
     max-width: 38rem;
+  }
+
+  .tok-ai-cta--integrated {
+    padding-top: 0.35rem;
   }
 
   .tok-ai-cta__heading {
