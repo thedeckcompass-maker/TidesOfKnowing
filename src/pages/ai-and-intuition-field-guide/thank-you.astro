@@ -1,0 +1,131 @@
+---
+/**
+ * Post-signup delivery page only. MailerLite delivery emails should link here, not to the public PDF path:
+ * https://tidesofknowing.com/ai-and-intuition-field-guide/thank-you/
+ * PDF asset: public/downloads/ai-and-intuition-series-field-guide.pdf (when published).
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Your field guide | Tides of Knowing";
+const description =
+  "Download the AI and Intuition field guide PDF and continue with weekly field notes by email.";
+const ogUrl = new URL("/ai-and-intuition-field-guide/thank-you/", siteBase(Astro)).href;
+const pdfHref = "/downloads/ai-and-intuition-series-field-guide.pdf";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={ogUrl}
+  tdcPlacement="none"
+  metaRobots="noindex, nofollow"
+>
+  <article class="tok-field-guide-thanks page-inner">
+    <header class="tok-field-guide-thanks__hero">
+      <p class="tok-field-guide-thanks__eyebrow">Field guide</p>
+      <h1 class="tok-field-guide-thanks__title">Your field guide</h1>
+    </header>
+
+    <div class="tok-field-guide-thanks__body">
+      <p class="tok-field-guide-thanks__p">
+        The AI and Intuition field guide is available below. It includes the complete seven-part series, an additional
+        unpublished closing essay, and the companion field notes sequence now underway by email.
+      </p>
+      <p class="tok-field-guide-thanks__actions">
+        <a class="tok-field-guide-thanks__dl" href={pdfHref}>Download the field guide</a>
+      </p>
+      <p class="tok-field-guide-thanks__p tok-field-guide-thanks__p--muted">
+        The seven field notes will continue to arrive weekly by email to the address you used to join this list.
+      </p>
+      <p class="tok-field-guide-thanks__p tok-field-guide-thanks__p--note">
+        If the file is not yet on the server, the same link will resolve once the PDF is published. Nothing else is
+        required on this page.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .tok-field-guide-thanks {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 40rem;
+  }
+
+  .tok-field-guide-thanks__hero {
+    margin-bottom: 1.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .tok-field-guide-thanks__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-nav-compact);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper-tdc);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-field-guide-thanks__title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.65rem, 3.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--tok-water);
+  }
+
+  .tok-field-guide-thanks__p {
+    margin: 0 0 1rem;
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: var(--tok-line-body);
+    color: var(--tok-text-dark);
+  }
+
+  .tok-field-guide-thanks__p--muted {
+    color: color-mix(in srgb, var(--tok-text-dark) 82%, transparent);
+    font-size: 0.98rem;
+  }
+
+  .tok-field-guide-thanks__p--note {
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-field-guide-thanks__actions {
+    margin: 1.25rem 0 1.15rem;
+  }
+
+  .tok-field-guide-thanks__dl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.35rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-meta);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
+    border-radius: var(--radius-2);
+    transition:
+      background var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .tok-field-guide-thanks__dl:hover {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  .tok-field-guide-thanks__dl:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+</style>

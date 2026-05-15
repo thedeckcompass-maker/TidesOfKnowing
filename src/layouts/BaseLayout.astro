@@ -32,6 +32,8 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** Appended to automatic body surface classes (TOK brand). */
   bodyClass?: string;
+  /** When set, emitted as `<meta name="robots" content="…">` (e.g. `noindex, nofollow`). */
+  metaRobots?: string;
 }
 
 const {
@@ -50,6 +52,7 @@ const {
   tdcPlacement = "before-footer",
   jsonLd,
   bodyClass: bodyClassProp,
+  metaRobots,
 } = Astro.props;
 
 const trimmedOg = typeof ogUrl === "string" ? ogUrl.trim() : "";
@@ -115,6 +118,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {metaRobots && <meta name="robots" content={metaRobots} />}
     {metaAuthor && <meta name="author" content={metaAuthor} />}
     <link rel="canonical" href={canonical} />
     {sequentialLinks?.prev && (
