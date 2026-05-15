@@ -93,5 +93,5 @@ These should use TOK tokens only (no ad-hoc hex). Third-party embeds (MailerLite
 ## AI + Intuition field guide (capture vs delivery)
 
 - **Public acquisition:** `/ai-and-intuition-field-guide/` explains the edition and uses the MailerLite modal CTA only. It does not link to the PDF.
-- **Post-signup delivery:** `/ai-and-intuition-field-guide/thank-you/` is `noindex` and is the URL to use in MailerLite delivery emails. It holds the download link to `/downloads/ai-and-intuition-series-field-guide.pdf` (when the file is published).
+- **Post-signup delivery:** `/ai-and-intuition-field-guide/thank-you/` is `noindex` and is the URL to use in MailerLite delivery emails. It holds the download link to `/downloads/ai-and-intuition-series-field-guide.pdf`.
 - **Articles:** The seven AI series articles keep linking to `/ai-and-intuition-field-guide/` for context, not to the thank-you page.

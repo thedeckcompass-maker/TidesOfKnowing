@@ -2,7 +2,7 @@
 /**
  * Post-signup delivery page only. MailerLite delivery emails should link here, not to the public PDF path:
  * https://tidesofknowing.com/ai-and-intuition-field-guide/thank-you/
- * PDF asset: public/downloads/ai-and-intuition-series-field-guide.pdf (when published).
+ * PDF: public/downloads/ai-and-intuition-series-field-guide.pdf
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { siteBase } from "../../lib/site";
@@ -12,6 +12,7 @@ const description =
   "Download the AI and Intuition field guide PDF and continue with weekly field notes by email.";
 const ogUrl = new URL("/ai-and-intuition-field-guide/thank-you/", siteBase(Astro)).href;
 const pdfHref = "/downloads/ai-and-intuition-series-field-guide.pdf";
+const coverSrc = "/images/lead-magnets/ai-intuition-field-guide-cover.png";
 ---
 
 <BaseLayout
@@ -32,15 +33,28 @@ const pdfHref = "/downloads/ai-and-intuition-series-field-guide.pdf";
         The AI and Intuition field guide is available below. It includes the complete seven-part series, an additional
         unpublished closing essay, and the companion field notes sequence now underway by email.
       </p>
+      <figure class="tok-field-guide-thanks__cover">
+        <img
+          class="tok-field-guide-thanks__cover-img"
+          src={coverSrc}
+          alt=""
+          width="200"
+          height="300"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
       <p class="tok-field-guide-thanks__actions">
-        <a class="tok-field-guide-thanks__dl" href={pdfHref}>Download the field guide</a>
+        <a
+          class="tok-field-guide-thanks__dl"
+          href={pdfHref}
+          download="ai-and-intuition-series-field-guide.pdf"
+        >
+          Download the field guide
+        </a>
       </p>
       <p class="tok-field-guide-thanks__p tok-field-guide-thanks__p--muted">
         The seven field notes will continue to arrive weekly by email to the address you used to join this list.
-      </p>
-      <p class="tok-field-guide-thanks__p tok-field-guide-thanks__p--note">
-        If the file is not yet on the server, the same link will resolve once the PDF is published. Nothing else is
-        required on this page.
       </p>
     </div>
   </article>
@@ -86,19 +100,29 @@ const pdfHref = "/downloads/ai-and-intuition-series-field-guide.pdf";
   }
 
   .tok-field-guide-thanks__p--muted {
+    margin-bottom: 0;
     color: color-mix(in srgb, var(--tok-text-dark) 82%, transparent);
     font-size: 0.98rem;
   }
 
-  .tok-field-guide-thanks__p--note {
-    margin-bottom: 0;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--tok-text-muted);
+  .tok-field-guide-thanks__cover {
+    margin: 0 0 1.1rem;
+    padding: 0;
+    max-width: 6.25rem;
+    border: none;
+  }
+
+  .tok-field-guide-thanks__cover-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, var(--tok-border-light));
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-sm);
   }
 
   .tok-field-guide-thanks__actions {
-    margin: 1.25rem 0 1.15rem;
+    margin: 0 0 1.15rem;
   }
 
   .tok-field-guide-thanks__dl {

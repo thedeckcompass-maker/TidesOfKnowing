@@ -7,6 +7,8 @@ const title = "The AI and Intuition Field Guide | Tides of Knowing";
 const description =
   "A compiled edition of the seven-part Tides of Knowing series: the essays, an additional unpublished closing essay, and private field notes for slower rereading.";
 const ogUrl = new URL("/ai-and-intuition-field-guide/", siteBase(Astro)).href;
+/** Publication cover (static asset; no PDF link on this page). */
+const coverSrc = "/images/lead-magnets/ai-intuition-field-guide-cover.png";
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
@@ -14,6 +16,17 @@ const ogUrl = new URL("/ai-and-intuition-field-guide/", siteBase(Astro)).href;
     <header class="tok-field-guide-page__hero">
       <p class="tok-field-guide-page__eyebrow">Field guide</p>
       <h1 class="tok-field-guide-page__title">The AI and Intuition Series</h1>
+      <figure class="tok-field-guide-page__cover">
+        <img
+          class="tok-field-guide-page__cover-img"
+          src={coverSrc}
+          alt="Cover of The AI and Intuition Series field guide"
+          width="640"
+          height="960"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
       <div class="tok-field-guide-page__lede">
         <p>
           This field guide gathers the full seven-part series into one place for rereading and reference. It is built
@@ -68,13 +81,30 @@ const ogUrl = new URL("/ai-and-intuition-field-guide/", siteBase(Astro)).href;
   }
 
   .tok-field-guide-page__title {
-    margin: 0 0 1rem;
+    margin: 0 0 1.1rem;
     font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.55rem);
     line-height: 1.15;
     color: var(--tok-water);
+  }
+
+  .tok-field-guide-page__cover {
+    margin: 0 0 1.35rem;
+    padding: 0;
+    max-width: min(11rem, 42vw);
+    border: none;
+  }
+
+  .tok-field-guide-page__cover-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, var(--tok-border-light));
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-sm);
   }
 
   .tok-field-guide-page__lede p {
