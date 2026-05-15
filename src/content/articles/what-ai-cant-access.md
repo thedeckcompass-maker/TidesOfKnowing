@@ -39,7 +39,7 @@ Then one day I was in the middle of a reading for a client. Something in the ses
 I want to be precise about what happened there, because precision is what this series is built on. The meaning was not in the wood. The wood is wood, salt-bleached, ocean-shaped, indifferent. What happened was that over time, my perceptual system had been building something in the space between looking and knowing. Forming impressions. Registering them. Holding them without forcing them into language or filing them under a category. And when the moment arrived that required them, they were available. Not recalled as a memory exactly. Available, the way a word is available when the sentence finally needs it.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 No AI system on earth could have done that. Not because it lacks sufficient processing power, or because the dataset wasn't large enough, or because the model wasn't sophisticated enough. Because what happened never entered the data stream in the first place.
@@ -105,7 +105,7 @@ Here is what that means specifically in a reading. A practitioner sits with a sp
 AI enters the process after that translation. It has no presence in the stage before it. This is not a gap that more sophisticated training will close. The pre-symbolic stage produces nothing that can be fed into any system until the practitioner has already done the work of bringing it forward.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ---

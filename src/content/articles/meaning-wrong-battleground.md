@@ -32,7 +32,7 @@ I have been doing this regularly and deliberately. It is not a test designed to 
 What I consistently find is this. AI's ability to work with meaning is strong, and it is getting stronger. As more practitioners use these systems, as more knowledge is shared and encoded, the large language models that underpin them become increasingly sophisticated in their handling of symbolic interpretation. The meanings, the traditional associations, the archetypal frameworks, the contextual variations: AI handles all of this with growing fluency.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 > But there is a layer it does not reach. And that layer is where the reading actually begins.
@@ -90,7 +90,7 @@ The practitioner who has built their value primarily on interpretive knowledge, 
 The question is not whether to know meanings. Of course meanings matter. The question is whether meaning is where the practitioner's primary differentiation lives. And increasingly, it is not.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ---

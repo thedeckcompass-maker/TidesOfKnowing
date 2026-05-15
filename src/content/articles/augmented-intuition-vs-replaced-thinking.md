@@ -38,7 +38,7 @@ What happens when those two things combine is genuinely powerful. My perception 
 That is augmentation working correctly. And it is one decision away from becoming something else entirely.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 ---
@@ -92,7 +92,7 @@ When the interpretive layer arrives first, the perceptual work that follows is n
 It reveals whether the practitioner is using AI in the position that serves the reading, or in the position that substitutes for its most important stage.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ---

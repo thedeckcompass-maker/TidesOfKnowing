@@ -44,7 +44,7 @@ She asked what systems I had studied under. I told her I was self-taught. What I
 All of that from one card. Not from its textbook meaning. From what the card, in that moment, with that question present, activated.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 > This is what tarot actually is. Not a dictionary of meanings. An interface.
@@ -96,7 +96,7 @@ This is the interface model in operation. The card provided the symbolic trigger
 The question had been presented blind, with no personal connection disclosed, no emotional context offered, no information that could have shaped what arrived. What was activated was not constructed from available cues. It was not assembled from plausible interpretations of established meanings. It was accurate. And accuracy of that specificity, reached without the context that would usually anchor it, does not come from a dictionary.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ---

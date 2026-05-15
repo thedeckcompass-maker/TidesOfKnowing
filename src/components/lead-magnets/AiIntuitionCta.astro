@@ -1,0 +1,185 @@
+---
+/**
+ * Restrained editorial CTA: opens AiIntuitionModal (MailerLite inside modal only).
+ * Used for the seven AI + Intuition series articles only (see pages/articles/[slug].astro).
+ */
+import AiIntuitionModal from "./AiIntuitionModal.astro";
+
+const modalId = "tok-ai-intuition-field-modal";
+const titleId = "tok-ai-intuition-cta-heading";
+---
+
+<div class="tok-ai-cta-root" data-ai-intuition-cta-root>
+  <section class="tok-ai-cta" aria-labelledby={titleId}>
+    <h2 id={titleId} class="tok-ai-cta__heading">The AI and Intuition Series</h2>
+    <p class="tok-ai-cta__body">
+      Receive the complete field guide edition of the series for slower reflection and reference, including an
+      additional unpublished closing essay and seven private field notes that deepen the ideas and perceptual
+      practices introduced throughout the essays.
+    </p>
+    <button
+      type="button"
+      class="tok-ai-cta__btn"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls={modalId}
+      data-ai-intuition-modal-open
+    >
+      Receive the field guide
+    </button>
+  </section>
+
+  <AiIntuitionModal modalId={modalId} />
+</div>
+
+<script define:vars={{ modalId }}>
+  (function () {
+    const root = document.querySelector("[data-ai-intuition-cta-root]");
+    const dialog = document.getElementById(modalId);
+    const openBtn = root?.querySelector("[data-ai-intuition-modal-open]");
+    if (!root || !dialog || !(dialog instanceof HTMLDialogElement) || !openBtn || !root.contains(dialog))
+      return;
+
+    const closeEls = dialog.querySelectorAll("[data-ai-intuition-modal-close]");
+    const html = document.documentElement;
+    let previousActive = null;
+
+    function getFocusable() {
+      const sel =
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      return Array.from(dialog.querySelectorAll(sel)).filter(
+        (el) =>
+          el instanceof HTMLElement &&
+          !el.hasAttribute("hidden") &&
+          !el.closest("[hidden], [inert]")
+      );
+    }
+
+    function onDialogKeydown(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        dialog.close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const list = getFocusable();
+      if (list.length === 0) return;
+      const first = list[0];
+      const last = list[list.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function openModal() {
+      previousActive = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      html.dataset.tokScrollLock = "1";
+      html.dataset.tokPrevOverflow = html.style.overflow;
+      html.style.overflow = "hidden";
+      dialog.showModal();
+      openBtn.setAttribute("aria-expanded", "true");
+      dialog.addEventListener("keydown", onDialogKeydown);
+      window.setTimeout(() => {
+        const list = getFocusable();
+        (list[0] || dialog).focus();
+      }, 0);
+    }
+
+    function closeModal() {
+      dialog.close();
+    }
+
+    function onClose() {
+      html.style.overflow = html.dataset.tokPrevOverflow || "";
+      delete html.dataset.tokPrevOverflow;
+      delete html.dataset.tokScrollLock;
+      openBtn.setAttribute("aria-expanded", "false");
+      dialog.removeEventListener("keydown", onDialogKeydown);
+      if (previousActive) previousActive.focus();
+    }
+
+    openBtn.addEventListener("click", () => {
+      if (!dialog.open) openModal();
+    });
+
+    closeEls.forEach((el) => {
+      el.addEventListener("click", () => closeModal());
+    });
+
+    dialog.addEventListener("close", onClose);
+
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) closeModal();
+    });
+  })();
+</script>
+
+<style>
+  .tok-ai-cta-root {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tok-ai-cta {
+    margin: 0;
+    padding: 1.25rem 0 0.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-border-light) 92%, var(--tok-text-dark));
+    max-width: 38rem;
+  }
+
+  .tok-ai-cta__heading {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.28;
+    color: var(--tok-water);
+  }
+
+  .tok-ai-cta__body {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: var(--tok-line-body);
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+    text-wrap: pretty;
+  }
+
+  .tok-ai-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.95rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-meta);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper-tight);
+    text-transform: uppercase;
+    color: var(--tok-water);
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 55%, var(--tok-border-light));
+    border-radius: var(--radius-2);
+    cursor: pointer;
+    transition:
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .tok-ai-cta__btn:hover {
+    background: color-mix(in srgb, var(--tok-gold) 8%, var(--tok-surface-reading));
+    border-color: var(--tok-gold);
+    color: var(--tok-text-dark);
+  }
+
+  .tok-ai-cta__btn:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+</style>

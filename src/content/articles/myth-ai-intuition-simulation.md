@@ -34,7 +34,7 @@ I found out later how it had come to be. Before the architect drew a single line
 The building that resulted was not just well-designed. It was the physical realisation of something that had first existed in a pre-symbolic space, in the attending and the sensing before the drafting. The architect used every structural skill he had. But those skills served something that had already formed before a single technical decision was made.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 > That is the distinction this article is about. And it is the distinction that gets lost every time someone describes AI as intuitive.
@@ -82,7 +82,7 @@ I had to reorientate. To rebalance what the framework could show me with what co
 This is not a criticism of the tool. It did what it was built to do. The error was in allowing the tool's domain to gradually expand into territory it was never designed to reach. When that happens, it is not the tool that loses something. It is the practitioner.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ---

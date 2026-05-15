@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
-import AiIntuitionSignup from "../../components/lead-magnets/AiIntuitionSignup.astro";
+import AiIntuitionCta from "../../components/lead-magnets/AiIntuitionCta.astro";
 import { estimateReadingMinutes } from "../../lib/readingTime";
 
 /** Seven-part AI and Intuition series only (lead magnet placements are not site-wide). */
@@ -35,7 +35,7 @@ const isAiIntuitionSeriesArticle = AI_INTUITION_SERIES_SLUGS.has(article.data.sl
   {
     isAiIntuitionSeriesArticle ? (
       <div class="tok-article-ai-signup-wrap" slot="append">
-        <AiIntuitionSignup />
+        <AiIntuitionCta />
       </div>
     ) : null
   }

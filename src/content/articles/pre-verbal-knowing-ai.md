@@ -35,7 +35,7 @@ The programme was declassified in 1995. Its results remain contested. What is no
 What interests me is not the certainty of its claims, but the discipline embedded within the protocol itself: the attempt to encounter perception before explanation arrives.
 
 <aside class="tok-ai-series-inline-note" aria-label="Series context">
-<p class="tok-ai-series-inline-note__text">Reading the series as a whole changes the shape of the argument. Subscribers can receive the <a href="/ai-and-intuition-field-guide/">compiled field guide edition</a>, including a closing essay and accompanying field notes.</p>
+<p class="tok-ai-series-inline-note__text">Some ideas reveal themselves more clearly when revisited slowly. Readers can receive the <a href="/ai-and-intuition-field-guide/">full field guide edition</a> of this series, including an additional unpublished closing essay and seven private field notes extending the conversations beyond the published essays.</p>
 </aside>
 
 <figure class="article-section-image">
@@ -80,7 +80,7 @@ By the time information is available to an AI system, the pre-verbal stage has a
 The problem arises when practitioners reach for AI before that translation has occurred: using it for the initial impression, the first sensing of what a spread is showing, the receptive stage that has not yet resolved into language. The tool cannot do that work. And the capacity that can do it, if it is not exercised, does not stay static. It atrophies.
 
 <aside class="tok-ai-series-mid-ref" aria-label="Field guide edition">
-<p class="tok-ai-series-mid-ref__text">The complete <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series, including the closing essay and weekly field notes, is available to subscribers.</p>
+<p class="tok-ai-series-mid-ref__text">The <a href="/ai-and-intuition-field-guide/">field guide edition</a> of this series includes a downloadable PDF designed for slower rereading, an additional unpublished closing essay, and seven companion field notes delivered weekly. Each note expands on patterns, tensions, and perceptual details not explored publicly in the essays themselves.</p>
 </aside>
 
 ## The Paradox of Expectation
