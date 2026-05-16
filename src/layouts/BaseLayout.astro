@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/share.css";
+import MailerLiteUniversal from "../components/MailerLiteUniversal.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import { getEcosystemJsonLdGraph } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
@@ -34,6 +35,8 @@ interface Props {
   bodyClass?: string;
   /** When set, emitted as `<meta name="robots" content="…">` (e.g. `noindex, nofollow`). */
   metaRobots?: string;
+  /** Load MailerLite universal.js only when the page has `.ml-embedded` forms (e.g. /subscribe/). */
+  mailerLite?: boolean;
 }
 
 const {
@@ -53,6 +56,7 @@ const {
   jsonLd,
   bodyClass: bodyClassProp,
   metaRobots,
+  mailerLite = false,
 } = Astro.props;
 
 const trimmedOg = typeof ogUrl === "string" ? ogUrl.trim() : "";
@@ -343,15 +347,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       })();
     </script>
 
-    <!-- MailerLite Universal -->
-    <script is:inline>
-      (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-      .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-      n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-      (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-      ml('account', '2247024');
-    </script>
-    <!-- End MailerLite Universal -->
+    {mailerLite ? <MailerLiteUniversal /> : null}
   </body>
 </html>
 

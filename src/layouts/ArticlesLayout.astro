@@ -38,6 +38,8 @@ interface Props {
     ctaLabel?: string;
     ctaHref?: string;
   };
+  /** When true, loads MailerLite universal.js (e.g. AI series lead-magnet modal). */
+  mailerLite?: boolean;
 }
 
 const {
@@ -50,6 +52,7 @@ const {
   hideTopShare = false,
   hideMobileShareBar = false,
   conversionBlockCopy,
+  mailerLite = false,
 } = Astro.props;
 const d = article.data;
 const resolvedHeaderTitle = headerTitle ?? d.title;
@@ -137,6 +140,7 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
   metaAuthor={d.author}
   tdcPlacement="none"
   jsonLd={jsonLdCombined}
+  mailerLite={mailerLite}
 >
   <div class="article-shell page-inner tok-article-share-shell">
     <div class="tok-articles-breadcrumbs">

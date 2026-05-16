@@ -30,7 +30,7 @@ const readingMinutes =
 const isAiIntuitionSeriesArticle = AI_INTUITION_SERIES_SLUGS.has(article.data.slug);
 ---
 
-<ArticlesLayout article={article} readingMinutes={readingMinutes}>
+<ArticlesLayout article={article} readingMinutes={readingMinutes} mailerLite={isAiIntuitionSeriesArticle}>
   <Content />
   {
     isAiIntuitionSeriesArticle ? (
