@@ -82,7 +82,7 @@ export function initNewsletterSignup(root: Document | HTMLElement = document): v
 
         if (data.ok) {
           form.reset();
-          setStatus(form, data.message ?? "Thanks — check your inbox to confirm.", false);
+          setStatus(form, data.message ?? "Thanks. Check your inbox to confirm.", false);
           return;
         }
 

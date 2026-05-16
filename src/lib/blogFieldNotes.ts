@@ -4,7 +4,7 @@ export type BlogEntry = CollectionEntry<"blog">;
 export type BlogEntryType = BlogEntry["data"]["type"];
 
 const FIELD_NOTES_DEFINITION =
-  "Field Notes on Tides of Knowing document real practice — anonymised where necessary, reflective always. They are not theory. They are the work, observed closely.";
+  "Field Notes on Tides of Knowing document real practice: anonymised where necessary, reflective always. They are not theory. They are the work, observed closely.";
 
 export { FIELD_NOTES_DEFINITION };
 

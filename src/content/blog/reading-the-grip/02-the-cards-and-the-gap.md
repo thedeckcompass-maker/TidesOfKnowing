@@ -1,7 +1,7 @@
 ---
 type: field-note
 title: "The Cards and the Gap"
-description: "What to do when the spread and the seeker's presenting energy are worlds apart — including how to verify the signal when symbolic coherence and felt reality diverge completely."
+description: "What to do when the spread and the seeker's presenting energy are worlds apart, including how to verify the signal when symbolic coherence and felt reality diverge completely."
 seriesSlug: reading-the-grip
 fieldNoteSlug: the-cards-and-the-gap
 order: 2

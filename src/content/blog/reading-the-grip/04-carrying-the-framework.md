@@ -1,7 +1,7 @@
 ---
 type: field-note
 title: "Carrying the Framework"
-description: "How experienced tarot readers carry an interpretive framework through a session through languaging rather than explanation — and what changes when the seeker is under genuine distress."
+description: "How experienced tarot readers carry an interpretive framework through a session through languaging rather than explanation, and what changes when the seeker is under genuine distress."
 seriesSlug: reading-the-grip
 fieldNoteSlug: carrying-the-framework
 order: 4

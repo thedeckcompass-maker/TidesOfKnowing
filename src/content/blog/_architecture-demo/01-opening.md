@@ -1,6 +1,6 @@
 ---
 type: field-note
-title: "Architecture demo — opening"
+title: "Architecture demo: opening"
 description: "Draft note for nested route validation."
 seriesSlug: architecture-demo
 order: 1

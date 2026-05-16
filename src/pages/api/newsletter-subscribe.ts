@@ -116,7 +116,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return new Response(
       JSON.stringify({
         ok: true,
-        message: "Thanks — check your inbox to confirm your subscription.",
+        message: "Thanks. Check your inbox to confirm your subscription.",
       }),
       { status: 200, headers: { "content-type": "application/json" } },
     );

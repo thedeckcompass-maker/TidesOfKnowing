@@ -6,8 +6,8 @@ date: 2026-05-01
 tags: []
 draft: true
 corePrinciple: "Validate print layout and series cheat sheet URL."
-distinction: "Draft only — not published."
-cheatSheetFooter: "Tides of Knowing — architecture validation stub."
+distinction: "Draft only: not published."
+cheatSheetFooter: "Tides of Knowing · architecture validation stub."
 ---
 
 ## Step one

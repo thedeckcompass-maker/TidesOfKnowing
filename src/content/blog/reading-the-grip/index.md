@@ -26,6 +26,6 @@ heroImageAlt: "Tarot spread overview for the Reading the Grip series"
 
 This series of Field Notes addresses one of the most demanding situations a tarot reader encounters: a seeker who arrives with obvious weight attached to their situation and a tight grip on a specific outcome.
 
-Recognising that grip early — and knowing what to do with it — is the difference between a reading that lands and one that doesn't. These four Field Notes document the decisions made across one real reading, from first contact to delivery. Each one is standalone and can be read in any order. Each covers a specific decision point that will sharpen how you approach high-stakes readings in your own practice.
+Recognising that grip early, and knowing what to do with it, is the difference between a reading that lands and one that doesn't. These four Field Notes document the decisions made across one real reading, from first contact to delivery. Each one is standalone and can be read in any order. Each covers a specific decision point that will sharpen how you approach high-stakes readings in your own practice.
 
 A downloadable cheat sheet accompanies the series. It distills the full framework into a practical guide you can use before any reading where a seeker is holding tight to outcomes.

@@ -53,7 +53,7 @@ if (series) {
     slug: fieldNoteSlugFromEntry(n),
     title:
       typeof n.data.order === "number"
-        ? `Field Note ${String(n.data.order).padStart(2, "0")} — ${n.data.title}`
+        ? `Field Note ${String(n.data.order).padStart(2, "0")} – ${n.data.title}`
         : n.data.title,
     description: n.data.description ?? "",
     order: n.data.order,
