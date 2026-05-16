@@ -254,26 +254,24 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
     <footer class="site-footer">
       <div class="page-inner site-footer__inner">
-        <div class="site-footer__col">
-          <p class="site-footer__copy site-footer__copy--center">
-            © 2026 Tides of Knowing · Leigh Spencer. All rights reserved. Original content.
-          </p>
-          <nav class="site-footer__discover" aria-label="Sections">
-            <a class="site-footer__discover-link" href="/articles/">Articles</a>
-            <a class="site-footer__discover-link" href="/series/">Series</a>
-            <a class="site-footer__discover-link" href="/tags/">Topics</a>
-            <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
-            <a class="site-footer__discover-link" href="/contact/">Contact</a>
-            <a class="site-footer__discover-link" href="/media/">Media</a>
-            <a class="site-footer__discover-link" href="/privacy/">Privacy Policy</a>
-            <a class="site-footer__discover-link" href="/terms/">Terms of Use</a>
-          </nav>
-        </div>
+        <nav class="site-footer__discover" aria-label="Sections">
+          <a class="site-footer__discover-link" href="/articles/">Articles</a>
+          <a class="site-footer__discover-link" href="/series/">Series</a>
+          <a class="site-footer__discover-link" href="/tags/">Topics</a>
+          <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
+          <a class="site-footer__discover-link" href="/contact/">Contact</a>
+          <a class="site-footer__discover-link" href="/media/">Media</a>
+          <a class="site-footer__discover-link" href="/privacy/">Privacy Policy</a>
+          <a class="site-footer__discover-link" href="/terms/">Terms of Use</a>
+        </nav>
         <a class="site-footer__email" href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>
       </div>
-      <div class="page-inner site-footer__proprietary-wrap">
-        <p class="site-footer__proprietary tok-ip-attribution">
-          An original interpretive framework created by Tides of Knowing: the COMPASS Method.
+      <div class="page-inner site-footer__meta">
+        <p class="site-footer__copy">
+          © 2026 Tides of Knowing · Leigh Spencer. All rights reserved. Original content.
+        </p>
+        <p class="site-footer__attribution tok-ip-attribution">
+          The COMPASS Method™ · Original interpretive framework by Tides of Knowing.
         </p>
       </div>
     </footer>
@@ -674,12 +672,8 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     background: var(--tok-deep-ocean);
     color: var(--tok-text-light-soft);
     border-top: 2px solid var(--tok-gold);
-    padding: 2rem 0 2.5rem;
+    padding: 1.35rem 0 1.5rem;
     margin-top: 0;
-  }
-
-  .site-footer__copy--center {
-    text-align: center;
   }
 
   .site-footer__inner {
@@ -687,19 +681,15 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem 2rem;
-  }
-
-  .site-footer__col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.65rem 1.5rem;
   }
 
   .site-footer__discover {
     display: flex;
+    flex: 1 1 16rem;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+    align-items: center;
+    gap: 0.35rem 0.85rem;
   }
 
   .site-footer__discover-link {
@@ -716,20 +706,14 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     color: var(--tok-teal-light);
   }
 
-  .site-footer__copy {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    opacity: 0.85;
-  }
-
   .site-footer__email {
+    flex-shrink: 0;
     font-family: var(--font-body);
     font-size: var(--tok-type-footer-email);
     font-weight: 500;
-    letter-spacing: var(--tok-letter-upper-tight);
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--tok-text-light-soft) 75%, transparent);
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 72%, transparent);
     text-decoration: none;
   }
 
@@ -737,14 +721,39 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     color: var(--tok-teal-light);
   }
 
-  .site-footer__proprietary-wrap {
-    margin-top: 1.35rem;
-    padding-top: 1rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-border-system) 52%, transparent);
+  .site-footer__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 0.85rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-border-system) 40%, transparent);
   }
 
-  .site-footer__proprietary {
+  .site-footer__copy {
     margin: 0;
-    color: color-mix(in srgb, var(--tok-text-light-soft) 82%, transparent);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 72%, transparent);
+  }
+
+  .site-footer__attribution.tok-ip-attribution {
+    margin: 0;
+    max-width: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 62%, transparent);
+  }
+
+  @media (max-width: 640px) {
+    .site-footer__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .site-footer__email {
+      margin-top: 0.15rem;
+    }
   }
 </style>
