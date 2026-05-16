@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import NewsletterSignupForm from "../components/NewsletterSignupForm.astro";
+import { MAIN_SUBSCRIBE_SOURCE_COMPONENT } from "../lib/mailerlite";
 import { siteBase } from "../lib/site";
 
 const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
@@ -9,7 +11,6 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
   title="Subscribe | Tides of Knowing"
   description="Get new articles and updates from Tides of Knowing. Join the list to stay close to the work."
   ogUrl={ogUrl}
-  mailerLite
 >
   <article class="tok-subscribe page-inner">
     <header class="tok-subscribe__head">
@@ -20,16 +21,12 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
       </p>
     </header>
 
-    {/*
-      MailerLite embedded form 6Tmwkx has one manually configured hidden segmentation value:
-      source_component = ml-6Tmwkx-main-subscribe (fixed in the MailerLite dashboard).
-      Dynamic page-level attribution is preserved in incoming query parameters and sessionStorage
-      (see subscribePageAttribution.ts) but is not guaranteed to be stored on the MailerLite subscriber
-      unless a future first-party subscribe endpoint or separate MailerLite forms are introduced.
-    */}
-
     <div class="tok-subscribe__form-wrap">
-      <div class="ml-embedded" data-form="6Tmwkx"></div>
+      <NewsletterSignupForm
+        variant="page"
+        sourceComponent={MAIN_SUBSCRIBE_SOURCE_COMPONENT}
+        idPrefix="subscribe-newsletter"
+      />
     </div>
   </article>
 </BaseLayout>
@@ -73,6 +70,5 @@ const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
   .tok-subscribe__form-wrap {
     margin-top: 0.5rem;
     margin-bottom: 2rem;
-    min-height: 4rem;
   }
 </style>

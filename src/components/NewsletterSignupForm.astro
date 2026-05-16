@@ -1,0 +1,193 @@
+---
+interface Props {
+  /** Compact sidebar layout vs fuller /subscribe/ layout. */
+  variant?: "sidebar" | "page";
+  /** Stored on the subscriber as MailerLite `source_component`. */
+  sourceComponent: string;
+  /** Prefix for input `id` / `for` attributes (must be unique per page). */
+  idPrefix: string;
+}
+
+const { variant = "sidebar", sourceComponent, idPrefix } = Astro.props;
+const isPage = variant === "page";
+const nameId = `${idPrefix}-name`;
+const emailId = `${idPrefix}-email`;
+---
+
+<form
+  class:list={["tok-newsletter", isPage && "tok-newsletter--page", !isPage && "tok-newsletter--sidebar"]}
+  data-newsletter-form
+  data-source-component={sourceComponent}
+  action="/api/newsletter-subscribe/"
+  method="post"
+  novalidate
+>
+  <div class="tok-newsletter__field">
+    <label class="tok-newsletter__label" for={nameId}>Name</label>
+    <input
+      id={nameId}
+      class="tok-newsletter__input"
+      type="text"
+      name="name"
+      autocomplete="name"
+      placeholder={isPage ? "Your name" : "Name"}
+      required
+    />
+  </div>
+  <div class="tok-newsletter__field">
+    <label class="tok-newsletter__label" for={emailId}>Email</label>
+    <input
+      id={emailId}
+      class="tok-newsletter__input"
+      type="email"
+      name="email"
+      autocomplete="email"
+      placeholder={isPage ? "you@example.com" : "Email"}
+      required
+    />
+  </div>
+  <input
+    class="tok-newsletter__hp"
+    type="text"
+    name="website"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+  <button class="tok-newsletter__btn" type="submit">Subscribe</button>
+  <p class="tok-newsletter__status" data-newsletter-status hidden></p>
+</form>
+
+<script>
+  import { initNewsletterSignup } from "../scripts/newsletterSignup";
+
+  const host = document.currentScript?.parentElement;
+  initNewsletterSignup(host ?? document);
+</script>
+
+<style>
+  .tok-newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .tok-newsletter--page {
+    gap: 0.75rem;
+    max-width: 22rem;
+  }
+
+  .tok-newsletter__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .tok-newsletter--sidebar .tok-newsletter__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tok-newsletter--page .tok-newsletter__label {
+    font-family: var(--font-body);
+    font-size: var(--tok-type-nav-dropdown);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper-tdc);
+    text-transform: uppercase;
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-newsletter__input {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 50%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--tok-surface-reading) 60%, transparent);
+    color: var(--tok-text-dark);
+  }
+
+  .tok-newsletter--page .tok-newsletter__input {
+    font-size: 1rem;
+    padding: 0.6rem 0.75rem;
+  }
+
+  .tok-newsletter__input::placeholder {
+    color: color-mix(in srgb, var(--tok-text-dark) 45%, transparent);
+  }
+
+  .tok-newsletter__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tok-newsletter__btn {
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-ml-cta);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    padding: 0.55rem 1rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--tok-teal-dim);
+    color: var(--tok-text-light);
+    cursor: pointer;
+    transition: background var(--dur-base) var(--ease-out);
+  }
+
+  .tok-newsletter--page .tok-newsletter__btn {
+    margin-top: 0.25rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.75rem;
+  }
+
+  .tok-newsletter__btn:hover:not(:disabled) {
+    background: var(--tok-teal);
+  }
+
+  .tok-newsletter__btn:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
+
+  .tok-newsletter__btn:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 2px;
+  }
+
+  .tok-newsletter__status {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .tok-newsletter--page .tok-newsletter__status {
+    font-size: 0.95rem;
+  }
+
+  .tok-newsletter__status.is-error {
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-newsletter__status.is-success {
+    color: var(--tok-teal);
+  }
+</style>

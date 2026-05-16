@@ -1,5 +1,6 @@
 ---
-import BlogNewsletterSignup from "./BlogNewsletterSignup.astro";
+import NewsletterSignupForm from "./NewsletterSignupForm.astro";
+import { BLOG_SIDEBAR_SOURCE_COMPONENT } from "../lib/mailerlite";
 import type { BlogCategoryRow } from "../lib/blogCategories";
 
 interface Props {
@@ -27,7 +28,11 @@ const { categories, activeCategorySlug = null } = Astro.props;
       New articles and occasional Field Notes, in your inbox.
     </p>
     <div class="tok-blog-sidebar__form">
-      <BlogNewsletterSignup />
+      <NewsletterSignupForm
+        variant="sidebar"
+        sourceComponent={BLOG_SIDEBAR_SOURCE_COMPONENT}
+        idPrefix="blog-newsletter"
+      />
     </div>
   </section>
 

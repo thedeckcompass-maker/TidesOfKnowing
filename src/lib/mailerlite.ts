@@ -4,8 +4,11 @@ export const MAILERLITE_API_BASE = "https://connect.mailerlite.com/api";
 /** Embedded form 6Tmwkx — matches `data-form` on /subscribe/ and legacy embed. */
 export const MAILERLITE_NEWSLETTER_FORM_SLUG = "6Tmwkx";
 
-/** Segmentation field for sidebar signups (distinct from ml-6Tmwkx-main-subscribe on /subscribe/). */
+/** Segmentation field for Field Notes sidebar signups. */
 export const BLOG_SIDEBAR_SOURCE_COMPONENT = "ml-6Tmwkx-blog-sidebar";
+
+/** Segmentation field for /subscribe/ (matches legacy embedded form dashboard value). */
+export const MAIN_SUBSCRIBE_SOURCE_COMPONENT = "ml-6Tmwkx-main-subscribe";
 
 export type MailerLiteSubscribeResult =
   | { ok: true; status: number }

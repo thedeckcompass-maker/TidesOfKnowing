@@ -1,7 +1,6 @@
 /**
  * /subscribe/ landing: persist attribution query keys in sessionStorage (best-effort;
- * values are hints only, not trusted). Optionally prefill the MailerLite email field from
- * `?email=` when the embed exposes a normal email input. Does not touch segmentation fields.
+ * values are hints only, not trusted). Prefills the first-party email field from `?email=`.
  */
 
 const STORAGE_PREFIX = "tok_nl_attr_";
@@ -13,9 +12,6 @@ const PARAM_KEYS = [
   "utm_campaign",
   "utm_content",
 ] as const;
-
-const POLL_MS = 400;
-const MAX_WAIT_MS = 30_000;
 
 function safeStore(key: string, value: string, maxLen: number): void {
   try {
@@ -46,26 +42,10 @@ function isPlausibleEmail(value: string): boolean {
 
 function tryPrefillEmail(root: HTMLElement, email: string): boolean {
   if (!isPlausibleEmail(email)) return false;
-  try {
-    const selectors = [
-      'input[type="email"]',
-      'input[name="email"]',
-      'input[name="fields[email]"]',
-      'input[autocomplete="email"]',
-    ];
-    for (const sel of selectors) {
-      const found = root.querySelectorAll(sel);
-      for (const el of found) {
-        if (!(el instanceof HTMLInputElement) || el.disabled) continue;
-        if (el.value && el.value.trim() !== "") continue;
-        el.value = email;
-        return true;
-      }
-    }
-  } catch {
-    /* ignore */
-  }
-  return false;
+  const el = root.querySelector<HTMLInputElement>('input[type="email"][name="email"]');
+  if (!el || el.disabled || (el.value && el.value.trim() !== "")) return false;
+  el.value = email;
+  return true;
 }
 
 export function initSubscribePageAttribution(): void {
@@ -81,16 +61,8 @@ export function initSubscribePageAttribution(): void {
   }
   if (!emailFromUrl || !isPlausibleEmail(emailFromUrl)) return;
 
-  const started = Date.now();
-  let filled = false;
-  const id = window.setInterval(() => {
-    if (filled || Date.now() - started > MAX_WAIT_MS) {
-      window.clearInterval(id);
-      return;
-    }
-    const root = document.querySelector(".tok-subscribe__form-wrap");
-    if (!(root instanceof HTMLElement)) return;
-    filled = tryPrefillEmail(root, emailFromUrl);
-    if (filled) window.clearInterval(id);
-  }, POLL_MS);
+  const root = document.querySelector(".tok-subscribe__form-wrap");
+  if (root instanceof HTMLElement) {
+    tryPrefillEmail(root, emailFromUrl);
+  }
 }

@@ -4,8 +4,8 @@
 
 - `EMAIL_API_KEY`
 - `EMAIL_TO=hello@tidesofknowing.com`
-- `MAILERLITE_API_KEY` — MailerLite Connect API token for the Field Notes sidebar signup (`/api/newsletter-subscribe/`). Create under Integrations → MailerLite API in the MailerLite dashboard.
-- `MAILERLITE_NEWSLETTER_GROUP_IDS` (optional) — comma-separated group IDs if sidebar signups should join specific groups (same audience as embedded form `6Tmwkx`).
+- `MAILERLITE_API_KEY` — MailerLite Connect API token for first-party newsletter signup (`/api/newsletter-subscribe/`, Field Notes sidebar and `/subscribe/`). Create under Integrations → MailerLite API in the MailerLite dashboard.
+- `MAILERLITE_NEWSLETTER_GROUP_IDS` (optional) — comma-separated group IDs for new subscribers (same audience as legacy form `6Tmwkx`).
 
 ### Resend Setup Notes
 

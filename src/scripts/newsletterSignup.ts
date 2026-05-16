@@ -1,9 +1,9 @@
 /**
- * Field Notes sidebar newsletter — first-party POST to /api/newsletter-subscribe
- * (avoids MailerLite embed reCAPTCHA widget on blog pages).
+ * First-party newsletter forms — POST to /api/newsletter-subscribe/
  */
 
 const ENDPOINT = "/api/newsletter-subscribe/";
+const ATTR_PREFIX = "tok_nl_attr_";
 
 function setStatus(root: HTMLElement, message: string, isError: boolean): void {
   const el = root.querySelector("[data-newsletter-status]");
@@ -14,21 +14,44 @@ function setStatus(root: HTMLElement, message: string, isError: boolean): void {
   el.classList.toggle("is-success", !isError);
 }
 
-export function initBlogNewsletterSignup(root: Document | HTMLElement = document): void {
-  const forms = root.querySelectorAll<HTMLFormElement>("[data-blog-newsletter-form]");
+function resolveSourceComponent(form: HTMLFormElement): string {
+  const fallback = form.dataset.sourceComponent ?? "";
+  if (typeof window === "undefined") return fallback;
+  try {
+    const fromUrl = new URLSearchParams(window.location.search).get("source_component")?.trim();
+    if (fromUrl) return fromUrl.slice(0, 200);
+    const fromStorage = sessionStorage.getItem(`${ATTR_PREFIX}source_component`)?.trim();
+    if (fromStorage) return fromStorage.slice(0, 200);
+  } catch {
+    /* ignore */
+  }
+  return fallback;
+}
+
+export function initNewsletterSignup(root: Document | HTMLElement = document): void {
+  const forms = root.querySelectorAll<HTMLFormElement>("[data-newsletter-form]");
   forms.forEach((form) => {
-    if (form.dataset.blogNewsletterBound === "1") return;
-    form.dataset.blogNewsletterBound = "1";
+    if (form.dataset.newsletterBound === "1") return;
+    form.dataset.newsletterBound = "1";
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const emailInput = form.querySelector('input[type="email"]');
+      const nameInput = form.querySelector<HTMLInputElement>('input[name="name"]');
+      const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
       const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
       const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
 
       if (!(emailInput instanceof HTMLInputElement)) return;
 
+      const name = nameInput?.value.trim() ?? "";
       const email = emailInput.value.trim();
+
+      if (!name) {
+        setStatus(form, "Please enter your name.", true);
+        nameInput?.focus();
+        return;
+      }
+
       if (!email) {
         setStatus(form, "Please enter your email address.", true);
         emailInput.focus();
@@ -43,9 +66,10 @@ export function initBlogNewsletterSignup(root: Document | HTMLElement = document
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            name,
             email,
             website: honeypot?.value ?? "",
-            source_component: form.dataset.sourceComponent ?? "",
+            source_component: resolveSourceComponent(form),
           }),
         });
 
@@ -63,14 +87,7 @@ export function initBlogNewsletterSignup(root: Document | HTMLElement = document
         }
 
         if (data.code === "not_configured") {
-          const subscribe = form.querySelector<HTMLAnchorElement>("[data-newsletter-fallback]");
-          setStatus(
-            form,
-            subscribe
-              ? "Signup is temporarily unavailable here. Use the link below."
-              : (data.error ?? "Signup is temporarily unavailable."),
-            true,
-          );
+          setStatus(form, data.error ?? "Signup is temporarily unavailable.", true);
           return;
         }
 
@@ -86,8 +103,8 @@ export function initBlogNewsletterSignup(root: Document | HTMLElement = document
 
 if (typeof document !== "undefined") {
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => initBlogNewsletterSignup());
+    document.addEventListener("DOMContentLoaded", () => initNewsletterSignup());
   } else {
-    initBlogNewsletterSignup();
+    initNewsletterSignup();
   }
 }

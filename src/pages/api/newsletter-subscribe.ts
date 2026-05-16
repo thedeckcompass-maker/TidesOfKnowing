@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import {
   BLOG_SIDEBAR_SOURCE_COMPONENT,
+  MAIN_SUBSCRIBE_SOURCE_COMPONENT,
   mailerLiteCreateSubscriber,
   parseMailerLiteGroupIds,
 } from "../../lib/mailerlite";
@@ -17,6 +18,7 @@ function isValidEmail(email: string): boolean {
 }
 
 type SubscribePayload = {
+  name?: string;
   email?: string;
   /** Honeypot — must stay empty for humans. */
   website?: string;
@@ -32,7 +34,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return new Response(
         JSON.stringify({
           ok: false,
-          error: "Newsletter signup is not configured. Please use the subscribe page.",
+          error: "Newsletter signup is not configured.",
           code: "not_configured",
         }),
         { status: 503, headers: { "content-type": "application/json" } },
@@ -60,6 +62,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
       });
     }
 
+    const name = clean(payload.name);
+    if (!name) {
+      return new Response(
+        JSON.stringify({ ok: false, error: "Please enter your name." }),
+        { status: 400, headers: { "content-type": "application/json" } },
+      );
+    }
+
     const email = clean(payload.email).toLowerCase();
     if (!email) {
       return new Response(
@@ -75,14 +85,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    const sourceComponent = clean(payload.source_component) || BLOG_SIDEBAR_SOURCE_COMPONENT;
+    const sourceRaw = clean(payload.source_component);
+    const sourceComponent =
+      sourceRaw === BLOG_SIDEBAR_SOURCE_COMPONENT ||
+      sourceRaw === MAIN_SUBSCRIBE_SOURCE_COMPONENT
+        ? sourceRaw
+        : sourceRaw || BLOG_SIDEBAR_SOURCE_COMPONENT;
+
     const groupIds = parseMailerLiteGroupIds(
       runtimeEnv?.MAILERLITE_NEWSLETTER_GROUP_IDS ?? import.meta.env.MAILERLITE_NEWSLETTER_GROUP_IDS,
     );
 
     const result = await mailerLiteCreateSubscriber(apiKey, {
       email,
-      fields: { source_component: sourceComponent },
+      fields: {
+        name: name.slice(0, 200),
+        source_component: sourceComponent.slice(0, 200),
+      },
       groups: groupIds.length > 0 ? groupIds : undefined,
     });
 
