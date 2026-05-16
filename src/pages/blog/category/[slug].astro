@@ -10,6 +10,7 @@ import {
   blogCategoryLabel,
   blogCategorySlugFromLabel,
 } from "../../../lib/blogCategories";
+import { getStandaloneFieldNotes, standaloneSlugFromEntry } from "../../../lib/blogFieldNotes";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
 
 const paramSlug = Astro.params.slug;
@@ -17,9 +18,9 @@ if (!paramSlug) {
   return Astro.redirect("/blog/");
 }
 
-const allPosts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-);
+const allPosts = getStandaloneFieldNotes(
+  await getCollection("blog", ({ data }) => !data.draft),
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const categoryRows = blogCategoryIndex(allPosts);
 const row = categoryRows.find((r) => r.slug === paramSlug);
@@ -93,7 +94,7 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
           ) : (
             <ul class="tok-blog-feed">
               {posts.map((post) => {
-                const postSlug = post.slug ?? post.id;
+                const postSlug = standaloneSlugFromEntry(post);
                 const cat = blogCategoryLabel(post);
                 const catSlug = blogCategorySlugFromLabel(cat);
                 return (
@@ -152,7 +153,7 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   @media (min-width: 960px) {
     .tok-blog-index-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(14rem, 17.5rem);
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, var(--tok-blog-sidebar-max));
       gap: 2.75rem;
     }
   }

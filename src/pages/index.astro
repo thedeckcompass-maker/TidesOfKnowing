@@ -5,10 +5,11 @@ import { getCollection } from "astro:content";
 import { ENTITY_IDS, TIDES_OF_KNOWING_ORIGIN } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 import { sortArticlesLibraryNewest } from "../lib/articleLibraryOrder";
+import { getStandaloneFieldNotes, standaloneSlugFromEntry } from "../lib/blogFieldNotes";
 import { sortBlogPostsForListing } from "../lib/sortBlogPosts";
 
 const latest = sortBlogPostsForListing(
-  await getCollection("blog", ({ data }) => !data.draft),
+  getStandaloneFieldNotes(await getCollection("blog", ({ data }) => !data.draft)),
 );
 
 const latestMethodology = sortArticlesLibraryNewest(
@@ -226,7 +227,7 @@ const websiteLd = {
           <ul class="latest__list">
             {latest.map((post) => (
               <li class="latest__item" data-reveal>
-                <a class="latest__link" href={`/blog/${post.slug ?? post.id}/`}>
+                <a class="latest__link" href={`/blog/${standaloneSlugFromEntry(post)}/`}>
                   <span class="latest__post-title">{post.data.title}</span>
                   <span class="latest__post-meta">
                     {post.data.date.toLocaleDateString("en-AU", {

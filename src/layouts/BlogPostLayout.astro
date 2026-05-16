@@ -5,8 +5,9 @@ import BlogSidebar from "../components/BlogSidebar.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { RelatedLink } from "../data/relatedPosts";
 import type { BlogCategoryRow } from "../lib/blogCategories";
+import { FOUNDATIONAL_FIELD_NOTE_FOOTER } from "../lib/blogFieldNotes";
+import { ABOUT_PATH, blogPostingJsonLd } from "../lib/blogSeo";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
-import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 
 interface NavPost {
@@ -18,9 +19,16 @@ interface Props {
   title: string;
   description: string;
   date: Date;
+  modifiedDate?: Date;
   readingMinutes: number;
   ogUrl: string;
   ogImageAbsolute: string;
+  pageTitle?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  datePublishedIso?: string;
+  dateModifiedIso?: string;
+  displayDate?: string;
   categoryLabel: string;
   categorySlug: string;
   articleTags: string[];
@@ -28,15 +36,24 @@ interface Props {
   sidebarCategories: BlogCategoryRow[];
   prevPost: NavPost | null;
   nextPost: NavPost | null;
+  /** Slower, editorial standalone archive notes (not series or practitioner walkthroughs). */
+  foundational?: boolean;
 }
 
 const {
   title,
   description,
   date,
+  modifiedDate,
   readingMinutes,
   ogUrl,
   ogImageAbsolute,
+  pageTitle: pageTitleProp,
+  ogTitle,
+  ogDescription,
+  datePublishedIso,
+  dateModifiedIso,
+  displayDate: displayDateProp,
   categoryLabel,
   categorySlug,
   articleTags,
@@ -44,15 +61,31 @@ const {
   sidebarCategories,
   prevPost,
   nextPost,
+  foundational = false,
 } = Astro.props;
 
-const pageTitle = `${title} | Field Notes | Tides of Knowing`;
-const isoDate = date.toISOString();
-const displayDate = date.toLocaleDateString("en-AU", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const pageTitle = pageTitleProp ?? `${title} | Field Notes | Tides of Knowing`;
+const isoDate = datePublishedIso ?? date.toISOString();
+const modifiedIso =
+  dateModifiedIso ?? (modifiedDate ?? date).toISOString();
+const displayDate =
+  displayDateProp ??
+  date.toLocaleDateString("en-AU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+const seoForLd = {
+  pageTitle,
+  metaDescription: description,
+  ogUrl,
+  ogImageAbsolute,
+  ogTitle: ogTitle ?? pageTitle,
+  ogDescription: ogDescription ?? description,
+  datePublished: isoDate,
+  dateModified: modifiedIso,
+};
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -63,24 +96,11 @@ const crumbs: BreadcrumbItem[] = [
   { label: title, url: null },
 ];
 
-const blogPostingLd: Record<string, unknown> = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
+const blogPostingLd = blogPostingJsonLd(seoForLd, {
   headline: title,
-  description,
-  image: ogImageAbsolute,
-  datePublished: isoDate,
-  dateModified: isoDate,
-  author: { "@id": ENTITY_IDS.person },
-  publisher: { "@id": ENTITY_IDS.tidesOrg },
-  url: ogUrl,
-  mainEntityOfPage: {
-    "@type": "WebPage",
-    "@id": ogUrl,
-  },
   articleSection: categoryLabel,
   keywords: articleTags.join(", "),
-};
+});
 
 const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 ---
@@ -91,7 +111,10 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
   ogUrl={ogUrl}
   ogType="article"
   articlePublishedTime={isoDate}
+  articleModifiedTime={modifiedIso}
   ogImage={ogImageAbsolute}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
   articleTags={articleTags}
   metaAuthor="Leigh Spencer"
   tdcPlacement="none"
@@ -106,11 +129,18 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
       <div class="tok-blog-post-main">
         <header class="tok-blog-post-head" data-reveal>
           <p class="tok-blog-post-kicker">
+            <span class="tok-blog-post-kind">
+              {foundational ? "Foundational Field Note" : "Field Note"}
+            </span>
+            <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
             <a class="tok-blog-post-cat" href={`/blog/category/${categorySlug}/`}>
               {categoryLabel}
             </a>
           </p>
           <h1 class="tok-blog-post-title">{title}</h1>
+          <p class="tok-blog-post-byline">
+            <a href={ABOUT_PATH}>Leigh Spencer</a>
+          </p>
           <p class="tok-blog-post-meta">
             <time datetime={isoDate}>{displayDate}</time>
             <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
@@ -119,10 +149,28 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
         </header>
 
         <article class="tok-blog-article">
-          <div class="article-prose tok-blog-post-prose">
+          <div
+            class:list={[
+              "article-prose tok-blog-post-prose",
+              foundational && "tok-blog-post-prose--foundational",
+            ]}
+          >
             <slot />
           </div>
         </article>
+
+        {
+          foundational ? (
+            <>
+              <hr class="tok-blog-post-rule" />
+              <footer class="tok-blog-post-footer" data-reveal>
+                <p class="tok-blog-post-footer__text">
+                  <em>{FOUNDATIONAL_FIELD_NOTE_FOOTER}</em>
+                </p>
+              </footer>
+            </>
+          ) : null
+        }
 
         <nav class="tok-blog-adj" aria-label="Adjacent Field Notes" data-reveal>
           {
@@ -191,7 +239,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   @media (min-width: 960px) {
     .tok-blog-post-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(14rem, 17.5rem);
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, var(--tok-blog-sidebar-max));
       gap: 2.75rem;
     }
   }
@@ -203,6 +251,15 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-post-kicker {
     margin: 0 0 0.5rem;
+  }
+
+  .tok-blog-post-kind {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-post-cat {
@@ -217,6 +274,23 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-post-cat:hover {
     color: var(--tok-teal);
+  }
+
+  .tok-blog-post-byline {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .tok-blog-post-byline a {
+    color: var(--tok-teal);
+    text-decoration: none;
+  }
+
+  .tok-blog-post-byline a:hover {
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-post-title {
@@ -249,6 +323,33 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-post-prose {
     font-size: 1.04rem;
+  }
+
+  .tok-blog-post-prose--foundational {
+    font-size: 1.06rem;
+    line-height: 1.78;
+  }
+
+  .tok-blog-post-prose--foundational :global(h2) {
+    margin-top: 2.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .tok-blog-post-prose--foundational :global(h2:first-child) {
+    margin-top: 1.5rem;
+  }
+
+  .tok-blog-post-rule {
+    margin: 2rem 0 1.25rem;
+    border: none;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tok-blog-post-footer__text {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.68;
+    opacity: 0.9;
   }
 
   .tok-blog-adj {

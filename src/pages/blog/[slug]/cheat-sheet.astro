@@ -1,0 +1,112 @@
+---
+/**
+ * Cheat sheet routes (one dynamic segment before `cheat-sheet`):
+ * - `/blog/[series-slug]/cheat-sheet/`
+ * - `/blog/[standalone-field-note-slug]/cheat-sheet/`
+ */
+import { getCollection, render } from "astro:content";
+import ReadingTheGripCheatSheet from "../../../components/ReadingTheGripCheatSheet.astro";
+import CheatSheetLayout from "../../../layouts/CheatSheetLayout.astro";
+import {
+  findSeriesCheatSheet,
+  findSeriesEntry,
+  findStandaloneCheatSheet,
+  findStandaloneFieldNote,
+  seriesLandingPath,
+  standaloneFieldNotePath,
+} from "../../../lib/blogFieldNotes";
+import { resolveBlogSeo, type BlogSeoResolved } from "../../../lib/blogSeo";
+import { siteBase } from "../../../lib/site";
+
+const segment = Astro.params.slug;
+if (!segment) {
+  return Astro.redirect("/blog/");
+}
+
+const allEntries = await getCollection("blog");
+const base = siteBase(Astro);
+const defaultOg = new URL("/favicon.svg", base).href;
+const pageUrl = new URL(`/blog/${segment}/cheat-sheet/`, base).href;
+
+const series = findSeriesEntry(allEntries, segment);
+const seriesSheet = series ? findSeriesCheatSheet(allEntries, segment) : undefined;
+
+let readingTheGripSeo: BlogSeoResolved | null = null;
+let readingTheGripBack: { href: string; label: string } | null = null;
+
+let view:
+  | {
+      sheet: NonNullable<typeof seriesSheet>;
+      Content: Awaited<ReturnType<typeof render>>["Content"];
+      backHref: string;
+      backLabel: string;
+    }
+  | null = null;
+
+if (series && seriesSheet && segment === "reading-the-grip") {
+  const ogImage = new URL(
+    "/images/blog/reading-the-grip/full-spread-overview.jpg",
+    base,
+  ).href;
+  readingTheGripSeo = resolveBlogSeo({
+    entry: seriesSheet,
+    pageUrl,
+    baseHref: base.href,
+    defaultOgImage: ogImage,
+    titleSuffix: "Cheat sheet | Tides of Knowing",
+  });
+  readingTheGripBack = {
+    href: seriesLandingPath(segment),
+    label: series.data.title,
+  };
+} else if (series && seriesSheet) {
+  const rendered = await render(seriesSheet);
+  view = {
+    sheet: seriesSheet,
+    Content: rendered.Content,
+    backHref: seriesLandingPath(segment),
+    backLabel: series.data.title,
+  };
+}
+
+if (!view && !readingTheGripSeo) {
+  const parent = findStandaloneFieldNote(allEntries, segment);
+  const sheet = findStandaloneCheatSheet(allEntries, segment);
+  if (!parent || !sheet) {
+    return Astro.redirect(series ? seriesLandingPath(segment) : "/blog/");
+  }
+  const rendered = await render(sheet);
+  view = {
+    sheet,
+    Content: rendered.Content,
+    backHref: standaloneFieldNotePath(segment),
+    backLabel: parent.data.title,
+  };
+}
+---
+
+{
+  readingTheGripSeo && readingTheGripBack ? (
+    <ReadingTheGripCheatSheet
+      pageTitle={readingTheGripSeo.pageTitle}
+      metaDescription={readingTheGripSeo.metaDescription}
+      canonicalUrl={readingTheGripSeo.ogUrl}
+      ogTitle={readingTheGripSeo.ogTitle}
+      ogDescription={readingTheGripSeo.ogDescription}
+      ogImage={readingTheGripSeo.ogImageAbsolute}
+      backHref={readingTheGripBack.href}
+      backLabel={readingTheGripBack.label}
+    />
+  ) : view ? (
+    <CheatSheetLayout
+      entry={view.sheet}
+      pageUrl={pageUrl}
+      baseHref={base.href}
+      defaultOgImage={defaultOg}
+      backHref={view.backHref}
+      backLabel={view.backLabel}
+    >
+      <view.Content />
+    </CheatSheetLayout>
+  ) : null
+}

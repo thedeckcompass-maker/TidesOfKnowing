@@ -1,14 +1,21 @@
 ---
-title: "Reading as relationship, not performance"
+type: field-note
+fieldNoteKind: foundational
+title: "Reading as Relationship, Not Performance"
 description: "When tarot becomes a performance for an audience, intuitive work loses the slack it needs; Leigh Spencer traces consent, repair, and the everyday habits that keep readings relational for clients and for yourself."
 date: 2026-04-12
-category: "Practice"
+modifiedDate: 2026-04-12
+category: "Field Notes"
 tags:
   - tarot-ethics
   - intuitive-reading
   - reading-culture
 draft: false
 featured: false
+metaTitle: "Reading as Relationship, Not Performance | Field Notes | Tides of Knowing"
+metaDescription: "Why relationship-based tarot reading depends on consent, repair, and habits that resist performance culture."
+ogTitle: "Reading as Relationship, Not Performance | Field Notes | Tides of Knowing"
+ogDescription: "On keeping tarot readings relational when platforms and audiences reward performance over presence."
 ---
 
 Most public tarot content rewards performance: rapid pulls, theatrical certainty, readings shaped for retention graphs instead of human nervous systems. Theatre is fine when everyone consents to the stage. The trouble starts when performance replaces **relationship**, when you feel you must always sound prophetic, always land a zinger, always force ambiguity into a headline before anyone has exhaled. Intuition withers under that pressure. It needs slack: a pause, a second look, the willingness to say, *This image is sharp for me today; I need a moment before I put it into words.*

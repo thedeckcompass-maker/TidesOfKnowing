@@ -1,0 +1,360 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import BlogSidebar from "../components/BlogSidebar.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import type { BlogCategoryRow } from "../lib/blogCategories";
+import { FIELD_NOTES_DEFINITION } from "../lib/blogFieldNotes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
+import { siteBase } from "../lib/site";
+
+export interface SeriesNoteLink {
+  slug: string;
+  title: string;
+  description: string;
+  order?: number;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  description: string;
+  seriesSlug: string;
+  notes: SeriesNoteLink[];
+  cheatSheetHref: string | null;
+  pageTitle: string;
+  metaDescription: string;
+  ogUrl: string;
+  ogImageAbsolute: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  sidebarCategories: BlogCategoryRow[];
+}
+
+const {
+  title,
+  subtitle,
+  description,
+  seriesSlug,
+  notes,
+  cheatSheetHref,
+  pageTitle,
+  metaDescription,
+  ogUrl,
+  ogImageAbsolute,
+  ogTitle,
+  ogDescription,
+  sidebarCategories,
+} = Astro.props;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: title, url: null },
+];
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: title,
+  description: metaDescription,
+  numberOfItems: notes.length,
+  itemListElement: notes.map((n, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    url: new URL(`/blog/${seriesSlug}/${n.slug}/`, siteHref).href,
+    name: n.title,
+  })),
+};
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: title,
+  description: metaDescription,
+  url: ogUrl,
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  mainEntity: itemListLd,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={metaDescription}
+  ogUrl={ogUrl}
+  ogImage={ogImageAbsolute}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  metaAuthor="Leigh Spencer"
+  tdcPlacement="none"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-series page-inner">
+    <div class="tok-blog-series-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-series-grid">
+      <main class="tok-blog-series-main">
+        <header class="tok-blog-series-head" data-reveal>
+          <p class="tok-blog-series-kicker">Field Note series</p>
+          <h1 class="tok-blog-series-title">{title}</h1>
+          {
+            subtitle ? (
+              <p class="tok-blog-series-subtitle">{subtitle}</p>
+            ) : null
+          }
+          <p class="tok-blog-series-intro">{description}</p>
+        </header>
+
+        <section class="tok-blog-series-body" aria-labelledby="series-body-heading" data-reveal>
+          <h2 id="series-body-heading" class="visually-hidden">Series introduction</h2>
+          <div class="article-prose tok-blog-series-prose">
+            <slot name="introduction" />
+          </div>
+        </section>
+
+        <section class="tok-blog-series-list" aria-labelledby="series-notes-heading" data-reveal>
+          <h2 id="series-notes-heading" class="tok-blog-series-list-title">In this series</h2>
+          {
+            notes.length === 0 ? (
+              <p class="tok-blog-series-empty">Notes in this series are being prepared.</p>
+            ) : (
+              <ol class="tok-blog-series-notes">
+                {notes.map((note) => (
+                  <li class="tok-blog-series-notes__item">
+                    <article>
+                      <h3 class="tok-blog-series-notes__title">
+                        <a href={`/blog/${seriesSlug}/${note.slug}/`}>{note.title}</a>
+                      </h3>
+                      <p class="tok-blog-series-notes__desc">{note.description}</p>
+                    </article>
+                  </li>
+                ))}
+              </ol>
+            )
+          }
+        </section>
+
+        {
+          cheatSheetHref ? (
+            <section class="tok-blog-series-cta" data-reveal>
+              <a class="tok-blog-series-cta__link" href={cheatSheetHref}>
+                {
+                  seriesSlug === "reading-the-grip"
+                    ? "Download the cheat sheet: Reading the Grip — Reader's Field Guide"
+                    : "Open the cheat sheet"
+                }
+              </a>
+              <p class="tok-blog-series-cta__hint">Print-ready reference for this series.</p>
+            </section>
+          ) : null
+        }
+
+        <footer class="tok-blog-series-footer" data-reveal>
+          <p class="tok-blog-series-footer__def">
+            <em>{FIELD_NOTES_DEFINITION}</em>
+          </p>
+        </footer>
+      </main>
+
+      <BlogSidebar categories={sidebarCategories} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tok-blog-series-breadcrumbs {
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tok-blog-series-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding: 0 0 clamp(3rem, 8vw, 5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .tok-blog-series-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, var(--tok-blog-sidebar-max));
+      gap: 2.75rem;
+    }
+  }
+
+  .tok-blog-series-main {
+    min-width: 0;
+    max-width: 42rem;
+  }
+
+  .tok-blog-series-kicker {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .tok-blog-series-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.18;
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-blog-series-subtitle {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: color-mix(in srgb, var(--tok-teal-dim) 88%, var(--tok-text-dark));
+  }
+
+  .tok-blog-series-intro {
+    margin: 0 0 1.5rem;
+    font-size: 1.06rem;
+    line-height: 1.75;
+  }
+
+  .tok-blog-series-prose {
+    font-size: 1.04rem;
+  }
+
+  .tok-blog-series-list {
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tok-blog-series-list-title {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.45rem;
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-blog-series-notes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: series-note;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tok-blog-series-notes__item {
+    counter-increment: series-note;
+    padding-left: 2.25rem;
+    position: relative;
+  }
+
+  .tok-blog-series-notes__item::before {
+    content: counter(series-note, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--tok-gold);
+  }
+
+  .tok-blog-series-notes__title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .tok-blog-series-notes__title a {
+    color: var(--tok-teal-dim);
+    text-decoration: none;
+  }
+
+  .tok-blog-series-notes__title a:hover {
+    color: var(--tok-teal);
+  }
+
+  .tok-blog-series-notes__desc {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    opacity: 0.92;
+  }
+
+  .tok-blog-series-empty {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .tok-blog-series-cta {
+    margin-top: 2rem;
+    padding: 1.25rem 1.15rem;
+    background: var(--tok-surface-reading-soft);
+    border-left: 3px solid var(--tok-gold);
+  }
+
+  .tok-blog-series-cta__link {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tok-teal);
+  }
+
+  .tok-blog-series-cta__link:hover {
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-blog-series-cta__hint {
+    margin: 0.45rem 0 0;
+    font-size: 0.92rem;
+    opacity: 0.85;
+  }
+
+  .tok-blog-series-footer {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+
+  .tok-blog-series-footer__def {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    opacity: 0.88;
+  }
+</style>

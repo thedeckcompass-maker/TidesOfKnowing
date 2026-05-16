@@ -1,0 +1,746 @@
+---
+/**
+ * Print-ready field guide for Reading the Grip (operational layout, not editorial article chrome).
+ */
+interface Props {
+  pageTitle: string;
+  metaDescription: string;
+  canonicalUrl: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  backHref?: string;
+  backLabel?: string;
+}
+
+const {
+  pageTitle,
+  metaDescription,
+  canonicalUrl,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  backHref,
+  backLabel,
+} = Astro.props;
+
+const img = (name: string) => `/images/blog/reading-the-grip/${name}`;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <style is:global>
+      :root {
+        --rtg-ink: var(--tok-teal-dim, #0b1f3a);
+        --rtg-mid: var(--tok-teal, #1e3a5f);
+        --rtg-gold: var(--tok-gold, #b8954a);
+        --rtg-sand: #f0ebe2;
+        --rtg-pale: #faf7f3;
+        --rtg-rule: #c8bfb0;
+        --rtg-muted: #4a4540;
+        --font-heading: var(--font-heading, "Cormorant Garamond", "Times New Roman", serif);
+        --font-body: var(--font-body, "Source Sans 3", system-ui, sans-serif);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 11pt;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-body);
+        color: var(--rtg-ink);
+        background: #e8e3db;
+        line-height: 1.45;
+      }
+
+      .rtg-guide {
+        background: var(--rtg-pale);
+        max-width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 14mm 16mm 18mm;
+      }
+
+      .rtg-guide__screen-nav {
+        margin-bottom: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .rtg-guide__screen-nav a {
+        color: var(--rtg-mid);
+      }
+
+      .rtg-guide__header {
+        border-bottom: 2px solid var(--rtg-ink);
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__kicker {
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--rtg-gold);
+        margin: 0 0 0.5rem;
+      }
+
+      .rtg-guide__title {
+        margin: 0 0 0.35rem;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-weight: 600;
+        font-size: 1.75rem;
+        line-height: 1.15;
+        color: var(--rtg-ink);
+      }
+
+      .rtg-guide__subtitle {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.9rem;
+        color: var(--rtg-muted);
+      }
+
+      .rtg-guide__principle {
+        background: var(--rtg-ink);
+        color: var(--rtg-sand);
+        padding: 1rem 1.15rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__principle-label {
+        display: block;
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--rtg-rule);
+        margin-bottom: 0.35rem;
+      }
+
+      .rtg-guide__principle p {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+
+      .rtg-guide__section-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--rtg-gold);
+        font-weight: 600;
+        margin: 0 0 0.65rem;
+      }
+
+      .rtg-guide__two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__card {
+        border-left: 3px solid var(--rtg-gold);
+        padding-left: 0.85rem;
+      }
+
+      .rtg-guide__card h3 {
+        margin: 0 0 0.35rem;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.92rem;
+        font-weight: 600;
+      }
+
+      .rtg-guide__card p {
+        margin: 0;
+        font-size: 0.78rem;
+        line-height: 1.55;
+        color: var(--rtg-muted);
+      }
+
+      .rtg-guide__step {
+        display: grid;
+        grid-template-columns: 1.75rem 1fr;
+        gap: 0.65rem;
+        margin-bottom: 1rem;
+        align-items: start;
+      }
+
+      .rtg-guide__step-num {
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--rtg-rule);
+        line-height: 1;
+      }
+
+      .rtg-guide__step h3 {
+        margin: 0 0 0.15rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+      }
+
+      .rtg-guide__step p {
+        margin: 0;
+        font-size: 0.76rem;
+        line-height: 1.55;
+        color: var(--rtg-muted);
+      }
+
+      .rtg-guide__rule {
+        border: none;
+        border-top: 1px solid var(--rtg-rule);
+        margin: 1.35rem 0;
+      }
+
+      .rtg-guide__questions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__question {
+        background: var(--rtg-sand);
+        padding: 0.65rem 0.85rem;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.76rem;
+        line-height: 1.45;
+        color: #3a342e;
+      }
+
+      .rtg-guide__distinction {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 1px solid var(--rtg-rule);
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__distinction-col {
+        padding: 0.85rem 1rem;
+      }
+
+      .rtg-guide__distinction-col:first-child {
+        border-right: 1px solid var(--rtg-rule);
+        background: #f5f1ec;
+      }
+
+      .rtg-guide__distinction-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #8a7e74;
+        margin-bottom: 0.45rem;
+      }
+
+      .rtg-guide__distinction ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .rtg-guide__distinction li {
+        position: relative;
+        padding-left: 0.85rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.76rem;
+        line-height: 1.5;
+        color: var(--rtg-muted);
+      }
+
+      .rtg-guide__distinction-col--not li::before {
+        content: "–";
+        position: absolute;
+        left: 0;
+        color: #b0a090;
+      }
+
+      .rtg-guide__distinction-col--yes li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--rtg-gold);
+      }
+
+      .rtg-guide__figure {
+        margin: 0.65rem 0 0;
+        background: var(--rtg-sand);
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      .rtg-guide__figure img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+
+      .rtg-guide__figure--pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        background: transparent;
+        padding: 0;
+      }
+
+      .rtg-guide__figure--pair .rtg-guide__figure {
+        margin: 0;
+      }
+
+      .rtg-guide__deck {
+        background: var(--rtg-sand);
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.76rem;
+        color: var(--rtg-muted);
+      }
+
+      .rtg-guide__deck strong {
+        display: block;
+        color: var(--rtg-ink);
+        font-size: 0.72rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .rtg-guide__invite {
+        background: var(--rtg-ink);
+        color: var(--rtg-sand);
+        padding: 1.15rem 1.35rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .rtg-guide__invite-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--rtg-rule);
+        margin-bottom: 0.45rem;
+      }
+
+      .rtg-guide__invite p {
+        margin: 0 0 0.65rem;
+        font-size: 0.78rem;
+        line-height: 1.55;
+      }
+
+      .rtg-guide__invite p:first-of-type {
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.9rem;
+      }
+
+      .rtg-guide__invite a {
+        color: var(--rtg-sand);
+        font-weight: 600;
+      }
+
+      .rtg-guide__footer {
+        border-top: 1px solid var(--rtg-rule);
+        padding-top: 0.85rem;
+        text-align: right;
+      }
+
+      .rtg-guide__footer p {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 0.72rem;
+        color: #9a9088;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 600px) {
+        .rtg-guide__two-col,
+        .rtg-guide__questions,
+        .rtg-guide__distinction,
+        .rtg-guide__figure--pair {
+          grid-template-columns: 1fr;
+        }
+
+        .rtg-guide__distinction-col:first-child {
+          border-right: none;
+          border-bottom: 1px solid var(--rtg-rule);
+        }
+      }
+
+      @media print {
+        .rtg-guide__screen-nav {
+          display: none !important;
+        }
+
+        body {
+          background: #fff;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 12mm 14mm;
+        }
+
+        .rtg-guide {
+          max-width: none;
+          min-height: auto;
+          padding: 0;
+          box-shadow: none;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="rtg-guide">
+      {
+        backHref && backLabel ? (
+          <p class="rtg-guide__screen-nav">
+            <a href={backHref}>← {backLabel}</a>
+          </p>
+        ) : null
+      }
+
+      <header class="rtg-guide__header">
+        <p class="rtg-guide__kicker">Tides of Knowing: Reader's Field Guide</p>
+        <h1 class="rtg-guide__title">Reading the Grip</h1>
+        <p class="rtg-guide__subtitle">
+          When a seeker is holding tight to outcomes: a framework for the session
+        </p>
+      </header>
+
+      <section class="rtg-guide__principle" aria-labelledby="rtg-core-label">
+        <span id="rtg-core-label" class="rtg-guide__principle-label">The core observation</span>
+        <p>
+          When a seeker assigns life-or-death importance to a specific outcome, they create the
+          very contraction that makes the reading hardest to land. The grip is not the situation.
+          The grip is the obstacle.
+        </p>
+      </section>
+
+      <p class="rtg-guide__section-label">Step one: Recognise the signal before the session begins</p>
+      <div class="rtg-guide__two-col">
+        <div class="rtg-guide__card">
+          <h3>In the seeker's initial contact</h3>
+          <p>
+            Language tumbling over itself. Urgency. Words like "ultimate," "destroyed,"
+            "everything." The weight of a situation that has become life-or-death in their
+            framing. You'll sense it before you've analysed it.
+          </p>
+        </div>
+        <div class="rtg-guide__card">
+          <h3>In the session with the seeker</h3>
+          <p>
+            They're auditing the cards for confirmation rather than receiving them. Questions
+            that circle the same outcome. Resistance to anything that doesn't match the feared or
+            hoped-for result.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">Step two: Orient yourself before you begin</p>
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">1</span>
+        <div>
+          <h3>Pull a few cards for yourself: not the seeker</h3>
+          <p>
+            Not to preview their outcome. To know what you're working with so you can make
+            deliberate choices about how to sequence and frame the reading. The chef surveys the
+            kitchen before the menu arrives.
+          </p>
+        </div>
+      </div>
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">2</span>
+        <div>
+          <h3>Ask the single most useful question</h3>
+          <p>
+            Is this person currently able to receive what the cards are showing? If not: what do
+            they need first? That answer shapes everything that follows.
+          </p>
+        </div>
+      </div>
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">3</span>
+        <div>
+          <h3>Use the technology if you have it</h3>
+          <p>
+            Recording a reading gives you space that live sessions don't. You can pause,
+            reflect, restructure. Use that time deliberately. You're not obligated to deliver in a
+            single unbroken stream.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">Step three: Language that loosens the grip</p>
+      <div class="rtg-guide__questions">
+        <p class="rtg-guide__question">
+          What if the situation is moving somewhere you haven't considered yet?
+        </p>
+        <p class="rtg-guide__question">
+          The cards aren't showing the outcome you're bracing for. They're showing something
+          forming behind it. Can we look at that together?
+        </p>
+        <p class="rtg-guide__question">
+          What would it feel like to hold this more lightly: not give up on it, just carry it
+          differently?
+        </p>
+        <p class="rtg-guide__question">
+          The grip itself is information. What does it tell you about what you most need to trust
+          right now?
+        </p>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">
+        The distinction that matters: delivery is not performance
+      </p>
+      <div class="rtg-guide__distinction">
+        <div class="rtg-guide__distinction-col rtg-guide__distinction-col--not">
+          <p class="rtg-guide__distinction-label">Performance looks like</p>
+          <ul>
+            <li>Filling the time because the time is there</li>
+            <li>Pulling more cards to demonstrate depth</li>
+            <li>Covering everything so you feel adequate</li>
+            <li>Delivering for the impression it creates</li>
+          </ul>
+        </div>
+        <div class="rtg-guide__distinction-col rtg-guide__distinction-col--yes">
+          <p class="rtg-guide__distinction-label">Delivery looks like</p>
+          <ul>
+            <li>Thinking about how to hand it over usefully</li>
+            <li>Creating conditions for the reading to land</li>
+            <li>Giving the seeker something they can use</li>
+            <li>Knowing when sitting with someone is enough</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="rtg-guide__section-label">What a well-anchored reading leaves behind</p>
+      <div class="rtg-guide__two-col">
+        <div class="rtg-guide__card">
+          <h3>An orientation, not just information</h3>
+          <p>
+            They understand not just what the cards showed, but why they found it hard to receive.
+            The grip itself becomes part of what they learn from.
+          </p>
+        </div>
+        <div class="rtg-guide__card">
+          <h3>A tool they can return to</h3>
+          <p>
+            Something they can use in the weeks ahead: a way of understanding their own
+            relationship to the outcome that gives them somewhere to stand when the ground shifts
+            again.
+          </p>
+        </div>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">The reading in practice</p>
+      <p style="font-size:0.78rem;line-height:1.6;color:var(--rtg-muted);margin:0 0 1.25rem;">
+        What follows is the actual reading delivered for this series. The spread layout, card
+        selection, and positional intent are shown step by step. No interpretation is provided.
+        That is your work. Use this as a practical exercise then share your insights using the
+        invitation below.
+      </p>
+
+      <p class="rtg-guide__section-label">Pre-Read Orientation: Before the Session</p>
+      <p style="font-size:0.76rem;line-height:1.55;color:var(--rtg-muted);margin:0 0 0.75rem;">
+        Pulled by the reader before the session begins. Not part of the reading delivered to the
+        seeker. Purpose: to orient the reader to the energetic conditions and verify the signal.
+      </p>
+      <div class="rtg-guide__deck">
+        <strong>Sacred Symbols Oracle by Marcella Kroll</strong>
+        Good Fortune (13) · Karmic Path (08) · Affluence (05)
+      </div>
+      <div class="rtg-guide__deck">
+        <strong>Alchemical Tarot Renewed by Robert M. Place</strong>
+        Four of Wands
+      </div>
+      <div class="rtg-guide__figure--pair">
+        <figure class="rtg-guide__figure">
+          <img
+            src={img("preread-oracle.jpg")}
+            alt="Pre-read oracle cards: Good Fortune, Karmic Path, Affluence"
+            width="400"
+            height="300"
+            loading="lazy"
+          />
+        </figure>
+        <figure class="rtg-guide__figure">
+          <img
+            src={img("preread-tarot.jpg")}
+            alt="Pre-read tarot card: Four of Wands"
+            width="400"
+            height="300"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">The Full Spread: Overview</p>
+      <p style="font-size:0.76rem;line-height:1.55;color:var(--rtg-muted);margin:0 0 0.75rem;">
+        All tarot cards from the Alchemical Tarot Renewed by Robert M. Place. Bridge oracle from
+        Wisdom of the Oracle pocket edition by Colette Baron-Reid. Study the layout before reading
+        the positional notes below.
+      </p>
+      <figure class="rtg-guide__figure">
+        <img
+          src={img("full-spread-overview.jpg")}
+          alt="Full tarot spread overview for Reading the Grip"
+          width="1200"
+          height="800"
+          loading="lazy"
+        />
+      </figure>
+
+      <hr class="rtg-guide__rule" />
+
+      <p class="rtg-guide__section-label">The spread: position by position</p>
+
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">1</span>
+        <div>
+          <h3>Anchor: Three of Swords</h3>
+          <p>
+            The central card. Named hurts. What is known and acknowledged. This card sets the
+            energetic starting point of the reading: what is already on the table between reader
+            and seeker.
+          </p>
+          <figure class="rtg-guide__figure">
+            <img src={img("spread-anchor.jpg")} alt="Spread anchor: Three of Swords" width="600" height="400" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">2</span>
+        <div>
+          <h3>Left: The Relationship and The Betrayal</h3>
+          <p>Knight of Swords · Queen of Swords · Ten of Swords</p>
+          <p>
+            Asked to show the relational dynamic the seeker was navigating: specifically the
+            experience of betrayal she had described. What does the energy of this relationship
+            look like?
+          </p>
+          <figure class="rtg-guide__figure">
+            <img src={img("spread-left.jpg")} alt="Spread left: Knight, Queen, Ten of Swords" width="600" height="400" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">3</span>
+        <div>
+          <h3>Right: Family and Other Relationships</h3>
+          <p>Eight of Swords · Ace of Wands · Nine of Pentacles</p>
+          <p>
+            Asked to show the familial landscape alongside the primary situation. What conditions
+            and opportunities exist in that broader relational space?
+          </p>
+          <figure class="rtg-guide__figure">
+            <img src={img("spread-right.jpg")} alt="Spread right: Eight of Swords, Ace of Wands, Nine of Pentacles" width="600" height="400" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">4</span>
+        <div>
+          <h3>Base: The Seeker's Current State and Resources</h3>
+          <p>Ten of Wands · Queen of Coins (reversed) · Strength</p>
+          <p>
+            Asked to show the seeker herself: her current energetic state, her personal resources,
+            what she is carrying into this situation. This is her foundation. What does it tell
+            you?
+          </p>
+          <figure class="rtg-guide__figure">
+            <img src={img("spread-base.jpg")} alt="Spread base: Ten of Wands, Queen of Coins, Strength" width="600" height="400" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="rtg-guide__step">
+        <span class="rtg-guide__step-num">5</span>
+        <div>
+          <h3>Bridge: The Opportunity</h3>
+          <p>Wisdom of the Oracle pocket edition by Colette Baron-Reid</p>
+          <p>By the Book · Breathe (reversed) · The Fates</p>
+          <p>
+            Asked to bridge what the tarot was showing with the opportunity available to the
+            seeker. Not what she needs to do, but what is possible from where she is standing. Where
+            is the opening?
+          </p>
+          <figure class="rtg-guide__figure">
+            <img src={img("spread-bridge.jpg")} alt="Spread bridge: By the Book, Breathe, The Fates" width="600" height="400" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+
+      <hr class="rtg-guide__rule" />
+
+      <section class="rtg-guide__invite" aria-labelledby="rtg-invite-label">
+        <p id="rtg-invite-label" class="rtg-guide__invite-label">Practitioner Invitation</p>
+        <p>The spread and positional intent are above. The interpretation is yours to work with.</p>
+        <p>
+          How would you navigate this reading? What would you prioritise? How would you use the
+          loosen-the-grip framework to bridge the gap between where this seeker was sitting and what
+          the cards were showing her? What do you see as the opportunity in this spread?
+        </p>
+        <p>
+          Share your insights with Leigh at <a href="mailto:leigh@tidesofknowing.com">leigh@tidesofknowing.com</a>
+        </p>
+      </section>
+
+      <footer class="rtg-guide__footer">
+        <p>
+          Structure is what makes intuition deliverable.<br />
+          The COMPASS Method™ · tidesofknowing.com
+        </p>
+      </footer>
+    </article>
+  </body>
+</html>

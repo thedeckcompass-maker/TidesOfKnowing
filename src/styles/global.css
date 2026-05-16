@@ -82,6 +82,19 @@ a:focus-visible {
   margin-inline: auto;
 }
 
+/* Field Notes library grids — grid items default to min-width:auto (MailerLite min-content) */
+.tok-blog-index-grid,
+.tok-blog-post-grid,
+.tok-blog-series-grid {
+  min-width: 0;
+}
+
+.tok-blog-index-grid > *,
+.tok-blog-post-grid > *,
+.tok-blog-series-grid > * {
+  min-width: 0;
+}
+
 /* --- Long-form article prose (editorial column) --- */
 .article-prose {
   font-size: 1rem;
@@ -301,7 +314,34 @@ a:focus-visible {
   font-weight: 600;
 }
 
-/* --- MailerLite embedded form (/subscribe) — align with ToK tokens --- */
+/* --- MailerLite embedded form — sidebar + /subscribe --- */
+.tok-blog-sidebar__form.ml-embedded {
+  display: flow-root;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.tok-blog-sidebar__form.ml-embedded .ml-form-embedContainer,
+.tok-blog-sidebar__form.ml-embedded .ml-form-embedWrapper,
+.tok-blog-sidebar__form.ml-embedded .ml-form-align-center,
+.tok-blog-sidebar__form.ml-embedded .ml-form-embedBody,
+.tok-blog-sidebar__form.ml-embedded .ml-form-embedContent,
+.tok-blog-sidebar__form.ml-embedded .ml-block-form {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.tok-blog-sidebar__form.ml-embedded input[type="email"],
+.tok-blog-sidebar__form.ml-embedded input[type="text"],
+.tok-blog-sidebar__form.ml-embedded button,
+.tok-blog-sidebar__form.ml-embedded input[type="submit"] {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
 .tok-subscribe .ml-embedded,
 .tok-subscribe .ml-embedded * {
   box-sizing: border-box;

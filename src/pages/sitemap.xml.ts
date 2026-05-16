@@ -2,6 +2,14 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { slugify } from "../utils/slugify";
 import { blogCategoryIndex } from "../lib/blogCategories";
+import {
+  fieldNoteSlugFromEntry,
+  getSeriesEntries,
+  getSeriesFieldNotes,
+  getStandaloneFieldNotes,
+  seriesSlugFromEntry,
+  standaloneSlugFromEntry,
+} from "../lib/blogFieldNotes";
 import { LIBRARY_PER_PAGE, totalPages } from "../lib/libraryPagination";
 import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
 
@@ -105,7 +113,9 @@ export const GET: APIRoute = async () => {
     rows.push({ path: `/tags/${t}/`, changefreq: "monthly", priority: "0.6" });
   }
 
-  for (const c of blogCategoryIndex(blog)) {
+  const standaloneBlog = getStandaloneFieldNotes(blog);
+
+  for (const c of blogCategoryIndex(standaloneBlog)) {
     rows.push({
       path: `/blog/category/${c.slug}/`,
       changefreq: "weekly",
@@ -113,13 +123,31 @@ export const GET: APIRoute = async () => {
     });
   }
 
-  for (const post of blog) {
-    const slug = post.slug ?? post.id;
+  for (const post of standaloneBlog) {
+    const slug = standaloneSlugFromEntry(post);
     rows.push({
       path: `/blog/${slug}/`,
       changefreq: "monthly",
       priority: "0.65",
     });
+  }
+
+  for (const series of getSeriesEntries(blog)) {
+    const seriesSlug = seriesSlugFromEntry(series);
+    if (!seriesSlug) continue;
+    rows.push({
+      path: `/blog/${seriesSlug}/`,
+      changefreq: "monthly",
+      priority: "0.68",
+    });
+    for (const note of getSeriesFieldNotes(blog, seriesSlug)) {
+      const noteSlug = fieldNoteSlugFromEntry(note);
+      rows.push({
+        path: `/blog/${seriesSlug}/${noteSlug}/`,
+        changefreq: "monthly",
+        priority: "0.64",
+      });
+    }
   }
 
   const seen = new Map<string, Row>();

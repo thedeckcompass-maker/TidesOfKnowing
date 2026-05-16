@@ -1,0 +1,99 @@
+---
+import { getCollection, render } from "astro:content";
+import SeriesFieldNoteLayout from "../../../layouts/SeriesFieldNoteLayout.astro";
+import {
+  blogCategoryIndex,
+  blogCategoryLabel,
+  blogCategorySlugFromLabel,
+} from "../../../lib/blogCategories";
+import {
+  fieldNoteSlugFromEntry,
+  findSeriesEntry,
+  findSeriesFieldNote,
+  getSeriesFieldNotes,
+  seriesCheatSheetPath,
+  seriesHasCheatSheet,
+} from "../../../lib/blogFieldNotes";
+import { resolveBlogSeo } from "../../../lib/blogSeo";
+import { estimateReadingMinutes } from "../../../lib/readingTime";
+import { siteBase } from "../../../lib/site";
+
+const seriesSlug = Astro.params.seriesSlug;
+const noteSlug = Astro.params.noteSlug;
+
+if (!seriesSlug || !noteSlug || noteSlug === "cheat-sheet") {
+  return Astro.redirect("/blog/");
+}
+
+const allEntries = await getCollection("blog");
+const series = findSeriesEntry(allEntries, seriesSlug);
+const post = findSeriesFieldNote(allEntries, seriesSlug, noteSlug);
+
+if (!series || !post) {
+  return Astro.redirect("/blog/");
+}
+
+const seriesNotes = getSeriesFieldNotes(allEntries, seriesSlug);
+const idx = seriesNotes.findIndex((n) => fieldNoteSlugFromEntry(n) === noteSlug);
+const prevNote =
+  idx > 0
+    ? {
+        slug: fieldNoteSlugFromEntry(seriesNotes[idx - 1]),
+        title: seriesNotes[idx - 1].data.title,
+      }
+    : null;
+const nextNote =
+  idx >= 0 && idx < seriesNotes.length - 1
+    ? {
+        slug: fieldNoteSlugFromEntry(seriesNotes[idx + 1]),
+        title: seriesNotes[idx + 1].data.title,
+      }
+    : null;
+
+const rendered = await render(post);
+const { Content } = rendered;
+const body = post.body ?? "";
+const readingMinutes = post.data.readingTime ?? estimateReadingMinutes(body);
+
+const base = siteBase(Astro);
+const defaultOg = new URL("/favicon.svg", base).href;
+const ogUrl = new URL(`/blog/${seriesSlug}/${noteSlug}/`, base).href;
+const seo = resolveBlogSeo({ entry: post, pageUrl: ogUrl, baseHref: base.href, defaultOgImage: defaultOg });
+
+const categoryLabel = blogCategoryLabel(post);
+const categorySlug = blogCategorySlugFromLabel(categoryLabel);
+const sidebarCategories = blogCategoryIndex(
+  allEntries.filter((e) => e.data.type === "field-note" && !e.data.seriesSlug),
+);
+
+const cheatSheetHref = seriesHasCheatSheet(allEntries, seriesSlug)
+  ? seriesCheatSheetPath(seriesSlug)
+  : null;
+
+const isoDate = post.data.date.toISOString();
+const displayDate = post.data.date.toLocaleDateString("en-AU", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<SeriesFieldNoteLayout
+  seo={seo}
+  headline={post.data.title}
+  seriesTitle={series.data.title}
+  seriesSlug={seriesSlug}
+  positioningSentence={post.data.positioningSentence}
+  readingMinutes={readingMinutes}
+  categoryLabel={categoryLabel}
+  categorySlug={categorySlug}
+  articleTags={post.data.tags}
+  sidebarCategories={sidebarCategories}
+  prevNote={prevNote}
+  nextNote={nextNote}
+  cheatSheetHref={cheatSheetHref}
+  displayDate={displayDate}
+  isoDate={isoDate}
+>
+  <Content />
+</SeriesFieldNoteLayout>

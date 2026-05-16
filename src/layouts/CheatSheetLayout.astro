@@ -1,0 +1,255 @@
+---
+/**
+ * Standalone print-ready cheat sheet — no site chrome, embedded print CSS.
+ */
+import { resolveBlogSeo } from "../lib/blogSeo";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+  pageUrl: string;
+  baseHref: string;
+  defaultOgImage: string;
+  backHref?: string;
+  backLabel?: string;
+}
+
+const { entry, pageUrl, baseHref, defaultOgImage, backHref, backLabel } =
+  Astro.props;
+
+const seo = resolveBlogSeo({
+  entry,
+  pageUrl,
+  baseHref,
+  defaultOgImage,
+  titleSuffix: "Cheat sheet | Tides of Knowing",
+});
+
+const { title, corePrinciple, distinction, cheatSheetFooter } = entry.data;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.pageTitle}</title>
+    <meta name="description" content={seo.metaDescription} />
+    <link rel="canonical" href={seo.ogUrl} />
+    <meta property="og:title" content={seo.ogTitle} />
+    <meta property="og:description" content={seo.ogDescription} />
+    <meta property="og:url" content={seo.ogUrl} />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content={seo.ogImageAbsolute} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={seo.ogTitle} />
+    <meta name="twitter:description" content={seo.ogDescription} />
+    <style is:global>
+      :root {
+        --tok-teal-dim: #0b1f3a;
+        --tok-teal: #1e3a5f;
+        --tok-gold: #b8954a;
+        --tok-text: #1a1a1a;
+        --tok-muted: #4a4a4a;
+        --font-heading: "Cormorant Garamond", "Times New Roman", serif;
+        --font-body: "Source Sans 3", system-ui, sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 11pt;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-body);
+        color: var(--tok-text);
+        background: #fff;
+        line-height: 1.45;
+      }
+
+      .tok-cheat-sheet {
+        max-width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        padding: 14mm 16mm 18mm;
+      }
+
+      .tok-cheat-sheet__screen-nav {
+        margin-bottom: 1rem;
+        font-size: 0.75rem;
+      }
+
+      .tok-cheat-sheet__screen-nav a {
+        color: var(--tok-teal);
+      }
+
+      .tok-cheat-sheet__header {
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--tok-gold);
+      }
+
+      .tok-cheat-sheet__title {
+        margin: 0;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-weight: 600;
+        font-size: 1.65rem;
+        line-height: 1.2;
+        color: var(--tok-teal-dim);
+      }
+
+      .tok-cheat-sheet__principle {
+        margin: 0 0 1.15rem;
+        padding: 0.65rem 0.75rem;
+        background: #f6f4ef;
+        border-left: 3px solid var(--tok-gold);
+        font-size: 0.95rem;
+      }
+
+      .tok-cheat-sheet__principle-label {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--tok-gold);
+      }
+
+      .tok-cheat-sheet__steps {
+        margin-bottom: 1rem;
+      }
+
+      .tok-cheat-sheet__steps :is(h2, h3) {
+        margin: 0.85rem 0 0.35rem;
+        font-family: var(--font-heading);
+        font-style: italic;
+        font-size: 1.05rem;
+        color: var(--tok-teal-dim);
+      }
+
+      .tok-cheat-sheet__steps :is(p, ul, ol) {
+        margin: 0 0 0.5rem;
+        font-size: 0.92rem;
+      }
+
+      .tok-cheat-sheet__steps ul,
+      .tok-cheat-sheet__steps ol {
+        padding-left: 1.15rem;
+      }
+
+      .tok-cheat-sheet__distinction {
+        margin: 1rem 0;
+        padding: 0.6rem 0.7rem;
+        border: 1px solid color-mix(in srgb, var(--tok-teal) 25%, transparent);
+        font-size: 0.88rem;
+      }
+
+      .tok-cheat-sheet__distinction-label {
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--tok-teal);
+      }
+
+      .tok-cheat-sheet__footer {
+        margin-top: 1.25rem;
+        padding-top: 0.65rem;
+        border-top: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
+        font-size: 0.78rem;
+        color: var(--tok-muted);
+      }
+
+      @media print {
+        .tok-cheat-sheet__screen-nav {
+          display: none !important;
+        }
+
+        body {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 12mm 14mm;
+        }
+
+        .tok-cheat-sheet {
+          max-width: none;
+          min-height: auto;
+          padding: 0;
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <article class="tok-cheat-sheet">
+      {
+        backHref && backLabel ? (
+          <p class="tok-cheat-sheet__screen-nav">
+            <a href={backHref}>← {backLabel}</a>
+          </p>
+        ) : null
+      }
+
+      <header class="tok-cheat-sheet__header">
+        <h1 class="tok-cheat-sheet__title">{title}</h1>
+      </header>
+
+      {
+        corePrinciple ? (
+          <section class="tok-cheat-sheet__principle" aria-labelledby="cheat-principle-label">
+            <span id="cheat-principle-label" class="tok-cheat-sheet__principle-label">
+              Core principle
+            </span>
+            <p>{corePrinciple}</p>
+          </section>
+        ) : null
+      }
+
+      <section class="tok-cheat-sheet__steps" aria-label="Steps">
+        <slot />
+      </section>
+
+      {
+        distinction ? (
+          <section class="tok-cheat-sheet__distinction" aria-labelledby="cheat-distinction-label">
+            <span id="cheat-distinction-label" class="tok-cheat-sheet__distinction-label">
+              Distinction
+            </span>
+            <p>{distinction}</p>
+          </section>
+        ) : null
+      }
+
+      {
+        cheatSheetFooter ? (
+          <footer class="tok-cheat-sheet__footer">
+            <p>{cheatSheetFooter}</p>
+          </footer>
+        ) : (
+          <footer class="tok-cheat-sheet__footer">
+            <p>Tides of Knowing — tidesofknowing.com</p>
+          </footer>
+        )
+      }
+    </article>
+  </body>
+</html>

@@ -1,8 +1,11 @@
 ---
-title: "Ethics, lineage, and the long view"
+type: field-note
+fieldNoteKind: foundational
+title: "Ethics, Lineage, and the Long View"
 description: "Leigh Spencer situates intuitive tarot in history and whakapapa, defines a modest ethical frame for readers and teachers, and clarifies how public articles and The Deck Compass classroom can share one standard across different containers."
 date: 2026-04-11
-category: "Ethics"
+modifiedDate: 2026-04-11
+category: "Field Notes"
 tags:
   - tarot-ethics
   - lineage
@@ -10,6 +13,10 @@ tags:
   - the-deck-compass
 draft: false
 featured: false
+metaTitle: "Ethics, Lineage, and the Long View | Field Notes | Tides of Knowing"
+metaDescription: "Situating intuitive tarot in history and whakapapa, with a modest ethical frame for readers, teachers, and public writing."
+ogTitle: "Ethics, Lineage, and the Long View | Field Notes | Tides of Knowing"
+ogDescription: "On lineage, humility, and shared standards across public articles and The Deck Compass classroom."
 ---
 
 Tarot does not float above history. The images carry aesthetic lineages, esoteric arguments, colonial entanglements, and living communities who kept practice alive through censorship, ridicule, and revival. Acknowledging that inheritance is not an exercise in guilt. It is a way to read with wider eyes and lighter hands. When we know where a symbol came from, we are less likely to weaponise it, or to mistake private projection for ancient authority. Writing that has room to breathe can name teachers, credit sources, and point to primary texts when a claim is not purely experiential. That matters if we want the craft to mature in public.

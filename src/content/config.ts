@@ -1,21 +1,102 @@
 import { z } from "astro:content";
 
-/** Blog collection (public label: Field Notes) — used by `src/content.config.ts`. */
-export const blogSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  date: z.coerce.date(),
-  /** Broad bucket for Field Notes (e.g. Announcements, Reflections, Site updates). */
-  category: z.string().optional(),
-  tags: z.array(z.string()),
-  draft: z.boolean().default(false),
-  /** Optional image for Open Graph only; not shown as a full-width cover on Field Notes posts. */
-  heroImage: z.string().optional(),
-  heroImageAlt: z.string().optional(),
-  heroCaption: z.string().optional(),
-  readingTime: z.number().optional(),
-  featured: z.boolean().default(false),
+const blogSeoFields = z.object({
+  /** Overrides `<title>` when set. */
+  metaTitle: z.string().optional(),
+  /** Overrides meta description when set. */
+  metaDescription: z.string().optional(),
+  ogTitle: z.string().optional(),
+  ogDescription: z.string().optional(),
+  /** Open Graph / Twitter image (absolute or site-root path). Falls back to `heroImage`. */
+  ogImage: z.string().optional(),
 });
+
+const blogDates = z.object({
+  /** Published date (required for series and field notes). */
+  date: z.coerce.date(),
+  /** Last modified; falls back to `date` in templates when omitted. */
+  modifiedDate: z.coerce.date().optional(),
+});
+
+/**
+ * Field Notes collection (`blog`) — supports standalone posts, series, nested notes, and cheat sheets.
+ * Omit `type` on legacy posts; they are treated as standalone field notes.
+ */
+export const blogSchema = z
+  .object({
+    type: z.enum(["series", "field-note", "cheat-sheet"]).default("field-note"),
+    title: z.string(),
+    /** Short summary / meta description (required for series and field notes). */
+    description: z.string().optional(),
+    subtitle: z.string().optional(),
+    /** URL segment for a series landing page (`/blog/[seriesSlug]/`). */
+    seriesSlug: z.string().optional(),
+    /**
+     * URL segment for a note inside a series (`/blog/[seriesSlug]/[fieldNoteSlug]/`).
+     * When omitted, derived from the markdown file name in a series folder.
+     */
+    fieldNoteSlug: z.string().optional(),
+    /** Order within a series (lower first). */
+    order: z.number().optional(),
+    category: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+    cheatSheetAvailable: z.boolean().default(false),
+    /** Optional one-line positioning line (series field notes). */
+    positioningSentence: z.string().optional(),
+    /** Cheat sheet blocks (optional; body markdown may also carry steps). */
+    corePrinciple: z.string().optional(),
+    distinction: z.string().optional(),
+    cheatSheetFooter: z.string().optional(),
+    heroImage: z.string().optional(),
+    heroImageAlt: z.string().optional(),
+    heroCaption: z.string().optional(),
+    readingTime: z.number().optional(),
+    featured: z.boolean().default(false),
+    /** Standalone archive notes: slower, conceptual Field Notes (not series or practitioner walkthroughs). */
+    fieldNoteKind: z.enum(["foundational"]).optional(),
+  })
+  .merge(blogSeoFields)
+  .merge(blogDates)
+  .superRefine((data, ctx) => {
+    if (data.type === "series") {
+      if (!data.seriesSlug?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "seriesSlug is required when type is series",
+          path: ["seriesSlug"],
+        });
+      }
+      if (!data.description?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "description is required when type is series",
+          path: ["description"],
+        });
+      }
+    }
+    if (data.type === "field-note") {
+      if (!data.description?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "description is required when type is field-note",
+          path: ["description"],
+        });
+      }
+    }
+    if (data.type === "cheat-sheet") {
+      const hasSeries = Boolean(data.seriesSlug?.trim());
+      const hasParent = Boolean(data.fieldNoteSlug?.trim());
+      if (!hasSeries && !hasParent) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message:
+            "cheat-sheet requires seriesSlug (series cheat sheet) or fieldNoteSlug (standalone note cheat sheet)",
+          path: ["seriesSlug"],
+        });
+      }
+    }
+  });
 
 /** Long-form articles under `/articles/[slug]/` — used by `src/content.config.ts`. */
 export const articlesSchema = z.object({

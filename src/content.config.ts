@@ -1,4 +1,3 @@
-import { basename } from "node:path";
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { articlesSchema, blogSchema } from "./content/config";
@@ -11,8 +10,11 @@ const blog = defineCollection({
   loader: glob({
     pattern: "**/*.md",
     base: blogBase,
-    /** One id per file stem; avoids glob-loader duplicate-id noise if paths vary by separator. */
-    generateId: ({ entry }) => basename(entry, ".md"),
+    /**
+     * Stable ids from relative paths (e.g. `my-series/note-one`, `welcome-to-tides-of-knowing`).
+     * Enables nested series folders without stem collisions.
+     */
+    generateId: ({ entry }) => entry.replace(/\.md$/i, "").replace(/\\/g, "/"),
   }),
   schema: blogSchema,
 });

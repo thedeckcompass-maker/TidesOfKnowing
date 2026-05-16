@@ -1,13 +1,20 @@
 ---
-title: "The origin of the COMPASS Method"
+type: field-note
+fieldNoteKind: foundational
+title: "The Origin of The COMPASS Method™"
 description: "Leigh Spencer reflects on how the COMPASS Method emerged over decades of intuitive reading practice, and why attention, not knowledge, became the defining factor in clarity."
 date: 2026-04-12
-category: "Announcements"
+modifiedDate: 2026-04-12
+category: "Field Notes"
 tags:
   - compass-method
   - intuitive-reading
   - reader-development
 draft: false
+metaTitle: "The Origin of The COMPASS Method™ | Field Notes | Tides of Knowing"
+metaDescription: "How The COMPASS Method™ emerged from decades of intuitive reading practice, and why attention became the defining factor in interpretive clarity."
+ogTitle: "The Origin of The COMPASS Method™ | Field Notes | Tides of Knowing"
+ogDescription: "A foundational reflection on how The COMPASS Method™ took shape through practice, not theory alone."
 ---
 
 I've been reading cards for more than 40 years.

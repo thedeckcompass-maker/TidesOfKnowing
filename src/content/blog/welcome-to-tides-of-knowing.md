@@ -1,14 +1,21 @@
 ---
+type: field-note
+fieldNoteKind: foundational
 title: "Welcome to Tides of Knowing"
 description: "Leigh Spencer introduces Tides of Knowing and The Deck Compass, explains how methodology articles differ from this journal, and argues that structure helps intuitive tarot readers stay precise without losing warmth."
 date: 2026-04-05
-category: "Announcements"
+modifiedDate: 2026-04-05
+category: "Field Notes"
 tags:
   - tides-of-knowing
   - intuitive-tarot
   - the-deck-compass
 draft: false
 featured: true
+metaTitle: "Welcome to Tides of Knowing | Field Notes | Tides of Knowing"
+metaDescription: "Leigh Spencer introduces Tides of Knowing, The Deck Compass, and how Field Notes relate to the methodology articles on this site."
+ogTitle: "Welcome to Tides of Knowing | Field Notes | Tides of Knowing"
+ogDescription: "An introduction to Tides of Knowing, The Deck Compass, and the role of Field Notes alongside long-form methodology writing."
 ---
 
 If you have carried a deck for more than a season, you already know intuitive tarot is not a party trick. It is a discipline of attention: staying with an image until it yields something truer than your first association. The [methodology articles](/articles/) here are for readers who treat the cards as a conversation, not a verdict machine. They will grow into essays, exercises, and arguments worth revisiting when the world is loud and your practice feels thin.

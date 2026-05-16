@@ -91,6 +91,7 @@
   --bp-sm: 720px; /* brand icon tighten */
   --bp-md: 768px; /* article prose scale */
   --bp-blog-sticky: 960px; /* Field Notes sidebar */
+  --tok-blog-sidebar-max: 21.5rem; /* ~344px; MailerLite newsletter embed minimum */
   --bp-nav: 900px; /* mobile nav drawer */
   --bp-nav-min: 901px;
   --bp-lg: 1024px; /* article share sidebar */

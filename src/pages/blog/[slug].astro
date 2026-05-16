@@ -1,86 +1,220 @@
 ---
-/** Single Field Note — public label "Field Notes"; route `/blog/[slug]/` retained for compatibility. */
+/**
+ * Single-segment Field Notes routes:
+ * - Standalone field notes: `/blog/[slug]/`
+ * - Series landing pages: `/blog/[series-slug]/` (when slug matches a series entry)
+ */
 import { getCollection, render } from "astro:content";
 import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+import FieldNoteSeriesLayout from "../../layouts/FieldNoteSeriesLayout.astro";
 import { getRelatedForSlug } from "../../data/relatedPosts";
-import { estimateReadingMinutes } from "../../lib/readingTime";
-import { siteBase } from "../../lib/site";
 import {
   blogCategoryIndex,
   blogCategoryLabel,
   blogCategorySlugFromLabel,
 } from "../../lib/blogCategories";
+import {
+  fieldNoteSlugFromEntry,
+  findSeriesEntry,
+  findStandaloneFieldNote,
+  getSeriesFieldNotes,
+  isFoundationalFieldNote,
+  isSeriesEntry,
+  seriesCheatSheetPath,
+  seriesHasCheatSheet,
+  standaloneSlugFromEntry,
+} from "../../lib/blogFieldNotes";
+import { resolveBlogSeo } from "../../lib/blogSeo";
+import { estimateReadingMinutes } from "../../lib/readingTime";
+import { siteBase } from "../../lib/site";
 
 const paramSlug = Astro.params.slug;
 if (!paramSlug) {
   return Astro.redirect("/blog/");
 }
 
-const allPosts = await getCollection("blog", ({ data }) => !data.draft);
-const post = allPosts.find((p) => (p.slug ?? p.id) === paramSlug);
+const allEntries = await getCollection("blog");
+const published = allEntries.filter((e) => !e.data.draft);
 
-if (!post) {
+const series = findSeriesEntry(allEntries, paramSlug);
+const seriesSlug = paramSlug;
+
+let seriesView: {
+  series: NonNullable<typeof series>;
+  notes: { slug: string; title: string; description: string; order?: number }[];
+  seo: ReturnType<typeof resolveBlogSeo>;
+  cheatSheetHref: string | null;
+  sidebarCategories: ReturnType<typeof blogCategoryIndex>;
+  IntroductionContent: Awaited<ReturnType<typeof render>>["Content"];
+} | null = null;
+
+if (series) {
+  const notes = getSeriesFieldNotes(allEntries, seriesSlug).map((n) => ({
+    slug: fieldNoteSlugFromEntry(n),
+    title:
+      typeof n.data.order === "number"
+        ? `Field Note ${String(n.data.order).padStart(2, "0")} — ${n.data.title}`
+        : n.data.title,
+    description: n.data.description ?? "",
+    order: n.data.order,
+  }));
+
+  const base = siteBase(Astro);
+  const defaultOg = new URL("/favicon.svg", base).href;
+  const ogUrl = new URL(`/blog/${seriesSlug}/`, base).href;
+  const seo = resolveBlogSeo({
+    entry: series,
+    pageUrl: ogUrl,
+    baseHref: base.href,
+    defaultOgImage: defaultOg,
+    titleSuffix: "Field Notes series | Tides of Knowing",
+  });
+
+  const cheatSheetHref = seriesHasCheatSheet(allEntries, seriesSlug)
+    ? seriesCheatSheetPath(seriesSlug)
+    : null;
+
+  const sidebarCategories = blogCategoryIndex(
+    published.filter((e) => !isSeriesEntry(e) && e.data.type !== "cheat-sheet"),
+  );
+
+  const rendered = await render(series);
+  seriesView = {
+    series,
+    notes,
+    seo,
+    cheatSheetHref,
+    sidebarCategories,
+    IntroductionContent: rendered.Content,
+  };
+}
+
+const allPosts = published.filter(
+  (e) => e.data.type !== "cheat-sheet" && !isSeriesEntry(e),
+);
+const post = seriesView ? null : findStandaloneFieldNote(allEntries, paramSlug);
+
+if (!seriesView && !post) {
   return Astro.redirect("/blog/");
 }
 
-const slug = post.slug ?? post.id;
-const rendered = await render(post);
-const { Content } = rendered;
+let standaloneView: {
+  post: NonNullable<typeof post>;
+  Content: Awaited<ReturnType<typeof render>>["Content"];
+  seo: ReturnType<typeof resolveBlogSeo>;
+  readingMinutes: number;
+  slug: string;
+  related: ReturnType<typeof getRelatedForSlug>;
+  sidebarCategories: ReturnType<typeof blogCategoryIndex>;
+  categoryLabel: string;
+  categorySlug: string;
+  prevPost: { slug: string; title: string } | null;
+  nextPost: { slug: string; title: string } | null;
+  isoDate: string;
+  modifiedIso: string;
+  displayDate: string;
+} | null = null;
 
-const body = post.body ?? "";
+if (post) {
+  const slug = standaloneSlugFromEntry(post);
+  const rendered = await render(post);
+  const body = post.body ?? "";
+  const readingMinutes = post.data.readingTime ?? estimateReadingMinutes(body);
+  const base = siteBase(Astro);
+  const defaultOg = new URL("/favicon.svg", base).href;
+  const ogUrl = new URL(`/blog/${slug}/`, base).href;
+  const seo = resolveBlogSeo({
+    entry: post,
+    pageUrl: ogUrl,
+    baseHref: base.href,
+    defaultOgImage: defaultOg,
+  });
 
-const readingMinutes =
-  post.data.readingTime ?? estimateReadingMinutes(body);
+  const standaloneNotes = allPosts.filter((p) => !p.data.seriesSlug?.trim());
+  const byDateAsc = [...standaloneNotes].sort(
+    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+  );
+  const idx = byDateAsc.findIndex((p) => standaloneSlugFromEntry(p) === slug);
 
-const base = siteBase(Astro);
-const defaultOg = new URL("/favicon.svg", base).href;
-const heroImage = post.data.heroImage?.trim();
-const ogImageAbsolute = heroImage
-  ? new URL(heroImage, base).href
-  : defaultOg;
-
-const ogUrl = new URL(`/blog/${slug}/`, base).href;
-const related = getRelatedForSlug(slug);
-
-const sidebarCategories = blogCategoryIndex(allPosts);
-
-const categoryLabel = blogCategoryLabel(post);
-const categorySlug = blogCategorySlugFromLabel(categoryLabel);
-
-const byDateAsc = [...allPosts].sort(
-  (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
-);
-const idx = byDateAsc.findIndex((p) => (p.slug ?? p.id) === slug);
-const prevPost =
-  idx > 0
-    ? {
-        slug: byDateAsc[idx - 1].slug ?? byDateAsc[idx - 1].id,
-        title: byDateAsc[idx - 1].data.title,
-      }
-    : null;
-const nextPost =
-  idx >= 0 && idx < byDateAsc.length - 1
-    ? {
-        slug: byDateAsc[idx + 1].slug ?? byDateAsc[idx + 1].id,
-        title: byDateAsc[idx + 1].data.title,
-      }
-    : null;
+  standaloneView = {
+    post,
+    Content: rendered.Content,
+    seo,
+    readingMinutes,
+    slug,
+    related: getRelatedForSlug(slug),
+    sidebarCategories: blogCategoryIndex(allPosts),
+    categoryLabel: blogCategoryLabel(post),
+    categorySlug: blogCategorySlugFromLabel(blogCategoryLabel(post)),
+    prevPost:
+      idx > 0
+        ? {
+            slug: standaloneSlugFromEntry(byDateAsc[idx - 1]),
+            title: byDateAsc[idx - 1].data.title,
+          }
+        : null,
+    nextPost:
+      idx >= 0 && idx < byDateAsc.length - 1
+        ? {
+            slug: standaloneSlugFromEntry(byDateAsc[idx + 1]),
+            title: byDateAsc[idx + 1].data.title,
+          }
+        : null,
+    isoDate: post.data.date.toISOString(),
+    modifiedIso: (post.data.modifiedDate ?? post.data.date).toISOString(),
+    displayDate: post.data.date.toLocaleDateString("en-AU", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+  };
+}
 ---
 
-<BlogPostLayout
-  title={post.data.title}
-  description={post.data.description}
-  date={post.data.date}
-  readingMinutes={readingMinutes}
-  ogUrl={ogUrl}
-  ogImageAbsolute={ogImageAbsolute}
-  categoryLabel={categoryLabel}
-  categorySlug={categorySlug}
-  articleTags={post.data.tags}
-  related={related}
-  sidebarCategories={sidebarCategories}
-  prevPost={prevPost}
-  nextPost={nextPost}
->
-  <Content />
-</BlogPostLayout>
+{
+  seriesView ? (
+    <FieldNoteSeriesLayout
+      title={seriesView.series.data.title}
+      subtitle={seriesView.series.data.subtitle}
+      description={seriesView.series.data.description ?? ""}
+      seriesSlug={seriesSlug}
+      notes={seriesView.notes}
+      cheatSheetHref={seriesView.cheatSheetHref}
+      pageTitle={seriesView.seo.pageTitle}
+      metaDescription={seriesView.seo.metaDescription}
+      ogUrl={seriesView.seo.ogUrl}
+      ogImageAbsolute={seriesView.seo.ogImageAbsolute}
+      ogTitle={seriesView.seo.ogTitle}
+      ogDescription={seriesView.seo.ogDescription}
+      sidebarCategories={seriesView.sidebarCategories}
+    >
+      <seriesView.IntroductionContent slot="introduction" />
+    </FieldNoteSeriesLayout>
+  ) : standaloneView ? (
+    <BlogPostLayout
+      title={standaloneView.post.data.title}
+      description={standaloneView.seo.metaDescription}
+      date={standaloneView.post.data.date}
+      modifiedDate={standaloneView.post.data.modifiedDate}
+      readingMinutes={standaloneView.readingMinutes}
+      ogUrl={standaloneView.seo.ogUrl}
+      ogImageAbsolute={standaloneView.seo.ogImageAbsolute}
+      ogTitle={standaloneView.seo.ogTitle}
+      ogDescription={standaloneView.seo.ogDescription}
+      pageTitle={standaloneView.seo.pageTitle}
+      categoryLabel={standaloneView.categoryLabel}
+      categorySlug={standaloneView.categorySlug}
+      articleTags={standaloneView.post.data.tags}
+      related={standaloneView.related}
+      sidebarCategories={standaloneView.sidebarCategories}
+      prevPost={standaloneView.prevPost}
+      nextPost={standaloneView.nextPost}
+      datePublishedIso={standaloneView.isoDate}
+      dateModifiedIso={standaloneView.modifiedIso}
+      displayDate={standaloneView.displayDate}
+      foundational={isFoundationalFieldNote(standaloneView.post)}
+    >
+      <standaloneView.Content />
+    </BlogPostLayout>
+  ) : null
+}

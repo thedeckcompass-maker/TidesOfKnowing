@@ -1,0 +1,341 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+import BlogSidebar from "../components/BlogSidebar.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import type { BlogCategoryRow } from "../lib/blogCategories";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { blogPostingJsonLd, type BlogSeoResolved } from "../lib/blogSeo";
+import { siteBase } from "../lib/site";
+
+interface NavNote {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  seo: BlogSeoResolved;
+  headline: string;
+  seriesTitle: string;
+  seriesSlug: string;
+  positioningSentence?: string;
+  readingMinutes: number;
+  categoryLabel: string;
+  categorySlug: string;
+  articleTags: string[];
+  sidebarCategories: BlogCategoryRow[];
+  prevNote: NavNote | null;
+  nextNote: NavNote | null;
+  cheatSheetHref: string | null;
+  displayDate: string;
+  isoDate: string;
+}
+
+const {
+  seo,
+  headline,
+  seriesTitle,
+  seriesSlug,
+  positioningSentence,
+  readingMinutes,
+  categoryLabel,
+  categorySlug,
+  articleTags,
+  sidebarCategories,
+  prevNote,
+  nextNote,
+  cheatSheetHref,
+  displayDate,
+  isoDate,
+} = Astro.props;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: seriesTitle, url: `/blog/${seriesSlug}/` },
+  { label: headline, url: null },
+];
+
+const blogPostingLd = blogPostingJsonLd(seo, {
+  headline,
+  articleSection: categoryLabel,
+  keywords: articleTags.join(", "),
+});
+
+const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={seo.pageTitle}
+  description={seo.metaDescription}
+  ogUrl={seo.ogUrl}
+  ogType="article"
+  articlePublishedTime={seo.datePublished}
+  articleModifiedTime={seo.dateModified}
+  ogImage={seo.ogImageAbsolute}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  articleTags={articleTags}
+  metaAuthor="Leigh Spencer"
+  tdcPlacement="none"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-post-shell page-inner">
+    <div class="tok-blog-post-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-post-grid">
+      <div class="tok-blog-post-main">
+        <header class="tok-blog-post-head" data-reveal>
+          <p class="tok-blog-post-kicker">
+            <a class="tok-blog-post-cat" href={`/blog/${seriesSlug}/`}>
+              {seriesTitle}
+            </a>
+            <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
+            <a class="tok-blog-post-cat" href={`/blog/category/${categorySlug}/`}>
+              {categoryLabel}
+            </a>
+          </p>
+          <h1 class="tok-blog-post-title">{headline}</h1>
+          {
+            positioningSentence ? (
+              <p class="tok-series-note-positioning">{positioningSentence}</p>
+            ) : null
+          }
+          <p class="tok-blog-post-meta">
+            <time datetime={isoDate}>{displayDate}</time>
+            <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
+            <span>{readingMinutes} min read</span>
+          </p>
+        </header>
+
+        <article class="tok-blog-article">
+          <div class="article-prose tok-blog-post-prose tok-series-note-prose">
+            <slot />
+          </div>
+        </article>
+
+        <hr class="tok-series-note-rule" />
+
+        <footer class="tok-series-note-footer" data-reveal>
+          <p class="tok-series-note-footer__series">
+            {
+              seriesSlug === "reading-the-grip" && cheatSheetHref ? (
+                <em>
+                  This is part of the Reading the Grip Field Note series. The full framework
+                  is available as a printable guide:{" "}
+                  <a href={cheatSheetHref}>Reading the Grip — Reader's Field Guide</a>.
+                </em>
+              ) : (
+                <em>
+                  Part of the <a href={`/blog/${seriesSlug}/`}>{seriesTitle}</a> Field Note
+                  series.
+                </em>
+              )
+            }
+          </p>
+        </footer>
+
+        <nav class="tok-blog-adj" aria-label="Adjacent notes in series" data-reveal>
+          {
+            prevNote ? (
+              <a
+                class="tok-blog-adj__link tok-blog-adj__link--prev"
+                href={`/blog/${seriesSlug}/${prevNote.slug}/`}
+              >
+                <span class="tok-blog-adj__label">Previous in series</span>
+                <span class="tok-blog-adj__title">{prevNote.title}</span>
+              </a>
+            ) : (
+              <span class="tok-blog-adj__spacer" />
+            )
+          }
+          {
+            nextNote ? (
+              <a
+                class="tok-blog-adj__link tok-blog-adj__link--next"
+                href={`/blog/${seriesSlug}/${nextNote.slug}/`}
+              >
+                <span class="tok-blog-adj__label">Next in series</span>
+                <span class="tok-blog-adj__title">{nextNote.title}</span>
+              </a>
+            ) : (
+              <span class="tok-blog-adj__spacer" />
+            )
+          }
+        </nav>
+
+        <div data-reveal>
+          <TdcConversionBlock subscribePlacement="blog-post-conversion-block" />
+        </div>
+      </div>
+
+      <BlogSidebar categories={sidebarCategories} activeCategorySlug={categorySlug} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tok-blog-post-breadcrumbs {
+    margin-top: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .tok-blog-post-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .tok-blog-post-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, var(--tok-blog-sidebar-max));
+      gap: 2.75rem;
+    }
+  }
+
+  .tok-blog-post-main {
+    min-width: 0;
+    max-width: 42rem;
+  }
+
+  .tok-blog-post-kicker {
+    margin: 0 0 0.5rem;
+  }
+
+  .tok-blog-post-cat {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tok-gold);
+  }
+
+  .tok-blog-post-cat:hover {
+    color: var(--tok-teal);
+  }
+
+  .tok-blog-post-title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.18;
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-series-note-positioning {
+    margin: 0 0 0.85rem;
+    font-size: 1.08rem;
+    line-height: 1.65;
+    font-style: italic;
+    color: color-mix(in srgb, var(--tok-teal-dim) 92%, var(--tok-text-dark));
+  }
+
+  .tok-blog-post-meta {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--tok-text-dark) 55%, var(--tok-surface-reading));
+  }
+
+  .tok-blog-post-meta-sep {
+    margin: 0 0.45rem;
+  }
+
+  .tok-blog-article {
+    margin-bottom: 1.5rem;
+  }
+
+  .tok-series-note-prose :global(h2) {
+    margin-top: 2rem;
+  }
+
+  .tok-series-note-rule {
+    margin: 2rem 0 1.25rem;
+    border: none;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tok-series-note-footer__series {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  .tok-series-note-cheat {
+    margin: 0 0 1.5rem;
+    font-size: 0.92rem;
+  }
+
+  .tok-blog-adj {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  @media (min-width: var(--bp-xs)) {
+    .tok-blog-adj {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .tok-blog-adj__spacer {
+    display: none;
+  }
+
+  @media (min-width: var(--bp-xs)) {
+    .tok-blog-adj__spacer {
+      display: block;
+    }
+  }
+
+  .tok-blog-adj__link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.35rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .tok-blog-adj__link:hover .tok-blog-adj__title {
+    color: var(--tok-teal);
+  }
+
+  .tok-blog-adj__link--next {
+    text-align: right;
+  }
+
+  .tok-blog-adj__label {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .tok-blog-adj__title {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: var(--tok-teal-dim);
+    transition: color 0.2s ease;
+  }
+</style>
