@@ -18,29 +18,6 @@ import LibraryPagination from "../../../../../components/LibraryPagination.astro
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../../lib/breadcrumbs";
 import { siteBase } from "../../../../../lib/site";
 
-export async function getStaticPaths() {
-  const articles = await getCollection("articles");
-  const bySeries = new Map<string, typeof articles>();
-  for (const a of articles) {
-    const n = a.data.seriesName;
-    if (!n) continue;
-    const s = slugify(n);
-    const list = bySeries.get(s) ?? [];
-    list.push(a);
-    bySeries.set(s, list);
-  }
-  const out: { params: { series: string; page: string } }[] = [];
-  for (const [seriesSlug, list] of bySeries) {
-    const sorted = sortArticles(list, "series");
-    const tp = totalPages(sorted.length, LIBRARY_PER_PAGE);
-    if (tp <= 1) continue;
-    for (let p = 2; p <= tp; p++) {
-      out.push({ params: { series: seriesSlug, page: String(p) } });
-    }
-  }
-  return out;
-}
-
 const { series: seriesParam, page: pageStr } = Astro.params;
 const pageNum = Number.parseInt(pageStr ?? "2", 10);
 

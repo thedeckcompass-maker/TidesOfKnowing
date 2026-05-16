@@ -10,18 +10,6 @@ import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
 
-export async function getStaticPaths() {
-  const articles = await getCollection("articles");
-  const slugs = [
-    ...new Set(
-      articles
-        .filter((a) => a.data.seriesName)
-        .map((a) => slugify(a.data.seriesName!)),
-    ),
-  ];
-  return slugs.map((slug) => ({ params: { slug } }));
-}
-
 const { slug } = Astro.params;
 const articles = await getCollection("articles");
 const inSeries = articles.filter(

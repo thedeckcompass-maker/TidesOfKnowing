@@ -18,18 +18,6 @@ import LibraryPagination from "../../../../components/LibraryPagination.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../lib/breadcrumbs";
 import { siteBase } from "../../../../lib/site";
 
-export async function getStaticPaths() {
-  const articles = await getCollection("articles");
-  const slugs = [
-    ...new Set(
-      articles
-        .filter((a) => a.data.seriesName)
-        .map((a) => slugify(a.data.seriesName!)),
-    ),
-  ];
-  return slugs.map((series) => ({ params: { series } }));
-}
-
 const { series: seriesParam } = Astro.params;
 const articles = await getCollection("articles");
 const filtered = articles.filter(
