@@ -1,0 +1,366 @@
+---
+import { getCollection, render } from "astro:content";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  isRepeatingMeaningReady,
+  repeatingCardDisplayTitle,
+  repeatingCardPanelDomId,
+  repeatingCardPanelSummary,
+  repeatingCardSlugFromId,
+} from "../../../lib/repeatingCardMeanings";
+import {
+  buildScopedSectionNav,
+  prefixHeadingIdsInHtml,
+} from "../../../lib/rcmHeadingIds";
+import {
+  getRepeatingCardBreadcrumbs,
+  getRepeatingCardJsonLd,
+  getRepeatingCardMetaDescription,
+  getRepeatingCardMetaTitle,
+  getRepeatingCardOgImage,
+} from "../../../lib/repeatingCardSeo";
+import { getRepeatingCardCanonicalUrl, getRepeatingCardHubPath } from "../../../lib/repeatingCardUrls";
+import { siteBase } from "../../../lib/site";
+import { tarotCardImagePath } from "../../../lib/tarotCardImage";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const collection = await getCollection("repeatingCardMeanings");
+  return collection
+    .filter((entry) => isRepeatingMeaningReady(entry))
+    .map((entry) => ({
+      params: { id: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const paramId = Astro.params.id?.replace(/\/$/, "") ?? "";
+
+if (!entry || entry.id !== paramId || !isRepeatingMeaningReady(entry)) {
+  return Astro.redirect(getRepeatingCardHubPath());
+}
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = getRepeatingCardCanonicalUrl(entry, siteHref);
+const title = getRepeatingCardMetaTitle(entry);
+const description = getRepeatingCardMetaDescription(entry);
+const ogImage = getRepeatingCardOgImage(entry, siteHref);
+const crumbs = getRepeatingCardBreadcrumbs(entry);
+const jsonLd = getRepeatingCardJsonLd(entry, siteHref);
+
+const fallbackLabel = repeatingCardSlugFromId(entry.id)
+  .split("-")
+  .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+  .join(" ");
+const displayTitle = repeatingCardDisplayTitle(entry, fallbackLabel);
+const panelDomId = repeatingCardPanelDomId(entry.id);
+const panelSummary = repeatingCardPanelSummary(entry);
+const imageSrc = tarotCardImagePath(repeatingCardSlugFromId(entry.id));
+
+const { headings } = await render(entry);
+const rawHtml = entry.rendered?.html ?? "";
+const articleHtml = rawHtml ? prefixHeadingIdsInHtml(rawHtml, panelDomId) : "";
+const sectionNav = buildScopedSectionNav(headings, panelDomId);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={canonical}
+  ogType="article"
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <article class="rcm-card page-inner" id="rcm-card-page">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="rcm-card__hero">
+      <p class="rcm-card__eyebrow">Repeating card meaning</p>
+      <h1 class="rcm-card__title">{displayTitle}</h1>
+      <p class="rcm-card__hub-link-wrap">
+        <a class="rcm-card__hub-link" href={getRepeatingCardHubPath()}>
+          Open the card selector tool
+        </a>
+      </p>
+    </header>
+
+    <div class="rcm-card__body">
+      <header class="rcm-card__card-head">
+        <div class="rcm-card__card-visual">
+          <div class="rcm-card__card-slot">
+            <img
+              class="rcm-card__card-img"
+              src={imageSrc}
+              alt={`${displayTitle} tarot card`}
+              width="280"
+              height="480"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <div class="rcm-card__card-intro">
+          {
+            panelSummary ? (
+              <p class="rcm-card__card-summary">{panelSummary}</p>
+            ) : null
+          }
+        </div>
+      </header>
+
+      {
+        articleHtml ? (
+          <div class="rcm-card__reading-body">
+            {
+              sectionNav.length > 0 ? (
+                <nav class="rcm-card__section-nav" aria-label={`${displayTitle} sections`}>
+                  <p class="rcm-card__section-nav-title">On this reading</p>
+                  <ol class="rcm-card__section-nav-list">
+                    {
+                      sectionNav.map((item) => (
+                        <li>
+                          <a class="rcm-card__section-nav-link" href={`#${item.slug}`}>
+                            {item.text}
+                          </a>
+                        </li>
+                      ))
+                    }
+                  </ol>
+                </nav>
+              ) : null
+            }
+
+            <div class="rcm-card__reading">
+              <div
+                class="article-prose rcm-card__prose rcm-card__article-content"
+                set:html={articleHtml}
+              />
+            </div>
+          </div>
+        ) : null
+      }
+    </div>
+
+    <p class="rcm-card__back-wrap">
+      <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Back to Repeating Card Meanings</a>
+      <span class="rcm-card__back-sep" aria-hidden="true">·</span>
+      <a class="rcm-card__back" href="/tools/">Back to Tarot tools</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .rcm-card {
+    padding: clamp(1.25rem, 4vw, 2rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 52rem;
+  }
+
+  .rcm-card__hero {
+    margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    padding-bottom: clamp(1rem, 2.5vw, 1.35rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .rcm-card__eyebrow {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-card__title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.85rem, 4vw, 2.35rem);
+    line-height: 1.15;
+    color: var(--tok-text-light);
+  }
+
+  .rcm-card__hub-link-wrap {
+    margin: 0;
+  }
+
+  .rcm-card__hub-link {
+    font-size: 0.92rem;
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-card__hub-link:hover {
+    color: var(--tok-text-light);
+  }
+
+  .rcm-card__card-head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 70%, var(--tok-surface-reading));
+  }
+
+  @media (min-width: 640px) {
+    .rcm-card__card-head {
+      grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  .rcm-card__card-slot {
+    margin: 0 auto;
+    max-width: 9.5rem;
+    border-radius: var(--radius-soft);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    background: var(--tok-surface-reading);
+  }
+
+  .rcm-card__card-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .rcm-card__card-summary {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+  }
+
+  .rcm-card__reading-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 3vw, 1.35rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .rcm-card__reading-body {
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      gap: clamp(1.25rem, 3vw, 2rem);
+    }
+  }
+
+  .rcm-card__section-nav {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+    border-radius: 0 var(--radius-soft) var(--radius-soft) 0;
+  }
+
+  @media (min-width: 900px) {
+    .rcm-card__section-nav {
+      position: sticky;
+      top: var(--tok-sticky-under-header);
+      align-self: start;
+      max-height: calc(100vh - var(--tok-sticky-under-header) - 1.5rem);
+      overflow-y: auto;
+    }
+  }
+
+  .rcm-card__section-nav-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-card__section-nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  @media (max-width: 899px) {
+    .rcm-card__section-nav-list {
+      flex-flow: row wrap;
+      gap: 0.35rem 0.85rem;
+    }
+  }
+
+  .rcm-card__section-nav-link {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--tok-teal);
+    text-decoration: none;
+  }
+
+  .rcm-card__section-nav-link:hover {
+    color: var(--tok-teal-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-card__reading {
+    min-width: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
+    border-radius: var(--radius-soft);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .rcm-card__article-content {
+    min-width: 0;
+    max-width: var(--reading-width);
+  }
+
+  .rcm-card__prose > h1:first-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .rcm-card__prose h2 {
+    padding-top: 0.35rem;
+    scroll-margin-top: calc(var(--tok-sticky-under-header) + 0.75rem);
+  }
+
+  .rcm-card__back-wrap {
+    margin: 2rem 0 0;
+    font-size: 0.92rem;
+  }
+
+  .rcm-card__back {
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-card__back:hover {
+    color: var(--tok-text-light);
+  }
+
+  .rcm-card__back-sep {
+    margin: 0 0.45rem;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
+  }
+</style>

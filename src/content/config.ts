@@ -19,7 +19,7 @@ const blogDates = z.object({
 });
 
 /**
- * Field Notes collection (`blog`) — supports standalone posts, series, nested notes, and cheat sheets.
+ * Field Notes collection (`blog`): supports standalone posts, series, nested notes, and cheat sheets.
  * Omit `type` on legacy posts; they are treated as standalone field notes.
  */
 export const blogSchema = z
@@ -98,7 +98,7 @@ export const blogSchema = z
     }
   });
 
-/** Long-form articles under `/articles/[slug]/` — used by `src/content.config.ts`. */
+/** Long-form articles under `/articles/[slug]/`: used by `src/content.config.ts`. */
 export const articlesSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
@@ -151,4 +151,12 @@ export const repeatingCardMeaningsSchema = z.object({
   ready: z.boolean().optional(),
   /** Conversational panel summary for the tool header (distinct from body pull quote). */
   summary: z.string().optional(),
+  metaTitle: z.string().optional(),
+  metaDescription: z.string().optional(),
+  themes: z.array(z.string()).default([]),
+  life_areas: z.array(z.string()).default([]),
+  seeker_states: z.array(z.string()).default([]),
+  compass_pillars: z.array(z.string()).default([]),
+  related_cards: z.array(z.string()).default([]),
+  related_articles: z.array(z.string()).default([]),
 });

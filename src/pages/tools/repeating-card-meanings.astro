@@ -16,6 +16,7 @@ import {
   buildScopedSectionNav,
   prefixHeadingIdsInHtml,
 } from "../../lib/rcmHeadingIds";
+import { getRepeatingCardPath } from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
 const title = "Repeating Card Meanings | Tarot Tool | Tides of Knowing";
@@ -170,6 +171,9 @@ const cards: CardPanel[] = await Promise.all(
                       <p class="rcm-tool__card-summary">{card.panelSummary}</p>
                     ) : null
                   }
+                  <p class="rcm-tool__card-page-link">
+                    <a href={getRepeatingCardPath(card.id)}>Open the full card page</a>
+                  </p>
                 </div>
               </header>
 
@@ -509,6 +513,21 @@ const cards: CardPanel[] = await Promise.all(
     line-height: 1.65;
     color: var(--tok-text-dark);
     opacity: 0.92;
+  }
+
+  .rcm-tool__card-page-link {
+    margin: 0.85rem 0 0;
+    font-size: 0.92rem;
+  }
+
+  .rcm-tool__card-page-link a {
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-tool__card-page-link a:hover {
+    color: var(--tok-teal-dim);
   }
 
   .rcm-tool__preparing {

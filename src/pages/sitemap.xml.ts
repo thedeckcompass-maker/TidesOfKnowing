@@ -12,6 +12,8 @@ import {
 } from "../lib/blogFieldNotes";
 import { LIBRARY_PER_PAGE, totalPages } from "../lib/libraryPagination";
 import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
+import { isRepeatingMeaningReady } from "../lib/repeatingCardMeanings";
+import { getRepeatingCardHubPath, getRepeatingCardPath } from "../lib/repeatingCardUrls";
 
 export const prerender = true;
 
@@ -51,7 +53,7 @@ function addPages(
 
 export const GET: APIRoute = async () => {
   const articles = await getCollection("articles");
-  /** Field Notes — Astro collection id `blog`; sitemap paths stay `/blog/…` for compatibility. */
+  /** Field Notes: Astro collection id `blog`; sitemap paths stay `/blog/...` for compatibility. */
   const blog = await getCollection("blog", ({ data }) => !data.draft);
 
   const rows: Row[] = [];
@@ -111,6 +113,22 @@ export const GET: APIRoute = async () => {
   );
   for (const t of tagSlugs) {
     rows.push({ path: `/tags/${t}/`, changefreq: "monthly", priority: "0.6" });
+  }
+
+  rows.push({
+    path: getRepeatingCardHubPath(),
+    changefreq: "monthly",
+    priority: "0.75",
+  });
+
+  const repeatingCards = await getCollection("repeatingCardMeanings");
+  for (const entry of repeatingCards) {
+    if (!isRepeatingMeaningReady(entry)) continue;
+    rows.push({
+      path: getRepeatingCardPath(entry),
+      changefreq: "monthly",
+      priority: "0.68",
+    });
   }
 
   const standaloneBlog = getStandaloneFieldNotes(blog);
