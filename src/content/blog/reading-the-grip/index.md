@@ -22,6 +22,7 @@ ogDescription: "Practitioner Field Notes documenting real reading conditions whe
 ogImage: "/images/blog/reading-the-grip/full-spread-overview.jpg"
 heroImage: "/images/blog/reading-the-grip/full-spread-overview.jpg"
 heroImageAlt: "Tarot spread overview for the Reading the Grip series"
+heroCaption: "After drawing the pre-read cards, this was the final spread that was offered and that incorporated the structure these Field Notes lay out."
 ---
 
 This series of Field Notes addresses one of the most demanding situations a tarot reader encounters: a seeker who arrives with obvious weight attached to their situation and a tight grip on a specific outcome.

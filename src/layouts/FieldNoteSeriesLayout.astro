@@ -31,6 +31,7 @@ interface Props {
   sidebarCategories: BlogCategoryRow[];
   heroImage?: string;
   heroImageAlt?: string;
+  heroCaption?: string;
 }
 
 const {
@@ -49,6 +50,7 @@ const {
   sidebarCategories,
   heroImage,
   heroImageAlt = "",
+  heroCaption,
 } = Astro.props;
 
 const base = siteBase(Astro);
@@ -107,12 +109,6 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
       <main class="tok-blog-series-main">
         <header class="tok-blog-series-head" data-reveal>
           <p class="tok-blog-series-kicker">Field Note series</p>
-          <h1 class="tok-blog-series-title">{title}</h1>
-          {
-            subtitle ? (
-              <p class="tok-blog-series-subtitle">{subtitle}</p>
-            ) : null
-          }
           {
             heroImage ? (
               <figure class="tok-blog-series-hero" data-reveal>
@@ -124,7 +120,14 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
                   loading="eager"
                   decoding="async"
                 />
+                {heroCaption ? <figcaption>{heroCaption}</figcaption> : null}
               </figure>
+            ) : null
+          }
+          <h1 class="tok-blog-series-title">{title}</h1>
+          {
+            subtitle ? (
+              <p class="tok-blog-series-subtitle">{subtitle}</p>
             ) : null
           }
           <p class="tok-blog-series-intro">{description}</p>
@@ -253,7 +256,7 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-series-hero {
-    margin: 0 0 1.35rem;
+    margin: 0.35rem 0 1.35rem;
     padding: 0;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
     border-radius: var(--radius-soft);
@@ -268,6 +271,18 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
     height: auto;
     object-fit: contain;
     object-position: center;
+  }
+
+  .tok-blog-series-hero figcaption {
+    margin: 0;
+    padding: 0.75rem 1rem 0.85rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    text-align: center;
+    color: var(--tok-text-dark);
+    opacity: 0.72;
   }
 
   .tok-blog-series-intro {

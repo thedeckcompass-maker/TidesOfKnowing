@@ -35,25 +35,23 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
 
     <ul class="tools-hub__grid" role="list">
       <li class="tools-hub__card">
-        <a class="tools-hub__card-link" href="/tools/two-card-tarot-reading/">
-          <span class="tools-hub__card-name">When Two Cards Meet</span>
-        </a>
+        <span class="tools-hub__card-name--plain">When Two Cards Meet</span>
         <p class="tools-hub__card-desc">Two-card relational reading: room and entering force.</p>
         <p class="tools-hub__compass">
           This tool trains Map and Sense: noticing the relationship between two cards before forcing
           them into a fixed interpretation.
         </p>
-        <p class="tools-hub__status tools-hub__status--live">Available now</p>
+        <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
-      <li class="tools-hub__card tools-hub__card--soon">
-        <a class="tools-hub__card-link tools-hub__card-link--soon" href={tableBetweenThemUrl}>
+      <li class="tools-hub__card">
+        <a class="tools-hub__card-link" href={tableBetweenThemUrl}>
           <span class="tools-hub__card-name">The Table Between Them</span>
         </a>
         <p class="tools-hub__card-desc">Three-card interpreter: movement, sequence, and story.</p>
         <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
-      <li class="tools-hub__card tools-hub__card--soon">
-        <a class="tools-hub__card-link tools-hub__card-link--soon" href={repeatedCardMeaningUrl}>
+      <li class="tools-hub__card">
+        <a class="tools-hub__card-link" href={repeatedCardMeaningUrl}>
           <span class="tools-hub__card-name">Repeated Card Meaning Tool</span>
         </a>
         <p class="tools-hub__card-desc">
@@ -168,12 +166,6 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     min-height: 0;
   }
 
-  .tools-hub__card--soon {
-    border-style: dashed;
-    border-color: color-mix(in srgb, var(--tok-water) 22%, transparent);
-    background: color-mix(in srgb, var(--tok-water) 3%, transparent);
-  }
-
   .tools-hub__card-link {
     text-decoration: none;
     color: var(--tok-teal-light);
@@ -188,17 +180,12 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     text-underline-offset: 0.12em;
   }
 
-  .tools-hub__card-link--soon {
-    color: var(--tok-water);
-    opacity: 0.92;
-  }
-
   .tools-hub__card-name--plain {
     display: block;
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.35;
-    color: var(--tok-water);
+    color: var(--tok-teal-light);
   }
 
   .tools-hub__card-desc {
@@ -293,10 +280,6 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-  }
-
-  .tools-hub__status--live {
-    color: var(--tok-water);
   }
 
   .tools-hub__status--next {
