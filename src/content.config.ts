@@ -1,10 +1,18 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { articlesSchema, blogSchema } from "./content/config";
+import {
+  articlesSchema,
+  blogSchema,
+  repeatingCardMeaningsSchema,
+} from "./content/config";
 
 /** Field Notes markdown root only (`content-intake/blog` is never loaded here). */
 const blogBase = new URL("./content/blog/", import.meta.url);
 const articlesBase = new URL("./content/articles/", import.meta.url);
+const repeatingCardMeaningsBase = new URL(
+  "./content/repeating-card-meanings/",
+  import.meta.url,
+);
 
 const blog = defineCollection({
   loader: glob({
@@ -24,4 +32,17 @@ const articles = defineCollection({
   schema: articlesSchema,
 });
 
-export const collections = { blog, articles };
+/** Suit subfolders for card entries (add new suits here when content is ready). */
+const repeatingCardSuitPattern = "{majors,cups,swords,wands,pentacles}";
+
+const repeatingCardMeanings = defineCollection({
+  loader: glob({
+    pattern: `${repeatingCardSuitPattern}/*.md`,
+    base: repeatingCardMeaningsBase,
+    /** Stable ids: `majors/the-fool`, `cups/ace-of-cups`, etc. */
+    generateId: ({ entry }) => entry.replace(/\.md$/i, "").replace(/\\/g, "/"),
+  }),
+  schema: repeatingCardMeaningsSchema,
+});
+
+export const collections = { blog, articles, repeatingCardMeanings };

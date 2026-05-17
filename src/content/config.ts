@@ -133,3 +133,22 @@ export const articlesSchema = z.object({
     })
     .optional(),
 });
+
+/**
+ * Repeating card meaning entries under suit folders:
+ * `content/repeating-card-meanings/{majors,cups,swords,wands,pentacles}/`.
+ * Framework and memory docs live outside these folders and are not collected.
+ */
+export const repeatingCardMeaningsSchema = z.object({
+  title: z.string(),
+  slug: z.string().optional(),
+  arcana: z.string(),
+  suit: z.string(),
+  card_number: z.string(),
+  tier: z.string().optional(),
+  status: z.string().optional(),
+  /** When false, the tool shows a preparing state even if a file exists. */
+  ready: z.boolean().optional(),
+  /** Conversational panel summary for the tool header (distinct from body pull quote). */
+  summary: z.string().optional(),
+});

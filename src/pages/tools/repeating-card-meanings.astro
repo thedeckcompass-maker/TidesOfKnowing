@@ -1,0 +1,646 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  getRepeatingCardEntry,
+  getRepeatingCardToolOptions,
+  isRepeatingMeaningReady,
+  REPEATING_MEANING_PREPARING_COPY,
+  repeatingCardDisplayTitle,
+  repeatingCardPanelDomId,
+  repeatingCardSlugFromId,
+  repeatingCardPanelSummary,
+} from "../../lib/repeatingCardMeanings";
+import { tarotCardImagePath } from "../../lib/tarotCardImage";
+import {
+  buildScopedSectionNav,
+  prefixHeadingIdsInHtml,
+} from "../../lib/rcmHeadingIds";
+import { siteBase } from "../../lib/site";
+
+const title = "Repeating Card Meanings | Tarot Tool | Tides of Knowing";
+const description =
+  "Explore what it means when the same tarot card keeps appearing across readings, whether for a reason, a season, or a lifetime.";
+const ogUrl = new URL("/tools/repeating-card-meanings/", siteBase(Astro)).href;
+
+const collection = await getCollection("repeatingCardMeanings");
+const byId = new Map(collection.map((entry) => [entry.id, entry]));
+
+type CardPanel = {
+  id: string;
+  panelDomId: string;
+  label: string;
+  ready: boolean;
+  displayTitle: string;
+  imageSrc: string;
+  panelSummary: string | null;
+  articleHtml: string | null;
+  sectionNav: { slug: string; text: string }[];
+};
+
+const toolOptions = getRepeatingCardToolOptions(collection);
+
+const cards: CardPanel[] = await Promise.all(
+  toolOptions.map(async ({ id, label }) => {
+    const entry = getRepeatingCardEntry(byId, id);
+    const ready = isRepeatingMeaningReady(entry);
+    const displayTitle = repeatingCardDisplayTitle(entry, label);
+    const imageSrc = tarotCardImagePath(repeatingCardSlugFromId(id));
+
+    if (!ready || !entry) {
+      return {
+        id,
+        panelDomId: repeatingCardPanelDomId(id),
+        label,
+        ready: false,
+        displayTitle,
+        imageSrc,
+        panelSummary: null,
+        articleHtml: null,
+        sectionNav: [],
+      };
+    }
+
+    const panelDomId = repeatingCardPanelDomId(id);
+    const { headings } = await render(entry);
+    const rawHtml = entry.rendered?.html ?? "";
+    const articleHtml = rawHtml
+      ? prefixHeadingIdsInHtml(rawHtml, panelDomId)
+      : null;
+    const sectionNav = buildScopedSectionNav(headings, panelDomId);
+
+    return {
+      id,
+      panelDomId,
+      label,
+      ready: Boolean(articleHtml),
+      displayTitle,
+      imageSrc,
+      panelSummary: repeatingCardPanelSummary(entry),
+      articleHtml,
+      sectionNav,
+    };
+  }),
+);
+---
+
+<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+  <article class="rcm-tool page-inner" id="rcm-tool">
+    <header class="rcm-tool__hero">
+      <p class="rcm-tool__eyebrow">Tarot interpretation tool</p>
+      <h1 class="rcm-tool__title">Repeating Card Meanings</h1>
+      <p class="rcm-tool__lede">
+        When the same tarot card continues appearing across readings, the repetition often points toward
+        something unresolved, unintegrated, re-emerging, or still unfolding beneath the surface of events.
+      </p>
+      <p class="rcm-tool__lede">
+        This tool explores what recurring cards may be attempting to stabilise across time: across days,
+        seasons, relationships, transitions, emotional cycles, and longer life patterns.
+      </p>
+      <p class="rcm-tool__lede">
+        Rather than treating repeated cards as isolated meanings, the readings examine:
+      </p>
+      <ul class="rcm-tool__hero-list">
+        <li>what continues returning into awareness</li>
+        <li>where pressure, timing, avoidance, or unfinished movement may exist</li>
+        <li>
+          how the meaning of repetition shifts as the Seeker's circumstances and relationship to the
+          pattern evolve
+        </li>
+      </ul>
+      <p class="rcm-tool__lede rcm-tool__lede--closing">
+        Choose the card that keeps appearing. There is no draw here. The interpretation unfolds from the
+        card already present in your life.
+      </p>
+      <p class="rcm-tool__authority">
+        Created by Leigh Spencer for Tides of Knowing, drawing on 40+ years of tarot practice, symbolic
+        interpretation, and The COMPASS Method<sup class="rcm-tool__tm">TM</sup>.
+      </p>
+    </header>
+
+    <section class="rcm-tool__selector" aria-labelledby="rcm-selector-heading">
+      <h2 class="visually-hidden" id="rcm-selector-heading">Choose a card</h2>
+      <div class="rcm-tool__selector-panel">
+        <label class="rcm-tool__label" for="rcm-card-select">Choose the card that keeps appearing</label>
+        <select class="rcm-tool__select" id="rcm-card-select" name="card">
+          <option value="">Select a card</option>
+          {
+            cards.map((card) => (
+              <option value={card.id}>{card.label}</option>
+            ))
+          }
+        </select>
+        <p class="rcm-tool__selector-hint" id="rcm-empty-hint">
+          Select a card above to read its repeating meaning.
+        </p>
+      </div>
+    </section>
+
+    <div id="rcm-results" class="rcm-tool__results" aria-live="polite">
+      {
+        cards.map((card) =>
+          card.ready && card.articleHtml ? (
+            <section
+              class="rcm-tool__result"
+              id={`rcm-panel-${card.panelDomId}`}
+              data-rcm-panel={card.id}
+              hidden
+              aria-labelledby={`rcm-heading-${card.panelDomId}`}
+            >
+              <header class="rcm-tool__card-head">
+                <div class="rcm-tool__card-visual">
+                  <div class="rcm-tool__card-slot">
+                    <img
+                      class="rcm-tool__card-img"
+                      src={card.imageSrc}
+                      alt={`${card.displayTitle} tarot card`}
+                      width="280"
+                      height="480"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+                <div class="rcm-tool__card-intro">
+                  <h2 class="rcm-tool__card-title" id={`rcm-heading-${card.panelDomId}`}>
+                    {card.displayTitle}
+                  </h2>
+                  {
+                    card.panelSummary ? (
+                      <p class="rcm-tool__card-summary">{card.panelSummary}</p>
+                    ) : null
+                  }
+                </div>
+              </header>
+
+              <div class="rcm-tool__reading-body">
+              {
+                card.sectionNav.length > 0 ? (
+                  <nav
+                    class="rcm-tool__section-nav"
+                    aria-label={`${card.displayTitle} sections`}
+                  >
+                    <p class="rcm-tool__section-nav-title">On this reading</p>
+                    <ol class="rcm-tool__section-nav-list">
+                      {
+                        card.sectionNav.map((item) => (
+                          <li>
+                            <a
+                              class="rcm-tool__section-nav-link"
+                              href={`#${item.slug}`}
+                            >
+                              {item.text}
+                            </a>
+                          </li>
+                        ))
+                      }
+                    </ol>
+                  </nav>
+                ) : null
+              }
+
+              <div class="rcm-tool__reading">
+                <div
+                  class="article-prose rcm-tool__prose rcm-tool__article-content"
+                  set:html={card.articleHtml}
+                />
+              </div>
+              </div>
+            </section>
+          ) : (
+            <section
+              class="rcm-tool__result rcm-tool__result--preparing"
+              id={`rcm-panel-${card.panelDomId}`}
+              data-rcm-panel={card.id}
+              hidden
+              aria-labelledby={`rcm-heading-${card.panelDomId}`}
+            >
+              <header class="rcm-tool__card-head rcm-tool__card-head--preparing">
+                <div class="rcm-tool__card-visual">
+                  <div class="rcm-tool__card-slot">
+                    <img
+                      class="rcm-tool__card-img"
+                      src={card.imageSrc}
+                      alt={`${card.displayTitle} tarot card`}
+                      width="280"
+                      height="480"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+                <div class="rcm-tool__card-intro">
+                  <h2 class="rcm-tool__card-title" id={`rcm-heading-${card.panelDomId}`}>
+                    {card.displayTitle}
+                  </h2>
+                  <p class="rcm-tool__preparing">
+                    {REPEATING_MEANING_PREPARING_COPY}
+                  </p>
+                </div>
+              </header>
+            </section>
+          ),
+        )
+      }
+    </div>
+
+    <p class="rcm-tool__back-wrap">
+      <a class="rcm-tool__back" href="/tools/">Back to Tarot tools</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<script>
+  const select = document.getElementById("rcm-card-select");
+  const emptyHint = document.getElementById("rcm-empty-hint");
+  const panels = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-rcm-panel]"),
+  );
+
+  function showCard(cardId: string) {
+    const hasSelection = Boolean(cardId);
+    if (emptyHint) emptyHint.hidden = hasSelection;
+    panels.forEach((panel) => {
+      panel.hidden = panel.dataset.rcmPanel !== cardId;
+    });
+    if (hasSelection) {
+      const panel = document.querySelector<HTMLElement>(
+        `[data-rcm-panel="${CSS.escape(cardId)}"]`,
+      );
+      panel?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function cardFromLocation(): string {
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = params.get("card")?.trim();
+    if (fromQuery) return fromQuery;
+    const hash = window.location.hash.replace(/^#/, "").trim();
+    return hash;
+  }
+
+  function syncLocation(cardId: string) {
+    const url = new URL(window.location.href);
+    if (cardId) {
+      url.searchParams.set("card", cardId);
+      url.hash = "";
+    } else {
+      url.searchParams.delete("card");
+    }
+    window.history.replaceState({}, "", url);
+  }
+
+  function applyInitialSelection() {
+    if (!(select instanceof HTMLSelectElement)) return;
+    const initial = cardFromLocation();
+    if (initial && select.querySelector(`option[value="${initial}"]`)) {
+      select.value = initial;
+      showCard(initial);
+    }
+  }
+
+  select?.addEventListener("change", () => {
+    if (!(select instanceof HTMLSelectElement)) return;
+    const cardId = select.value;
+    showCard(cardId);
+    syncLocation(cardId);
+  });
+
+  applyInitialSelection();
+</script>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .rcm-tool {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 52rem;
+  }
+
+  .rcm-tool__hero {
+    margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
+    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .rcm-tool__eyebrow {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-tool__title {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.65rem);
+    line-height: 1.15;
+    color: var(--tok-text-light);
+  }
+
+  .rcm-tool__lede {
+    margin: 0 0 0.85rem;
+    max-width: 44rem;
+    font-size: 1.06rem;
+    line-height: 1.72;
+    color: var(--tok-text-light-soft);
+  }
+
+  .rcm-tool__hero-list {
+    margin: 0 0 0.9rem;
+    padding-left: 1.2rem;
+    max-width: 44rem;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: var(--tok-text-light-soft);
+  }
+
+  .rcm-tool__hero-list li {
+    margin-bottom: 0.45rem;
+  }
+
+  .rcm-tool__hero-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .rcm-tool__lede--closing {
+    margin-bottom: 0;
+    font-size: 1rem;
+    opacity: 0.94;
+  }
+
+  .rcm-tool__tm {
+    font-size: 0.58em;
+    line-height: 0;
+    vertical-align: super;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+
+  .rcm-tool__authority {
+    margin: clamp(1.15rem, 3vw, 1.5rem) 0 0;
+    padding-top: clamp(0.9rem, 2.5vw, 1.15rem);
+    max-width: 44rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    font-weight: 400;
+    line-height: 1.62;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 78%, transparent);
+  }
+
+  .rcm-tool__selector {
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .rcm-tool__selector-panel {
+    display: grid;
+    gap: 0.55rem;
+    padding: clamp(1rem, 3vw, 1.35rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading) 48%, transparent);
+    color: var(--tok-text-dark);
+  }
+
+  .rcm-tool__label {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+  }
+
+  .rcm-tool__select {
+    width: 100%;
+    max-width: 28rem;
+    padding: 0.68rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--tok-text-dark);
+    background: var(--tok-surface-reading);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
+    border-radius: var(--radius-soft);
+  }
+
+  .rcm-tool__selector-hint {
+    margin: 0.15rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+    opacity: 0.78;
+  }
+
+  .rcm-tool__results {
+    display: grid;
+    gap: 0;
+  }
+
+  .rcm-tool__result {
+    scroll-margin-top: var(--tok-sticky-under-header);
+  }
+
+  .rcm-tool__card-head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 70%, var(--tok-surface-reading));
+  }
+
+  @media (min-width: 640px) {
+    .rcm-tool__card-head {
+      grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  .rcm-tool__card-slot {
+    margin: 0 auto;
+    max-width: 9.5rem;
+    border-radius: var(--radius-soft);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    background: var(--tok-surface-reading);
+  }
+
+  .rcm-tool__card-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .rcm-tool__card-title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.65rem, 3.5vw, 2.1rem);
+    line-height: 1.2;
+    color: var(--tok-water);
+  }
+
+  .rcm-tool__card-summary {
+    margin: 0;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+  }
+
+  .rcm-tool__preparing {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+    opacity: 0.88;
+  }
+
+  .rcm-tool__reading-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 3vw, 1.35rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .rcm-tool__reading-body {
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      gap: clamp(1.25rem, 3vw, 2rem);
+    }
+  }
+
+  .rcm-tool__section-nav {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-left: 3px solid var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+    border-radius: 0 var(--radius-soft) var(--radius-soft) 0;
+  }
+
+  @media (min-width: 900px) {
+    .rcm-tool__section-nav {
+      position: sticky;
+      top: var(--tok-sticky-under-header);
+      align-self: start;
+      max-height: calc(100vh - var(--tok-sticky-under-header) - 1.5rem);
+      overflow-y: auto;
+    }
+  }
+
+  .rcm-tool__section-nav-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-tool__section-nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  @media (max-width: 899px) {
+    .rcm-tool__section-nav-list {
+      flex-flow: row wrap;
+      gap: 0.35rem 0.85rem;
+    }
+  }
+
+  .rcm-tool__section-nav-link {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--tok-teal);
+    text-decoration: none;
+  }
+
+  .rcm-tool__section-nav-link:hover {
+    color: var(--tok-teal-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-tool__reading {
+    min-width: 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
+    border-radius: var(--radius-soft);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .rcm-tool__article-content {
+    min-width: 0;
+    max-width: var(--reading-width);
+  }
+
+  .rcm-tool__prose {
+    margin-inline: 0;
+  }
+
+  .rcm-tool__prose > h1:first-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .rcm-tool__prose h2 {
+    padding-top: 0.35rem;
+    scroll-margin-top: calc(var(--tok-sticky-under-header) + 0.75rem);
+  }
+
+  .rcm-tool__prose h2 + p,
+  .rcm-tool__prose h3 + p {
+    margin-top: 0.5rem;
+  }
+
+  .rcm-tool__back-wrap {
+    margin: 2rem 0 0;
+  }
+
+  .rcm-tool__back {
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-tool__back:hover {
+    color: var(--tok-text-light);
+  }
+</style>

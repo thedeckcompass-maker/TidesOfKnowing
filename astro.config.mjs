@@ -18,5 +18,6 @@ export default defineConfig({
     "/topics/": "/tags/",
     "/blog/welcome-to-the-library/": "/blog/welcome-to-tides-of-knowing/",
     "/blog/compass-method-anchor-article/": "/articles/compass-method/",
+    "/tools/repeating-tarot-cards-meaning/": "/tools/repeating-card-meanings/",
   },
 });
