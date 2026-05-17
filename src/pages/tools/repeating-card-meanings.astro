@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
   getRepeatingCardEntry,
-  getRepeatingCardToolOptions,
+  getAllRepeatingCardToolOptions,
   isRepeatingMeaningReady,
   REPEATING_MEANING_PREPARING_COPY,
   repeatingCardDisplayTitle,
@@ -38,7 +38,7 @@ type CardPanel = {
   sectionNav: { slug: string; text: string }[];
 };
 
-const toolOptions = getRepeatingCardToolOptions(collection);
+const toolOptions = getAllRepeatingCardToolOptions(collection);
 
 const cards: CardPanel[] = await Promise.all(
   toolOptions.map(async ({ id, label }) => {

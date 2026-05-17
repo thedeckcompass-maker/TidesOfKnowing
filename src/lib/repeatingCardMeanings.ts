@@ -32,9 +32,21 @@ function fallbackLabelFromSlug(slug: string): string {
     .join(" ");
 }
 
+function sortRepeatingCardEntries(
+  a: CollectionEntry<"repeatingCardMeanings">,
+  b: CollectionEntry<"repeatingCardMeanings">,
+): number {
+  const numA = Number.parseInt(a.data.card_number, 10);
+  const numB = Number.parseInt(b.data.card_number, 10);
+  if (!Number.isNaN(numA) && !Number.isNaN(numB) && numA !== numB) {
+    return numA - numB;
+  }
+  return repeatingCardSlugFromId(a.id).localeCompare(repeatingCardSlugFromId(b.id));
+}
+
 /**
- * Dropdown options from the content collection for a suit folder (default: majors).
- * Sorted by `card_number` when present, otherwise by slug.
+ * Dropdown options from the content collection for one suit folder.
+ * Sorted by `card_number` (Ace through Ten, then courts 11–14), otherwise by slug.
  */
 export function getRepeatingCardToolOptions(
   entries: CollectionEntry<"repeatingCardMeanings">[],
@@ -44,14 +56,7 @@ export function getRepeatingCardToolOptions(
 
   return entries
     .filter((entry) => entry.id.startsWith(prefix))
-    .sort((a, b) => {
-      const numA = Number.parseInt(a.data.card_number, 10);
-      const numB = Number.parseInt(b.data.card_number, 10);
-      if (!Number.isNaN(numA) && !Number.isNaN(numB) && numA !== numB) {
-        return numA - numB;
-      }
-      return repeatingCardSlugFromId(a.id).localeCompare(repeatingCardSlugFromId(b.id));
-    })
+    .sort(sortRepeatingCardEntries)
     .map((entry) => ({
       id: entry.id,
       label: repeatingCardDisplayTitle(
@@ -59,6 +64,18 @@ export function getRepeatingCardToolOptions(
         fallbackLabelFromSlug(repeatingCardSlugFromId(entry.id)),
       ),
     }));
+}
+
+/**
+ * Full tool dropdown: majors first, then cups, swords, wands, pentacles as content exists.
+ * Within each suit, ordered by `card_number`.
+ */
+export function getAllRepeatingCardToolOptions(
+  entries: CollectionEntry<"repeatingCardMeanings">[],
+): RepeatingCardToolOption[] {
+  return REPEATING_CARD_SUIT_FOLDERS.flatMap((suit) =>
+    getRepeatingCardToolOptions(entries, suit),
+  );
 }
 
 /** Tarot image slug from a collection id (`majors/the-fool` → `the-fool`). */
