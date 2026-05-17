@@ -29,6 +29,8 @@ interface Props {
   ogTitle?: string;
   ogDescription?: string;
   sidebarCategories: BlogCategoryRow[];
+  heroImage?: string;
+  heroImageAlt?: string;
 }
 
 const {
@@ -45,6 +47,8 @@ const {
   ogTitle,
   ogDescription,
   sidebarCategories,
+  heroImage,
+  heroImageAlt = "",
 } = Astro.props;
 
 const base = siteBase(Astro);
@@ -107,6 +111,20 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
           {
             subtitle ? (
               <p class="tok-blog-series-subtitle">{subtitle}</p>
+            ) : null
+          }
+          {
+            heroImage ? (
+              <figure class="tok-blog-series-hero" data-reveal>
+                <img
+                  src={heroImage}
+                  alt={heroImageAlt}
+                  width="1200"
+                  height="800"
+                  loading="eager"
+                  decoding="async"
+                />
+              </figure>
             ) : null
           }
           <p class="tok-blog-series-intro">{description}</p>
@@ -232,6 +250,24 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
     font-size: 1.25rem;
     line-height: 1.4;
     color: color-mix(in srgb, var(--tok-teal-dim) 88%, var(--tok-text-dark));
+  }
+
+  .tok-blog-series-hero {
+    margin: 0 0 1.35rem;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, var(--tok-surface-reading));
+    overflow: hidden;
+  }
+
+  .tok-blog-series-hero img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
   }
 
   .tok-blog-series-intro {
