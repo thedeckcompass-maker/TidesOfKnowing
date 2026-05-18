@@ -40,17 +40,20 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 const iso = publishDate.toISOString();
 ---
 
-<header class="tok-article-header">
+<header
+  class:list={[
+    "tok-article-header",
+    { "tok-article-header--fit-contain": heroImageFit === "contain" },
+  ]}
+>
   {
     heroImage &&
       (heroImageFit === "contain" ? (
-        <figure class="tok-article-header__hero-frame">
+        <figure class="tok-article-header__hero-fit">
           <img
             src={heroImage}
             alt={heroImageAlt}
-            class="tok-article-header__hero tok-article-header__hero--contain"
-            width="1200"
-            height="630"
+            class="tok-article-header__hero-fit-img"
             loading="eager"
             decoding="async"
           />
@@ -104,39 +107,31 @@ const iso = publishDate.toISOString();
     margin-bottom: 1.75rem;
   }
 
-  .tok-article-header__hero-frame {
+  /**
+   * Repeating Card Patterns (and other contain-fit heroes): natural aspect ratio at
+   * full width. No max-height, overflow clip, or cover — separate from __hero cover path.
+   */
+  .tok-article-header--fit-contain {
+    margin-bottom: 2.5rem;
+  }
+
+  .tok-article-header__hero-fit {
     margin: 0 0 1.75rem;
-    padding: clamp(0.65rem, 2vw, 1rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-height: clamp(340px, 68vh, 720px);
+    padding: clamp(0.5rem, 1.5vw, 0.85rem);
+    overflow: visible;
     background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, var(--tok-surface-reading));
     border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
     border-radius: var(--radius-soft);
-    overflow: hidden;
   }
 
-  .tok-article-header__hero--contain {
+  .tok-article-header__hero-fit-img {
     display: block;
-    width: auto;
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    max-height: clamp(300px, 64vh, 680px);
-    margin: 0 auto;
-    object-fit: contain;
+    max-width: 100%;
+    margin: 0;
+    object-fit: unset;
     object-position: center;
-  }
-
-  @media (max-width: 640px) {
-    .tok-article-header__hero-frame {
-      max-height: min(58vh, 520px);
-      padding: 0.5rem;
-    }
-
-    .tok-article-header__hero--contain {
-      max-height: min(54vh, 480px);
-    }
   }
 
   .tok-article-header__inner {
