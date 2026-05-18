@@ -12,8 +12,12 @@
   - Reader
   - Creator
   - Mixed
+- Commercial Priority: High
+- Audience Signal Strength: Emerging
 
 (Series is written for experienced readers and practitioners; Seekers benefit indirectly through better sessions. Primary audience: **Creator**.)
+
+**Priority note:** Commercial Priority is **High** because the series maps cleanly to reader training, diagnostic practice, a workshop, the existing downloadable Field Guide, and a premium consultation or supervision theme. Audience Signal Strength is **Emerging** because launch data is still early: comments, shares, saves, email replies, repeated language, consultation requests, and search behaviour have not yet accumulated enough to rate Consistent or higher. Revisit after 60 to 90 days of live metrics.
 
 ---
 

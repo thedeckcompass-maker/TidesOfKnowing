@@ -12,6 +12,20 @@
   - Reader
   - Creator
   - Mixed
+- Commercial Priority:
+  - Low
+  - Medium
+  - High
+  - Flagship
+- Audience Signal Strength:
+  - Emerging
+  - Consistent
+  - Strong
+  - Defining
+
+**Commercial Priority** = how strategically monetisable the concept is.
+
+**Audience Signal Strength** = how clearly the audience is responding through comments, shares, saves, email replies, repeated language, consultation requests, or search behaviour.
 
 ---
 
