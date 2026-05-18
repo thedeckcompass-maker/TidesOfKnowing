@@ -13,7 +13,10 @@ import { articleAuthorAttribution } from "../lib/authorProfile";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
-import { isRepeatingCardPatternsArticle } from "../lib/repeatingCardPatternsSeries";
+import {
+  isRepeatingCardPatternsArticle,
+  REPEATING_CARD_PATTERNS_SERIES_NAME,
+} from "../lib/repeatingCardPatternsSeries";
 import { slugify } from "../utils/slugify";
 
 interface Props {
@@ -119,6 +122,11 @@ const articleAudio = getArticleAudio({
 
 const isLeighSpencer = d.author.trim() === "Leigh Spencer";
 
+/** Repeating Card Patterns heroes are portrait compositions; avoid cover crop. */
+const heroImageFit =
+  d.heroImageFit ??
+  (d.seriesName === REPEATING_CARD_PATTERNS_SERIES_NAME ? "contain" : "cover");
+
 /*
  * TODO: Optional frontmatter-driven article pathways (e.g. custom link labels and hrefs per article).
  * TODO: Optional per-article "Apply this" callout copy via frontmatter or manual MDX, not a global generic block.
@@ -162,7 +170,7 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
           readingTime={readingMinutes}
           heroImage={d.heroImage}
           heroImageAlt={d.heroImageAlt}
-          heroImageFit={d.heroImageFit}
+          heroImageFit={heroImageFit}
           author={d.author}
           shareUrl={canonicalUrl}
           hideTopShare={hideTopShare}

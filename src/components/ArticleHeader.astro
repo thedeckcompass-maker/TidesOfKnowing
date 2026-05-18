@@ -42,20 +42,30 @@ const iso = publishDate.toISOString();
 
 <header class="tok-article-header">
   {
-    heroImage && (
-      <img
-        src={heroImage}
-        alt={heroImageAlt}
-        class:list={[
-          "tok-article-header__hero",
-          { "tok-article-header__hero--contain": heroImageFit === "contain" },
-        ]}
-        width="1200"
-        height="630"
-        loading="eager"
-        decoding="async"
-      />
-    )
+    heroImage &&
+      (heroImageFit === "contain" ? (
+        <figure class="tok-article-header__hero-frame">
+          <img
+            src={heroImage}
+            alt={heroImageAlt}
+            class="tok-article-header__hero tok-article-header__hero--contain"
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      ) : (
+        <img
+          src={heroImage}
+          alt={heroImageAlt}
+          class="tok-article-header__hero"
+          width="1200"
+          height="630"
+          loading="eager"
+          decoding="async"
+        />
+      ))
   }
 
   <div class="tok-article-header__inner">
@@ -94,10 +104,39 @@ const iso = publishDate.toISOString();
     margin-bottom: 1.75rem;
   }
 
+  .tok-article-header__hero-frame {
+    margin: 0 0 1.75rem;
+    padding: clamp(0.65rem, 2vw, 1rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: clamp(340px, 68vh, 720px);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, var(--tok-surface-reading));
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
+    border-radius: var(--radius-soft);
+    overflow: hidden;
+  }
+
   .tok-article-header__hero--contain {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: clamp(300px, 64vh, 680px);
+    margin: 0 auto;
     object-fit: contain;
-    object-position: top center;
-    max-height: none;
+    object-position: center;
+  }
+
+  @media (max-width: 640px) {
+    .tok-article-header__hero-frame {
+      max-height: min(58vh, 520px);
+      padding: 0.5rem;
+    }
+
+    .tok-article-header__hero--contain {
+      max-height: min(54vh, 480px);
+    }
   }
 
   .tok-article-header__inner {
