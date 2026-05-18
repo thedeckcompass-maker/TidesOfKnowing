@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # Personal reference material
 Reference - Leigh/
+
+# Wrangler temporary build artifacts
+.wrangler/
