@@ -1,0 +1,116 @@
+---
+import {
+  REPEATING_CARD_PATTERNS_SERIES_NAME,
+  repeatingCardPatternsArticleHref,
+  repeatingCardPatternsArticles,
+} from "../lib/repeatingCardPatternsSeries";
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+const siblings = repeatingCardPatternsArticles
+  .filter((a) => a.slug !== currentSlug)
+  .sort((a, b) => a.order - b.order);
+---
+
+{
+  siblings.length > 0 && (
+    <section
+      class="tok-rcm-series-continue"
+      aria-labelledby="rcm-series-continue-heading"
+      data-reveal
+    >
+      <p class="tok-rcm-series-continue__eyebrow">{REPEATING_CARD_PATTERNS_SERIES_NAME}</p>
+      <h2 id="rcm-series-continue-heading" class="tok-rcm-series-continue__title">
+        Continue Exploring Repeating Card Patterns
+      </h2>
+      <ul class="tok-rcm-series-continue__list" role="list">
+        {siblings.map((item) => (
+          <li class="tok-rcm-series-continue__item">
+            <a class="tok-rcm-series-continue__link" href={repeatingCardPatternsArticleHref(item.slug)}>
+              <span class="tok-rcm-series-continue__link-title">{item.title}</span>
+              <span class="tok-rcm-series-continue__link-desc">{item.summary}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .tok-rcm-series-continue {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: clamp(1.35rem, 3.5vw, 1.85rem) 1rem 0;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .tok-rcm-series-continue__eyebrow {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .tok-rcm-series-continue__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .tok-rcm-series-continue__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .tok-rcm-series-continue__link {
+    display: block;
+    padding: 0.75rem 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 14%, transparent);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tok-rcm-series-continue__item:first-child .tok-rcm-series-continue__link {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .tok-rcm-series-continue__link-title {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tok-rcm-series-continue__link:hover .tok-rcm-series-continue__link-title {
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-rcm-series-continue__link-desc {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+</style>

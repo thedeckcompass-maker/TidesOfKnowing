@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import RepeatingCardPatternsEditorialLinks from "../../components/RepeatingCardPatternsEditorialLinks.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
   buildRepeatingCardHubSections,
@@ -61,6 +62,8 @@ const toolHref = getRepeatingCardHubPath();
         </span>
       </p>
     </header>
+
+    <RepeatingCardPatternsEditorialLinks heading="Understanding Repeating Card Patterns" />
 
     {
       sections.map((section) => (

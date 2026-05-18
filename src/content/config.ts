@@ -101,6 +101,10 @@ export const blogSchema = z
 /** Long-form articles under `/articles/[slug]/`: used by `src/content.config.ts`. */
 export const articlesSchema = z.object({
   title: z.string(),
+  /** Overrides `<title>` and default Open Graph title when set. */
+  metaTitle: z.string().optional(),
+  /** Overrides meta description and default Open Graph description when set. */
+  metaDescription: z.string().optional(),
   subtitle: z.string().optional(),
   slug: z.string(),
   publishDate: z.coerce.date(),

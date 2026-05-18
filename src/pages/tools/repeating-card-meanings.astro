@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import RepeatingCardPatternsEditorialLinks from "../../components/RepeatingCardPatternsEditorialLinks.astro";
 import {
   getRepeatingCardEntry,
   getAllRepeatingCardToolOptions,
@@ -247,6 +248,11 @@ const cards: CardPanel[] = await Promise.all(
         )
       }
     </div>
+
+    <RepeatingCardPatternsEditorialLinks
+      class="rcm-tool__learn-more"
+      heading="Learn More About Repeating Cards"
+    />
 
     <p class="rcm-tool__back-wrap">
       <a class="rcm-tool__back" href="/tools/">Back to Tarot tools</a>
@@ -647,6 +653,24 @@ const cards: CardPanel[] = await Promise.all(
   .rcm-tool__prose h2 + p,
   .rcm-tool__prose h3 + p {
     margin-top: 0.5rem;
+  }
+
+  .rcm-tool__learn-more {
+    margin-top: clamp(2rem, 5vw, 2.75rem);
+    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .rcm-tool__learn-more .tok-rcm-editorial-links__title {
+    color: var(--tok-text-light);
+  }
+
+  .rcm-tool__learn-more .tok-rcm-editorial-links__link-title {
+    color: var(--tok-teal-light);
+  }
+
+  .rcm-tool__learn-more .tok-rcm-editorial-links__link:hover .tok-rcm-editorial-links__link-title {
+    color: var(--tok-text-light);
   }
 
   .rcm-tool__back-wrap {

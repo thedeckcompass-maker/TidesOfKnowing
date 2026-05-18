@@ -2,7 +2,9 @@
 import { getCollection, render } from "astro:content";
 import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
 import AiIntuitionCta from "../../components/lead-magnets/AiIntuitionCta.astro";
+import RepeatingCardPatternsContinue from "../../components/RepeatingCardPatternsContinue.astro";
 import { estimateReadingMinutes } from "../../lib/readingTime";
+import { isRepeatingCardPatternsArticle } from "../../lib/repeatingCardPatternsSeries";
 
 /** Seven-part AI and Intuition series only (lead magnet placements are not site-wide). */
 const AI_INTUITION_SERIES_SLUGS = new Set([
@@ -28,10 +30,16 @@ const body = article.body ?? "";
 const readingMinutes =
   article.data.readingTime ?? estimateReadingMinutes(body);
 const isAiIntuitionSeriesArticle = AI_INTUITION_SERIES_SLUGS.has(article.data.slug);
+const isRepeatingCardPatterns = isRepeatingCardPatternsArticle(article.data.slug);
 ---
 
 <ArticlesLayout article={article} readingMinutes={readingMinutes} mailerLite={isAiIntuitionSeriesArticle}>
   <Content />
+  {
+    isRepeatingCardPatterns ? (
+      <RepeatingCardPatternsContinue slot="append" currentSlug={article.data.slug} />
+    ) : null
+  }
   {
     isAiIntuitionSeriesArticle ? (
       <div class="tok-article-ai-signup-wrap" slot="append">

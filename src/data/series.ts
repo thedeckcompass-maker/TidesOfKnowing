@@ -27,4 +27,12 @@ export const seriesData: Record<string, SeriesMeta> = {
     status: "complete",
     publishedDate: "2026-04-06",
   },
+  "repeating-card-patterns": {
+    title: "Repeating Card Patterns",
+    description:
+      "Three anchor essays on tarot recurrence: why the same card keeps appearing, what repeating Major Arcana cards signal, and how repeating cards differ from stalker-card language.",
+    totalParts: 3,
+    status: "complete",
+    publishedDate: "2026-05-18",
+  },
 };

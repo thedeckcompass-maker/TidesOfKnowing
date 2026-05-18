@@ -1,0 +1,102 @@
+---
+import {
+  repeatingCardPatternsArticleHref,
+  repeatingCardPatternsArticles,
+} from "../lib/repeatingCardPatternsSeries";
+
+interface Props {
+  heading: string;
+  class?: string;
+}
+
+const { heading, class: className } = Astro.props;
+
+const items = [...repeatingCardPatternsArticles].sort((a, b) => a.order - b.order);
+---
+
+<section class:list={["tok-rcm-editorial-links", className]} aria-labelledby="rcm-editorial-links-heading">
+  <h2 id="rcm-editorial-links-heading" class="tok-rcm-editorial-links__title">
+    {heading}
+  </h2>
+  <ul class="tok-rcm-editorial-links__list" role="list">
+    {
+      items.map((item) => (
+        <li class="tok-rcm-editorial-links__item">
+          <a class="tok-rcm-editorial-links__link" href={repeatingCardPatternsArticleHref(item.slug)}>
+            <span class="tok-rcm-editorial-links__link-title">{item.title}</span>
+            <span class="tok-rcm-editorial-links__link-desc">{item.summary}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .tok-rcm-editorial-links {
+    margin: clamp(1.75rem, 4vw, 2.25rem) 0;
+    padding: clamp(1.1rem, 3vw, 1.45rem) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .tok-rcm-editorial-links__title {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.35rem, 3vw, 1.55rem);
+    line-height: 1.2;
+    color: var(--tok-text-light);
+  }
+
+  .tok-rcm-editorial-links__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .tok-rcm-editorial-links__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tok-rcm-editorial-links__link-title {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tok-rcm-editorial-links__link:hover .tok-rcm-editorial-links__link-title {
+    color: var(--tok-text-light);
+  }
+
+  .tok-rcm-editorial-links__link-desc {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.88rem;
+    line-height: 1.52;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 82%, var(--tok-text-dark));
+  }
+
+  :global(.rcm-hub) .tok-rcm-editorial-links__link-title {
+    color: var(--tok-teal);
+  }
+
+  :global(.rcm-hub) .tok-rcm-editorial-links__link:hover .tok-rcm-editorial-links__link-title {
+    color: var(--tok-teal-dim);
+  }
+
+  :global(.rcm-hub) .tok-rcm-editorial-links__link-desc {
+    color: var(--tok-text-dark);
+    opacity: 0.88;
+  }
+</style>

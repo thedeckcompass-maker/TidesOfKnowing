@@ -13,6 +13,7 @@ import { articleAuthorAttribution } from "../lib/authorProfile";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
+import { isRepeatingCardPatternsArticle } from "../lib/repeatingCardPatternsSeries";
 import { slugify } from "../utils/slugify";
 
 interface Props {
@@ -63,7 +64,9 @@ const canonicalPath = `/articles/${d.slug}/`;
 const ogUrl = new URL(canonicalPath, base).href;
 const heroAbsolute = new URL(d.heroImage, base).href;
 
-const pageTitle = `${d.title} | Tides of Knowing`;
+const pageTitle =
+  d.metaTitle?.trim() || `${d.title} | Tides of Knowing`;
+const metaDescription = d.metaDescription?.trim() || d.excerpt;
 const publishedISO = d.publishDate.toISOString();
 const modifiedISO = d.updatedDate?.toISOString();
 
@@ -88,7 +91,7 @@ const articleLd: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": "TechArticle",
   headline: d.title,
-  description: d.excerpt,
+  description: metaDescription,
   image: heroAbsolute,
   datePublished: publishedISO,
   dateModified: modifiedISO ?? publishedISO,
@@ -130,12 +133,14 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
 
 <BaseLayout
   title={pageTitle}
-  description={d.excerpt}
+  description={metaDescription}
   ogUrl={ogUrl}
   ogType="article"
   articlePublishedTime={publishedISO}
   articleModifiedTime={modifiedISO}
   ogImage={heroAbsolute}
+  ogTitle={pageTitle}
+  ogDescription={metaDescription}
   articleTags={d.tags}
   metaAuthor={d.author}
   tdcPlacement="none"
@@ -224,7 +229,8 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
         </article>
 
         {
-          d.seriesName && (
+          d.seriesName &&
+            !isRepeatingCardPatternsArticle(d.slug) && (
             <ArticleSeries
               seriesName={d.seriesName}
               seriesOrder={d.seriesOrder}
