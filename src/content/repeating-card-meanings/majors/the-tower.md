@@ -1,12 +1,22 @@
 ---
-title: "The Tower Repeating Meaning"
-slug: "repeating-card-meanings/the-tower"
-arcana: "major"
-suit: "n/a"
+title: The Tower Repeating Meaning
+slug: repeating-card-meanings/the-tower
+arcana: major
+suit: n/a
 card_number: "16"
-tier: "full"
-status: "draft"
+tier: full
+status: draft
 summary: "Repeated Tower periods often emerge when a structure, belief, or situation can no longer support what has been built on top of it. The Seeker may be approaching collapse, resisting necessary rupture, or living in aftermath and trying to rebuild too quickly. Repetition points to revelation through disruption: what was unstable becomes visible. The work is not to fear every shake, but to recognise what truth the breaking is exposing."
+primaryKeyword: the tower card keeps appearing in tarot
+secondaryKeywords:
+  - why does the tower card keep showing up
+  - the tower repeating tarot meaning
+  - the tower card upheaval tarot
+  - the tower pattern in readings
+featuredSnippetAnswer: The Tower repeating in tarot readings signals a pattern related to structures that are ready to collapse - either a disruption that has already happened and not been integrated, or a false structure still being maintained at significant cost. It often appears when what needs to end is being held together through effort rather than allowed to release.
+answerEngineSummary: The Tower repeating in readings marks a seeker whose current structure - a belief, relationship, identity, or system - is no longer stable and is requiring increasing energy to maintain. The shadow expression includes rebuilding the same tower after each disruption rather than examining why it keeps falling. Integration involves allowing the collapse and building differently from the honest ground it reveals.
+canonicalUrl: /repeating-card-meanings/the-tower/
+openGraphImage: /images/tarot/rws/the-tower.jpg
 ---
 
 # The Tower Repeating Meaning

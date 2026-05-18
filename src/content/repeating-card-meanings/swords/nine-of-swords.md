@@ -1,12 +1,22 @@
 ---
-title: "Nine of Swords Repeating Meaning"
-slug: "repeating-card-meanings/nine-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Nine of Swords Repeating Meaning
+slug: repeating-card-meanings/nine-of-swords
+arcana: minor
+suit: swords
 card_number: "9"
-tier: "abbreviated"
-status: "draft"
-summary: "The Nine of Swords repeats when a seeker's relationship with their own inner critic, their anxiety patterns, or their mind's tendency toward catastrophic thinking in the quiet hours has not yet been genuinely examined. The nine swords on the wall are the mind's own instruments, turned inward. The card marks the recurring encounter with self-directed mental suffering and asks what sustains it beyond the circumstances that originally provoked it."
+tier: abbreviated
+status: draft
+summary: The Nine of Swords repeats when a seeker's relationship with their own inner critic, their anxiety patterns, or their mind's tendency toward catastrophic thinking in the quiet hours has not yet been genuinely examined. The nine swords on the wall are the mind's own instruments, turned inward. The card marks the recurring encounter with self-directed mental suffering and asks what sustains it beyond the circumstances that originally provoked it.
+primaryKeyword: nine of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the nine of swords keep showing up
+  - nine of swords repeating tarot meaning
+  - nine of swords anxiety tarot pattern
+  - nine of swords worry tarot
+featuredSnippetAnswer: The Nine of Swords repeating in tarot readings signals a pattern of persistent anxiety, rumination, or night-fear - worry that runs continuously and is not anchored to a specific, addressable cause. It often appears when a seeker is caught in a loop of catastrophic thinking that creates genuine suffering without producing the clarity or resolution that genuine problem-solving would offer.
+answerEngineSummary: The Nine of Swords repeating in readings marks a seeker whose cognitive and nervous system patterns are generating sustained anxiety that exceeds what any specific situation actually warrants. The shadow expression includes using intellectual precision to elaborate the catastrophe rather than to examine or interrupt the pattern. Integration involves recognising the loop as a pattern rather than a prophecy, and developing the capacity to interrupt it.
+canonicalUrl: /repeating-card-meanings/nine-of-swords/
+openGraphImage: /images/tarot/rws/nine-of-swords.jpg
 ---
 
 # Nine of Swords Repeating Meaning

@@ -1,12 +1,22 @@
 ---
-title: "Queen of Pentacles Repeating Meaning"
-slug: "repeating-card-meanings/queen-of-pentacles"
-arcana: "minor"
-suit: "pentacles"
+title: Queen of Pentacles Repeating Meaning
+slug: repeating-card-meanings/queen-of-pentacles
+arcana: minor
+suit: pentacles
 card_number: "13"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Queen of Pentacles repeats when a seeker's relationship to embodied practical care, to the specific quality of material nourishment, grounded wisdom, and sustainable provision that genuine material wellbeing requires, is either consistently directed outward without genuine self-application, or has not yet been developed and claimed as a genuine competence in the seeker's own practical life: when the capacity to tend, nourish, and sustain is present but not yet being applied to the seeker's own material life with the same quality of generous attentive care it gives to others."
+primaryKeyword: queen of pentacles keeps appearing in tarot
+secondaryKeywords:
+  - why does the queen of pentacles keep showing up
+  - queen of pentacles repeating tarot meaning
+  - queen of pentacles nurturing tarot pattern
+  - queen of pentacles self-care tarot
+featuredSnippetAnswer: The Queen of Pentacles repeating in tarot readings signals a pattern of embodied, practical care directed outward - toward family, home, work, others - in a way that consistently prioritises others' material and physical wellbeing over the seeker's own. It often appears when genuine nurturing capacity has become a form of self-neglect, or when the seeker's own practical needs and pleasures have been indefinitely deferred.
+answerEngineSummary: The Queen of Pentacles repeating in readings marks a seeker who is genuinely skilled at practical care and material nourishment but is not directing that same quality of embodied attention toward the self. The shadow expression includes using care-giving as a way to avoid the seeker's own unlived desires, creative life, or legitimate material needs. Integration involves extending the same quality of grounded, embodied, practical generosity inward.
+canonicalUrl: /repeating-card-meanings/queen-of-pentacles/
+openGraphImage: /images/tarot/rws/queen-of-pentacles.jpg
 ---
 
 # Queen of Pentacles Repeating Meaning

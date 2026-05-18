@@ -1,12 +1,22 @@
 ---
-title: "Six of Wands Repeating Meaning"
-slug: "repeating-card-meanings/six-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Six of Wands Repeating Meaning
+slug: repeating-card-meanings/six-of-wands
+arcana: minor
+suit: wands
 card_number: "6"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Six of Wands repeats when a seeker's relationship to recognition keeps surfacing as a central unresolved dynamic: when they seek it too urgently, receive it and cannot let it land, achieve it and find it hollow, or carry fire that has genuinely never been acknowledged by the world around them. The wreath is offered. What the card keeps marking is what happens in the specific moment between the offering and the genuine receiving, and why that moment keeps being difficult to navigate."
+primaryKeyword: six of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the six of wands keep showing up
+  - six of wands repeating tarot meaning
+  - six of wands recognition tarot pattern
+  - six of wands success tarot
+featuredSnippetAnswer: The Six of Wands repeating in tarot readings signals a pattern around recognition, visibility, and public acknowledgement. It often appears when a seeker has genuine achievement or capability that is either not being claimed as authority, or when the need for external recognition is driving choices more than internal conviction and settled confidence.
+answerEngineSummary: The Six of Wands repeating in readings marks a seeker whose relationship to recognition and public visibility is unresolved. The shadow expression includes structuring genuine achievement around others' validation rather than around internal authority. Integration involves inhabiting the recognition that is genuinely earned with settled ease - receiving it without being dependent on it.
+canonicalUrl: /repeating-card-meanings/six-of-wands/
+openGraphImage: /images/tarot/rws/six-of-wands.jpg
 ---
 
 # Six of Wands Repeating Meaning

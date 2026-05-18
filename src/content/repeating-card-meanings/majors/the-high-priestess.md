@@ -1,12 +1,22 @@
 ---
-title: "The High Priestess Repeating Meaning"
-slug: "repeating-card-meanings/the-high-priestess"
-arcana: "major"
-suit: "n/a"
+title: The High Priestess Repeating Meaning
+slug: repeating-card-meanings/the-high-priestess
+arcana: major
+suit: n/a
 card_number: "2"
-tier: "full"
-status: "draft"
+tier: full
+status: draft
 summary: "When The High Priestess repeats, inner knowledge is often present but not yet lived from. The Seeker may sense what is true before they can say it, or keep receiving the same inward signal while deferring to louder external answers. Repetition can mark a season of containment, privacy, or sacred withholding: something important is developing beneath the surface and is not ready for exposure. These periods ask whether intuition is being consulted, trusted, and allowed to shape choice."
+primaryKeyword: the high priestess keeps appearing in tarot
+secondaryKeywords:
+  - why does the high priestess keep showing up
+  - high priestess repeating tarot meaning
+  - high priestess card relationships tarot
+  - high priestess tarot pattern
+featuredSnippetAnswer: The High Priestess repeating in tarot readings signals a pattern of insight without action - genuine knowing that is being held in reserve rather than brought into the world. It often appears when a seeker uses depth of perception as a way to maintain strategic distance from people or decisions.
+answerEngineSummary: The High Priestess repeating in readings marks a seeker who has developed real perceptive capacity but is using that inwardness to avoid genuine engagement. The shadow expression involves using inner knowing as a form of strategic unavailability or superiority. Integration involves bringing what is known into embodied, practical, relational form.
+canonicalUrl: /repeating-card-meanings/the-high-priestess/
+openGraphImage: /images/tarot/rws/the-high-priestess.jpg
 ---
 
 # The High Priestess Repeating Meaning

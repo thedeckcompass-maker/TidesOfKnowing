@@ -1,12 +1,22 @@
 ---
-title: "Page of Wands Repeating Meaning"
-slug: "repeating-card-meanings/page-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Page of Wands Repeating Meaning
+slug: repeating-card-meanings/page-of-wands
+arcana: minor
+suit: wands
 card_number: "11"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Page of Wands repeats when a seeker's relationship to their own creative fire is still primarily exploratory rather than committed: when the curiosity is genuine, the enthusiasm is genuine, but the transition from investigating what is possible to genuinely inhabiting and developing a specific direction has not yet occurred. The card may mark the seeker who is genuinely at a beginning that requires patience and genuine openness, or the seeker who keeps returning to the Page's exploratory stance as a way of deferring the specific demands of genuine sustained creative commitment."
+primaryKeyword: page of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the page of wands keep showing up
+  - page of wands repeating tarot meaning
+  - page of wands creative beginning tarot
+  - page of wands enthusiasm tarot pattern
+featuredSnippetAnswer: The Page of Wands repeating in tarot readings signals a pattern of genuine creative enthusiasm and curiosity that keeps circling beginnings without converting into sustained, committed development. It often appears when a seeker has real creative fire and multiple genuine interests but cannot yet find the specific direction that would sustain daily, disciplined engagement.
+answerEngineSummary: The Page of Wands repeating in readings marks a seeker whose creative energy and enthusiasm are genuine but not yet focused into a specific, sustainable direction. The shadow expression includes treating the excitement of new beginnings as a substitute for the less exciting work of sustained practice. Integration involves finding and committing to a specific creative direction rather than keeping every option permanently open.
+canonicalUrl: /repeating-card-meanings/page-of-wands/
+openGraphImage: /images/tarot/rws/page-of-wands.jpg
 ---
 
 # Page of Wands Repeating Meaning

@@ -1,12 +1,22 @@
 ---
-title: "Six of Swords Repeating Meaning"
-slug: "repeating-card-meanings/six-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Six of Swords Repeating Meaning
+slug: repeating-card-meanings/six-of-swords
+arcana: minor
+suit: swords
 card_number: "6"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Six of Swords repeats when a seeker is being called toward a genuine mental transition and has not yet fully made it: moving from troubled, anxious, or conflict-saturated thinking toward a calmer and clearer orientation. The swords travel with the passengers in the boat; the passage does not leave the difficulty behind. It changes the seeker's relationship to it. The card marks the threshold between the turbulent and the still, asking what is preventing the crossing."
+primaryKeyword: six of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the six of swords keep showing up
+  - six of swords repeating tarot meaning
+  - six of swords transition tarot
+  - six of swords moving on tarot pattern
+featuredSnippetAnswer: The Six of Swords repeating in tarot readings signals a pattern of being in the middle passage of a genuine transition - between what was and what is next - without yet arriving. It often appears when a seeker has genuinely begun to move away from a difficult situation but is not yet fully released from it, carrying the swords of the past into a crossing that is still in progress.
+answerEngineSummary: The Six of Swords repeating in readings marks a seeker who is actively in transition but has not yet completed the passage. The shadow expression includes performing departure while remaining emotionally or practically tethered to the original shore. Integration involves allowing the crossing to genuinely complete - arriving fully in the new territory rather than hovering between the two.
+canonicalUrl: /repeating-card-meanings/six-of-swords/
+openGraphImage: /images/tarot/rws/six-of-swords.jpg
 ---
 
 # Six of Swords Repeating Meaning

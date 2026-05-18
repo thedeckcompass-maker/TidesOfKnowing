@@ -1,12 +1,22 @@
 ---
-title: "Queen of Wands Repeating Meaning"
-slug: "repeating-card-meanings/queen-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Queen of Wands Repeating Meaning
+slug: repeating-card-meanings/queen-of-wands
+arcana: minor
+suit: wands
 card_number: "13"
-tier: "abbreviated"
-status: "draft"
-summary: "The Queen of Wands repeats when a seeker is being called to fully embody their own creative authority, warmth, and magnetic self-possession, and keeps finding that something consistently reduces that embodiment. The fire is present. The magnetism is genuine. What the card keeps marking is the seeker's characteristic pattern of diminishing their own creative authority to stay safe, directing their warmth entirely outward while leaving themselves unreplenished, or holding the full expression of their genuine fire in reserve for conditions that never quite arrive."
+tier: abbreviated
+status: draft
+summary: The Queen of Wands repeats when a seeker is being called to fully embody their own creative authority, warmth, and magnetic self-possession, and keeps finding that something consistently reduces that embodiment. The fire is present. The magnetism is genuine. What the card keeps marking is the seeker's characteristic pattern of diminishing their own creative authority to stay safe, directing their warmth entirely outward while leaving themselves unreplenished, or holding the full expression of their genuine fire in reserve for conditions that never quite arrive.
+primaryKeyword: queen of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the queen of wands keep showing up
+  - queen of wands repeating tarot meaning
+  - queen of wands confidence tarot
+  - queen of wands creative authority tarot
+featuredSnippetAnswer: The Queen of Wands repeating in tarot readings signals a pattern of genuine creative authority and charisma that is present but not fully claimed as a settled, inhabited state. It often appears when a seeker holds real warmth, creative vision, and natural leadership capacity but is performing these qualities rather than living from their actual, settled core.
+answerEngineSummary: The Queen of Wands repeating in readings marks a seeker who possesses genuine creative authority but is not inhabiting it from a place of grounded ease. The shadow expression includes performing confidence and warmth while maintaining a private core of self-doubt that requires ongoing validation. Integration involves claiming creative authority as a settled, owned quality rather than a role that requires constant maintenance.
+canonicalUrl: /repeating-card-meanings/queen-of-wands/
+openGraphImage: /images/tarot/rws/queen-of-wands.jpg
 ---
 
 # Queen of Wands Repeating Meaning

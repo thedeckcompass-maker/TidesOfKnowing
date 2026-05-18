@@ -1,12 +1,22 @@
 ---
-title: "Seven of Swords Repeating Meaning"
-slug: "repeating-card-meanings/seven-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Seven of Swords Repeating Meaning
+slug: repeating-card-meanings/seven-of-swords
+arcana: minor
+suit: swords
 card_number: "7"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Seven of Swords repeats when a seeker is consistently engaging with difficult situations through the oblique rather than the direct: speaking around what needs to be spoken, approaching what needs to be confronted at an angle, or leaving incomplete what a full engagement would require. The card marks the characteristic preference for strategic partial engagement over the genuine cost of direct honesty."
+primaryKeyword: seven of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the seven of swords keep showing up
+  - seven of swords repeating tarot meaning
+  - seven of swords deception tarot pattern
+  - seven of swords avoidance tarot
+featuredSnippetAnswer: The Seven of Swords repeating in tarot readings signals a pattern of strategic avoidance - departing situations indirectly, avoiding direct accountability, or using cleverness to evade the honest reckoning that a situation genuinely requires. It often appears when a seeker has developed a pattern of exit strategies that prevent genuine completion.
+answerEngineSummary: The Seven of Swords repeating in readings marks a seeker whose characteristic response to difficult situations involves strategic evasion rather than direct engagement. The shadow expression includes using intelligence as a tool for avoidance and treating direct honesty as a threat to be outmanoeuvred. Integration involves choosing the direct path and the honest reckoning, even when the indirect route is available and more comfortable.
+canonicalUrl: /repeating-card-meanings/seven-of-swords/
+openGraphImage: /images/tarot/rws/seven-of-swords.jpg
 ---
 
 # Seven of Swords Repeating Meaning

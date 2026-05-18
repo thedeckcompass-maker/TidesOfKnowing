@@ -1,12 +1,22 @@
 ---
-title: "Two of Cups Repeating Meaning"
-slug: "repeating-card-meanings/two-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Two of Cups Repeating Meaning
+slug: repeating-card-meanings/two-of-cups
+arcana: minor
+suit: cups
 card_number: "2"
-tier: "abbreviated"
-status: "draft"
-summary: "Repeated Two of Cups appearances often highlight partnership, mutual recognition, or the gap between wanting connection and truly meeting another person. The Seeker may be reaching for relationship, mirroring, or harmony without full reciprocity, presence, or honest exchange. Repetition can mark a season of learning how to see and be seen, not only to attach or perform closeness. The card asks whether connection is being built through genuine meeting rather than longing alone."
+tier: abbreviated
+status: draft
+summary: Repeated Two of Cups appearances often highlight partnership, mutual recognition, or the gap between wanting connection and truly meeting another person. The Seeker may be reaching for relationship, mirroring, or harmony without full reciprocity, presence, or honest exchange. Repetition can mark a season of learning how to see and be seen, not only to attach or perform closeness. The card asks whether connection is being built through genuine meeting rather than longing alone.
+primaryKeyword: two of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the two of cups keep showing up
+  - two of cups repeating tarot meaning
+  - two of cups love tarot pattern
+  - two of cups relationship tarot
+featuredSnippetAnswer: The Two of Cups repeating in tarot readings signals a pattern around genuine relational joining that is not yet being fully entered. It often appears when a seeker is at the threshold of real connection - romantic, creative, or collaborative - but is held back by idealisation, fear of vulnerability, or ambivalence about genuine mutual commitment.
+answerEngineSummary: The Two of Cups repeating in readings marks a seeker who is close to genuine relational joining but is not fully crossing into it. The shadow expression includes projecting an ideal onto a real person in place of genuine meeting. Integration involves entering genuine reciprocal exchange with the real person or opportunity present - not the imagined version.
+canonicalUrl: /repeating-card-meanings/two-of-cups/
+openGraphImage: /images/tarot/rws/two-of-cups.jpg
 ---
 
 # Two of Cups Repeating Meaning

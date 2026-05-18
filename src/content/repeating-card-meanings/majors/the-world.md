@@ -1,12 +1,22 @@
 ---
-title: "The World Repeating Meaning"
-slug: "repeating-card-meanings/the-world"
-arcana: "major"
-suit: "n/a"
+title: The World Repeating Meaning
+slug: repeating-card-meanings/the-world
+arcana: major
+suit: n/a
 card_number: "21"
-tier: "full"
-status: "draft"
-summary: "When The World returns repeatedly, completion, integration, or arrival is usually near but not fully claimed. The Seeker may be on the threshold of a cycle's end, resisting closure, or sensing wholeness without letting it reorganise identity. Repetition can mark graduation from a long season of work, travel, healing, or ambition. The card asks what is finished, what must be celebrated or released, and how the next turn can begin from embodiment rather than escape."
+tier: full
+status: draft
+summary: When The World returns repeatedly, completion, integration, or arrival is usually near but not fully claimed. The Seeker may be on the threshold of a cycle's end, resisting closure, or sensing wholeness without letting it reorganise identity. Repetition can mark graduation from a long season of work, travel, healing, or ambition. The card asks what is finished, what must be celebrated or released, and how the next turn can begin from embodiment rather than escape.
+primaryKeyword: the world card keeps appearing in tarot
+secondaryKeywords:
+  - why does the world card keep showing up
+  - the world repeating tarot meaning
+  - the world card completion tarot
+  - the world card pattern in readings
+featuredSnippetAnswer: The World repeating in tarot readings signals a pattern related to completion - either a cycle that is genuinely complete but has not yet been fully acknowledged, or a threshold of wholeness that is available but is being approached without fully crossing. It often appears when a seeker is performing completion without actually inhabiting it.
+answerEngineSummary: The World repeating in readings marks a seeker who is at the genuine threshold of a significant completion or integration but has not yet allowed themselves to fully inhabit what has been achieved. The shadow expression includes deferring genuine arrival by immediately seeking the next thing. Integration involves pausing, acknowledging completion, and fully inhabiting what has been earned before the next cycle begins.
+canonicalUrl: /repeating-card-meanings/the-world/
+openGraphImage: /images/tarot/rws/the-world.jpg
 ---
 
 # The World Repeating Meaning

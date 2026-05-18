@@ -1,12 +1,22 @@
 ---
-title: "Two of Wands Repeating Meaning"
-slug: "repeating-card-meanings/two-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Two of Wands Repeating Meaning
+slug: repeating-card-meanings/two-of-wands
+arcana: minor
+suit: wands
 card_number: "2"
-tier: "abbreviated"
-status: "draft"
-summary: "The Two of Wands repeats when a seeker holds a clear vision of expansion and carries genuine fire for a larger life, but keeps returning to the survey point rather than committing to genuine departure. The world is already in hand. The horizon is already seen. What the card keeps marking is the characteristic pattern of treating the plan as a destination rather than a preparation, of remaining at the threshold of the next territory without taking the step that would make the territory real."
+tier: abbreviated
+status: draft
+summary: The Two of Wands repeats when a seeker holds a clear vision of expansion and carries genuine fire for a larger life, but keeps returning to the survey point rather than committing to genuine departure. The world is already in hand. The horizon is already seen. What the card keeps marking is the characteristic pattern of treating the plan as a destination rather than a preparation, of remaining at the threshold of the next territory without taking the step that would make the territory real.
+primaryKeyword: two of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the two of wands keep showing up
+  - two of wands repeating tarot meaning
+  - two of wands career decisions tarot
+  - two of wands planning tarot pattern
+featuredSnippetAnswer: The Two of Wands repeating in tarot readings signals a pattern of being poised at the threshold of genuine expansion without yet crossing into it. It often appears when a seeker holds a genuine vision or plan and is standing at the point of departure - knowing which direction is forward but not yet committing the body and the will to actual movement.
+answerEngineSummary: The Two of Wands repeating in readings marks a seeker who has genuine vision and the beginnings of a plan but has not yet converted that vision into committed forward movement. The shadow expression includes elaborating the plan as a substitute for taking the first genuine step. Integration involves choosing the direction with conviction and beginning actual movement toward it.
+canonicalUrl: /repeating-card-meanings/two-of-wands/
+openGraphImage: /images/tarot/rws/two-of-wands.jpg
 ---
 
 # Two of Wands Repeating Meaning

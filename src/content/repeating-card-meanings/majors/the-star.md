@@ -1,12 +1,22 @@
 ---
-title: "The Star Repeating Meaning"
-slug: "repeating-card-meanings/the-star"
-arcana: "major"
-suit: "n/a"
+title: The Star Repeating Meaning
+slug: repeating-card-meanings/the-star
+arcana: major
+suit: n/a
 card_number: "17"
-tier: "full"
-status: "draft"
-summary: "When The Star returns often, healing, renewal, and quiet hope are usually re-entering awareness after difficulty. The Seeker may be recovering trust in life, art, relationship, or purpose, sometimes tentatively. Repetition can mark fragile restoration, spiritual reorientation, or the need to let repair happen at its own pace. The card asks whether the Seeker is willing to receive gentleness and orient toward a future that is not yet fully formed but is no longer impossible."
+tier: full
+status: draft
+summary: When The Star returns often, healing, renewal, and quiet hope are usually re-entering awareness after difficulty. The Seeker may be recovering trust in life, art, relationship, or purpose, sometimes tentatively. Repetition can mark fragile restoration, spiritual reorientation, or the need to let repair happen at its own pace. The card asks whether the Seeker is willing to receive gentleness and orient toward a future that is not yet fully formed but is no longer impossible.
+primaryKeyword: the star card keeps appearing in tarot
+secondaryKeywords:
+  - why does the star card keep showing up
+  - the star repeating tarot meaning
+  - the star card hope tarot
+  - the star card healing tarot
+featuredSnippetAnswer: The Star repeating in tarot readings signals a pattern around renewal and trust that has not yet been genuinely received. It often appears after significant loss or disruption when a seeker can perceive the possibility of restoration but cannot fully open to it - circling hope without allowing it to land in the body and in daily life.
+answerEngineSummary: The Star repeating in readings marks a seeker who is in the territory of genuine renewal but has not yet allowed themselves to be fully restored by it. The shadow expression includes using spiritual hope as a way to avoid the practical, embodied work of healing. Integration involves allowing hope to become a lived, grounded orientation rather than a distant aspiration.
+canonicalUrl: /repeating-card-meanings/the-star/
+openGraphImage: /images/tarot/rws/the-star.jpg
 ---
 
 # The Star Repeating Meaning

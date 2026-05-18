@@ -1,12 +1,22 @@
 ---
-title: "Three of Cups Repeating Meaning"
-slug: "repeating-card-meanings/three-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Three of Cups Repeating Meaning
+slug: repeating-card-meanings/three-of-cups
+arcana: minor
+suit: cups
 card_number: "3"
-tier: "abbreviated"
-status: "draft"
-summary: "When the Three of Cups keeps returning, shared joy, friendship, or creative community is usually central. The Seeker may long for belonging while deflecting celebration directed toward them, or live socially busy yet emotionally under-fed. Repetition can point to grief for a past circle, fear of inhabiting joy, or difficulty letting others genuinely hold them. These periods ask whether the Seeker is allowing themselves to be celebrated, gathered with, and nourished in relational warmth."
+tier: abbreviated
+status: draft
+summary: When the Three of Cups keeps returning, shared joy, friendship, or creative community is usually central. The Seeker may long for belonging while deflecting celebration directed toward them, or live socially busy yet emotionally under-fed. Repetition can point to grief for a past circle, fear of inhabiting joy, or difficulty letting others genuinely hold them. These periods ask whether the Seeker is allowing themselves to be celebrated, gathered with, and nourished in relational warmth.
+primaryKeyword: three of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the three of cups keep showing up
+  - three of cups repeating tarot meaning
+  - three of cups friendship tarot
+  - three of cups community pattern
+featuredSnippetAnswer: The Three of Cups repeating in tarot readings signals a pattern around community, celebration, and relational reciprocity. It often appears when a seeker is giving generously to a circle of people without receiving equivalently - or when genuine joy and belonging are available but are not being fully allowed or inhabited.
+answerEngineSummary: The Three of Cups repeating in readings marks a seeker whose relationship to community and shared celebration has become unbalanced. The shadow expression includes over-giving to a group while neglecting individual needs and boundaries. Integration involves participating in genuine reciprocal community where giving and receiving are genuinely balanced.
+canonicalUrl: /repeating-card-meanings/three-of-cups/
+openGraphImage: /images/tarot/rws/three-of-cups.jpg
 ---
 
 # Three of Cups Repeating Meaning

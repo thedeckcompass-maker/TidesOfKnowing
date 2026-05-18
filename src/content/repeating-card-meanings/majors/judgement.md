@@ -1,12 +1,22 @@
 ---
-title: "Judgement Repeating Meaning"
-slug: "repeating-card-meanings/judgement"
-arcana: "major"
-suit: "n/a"
+title: Judgement Repeating Meaning
+slug: repeating-card-meanings/judgement
+arcana: major
+suit: n/a
 card_number: "20"
-tier: "full"
-status: "draft"
+tier: full
+status: draft
 summary: "Repeated Judgement appearances often mark a calling, reckoning, or life review that will not stay silent. The Seeker may be avoiding a response they already recognise as necessary: amends, vocation, truth-telling, or a decisive turn toward a new chapter. Repetition can feel like summons rather than suggestion. These periods ask what awakening is requesting embodiment and what old self must be laid down for the answer to be lived."
+primaryKeyword: judgement card keeps appearing in tarot
+secondaryKeywords:
+  - why does judgement keep showing up in tarot
+  - judgement repeating tarot meaning
+  - judgement card awakening tarot
+  - judgement card pattern in readings
+featuredSnippetAnswer: Judgement repeating in tarot readings signals a pattern of a genuine call to awakening or reclamation that is being heard but not answered. It often appears when a seeker is at the threshold of a significant identity shift - recognising what they are being called toward but unable to fully respond without releasing what came before.
+answerEngineSummary: Judgement repeating in readings marks a seeker who is receiving a genuine signal of awakening or reclamation but has not yet allowed themselves to respond fully to it. The shadow expression includes performing renewal while maintaining the old identity underneath. Integration involves genuinely releasing the past identity so the summoned self can step fully forward.
+canonicalUrl: /repeating-card-meanings/judgement/
+openGraphImage: /images/tarot/rws/judgement.jpg
 ---
 
 # Judgement Repeating Meaning

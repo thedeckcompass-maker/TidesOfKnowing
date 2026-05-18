@@ -1,12 +1,22 @@
 ---
-title: "Three of Wands Repeating Meaning"
-slug: "repeating-card-meanings/three-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Three of Wands Repeating Meaning
+slug: repeating-card-meanings/three-of-wands
+arcana: minor
+suit: wands
 card_number: "3"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Three of Wands repeats when a seeker has genuinely launched something and keeps finding themselves in the specific discomfort of not knowing what their initiative will return. The ships are on the water. The action has been taken. What the card keeps marking is the seeker's characteristic difficulty with the waiting period after genuine commitment: the tendency to doubt what was launched, to abandon the watching position before anything comes back, or to send out a new fleet before the first has had time to return."
+primaryKeyword: three of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the three of wands keep showing up
+  - three of wands repeating tarot meaning
+  - three of wands waiting tarot pattern
+  - three of wands expansion career tarot
+featuredSnippetAnswer: The Three of Wands repeating in tarot readings signals a pattern of being in the long middle of a genuine expansion - watching for returns on an investment without actively tending the work that would bring them. It often appears when a seeker has made a genuine beginning and sent things out into the world but has not yet resumed the active cultivation.
+answerEngineSummary: The Three of Wands repeating in readings marks a seeker who has launched a genuine initiative and is now waiting at a distance rather than returning to active development. The shadow expression includes treating the horizon-watching as productive engagement. Integration involves returning to the practical, daily tending of the developing work - not just watching for results.
+canonicalUrl: /repeating-card-meanings/three-of-wands/
+openGraphImage: /images/tarot/rws/three-of-wands.jpg
 ---
 
 # Three of Wands Repeating Meaning

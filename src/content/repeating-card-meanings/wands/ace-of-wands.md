@@ -1,12 +1,22 @@
 ---
-title: "Ace of Wands Repeating Meaning"
-slug: "repeating-card-meanings/ace-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Ace of Wands Repeating Meaning
+slug: repeating-card-meanings/ace-of-wands
+arcana: minor
+suit: wands
 card_number: "1"
-tier: "abbreviated"
-status: "draft"
-summary: "The Ace of Wands repeats when a genuine creative impulse, surge of desire, or awakening of life force keeps forming and failing to be protected long enough to become something. The spark is real; the seeker's pattern of doubting it before it catches, abandoning it before it takes hold, or routing energy toward obligation rather than genuine fire is what the card keeps marking. Its return is not a demand to begin recklessly; it is the patient insistence of a vitality that knows what it wants to ignite and is waiting for the seeker's genuine permission."
+tier: abbreviated
+status: draft
+summary: The Ace of Wands repeats when a genuine creative impulse, surge of desire, or awakening of life force keeps forming and failing to be protected long enough to become something. The spark is real; the seeker's pattern of doubting it before it catches, abandoning it before it takes hold, or routing energy toward obligation rather than genuine fire is what the card keeps marking. Its return is not a demand to begin recklessly; it is the patient insistence of a vitality that knows what it wants to ignite and is waiting for the seeker's genuine permission.
+primaryKeyword: ace of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the ace of wands keep showing up
+  - ace of wands repeating tarot meaning
+  - ace of wands creative block tarot
+  - ace of wands new project tarot
+featuredSnippetAnswer: The Ace of Wands repeating in tarot readings signals a pattern of genuine creative or purposive impulse that keeps igniting but is not sustained into committed action. It often appears when a seeker has real creative energy and genuine vision but is circling the beginning without allowing the initial spark to become a sustained, developing fire.
+answerEngineSummary: The Ace of Wands repeating in readings marks a seeker whose creative energy keeps arising but does not yet convert into sustained, committed engagement with a specific direction. The shadow expression includes treating the spark itself as the destination rather than as the beginning. Integration involves allowing the impulse to land in a specific, embodied, sustained first action.
+canonicalUrl: /repeating-card-meanings/ace-of-wands/
+openGraphImage: /images/tarot/rws/ace-of-wands.jpg
 ---
 
 # Ace of Wands Repeating Meaning

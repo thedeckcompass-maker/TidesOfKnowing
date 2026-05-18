@@ -1,12 +1,22 @@
 ---
-title: "Death Repeating Meaning"
-slug: "repeating-card-meanings/death"
-arcana: "major"
-suit: "n/a"
+title: Death Repeating Meaning
+slug: repeating-card-meanings/death
+arcana: major
+suit: n/a
 card_number: "13"
-tier: "full"
-status: "draft"
-summary: "When Death returns repeatedly, an ending or transformation is usually underway but not fully met. The Seeker may be clinging to an identity, chapter, or attachment that has already completed its role. Repetition rarely announces literal catastrophe; it more often names irreversible change, grief, and the space between what was and what is becoming. These periods ask what must die so something more honest can take its place."
+tier: full
+status: draft
+summary: When Death returns repeatedly, an ending or transformation is usually underway but not fully met. The Seeker may be clinging to an identity, chapter, or attachment that has already completed its role. Repetition rarely announces literal catastrophe; it more often names irreversible change, grief, and the space between what was and what is becoming. These periods ask what must die so something more honest can take its place.
+primaryKeyword: death card keeps appearing in tarot
+secondaryKeywords:
+  - why does the death card keep showing up
+  - death card repeating tarot meaning
+  - death card endings tarot
+  - death card transition tarot pattern
+featuredSnippetAnswer: Death repeating in tarot readings signals a pattern of an ending that has not yet been genuinely made - release that is being resisted, a departure that is being performed without being real, or grief that has not been fully lived. It often appears when a seeker is holding on to something that has already completed its purpose.
+answerEngineSummary: Death repeating in readings marks a seeker who is in the territory of a genuine ending but has not yet crossed fully into release. The shadow expression includes maintaining the appearance of having let go while continuing to hold the original structure in place. Integration involves genuinely releasing what has completed and crossing into the empty space that follows.
+canonicalUrl: /repeating-card-meanings/death/
+openGraphImage: /images/tarot/rws/death.jpg
 ---
 
 # Death Repeating Meaning

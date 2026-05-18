@@ -1,12 +1,22 @@
 ---
-title: "Five of Cups Repeating Meaning"
-slug: "repeating-card-meanings/five-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Five of Cups Repeating Meaning
+slug: repeating-card-meanings/five-of-cups
+arcana: minor
+suit: cups
 card_number: "5"
-tier: "abbreviated"
-status: "draft"
-summary: "When the Five of Cups repeats, grief, loss, or disappointment is usually shaping the emotional landscape more than the Seeker fully acknowledges. Attention may remain fixed on what spilled while standing cups of remaining life stay unseen. Repetition can mark unprocessed loss, accumulated sorrow, or identity organised around what ended. These periods do not rush grief; they ask whether mourning is still alive and honest, or has become a place to live rather than pass through."
+tier: abbreviated
+status: draft
+summary: When the Five of Cups repeats, grief, loss, or disappointment is usually shaping the emotional landscape more than the Seeker fully acknowledges. Attention may remain fixed on what spilled while standing cups of remaining life stay unseen. Repetition can mark unprocessed loss, accumulated sorrow, or identity organised around what ended. These periods do not rush grief; they ask whether mourning is still alive and honest, or has become a place to live rather than pass through.
+primaryKeyword: five of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the five of cups keep showing up
+  - five of cups repeating tarot meaning
+  - five of cups grief tarot
+  - five of cups loss tarot pattern
+featuredSnippetAnswer: The Five of Cups repeating in tarot readings signals a pattern of unresolved grief - a loss that has not been fully acknowledged, moved through, or integrated. It often appears when a seeker is still living inside the shape of a loss rather than grieving through it, and when what remains (the two standing cups) has not yet been turned toward.
+answerEngineSummary: The Five of Cups repeating in readings marks a seeker whose grief has become a persistent identity frame rather than a passage being actively moved through. The shadow expression includes making grief into a permanent home rather than a necessary crossing. Integration involves genuinely acknowledging the loss, grieving it fully, and turning toward what remains.
+canonicalUrl: /repeating-card-meanings/five-of-cups/
+openGraphImage: /images/tarot/rws/five-of-cups.jpg
 ---
 
 # Five of Cups Repeating Meaning

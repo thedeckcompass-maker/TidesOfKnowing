@@ -1,12 +1,22 @@
 ---
-title: "Page of Swords Repeating Meaning"
-slug: "repeating-card-meanings/page-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Page of Swords Repeating Meaning
+slug: repeating-card-meanings/page-of-swords
+arcana: minor
+suit: swords
 card_number: "11"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Page of Swords repeats when a seeker's genuine perceptiveness and intellectual alertness has turned primarily toward scanning for threat rather than toward genuine inquiry and discovery. The sword is raised, the eyes are quick, the intelligence is real. The pattern the card keeps marking is the deployment of that intelligence as a vigilance system: always watching the horizon for what might come, seldom resting long enough to genuinely engage with what is already present. The question is not whether the sharpness is real but what it is consistently in service of."
+primaryKeyword: page of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the page of swords keep showing up
+  - page of swords repeating tarot meaning
+  - page of swords learning tarot pattern
+  - page of swords overthinking tarot
+featuredSnippetAnswer: The Page of Swords repeating in tarot readings signals a pattern of genuine intellectual curiosity and mental acuity in early, undirected development - where sharp thinking is present but has not yet been focused into a specific, sustained line of inquiry or action. It often appears when a seeker is using intelligence to observe and analyse rather than to commit and develop.
+answerEngineSummary: The Page of Swords repeating in readings marks a seeker whose genuine intellectual capacity is not yet directed with purpose and sustained commitment. The shadow expression includes using cleverness as a defence - keeping everything under observation without fully engaging with anything. Integration involves choosing a specific direction for the intelligence to develop and committing to it with genuine, sustained inquiry.
+canonicalUrl: /repeating-card-meanings/page-of-swords/
+openGraphImage: /images/tarot/rws/page-of-swords.jpg
 ---
 
 # Page of Swords Repeating Meaning

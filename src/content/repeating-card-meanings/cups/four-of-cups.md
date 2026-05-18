@@ -1,12 +1,22 @@
 ---
-title: "Four of Cups Repeating Meaning"
-slug: "repeating-card-meanings/four-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Four of Cups Repeating Meaning
+slug: repeating-card-meanings/four-of-cups
+arcana: minor
+suit: cups
 card_number: "4"
-tier: "abbreviated"
-status: "draft"
-summary: "Repeated Four of Cups periods often signal emotional withdrawal, boredom, or dissatisfaction that is not being honestly examined. The Seeker may be disengaged from what is present while overlooking a genuine new offer of feeling or meaning. Repetition asks what they are actually seeking, and whether apathy has become a shelter from risk, disappointment, or the vulnerability of wanting more. The card points to missed receptivity beneath apparent indifference."
+tier: abbreviated
+status: draft
+summary: Repeated Four of Cups periods often signal emotional withdrawal, boredom, or dissatisfaction that is not being honestly examined. The Seeker may be disengaged from what is present while overlooking a genuine new offer of feeling or meaning. Repetition asks what they are actually seeking, and whether apathy has become a shelter from risk, disappointment, or the vulnerability of wanting more. The card points to missed receptivity beneath apparent indifference.
+primaryKeyword: four of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the four of cups keep showing up
+  - four of cups repeating tarot meaning
+  - four of cups boredom tarot
+  - four of cups missed opportunity tarot
+featuredSnippetAnswer: The Four of Cups repeating in tarot readings signals a pattern of withdrawal and disengagement - where genuine possibilities or offers are being missed because the seeker's attention is turned inward, into fantasy, or into dissatisfaction with what is present. It often appears when what is being offered cannot be seen because of what is being longed for.
+answerEngineSummary: The Four of Cups repeating in readings marks a seeker whose withdrawal from engagement has become habitual rather than intentional. The shadow expression includes using contemplation or discontent as a way to avoid the vulnerability of genuine receptivity. Integration involves allowing the actual present moment - and what it genuinely offers - to be received.
+canonicalUrl: /repeating-card-meanings/four-of-cups/
+openGraphImage: /images/tarot/rws/four-of-cups.jpg
 ---
 
 # Four of Cups Repeating Meaning

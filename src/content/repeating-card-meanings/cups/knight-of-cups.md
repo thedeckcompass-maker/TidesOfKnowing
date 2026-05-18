@@ -1,12 +1,22 @@
 ---
-title: "Knight of Cups Repeating Meaning"
-slug: "repeating-card-meanings/knight-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Knight of Cups Repeating Meaning
+slug: repeating-card-meanings/knight-of-cups
+arcana: minor
+suit: cups
 card_number: "12"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "Repeated Knight of Cups periods often mark pursuit guided by feeling, romance, artistry, or idealism that has not yet arrived anywhere stable. The Seeker may be perpetually en route: charming, devoted, moved by beauty or longing, yet reluctant to land in reality's limits. Repetition can point to seductive possibility, emotional questing, or devotion that avoids the vulnerability of completion. The card asks whether the journey is genuine, and whether the Seeker is willing to arrive."
+primaryKeyword: knight of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the knight of cups keep showing up
+  - knight of cups repeating tarot meaning
+  - knight of cups romantic tarot pattern
+  - knight of cups idealism tarot
+featuredSnippetAnswer: The Knight of Cups repeating in tarot readings signals a pattern of romantic or emotional idealism - pursuing the feeling of connection, beauty, or inspiration rather than building genuine, sustained relational or creative engagement. It often appears when a seeker is more devoted to the ideal version of an experience than to its real, imperfect form.
+answerEngineSummary: The Knight of Cups repeating in readings marks a seeker whose emotional and relational pursuits are shaped more by idealism and feeling than by genuine sustained commitment. The shadow expression includes using romantic fantasy as a substitute for the work of real intimacy. Integration involves bringing the genuine feeling into contact with the actual person, project, or path - not its imagined version.
+canonicalUrl: /repeating-card-meanings/knight-of-cups/
+openGraphImage: /images/tarot/rws/knight-of-cups.jpg
 ---
 
 # Knight of Cups Repeating Meaning

@@ -1,12 +1,22 @@
 ---
-title: "Six of Cups Repeating Meaning"
-slug: "repeating-card-meanings/six-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Six of Cups Repeating Meaning
+slug: repeating-card-meanings/six-of-cups
+arcana: minor
+suit: cups
 card_number: "6"
-tier: "abbreviated"
-status: "draft"
-summary: "Repeated Six of Cups appearances often bring memory, tenderness, nostalgia, or the emotional tone of earlier life back into focus. The Seeker may be comforted by the past, bound to it, or invited to carry its gifts forward without retreating into it. Repetition can highlight childhood patterns, old kindnesses, lost innocence, or relationships that once held them safely. The card asks how past sweetness is influencing present capacity to receive, relate, and belong."
+tier: abbreviated
+status: draft
+summary: Repeated Six of Cups appearances often bring memory, tenderness, nostalgia, or the emotional tone of earlier life back into focus. The Seeker may be comforted by the past, bound to it, or invited to carry its gifts forward without retreating into it. Repetition can highlight childhood patterns, old kindnesses, lost innocence, or relationships that once held them safely. The card asks how past sweetness is influencing present capacity to receive, relate, and belong.
+primaryKeyword: six of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the six of cups keep showing up
+  - six of cups repeating tarot meaning
+  - six of cups nostalgia tarot
+  - six of cups childhood patterns tarot
+featuredSnippetAnswer: The Six of Cups repeating in tarot readings signals a pattern of the past shaping the present - nostalgia, childhood relational templates, or inherited emotional patterns that are being lived out in current relationships without awareness. It often appears when what a seeker is seeking in the present is a version of what was known, or lost, in the past.
+answerEngineSummary: The Six of Cups repeating in readings marks a seeker whose current relational and emotional life is being shaped by templates established in childhood or early experience. The shadow expression includes using idealised memory as a standard that prevents genuine present engagement. Integration involves consciously examining what has been inherited and choosing which aspects to carry forward.
+canonicalUrl: /repeating-card-meanings/six-of-cups/
+openGraphImage: /images/tarot/rws/six-of-cups.jpg
 ---
 
 # Six of Cups Repeating Meaning

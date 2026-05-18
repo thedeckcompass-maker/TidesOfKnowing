@@ -1,12 +1,22 @@
 ---
-title: "Five of Swords Repeating Meaning"
-slug: "repeating-card-meanings/five-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Five of Swords Repeating Meaning
+slug: repeating-card-meanings/five-of-swords
+arcana: minor
+suit: swords
 card_number: "5"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Five of Swords repeats when a seeker is caught in a pattern of conflict that produces a specific kind of hollow victory: winning arguments that do not resolve anything, being right at the cost of genuine connection, or engaging in battles whose terms were never genuinely appropriate to what was actually at stake. The card marks the recurring encounter with the question of what winning is actually for."
+primaryKeyword: five of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the five of swords keep showing up
+  - five of swords repeating tarot meaning
+  - five of swords conflict tarot pattern
+  - five of swords winning and losing tarot
+featuredSnippetAnswer: The Five of Swords repeating in tarot readings signals a recurring pattern of conflict where winning comes at significant relational cost, or where a seeker consistently occupies the losing position in a dynamic they continue to re-enter. It often appears when the terms of a conflict have been accepted without examination of whether the battle itself is worth continuing.
+answerEngineSummary: The Five of Swords repeating in readings marks a seeker who is repeatedly drawn into a conflict pattern whose costs have not been honestly assessed. The shadow expression includes winning through tactics that damage genuine trust, or accepting defeat as an identity rather than examining the terms of the encounter. Integration involves deciding whether the situation is worth continuing and, if so, on what genuinely different terms.
+canonicalUrl: /repeating-card-meanings/five-of-swords/
+openGraphImage: /images/tarot/rws/five-of-swords.jpg
 ---
 
 # Five of Swords Repeating Meaning

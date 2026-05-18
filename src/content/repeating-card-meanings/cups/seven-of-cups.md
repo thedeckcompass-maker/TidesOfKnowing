@@ -1,12 +1,22 @@
 ---
-title: "Seven of Cups Repeating Meaning"
-slug: "repeating-card-meanings/seven-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Seven of Cups Repeating Meaning
+slug: repeating-card-meanings/seven-of-cups
+arcana: minor
+suit: cups
 card_number: "7"
-tier: "abbreviated"
-status: "draft"
-summary: "When the Seven of Cups keeps returning, imagination, desire, and possibility are often abundant but ungrounded. The Seeker may live among many visions, projections, or fantasies without choosing one cup concretely. Repetition can point to confusion about what is truly wanted, emotional nourishment through fantasy, or seeing people and situations through need rather than clarity. These periods ask what must come down from the clouds into lived choice and honest perception."
+tier: abbreviated
+status: draft
+summary: When the Seven of Cups keeps returning, imagination, desire, and possibility are often abundant but ungrounded. The Seeker may live among many visions, projections, or fantasies without choosing one cup concretely. Repetition can point to confusion about what is truly wanted, emotional nourishment through fantasy, or seeing people and situations through need rather than clarity. These periods ask what must come down from the clouds into lived choice and honest perception.
+primaryKeyword: seven of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the seven of cups keep showing up
+  - seven of cups repeating tarot meaning
+  - seven of cups too many choices tarot
+  - seven of cups fantasy tarot pattern
+featuredSnippetAnswer: The Seven of Cups repeating in tarot readings signals a pattern of fantasy and avoidance - where the imagination generates many possible paths or desires but genuine choice and committed action are consistently deferred. It often appears when a seeker is using the richness of possibility as a substitute for the discomfort of concrete commitment.
+answerEngineSummary: The Seven of Cups repeating in readings marks a seeker who is caught in a pattern of imagining options without choosing between them. The shadow expression includes using the pleasure of possibility to avoid the necessary loss that every genuine choice entails. Integration involves choosing one genuine path and committing to it with the full awareness of what has been released.
+canonicalUrl: /repeating-card-meanings/seven-of-cups/
+openGraphImage: /images/tarot/rws/seven-of-cups.jpg
 ---
 
 # Seven of Cups Repeating Meaning

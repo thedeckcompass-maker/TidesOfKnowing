@@ -1,12 +1,22 @@
 ---
-title: "Knight of Wands Repeating Meaning"
-slug: "repeating-card-meanings/knight-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Knight of Wands Repeating Meaning
+slug: repeating-card-meanings/knight-of-wands
+arcana: minor
+suit: wands
 card_number: "12"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Knight of Wands repeats when a seeker's fire consistently expresses as full-speed forward charge: bold, exciting, and genuinely alive, but also consistently outrunning the direction, strategy, or sustained effort that would allow the charge to produce genuine lasting results. The horse is real. The fire is real. What the card keeps marking is the seeker's characteristic pattern of riding their creative or vocational fire at a pace that either outpaces the destination or produces the specific crash that follows when momentum has been the primary guide."
+primaryKeyword: knight of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the knight of wands keep showing up
+  - knight of wands repeating tarot meaning
+  - knight of wands impulsive tarot pattern
+  - knight of wands commitment tarot
+featuredSnippetAnswer: The Knight of Wands repeating in tarot readings signals a pattern of enthusiastic, rapid movement that does not sustain long enough to develop into genuine mastery or completion. It often appears when a seeker is drawn by excitement and novelty but moves on before the more difficult, less glamorous middle phase of genuine development has been entered and completed.
+answerEngineSummary: The Knight of Wands repeating in readings marks a seeker whose genuine creative and purposive fire is real but not yet sustained through the long middle of any one direction. The shadow expression includes using the next exciting beginning to avoid the demands of the current, more difficult development. Integration involves committing to one direction long enough to discover what it actually requires.
+canonicalUrl: /repeating-card-meanings/knight-of-wands/
+openGraphImage: /images/tarot/rws/knight-of-wands.jpg
 ---
 
 # Knight of Wands Repeating Meaning

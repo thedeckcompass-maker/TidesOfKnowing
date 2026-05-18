@@ -1,12 +1,22 @@
 ---
-title: "Five of Wands Repeating Meaning"
-slug: "repeating-card-meanings/five-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Five of Wands Repeating Meaning
+slug: repeating-card-meanings/five-of-wands
+arcana: minor
+suit: wands
 card_number: "5"
-tier: "abbreviated"
-status: "draft"
-summary: "The Five of Wands repeats when a seeker's creative fire keeps fragmenting across competing directions, conflicting demands, or unresolved inner contests rather than finding a single sustained path. The wands are genuinely swinging. The energy is genuinely there. What the card keeps marking is the pattern in which multiple genuine desires, obligations, or impulses occupy the same space and prevent any single one from gaining the ground it needs to develop into something real. Its return is an invitation to understand what is driving the contest and whether any of it needs to be."
+tier: abbreviated
+status: draft
+summary: The Five of Wands repeats when a seeker's creative fire keeps fragmenting across competing directions, conflicting demands, or unresolved inner contests rather than finding a single sustained path. The wands are genuinely swinging. The energy is genuinely there. What the card keeps marking is the pattern in which multiple genuine desires, obligations, or impulses occupy the same space and prevent any single one from gaining the ground it needs to develop into something real. Its return is an invitation to understand what is driving the contest and whether any of it needs to be.
+primaryKeyword: five of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the five of wands keep showing up
+  - five of wands repeating tarot meaning
+  - five of wands conflict tarot pattern
+  - five of wands competition tarot
+featuredSnippetAnswer: The Five of Wands repeating in tarot readings signals a pattern of recurring conflict, friction, or competitive fragmentation - either in external situations with others or internally among the seeker's own competing drives and directions. It often appears when genuine creative energy has no coherent outlet and turns into noise, argument, or self-undermining competition.
+answerEngineSummary: The Five of Wands repeating in readings marks a seeker whose genuine creative or purposive energy is being spent on conflict and competition rather than on directed development. The shadow expression includes maintaining a combative stance past the point where it serves any genuine purpose. Integration involves finding the direction that makes the scattered energy coherent rather than contentious.
+canonicalUrl: /repeating-card-meanings/five-of-wands/
+openGraphImage: /images/tarot/rws/five-of-wands.jpg
 ---
 
 # Five of Wands Repeating Meaning

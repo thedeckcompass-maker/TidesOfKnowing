@@ -1,12 +1,22 @@
 ---
-title: "Four of Wands Repeating Meaning"
-slug: "repeating-card-meanings/four-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Four of Wands Repeating Meaning
+slug: repeating-card-meanings/four-of-wands
+arcana: minor
+suit: wands
 card_number: "4"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Four of Wands repeats when a seeker keeps arriving at genuine moments of completion, celebration, or homecoming and consistently fails to receive them fully. The garlands are hung. The ground is held. What the card keeps marking is the seeker's pattern of moving through their own arrivals without pausing long enough to genuinely inhabit them: rushing to the next beginning, minimising what has been built, or treating the completion as a brief rest stop rather than a genuine moment of landing. Its return is an insistence that what has been built deserves to be genuinely lived in."
+primaryKeyword: four of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the four of wands keep showing up
+  - four of wands repeating tarot meaning
+  - four of wands celebration tarot
+  - four of wands home tarot pattern
+featuredSnippetAnswer: The Four of Wands repeating in tarot readings signals a pattern around arrival, celebration, and genuine homecoming that is not yet being received. It often appears when a seeker has reached a genuine milestone but cannot rest in it - still moving, still performing, or still waiting for the moment to feel safe enough to actually celebrate and belong.
+answerEngineSummary: The Four of Wands repeating in readings marks a seeker who has reached a genuine threshold of arrival or community but has not allowed themselves to inhabit the celebration with ease. The shadow expression includes remaining in forward momentum as a way to avoid the vulnerability of genuine rest and belonging. Integration involves pausing, receiving the arrival, and allowing the celebration to land.
+canonicalUrl: /repeating-card-meanings/four-of-wands/
+openGraphImage: /images/tarot/rws/four-of-wands.jpg
 ---
 
 # Four of Wands Repeating Meaning

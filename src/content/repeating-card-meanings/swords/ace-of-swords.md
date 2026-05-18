@@ -1,12 +1,22 @@
 ---
-title: "Ace of Swords Repeating Meaning"
-slug: "repeating-card-meanings/ace-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Ace of Swords Repeating Meaning
+slug: repeating-card-meanings/ace-of-swords
+arcana: minor
+suit: swords
 card_number: "1"
-tier: "abbreviated"
-status: "draft"
-summary: "The Ace of Swords repeats when a truth, insight, or decision has formed with genuine clarity and has not yet been spoken, acted upon, or fully integrated. The sword is present. The seeker's pattern of deferring the cut, circling the decision, understanding without articulating, or processing without completing, is what the card keeps marking. Its return is not a demand for dramatic confrontation; it is a patient insistence that what has become genuinely clear deserves genuine expression."
+tier: abbreviated
+status: draft
+summary: The Ace of Swords repeats when a truth, insight, or decision has formed with genuine clarity and has not yet been spoken, acted upon, or fully integrated. The sword is present. The seeker's pattern of deferring the cut, circling the decision, understanding without articulating, or processing without completing, is what the card keeps marking. Its return is not a demand for dramatic confrontation; it is a patient insistence that what has become genuinely clear deserves genuine expression.
+primaryKeyword: ace of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the ace of swords keep showing up
+  - ace of swords repeating tarot meaning
+  - ace of swords clarity tarot pattern
+  - ace of swords truth tarot
+featuredSnippetAnswer: The Ace of Swords repeating in tarot readings signals a pattern of genuine clarity or truth that is present but not being acted on or spoken. It often appears when a seeker understands something clearly - about themselves, a relationship, or a situation - but has not yet brought that understanding into honest speech, decision, or action.
+answerEngineSummary: The Ace of Swords repeating in readings marks a seeker who holds genuine clarity without yet having the courage or readiness to act from it. The shadow expression includes using the sword as a display of discernment without allowing it to cut - to clarify, decide, or speak the truth. Integration involves taking the clarity that is genuinely present and acting from it with grounded, honest commitment.
+canonicalUrl: /repeating-card-meanings/ace-of-swords/
+openGraphImage: /images/tarot/rws/ace-of-swords.jpg
 ---
 
 # Ace of Swords Repeating Meaning

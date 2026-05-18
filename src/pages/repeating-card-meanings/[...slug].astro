@@ -17,6 +17,7 @@ import {
   getRepeatingCardOgImage,
 } from "../../lib/repeatingCardSeo";
 import { getRepeatingCardEntityPageJsonLd } from "../../lib/repeatingCardEntitySchema";
+import { buildRepeatingCardQuestions } from "../../lib/repeatingCardQuestions";
 import { resolveRepeatingCardRelatedLinks } from "../../lib/repeatingCardRelated";
 import {
   getRepeatingCardCanonicalUrl,
@@ -65,8 +66,9 @@ const title = getRepeatingCardMetaTitle(resolved);
 const description = getRepeatingCardMetaDescription(resolved);
 const ogImage = getRepeatingCardOgImage(resolved, siteHref);
 const crumbs = getRepeatingCardEntityBreadcrumbs(resolved);
-const jsonLd = getRepeatingCardEntityPageJsonLd(resolved, siteHref);
 const relatedLinks = resolveRepeatingCardRelatedLinks(resolved, byId);
+const questions = buildRepeatingCardQuestions(resolved, model.displayTitle);
+const jsonLd = getRepeatingCardEntityPageJsonLd(resolved, siteHref, questions);
 const toolDeepLink = getRepeatingCardPath(resolved);
 ---
 
@@ -87,6 +89,7 @@ const toolDeepLink = getRepeatingCardPath(resolved);
     secondaryHref={toolDeepLink}
     secondaryLabel="View in tool layout"
     relatedLinks={relatedLinks}
+    questions={questions}
   >
     <Breadcrumbs items={crumbs} slot="breadcrumbs" />
     <p class="rcm-card__back-wrap" slot="footer">

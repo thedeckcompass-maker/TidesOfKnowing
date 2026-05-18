@@ -1,0 +1,75 @@
+---
+import type { RepeatingCardQuestionsModel } from "../lib/repeatingCardQuestions";
+
+interface Props {
+  questions: RepeatingCardQuestionsModel;
+}
+
+const { questions } = Astro.props;
+const { items } = questions;
+---
+
+<section class="rcm-questions" aria-labelledby="rcm-questions-heading">
+  <h2 id="rcm-questions-heading" class="rcm-questions__title">
+    Common Questions About This Repeating Card
+  </h2>
+  <dl class="rcm-questions__list">
+    {
+      items.map((item) => (
+        <>
+          <dt class="rcm-questions__q">{item.question}</dt>
+          <dd class="rcm-questions__a">
+            <p>{item.answer}</p>
+          </dd>
+        </>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .rcm-questions {
+    margin: clamp(2rem, 5vw, 2.75rem) 0 0;
+    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
+    max-width: var(--reading-width);
+  }
+
+  .rcm-questions__title {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.35rem, 3vw, 1.6rem);
+    line-height: 1.2;
+    color: var(--tok-text-light);
+  }
+
+  .rcm-questions__list {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .rcm-questions__q {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--tok-teal);
+  }
+
+  .rcm-questions__a {
+    margin: 0.35rem 0 0;
+  }
+
+  .rcm-questions__a p {
+    margin: 0;
+    font-size: 0.94rem;
+    line-height: 1.62;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+  }
+</style>

@@ -1,12 +1,22 @@
 ---
-title: "Seven of Wands Repeating Meaning"
-slug: "repeating-card-meanings/seven-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Seven of Wands Repeating Meaning
+slug: repeating-card-meanings/seven-of-wands
+arcana: minor
+suit: wands
 card_number: "7"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Seven of Wands repeats when a seeker keeps finding themselves in the defensive position: defending their creative work, their vocational choices, their values, or their right to occupy the ground they stand on. The high position is held. The wands below are real. What the card keeps marking is whether the defence is genuinely required or whether it has become a posture that the seeker brings to territory that is no longer under actual attack, or never was."
+primaryKeyword: seven of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the seven of wands keep showing up
+  - seven of wands repeating tarot meaning
+  - seven of wands standing ground tarot
+  - seven of wands defence tarot pattern
+featuredSnippetAnswer: The Seven of Wands repeating in tarot readings signals a pattern of sustained defensive effort - holding a position against perceived opposition, often past the point where genuine threat exists or where the defended position deserves the cost of its defence. It often appears when a seeker's vigilance has become the primary response to any form of challenge.
+answerEngineSummary: The Seven of Wands repeating in readings marks a seeker who is in a habitual posture of defence, maintaining readiness for opposition even when the original threat has passed or was never as real as imagined. The shadow expression includes using the drama of standing ground as a substitute for genuine, settled authority. Integration involves discerning what is genuinely worth defending and letting the rest go.
+canonicalUrl: /repeating-card-meanings/seven-of-wands/
+openGraphImage: /images/tarot/rws/seven-of-wands.jpg
 ---
 
 # Seven of Wands Repeating Meaning

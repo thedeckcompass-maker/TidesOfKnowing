@@ -1,12 +1,22 @@
 ---
-title: "Four of Swords Repeating Meaning"
-slug: "repeating-card-meanings/four-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Four of Swords Repeating Meaning
+slug: repeating-card-meanings/four-of-swords
+arcana: minor
+suit: swords
 card_number: "4"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Four of Swords repeats when a seeker's mind has been in sustained active engagement without genuine recuperation, or when the capacity for genuine mental rest has been lost or systematically avoided. The figure lies in repose while three swords hang above: the work is paused, not complete. The card marks the distinction between productive rest and the avoidance of rest, and asks the seeker to locate themselves honestly between the two."
+primaryKeyword: four of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the four of swords keep showing up
+  - four of swords repeating tarot meaning
+  - four of swords rest tarot pattern
+  - four of swords recovery tarot
+featuredSnippetAnswer: The Four of Swords repeating in tarot readings signals a pattern of genuine depletion that has not yet been met with genuine rest. It often appears when a seeker has been in sustained effort for so long that they no longer recognise rest as legitimate - or when a necessary withdrawal from activity is being deferred in favour of continued management and performance.
+answerEngineSummary: The Four of Swords repeating in readings marks a seeker whose system requires genuine rest and withdrawal but who is continuing in sustained effort rather than allowing real recovery. The shadow expression includes treating rest as weakness or failure rather than as a legitimate and necessary stage in any sustained cycle of effort. Integration involves genuinely stopping and allowing the body and mind to repair without immediately returning to production.
+canonicalUrl: /repeating-card-meanings/four-of-swords/
+openGraphImage: /images/tarot/rws/four-of-swords.jpg
 ---
 
 # Four of Swords Repeating Meaning

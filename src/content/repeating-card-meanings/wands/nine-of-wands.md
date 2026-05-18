@@ -1,12 +1,22 @@
 ---
-title: "Nine of Wands Repeating Meaning"
-slug: "repeating-card-meanings/nine-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Nine of Wands Repeating Meaning
+slug: repeating-card-meanings/nine-of-wands
+arcana: minor
+suit: wands
 card_number: "9"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Nine of Wands repeats when a seeker keeps arriving at the specific state of having been genuinely hurt by the work of their own creative or vocational life and being uncertain whether to continue. The fire is still there. The figure is still standing. What the card keeps marking is the seeker's characteristic relationship to wounding and resilience: whether the guardedness that developed from genuine hurt has now become a permanent posture that outlasts its necessity, and whether the pattern of continued endurance is chosen or simply the only mode that remains."
+primaryKeyword: nine of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the nine of wands keep showing up
+  - nine of wands repeating tarot meaning
+  - nine of wands exhaustion tarot
+  - nine of wands resilience tarot pattern
+featuredSnippetAnswer: The Nine of Wands repeating in tarot readings signals a pattern of exhausted resilience - continuing to hold a position, carry a weight, or maintain a stance past the point of genuine sustainable capacity. It often appears when a seeker has been in a sustained state of readiness or endurance for so long that it has become their identity rather than a temporary condition.
+answerEngineSummary: The Nine of Wands repeating in readings marks a seeker who is carrying the accumulated weight of sustained effort without relief. The shadow expression includes performing endurance as a form of identity rather than addressing the underlying wound that has made the sustained effort necessary. Integration involves recognising that rest and repair are not failures of resilience but its genuine conditions.
+canonicalUrl: /repeating-card-meanings/nine-of-wands/
+openGraphImage: /images/tarot/rws/nine-of-wands.jpg
 ---
 
 # Nine of Wands Repeating Meaning

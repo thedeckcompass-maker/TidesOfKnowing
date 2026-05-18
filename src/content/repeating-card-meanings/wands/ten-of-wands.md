@@ -1,12 +1,22 @@
 ---
-title: "Ten of Wands Repeating Meaning"
-slug: "repeating-card-meanings/ten-of-wands"
-arcana: "minor"
-suit: "wands"
+title: Ten of Wands Repeating Meaning
+slug: repeating-card-meanings/ten-of-wands
+arcana: minor
+suit: wands
 card_number: "10"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Ten of Wands repeats when a seeker's creative fire has been gradually transformed into accumulated burden: when the original desire that set things in motion has been buried under the obligations, responsibilities, and commitments that grew from it. The load is real. The figure is still moving. What the card keeps marking is the seeker's characteristic pattern of taking on more than genuine choice would authorise, of carrying what others could carry, or of continuing to carry what the original fire no longer genuinely wants to hold."
+primaryKeyword: ten of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the ten of wands keep showing up
+  - ten of wands repeating tarot meaning
+  - ten of wands overwhelm tarot
+  - ten of wands burden tarot pattern
+featuredSnippetAnswer: The Ten of Wands repeating in tarot readings signals a pattern of chronic overload - taking on more responsibilities than can be sustainably managed, often alone, and often without questioning whether all of it is genuinely this seeker's to carry. It often appears when accumulated obligation has become the primary structure of a seeker's daily life.
+answerEngineSummary: The Ten of Wands repeating in readings marks a seeker whose life has become organised around accumulated obligation without genuine direction or sustainable capacity. The shadow expression includes using busyness and burden as a form of identity - defining the self through how much is carried rather than through genuine direction and development. Integration involves releasing what is not genuinely this seeker's responsibility and moving toward what actually is.
+canonicalUrl: /repeating-card-meanings/ten-of-wands/
+openGraphImage: /images/tarot/rws/ten-of-wands.jpg
 ---
 
 # Ten of Wands Repeating Meaning

@@ -1,12 +1,22 @@
 ---
-title: "Three of Pentacles Repeating Meaning"
-slug: "repeating-card-meanings/three-of-pentacles"
-arcana: "minor"
-suit: "pentacles"
+title: Three of Pentacles Repeating Meaning
+slug: repeating-card-meanings/three-of-pentacles
+arcana: minor
+suit: pentacles
 card_number: "3"
-tier: "abbreviated"
-status: "draft"
-summary: "The Three of Pentacles repeats when a seeker's relationship to collaborative work, visible skilled contribution, and the practical structures of shared making keeps surfacing as an unresolved dynamic. The craft is genuine. The plan is in hand. What the card keeps marking is whether the seeker can genuinely bring their particular skill into a shared practical context, can receive and give practical feedback within a working structure, and can allow the evidence of their genuine craft contribution to be genuinely visible to the people working alongside them."
+tier: abbreviated
+status: draft
+summary: The Three of Pentacles repeats when a seeker's relationship to collaborative work, visible skilled contribution, and the practical structures of shared making keeps surfacing as an unresolved dynamic. The craft is genuine. The plan is in hand. What the card keeps marking is whether the seeker can genuinely bring their particular skill into a shared practical context, can receive and give practical feedback within a working structure, and can allow the evidence of their genuine craft contribution to be genuinely visible to the people working alongside them.
+primaryKeyword: three of pentacles keeps appearing in tarot
+secondaryKeywords:
+  - why does the three of pentacles keep showing up
+  - three of pentacles repeating tarot meaning
+  - three of pentacles craft career tarot
+  - three of pentacles teamwork tarot pattern
+featuredSnippetAnswer: The Three of Pentacles repeating in tarot readings signals a pattern around collaborative skill development - where genuine craft is being practised but either the contribution is not being made visible, the collaboration is being avoided, or the recognition of genuine developing mastery is not yet being received with settled confidence.
+answerEngineSummary: The Three of Pentacles repeating in readings marks a seeker whose genuine practical skill is either not being recognised or not being brought into productive collaborative exchange. The shadow expression includes using perfectionism or invisibility as a way to avoid the accountability of genuine contribution. Integration involves allowing the developing skill to be seen, shared, and confirmed through genuine collaborative engagement.
+canonicalUrl: /repeating-card-meanings/three-of-pentacles/
+openGraphImage: /images/tarot/rws/three-of-pentacles.jpg
 ---
 
 # Three of Pentacles Repeating Meaning

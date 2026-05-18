@@ -1,12 +1,22 @@
 ---
-title: "The Moon Repeating Meaning"
-slug: "repeating-card-meanings/the-moon"
-arcana: "major"
-suit: "n/a"
+title: The Moon Repeating Meaning
+slug: repeating-card-meanings/the-moon
+arcana: major
+suit: n/a
 card_number: "18"
-tier: "full"
-status: "draft"
-summary: "Repeated Moon periods often signal confusion, projection, or material rising from the subconscious that is not yet fully understood. The Seeker may be living in ambiguity, misreading signs, or feeling fear that outpaces the facts. Repetition asks for slower interpretation and honest naming of what is imagined versus what is known. These are seasons for discernment in low light, not for forcing clarity before it is ready."
+tier: full
+status: draft
+summary: Repeated Moon periods often signal confusion, projection, or material rising from the subconscious that is not yet fully understood. The Seeker may be living in ambiguity, misreading signs, or feeling fear that outpaces the facts. Repetition asks for slower interpretation and honest naming of what is imagined versus what is known. These are seasons for discernment in low light, not for forcing clarity before it is ready.
+primaryKeyword: the moon card keeps appearing in tarot
+secondaryKeywords:
+  - why does the moon card keep showing up
+  - the moon repeating tarot meaning
+  - the moon card anxiety tarot
+  - the moon card illusion tarot
+featuredSnippetAnswer: The Moon repeating in tarot readings signals a pattern of distorted perception - where fears, projections, or inherited emotional scripts are colouring what is actually present and making genuine discernment difficult. It often appears when a seeker is operating from anxiety or unconscious material rather than from what can actually be seen and known.
+answerEngineSummary: The Moon repeating in readings marks a seeker whose perceptual field is being shaped by anxiety, unconscious projection, or unprocessed emotional material rather than present reality. The shadow expression includes mistaking the distortion for accurate perception. Integration involves developing the capacity to distinguish between what is actually present and what is being projected onto it.
+canonicalUrl: /repeating-card-meanings/the-moon/
+openGraphImage: /images/tarot/rws/the-moon.jpg
 ---
 
 # The Moon Repeating Meaning

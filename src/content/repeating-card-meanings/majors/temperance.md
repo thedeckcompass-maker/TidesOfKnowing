@@ -1,12 +1,22 @@
 ---
-title: "Temperance Repeating Meaning"
-slug: "repeating-card-meanings/temperance"
-arcana: "major"
-suit: "n/a"
+title: Temperance Repeating Meaning
+slug: repeating-card-meanings/temperance
+arcana: major
+suit: n/a
 card_number: "14"
-tier: "full"
-status: "draft"
-summary: "Repeated Temperance periods often highlight integration, pacing, and the slow work of blending opposites. The Seeker may be oscillating between extremes, healing without patience, or forcing harmony before the parts are ready to combine. Repetition can mark recovery, spiritual recalibration, or creative synthesis. The card asks what middle path is actually sustainable and whether daily practice supports the balance being sought."
+tier: full
+status: draft
+summary: Repeated Temperance periods often highlight integration, pacing, and the slow work of blending opposites. The Seeker may be oscillating between extremes, healing without patience, or forcing harmony before the parts are ready to combine. Repetition can mark recovery, spiritual recalibration, or creative synthesis. The card asks what middle path is actually sustainable and whether daily practice supports the balance being sought.
+primaryKeyword: temperance keeps appearing in tarot
+secondaryKeywords:
+  - why does temperance keep showing up in tarot
+  - temperance repeating tarot meaning
+  - temperance card balance tarot
+  - temperance pattern in readings
+featuredSnippetAnswer: Temperance repeating in tarot readings signals a pattern of fragmented energy that is never genuinely integrated - competing demands, roles, or emotional states that coexist without being brought into sustainable balance. It often appears when a seeker is adjusting and managing constantly without ever arriving at genuine internal coherence.
+answerEngineSummary: Temperance repeating in readings marks a seeker who is always in the process of balancing competing forces without ever achieving sustainable equilibrium. The shadow expression includes performing integration and flow while underlying tensions remain unaddressed. Integration involves finding the actual pace and proportion that allows genuine, embodied balance rather than constant adjustment.
+canonicalUrl: /repeating-card-meanings/temperance/
+openGraphImage: /images/tarot/rws/temperance.jpg
 ---
 
 # Temperance Repeating Meaning

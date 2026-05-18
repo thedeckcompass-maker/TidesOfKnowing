@@ -1,12 +1,22 @@
 ---
-title: "Three of Swords Repeating Meaning"
-slug: "repeating-card-meanings/three-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Three of Swords Repeating Meaning
+slug: repeating-card-meanings/three-of-swords
+arcana: minor
+suit: swords
 card_number: "3"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Three of Swords repeats when a seeker has not yet found a way to hold grief and clarity simultaneously: to let the heart be genuinely pierced by what is genuinely true without fragmenting, and to let genuine truth be spoken without requiring the absence of pain as its precondition. The card marks the place where honesty and tenderness have not yet learned to exist in the same moment."
+primaryKeyword: three of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the three of swords keep showing up
+  - three of swords repeating tarot meaning
+  - three of swords heartbreak tarot
+  - three of swords grief tarot pattern
+featuredSnippetAnswer: The Three of Swords repeating in tarot readings signals a pattern of unprocessed heartbreak, betrayal, or relational pain that is being held in the body and mind rather than fully acknowledged and moved through. It often appears when the pain of a specific loss or disappointment has become a persistent lens through which current experiences are being filtered.
+answerEngineSummary: The Three of Swords repeating in readings marks a seeker in whom the pain of a specific heartbreak or betrayal has not been fully metabolised. The shadow expression includes organising current relational life around the anticipation of the original pain repeating. Integration involves genuinely feeling and acknowledging the specific hurt so it can complete its passage rather than continuing to shape present experience.
+canonicalUrl: /repeating-card-meanings/three-of-swords/
+openGraphImage: /images/tarot/rws/three-of-swords.jpg
 ---
 
 # Three of Swords Repeating Meaning

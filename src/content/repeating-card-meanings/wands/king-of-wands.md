@@ -1,12 +1,22 @@
 ---
-title: "King of Wands Repeating Meaning"
-slug: "repeating-card-meanings/king-of-wands"
-arcana: "minor"
-suit: "wands"
+title: King of Wands Repeating Meaning
+slug: repeating-card-meanings/king-of-wands
+arcana: minor
+suit: wands
 card_number: "14"
-tier: "abbreviated"
-status: "draft"
-summary: "The King of Wands repeats when a seeker's genuine visionary fire and genuine creative authority keep meeting the specific difficulty of full and unapologetic deployment. The fire is real. The vision is genuine. What the card keeps marking is the seeker's characteristic pattern of hedging the authority, deferring the leadership, carrying the creative mastery without yet committing to the full responsibility of directing it at scale, or waiting for a quality of readiness or permission that the King's fire does not actually require before it can genuinely lead."
+tier: abbreviated
+status: draft
+summary: The King of Wands repeats when a seeker's genuine visionary fire and genuine creative authority keep meeting the specific difficulty of full and unapologetic deployment. The fire is real. The vision is genuine. What the card keeps marking is the seeker's characteristic pattern of hedging the authority, deferring the leadership, carrying the creative mastery without yet committing to the full responsibility of directing it at scale, or waiting for a quality of readiness or permission that the King's fire does not actually require before it can genuinely lead.
+primaryKeyword: king of wands keeps appearing in tarot
+secondaryKeywords:
+  - why does the king of wands keep showing up
+  - king of wands repeating tarot meaning
+  - king of wands leadership tarot
+  - king of wands authority tarot pattern
+featuredSnippetAnswer: The King of Wands repeating in tarot readings signals a pattern around visionary authority and creative leadership that is unresolved - either genuine authority present but not fully claimed, or authority exercised without the grounded responsibility and wisdom that make it genuinely sustainable. It often appears when a seeker has significant creative or leadership capacity but has not yet fully integrated it.
+answerEngineSummary: The King of Wands repeating in readings marks a seeker navigating the full weight of genuine creative authority. The shadow expression includes exercising visionary power without accountability, or repeating inherited patterns of charismatic leadership that serve the leader more than those being led. Integration involves claiming genuine authority with full awareness of its responsibilities and its effects on others.
+canonicalUrl: /repeating-card-meanings/king-of-wands/
+openGraphImage: /images/tarot/rws/king-of-wands.jpg
 ---
 
 # King of Wands Repeating Meaning

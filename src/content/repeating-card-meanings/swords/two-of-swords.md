@@ -1,12 +1,22 @@
 ---
-title: "Two of Swords Repeating Meaning"
-slug: "repeating-card-meanings/two-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Two of Swords Repeating Meaning
+slug: repeating-card-meanings/two-of-swords
+arcana: minor
+suit: swords
 card_number: "2"
-tier: "abbreviated"
-status: "draft"
+tier: abbreviated
+status: draft
 summary: "The Two of Swords repeats when a seeker is maintaining a deliberate not-knowing: holding two competing truths in artificial equilibrium rather than allowing genuine perception to settle the question. The blindfold is chosen, not imposed. The stalemate is not a failure of information but a refusal to weight it, because weighting it would require making a choice whose consequences the seeker has not yet found the readiness to accept."
+primaryKeyword: two of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the two of swords keep showing up
+  - two of swords repeating tarot meaning
+  - two of swords stalemate tarot pattern
+  - two of swords decision avoidance tarot
+featuredSnippetAnswer: The Two of Swords repeating in tarot readings signals a pattern of deliberate not-knowing - maintaining a stalemate between two directions as a way to avoid the discomfort of genuine choice. It often appears when a seeker is using the appearance of balance to prevent the acknowledgement of what they actually already know or prefer.
+answerEngineSummary: The Two of Swords repeating in readings marks a seeker who is in a self-maintained stalemate - actively sustaining a position of not-choosing as a form of protection from the consequences of clarity. The shadow expression includes using ambivalence as a place to live rather than a state to move through. Integration involves removing the blindfold and looking directly at what is actually present on each side.
+canonicalUrl: /repeating-card-meanings/two-of-swords/
+openGraphImage: /images/tarot/rws/two-of-swords.jpg
 ---
 
 # Two of Swords Repeating Meaning

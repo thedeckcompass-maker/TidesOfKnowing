@@ -1,12 +1,22 @@
 ---
-title: "King of Swords Repeating Meaning"
-slug: "repeating-card-meanings/king-of-swords"
-arcana: "minor"
-suit: "swords"
+title: King of Swords Repeating Meaning
+slug: repeating-card-meanings/king-of-swords
+arcana: minor
+suit: swords
 card_number: "14"
-tier: "abbreviated"
-status: "draft"
-summary: "The King of Swords repeats when a seeker has developed significant intellectual authority, analytical precision, and the capacity for clear judgment in external domains, and has not yet turned that same rigour consistently toward their own foundational assumptions, reasoning patterns, and self-understanding. The standards applied to others' thinking are genuine; the territory of the self has been governed by different standards, or left ungoverned altogether. The card keeps asking whether the sword the seeker wields so effectively outward is ever turned, with equal precision, inward."
+tier: abbreviated
+status: draft
+summary: The King of Swords repeats when a seeker has developed significant intellectual authority, analytical precision, and the capacity for clear judgment in external domains, and has not yet turned that same rigour consistently toward their own foundational assumptions, reasoning patterns, and self-understanding. The standards applied to others' thinking are genuine; the territory of the self has been governed by different standards, or left ungoverned altogether. The card keeps asking whether the sword the seeker wields so effectively outward is ever turned, with equal precision, inward.
+primaryKeyword: king of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the king of swords keep showing up
+  - king of swords repeating tarot meaning
+  - king of swords authority tarot pattern
+  - king of swords coldness tarot
+featuredSnippetAnswer: The King of Swords repeating in tarot readings signals a pattern of genuine intellectual authority and mastery that is not yet integrated with emotional truth or relational warmth. It often appears when a seeker exercises real clarity, precision, and principled thinking in ways that feel authoritative but have become disconnected from genuine feeling and genuine care for others.
+answerEngineSummary: The King of Swords repeating in readings marks a seeker whose genuine intellectual authority is operating in a way that has become disconnected from emotional and relational reality. The shadow expression includes using principled thinking as a way to avoid the felt, embodied complexity of genuine relational life. Integration involves bringing the clarity and authority of the mind into genuine, warm, present alignment with emotional truth.
+canonicalUrl: /repeating-card-meanings/king-of-swords/
+openGraphImage: /images/tarot/rws/king-of-swords.jpg
 ---
 
 # King of Swords Repeating Meaning

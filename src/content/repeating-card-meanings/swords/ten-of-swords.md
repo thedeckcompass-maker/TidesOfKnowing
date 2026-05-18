@@ -1,12 +1,22 @@
 ---
-title: "Ten of Swords Repeating Meaning"
-slug: "repeating-card-meanings/ten-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Ten of Swords Repeating Meaning
+slug: repeating-card-meanings/ten-of-swords
+arcana: minor
+suit: swords
 card_number: "10"
-tier: "abbreviated"
-status: "draft"
-summary: "The Ten of Swords repeats when a seeker's mind is in the habit of reaching worst-case conclusions before a situation requires them, or when a genuine ending has occurred and the mind has not yet oriented toward the dawn visible in the same scene. The card marks either the characteristic catastrophising that turns difficulty into anticipated collapse, or the genuine aftermath of something that genuinely ended, in which the seeker's thinking is still fixed on the fallen rather than on what is already beginning to rise."
+tier: abbreviated
+status: draft
+summary: The Ten of Swords repeats when a seeker's mind is in the habit of reaching worst-case conclusions before a situation requires them, or when a genuine ending has occurred and the mind has not yet oriented toward the dawn visible in the same scene. The card marks either the characteristic catastrophising that turns difficulty into anticipated collapse, or the genuine aftermath of something that genuinely ended, in which the seeker's thinking is still fixed on the fallen rather than on what is already beginning to rise.
+primaryKeyword: ten of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the ten of swords keep showing up
+  - ten of swords repeating tarot meaning
+  - ten of swords ending tarot pattern
+  - ten of swords rock bottom tarot
+featuredSnippetAnswer: The Ten of Swords repeating in tarot readings signals a pattern related to a genuine ending or collapse - either an ending that has not yet been fully acknowledged and released, or a pattern of experiencing repeated collapse in the same territory without yet understanding what needs to change at the foundation. It often appears when the same bottom keeps arriving.
+answerEngineSummary: The Ten of Swords repeating in readings marks a seeker for whom a genuine ending has either not been fully completed or is recurring because the conditions that produced it have not been examined. The shadow expression includes dramatising the wound rather than completing the ending. Integration involves genuinely acknowledging the collapse, releasing the swords that have accumulated, and beginning from the honest ground that the ending has revealed.
+canonicalUrl: /repeating-card-meanings/ten-of-swords/
+openGraphImage: /images/tarot/rws/ten-of-swords.jpg
 ---
 
 # Ten of Swords Repeating Meaning

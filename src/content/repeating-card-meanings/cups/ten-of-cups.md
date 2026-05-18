@@ -1,12 +1,22 @@
 ---
-title: "Ten of Cups Repeating Meaning"
-slug: "repeating-card-meanings/ten-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Ten of Cups Repeating Meaning
+slug: repeating-card-meanings/ten-of-cups
+arcana: minor
+suit: cups
 card_number: "10"
-tier: "abbreviated"
-status: "draft"
-summary: "Repeated Ten of Cups appearances often point to longing for emotional wholeness, harmony, family, or shared belonging. The Seeker may be building substitutes for the life pictured on the card, or grieving a version of home, love, or community that has not yet been embodied. Repetition asks what true emotional completion would require now, and what patterns prevent receiving joy, connection, or mutual celebration in the present."
+tier: abbreviated
+status: draft
+summary: Repeated Ten of Cups appearances often point to longing for emotional wholeness, harmony, family, or shared belonging. The Seeker may be building substitutes for the life pictured on the card, or grieving a version of home, love, or community that has not yet been embodied. Repetition asks what true emotional completion would require now, and what patterns prevent receiving joy, connection, or mutual celebration in the present.
+primaryKeyword: ten of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the ten of cups keep showing up
+  - ten of cups repeating tarot meaning
+  - ten of cups family tarot pattern
+  - ten of cups love and belonging tarot
+featuredSnippetAnswer: The Ten of Cups repeating in tarot readings signals a pattern around belonging, emotional fulfilment, and relational completion. It often appears when a seeker is longing for a quality of connection or family harmony that feels just out of reach - or when genuine belonging is available but is being held at a distance by idealism or past relational wounds.
+answerEngineSummary: The Ten of Cups repeating in readings marks a seeker whose relationship to genuine relational fulfilment - belonging, harmony, and shared joy - is unresolved. The shadow expression includes pursuing an idealised version of connection that prevents engagement with the real, imperfect version available. Integration involves receiving genuine belonging as it actually exists rather than as it is imagined to be.
+canonicalUrl: /repeating-card-meanings/ten-of-cups/
+openGraphImage: /images/tarot/rws/ten-of-cups.jpg
 ---
 
 # Ten of Cups Repeating Meaning

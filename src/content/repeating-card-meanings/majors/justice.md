@@ -1,12 +1,22 @@
 ---
-title: "Justice Repeating Meaning"
-slug: "repeating-card-meanings/justice"
-arcana: "major"
-suit: "n/a"
+title: Justice Repeating Meaning
+slug: repeating-card-meanings/justice
+arcana: major
+suit: n/a
 card_number: "11"
-tier: "full"
-status: "draft"
-summary: "When Justice repeats, consequence, truth, and balance are usually demanding attention. The Seeker may be circling an accountability they have not fully accepted, or a decision that requires fairness rather than preference. Repetition can highlight cause and effect, legal or ethical reckoning, or the gap between what is said and what is just. These periods ask where honesty would restore equilibrium and what must be owned for movement to become clean."
+tier: full
+status: draft
+summary: When Justice repeats, consequence, truth, and balance are usually demanding attention. The Seeker may be circling an accountability they have not fully accepted, or a decision that requires fairness rather than preference. Repetition can highlight cause and effect, legal or ethical reckoning, or the gap between what is said and what is just. These periods ask where honesty would restore equilibrium and what must be owned for movement to become clean.
+primaryKeyword: justice keeps appearing in tarot
+secondaryKeywords:
+  - why does justice keep showing up in tarot
+  - justice repeating tarot meaning
+  - justice card decisions tarot
+  - justice card pattern in readings
+featuredSnippetAnswer: Justice repeating in tarot readings signals a pattern where clarity is present but not being acted on - where a seeker understands what is true or fair but has not yet brought that understanding into honest speech or accountable decision. It often appears when a significant reckoning is being avoided through clever reasoning.
+answerEngineSummary: Justice repeating in readings marks a seeker who holds genuine discernment but is not yet acting from it with full integrity. The shadow expression includes using intellectual precision as a substitute for the courageous action that genuine fairness requires. Integration involves aligning what is known to be true with what is actually done and said.
+canonicalUrl: /repeating-card-meanings/justice/
+openGraphImage: /images/tarot/rws/justice.jpg
 ---
 
 # Justice Repeating Meaning

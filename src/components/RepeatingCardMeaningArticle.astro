@@ -5,6 +5,8 @@
  */
 import type { RepeatingCardRelatedLink } from "../lib/repeatingCardRelated";
 import type { RepeatingCardPageModel } from "../lib/repeatingCardPageModel";
+import type { RepeatingCardQuestionsModel } from "../lib/repeatingCardQuestions";
+import RepeatingCardQuestions from "./RepeatingCardQuestions.astro";
 import RepeatingCardRelatedMeanings from "./RepeatingCardRelatedMeanings.astro";
 
 export type RepeatingCardMeaningArticleVariant = "tool" | "entity";
@@ -17,6 +19,7 @@ interface Props {
   secondaryHref?: string;
   secondaryLabel?: string;
   relatedLinks?: RepeatingCardRelatedLink[];
+  questions?: RepeatingCardQuestionsModel | null;
 }
 
 const {
@@ -27,6 +30,7 @@ const {
   secondaryHref,
   secondaryLabel,
   relatedLinks = [],
+  questions = null,
 } = Astro.props;
 const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav } = model;
 ---
@@ -102,6 +106,8 @@ const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav 
       ) : null
     }
   </div>
+
+  {variant === "entity" && questions ? <RepeatingCardQuestions questions={questions} /> : null}
 
   {variant === "entity" && relatedLinks.length > 0 ? (
     <RepeatingCardRelatedMeanings links={relatedLinks} />

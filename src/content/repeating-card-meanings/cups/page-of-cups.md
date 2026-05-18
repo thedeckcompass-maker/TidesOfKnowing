@@ -1,12 +1,22 @@
 ---
-title: "Page of Cups Repeating Meaning"
-slug: "repeating-card-meanings/page-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Page of Cups Repeating Meaning
+slug: repeating-card-meanings/page-of-cups
+arcana: minor
+suit: cups
 card_number: "11"
-tier: "abbreviated"
-status: "draft"
-summary: "When the Page of Cups keeps returning, intuitive, creative, or emotionally symbolic messages are often arriving and being dismissed. The Seeker may notice dreams, hunches, artistic impulses, or tender surprises from within, then treat them as immature or impractical. Repetition highlights sensitivity that has not yet been trusted as information. These periods ask why the interior life keeps sending signals, and what would change if those signals were taken seriously rather than gently ridiculed or ignored."
+tier: abbreviated
+status: draft
+summary: When the Page of Cups keeps returning, intuitive, creative, or emotionally symbolic messages are often arriving and being dismissed. The Seeker may notice dreams, hunches, artistic impulses, or tender surprises from within, then treat them as immature or impractical. Repetition highlights sensitivity that has not yet been trusted as information. These periods ask why the interior life keeps sending signals, and what would change if those signals were taken seriously rather than gently ridiculed or ignored.
+primaryKeyword: page of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the page of cups keep showing up
+  - page of cups repeating tarot meaning
+  - page of cups creative tarot pattern
+  - page of cups emotional beginning tarot
+featuredSnippetAnswer: The Page of Cups repeating in tarot readings signals a pattern of early emotional or creative beginning - genuine curiosity and sensitivity present but not yet developed into sustained capacity or commitment. It often appears when a seeker is at the very beginning of an emotional learning arc and needs permission to take the feeling seriously.
+answerEngineSummary: The Page of Cups repeating in readings marks a seeker in the early stages of genuine emotional or intuitive development. The shadow expression includes requiring validation before allowing emotional or creative curiosity to become genuine practice. Integration involves taking the feeling or creative impulse seriously enough to act on it without waiting for external confirmation of its worth.
+canonicalUrl: /repeating-card-meanings/page-of-cups/
+openGraphImage: /images/tarot/rws/page-of-cups.jpg
 ---
 
 # Page of Cups Repeating Meaning

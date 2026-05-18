@@ -1,12 +1,22 @@
 ---
-title: "Wheel of Fortune Repeating Meaning"
-slug: "repeating-card-meanings/wheel-of-fortune"
-arcana: "major"
-suit: "n/a"
+title: Wheel of Fortune Repeating Meaning
+slug: repeating-card-meanings/wheel-of-fortune
+arcana: major
+suit: n/a
 card_number: "10"
-tier: "full"
-status: "draft"
-summary: "Repeated Wheel of Fortune periods often emerge when life is moving through instability, transition, reversal, or cyclical change that the Seeker is struggling to orient themselves within. The repetition may point to a need to develop a steadier relationship with uncertainty, timing, and forces that cannot be fully controlled through planning alone. These seasons ask whether the Seeker is fighting the turn of the wheel or learning to read the pattern they are already inside."
+tier: full
+status: draft
+summary: Repeated Wheel of Fortune periods often emerge when life is moving through instability, transition, reversal, or cyclical change that the Seeker is struggling to orient themselves within. The repetition may point to a need to develop a steadier relationship with uncertainty, timing, and forces that cannot be fully controlled through planning alone. These seasons ask whether the Seeker is fighting the turn of the wheel or learning to read the pattern they are already inside.
+primaryKeyword: wheel of fortune keeps appearing in tarot
+secondaryKeywords:
+  - why does the wheel of fortune keep showing up
+  - wheel of fortune repeating tarot meaning
+  - wheel of fortune card pattern
+  - wheel of fortune tarot change
+featuredSnippetAnswer: The Wheel of Fortune repeating in tarot readings signals a pattern of resisting cycles of change that are already in motion, or of attributing all movement to external fate rather than participating consciously in what is turning. It often appears when a seeker is either caught in a cycle they have not yet named or resisting the turn toward something genuinely new.
+answerEngineSummary: The Wheel of Fortune repeating in readings marks a seeker who is navigating change without yet understanding the pattern underlying it. The shadow expression includes using fatalism as a way to avoid agency within the cycle. Integration involves perceiving the pattern well enough to move with it rather than against it.
+canonicalUrl: /repeating-card-meanings/wheel-of-fortune/
+openGraphImage: /images/tarot/rws/the-wheel-of-fortune.jpg
 ---
 
 # Wheel of Fortune Repeating Meaning

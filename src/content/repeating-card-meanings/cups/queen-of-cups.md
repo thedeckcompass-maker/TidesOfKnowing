@@ -1,12 +1,22 @@
 ---
-title: "Queen of Cups Repeating Meaning"
-slug: "repeating-card-meanings/queen-of-cups"
-arcana: "minor"
-suit: "cups"
+title: Queen of Cups Repeating Meaning
+slug: repeating-card-meanings/queen-of-cups
+arcana: minor
+suit: cups
 card_number: "13"
-tier: "abbreviated"
-status: "draft"
-summary: "When the Queen of Cups repeats, emotional depth, intuition, and inner knowing are usually present but not fully owned. The Seeker may feel profoundly, contain feeling carefully, or read others with accuracy while doubting their own authority. Repetition can highlight compassion without boundaries, psychic sensitivity, or wisdom held quietly rather than lived from. These periods ask whether the Seeker will claim the depth they already inhabit as a legitimate guide for choice and relationship."
+tier: abbreviated
+status: draft
+summary: When the Queen of Cups repeats, emotional depth, intuition, and inner knowing are usually present but not fully owned. The Seeker may feel profoundly, contain feeling carefully, or read others with accuracy while doubting their own authority. Repetition can highlight compassion without boundaries, psychic sensitivity, or wisdom held quietly rather than lived from. These periods ask whether the Seeker will claim the depth they already inhabit as a legitimate guide for choice and relationship.
+primaryKeyword: queen of cups keeps appearing in tarot
+secondaryKeywords:
+  - why does the queen of cups keep showing up
+  - queen of cups repeating tarot meaning
+  - queen of cups empathy tarot pattern
+  - queen of cups emotional caretaker tarot
+featuredSnippetAnswer: The Queen of Cups repeating in tarot readings signals a pattern of profound emotional attunement and care that is directed outward - toward others' feelings, needs, and wellbeing - in ways that leave the seeker's own emotional life unattended or depleted. It often appears when a seeker's emotional intelligence has become a form of self-neglect.
+answerEngineSummary: The Queen of Cups repeating in readings marks a seeker who is deeply attuned to others' emotional experience but is not applying that same quality of compassionate attention to the self. The shadow expression includes using empathy as a way to avoid the seeker's own grief, longing, or unmet needs. Integration involves extending genuine emotional care inward with the same quality of presence given to others.
+canonicalUrl: /repeating-card-meanings/queen-of-cups/
+openGraphImage: /images/tarot/rws/queen-of-cups.jpg
 ---
 
 # Queen of Cups Repeating Meaning

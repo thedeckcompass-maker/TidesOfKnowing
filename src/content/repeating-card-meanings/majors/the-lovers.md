@@ -1,12 +1,22 @@
 ---
-title: "The Lovers Repeating Meaning"
-slug: "repeating-card-meanings/the-lovers"
-arcana: "major"
-suit: "n/a"
+title: The Lovers Repeating Meaning
+slug: repeating-card-meanings/the-lovers
+arcana: major
+suit: n/a
 card_number: "6"
-tier: "full"
-status: "draft"
-summary: "When The Lovers recur, choice and alignment are usually central. The Seeker may be divided between paths, values, or relational pulls, or repeating patterns of connection that reveal what they truly want versus what they tolerate. Repetition can highlight mirroring, commitment questions, or the cost of staying misaligned for comfort. These periods ask not only who or what is chosen, but whether the choice reflects integrated desire rather than split loyalty."
+tier: full
+status: draft
+summary: When The Lovers recur, choice and alignment are usually central. The Seeker may be divided between paths, values, or relational pulls, or repeating patterns of connection that reveal what they truly want versus what they tolerate. Repetition can highlight mirroring, commitment questions, or the cost of staying misaligned for comfort. These periods ask not only who or what is chosen, but whether the choice reflects integrated desire rather than split loyalty.
+primaryKeyword: the lovers keeps appearing in tarot
+secondaryKeywords:
+  - why does the lovers keep showing up in tarot
+  - the lovers repeating tarot meaning
+  - the lovers card relationship tarot
+  - the lovers card choices tarot
+featuredSnippetAnswer: The Lovers repeating in tarot readings signals a genuine choice that is being avoided, deferred, or made from external pressure rather than inner alignment. It often appears at a significant threshold of commitment - in relationship, vocation, or identity - where the seeker knows what they must choose but cannot yet fully commit.
+answerEngineSummary: The Lovers repeating in readings marks a seeker standing at a genuine crossroads who is deferring the choice rather than making it. The shadow expression includes using idealism or the fear of making the wrong choice to avoid making any choice. Integration involves choosing with full awareness of what is being both taken up and released.
+canonicalUrl: /repeating-card-meanings/the-lovers/
+openGraphImage: /images/tarot/rws/the-lovers.jpg
 ---
 
 # The Lovers Repeating Meaning

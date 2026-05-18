@@ -1,12 +1,22 @@
 ---
-title: "The Sun Repeating Meaning"
-slug: "repeating-card-meanings/the-sun"
-arcana: "major"
-suit: "n/a"
+title: The Sun Repeating Meaning
+slug: repeating-card-meanings/the-sun
+arcana: major
+suit: n/a
 card_number: "19"
-tier: "full"
-status: "draft"
-summary: "When The Sun recurs, visibility, vitality, and truthful expression are usually being invited or tested. The Seeker may be close to joy or success but reluctant to inhabit it, or repeating patterns that ask them to show up without distortion. Repetition can highlight clarity after fog, childlike renewal, or the simple fact that being seen requires honesty about what is real. The card asks whether warmth and truth can be received as steadily as they appear."
+tier: full
+status: draft
+summary: When The Sun recurs, visibility, vitality, and truthful expression are usually being invited or tested. The Seeker may be close to joy or success but reluctant to inhabit it, or repeating patterns that ask them to show up without distortion. Repetition can highlight clarity after fog, childlike renewal, or the simple fact that being seen requires honesty about what is real. The card asks whether warmth and truth can be received as steadily as they appear.
+primaryKeyword: the sun card keeps appearing in tarot
+secondaryKeywords:
+  - why does the sun card keep showing up
+  - the sun repeating tarot meaning
+  - the sun card confidence tarot
+  - the sun card pattern in readings
+featuredSnippetAnswer: The Sun repeating in tarot readings signals a pattern where genuine vitality, clarity, or creative confidence is present but is not yet being fully inhabited. It often appears when a seeker has genuine grounds for confidence but cannot yet allow themselves to be visible, joyful, or at ease in their own authority without waiting for external permission.
+answerEngineSummary: The Sun repeating in readings marks a seeker who holds genuine capacity for joy, visibility, and authentic expression but has not yet claimed it as a settled state. The shadow expression includes performing confidence as a substitute for genuine ease. Integration involves allowing the light that is genuinely present to be inhabited without apology or qualification.
+canonicalUrl: /repeating-card-meanings/the-sun/
+openGraphImage: /images/tarot/rws/the-sun.jpg
 ---
 
 # The Sun Repeating Meaning

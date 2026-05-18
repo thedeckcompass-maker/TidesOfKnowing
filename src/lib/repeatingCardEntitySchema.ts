@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import type { RepeatingCardQuestionsModel } from "./repeatingCardQuestions";
 import { AUTHOR_NAME } from "./blogSeo";
 import { breadcrumbJsonLd } from "./breadcrumbs";
 import { ENTITY_IDS } from "./ecosystem-structured-data";
@@ -101,12 +102,38 @@ function buildRepeatingCardSchemaGraph(
   };
 }
 
+/** FAQPage node from visible Q&A items (same model as `RepeatingCardQuestions.astro`). */
+export function repeatingCardFaqPageJsonLd(
+  canonical: string,
+  questions: RepeatingCardQuestionsModel,
+): Record<string, unknown> {
+  return {
+    "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    mainEntity: questions.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
 /** JSON-LD `@graph` for canonical `/repeating-card-meanings/{slug}/` pages. */
 export function getRepeatingCardEntityPageJsonLd(
   entry: RepeatingCardEntry,
   siteHref: string,
+  questions: RepeatingCardQuestionsModel | null = null,
 ): Record<string, unknown> {
-  return buildRepeatingCardSchemaGraph(entry, siteHref, "entity");
+  const doc = buildRepeatingCardSchemaGraph(entry, siteHref, "entity");
+  if (questions && questions.items.length > 0) {
+    const canonical = getRepeatingCardCanonicalUrl(entry, siteHref);
+    const graph = doc["@graph"] as Record<string, unknown>[];
+    graph.push(repeatingCardFaqPageJsonLd(canonical, questions));
+  }
+  return doc;
 }
 
 /**

@@ -1,12 +1,22 @@
 ---
-title: "Queen of Swords Repeating Meaning"
-slug: "repeating-card-meanings/queen-of-swords"
-arcana: "minor"
-suit: "swords"
+title: Queen of Swords Repeating Meaning
+slug: repeating-card-meanings/queen-of-swords
+arcana: minor
+suit: swords
 card_number: "13"
-tier: "abbreviated"
-status: "draft"
-summary: "The Queen of Swords repeats when a seeker has developed genuine perceptual clarity and intellectual precision and has not yet found a way to hold that clarity alongside genuine warmth and relational availability. The sword is raised; the gaze is clear; the hand is extended. The pattern the card marks is either the sharpness that has been separated from tenderness as a form of self-protection, or the genuine clarity and discernment the seeker possesses but does not yet fully claim as their own authority to act from."
+tier: abbreviated
+status: draft
+summary: The Queen of Swords repeats when a seeker has developed genuine perceptual clarity and intellectual precision and has not yet found a way to hold that clarity alongside genuine warmth and relational availability. The sword is raised; the gaze is clear; the hand is extended. The pattern the card marks is either the sharpness that has been separated from tenderness as a form of self-protection, or the genuine clarity and discernment the seeker possesses but does not yet fully claim as their own authority to act from.
+primaryKeyword: queen of swords keeps appearing in tarot
+secondaryKeywords:
+  - why does the queen of swords keep showing up
+  - queen of swords repeating tarot meaning
+  - queen of swords clarity tarot pattern
+  - queen of swords isolation tarot
+featuredSnippetAnswer: The Queen of Swords repeating in tarot readings signals a pattern of genuine clear-sighted authority that is being exercised in isolation - wisdom and discernment present but deployed at a relational distance that protects the seeker from the vulnerability of genuine, felt connection. It often appears when intelligence has become a substitute for intimacy.
+answerEngineSummary: The Queen of Swords repeating in readings marks a seeker who has developed genuine perceptive authority but is using that authority to remain safely above or apart from genuine relational engagement. The shadow expression includes using clarity as a blade that maintains distance rather than creating understanding. Integration involves bringing the genuine discernment into direct, warm, relational contact with others.
+canonicalUrl: /repeating-card-meanings/queen-of-swords/
+openGraphImage: /images/tarot/rws/queen-of-swords.jpg
 ---
 
 # Queen of Swords Repeating Meaning
