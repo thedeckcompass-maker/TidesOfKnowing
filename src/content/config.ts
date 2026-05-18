@@ -153,6 +153,18 @@ export const repeatingCardMeaningsSchema = z.object({
   summary: z.string().optional(),
   metaTitle: z.string().optional(),
   metaDescription: z.string().optional(),
+  /** SEO primary phrase; populated from card-metadata-map during rollout. */
+  primaryKeyword: z.string().optional(),
+  secondaryKeywords: z.array(z.string()).default([]),
+  /** Short answer block for featured snippets and answer engines. */
+  featuredSnippetAnswer: z.string().optional(),
+  answerEngineSummary: z.string().optional(),
+  /** Path-only canonical override; default is `/repeating-card-meanings/{card-slug}/`. */
+  canonicalUrl: z.string().optional(),
+  /** Path under public/, e.g. `/images/tarot/rws/the-fool.jpg`. */
+  openGraphImage: z.string().optional(),
+  datePublished: z.string().optional(),
+  dateModified: z.string().optional(),
   themes: z.array(z.string()).default([]),
   life_areas: z.array(z.string()).default([]),
   seeker_states: z.array(z.string()).default([]),

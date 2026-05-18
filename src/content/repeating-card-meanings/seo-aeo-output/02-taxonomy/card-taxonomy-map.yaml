@@ -1,0 +1,2987 @@
+# Card Taxonomy Map
+# Tides of Knowing — Repeating Card Meanings
+# Generated: 2026-05-18
+# Updated: 2026-05-18 — compass_pillars normalised to canonical COMPASS Method terms
+# Stage: 2 — Taxonomy
+#
+# All terms are drawn from controlled-vocabulary.md.
+# All assignments follow taxonomy-governance-rules.md.
+# compass_pillars use the seven canonical terms: center, open, map, perceive, align, sense, seal
+
+---
+
+majors/the-fool:
+  themes:
+    - threshold-paralysis
+    - surrender-and-trust
+    - identity-formation
+    - creative-ignition
+  life_areas:
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - love-and-relationships
+  seeker_states:
+    - perpetual-beginning
+    - seeking-approval-to-begin
+    - threshold-paralysis
+  compass_pillars:
+    - center
+    - open
+  archetypal_states:
+    - eternal-beginner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - irresponsibility-as-freedom
+    - perfectionism-as-prevention
+  integration_paths:
+    - grounded-beginning
+    - committed-departure
+  emotional_patterns:
+    - anticipatory-excitement
+    - anticipatory-anxiety
+    - restlessness
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+majors/the-magician:
+  themes:
+    - creative-ignition
+    - authority-development
+    - self-sabotage
+    - visibility-and-recognition
+  life_areas:
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - scattered-momentum
+    - validation-seeking
+    - waiting-for-permission
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - visionary
+    - eternal-beginner
+  relational_patterns:
+    - invisible-contribution
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - strategic-helplessness
+  integration_paths:
+    - claimed-authority
+    - grounded-beginning
+  emotional_patterns:
+    - anticipatory-excitement
+    - restlessness
+    - shame
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+majors/the-high-priestess:
+  themes:
+    - emotional-avoidance
+    - cognitive-entrapment
+    - shadow-reclamation
+    - relational-avoidance
+  life_areas:
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - family-and-generational-dynamics
+  seeker_states:
+    - clarity-without-action
+    - defended-position
+    - waiting-for-permission
+  compass_pillars:
+    - open
+    - perceive
+  archetypal_states:
+    - hermit-seeker
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - isolation-as-sovereignty
+  integration_paths:
+    - embodied-wisdom
+    - shadow-integration
+  emotional_patterns:
+    - defended-openness
+    - numbness
+    - longing
+  transitional_states:
+    - deepening
+    - identity-threshold
+
+majors/the-empress:
+  themes:
+    - self-sufficiency
+    - relational-reciprocity
+    - emotional-flooding
+    - creative-completion
+  life_areas:
+    - love-and-relationships
+    - family-and-generational-dynamics
+    - health-and-energy
+    - career-and-purpose
+  seeker_states:
+    - over-extending-generosity
+    - exhausted-resilience
+    - buried-under-obligation
+  compass_pillars:
+    - center
+    - sense
+  archetypal_states:
+    - caretaker
+    - sovereign
+  relational_patterns:
+    - over-extension
+    - control-through-giving
+  shadow_patterns:
+    - martyrdom
+    - control-masquerading-as-care
+  integration_paths:
+    - sustainable-generosity
+    - embodied-wisdom
+  emotional_patterns:
+    - depletion
+    - overwhelm
+    - longing
+  transitional_states:
+    - active-transition
+    - relational-change
+
+majors/the-emperor:
+  themes:
+    - authority-development
+    - authority-misuse
+    - pattern-inheritance
+    - self-sabotage
+  life_areas:
+    - career-and-purpose
+    - family-and-generational-dynamics
+    - money-and-stability
+    - love-and-relationships
+  seeker_states:
+    - uninhabited-authority
+    - defended-position
+    - pattern-inheritance-active
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - sovereign
+    - inheritor
+  relational_patterns:
+    - control-through-giving
+    - enmeshment
+  shadow_patterns:
+    - accumulation-as-safety
+    - isolation-as-sovereignty
+  integration_paths:
+    - claimed-authority
+    - generational-transformation
+  emotional_patterns:
+    - chronic-vigilance
+    - shame
+    - anticipatory-anxiety
+  transitional_states:
+    - authority-threshold
+    - identity-threshold
+
+majors/the-hierophant:
+  themes:
+    - authority-resistance
+    - pattern-inheritance
+    - identity-formation
+    - spiritual-bypassing
+  life_areas:
+    - spiritual-growth
+    - family-and-generational-dynamics
+    - career-and-purpose
+    - emotional-and-mental-patterns
+  seeker_states:
+    - pattern-inheritance-active
+    - waiting-for-permission
+    - stuck-in-ambivalence
+  compass_pillars:
+    - map
+    - align
+  archetypal_states:
+    - inheritor
+    - pilgrim
+  relational_patterns:
+    - dependency
+    - enmeshment
+  shadow_patterns:
+    - bitterness-as-wisdom
+    - nostalgic-stasis
+  integration_paths:
+    - generational-transformation
+    - claimed-authority
+  emotional_patterns:
+    - ambivalence
+    - resentment
+    - shame
+  transitional_states:
+    - identity-threshold
+    - awakening
+
+majors/the-lovers:
+  themes:
+    - ambivalence
+    - relational-attachment
+    - identity-formation
+    - threshold-paralysis
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - stuck-in-ambivalence
+    - threshold-paralysis
+    - seeking-approval-to-begin
+  compass_pillars:
+    - center
+    - perceive
+  archetypal_states:
+    - threshold-guardian
+    - pilgrim
+  relational_patterns:
+    - dependency
+    - idealisation
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - genuine-reciprocity
+  emotional_patterns:
+    - ambivalence
+    - longing
+    - anticipatory-anxiety
+  transitional_states:
+    - identity-threshold
+    - relational-change
+
+majors/the-chariot:
+  themes:
+    - authority-development
+    - self-sabotage
+    - threshold-paralysis
+    - cognitive-entrapment
+  life_areas:
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - health-and-energy
+  seeker_states:
+    - fragmented-effort
+    - scattered-momentum
+    - clarity-without-action
+  compass_pillars:
+    - align
+    - open
+  archetypal_states:
+    - pilgrim
+    - strategist
+  relational_patterns:
+    - competitive-fragmentation
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - performance-of-resilience
+  integration_paths:
+    - committed-departure
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - anticipatory-anxiety
+    - overwhelm
+  transitional_states:
+    - pre-departure
+    - active-transition
+
+majors/strength:
+  themes:
+    - shadow-reclamation
+    - self-worth
+    - self-sabotage
+    - emotional-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - health-and-energy
+    - love-and-relationships
+  seeker_states:
+    - defended-position
+    - validation-seeking
+    - uninhabited-authority
+  compass_pillars:
+    - open
+    - sense
+  archetypal_states:
+    - wounded-healer
+    - sovereign
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - strategic-helplessness
+    - performance-of-resilience
+  integration_paths:
+    - shadow-integration
+    - claimed-authority
+  emotional_patterns:
+    - shame
+    - defended-openness
+    - cautious-hope
+  transitional_states:
+    - identity-threshold
+    - awakening
+
+majors/the-hermit:
+  themes:
+    - isolation
+    - authority-development
+    - practice-and-mastery
+    - self-sufficiency
+  life_areas:
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - career-and-purpose
+    - love-and-relationships
+  seeker_states:
+    - self-sufficient-but-isolated
+    - clarity-without-action
+    - grief-without-completion
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - hermit-seeker
+    - wounded-healer
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - cleverness-as-avoidance
+  integration_paths:
+    - embodied-wisdom
+    - daily-practice
+  emotional_patterns:
+    - longing
+    - defended-openness
+    - ease
+  transitional_states:
+    - deepening
+    - identity-threshold
+
+majors/wheel-of-fortune:
+  themes:
+    - surrender-and-trust
+    - transition-resistance
+    - pattern-inheritance
+    - cognitive-entrapment
+  life_areas:
+    - spiritual-growth
+    - career-and-purpose
+    - money-and-stability
+    - emotional-and-mental-patterns
+  seeker_states:
+    - stuck-in-ambivalence
+    - anxiety-without-object
+    - pattern-inheritance-active
+  compass_pillars:
+    - map
+    - open
+  archetypal_states:
+    - pilgrim
+    - inheritor
+  relational_patterns:
+    - withdrawal-under-pressure
+    - dependency
+  shadow_patterns:
+    - bitterness-as-wisdom
+    - nostalgic-stasis
+  integration_paths:
+    - committed-departure
+    - long-arc-patience
+  emotional_patterns:
+    - anticipatory-anxiety
+    - restlessness
+    - chronic-vigilance
+  transitional_states:
+    - active-transition
+    - awakening
+
+majors/justice:
+  themes:
+    - cognitive-entrapment
+    - communication-clarity
+    - authority-development
+    - self-worth
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - money-and-stability
+    - emotional-and-mental-patterns
+  seeker_states:
+    - clarity-without-action
+    - stuck-in-ambivalence
+    - defended-position
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - strategist
+    - sovereign
+  relational_patterns:
+    - reciprocal-exchange
+    - invisible-contribution
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - bitterness-as-wisdom
+  integration_paths:
+    - claimed-authority
+    - material-wisdom
+  emotional_patterns:
+    - ambivalence
+    - resentment
+    - cautious-hope
+  transitional_states:
+    - identity-threshold
+    - vocational-pivot
+
+majors/the-hanged-man:
+  themes:
+    - surrender-and-trust
+    - threshold-paralysis
+    - cognitive-entrapment
+    - shadow-reclamation
+  life_areas:
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - career-and-purpose
+    - love-and-relationships
+  seeker_states:
+    - clarity-without-action
+    - threshold-paralysis
+    - performing-departure
+  compass_pillars:
+    - open
+    - seal
+  archetypal_states:
+    - hermit-seeker
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - fantasy-as-substitute
+  integration_paths:
+    - shadow-integration
+    - embodied-wisdom
+  emotional_patterns:
+    - longing
+    - numbness
+    - cautious-hope
+  transitional_states:
+    - pre-departure
+    - deepening
+
+majors/death:
+  themes:
+    - identity-dissolution
+    - grief-processing
+    - transition-resistance
+    - pattern-interruption
+  life_areas:
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - career-and-purpose
+  seeker_states:
+    - performing-departure
+    - grief-without-completion
+    - threshold-paralysis
+  compass_pillars:
+    - open
+    - seal
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - nostalgic-stasis
+    - grief-as-identity
+  integration_paths:
+    - committed-departure
+    - honest-grief
+  emotional_patterns:
+    - grief
+    - longing
+    - numbness
+  transitional_states:
+    - identity-threshold
+    - completion-and-release
+
+majors/temperance:
+  themes:
+    - emotional-cycles
+    - surrender-and-trust
+    - pattern-interruption
+    - self-sabotage
+  life_areas:
+    - spiritual-growth
+    - health-and-energy
+    - emotional-and-mental-patterns
+    - love-and-relationships
+  seeker_states:
+    - scattered-momentum
+    - fragmented-effort
+    - exhausted-resilience
+  compass_pillars:
+    - center
+    - sense
+  archetypal_states:
+    - wounded-healer
+    - craftsperson
+  relational_patterns:
+    - over-extension
+    - reciprocal-exchange
+  shadow_patterns:
+    - performance-of-resilience
+    - martyrdom
+  integration_paths:
+    - embodied-wisdom
+    - daily-practice
+  emotional_patterns:
+    - overwhelm
+    - restlessness
+    - cautious-hope
+  transitional_states:
+    - active-transition
+    - post-transition-integration
+
+majors/the-devil:
+  themes:
+    - shadow-projection
+    - cognitive-entrapment
+    - relational-attachment
+    - self-sabotage
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - money-and-stability
+    - health-and-energy
+  seeker_states:
+    - cognitive-entrapment
+    - protective-holding
+    - anxiety-without-object
+  compass_pillars:
+    - open
+    - perceive
+  archetypal_states:
+    - threshold-guardian
+    - guardian
+  relational_patterns:
+    - enmeshment
+    - dependency
+    - control-through-giving
+  shadow_patterns:
+    - accumulation-as-safety
+    - fantasy-as-substitute
+  integration_paths:
+    - shadow-integration
+    - committed-departure
+  emotional_patterns:
+    - shame
+    - chronic-vigilance
+    - anticipatory-anxiety
+  transitional_states:
+    - awakening
+    - identity-threshold
+
+majors/the-tower:
+  themes:
+    - identity-dissolution
+    - pattern-interruption
+    - grief-processing
+    - transition-resistance
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - money-and-stability
+    - spiritual-growth
+  seeker_states:
+    - threshold-paralysis
+    - anxiety-without-object
+    - performing-departure
+  compass_pillars:
+    - open
+    - map
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - performance-of-resilience
+    - bitterness-as-wisdom
+  integration_paths:
+    - honest-grief
+    - committed-departure
+  emotional_patterns:
+    - grief
+    - overwhelm
+    - anticipatory-anxiety
+  transitional_states:
+    - active-transition
+    - completion-and-release
+
+majors/the-star:
+  themes:
+    - surrender-and-trust
+    - emotional-opening
+    - abundance-orientation
+    - self-worth
+  life_areas:
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - health-and-energy
+    - love-and-relationships
+  seeker_states:
+    - grief-without-completion
+    - anxiety-without-object
+    - waiting-for-permission
+  compass_pillars:
+    - center
+    - open
+  archetypal_states:
+    - wounded-healer
+    - pilgrim
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - spiritual-bypassing
+    - fantasy-as-substitute
+  integration_paths:
+    - honest-grief
+    - embodied-wisdom
+  emotional_patterns:
+    - longing
+    - cautious-hope
+    - grief
+  transitional_states:
+    - post-transition-integration
+    - awakening
+
+majors/the-moon:
+  themes:
+    - cognitive-entrapment
+    - shadow-projection
+    - emotional-cycles
+    - emotional-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - love-and-relationships
+    - family-and-generational-dynamics
+  seeker_states:
+    - cognitive-entrapment
+    - anxiety-without-object
+    - avoidance-through-fantasy
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - hermit-seeker
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - idealisation
+  shadow_patterns:
+    - fantasy-as-substitute
+    - cleverness-as-avoidance
+  integration_paths:
+    - shadow-integration
+    - embodied-wisdom
+  emotional_patterns:
+    - anticipatory-anxiety
+    - chronic-vigilance
+    - numbness
+  transitional_states:
+    - awakening
+    - deepening
+
+majors/the-sun:
+  themes:
+    - visibility-and-recognition
+    - identity-reclamation
+    - abundance-orientation
+    - emotional-opening
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - health-and-energy
+    - spiritual-growth
+  seeker_states:
+    - visible-but-unclaimed
+    - validation-seeking
+    - seeking-approval-to-begin
+  compass_pillars:
+    - align
+    - center
+  archetypal_states:
+    - sovereign
+    - eternal-beginner
+  relational_patterns:
+    - invisible-contribution
+    - reciprocal-exchange
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - strategic-helplessness
+  integration_paths:
+    - claimed-authority
+    - grounded-beginning
+  emotional_patterns:
+    - anticipatory-excitement
+    - shame
+    - ease
+  transitional_states:
+    - identity-threshold
+    - awakening
+
+majors/judgement:
+  themes:
+    - identity-reclamation
+    - pattern-interruption
+    - grief-processing
+    - shadow-reclamation
+  life_areas:
+    - spiritual-growth
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+  seeker_states:
+    - performing-departure
+    - waiting-for-permission
+    - grief-without-completion
+  compass_pillars:
+    - open
+    - seal
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - nostalgic-stasis
+    - grief-as-identity
+  integration_paths:
+    - committed-departure
+    - shadow-integration
+  emotional_patterns:
+    - grief
+    - longing
+    - cautious-hope
+  transitional_states:
+    - identity-threshold
+    - awakening
+
+majors/the-world:
+  themes:
+    - creative-completion
+    - identity-reclamation
+    - self-sufficiency
+    - pattern-interruption
+  life_areas:
+    - career-and-purpose
+    - spiritual-growth
+    - love-and-relationships
+    - emotional-and-mental-patterns
+  seeker_states:
+    - threshold-paralysis
+    - performing-departure
+    - visible-but-unclaimed
+  compass_pillars:
+    - seal
+    - align
+  archetypal_states:
+    - sovereign
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+    - reciprocal-exchange
+  shadow_patterns:
+    - nostalgic-stasis
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - embodied-wisdom
+  emotional_patterns:
+    - satisfaction
+    - ambivalence
+    - ease
+  transitional_states:
+    - completion-and-release
+    - post-transition-integration
+
+# --- CUPS ---
+
+cups/ace-of-cups:
+  themes:
+    - emotional-opening
+    - relational-attachment
+    - creative-ignition
+    - surrender-and-trust
+  life_areas:
+    - love-and-relationships
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - health-and-energy
+  seeker_states:
+    - seeking-approval-to-begin
+    - threshold-paralysis
+    - waiting-for-permission
+  compass_pillars:
+    - open
+    - sense
+  archetypal_states:
+    - eternal-beginner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+    - dependency
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - grounded-beginning
+    - genuine-reciprocity
+  emotional_patterns:
+    - longing
+    - defended-openness
+    - anticipatory-excitement
+  transitional_states:
+    - pre-departure
+    - relational-change
+
+cups/two-of-cups:
+  themes:
+    - relational-attachment
+    - relational-reciprocity
+    - emotional-opening
+    - ambivalence
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - career-and-purpose
+  seeker_states:
+    - threshold-paralysis
+    - seeking-approval-to-begin
+    - stuck-in-ambivalence
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - pilgrim
+    - threshold-guardian
+  relational_patterns:
+    - idealisation
+    - avoidance-of-commitment
+    - dependency
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - genuine-reciprocity
+  emotional_patterns:
+    - longing
+    - ambivalence
+    - anticipatory-anxiety
+  transitional_states:
+    - relational-change
+    - identity-threshold
+
+cups/three-of-cups:
+  themes:
+    - collaboration
+    - relational-reciprocity
+    - emotional-opening
+    - isolation
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - health-and-energy
+    - emotional-and-mental-patterns
+  seeker_states:
+    - validation-seeking
+    - self-sufficient-but-isolated
+    - over-extending-generosity
+  compass_pillars:
+    - sense
+    - perceive
+  archetypal_states:
+    - caretaker
+    - sovereign
+  relational_patterns:
+    - over-extension
+    - reciprocal-exchange
+    - invisible-contribution
+  shadow_patterns:
+    - martyrdom
+    - complexity-as-identity
+  integration_paths:
+    - collaborative-craft
+    - sustainable-generosity
+  emotional_patterns:
+    - depletion
+    - ease
+    - longing
+  transitional_states:
+    - relational-change
+    - post-transition-integration
+
+cups/four-of-cups:
+  themes:
+    - emotional-avoidance
+    - threshold-paralysis
+    - cognitive-entrapment
+    - ambivalence
+  life_areas:
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - love-and-relationships
+    - career-and-purpose
+  seeker_states:
+    - avoidance-through-fantasy
+    - stuck-in-ambivalence
+    - clarity-without-action
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - hermit-seeker
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - cleverness-as-avoidance
+  integration_paths:
+    - committed-departure
+    - shadow-integration
+  emotional_patterns:
+    - numbness
+    - restlessness
+    - longing
+  transitional_states:
+    - pre-departure
+    - deepening
+
+cups/five-of-cups:
+  themes:
+    - grief-processing
+    - emotional-cycles
+    - shadow-reclamation
+    - relational-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - spiritual-growth
+    - family-and-generational-dynamics
+  seeker_states:
+    - grief-without-completion
+    - nostalgic-attachment
+    - performing-departure
+  compass_pillars:
+    - center
+    - open
+  archetypal_states:
+    - mourner
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - idealisation
+  shadow_patterns:
+    - grief-as-identity
+    - nostalgic-stasis
+  integration_paths:
+    - honest-grief
+    - shadow-integration
+  emotional_patterns:
+    - grief
+    - longing
+    - resentment
+  transitional_states:
+    - grief-passage
+    - post-transition-integration
+
+cups/six-of-cups:
+  themes:
+    - pattern-inheritance
+    - relational-attachment
+    - emotional-cycles
+    - generational-healing
+  life_areas:
+    - family-and-generational-dynamics
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - spiritual-growth
+  seeker_states:
+    - nostalgic-attachment
+    - pattern-inheritance-active
+    - grief-without-completion
+  compass_pillars:
+    - map
+    - perceive
+  archetypal_states:
+    - inheritor
+    - mourner
+  relational_patterns:
+    - dependency
+    - enmeshment
+    - idealisation
+  shadow_patterns:
+    - nostalgic-stasis
+    - grief-as-identity
+  integration_paths:
+    - generational-transformation
+    - honest-grief
+  emotional_patterns:
+    - longing
+    - grief
+    - cautious-hope
+  transitional_states:
+    - post-transition-integration
+    - deepening
+
+cups/seven-of-cups:
+  themes:
+    - cognitive-entrapment
+    - ambivalence
+    - threshold-paralysis
+    - emotional-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - career-and-purpose
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - avoidance-through-fantasy
+    - stuck-in-ambivalence
+    - scattered-momentum
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - visionary
+    - threshold-guardian
+  relational_patterns:
+    - idealisation
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - grounded-beginning
+  emotional_patterns:
+    - restlessness
+    - anticipatory-excitement
+    - overwhelm
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+cups/eight-of-cups:
+  themes:
+    - transition-resistance
+    - grief-processing
+    - identity-dissolution
+    - emotional-avoidance
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - performing-departure
+    - threshold-paralysis
+    - grief-without-completion
+  compass_pillars:
+    - open
+    - seal
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - nostalgic-stasis
+    - grief-as-identity
+  integration_paths:
+    - committed-departure
+    - honest-grief
+  emotional_patterns:
+    - grief
+    - longing
+    - numbness
+  transitional_states:
+    - identity-threshold
+    - completion-and-release
+
+cups/nine-of-cups:
+  themes:
+    - emotional-avoidance
+    - self-worth
+    - visibility-and-recognition
+    - abundance-orientation
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - health-and-energy
+  seeker_states:
+    - visible-but-unclaimed
+    - validation-seeking
+    - emotional-idealism
+  compass_pillars:
+    - center
+    - align
+  archetypal_states:
+    - sovereign
+    - guardian
+  relational_patterns:
+    - invisible-contribution
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - accumulation-as-safety
+  integration_paths:
+    - earned-self-sufficiency
+    - genuine-reciprocity
+  emotional_patterns:
+    - longing
+    - ease
+    - shame
+  transitional_states:
+    - post-transition-integration
+    - identity-threshold
+
+cups/ten-of-cups:
+  themes:
+    - relational-reciprocity
+    - emotional-opening
+    - abundance-orientation
+    - generational-healing
+  life_areas:
+    - love-and-relationships
+    - family-and-generational-dynamics
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - emotional-idealism
+    - threshold-paralysis
+    - seeking-approval-to-begin
+  compass_pillars:
+    - sense
+    - perceive
+  archetypal_states:
+    - inheritor
+    - sovereign
+  relational_patterns:
+    - idealisation
+    - dependency
+    - reciprocal-exchange
+  shadow_patterns:
+    - fantasy-as-substitute
+    - nostalgic-stasis
+  integration_paths:
+    - genuine-reciprocity
+    - generational-transformation
+  emotional_patterns:
+    - longing
+    - cautious-hope
+    - ease
+  transitional_states:
+    - relational-change
+    - post-transition-integration
+
+cups/page-of-cups:
+  themes:
+    - emotional-opening
+    - creative-ignition
+    - identity-formation
+    - relational-attachment
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - career-and-purpose
+    - spiritual-growth
+  seeker_states:
+    - perpetual-beginning
+    - seeking-approval-to-begin
+    - validation-seeking
+  compass_pillars:
+    - sense
+    - open
+  archetypal_states:
+    - eternal-beginner
+    - apprentice
+  relational_patterns:
+    - dependency
+    - idealisation
+  shadow_patterns:
+    - fantasy-as-substitute
+    - strategic-helplessness
+  integration_paths:
+    - grounded-beginning
+    - genuine-reciprocity
+  emotional_patterns:
+    - longing
+    - anticipatory-excitement
+    - defended-openness
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+cups/knight-of-cups:
+  themes:
+    - relational-attachment
+    - emotional-flooding
+    - threshold-paralysis
+    - self-sabotage
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - career-and-purpose
+  seeker_states:
+    - emotional-idealism
+    - avoidance-through-fantasy
+    - threshold-paralysis
+  compass_pillars:
+    - perceive
+    - sense
+  archetypal_states:
+    - pilgrim
+    - visionary
+  relational_patterns:
+    - idealisation
+    - dependency
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - martyrdom
+  integration_paths:
+    - committed-departure
+    - genuine-reciprocity
+  emotional_patterns:
+    - longing
+    - restlessness
+    - anticipatory-excitement
+  transitional_states:
+    - pre-departure
+    - relational-change
+
+cups/queen-of-cups:
+  themes:
+    - relational-reciprocity
+    - emotional-avoidance
+    - self-worth
+    - emotional-opening
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+    - spiritual-growth
+  seeker_states:
+    - over-extending-generosity
+    - exhausted-resilience
+    - grief-without-completion
+  compass_pillars:
+    - sense
+    - perceive
+  archetypal_states:
+    - caretaker
+    - wounded-healer
+  relational_patterns:
+    - over-extension
+    - enmeshment
+    - dependency
+  shadow_patterns:
+    - martyrdom
+    - control-masquerading-as-care
+  integration_paths:
+    - sustainable-generosity
+    - genuine-reciprocity
+  emotional_patterns:
+    - depletion
+    - defended-openness
+    - grief
+  transitional_states:
+    - relational-change
+    - deepening
+
+cups/king-of-cups:
+  themes:
+    - emotional-avoidance
+    - authority-development
+    - relational-reciprocity
+    - self-worth
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - spiritual-growth
+  seeker_states:
+    - uninhabited-authority
+    - defended-position
+    - clarity-without-action
+  compass_pillars:
+    - center
+    - align
+  archetypal_states:
+    - sovereign
+    - wounded-healer
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+    - reciprocal-exchange
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - cleverness-as-avoidance
+  integration_paths:
+    - claimed-authority
+    - genuine-reciprocity
+  emotional_patterns:
+    - defended-openness
+    - numbness
+    - ease
+  transitional_states:
+    - identity-threshold
+    - authority-threshold
+
+# --- WANDS ---
+
+wands/ace-of-wands:
+  themes:
+    - creative-ignition
+    - threshold-paralysis
+    - identity-formation
+    - surrender-and-trust
+  life_areas:
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - health-and-energy
+  seeker_states:
+    - perpetual-beginning
+    - seeking-approval-to-begin
+    - threshold-paralysis
+  compass_pillars:
+    - open
+    - perceive
+  archetypal_states:
+    - eternal-beginner
+    - pilgrim
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - irresponsibility-as-freedom
+    - perfectionism-as-prevention
+  integration_paths:
+    - grounded-beginning
+    - committed-departure
+  emotional_patterns:
+    - anticipatory-excitement
+    - restlessness
+    - anticipatory-anxiety
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+wands/two-of-wands:
+  themes:
+    - threshold-paralysis
+    - ambivalence
+    - authority-development
+    - creative-ignition
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - emotional-and-mental-patterns
+    - spiritual-growth
+  seeker_states:
+    - clarity-without-action
+    - stuck-in-ambivalence
+    - threshold-paralysis
+  compass_pillars:
+    - open
+    - align
+  archetypal_states:
+    - threshold-guardian
+    - visionary
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - ambivalence
+    - anticipatory-anxiety
+  transitional_states:
+    - pre-departure
+    - vocational-pivot
+
+wands/three-of-wands:
+  themes:
+    - transition-navigation
+    - authority-development
+    - creative-ignition
+    - surrender-and-trust
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - assessment-without-return
+    - clarity-without-action
+    - waiting-for-permission
+  compass_pillars:
+    - map
+    - align
+  archetypal_states:
+    - pilgrim
+    - visionary
+  relational_patterns:
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - fantasy-as-substitute
+    - bitterness-as-wisdom
+  integration_paths:
+    - long-arc-patience
+    - committed-departure
+  emotional_patterns:
+    - restlessness
+    - cautious-hope
+    - anticipatory-anxiety
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+wands/four-of-wands:
+  themes:
+    - identity-reclamation
+    - transition-navigation
+    - abundance-orientation
+    - relational-reciprocity
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - family-and-generational-dynamics
+    - emotional-and-mental-patterns
+  seeker_states:
+    - threshold-paralysis
+    - seeking-approval-to-begin
+    - performing-departure
+  compass_pillars:
+    - open
+    - perceive
+  archetypal_states:
+    - pilgrim
+    - sovereign
+  relational_patterns:
+    - avoidance-of-commitment
+    - reciprocal-exchange
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - nostalgic-stasis
+  integration_paths:
+    - committed-departure
+    - genuine-reciprocity
+  emotional_patterns:
+    - cautious-hope
+    - anticipatory-excitement
+    - ambivalence
+  transitional_states:
+    - post-transition-integration
+    - relational-change
+
+wands/five-of-wands:
+  themes:
+    - authority-resistance
+    - cognitive-entrapment
+    - self-sabotage
+    - collaboration
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - fragmented-effort
+    - scattered-momentum
+    - defended-position
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - strategist
+    - eternal-beginner
+  relational_patterns:
+    - competitive-fragmentation
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - bitterness-as-wisdom
+    - performance-of-resilience
+  integration_paths:
+    - collaborative-craft
+    - claimed-authority
+  emotional_patterns:
+    - resentment
+    - restlessness
+    - overwhelm
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+wands/six-of-wands:
+  themes:
+    - visibility-and-recognition
+    - authority-development
+    - self-worth
+    - identity-reclamation
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - visible-but-unclaimed
+    - validation-seeking
+    - uninhabited-authority
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - sovereign
+    - visionary
+  relational_patterns:
+    - invisible-contribution
+    - dependency
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - strategic-helplessness
+  integration_paths:
+    - claimed-authority
+    - grounded-beginning
+  emotional_patterns:
+    - shame
+    - anticipatory-excitement
+    - cautious-hope
+  transitional_states:
+    - identity-threshold
+    - authority-threshold
+
+wands/seven-of-wands:
+  themes:
+    - authority-resistance
+    - self-sabotage
+    - cognitive-entrapment
+    - authority-development
+  life_areas:
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - money-and-stability
+  seeker_states:
+    - defended-position
+    - exhausted-resilience
+    - anxiety-without-object
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - guardian
+    - strategist
+  relational_patterns:
+    - withdrawal-under-pressure
+    - competitive-fragmentation
+  shadow_patterns:
+    - performance-of-resilience
+    - bitterness-as-wisdom
+  integration_paths:
+    - claimed-authority
+    - long-arc-patience
+  emotional_patterns:
+    - chronic-vigilance
+    - depletion
+    - anticipatory-anxiety
+  transitional_states:
+    - active-transition
+    - authority-threshold
+
+wands/eight-of-wands:
+  themes:
+    - transition-navigation
+    - creative-completion
+    - threshold-paralysis
+    - cognitive-entrapment
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - spiritual-growth
+  seeker_states:
+    - scattered-momentum
+    - fragmented-effort
+    - threshold-paralysis
+  compass_pillars:
+    - map
+    - open
+  archetypal_states:
+    - pilgrim
+    - visionary
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - fantasy-as-substitute
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - long-arc-patience
+  emotional_patterns:
+    - restlessness
+    - anticipatory-excitement
+    - overwhelm
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+wands/nine-of-wands:
+  themes:
+    - authority-resistance
+    - cognitive-entrapment
+    - self-worth
+    - surrender-and-trust
+  life_areas:
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - health-and-energy
+    - love-and-relationships
+  seeker_states:
+    - exhausted-resilience
+    - defended-position
+    - anxiety-without-object
+  compass_pillars:
+    - perceive
+    - center
+  archetypal_states:
+    - guardian
+    - wounded-healer
+  relational_patterns:
+    - withdrawal-under-pressure
+    - dependency
+  shadow_patterns:
+    - performance-of-resilience
+    - accumulation-as-safety
+  integration_paths:
+    - long-arc-patience
+    - shadow-integration
+  emotional_patterns:
+    - chronic-vigilance
+    - depletion
+    - cautious-hope
+  transitional_states:
+    - active-transition
+    - post-transition-integration
+
+wands/ten-of-wands:
+  themes:
+    - self-sabotage
+    - cognitive-entrapment
+    - transition-resistance
+    - authority-resistance
+  life_areas:
+    - career-and-purpose
+    - health-and-energy
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - buried-under-obligation
+    - exhausted-resilience
+    - dutiful-without-direction
+  compass_pillars:
+    - perceive
+    - align
+  archetypal_states:
+    - caretaker
+    - guardian
+  relational_patterns:
+    - over-extension
+    - enmeshment
+  shadow_patterns:
+    - martyrdom
+    - complexity-as-identity
+  integration_paths:
+    - committed-departure
+    - sustainable-generosity
+  emotional_patterns:
+    - depletion
+    - overwhelm
+    - resentment
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+wands/page-of-wands:
+  themes:
+    - creative-ignition
+    - identity-formation
+    - threshold-paralysis
+    - authority-development
+  life_areas:
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+    - love-and-relationships
+  seeker_states:
+    - perpetual-beginning
+    - scattered-momentum
+    - seeking-approval-to-begin
+  compass_pillars:
+    - open
+    - perceive
+  archetypal_states:
+    - eternal-beginner
+    - apprentice
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - irresponsibility-as-freedom
+    - fantasy-as-substitute
+  integration_paths:
+    - grounded-beginning
+    - daily-practice
+  emotional_patterns:
+    - anticipatory-excitement
+    - restlessness
+    - anticipatory-anxiety
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+wands/knight-of-wands:
+  themes:
+    - creative-ignition
+    - threshold-paralysis
+    - self-sabotage
+    - transition-resistance
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - scattered-momentum
+    - perpetual-beginning
+    - avoidance-through-fantasy
+  compass_pillars:
+    - open
+    - align
+  archetypal_states:
+    - pilgrim
+    - eternal-beginner
+  relational_patterns:
+    - avoidance-of-commitment
+    - competitive-fragmentation
+  shadow_patterns:
+    - irresponsibility-as-freedom
+    - fantasy-as-substitute
+  integration_paths:
+    - committed-departure
+    - grounded-beginning
+  emotional_patterns:
+    - restlessness
+    - anticipatory-excitement
+    - overwhelm
+  transitional_states:
+    - pre-departure
+    - active-transition
+
+wands/queen-of-wands:
+  themes:
+    - visibility-and-recognition
+    - authority-development
+    - self-worth
+    - creative-completion
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - uninhabited-authority
+    - visible-but-unclaimed
+    - validation-seeking
+  compass_pillars:
+    - align
+    - center
+  archetypal_states:
+    - sovereign
+    - caretaker
+  relational_patterns:
+    - invisible-contribution
+    - over-extension
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - performance-of-resilience
+  integration_paths:
+    - claimed-authority
+    - sustainable-generosity
+  emotional_patterns:
+    - shame
+    - anticipatory-excitement
+    - ease
+  transitional_states:
+    - identity-threshold
+    - authority-threshold
+
+wands/king-of-wands:
+  themes:
+    - authority-development
+    - visibility-and-recognition
+    - authority-misuse
+    - creative-completion
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - love-and-relationships
+    - family-and-generational-dynamics
+  seeker_states:
+    - uninhabited-authority
+    - defended-position
+    - pattern-inheritance-active
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - sovereign
+    - builder
+  relational_patterns:
+    - control-through-giving
+    - invisible-contribution
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - accumulation-as-safety
+  integration_paths:
+    - claimed-authority
+    - collaborative-craft
+  emotional_patterns:
+    - chronic-vigilance
+    - ease
+    - shame
+  transitional_states:
+    - authority-threshold
+    - identity-threshold
+
+# --- SWORDS ---
+
+swords/ace-of-swords:
+  themes:
+    - communication-clarity
+    - cognitive-entrapment
+    - threshold-paralysis
+    - identity-formation
+  life_areas:
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - clarity-without-action
+    - threshold-paralysis
+    - waiting-for-permission
+  compass_pillars:
+    - align
+    - open
+  archetypal_states:
+    - pilgrim
+    - visionary
+  relational_patterns:
+    - avoidance-of-commitment
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - perfectionism-as-prevention
+  integration_paths:
+    - committed-departure
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - anticipatory-anxiety
+    - cautious-hope
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+swords/two-of-swords:
+  themes:
+    - cognitive-entrapment
+    - ambivalence
+    - threshold-paralysis
+    - emotional-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - career-and-purpose
+    - spiritual-growth
+  seeker_states:
+    - stuck-in-ambivalence
+    - clarity-without-action
+    - defended-position
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - threshold-guardian
+    - hermit-seeker
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - fantasy-as-substitute
+  integration_paths:
+    - committed-departure
+    - shadow-integration
+  emotional_patterns:
+    - ambivalence
+    - numbness
+    - anticipatory-anxiety
+  transitional_states:
+    - pre-departure
+    - deepening
+
+swords/three-of-swords:
+  themes:
+    - grief-processing
+    - cognitive-entrapment
+    - emotional-avoidance
+    - relational-avoidance
+  life_areas:
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+    - spiritual-growth
+  seeker_states:
+    - grief-without-completion
+    - cognitive-entrapment
+    - nostalgic-attachment
+  compass_pillars:
+    - center
+    - open
+  archetypal_states:
+    - mourner
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - grief-as-identity
+    - bitterness-as-wisdom
+  integration_paths:
+    - honest-grief
+    - shadow-integration
+  emotional_patterns:
+    - grief
+    - resentment
+    - longing
+  transitional_states:
+    - grief-passage
+    - post-transition-integration
+
+swords/four-of-swords:
+  themes:
+    - surrender-and-trust
+    - cognitive-entrapment
+    - transition-resistance
+    - emotional-avoidance
+  life_areas:
+    - health-and-energy
+    - emotional-and-mental-patterns
+    - spiritual-growth
+    - career-and-purpose
+  seeker_states:
+    - exhausted-resilience
+    - threshold-paralysis
+    - clarity-without-action
+  compass_pillars:
+    - map
+    - center
+  archetypal_states:
+    - hermit-seeker
+    - wounded-healer
+  relational_patterns:
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - performance-of-resilience
+    - isolation-as-sovereignty
+  integration_paths:
+    - embodied-wisdom
+    - long-arc-patience
+  emotional_patterns:
+    - depletion
+    - numbness
+    - cautious-hope
+  transitional_states:
+    - post-transition-integration
+    - deepening
+
+swords/five-of-swords:
+  themes:
+    - authority-misuse
+    - relational-power-dynamics
+    - cognitive-entrapment
+    - shadow-projection
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+  seeker_states:
+    - defended-position
+    - cognitive-entrapment
+    - anxiety-without-object
+  compass_pillars:
+    - perceive
+    - map
+  archetypal_states:
+    - strategist
+    - threshold-guardian
+  relational_patterns:
+    - control-through-giving
+    - triangulation
+    - competitive-fragmentation
+  shadow_patterns:
+    - bitterness-as-wisdom
+    - cleverness-as-avoidance
+  integration_paths:
+    - genuine-reciprocity
+    - shadow-integration
+  emotional_patterns:
+    - resentment
+    - chronic-vigilance
+    - shame
+  transitional_states:
+    - relational-change
+    - identity-threshold
+
+swords/six-of-swords:
+  themes:
+    - transition-navigation
+    - grief-processing
+    - transition-resistance
+    - identity-dissolution
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - spiritual-growth
+    - career-and-purpose
+  seeker_states:
+    - performing-departure
+    - grief-without-completion
+    - threshold-paralysis
+  compass_pillars:
+    - open
+    - map
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - nostalgic-stasis
+    - grief-as-identity
+  integration_paths:
+    - committed-departure
+    - honest-grief
+  emotional_patterns:
+    - grief
+    - longing
+    - numbness
+  transitional_states:
+    - active-transition
+    - grief-passage
+
+swords/seven-of-swords:
+  themes:
+    - authority-resistance
+    - self-sabotage
+    - cognitive-entrapment
+    - shadow-projection
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - performing-departure
+    - avoidance-through-fantasy
+    - defended-position
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - strategist
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - triangulation
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - irresponsibility-as-freedom
+  integration_paths:
+    - committed-departure
+    - shadow-integration
+  emotional_patterns:
+    - anticipatory-anxiety
+    - shame
+    - restlessness
+  transitional_states:
+    - identity-threshold
+    - awakening
+
+swords/eight-of-swords:
+  themes:
+    - cognitive-entrapment
+    - threshold-paralysis
+    - self-sabotage
+    - emotional-avoidance
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - career-and-purpose
+    - spiritual-growth
+  seeker_states:
+    - cognitive-entrapment
+    - stuck-in-ambivalence
+    - anxiety-without-object
+  compass_pillars:
+    - perceive
+    - open
+  archetypal_states:
+    - threshold-guardian
+    - hermit-seeker
+  relational_patterns:
+    - dependency
+    - withdrawal-under-pressure
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - strategic-helplessness
+  integration_paths:
+    - shadow-integration
+    - committed-departure
+  emotional_patterns:
+    - anticipatory-anxiety
+    - numbness
+    - chronic-vigilance
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+swords/nine-of-swords:
+  themes:
+    - cognitive-entrapment
+    - emotional-cycles
+    - shadow-projection
+    - self-sabotage
+  life_areas:
+    - emotional-and-mental-patterns
+    - health-and-energy
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - anxiety-without-object
+    - cognitive-entrapment
+    - exhausted-resilience
+  compass_pillars:
+    - perceive
+    - center
+  archetypal_states:
+    - hermit-seeker
+    - threshold-guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - enmeshment
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - perfectionism-as-prevention
+  integration_paths:
+    - shadow-integration
+    - embodied-wisdom
+  emotional_patterns:
+    - anticipatory-anxiety
+    - chronic-vigilance
+    - shame
+  transitional_states:
+    - awakening
+    - deepening
+
+swords/ten-of-swords:
+  themes:
+    - identity-dissolution
+    - grief-processing
+    - pattern-interruption
+    - cognitive-entrapment
+  life_areas:
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - career-and-purpose
+    - spiritual-growth
+  seeker_states:
+    - grief-without-completion
+    - performing-departure
+    - threshold-paralysis
+  compass_pillars:
+    - open
+    - seal
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - grief-as-identity
+    - bitterness-as-wisdom
+  integration_paths:
+    - honest-grief
+    - committed-departure
+  emotional_patterns:
+    - grief
+    - numbness
+    - resentment
+  transitional_states:
+    - completion-and-release
+    - grief-passage
+
+swords/page-of-swords:
+  themes:
+    - communication-clarity
+    - cognitive-entrapment
+    - authority-development
+    - identity-formation
+  life_areas:
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - scattered-momentum
+    - validation-seeking
+    - clarity-without-action
+  compass_pillars:
+    - perceive
+    - align
+  archetypal_states:
+    - eternal-beginner
+    - apprentice
+  relational_patterns:
+    - competitive-fragmentation
+    - avoidance-of-commitment
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - perfectionism-as-prevention
+  integration_paths:
+    - grounded-beginning
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - anticipatory-anxiety
+    - anticipatory-excitement
+  transitional_states:
+    - pre-departure
+    - identity-threshold
+
+swords/knight-of-swords:
+  themes:
+    - cognitive-entrapment
+    - authority-development
+    - authority-misuse
+    - self-sabotage
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - money-and-stability
+  seeker_states:
+    - scattered-momentum
+    - fragmented-effort
+    - defended-position
+  compass_pillars:
+    - align
+    - map
+  archetypal_states:
+    - pilgrim
+    - strategist
+  relational_patterns:
+    - competitive-fragmentation
+    - control-through-giving
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - performance-of-resilience
+  integration_paths:
+    - committed-departure
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - overwhelm
+    - chronic-vigilance
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+swords/queen-of-swords:
+  themes:
+    - communication-clarity
+    - relational-avoidance
+    - self-sufficiency
+    - authority-development
+  life_areas:
+    - love-and-relationships
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+  seeker_states:
+    - self-sufficient-but-isolated
+    - defended-position
+    - clarity-without-action
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - sovereign
+    - strategist
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - bitterness-as-wisdom
+  integration_paths:
+    - claimed-authority
+    - genuine-reciprocity
+  emotional_patterns:
+    - defended-openness
+    - resentment
+    - ease
+  transitional_states:
+    - identity-threshold
+    - authority-threshold
+
+swords/king-of-swords:
+  themes:
+    - authority-development
+    - communication-clarity
+    - cognitive-entrapment
+    - authority-misuse
+  life_areas:
+    - career-and-purpose
+    - love-and-relationships
+    - money-and-stability
+    - family-and-generational-dynamics
+  seeker_states:
+    - uninhabited-authority
+    - clarity-without-action
+    - defended-position
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - sovereign
+    - strategist
+  relational_patterns:
+    - control-through-giving
+    - invisible-contribution
+  shadow_patterns:
+    - cleverness-as-avoidance
+    - isolation-as-sovereignty
+  integration_paths:
+    - claimed-authority
+    - material-wisdom
+  emotional_patterns:
+    - chronic-vigilance
+    - defended-openness
+    - ease
+  transitional_states:
+    - authority-threshold
+    - identity-threshold
+
+# --- PENTACLES ---
+
+pentacles/ace-of-pentacles:
+  themes:
+    - material-building
+    - material-security
+    - creative-ignition
+    - threshold-paralysis
+  life_areas:
+    - money-and-stability
+    - career-and-purpose
+    - health-and-energy
+    - spiritual-growth
+  seeker_states:
+    - seeking-approval-to-begin
+    - threshold-paralysis
+    - perpetual-beginning
+  compass_pillars:
+    - open
+    - sense
+  archetypal_states:
+    - eternal-beginner
+    - builder
+  relational_patterns:
+    - avoidance-of-commitment
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - accumulation-as-safety
+  integration_paths:
+    - grounded-beginning
+    - material-wisdom
+  emotional_patterns:
+    - anticipatory-anxiety
+    - cautious-hope
+    - anticipatory-excitement
+  transitional_states:
+    - pre-departure
+    - material-turning-point
+
+pentacles/two-of-pentacles:
+  themes:
+    - cognitive-entrapment
+    - ambivalence
+    - material-security
+    - self-sabotage
+  life_areas:
+    - money-and-stability
+    - career-and-purpose
+    - emotional-and-mental-patterns
+    - health-and-energy
+  seeker_states:
+    - perpetual-juggling
+    - scattered-momentum
+    - stuck-in-ambivalence
+  compass_pillars:
+    - map
+    - perceive
+  archetypal_states:
+    - strategist
+    - eternal-beginner
+  relational_patterns:
+    - over-extension
+    - avoidance-of-commitment
+  shadow_patterns:
+    - complexity-as-identity
+    - perfectionism-as-prevention
+  integration_paths:
+    - long-arc-patience
+    - material-wisdom
+  emotional_patterns:
+    - overwhelm
+    - restlessness
+    - anticipatory-anxiety
+  transitional_states:
+    - active-transition
+    - vocational-pivot
+
+pentacles/three-of-pentacles:
+  themes:
+    - collaboration
+    - practice-and-mastery
+    - authority-development
+    - visibility-and-recognition
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - validation-seeking
+    - fragmented-effort
+    - waiting-for-permission
+  compass_pillars:
+    - align
+    - perceive
+  archetypal_states:
+    - apprentice
+    - craftsperson
+  relational_patterns:
+    - collaborative-building
+    - invisible-contribution
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - cleverness-as-avoidance
+  integration_paths:
+    - collaborative-craft
+    - daily-practice
+  emotional_patterns:
+    - shame
+    - cautious-hope
+    - restlessness
+  transitional_states:
+    - vocational-pivot
+    - deepening
+
+pentacles/four-of-pentacles:
+  themes:
+    - material-security
+    - scarcity-orientation
+    - authority-resistance
+    - relational-attachment
+  life_areas:
+    - money-and-stability
+    - love-and-relationships
+    - emotional-and-mental-patterns
+    - family-and-generational-dynamics
+  seeker_states:
+    - protective-holding
+    - material-hardship-frame
+    - pattern-inheritance-active
+  compass_pillars:
+    - perceive
+    - sense
+  archetypal_states:
+    - guardian
+    - inheritor
+  relational_patterns:
+    - control-through-giving
+    - dependency
+  shadow_patterns:
+    - accumulation-as-safety
+    - control-masquerading-as-care
+  integration_paths:
+    - material-wisdom
+    - genuine-reciprocity
+  emotional_patterns:
+    - chronic-vigilance
+    - anticipatory-anxiety
+    - shame
+  transitional_states:
+    - material-turning-point
+    - identity-threshold
+
+pentacles/five-of-pentacles:
+  themes:
+    - material-loss
+    - scarcity-orientation
+    - isolation
+    - shadow-projection
+  life_areas:
+    - money-and-stability
+    - health-and-energy
+    - love-and-relationships
+    - emotional-and-mental-patterns
+  seeker_states:
+    - material-hardship-frame
+    - self-sufficient-but-isolated
+    - anxiety-without-object
+  compass_pillars:
+    - sense
+    - center
+  archetypal_states:
+    - mourner
+    - pilgrim
+  relational_patterns:
+    - withdrawal-under-pressure
+    - dependency
+  shadow_patterns:
+    - accumulation-as-safety
+    - isolation-as-sovereignty
+  integration_paths:
+    - honest-grief
+    - earned-self-sufficiency
+  emotional_patterns:
+    - shame
+    - chronic-vigilance
+    - depletion
+  transitional_states:
+    - material-turning-point
+    - grief-passage
+
+pentacles/six-of-pentacles:
+  themes:
+    - relational-reciprocity
+    - relational-power-dynamics
+    - material-security
+    - self-worth
+  life_areas:
+    - money-and-stability
+    - love-and-relationships
+    - career-and-purpose
+    - family-and-generational-dynamics
+  seeker_states:
+    - over-extending-generosity
+    - protective-holding
+    - material-hardship-frame
+  compass_pillars:
+    - perceive
+    - sense
+  archetypal_states:
+    - caretaker
+    - guardian
+  relational_patterns:
+    - control-through-giving
+    - dependency
+    - over-extension
+  shadow_patterns:
+    - control-masquerading-as-care
+    - martyrdom
+  integration_paths:
+    - sustainable-generosity
+    - genuine-reciprocity
+  emotional_patterns:
+    - resentment
+    - depletion
+    - cautious-hope
+  transitional_states:
+    - material-turning-point
+    - relational-change
+
+pentacles/seven-of-pentacles:
+  themes:
+    - practice-and-mastery
+    - surrender-and-trust
+    - material-building
+    - ambivalence
+  life_areas:
+    - money-and-stability
+    - career-and-purpose
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - assessment-without-return
+    - exhausted-resilience
+    - stuck-in-ambivalence
+  compass_pillars:
+    - map
+    - sense
+  archetypal_states:
+    - builder
+    - craftsperson
+  relational_patterns:
+    - withdrawal-under-pressure
+    - avoidance-of-commitment
+  shadow_patterns:
+    - bitterness-as-wisdom
+    - accumulation-as-safety
+  integration_paths:
+    - long-arc-patience
+    - material-wisdom
+  emotional_patterns:
+    - restlessness
+    - cautious-hope
+    - depletion
+  transitional_states:
+    - material-turning-point
+    - deepening
+
+pentacles/eight-of-pentacles:
+  themes:
+    - practice-and-mastery
+    - creative-completion
+    - authority-development
+    - self-sabotage
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - health-and-energy
+    - spiritual-growth
+  seeker_states:
+    - practice-deferred
+    - fragmented-effort
+    - dutiful-without-direction
+  compass_pillars:
+    - map
+    - align
+  archetypal_states:
+    - craftsperson
+    - apprentice
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - complexity-as-identity
+  integration_paths:
+    - daily-practice
+    - claimed-authority
+  emotional_patterns:
+    - restlessness
+    - shame
+    - cautious-hope
+  transitional_states:
+    - vocational-pivot
+    - deepening
+
+pentacles/nine-of-pentacles:
+  themes:
+    - self-sufficiency
+    - abundance-orientation
+    - isolation
+    - self-worth
+  life_areas:
+    - money-and-stability
+    - health-and-energy
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - self-sufficient-but-isolated
+    - visible-but-unclaimed
+    - protective-holding
+  compass_pillars:
+    - sense
+    - align
+  archetypal_states:
+    - sovereign
+    - guardian
+  relational_patterns:
+    - withdrawal-under-pressure
+    - invisible-contribution
+  shadow_patterns:
+    - isolation-as-sovereignty
+    - accumulation-as-safety
+  integration_paths:
+    - earned-self-sufficiency
+    - genuine-reciprocity
+  emotional_patterns:
+    - ease
+    - longing
+    - defended-openness
+  transitional_states:
+    - post-transition-integration
+    - identity-threshold
+
+pentacles/ten-of-pentacles:
+  themes:
+    - material-legacy
+    - generational-healing
+    - pattern-inheritance
+    - material-security
+  life_areas:
+    - family-and-generational-dynamics
+    - money-and-stability
+    - love-and-relationships
+    - spiritual-growth
+  seeker_states:
+    - pattern-inheritance-active
+    - protective-holding
+    - dutiful-without-direction
+  compass_pillars:
+    - map
+    - perceive
+  archetypal_states:
+    - inheritor
+    - builder
+  relational_patterns:
+    - enmeshment
+    - control-through-giving
+    - dependency
+  shadow_patterns:
+    - accumulation-as-safety
+    - nostalgic-stasis
+  integration_paths:
+    - generational-transformation
+    - material-wisdom
+  emotional_patterns:
+    - chronic-vigilance
+    - longing
+    - ease
+  transitional_states:
+    - material-turning-point
+    - identity-threshold
+
+pentacles/page-of-pentacles:
+  themes:
+    - practice-and-mastery
+    - material-building
+    - identity-formation
+    - creative-ignition
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - spiritual-growth
+    - emotional-and-mental-patterns
+  seeker_states:
+    - practice-deferred
+    - perpetual-beginning
+    - seeking-approval-to-begin
+  compass_pillars:
+    - sense
+    - open
+  archetypal_states:
+    - apprentice
+    - eternal-beginner
+  relational_patterns:
+    - avoidance-of-commitment
+    - dependency
+  shadow_patterns:
+    - perfectionism-as-prevention
+    - strategic-helplessness
+  integration_paths:
+    - grounded-beginning
+    - daily-practice
+  emotional_patterns:
+    - anticipatory-anxiety
+    - cautious-hope
+    - restlessness
+  transitional_states:
+    - pre-departure
+    - vocational-pivot
+
+pentacles/knight-of-pentacles:
+  themes:
+    - practice-and-mastery
+    - self-sabotage
+    - transition-resistance
+    - authority-resistance
+  life_areas:
+    - career-and-purpose
+    - money-and-stability
+    - health-and-energy
+    - emotional-and-mental-patterns
+  seeker_states:
+    - dutiful-without-direction
+    - exhausted-resilience
+    - stuck-in-ambivalence
+  compass_pillars:
+    - map
+    - sense
+  archetypal_states:
+    - craftsperson
+    - builder
+  relational_patterns:
+    - withdrawal-under-pressure
+    - over-extension
+  shadow_patterns:
+    - complexity-as-identity
+    - martyrdom
+  integration_paths:
+    - long-arc-patience
+    - committed-departure
+  emotional_patterns:
+    - depletion
+    - restlessness
+    - ease
+  transitional_states:
+    - material-turning-point
+    - vocational-pivot
+
+pentacles/queen-of-pentacles:
+  themes:
+    - relational-reciprocity
+    - self-sufficiency
+    - material-building
+    - self-worth
+  life_areas:
+    - money-and-stability
+    - love-and-relationships
+    - health-and-energy
+    - family-and-generational-dynamics
+  seeker_states:
+    - over-extending-generosity
+    - exhausted-resilience
+    - visible-but-unclaimed
+  compass_pillars:
+    - sense
+    - perceive
+  archetypal_states:
+    - caretaker
+    - sovereign
+  relational_patterns:
+    - over-extension
+    - invisible-contribution
+    - dependency
+  shadow_patterns:
+    - martyrdom
+    - control-masquerading-as-care
+  integration_paths:
+    - sustainable-generosity
+    - embodied-wisdom
+  emotional_patterns:
+    - depletion
+    - ease
+    - defended-openness
+  transitional_states:
+    - identity-threshold
+    - authority-threshold
+
+pentacles/king-of-pentacles:
+  themes:
+    - material-legacy
+    - authority-development
+    - material-building
+    - self-worth
+  life_areas:
+    - money-and-stability
+    - career-and-purpose
+    - family-and-generational-dynamics
+    - love-and-relationships
+  seeker_states:
+    - uninhabited-authority
+    - protective-holding
+    - pattern-inheritance-active
+  compass_pillars:
+    - sense
+    - align
+  archetypal_states:
+    - sovereign
+    - builder
+  relational_patterns:
+    - control-through-giving
+    - invisible-contribution
+  shadow_patterns:
+    - accumulation-as-safety
+    - isolation-as-sovereignty
+  integration_paths:
+    - claimed-authority
+    - material-wisdom
+  emotional_patterns:
+    - chronic-vigilance
+    - ease
+    - shame
+  transitional_states:
+    - authority-threshold
+    - material-turning-point

@@ -1,0 +1,98 @@
+---
+import { getCollection } from "astro:content";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import RepeatingCardMeaningArticle from "../../components/RepeatingCardMeaningArticle.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  buildRepeatingCardSlugIndex,
+  getRepeatingCardEntryByCardSlug,
+  isRepeatingMeaningReady,
+  repeatingCardSlugFromId,
+} from "../../lib/repeatingCardMeanings";
+import { buildRepeatingCardPageModel } from "../../lib/repeatingCardPageModel";
+import {
+  getRepeatingCardEntityBreadcrumbs,
+  getRepeatingCardMetaDescription,
+  getRepeatingCardMetaTitle,
+  getRepeatingCardOgImage,
+} from "../../lib/repeatingCardSeo";
+import { getRepeatingCardEntityPageJsonLd } from "../../lib/repeatingCardEntitySchema";
+import { resolveRepeatingCardRelatedLinks } from "../../lib/repeatingCardRelated";
+import {
+  getRepeatingCardCanonicalUrl,
+  getRepeatingCardHubPath,
+  getRepeatingCardPath,
+} from "../../lib/repeatingCardUrls";
+import { siteBase } from "../../lib/site";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const collection = await getCollection("repeatingCardMeanings");
+  return collection
+    .filter((entry) => isRepeatingMeaningReady(entry))
+    .map((entry) => ({
+      params: { slug: repeatingCardSlugFromId(entry.id) },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const rawSlug = Astro.params.slug?.replace(/\/$/, "") ?? "";
+const cardSlug = rawSlug.includes("/") ? (rawSlug.split("/").pop() ?? "") : rawSlug;
+
+const collection = await getCollection("repeatingCardMeanings");
+const byId = new Map(collection.map((e) => [e.id, e]));
+const bySlug = buildRepeatingCardSlugIndex(collection);
+const resolved =
+  entry && isRepeatingMeaningReady(entry) && repeatingCardSlugFromId(entry.id) === cardSlug
+    ? entry
+    : getRepeatingCardEntryByCardSlug(bySlug, byId, cardSlug);
+
+if (!resolved || !isRepeatingMeaningReady(resolved)) {
+  return Astro.redirect(getRepeatingCardHubPath());
+}
+
+const model = await buildRepeatingCardPageModel(resolved);
+if (!model) {
+  return Astro.redirect(getRepeatingCardHubPath());
+}
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = getRepeatingCardCanonicalUrl(resolved, siteHref);
+const title = getRepeatingCardMetaTitle(resolved);
+const description = getRepeatingCardMetaDescription(resolved);
+const ogImage = getRepeatingCardOgImage(resolved, siteHref);
+const crumbs = getRepeatingCardEntityBreadcrumbs(resolved);
+const jsonLd = getRepeatingCardEntityPageJsonLd(resolved, siteHref);
+const relatedLinks = resolveRepeatingCardRelatedLinks(resolved, byId);
+const toolDeepLink = getRepeatingCardPath(resolved);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={canonical}
+  ogType="article"
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <RepeatingCardMeaningArticle
+    model={model}
+    variant="entity"
+    hubHref={getRepeatingCardHubPath()}
+    hubLabel="Open the card selector tool"
+    secondaryHref={toolDeepLink}
+    secondaryLabel="View in tool layout"
+    relatedLinks={relatedLinks}
+  >
+    <Breadcrumbs items={crumbs} slot="breadcrumbs" />
+    <p class="rcm-card__back-wrap" slot="footer">
+      <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Card selector tool</a>
+      <span class="rcm-card__back-sep" aria-hidden="true">·</span>
+      <a class="rcm-card__back" href="/tools/">Tarot tools</a>
+    </p>
+  </RepeatingCardMeaningArticle>
+</BaseLayout>

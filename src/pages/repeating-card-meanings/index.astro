@@ -1,0 +1,216 @@
+---
+import { getCollection } from "astro:content";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  buildRepeatingCardHubSections,
+  getRepeatingCardHubBreadcrumbs,
+  getRepeatingCardHubCanonicalUrl,
+  getRepeatingCardHubJsonLd,
+  REPEATING_CARD_HUB_DESCRIPTION,
+  REPEATING_CARD_HUB_TITLE,
+} from "../../lib/repeatingCardHub";
+import { getRepeatingCardHubPath } from "../../lib/repeatingCardUrls";
+import { siteBase } from "../../lib/site";
+
+export const prerender = true;
+
+const collection = await getCollection("repeatingCardMeanings");
+const sections = buildRepeatingCardHubSections(collection);
+const cardCount = sections.reduce((n, section) => n + section.cards.length, 0);
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = getRepeatingCardHubCanonicalUrl(siteHref);
+const crumbs = getRepeatingCardHubBreadcrumbs();
+const jsonLd = getRepeatingCardHubJsonLd(sections, siteHref);
+const toolHref = getRepeatingCardHubPath();
+---
+
+<BaseLayout
+  title={REPEATING_CARD_HUB_TITLE}
+  description={REPEATING_CARD_HUB_DESCRIPTION}
+  ogUrl={canonical}
+  ogType="website"
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <article class="rcm-hub page-inner" id="rcm-hub">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="rcm-hub__hero">
+      <p class="rcm-hub__eyebrow">Tarot pattern library</p>
+      <h1 class="rcm-hub__title">Repeating Card Meanings</h1>
+      <p class="rcm-hub__lede">
+        When the same tarot card keeps appearing across readings, the repetition is usually symbolic
+        emphasis: something unresolved, unintegrated, re-emerging, or still unfolding beneath the
+        surface of events. These pages explore what that pattern may be asking from you, without
+        fortune-telling or fixed predictions.
+      </p>
+      <p class="rcm-hub__lede">
+        Tides of Knowing treats repeated cards as relational information. Each entry is written for
+        psychologically nuanced interpretation, informed by decades of practice and The COMPASS
+        Method<sup class="rcm-hub__tm">TM</sup>, which names conditions of attention that help
+        intuitive reading stay clear under pressure.
+      </p>
+      <p class="rcm-hub__tool-wrap">
+        <a class="rcm-hub__tool-link" href={toolHref}>Open the interactive card selector tool</a>
+        <span class="rcm-hub__tool-note">
+          ({cardCount} card meanings indexed here; use the tool when you already know which card keeps
+          returning.)
+        </span>
+      </p>
+    </header>
+
+    {
+      sections.map((section) => (
+        <section class="rcm-hub__suit" aria-labelledby={`rcm-hub-suit-${section.suit}`}>
+          <h2 id={`rcm-hub-suit-${section.suit}`} class="rcm-hub__suit-title">
+            {section.heading}
+          </h2>
+          <ul class="rcm-hub__card-list" role="list">
+            {
+              section.cards.map((card) => (
+                <li class="rcm-hub__card-item">
+                  <a class="rcm-hub__card-link" href={card.href}>
+                    {card.title}
+                  </a>
+                  {card.summary ? <p class="rcm-hub__card-summary">{card.summary}</p> : null}
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      ))
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .rcm-hub {
+    padding: clamp(1.25rem, 4vw, 2rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 52rem;
+  }
+
+  .rcm-hub__hero {
+    margin-bottom: clamp(2rem, 5vw, 2.75rem);
+    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .rcm-hub__eyebrow {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-hub__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.5vw, 2.6rem);
+    line-height: 1.12;
+    color: var(--tok-text-light);
+  }
+
+  .rcm-hub__lede {
+    margin: 0 0 0.85rem;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+    opacity: 0.94;
+  }
+
+  .rcm-hub__tm {
+    font-size: 0.65em;
+    vertical-align: super;
+    line-height: 0;
+  }
+
+  .rcm-hub__tool-wrap {
+    margin: 1.25rem 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .rcm-hub__tool-link {
+    color: var(--tok-teal-light);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-hub__tool-link:hover {
+    color: var(--tok-text-light);
+  }
+
+  .rcm-hub__tool-note {
+    color: color-mix(in srgb, var(--tok-text-light-soft) 75%, var(--tok-text-dark));
+  }
+
+  .rcm-hub__suit {
+    margin-bottom: clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .rcm-hub__suit-title {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.45rem, 3vw, 1.75rem);
+    line-height: 1.2;
+    color: var(--tok-text-light);
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+
+  .rcm-hub__card-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 640px) {
+    .rcm-hub__card-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem 1.35rem;
+    }
+  }
+
+  .rcm-hub__card-item {
+    margin: 0;
+    padding: 0.65rem 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 14%, transparent);
+  }
+
+  .rcm-hub__card-link {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--tok-teal);
+    text-decoration: none;
+  }
+
+  .rcm-hub__card-link:hover {
+    color: var(--tok-teal-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-hub__card-summary {
+    margin: 0.35rem 0 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--tok-text-dark);
+    opacity: 0.88;
+  }
+</style>

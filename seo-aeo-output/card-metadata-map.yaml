@@ -1,0 +1,246 @@
+# Repeating Card Meanings: metadata map for SEO/AEO pipelines
+# Canonical path prefix (target): /repeating-card-meanings/{card-slug}/
+# Live Astro paths (current): /tools/repeating-card-meanings/{collection-id}/
+# Trailing slash: required on all canonicalUrl values (site convention).
+
+conventions:
+  canonicalPathPrefix: /repeating-card-meanings/
+  trailingSlash: required
+  slugSource: card filename segment (no suit folder in canonical path)
+  livePathPrefix: /tools/repeating-card-meanings/
+
+cards:
+  "cups/ace-of-cups":
+    canonicalUrl: /repeating-card-meanings/ace-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/ace-of-cups/
+  "cups/eight-of-cups":
+    canonicalUrl: /repeating-card-meanings/eight-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/eight-of-cups/
+  "cups/five-of-cups":
+    canonicalUrl: /repeating-card-meanings/five-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/five-of-cups/
+  "cups/four-of-cups":
+    canonicalUrl: /repeating-card-meanings/four-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/four-of-cups/
+  "cups/king-of-cups":
+    canonicalUrl: /repeating-card-meanings/king-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/king-of-cups/
+  "cups/knight-of-cups":
+    canonicalUrl: /repeating-card-meanings/knight-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/knight-of-cups/
+  "cups/nine-of-cups":
+    canonicalUrl: /repeating-card-meanings/nine-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/nine-of-cups/
+  "cups/page-of-cups":
+    canonicalUrl: /repeating-card-meanings/page-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/page-of-cups/
+  "cups/queen-of-cups":
+    canonicalUrl: /repeating-card-meanings/queen-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/queen-of-cups/
+  "cups/seven-of-cups":
+    canonicalUrl: /repeating-card-meanings/seven-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/seven-of-cups/
+  "cups/six-of-cups":
+    canonicalUrl: /repeating-card-meanings/six-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/six-of-cups/
+  "cups/ten-of-cups":
+    canonicalUrl: /repeating-card-meanings/ten-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/ten-of-cups/
+  "cups/three-of-cups":
+    canonicalUrl: /repeating-card-meanings/three-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/three-of-cups/
+  "cups/two-of-cups":
+    canonicalUrl: /repeating-card-meanings/two-of-cups/
+    liveUrl: /tools/repeating-card-meanings/cups/two-of-cups/
+  "majors/death":
+    canonicalUrl: /repeating-card-meanings/death/
+    liveUrl: /tools/repeating-card-meanings/majors/death/
+  "majors/judgement":
+    canonicalUrl: /repeating-card-meanings/judgement/
+    liveUrl: /tools/repeating-card-meanings/majors/judgement/
+  "majors/justice":
+    canonicalUrl: /repeating-card-meanings/justice/
+    liveUrl: /tools/repeating-card-meanings/majors/justice/
+  "majors/strength":
+    canonicalUrl: /repeating-card-meanings/strength/
+    liveUrl: /tools/repeating-card-meanings/majors/strength/
+  "majors/temperance":
+    canonicalUrl: /repeating-card-meanings/temperance/
+    liveUrl: /tools/repeating-card-meanings/majors/temperance/
+  "majors/the-chariot":
+    canonicalUrl: /repeating-card-meanings/the-chariot/
+    liveUrl: /tools/repeating-card-meanings/majors/the-chariot/
+  "majors/the-devil":
+    canonicalUrl: /repeating-card-meanings/the-devil/
+    liveUrl: /tools/repeating-card-meanings/majors/the-devil/
+  "majors/the-emperor":
+    canonicalUrl: /repeating-card-meanings/the-emperor/
+    liveUrl: /tools/repeating-card-meanings/majors/the-emperor/
+  "majors/the-empress":
+    canonicalUrl: /repeating-card-meanings/the-empress/
+    liveUrl: /tools/repeating-card-meanings/majors/the-empress/
+  "majors/the-fool":
+    canonicalUrl: /repeating-card-meanings/the-fool/
+    liveUrl: /tools/repeating-card-meanings/majors/the-fool/
+  "majors/the-hanged-man":
+    canonicalUrl: /repeating-card-meanings/the-hanged-man/
+    liveUrl: /tools/repeating-card-meanings/majors/the-hanged-man/
+  "majors/the-hermit":
+    canonicalUrl: /repeating-card-meanings/the-hermit/
+    liveUrl: /tools/repeating-card-meanings/majors/the-hermit/
+  "majors/the-hierophant":
+    canonicalUrl: /repeating-card-meanings/the-hierophant/
+    liveUrl: /tools/repeating-card-meanings/majors/the-hierophant/
+  "majors/the-high-priestess":
+    canonicalUrl: /repeating-card-meanings/the-high-priestess/
+    liveUrl: /tools/repeating-card-meanings/majors/the-high-priestess/
+  "majors/the-lovers":
+    canonicalUrl: /repeating-card-meanings/the-lovers/
+    liveUrl: /tools/repeating-card-meanings/majors/the-lovers/
+  "majors/the-magician":
+    canonicalUrl: /repeating-card-meanings/the-magician/
+    liveUrl: /tools/repeating-card-meanings/majors/the-magician/
+  "majors/the-moon":
+    canonicalUrl: /repeating-card-meanings/the-moon/
+    liveUrl: /tools/repeating-card-meanings/majors/the-moon/
+  "majors/the-star":
+    canonicalUrl: /repeating-card-meanings/the-star/
+    liveUrl: /tools/repeating-card-meanings/majors/the-star/
+  "majors/the-sun":
+    canonicalUrl: /repeating-card-meanings/the-sun/
+    liveUrl: /tools/repeating-card-meanings/majors/the-sun/
+  "majors/the-tower":
+    canonicalUrl: /repeating-card-meanings/the-tower/
+    liveUrl: /tools/repeating-card-meanings/majors/the-tower/
+  "majors/the-world":
+    canonicalUrl: /repeating-card-meanings/the-world/
+    liveUrl: /tools/repeating-card-meanings/majors/the-world/
+  "majors/wheel-of-fortune":
+    canonicalUrl: /repeating-card-meanings/wheel-of-fortune/
+    liveUrl: /tools/repeating-card-meanings/majors/wheel-of-fortune/
+  "pentacles/ace-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/ace-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/ace-of-pentacles/
+  "pentacles/eight-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/eight-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/eight-of-pentacles/
+  "pentacles/five-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/five-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/five-of-pentacles/
+  "pentacles/four-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/four-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/four-of-pentacles/
+  "pentacles/king-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/king-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/king-of-pentacles/
+  "pentacles/knight-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/knight-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/knight-of-pentacles/
+  "pentacles/nine-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/nine-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/nine-of-pentacles/
+  "pentacles/page-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/page-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/page-of-pentacles/
+  "pentacles/queen-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/queen-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/queen-of-pentacles/
+  "pentacles/seven-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/seven-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/seven-of-pentacles/
+  "pentacles/six-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/six-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/six-of-pentacles/
+  "pentacles/ten-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/ten-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/ten-of-pentacles/
+  "pentacles/three-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/three-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/three-of-pentacles/
+  "pentacles/two-of-pentacles":
+    canonicalUrl: /repeating-card-meanings/two-of-pentacles/
+    liveUrl: /tools/repeating-card-meanings/pentacles/two-of-pentacles/
+  "swords/ace-of-swords":
+    canonicalUrl: /repeating-card-meanings/ace-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/ace-of-swords/
+  "swords/eight-of-swords":
+    canonicalUrl: /repeating-card-meanings/eight-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/eight-of-swords/
+  "swords/five-of-swords":
+    canonicalUrl: /repeating-card-meanings/five-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/five-of-swords/
+  "swords/four-of-swords":
+    canonicalUrl: /repeating-card-meanings/four-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/four-of-swords/
+  "swords/king-of-swords":
+    canonicalUrl: /repeating-card-meanings/king-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/king-of-swords/
+  "swords/knight-of-swords":
+    canonicalUrl: /repeating-card-meanings/knight-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/knight-of-swords/
+  "swords/nine-of-swords":
+    canonicalUrl: /repeating-card-meanings/nine-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/nine-of-swords/
+  "swords/page-of-swords":
+    canonicalUrl: /repeating-card-meanings/page-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/page-of-swords/
+  "swords/queen-of-swords":
+    canonicalUrl: /repeating-card-meanings/queen-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/queen-of-swords/
+  "swords/seven-of-swords":
+    canonicalUrl: /repeating-card-meanings/seven-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/seven-of-swords/
+  "swords/six-of-swords":
+    canonicalUrl: /repeating-card-meanings/six-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/six-of-swords/
+  "swords/ten-of-swords":
+    canonicalUrl: /repeating-card-meanings/ten-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/ten-of-swords/
+  "swords/three-of-swords":
+    canonicalUrl: /repeating-card-meanings/three-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/three-of-swords/
+  "swords/two-of-swords":
+    canonicalUrl: /repeating-card-meanings/two-of-swords/
+    liveUrl: /tools/repeating-card-meanings/swords/two-of-swords/
+  "wands/ace-of-wands":
+    canonicalUrl: /repeating-card-meanings/ace-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/ace-of-wands/
+  "wands/eight-of-wands":
+    canonicalUrl: /repeating-card-meanings/eight-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/eight-of-wands/
+  "wands/five-of-wands":
+    canonicalUrl: /repeating-card-meanings/five-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/five-of-wands/
+  "wands/four-of-wands":
+    canonicalUrl: /repeating-card-meanings/four-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/four-of-wands/
+  "wands/king-of-wands":
+    canonicalUrl: /repeating-card-meanings/king-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/king-of-wands/
+  "wands/knight-of-wands":
+    canonicalUrl: /repeating-card-meanings/knight-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/knight-of-wands/
+  "wands/nine-of-wands":
+    canonicalUrl: /repeating-card-meanings/nine-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/nine-of-wands/
+  "wands/page-of-wands":
+    canonicalUrl: /repeating-card-meanings/page-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/page-of-wands/
+  "wands/queen-of-wands":
+    canonicalUrl: /repeating-card-meanings/queen-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/queen-of-wands/
+  "wands/seven-of-wands":
+    canonicalUrl: /repeating-card-meanings/seven-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/seven-of-wands/
+  "wands/six-of-wands":
+    canonicalUrl: /repeating-card-meanings/six-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/six-of-wands/
+  "wands/ten-of-wands":
+    canonicalUrl: /repeating-card-meanings/ten-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/ten-of-wands/
+  "wands/three-of-wands":
+    canonicalUrl: /repeating-card-meanings/three-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/three-of-wands/
+  "wands/two-of-wands":
+    canonicalUrl: /repeating-card-meanings/two-of-wands/
+    liveUrl: /tools/repeating-card-meanings/wands/two-of-wands/

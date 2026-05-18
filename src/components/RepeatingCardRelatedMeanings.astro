@@ -1,0 +1,117 @@
+---
+import type { RepeatingCardRelatedLink } from "../lib/repeatingCardRelated";
+
+interface Props {
+  links: RepeatingCardRelatedLink[];
+}
+
+const { links } = Astro.props;
+
+if (links.length === 0) {
+  return null;
+}
+---
+
+<section class="rcm-related" aria-labelledby="rcm-related-heading">
+  <p class="rcm-related__continue">Continue the pattern</p>
+  <h2 id="rcm-related-heading" class="rcm-related__title">
+    Related Repeating Card Meanings
+  </h2>
+  <ul class="rcm-related__list" role="list">
+    {
+      links.map((link) => (
+        <li class="rcm-related__item">
+          <a class="rcm-related__link" href={link.href}>
+            <span class="rcm-related__card-title">{link.title}</span>
+            <span class="rcm-related__label">{link.relationshipLabel}</span>
+          </a>
+          {link.summary ? <p class="rcm-related__summary">{link.summary}</p> : null}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .rcm-related {
+    margin: clamp(2rem, 5vw, 2.75rem) 0 0;
+    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .rcm-related__continue {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-related__title {
+    margin: 0 0 1rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.35rem, 3vw, 1.6rem);
+    line-height: 1.2;
+    color: var(--tok-text-light);
+  }
+
+  .rcm-related__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .rcm-related__item {
+    margin: 0;
+    padding: 0.75rem 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 14%, transparent);
+  }
+
+  .rcm-related__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.65rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .rcm-related__link:hover .rcm-related__card-title {
+    color: var(--tok-teal-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-related__card-title {
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--tok-teal);
+  }
+
+  .rcm-related__label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 80%, var(--tok-gold));
+  }
+
+  .rcm-related__summary {
+    margin: 0.4rem 0 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--tok-text-dark);
+    opacity: 0.88;
+    max-width: 42rem;
+  }
+</style>

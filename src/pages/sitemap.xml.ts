@@ -13,7 +13,11 @@ import {
 import { LIBRARY_PER_PAGE, totalPages } from "../lib/libraryPagination";
 import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
 import { isRepeatingMeaningReady } from "../lib/repeatingCardMeanings";
-import { getRepeatingCardHubPath, getRepeatingCardPath } from "../lib/repeatingCardUrls";
+import {
+  getRepeatingCardCanonicalPath,
+  getRepeatingCardHubPath,
+  getRepeatingCardSeoHubPath,
+} from "../lib/repeatingCardUrls";
 
 export const prerender = true;
 
@@ -115,19 +119,28 @@ export const GET: APIRoute = async () => {
     rows.push({ path: `/tags/${t}/`, changefreq: "monthly", priority: "0.6" });
   }
 
+  /** Interactive tool hub (not individual tool deep-links). */
   rows.push({
     path: getRepeatingCardHubPath(),
     changefreq: "monthly",
     priority: "0.75",
   });
 
+  /** SEO/AEO cluster hub for canonical entity pages. */
+  rows.push({
+    path: getRepeatingCardSeoHubPath(),
+    changefreq: "monthly",
+    priority: "0.8",
+  });
+
+  /** Canonical entity card pages (`/repeating-card-meanings/{slug}/`). */
   const repeatingCards = await getCollection("repeatingCardMeanings");
   for (const entry of repeatingCards) {
     if (!isRepeatingMeaningReady(entry)) continue;
     rows.push({
-      path: getRepeatingCardPath(entry),
+      path: getRepeatingCardCanonicalPath(entry),
       changefreq: "monthly",
-      priority: "0.68",
+      priority: "0.72",
     });
   }
 

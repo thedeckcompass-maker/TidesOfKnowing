@@ -1,0 +1,813 @@
+# Internal Linking Map
+# Tides of Knowing — Repeating Card Meanings
+# Generated: 2026-05-18
+# Stage: 6 — Internal Linking
+#
+# This file records the cluster membership, hub status, linking tier, and anchor text
+# for each of the 78 repeating card meaning pages.
+#
+# For direct card-to-card link targets (3-5 per card), see related-card-map.yaml.
+# For cluster definitions and pillar page candidates, see high-authority-clusters.md.
+# For topic cluster linking strategy, see topic-cluster-map.md.
+#
+# Linking tiers:
+#   tier-1: Cross-cluster hub (10 cards) — highest internal link authority
+#   tier-2: Multi-cluster member (2+ clusters) — high internal link authority
+#   tier-3: Single cluster member — standard internal link authority
+#   tier-4: No cluster assignment yet — minimal internal linking; awaits future cluster expansion
+#
+# Anchor text principle: anchor text should describe the card's repeating pattern,
+# not just the card name. Format: "{card name} repeating meaning" for generic links;
+# use pattern-specific anchor text where contextually available.
+
+---
+
+# Major Arcana
+
+majors/the-fool:
+  clusters: [1, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Fool repeating meaning"
+  anchor_text_alt: "when The Fool keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/the-magician:
+  clusters: [10]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "The Magician repeating meaning"
+  anchor_text_alt: "when The Magician keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/the-high-priestess:
+  clusters: [5]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "The High Priestess repeating meaning"
+  anchor_text_alt: "when The High Priestess keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+
+majors/the-empress:
+  clusters: [7, 8]
+  linking_tier: tier-2
+  hub_status: true
+  anchor_text_suggestion: "The Empress repeating meaning"
+  anchor_text_alt: "when The Empress keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+majors/the-emperor:
+  clusters: [3, 4, 8]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "The Emperor repeating meaning"
+  anchor_text_alt: "when The Emperor keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+majors/the-hierophant:
+  clusters: [3, 4, 8]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "The Hierophant repeating meaning"
+  anchor_text_alt: "when The Hierophant keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+majors/the-lovers:
+  clusters: [1, 7]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Lovers repeating meaning"
+  anchor_text_alt: "when The Lovers keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+majors/the-chariot:
+  clusters: [1, 3]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Chariot repeating meaning"
+  anchor_text_alt: "when The Chariot keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+
+majors/strength:
+  clusters: [3, 5, 10]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "Strength repeating meaning"
+  anchor_text_alt: "when Strength keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/the-hermit:
+  clusters: [5, 6, 10]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "The Hermit repeating meaning"
+  anchor_text_alt: "when The Hermit keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/wheel-of-fortune:
+  clusters: [4, 9]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Wheel of Fortune repeating meaning"
+  anchor_text_alt: "when the Wheel of Fortune keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+majors/justice:
+  clusters: [3]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Justice repeating meaning"
+  anchor_text_alt: "when Justice keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+
+majors/the-hanged-man:
+  clusters: [2, 9]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Hanged Man repeating meaning"
+  anchor_text_alt: "when The Hanged Man keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+majors/death:
+  clusters: [2, 9]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "Death repeating meaning"
+  anchor_text_alt: "when Death keeps appearing in tarot"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+majors/temperance:
+  clusters: [11]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Temperance repeating meaning"
+  anchor_text_alt: "when Temperance keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+majors/the-devil:
+  clusters: [5, 11]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "The Devil repeating meaning"
+  anchor_text_alt: "when The Devil keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+majors/the-tower:
+  clusters: [2, 9]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Tower repeating meaning"
+  anchor_text_alt: "when The Tower keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+majors/the-star:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "The Star repeating meaning"
+  anchor_text_alt: "when The Star keeps appearing"
+  pillar_page_candidates: []
+  notes: "No current cluster assignment. Listed in gap analysis under spiritual emergence."
+
+majors/the-moon:
+  clusters: [4, 5, 11]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "The Moon repeating meaning"
+  anchor_text_alt: "when The Moon keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+majors/the-sun:
+  clusters: [3, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The Sun repeating meaning"
+  anchor_text_alt: "when The Sun keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/judgement:
+  clusters: [2, 9, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Judgement repeating meaning"
+  anchor_text_alt: "when Judgement keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+majors/the-world:
+  clusters: [9, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "The World repeating meaning"
+  anchor_text_alt: "when The World keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+---
+
+# Wands
+
+wands/ace-of-wands:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Ace of Wands repeating meaning"
+  anchor_text_alt: "when the Ace of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+wands/two-of-wands:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Two of Wands repeating meaning"
+  anchor_text_alt: "when the Two of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+wands/three-of-wands:
+  clusters: [9]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Three of Wands repeating meaning"
+  anchor_text_alt: "when the Three of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+wands/four-of-wands:
+  clusters: [9]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Four of Wands repeating meaning"
+  anchor_text_alt: "when the Four of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+wands/five-of-wands:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Five of Wands repeating meaning"
+  anchor_text_alt: "when the Five of Wands keeps appearing"
+  pillar_page_candidates: []
+  notes: "Listed in gap analysis under collaboration and community. No cluster assigned yet."
+
+wands/six-of-wands:
+  clusters: [3, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Six of Wands repeating meaning"
+  anchor_text_alt: "when the Six of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+wands/seven-of-wands:
+  clusters: [3]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Seven of Wands repeating meaning"
+  anchor_text_alt: "when the Seven of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+
+wands/eight-of-wands:
+  clusters: [6]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Eight of Wands repeating meaning"
+  anchor_text_alt: "when the Eight of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+
+wands/nine-of-wands:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Nine of Wands repeating meaning"
+  anchor_text_alt: "when the Nine of Wands keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links primarily through related-card-map.yaml relationships."
+
+wands/ten-of-wands:
+  clusters: [6, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Ten of Wands repeating meaning"
+  anchor_text_alt: "when the Ten of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+wands/page-of-wands:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Page of Wands repeating meaning"
+  anchor_text_alt: "when the Page of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+wands/knight-of-wands:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Knight of Wands repeating meaning"
+  anchor_text_alt: "when the Knight of Wands keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+wands/queen-of-wands:
+  clusters: [3, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Queen of Wands repeating meaning"
+  anchor_text_alt: "when the Queen of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+wands/king-of-wands:
+  clusters: [3]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "King of Wands repeating meaning"
+  anchor_text_alt: "when the King of Wands keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+
+---
+
+# Cups
+
+cups/ace-of-cups:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Ace of Cups repeating meaning"
+  anchor_text_alt: "when the Ace of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+cups/two-of-cups:
+  clusters: [7]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Two of Cups repeating meaning"
+  anchor_text_alt: "when the Two of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+cups/three-of-cups:
+  clusters: [7]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Three of Cups repeating meaning"
+  anchor_text_alt: "when the Three of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+cups/four-of-cups:
+  clusters: [6, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Four of Cups repeating meaning"
+  anchor_text_alt: "when the Four of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+cups/five-of-cups:
+  clusters: [2, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Five of Cups repeating meaning"
+  anchor_text_alt: "when the Five of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+cups/six-of-cups:
+  clusters: [2, 4, 7]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Six of Cups repeating meaning"
+  anchor_text_alt: "when the Six of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+cups/seven-of-cups:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Seven of Cups repeating meaning"
+  anchor_text_alt: "when the Seven of Cups keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+cups/eight-of-cups:
+  clusters: [2, 9]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Eight of Cups repeating meaning"
+  anchor_text_alt: "when the Eight of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+cups/nine-of-cups:
+  clusters: [10]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Nine of Cups repeating meaning"
+  anchor_text_alt: "when the Nine of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+cups/ten-of-cups:
+  clusters: [4, 7]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Ten of Cups repeating meaning"
+  anchor_text_alt: "when the Ten of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+cups/page-of-cups:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Page of Cups repeating meaning"
+  anchor_text_alt: "when the Page of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+cups/knight-of-cups:
+  clusters: [7]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Knight of Cups repeating meaning"
+  anchor_text_alt: "when the Knight of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+
+cups/queen-of-cups:
+  clusters: [7, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Queen of Cups repeating meaning"
+  anchor_text_alt: "when the Queen of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+cups/king-of-cups:
+  clusters: [3, 7, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "King of Cups repeating meaning"
+  anchor_text_alt: "when the King of Cups keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+---
+
+# Swords
+
+swords/ace-of-swords:
+  clusters: [1]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Ace of Swords repeating meaning"
+  anchor_text_alt: "when the Ace of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+
+swords/two-of-swords:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Two of Swords repeating meaning"
+  anchor_text_alt: "when the Two of Swords keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+swords/three-of-swords:
+  clusters: [2]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Three of Swords repeating meaning"
+  anchor_text_alt: "when the Three of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+
+swords/four-of-swords:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Four of Swords repeating meaning"
+  anchor_text_alt: "when the Four of Swords keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+swords/five-of-swords:
+  clusters: [5]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Five of Swords repeating meaning"
+  anchor_text_alt: "when the Five of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+
+swords/six-of-swords:
+  clusters: [2, 9]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Six of Swords repeating meaning"
+  anchor_text_alt: "when the Six of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+    - "When Tarot Keeps Showing You Change and Transition Cards"
+
+swords/seven-of-swords:
+  clusters: [5]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Seven of Swords repeating meaning"
+  anchor_text_alt: "when the Seven of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+
+swords/eight-of-swords:
+  clusters: [5, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Eight of Swords repeating meaning"
+  anchor_text_alt: "when the Eight of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+swords/nine-of-swords:
+  clusters: [5, 11]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Nine of Swords repeating meaning"
+  anchor_text_alt: "when the Nine of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Shadow or Hidden-Truth Cards"
+    - "When Tarot Keeps Showing You Emotional Pattern Cards"
+
+swords/ten-of-swords:
+  clusters: [2]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Ten of Swords repeating meaning"
+  anchor_text_alt: "when the Ten of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Loss or Ending Card"
+
+swords/page-of-swords:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Page of Swords repeating meaning"
+  anchor_text_alt: "when the Page of Swords keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+swords/knight-of-swords:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Knight of Swords repeating meaning"
+  anchor_text_alt: "when the Knight of Swords keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+swords/queen-of-swords:
+  clusters: [3, 10]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Queen of Swords repeating meaning"
+  anchor_text_alt: "when the Queen of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Identity or Self-Worth Cards"
+
+swords/king-of-swords:
+  clusters: [3]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "King of Swords repeating meaning"
+  anchor_text_alt: "when the King of Swords keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+
+---
+
+# Pentacles
+
+pentacles/ace-of-pentacles:
+  clusters: [1, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Ace of Pentacles repeating meaning"
+  anchor_text_alt: "when the Ace of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/two-of-pentacles:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Two of Pentacles repeating meaning"
+  anchor_text_alt: "when the Two of Pentacles keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+pentacles/three-of-pentacles:
+  clusters: [6]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Three of Pentacles repeating meaning"
+  anchor_text_alt: "when the Three of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+
+pentacles/four-of-pentacles:
+  clusters: [4, 7, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Four of Pentacles repeating meaning"
+  anchor_text_alt: "when the Four of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/five-of-pentacles:
+  clusters: [8]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Five of Pentacles repeating meaning"
+  anchor_text_alt: "when the Five of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/six-of-pentacles:
+  clusters: [7, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Six of Pentacles repeating meaning"
+  anchor_text_alt: "when the Six of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Love or Relationship Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/seven-of-pentacles:
+  clusters: [6, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Seven of Pentacles repeating meaning"
+  anchor_text_alt: "when the Seven of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/eight-of-pentacles:
+  clusters: [6, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Eight of Pentacles repeating meaning"
+  anchor_text_alt: "when the Eight of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/nine-of-pentacles:
+  clusters: [8]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Nine of Pentacles repeating meaning"
+  anchor_text_alt: "when the Nine of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/ten-of-pentacles:
+  clusters: [4, 8]
+  linking_tier: tier-1
+  hub_status: true
+  anchor_text_suggestion: "Ten of Pentacles repeating meaning"
+  anchor_text_alt: "when the Ten of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+pentacles/page-of-pentacles:
+  clusters: [1, 6]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "Page of Pentacles repeating meaning"
+  anchor_text_alt: "when the Page of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Beginning Card"
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+
+pentacles/knight-of-pentacles:
+  clusters: [6]
+  linking_tier: tier-3
+  hub_status: false
+  anchor_text_suggestion: "Knight of Pentacles repeating meaning"
+  anchor_text_alt: "when the Knight of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Practice or Craft Card"
+
+pentacles/queen-of-pentacles:
+  clusters: []
+  linking_tier: tier-4
+  hub_status: false
+  anchor_text_suggestion: "Queen of Pentacles repeating meaning"
+  anchor_text_alt: "when the Queen of Pentacles keeps appearing"
+  pillar_page_candidates: []
+  notes: "No cluster assignment. Links through related-card-map.yaml relationships."
+
+pentacles/king-of-pentacles:
+  clusters: [3, 4, 8]
+  linking_tier: tier-2
+  hub_status: false
+  anchor_text_suggestion: "King of Pentacles repeating meaning"
+  anchor_text_alt: "when the King of Pentacles keeps appearing"
+  pillar_page_candidates:
+    - "When Tarot Keeps Showing You a Power or Authority Card"
+    - "When Tarot Keeps Showing You Family or Generational Patterns"
+    - "When Tarot Keeps Showing You a Money or Stability Card"
+
+---
+
+# Summary Counts
+
+# Tier breakdown:
+#   tier-1 (cross-cluster hubs): 10 cards
+#     The Empress, The Emperor, The Hierophant, Strength, The Hermit,
+#     Death, The Devil, The Moon, Ten of Pentacles, The Hermit
+#
+#   tier-2 (multi-cluster, 2+ clusters): 32 cards
+#   tier-3 (single cluster): 25 cards
+#   tier-4 (no cluster yet): 11 cards
+#
+# Cards without cluster assignments (tier-4):
+#   The Star, Five of Wands, Nine of Wands, Knight of Wands,
+#   Seven of Cups, Two of Swords, Four of Swords, Page of Swords,
+#   Knight of Swords, Two of Pentacles, Queen of Pentacles
+#
+# These 11 cards should be reviewed for cluster expansion.
+# See future-content-opportunities.md for gap analysis.

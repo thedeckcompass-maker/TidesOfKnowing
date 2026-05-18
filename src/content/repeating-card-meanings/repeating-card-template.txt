@@ -1,0 +1,142 @@
+<!-- majors/the-card-slug.md -->
+---
+title: "[Card Name] Repeating Meaning"
+slug: "repeating-card-meanings/[card-slug]"
+arcana: "major | minor"
+suit: "cups | pentacles | swords | wands | n/a"
+card_number: ""
+tier: "full | abbreviated"
+status: "draft | review | published"
+---
+
+# [Card Name] Repeating Meaning
+
+> Opening epigraph or framing line. One sentence that captures the card's repeating signature.
+> Example for The Hermit: "Some cards return because the Seeker has not yet been willing to be alone with what they already know."
+
+## Core Repeating Message
+
+[Substantial overview: why this energy keeps returning, what remains unresolved, what the psyche is trying to integrate, how the Seeker may unknowingly perpetuate the cycle. Majors: 1500 to 2500 words. Minors: 600 to 900 words.]
+
+---
+
+## When This Card Repeats Weekly
+
+[Immediate pressures, active emotional climate, acute situations. Majors: 400 to 700. Minors: 250 to 400.]
+
+---
+
+## When This Card Repeats Monthly
+
+[Emerging patterns, stabilising dynamics, recurring relational or emotional structures. Majors: 500 to 800. Minors: 300 to 500.]
+
+---
+
+## When This Card Repeats Seasonally
+
+[Larger transformation cycles, identity reconstruction, spiritual initiation. Majors: 700 to 1100. Minors: 400 to 600.]
+
+---
+
+## When This Card Repeats Across Years
+
+[Lifelong themes, soul curriculum, karmic loops, archetypal mastery, inherited patterns. Majors: 900 to 1400. Minors: 500 to 700.]
+
+---
+
+# Life Area Interpretations
+
+## Love & Relationships
+
+[Majors: 600 to 1000. Minors: 300 to 500.]
+
+---
+
+## Career & Purpose
+
+[Majors: 600 to 1000. Minors: 300 to 500.]
+
+---
+
+## Money & Stability
+
+[Majors: 500 to 800. Minors: 250 to 400.]
+
+---
+
+## Spiritual Growth
+
+[Majors: 700 to 1100. Minors: 350 to 550.]
+
+---
+
+## Emotional & Mental Patterns
+
+[Majors: 600 to 1000. Minors: 300 to 500.]
+
+---
+
+## Family & Generational Dynamics
+
+[Majors: 500 to 800. Minors: 250 to 400.]
+
+---
+
+## Health & Energy
+
+[Energetic depletion, stress cycles, embodiment. Never diagnostic of illness. Majors: 500 to 800. Minors: 250 to 400.]
+
+---
+
+# Advanced Interpretive Sections
+
+## The Shadow Expression
+
+[How the repeated energy behaves when unconscious. Majors: 400 to 600. Minors: 200 to 350.]
+
+---
+
+## The Integrated Expression
+
+[How the energy behaves once consciously embodied. Majors: 400 to 600. Minors: 200 to 350.]
+
+---
+
+## Why This Energy Has Not Released Yet
+
+[Resistance, fear, comfort in identity, unresolved grief, relational reinforcement, hidden emotional gain. Especially psychologically insightful. Majors: 500 to 800. Minors: 300 to 450.]
+
+---
+
+## What This Card Wants the Seeker to Understand
+
+[Compassionate but direct. Majors: 400 to 600. Minors: 200 to 350.]
+
+---
+
+## Signs the Pattern Is Beginning to Resolve
+
+[Behavioural shifts, emotional neutrality, clarity, improved boundaries, changed attraction patterns. Majors: 400 to 600. Minors: 200 to 350.]
+
+---
+
+## Reflective Questions
+
+[10 deeply thoughtful journaling prompts. No shallow questions.]
+
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+
+---
+
+## Practical Integration Actions
+
+[Procedural. This resource is the documented exception to WHY-without-HOW. Behavioural shifts, communication adjustments, awareness practices, journaling, nervous system care, symbolic ritual, practical life restructuring, boundary work, embodiment practices. Majors: 600 to 900. Minors: 350 to 550.]

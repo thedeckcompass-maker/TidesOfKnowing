@@ -1,0 +1,1114 @@
+# Card Metadata Map
+# Tides of Knowing — Repeating Card Meanings
+# Generated: 2026-05-18
+# Updated: 2026-05-18 — metaTitle separator updated to pipe; openGraphImage paths updated to /images/tarot/rws/
+# Stage: 4 — Metadata
+#
+# Fields: metaTitle, metaDescription, primaryKeyword, secondaryKeywords,
+#         featuredSnippetAnswer, answerEngineSummary, canonicalUrl, openGraphImage
+# See metadata-governance.md for field rules and character limits.
+# Leigh Spencer to review before production deployment.
+
+---
+
+# === MAJOR ARCANA ===
+
+majors/the-fool:
+  metaTitle: "The Fool Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Fool keeps appearing, it marks a threshold that returns uncrossed — every beginning stays a beginning. The repeating pattern asks what is keeping you at the edge."
+  primaryKeyword: "the fool keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the fool keep showing up in tarot"
+    - "the fool repeating tarot meaning"
+    - "the fool card keeps coming up every week"
+    - "the fool pattern in tarot readings"
+  featuredSnippetAnswer: "The Fool repeating in tarot readings signals a pattern of perpetual beginning — starting new chapters without completing them, or standing at genuine thresholds without crossing. It often appears when a seeker knows a departure is required but cannot yet commit to the actual step that would make it real."
+  answerEngineSummary: "The Fool repeating in readings marks a seeker who returns to the beginning of the same cycle rather than committing to genuine departure. The shadow expression is using the appearance of freedom as an avoidance of actual accountability. Integration involves making a grounded first step that becomes a real crossing rather than another rehearsal."
+  canonicalUrl: "/repeating-card-meanings/the-fool/"
+  openGraphImage: "/images/tarot/rws/the-fool.jpg"
+
+majors/the-magician:
+  metaTitle: "The Magician Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Magician keeps appearing, it marks genuine capacity held in place by self-doubt or scattered effort. The tools are present; the pattern asks why they remain unused."
+  primaryKeyword: "the magician keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the magician keep showing up in tarot"
+    - "the magician repeating tarot meaning"
+    - "the magician card career tarot"
+    - "the magician pattern in readings"
+  featuredSnippetAnswer: "The Magician repeating in tarot readings signals a pattern where genuine capability is present but not fully claimed or directed. It often appears when a seeker has the skills required for a goal but is scattered, self-doubting, or waiting for external validation before acting with genuine authority."
+  answerEngineSummary: "The Magician repeating in readings marks a seeker who possesses real skill or creative capacity but is not fully occupying it. The shadow expression includes using the appearance of competence to avoid the accountability of genuine commitment. Integration involves claiming authority and directing effort with settled, grounded confidence."
+  canonicalUrl: "/repeating-card-meanings/the-magician/"
+  openGraphImage: "/images/tarot/rws/the-magician.jpg"
+
+majors/the-high-priestess:
+  metaTitle: "High Priestess Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the High Priestess keeps appearing, it marks a pattern of genuine knowing held in reserve — inner clarity that is not being brought into action or relationship."
+  primaryKeyword: "the high priestess keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the high priestess keep showing up"
+    - "high priestess repeating tarot meaning"
+    - "high priestess card relationships tarot"
+    - "high priestess tarot pattern"
+  featuredSnippetAnswer: "The High Priestess repeating in tarot readings signals a pattern of insight without action — genuine knowing that is being held in reserve rather than brought into the world. It often appears when a seeker uses depth of perception as a way to maintain strategic distance from people or decisions."
+  answerEngineSummary: "The High Priestess repeating in readings marks a seeker who has developed real perceptive capacity but is using that inwardness to avoid genuine engagement. The shadow expression involves using inner knowing as a form of strategic unavailability or superiority. Integration involves bringing what is known into embodied, practical, relational form."
+  canonicalUrl: "/repeating-card-meanings/the-high-priestess/"
+  openGraphImage: "/images/tarot/rws/the-high-priestess.jpg"
+
+majors/the-empress:
+  metaTitle: "The Empress Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Empress keeps appearing, it marks a pattern of unsustainable giving — generous toward others, depleted within. The card asks whether nourishment flows in both directions."
+  primaryKeyword: "the empress keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the empress keep showing up in tarot"
+    - "the empress repeating tarot meaning"
+    - "the empress card burnout tarot"
+    - "empress card relationships tarot"
+  featuredSnippetAnswer: "The Empress repeating in tarot readings signals a pattern of depletion through over-giving, or a persistent imbalance between care extended to others and care received by the seeker. It often appears when generosity has become a way of avoiding the seeker's own unlived needs, desires, or grief."
+  answerEngineSummary: "The Empress repeating in readings marks a seeker whose giving extends past sustainable capacity, often without awareness of the imbalance. The shadow expression includes using care-giving as a form of control or as an avoidance of the seeker's own unlived life. Integration involves extending the same quality of nourishment toward the self."
+  canonicalUrl: "/repeating-card-meanings/the-empress/"
+  openGraphImage: "/images/tarot/rws/the-empress.jpg"
+
+majors/the-emperor:
+  metaTitle: "The Emperor Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Emperor keeps appearing, it marks a pattern around authority — unclaimed personal power, inherited structures of control, or leadership not yet fully owned."
+  primaryKeyword: "the emperor keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the emperor keep showing up in tarot"
+    - "the emperor repeating tarot meaning"
+    - "the emperor card authority tarot"
+    - "emperor card father patterns tarot"
+  featuredSnippetAnswer: "The Emperor repeating in tarot readings signals a pattern around authority that remains unresolved — either genuine authority that has not been claimed, or inherited structures of power being operated from without examination. It often appears when questions of leadership, paternal inheritance, or structural control are pressing."
+  answerEngineSummary: "The Emperor repeating in readings marks a seeker navigating an unresolved relationship to power — either refusing to occupy genuine authority or exercising inherited authority without questioning its source. The shadow expression includes using control and structure to manage anxiety. Integration involves claimed, grounded, examined authority."
+  canonicalUrl: "/repeating-card-meanings/the-emperor/"
+  openGraphImage: "/images/tarot/rws/the-emperor.jpg"
+
+majors/the-hierophant:
+  metaTitle: "The Hierophant Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Hierophant keeps appearing, it marks an unexamined inheritance — beliefs, institutions, or systems accepted as given that have not yet been consciously chosen."
+  primaryKeyword: "the hierophant keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the hierophant keep showing up"
+    - "the hierophant repeating tarot meaning"
+    - "hierophant card spiritual tarot"
+    - "hierophant family patterns tarot"
+  featuredSnippetAnswer: "The Hierophant repeating in tarot readings signals a pattern of operating from inherited belief systems, institutional frameworks, or received permission structures without conscious examination. It often appears when a seeker is held within a tradition or family system that is shaping their choices without their full awareness or consent."
+  answerEngineSummary: "The Hierophant repeating in readings marks a seeker navigating the gap between received belief and genuine personal authority. The shadow expression includes using collective systems as a substitute for individual discernment. Integration involves consciously choosing what to carry forward from inherited frameworks and what to deliberately leave behind."
+  canonicalUrl: "/repeating-card-meanings/the-hierophant/"
+  openGraphImage: "/images/tarot/rws/the-hierophant.jpg"
+
+majors/the-lovers:
+  metaTitle: "The Lovers Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Lovers keeps appearing, it marks a genuine choice that is being avoided or deferred — often a choice of self as much as a choice of partner or path."
+  primaryKeyword: "the lovers keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the lovers keep showing up in tarot"
+    - "the lovers repeating tarot meaning"
+    - "the lovers card relationship tarot"
+    - "the lovers card choices tarot"
+  featuredSnippetAnswer: "The Lovers repeating in tarot readings signals a genuine choice that is being avoided, deferred, or made from external pressure rather than inner alignment. It often appears at a significant threshold of commitment — in relationship, vocation, or identity — where the seeker knows what they must choose but cannot yet fully commit."
+  answerEngineSummary: "The Lovers repeating in readings marks a seeker standing at a genuine crossroads who is deferring the choice rather than making it. The shadow expression includes using idealism or the fear of making the wrong choice to avoid making any choice. Integration involves choosing with full awareness of what is being both taken up and released."
+  canonicalUrl: "/repeating-card-meanings/the-lovers/"
+  openGraphImage: "/images/tarot/rws/the-lovers.jpg"
+
+majors/the-chariot:
+  metaTitle: "The Chariot Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Chariot keeps appearing, it marks a pattern of fragmented will — genuine capability split across competing directions without coherent movement toward any of them."
+  primaryKeyword: "the chariot keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the chariot keep showing up in tarot"
+    - "the chariot repeating tarot meaning"
+    - "the chariot card career tarot"
+    - "the chariot pattern in readings"
+  featuredSnippetAnswer: "The Chariot repeating in tarot readings signals a pattern of fragmented effort or misdirected will — genuine capacity for movement scattered across competing demands without clear, committed direction. It often appears when a seeker has the drive required for progress but cannot align competing forces into coherent forward motion."
+  answerEngineSummary: "The Chariot repeating in readings marks a seeker whose genuine will and capability are present but not yet directed into coherent movement. The shadow expression includes performing decisive forward momentum while avoiding genuine commitment to direction. Integration involves aligning competing internal forces and choosing a direction with settled intent."
+  canonicalUrl: "/repeating-card-meanings/the-chariot/"
+  openGraphImage: "/images/tarot/rws/the-chariot.jpg"
+
+majors/strength:
+  metaTitle: "Strength Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When Strength keeps appearing, it marks an unresolved relationship to inner power — strength that is present but not yet fully owned, or a wound that has not been met with genuine compassion."
+  primaryKeyword: "strength card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does strength keep showing up in tarot"
+    - "strength repeating tarot meaning"
+    - "strength card pattern in readings"
+    - "strength card self-worth tarot"
+  featuredSnippetAnswer: "Strength repeating in tarot readings signals a pattern where genuine inner power is present but not fully inhabited — or where a chronic wound is being managed through performance of resilience rather than genuinely met with compassion. It often appears when a seeker's capacity to be with difficulty has outrun their capacity to acknowledge it."
+  answerEngineSummary: "Strength repeating in readings marks a seeker who holds genuine inner capacity but has not yet claimed it as settled authority. The shadow expression includes performing endurance as a way to avoid acknowledging the wound that endurance is covering. Integration involves meeting the inner animal — the feared or disowned part — with genuine care rather than control."
+  canonicalUrl: "/repeating-card-meanings/strength/"
+  openGraphImage: "/images/tarot/rws/strength.jpg"
+
+majors/the-hermit:
+  metaTitle: "The Hermit Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Hermit keeps appearing, it marks a pattern around solitude — either a necessary withdrawal that hasn't been made, or an isolation that has extended past its genuine purpose."
+  primaryKeyword: "the hermit keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the hermit keep showing up in tarot"
+    - "the hermit repeating tarot meaning"
+    - "the hermit card isolation tarot"
+    - "the hermit pattern spiritual growth"
+  featuredSnippetAnswer: "The Hermit repeating in tarot readings signals a pattern around solitude and inner development that has not been resolved. It appears either when a genuine period of withdrawal is being avoided, or when a withdrawal that served its purpose has extended into isolation that now prevents genuine connection and contribution."
+  answerEngineSummary: "The Hermit repeating in readings marks a seeker in an unresolved relationship to aloneness — either avoiding the depth of withdrawal that genuine development requires, or inhabiting an isolation that has become a substitute for genuine authority. Integration involves bringing the lamp's light back into contact with others without losing the knowledge the withdrawal produced."
+  canonicalUrl: "/repeating-card-meanings/the-hermit/"
+  openGraphImage: "/images/tarot/rws/the-hermit.jpg"
+
+majors/wheel-of-fortune:
+  metaTitle: "Wheel of Fortune Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Wheel of Fortune keeps appearing, it marks a pattern of resisting change that is already in motion — or of waiting for external circumstances to shift rather than participating in the turn."
+  primaryKeyword: "wheel of fortune keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the wheel of fortune keep showing up"
+    - "wheel of fortune repeating tarot meaning"
+    - "wheel of fortune card pattern"
+    - "wheel of fortune tarot change"
+  featuredSnippetAnswer: "The Wheel of Fortune repeating in tarot readings signals a pattern of resisting cycles of change that are already in motion, or of attributing all movement to external fate rather than participating consciously in what is turning. It often appears when a seeker is either caught in a cycle they have not yet named or resisting the turn toward something genuinely new."
+  answerEngineSummary: "The Wheel of Fortune repeating in readings marks a seeker who is navigating change without yet understanding the pattern underlying it. The shadow expression includes using fatalism as a way to avoid agency within the cycle. Integration involves perceiving the pattern well enough to move with it rather than against it."
+  canonicalUrl: "/repeating-card-meanings/wheel-of-fortune/"
+  openGraphImage: "/images/tarot/rws/wheel-of-fortune.jpg"
+
+majors/justice:
+  metaTitle: "Justice Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When Justice keeps appearing, it marks a pattern of unresolved clarity — genuine understanding that has not been translated into honest speech, fair action, or accountable decision."
+  primaryKeyword: "justice keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does justice keep showing up in tarot"
+    - "justice repeating tarot meaning"
+    - "justice card decisions tarot"
+    - "justice card pattern in readings"
+  featuredSnippetAnswer: "Justice repeating in tarot readings signals a pattern where clarity is present but not being acted on — where a seeker understands what is true or fair but has not yet brought that understanding into honest speech or accountable decision. It often appears when a significant reckoning is being avoided through clever reasoning."
+  answerEngineSummary: "Justice repeating in readings marks a seeker who holds genuine discernment but is not yet acting from it with full integrity. The shadow expression includes using intellectual precision as a substitute for the courageous action that genuine fairness requires. Integration involves aligning what is known to be true with what is actually done and said."
+  canonicalUrl: "/repeating-card-meanings/justice/"
+  openGraphImage: "/images/tarot/rws/justice.jpg"
+
+majors/the-hanged-man:
+  metaTitle: "The Hanged Man Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Hanged Man keeps appearing, it marks a genuine suspension — a moment of necessary pause that is being avoided, or a pause that has extended into indefinite postponement."
+  primaryKeyword: "the hanged man keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the hanged man keep showing up"
+    - "the hanged man repeating tarot meaning"
+    - "the hanged man card stuck tarot"
+    - "the hanged man pattern in readings"
+  featuredSnippetAnswer: "The Hanged Man repeating in tarot readings signals a pattern of suspension — either a necessary pause being actively avoided, or a pause that has extended indefinitely without producing the new perspective it was meant to yield. It often appears when a seeker is waiting for circumstances to change rather than allowing the waiting itself to do its work."
+  answerEngineSummary: "The Hanged Man repeating in readings marks a seeker in an unresolved relationship to stillness and surrender. The shadow expression includes using apparent waiting as a way to avoid the genuine vulnerability that real suspension requires. Integration involves releasing the grip on the old orientation and allowing the inverted view to produce genuine insight."
+  canonicalUrl: "/repeating-card-meanings/the-hanged-man/"
+  openGraphImage: "/images/tarot/rws/the-hanged-man.jpg"
+
+majors/death:
+  metaTitle: "Death Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When Death keeps appearing, it marks an ending that has not yet been fully made — a release that is still being resisted, or a grief that is still being performed rather than lived."
+  primaryKeyword: "death card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the death card keep showing up"
+    - "death card repeating tarot meaning"
+    - "death card endings tarot"
+    - "death card transition tarot pattern"
+  featuredSnippetAnswer: "Death repeating in tarot readings signals a pattern of an ending that has not yet been genuinely made — release that is being resisted, a departure that is being performed without being real, or grief that has not been fully lived. It often appears when a seeker is holding on to something that has already completed its purpose."
+  answerEngineSummary: "Death repeating in readings marks a seeker who is in the territory of a genuine ending but has not yet crossed fully into release. The shadow expression includes maintaining the appearance of having let go while continuing to hold the original structure in place. Integration involves genuinely releasing what has completed and crossing into the empty space that follows."
+  canonicalUrl: "/repeating-card-meanings/death/"
+  openGraphImage: "/images/tarot/rws/death.jpg"
+
+majors/temperance:
+  metaTitle: "Temperance Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When Temperance keeps appearing, it marks a pattern of chronic imbalance — competing demands that are never genuinely integrated, or an inner life that is always being adjusted but never settled."
+  primaryKeyword: "temperance keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does temperance keep showing up in tarot"
+    - "temperance repeating tarot meaning"
+    - "temperance card balance tarot"
+    - "temperance pattern in readings"
+  featuredSnippetAnswer: "Temperance repeating in tarot readings signals a pattern of fragmented energy that is never genuinely integrated — competing demands, roles, or emotional states that coexist without being brought into sustainable balance. It often appears when a seeker is adjusting and managing constantly without ever arriving at genuine internal coherence."
+  answerEngineSummary: "Temperance repeating in readings marks a seeker who is always in the process of balancing competing forces without ever achieving sustainable equilibrium. The shadow expression includes performing integration and flow while underlying tensions remain unaddressed. Integration involves finding the actual pace and proportion that allows genuine, embodied balance rather than constant adjustment."
+  canonicalUrl: "/repeating-card-meanings/temperance/"
+  openGraphImage: "/images/tarot/rws/temperance.jpg"
+
+majors/the-devil:
+  metaTitle: "The Devil Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Devil keeps appearing, it marks a pattern of entrapment — a belief, relationship, or habit that feels like necessity when it is actually a choice that could be unmade."
+  primaryKeyword: "the devil card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the devil card keep showing up"
+    - "the devil repeating tarot meaning"
+    - "the devil card patterns tarot"
+    - "the devil card shadow tarot"
+  featuredSnippetAnswer: "The Devil repeating in tarot readings signals a pattern of entrapment — a belief, relationship, habit, or fixation that is experienced as necessary or inevitable but is actually maintained by the seeker's own investment. It often appears when a seeker is bound by something they have not yet recognised as a choice."
+  answerEngineSummary: "The Devil repeating in readings marks a seeker in a genuine entrapment pattern — one maintained by unconscious belief, accumulated shadow material, or the comfort of familiar constraint. The shadow expression includes mistaking the chains for identity and the cage for safety. Integration involves recognising that the bonds are held in place by the seeker's own grip."
+  canonicalUrl: "/repeating-card-meanings/the-devil/"
+  openGraphImage: "/images/tarot/rws/the-devil.jpg"
+
+majors/the-tower:
+  metaTitle: "The Tower Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Tower keeps appearing, it marks a structure that is ready to fall — or the continued cost of holding a collapsing structure in place through sheer effort and avoidance."
+  primaryKeyword: "the tower card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the tower card keep showing up"
+    - "the tower repeating tarot meaning"
+    - "the tower card upheaval tarot"
+    - "the tower pattern in readings"
+  featuredSnippetAnswer: "The Tower repeating in tarot readings signals a pattern related to structures that are ready to collapse — either a disruption that has already happened and not been integrated, or a false structure still being maintained at significant cost. It often appears when what needs to end is being held together through effort rather than allowed to release."
+  answerEngineSummary: "The Tower repeating in readings marks a seeker whose current structure — a belief, relationship, identity, or system — is no longer stable and is requiring increasing energy to maintain. The shadow expression includes rebuilding the same tower after each disruption rather than examining why it keeps falling. Integration involves allowing the collapse and building differently from the honest ground it reveals."
+  canonicalUrl: "/repeating-card-meanings/the-tower/"
+  openGraphImage: "/images/tarot/rws/the-tower.jpg"
+
+majors/the-star:
+  metaTitle: "The Star Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Star keeps appearing, it marks a pattern of hope held at a distance — genuine renewal that is available but not yet being received, or trust that is being circled without landing."
+  primaryKeyword: "the star card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the star card keep showing up"
+    - "the star repeating tarot meaning"
+    - "the star card hope tarot"
+    - "the star card healing tarot"
+  featuredSnippetAnswer: "The Star repeating in tarot readings signals a pattern around renewal and trust that has not yet been genuinely received. It often appears after significant loss or disruption when a seeker can perceive the possibility of restoration but cannot fully open to it — circling hope without allowing it to land in the body and in daily life."
+  answerEngineSummary: "The Star repeating in readings marks a seeker who is in the territory of genuine renewal but has not yet allowed themselves to be fully restored by it. The shadow expression includes using spiritual hope as a way to avoid the practical, embodied work of healing. Integration involves allowing hope to become a lived, grounded orientation rather than a distant aspiration."
+  canonicalUrl: "/repeating-card-meanings/the-star/"
+  openGraphImage: "/images/tarot/rws/the-star.jpg"
+
+majors/the-moon:
+  metaTitle: "The Moon Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Moon keeps appearing, it marks a pattern of distortion — projections, fears, or inherited scripts obscuring what is actually present, making the ordinary feel threatening."
+  primaryKeyword: "the moon card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the moon card keep showing up"
+    - "the moon repeating tarot meaning"
+    - "the moon card anxiety tarot"
+    - "the moon card illusion tarot"
+  featuredSnippetAnswer: "The Moon repeating in tarot readings signals a pattern of distorted perception — where fears, projections, or inherited emotional scripts are colouring what is actually present and making genuine discernment difficult. It often appears when a seeker is operating from anxiety or unconscious material rather than from what can actually be seen and known."
+  answerEngineSummary: "The Moon repeating in readings marks a seeker whose perceptual field is being shaped by anxiety, unconscious projection, or unprocessed emotional material rather than present reality. The shadow expression includes mistaking the distortion for accurate perception. Integration involves developing the capacity to distinguish between what is actually present and what is being projected onto it."
+  canonicalUrl: "/repeating-card-meanings/the-moon/"
+  openGraphImage: "/images/tarot/rws/the-moon.jpg"
+
+majors/the-sun:
+  metaTitle: "The Sun Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Sun keeps appearing, it marks genuine confidence or creative vitality that is present but not yet being claimed — visibility that is available but still being held back."
+  primaryKeyword: "the sun card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the sun card keep showing up"
+    - "the sun repeating tarot meaning"
+    - "the sun card confidence tarot"
+    - "the sun card pattern in readings"
+  featuredSnippetAnswer: "The Sun repeating in tarot readings signals a pattern where genuine vitality, clarity, or creative confidence is present but is not yet being fully inhabited. It often appears when a seeker has genuine grounds for confidence but cannot yet allow themselves to be visible, joyful, or at ease in their own authority without waiting for external permission."
+  answerEngineSummary: "The Sun repeating in readings marks a seeker who holds genuine capacity for joy, visibility, and authentic expression but has not yet claimed it as a settled state. The shadow expression includes performing confidence as a substitute for genuine ease. Integration involves allowing the light that is genuinely present to be inhabited without apology or qualification."
+  canonicalUrl: "/repeating-card-meanings/the-sun/"
+  openGraphImage: "/images/tarot/rws/the-sun.jpg"
+
+majors/judgement:
+  metaTitle: "Judgement Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When Judgement keeps appearing, it marks a call that is being heard but not answered — a genuine awakening available to the seeker that is being avoided or deferred."
+  primaryKeyword: "judgement card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does judgement keep showing up in tarot"
+    - "judgement repeating tarot meaning"
+    - "judgement card awakening tarot"
+    - "judgement card pattern in readings"
+  featuredSnippetAnswer: "Judgement repeating in tarot readings signals a pattern of a genuine call to awakening or reclamation that is being heard but not answered. It often appears when a seeker is at the threshold of a significant identity shift — recognising what they are being called toward but unable to fully respond without releasing what came before."
+  answerEngineSummary: "Judgement repeating in readings marks a seeker who is receiving a genuine signal of awakening or reclamation but has not yet allowed themselves to respond fully to it. The shadow expression includes performing renewal while maintaining the old identity underneath. Integration involves genuinely releasing the past identity so the summoned self can step fully forward."
+  canonicalUrl: "/repeating-card-meanings/judgement/"
+  openGraphImage: "/images/tarot/rws/judgement.jpg"
+
+majors/the-world:
+  metaTitle: "The World Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the World keeps appearing, it marks a completion that has not yet been claimed — genuine fulfilment that is available but held at arm's length by the seeker's own hesitation."
+  primaryKeyword: "the world card keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the world card keep showing up"
+    - "the world repeating tarot meaning"
+    - "the world card completion tarot"
+    - "the world card pattern in readings"
+  featuredSnippetAnswer: "The World repeating in tarot readings signals a pattern related to completion — either a cycle that is genuinely complete but has not yet been fully acknowledged, or a threshold of wholeness that is available but is being approached without fully crossing. It often appears when a seeker is performing completion without actually inhabiting it."
+  answerEngineSummary: "The World repeating in readings marks a seeker who is at the genuine threshold of a significant completion or integration but has not yet allowed themselves to fully inhabit what has been achieved. The shadow expression includes deferring genuine arrival by immediately seeking the next thing. Integration involves pausing, acknowledging completion, and fully inhabiting what has been earned before the next cycle begins."
+  canonicalUrl: "/repeating-card-meanings/the-world/"
+  openGraphImage: "/images/tarot/rws/the-world.jpg"
+
+# === CUPS ===
+
+cups/ace-of-cups:
+  metaTitle: "Ace of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ace of Cups keeps appearing, it marks an emotional opening that keeps being offered but not received — a threshold of genuine feeling that is being approached without crossing."
+  primaryKeyword: "ace of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ace of cups keep showing up"
+    - "ace of cups repeating tarot meaning"
+    - "ace of cups love tarot pattern"
+    - "ace of cups new relationship tarot"
+  featuredSnippetAnswer: "The Ace of Cups repeating in tarot readings signals a pattern of an emotional opening that keeps being offered but not fully received. It often appears when a seeker is at the threshold of genuine feeling — new love, creative vulnerability, or emotional beginning — but is waiting for permission or certainty before allowing themselves to open."
+  answerEngineSummary: "The Ace of Cups repeating in readings marks a seeker standing at the edge of genuine emotional availability without yet crossing into it. The shadow expression includes waiting for perfect conditions before allowing the heart to open. Integration involves making the first genuine, embodied step into emotional experience without requiring certainty of outcome."
+  canonicalUrl: "/repeating-card-meanings/ace-of-cups/"
+  openGraphImage: "/images/tarot/rws/ace-of-cups.jpg"
+
+cups/two-of-cups:
+  metaTitle: "Two of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Two of Cups keeps appearing, it marks a relational threshold — genuine connection that is possible but blocked by idealisation, ambivalence, or the fear of being truly met."
+  primaryKeyword: "two of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the two of cups keep showing up"
+    - "two of cups repeating tarot meaning"
+    - "two of cups love tarot pattern"
+    - "two of cups relationship tarot"
+  featuredSnippetAnswer: "The Two of Cups repeating in tarot readings signals a pattern around genuine relational joining that is not yet being fully entered. It often appears when a seeker is at the threshold of real connection — romantic, creative, or collaborative — but is held back by idealisation, fear of vulnerability, or ambivalence about genuine mutual commitment."
+  answerEngineSummary: "The Two of Cups repeating in readings marks a seeker who is close to genuine relational joining but is not fully crossing into it. The shadow expression includes projecting an ideal onto a real person in place of genuine meeting. Integration involves entering genuine reciprocal exchange with the real person or opportunity present — not the imagined version."
+  canonicalUrl: "/repeating-card-meanings/two-of-cups/"
+  openGraphImage: "/images/tarot/rws/two-of-cups.jpg"
+
+cups/three-of-cups:
+  metaTitle: "Three of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Three of Cups keeps appearing, it marks a pattern around community and belonging — either a joy that is not being received, or a giving that has become depleting."
+  primaryKeyword: "three of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the three of cups keep showing up"
+    - "three of cups repeating tarot meaning"
+    - "three of cups friendship tarot"
+    - "three of cups community pattern"
+  featuredSnippetAnswer: "The Three of Cups repeating in tarot readings signals a pattern around community, celebration, and relational reciprocity. It often appears when a seeker is giving generously to a circle of people without receiving equivalently — or when genuine joy and belonging are available but are not being fully allowed or inhabited."
+  answerEngineSummary: "The Three of Cups repeating in readings marks a seeker whose relationship to community and shared celebration has become unbalanced. The shadow expression includes over-giving to a group while neglecting individual needs and boundaries. Integration involves participating in genuine reciprocal community where giving and receiving are genuinely balanced."
+  canonicalUrl: "/repeating-card-meanings/three-of-cups/"
+  openGraphImage: "/images/tarot/rws/three-of-cups.jpg"
+
+cups/four-of-cups:
+  metaTitle: "Four of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Four of Cups keeps appearing, it marks a pattern of withdrawal — genuine offers or possibilities being missed because the seeker's attention is turned inward or nowhere."
+  primaryKeyword: "four of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the four of cups keep showing up"
+    - "four of cups repeating tarot meaning"
+    - "four of cups boredom tarot"
+    - "four of cups missed opportunity tarot"
+  featuredSnippetAnswer: "The Four of Cups repeating in tarot readings signals a pattern of withdrawal and disengagement — where genuine possibilities or offers are being missed because the seeker's attention is turned inward, into fantasy, or into dissatisfaction with what is present. It often appears when what is being offered cannot be seen because of what is being longed for."
+  answerEngineSummary: "The Four of Cups repeating in readings marks a seeker whose withdrawal from engagement has become habitual rather than intentional. The shadow expression includes using contemplation or discontent as a way to avoid the vulnerability of genuine receptivity. Integration involves allowing the actual present moment — and what it genuinely offers — to be received."
+  canonicalUrl: "/repeating-card-meanings/four-of-cups/"
+  openGraphImage: "/images/tarot/rws/four-of-cups.jpg"
+
+cups/five-of-cups:
+  metaTitle: "Five of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Five of Cups keeps appearing, it marks grief that has not been fully processed — a loss that has become a persistent frame rather than a passage that is moving through."
+  primaryKeyword: "five of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the five of cups keep showing up"
+    - "five of cups repeating tarot meaning"
+    - "five of cups grief tarot"
+    - "five of cups loss tarot pattern"
+  featuredSnippetAnswer: "The Five of Cups repeating in tarot readings signals a pattern of unresolved grief — a loss that has not been fully acknowledged, moved through, or integrated. It often appears when a seeker is still living inside the shape of a loss rather than grieving through it, and when what remains (the two standing cups) has not yet been turned toward."
+  answerEngineSummary: "The Five of Cups repeating in readings marks a seeker whose grief has become a persistent identity frame rather than a passage being actively moved through. The shadow expression includes making grief into a permanent home rather than a necessary crossing. Integration involves genuinely acknowledging the loss, grieving it fully, and turning toward what remains."
+  canonicalUrl: "/repeating-card-meanings/five-of-cups/"
+  openGraphImage: "/images/tarot/rws/five-of-cups.jpg"
+
+cups/six-of-cups:
+  metaTitle: "Six of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Six of Cups keeps appearing, it marks the past's pull on the present — nostalgia, childhood patterns, or inherited relational templates shaping current choices."
+  primaryKeyword: "six of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the six of cups keep showing up"
+    - "six of cups repeating tarot meaning"
+    - "six of cups nostalgia tarot"
+    - "six of cups childhood patterns tarot"
+  featuredSnippetAnswer: "The Six of Cups repeating in tarot readings signals a pattern of the past shaping the present — nostalgia, childhood relational templates, or inherited emotional patterns that are being lived out in current relationships without awareness. It often appears when what a seeker is seeking in the present is a version of what was known, or lost, in the past."
+  answerEngineSummary: "The Six of Cups repeating in readings marks a seeker whose current relational and emotional life is being shaped by templates established in childhood or early experience. The shadow expression includes using idealised memory as a standard that prevents genuine present engagement. Integration involves consciously examining what has been inherited and choosing which aspects to carry forward."
+  canonicalUrl: "/repeating-card-meanings/six-of-cups/"
+  openGraphImage: "/images/tarot/rws/six-of-cups.jpg"
+
+cups/seven-of-cups:
+  metaTitle: "Seven of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Seven of Cups keeps appearing, it marks a pattern of fantasy and choice-paralysis — too many options imagined, none genuinely chosen, action consistently deferred."
+  primaryKeyword: "seven of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the seven of cups keep showing up"
+    - "seven of cups repeating tarot meaning"
+    - "seven of cups too many choices tarot"
+    - "seven of cups fantasy tarot pattern"
+  featuredSnippetAnswer: "The Seven of Cups repeating in tarot readings signals a pattern of fantasy and avoidance — where the imagination generates many possible paths or desires but genuine choice and committed action are consistently deferred. It often appears when a seeker is using the richness of possibility as a substitute for the discomfort of concrete commitment."
+  answerEngineSummary: "The Seven of Cups repeating in readings marks a seeker who is caught in a pattern of imagining options without choosing between them. The shadow expression includes using the pleasure of possibility to avoid the necessary loss that every genuine choice entails. Integration involves choosing one genuine path and committing to it with the full awareness of what has been released."
+  canonicalUrl: "/repeating-card-meanings/seven-of-cups/"
+  openGraphImage: "/images/tarot/rws/seven-of-cups.jpg"
+
+cups/eight-of-cups:
+  metaTitle: "Eight of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Eight of Cups keeps appearing, it marks a departure that has not yet been made — knowing it is time to leave and still not leaving, or leaving in form while staying in substance."
+  primaryKeyword: "eight of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the eight of cups keep showing up"
+    - "eight of cups repeating tarot meaning"
+    - "eight of cups walking away tarot"
+    - "eight of cups leaving relationship tarot"
+  featuredSnippetAnswer: "The Eight of Cups repeating in tarot readings signals a pattern of knowing it is time to leave a situation, relationship, or identity — and not yet genuinely leaving. It often appears when a seeker understands intellectually that something has been completed or outgrown but has not yet made the embodied, genuine departure that would end the cycle."
+  answerEngineSummary: "The Eight of Cups repeating in readings marks a seeker who is aware that departure is required but has not yet made it real. The shadow expression includes performing the appearance of having left while maintaining the emotional and practical structures of the original arrangement. Integration involves making the genuine departure — the real one, not the rehearsed version."
+  canonicalUrl: "/repeating-card-meanings/eight-of-cups/"
+  openGraphImage: "/images/tarot/rws/eight-of-cups.jpg"
+
+cups/nine-of-cups:
+  metaTitle: "Nine of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Nine of Cups keeps appearing, it marks genuine satisfaction that is present but not being fully claimed — contentment that is available but held at arm's length."
+  primaryKeyword: "nine of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the nine of cups keep showing up"
+    - "nine of cups repeating tarot meaning"
+    - "nine of cups wish fulfillment tarot"
+    - "nine of cups satisfaction tarot pattern"
+  featuredSnippetAnswer: "The Nine of Cups repeating in tarot readings signals a pattern around genuine satisfaction or fulfilment that is present but not being fully inhabited. It often appears when a seeker has what they wished for — or is close to it — but cannot allow themselves to rest in genuine contentment without immediately seeking more, or without chronic private dissatisfaction."
+  answerEngineSummary: "The Nine of Cups repeating in readings marks a seeker who holds genuine grounds for satisfaction but is unable to inhabit it with ease. The shadow expression includes using private dissatisfaction or continued striving to avoid the vulnerability of genuine arrival. Integration involves allowing genuine satisfaction to be received and inhabited without immediately moving to the next desire."
+  canonicalUrl: "/repeating-card-meanings/nine-of-cups/"
+  openGraphImage: "/images/tarot/rws/nine-of-cups.jpg"
+
+cups/ten-of-cups:
+  metaTitle: "Ten of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ten of Cups keeps appearing, it marks a longing for genuine belonging — either a vision of relational fulfilment that cannot be reached, or one that is available but not yet trusted."
+  primaryKeyword: "ten of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ten of cups keep showing up"
+    - "ten of cups repeating tarot meaning"
+    - "ten of cups family tarot pattern"
+    - "ten of cups love and belonging tarot"
+  featuredSnippetAnswer: "The Ten of Cups repeating in tarot readings signals a pattern around belonging, emotional fulfilment, and relational completion. It often appears when a seeker is longing for a quality of connection or family harmony that feels just out of reach — or when genuine belonging is available but is being held at a distance by idealism or past relational wounds."
+  answerEngineSummary: "The Ten of Cups repeating in readings marks a seeker whose relationship to genuine relational fulfilment — belonging, harmony, and shared joy — is unresolved. The shadow expression includes pursuing an idealised version of connection that prevents engagement with the real, imperfect version available. Integration involves receiving genuine belonging as it actually exists rather than as it is imagined to be."
+  canonicalUrl: "/repeating-card-meanings/ten-of-cups/"
+  openGraphImage: "/images/tarot/rws/ten-of-cups.jpg"
+
+cups/page-of-cups:
+  metaTitle: "Page of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Page of Cups keeps appearing, it marks an early emotional or creative beginning that is not yet being fully entered — curiosity about feeling that hasn't become commitment."
+  primaryKeyword: "page of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the page of cups keep showing up"
+    - "page of cups repeating tarot meaning"
+    - "page of cups creative tarot pattern"
+    - "page of cups emotional beginning tarot"
+  featuredSnippetAnswer: "The Page of Cups repeating in tarot readings signals a pattern of early emotional or creative beginning — genuine curiosity and sensitivity present but not yet developed into sustained capacity or commitment. It often appears when a seeker is at the very beginning of an emotional learning arc and needs permission to take the feeling seriously."
+  answerEngineSummary: "The Page of Cups repeating in readings marks a seeker in the early stages of genuine emotional or intuitive development. The shadow expression includes requiring validation before allowing emotional or creative curiosity to become genuine practice. Integration involves taking the feeling or creative impulse seriously enough to act on it without waiting for external confirmation of its worth."
+  canonicalUrl: "/repeating-card-meanings/page-of-cups/"
+  openGraphImage: "/images/tarot/rws/page-of-cups.jpg"
+
+cups/knight-of-cups:
+  metaTitle: "Knight of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Knight of Cups keeps appearing, it marks a pattern of romantic or emotional pursuit that is more devoted to the ideal than to the real — chasing feeling rather than building it."
+  primaryKeyword: "knight of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the knight of cups keep showing up"
+    - "knight of cups repeating tarot meaning"
+    - "knight of cups romantic tarot pattern"
+    - "knight of cups idealism tarot"
+  featuredSnippetAnswer: "The Knight of Cups repeating in tarot readings signals a pattern of romantic or emotional idealism — pursuing the feeling of connection, beauty, or inspiration rather than building genuine, sustained relational or creative engagement. It often appears when a seeker is more devoted to the ideal version of an experience than to its real, imperfect form."
+  answerEngineSummary: "The Knight of Cups repeating in readings marks a seeker whose emotional and relational pursuits are shaped more by idealism and feeling than by genuine sustained commitment. The shadow expression includes using romantic fantasy as a substitute for the work of real intimacy. Integration involves bringing the genuine feeling into contact with the actual person, project, or path — not its imagined version."
+  canonicalUrl: "/repeating-card-meanings/knight-of-cups/"
+  openGraphImage: "/images/tarot/rws/knight-of-cups.jpg"
+
+cups/queen-of-cups:
+  metaTitle: "Queen of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Queen of Cups keeps appearing, it marks a pattern of deep emotional care extended outward at the cost of the seeker's own emotional needs and inner life."
+  primaryKeyword: "queen of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the queen of cups keep showing up"
+    - "queen of cups repeating tarot meaning"
+    - "queen of cups empathy tarot pattern"
+    - "queen of cups emotional caretaker tarot"
+  featuredSnippetAnswer: "The Queen of Cups repeating in tarot readings signals a pattern of profound emotional attunement and care that is directed outward — toward others' feelings, needs, and wellbeing — in ways that leave the seeker's own emotional life unattended or depleted. It often appears when a seeker's emotional intelligence has become a form of self-neglect."
+  answerEngineSummary: "The Queen of Cups repeating in readings marks a seeker who is deeply attuned to others' emotional experience but is not applying that same quality of compassionate attention to the self. The shadow expression includes using empathy as a way to avoid the seeker's own grief, longing, or unmet needs. Integration involves extending genuine emotional care inward with the same quality of presence given to others."
+  canonicalUrl: "/repeating-card-meanings/queen-of-cups/"
+  openGraphImage: "/images/tarot/rws/queen-of-cups.jpg"
+
+cups/king-of-cups:
+  metaTitle: "King of Cups Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the King of Cups keeps appearing, it marks genuine emotional wisdom held at a distance — the capacity to hold emotional experience with authority, not yet fully inhabited."
+  primaryKeyword: "king of cups keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the king of cups keep showing up"
+    - "king of cups repeating tarot meaning"
+    - "king of cups emotional authority tarot"
+    - "king of cups pattern in readings"
+  featuredSnippetAnswer: "The King of Cups repeating in tarot readings signals a pattern of genuine emotional depth and wisdom present but not fully claimed as grounded authority. It often appears when a seeker holds considerable emotional intelligence and capacity for compassion but is maintaining emotional distance — using wisdom as protection rather than as a basis for genuine, stable engagement."
+  answerEngineSummary: "The King of Cups repeating in readings marks a seeker who possesses real emotional maturity and depth but is not inhabiting it as settled, relational authority. The shadow expression includes using emotional self-sufficiency as a substitute for genuine intimacy. Integration involves bringing emotional wisdom into full, present, relational contact without retreating into protected distance."
+  canonicalUrl: "/repeating-card-meanings/king-of-cups/"
+  openGraphImage: "/images/tarot/rws/king-of-cups.jpg"
+
+# === WANDS ===
+
+wands/ace-of-wands:
+  metaTitle: "Ace of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ace of Wands keeps appearing, it marks a creative impulse that keeps igniting but not catching — the spark is genuine but has not yet become sustained fire."
+  primaryKeyword: "ace of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ace of wands keep showing up"
+    - "ace of wands repeating tarot meaning"
+    - "ace of wands creative block tarot"
+    - "ace of wands new project tarot"
+  featuredSnippetAnswer: "The Ace of Wands repeating in tarot readings signals a pattern of genuine creative or purposive impulse that keeps igniting but is not sustained into committed action. It often appears when a seeker has real creative energy and genuine vision but is circling the beginning without allowing the initial spark to become a sustained, developing fire."
+  answerEngineSummary: "The Ace of Wands repeating in readings marks a seeker whose creative energy keeps arising but does not yet convert into sustained, committed engagement with a specific direction. The shadow expression includes treating the spark itself as the destination rather than as the beginning. Integration involves allowing the impulse to land in a specific, embodied, sustained first action."
+  canonicalUrl: "/repeating-card-meanings/ace-of-wands/"
+  openGraphImage: "/images/tarot/rws/ace-of-wands.jpg"
+
+wands/two-of-wands:
+  metaTitle: "Two of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Two of Wands keeps appearing, it marks a seeker standing at the threshold of expansion — holding the world in their hands and still not yet stepping out toward it."
+  primaryKeyword: "two of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the two of wands keep showing up"
+    - "two of wands repeating tarot meaning"
+    - "two of wands career decisions tarot"
+    - "two of wands planning tarot pattern"
+  featuredSnippetAnswer: "The Two of Wands repeating in tarot readings signals a pattern of being poised at the threshold of genuine expansion without yet crossing into it. It often appears when a seeker holds a genuine vision or plan and is standing at the point of departure — knowing which direction is forward but not yet committing the body and the will to actual movement."
+  answerEngineSummary: "The Two of Wands repeating in readings marks a seeker who has genuine vision and the beginnings of a plan but has not yet converted that vision into committed forward movement. The shadow expression includes elaborating the plan as a substitute for taking the first genuine step. Integration involves choosing the direction with conviction and beginning actual movement toward it."
+  canonicalUrl: "/repeating-card-meanings/two-of-wands/"
+  openGraphImage: "/images/tarot/rws/two-of-wands.jpg"
+
+wands/three-of-wands:
+  metaTitle: "Three of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Three of Wands keeps appearing, it marks a seeker in the long middle of an expansion — watching the horizon, waiting for ships to return, not yet returning to the work."
+  primaryKeyword: "three of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the three of wands keep showing up"
+    - "three of wands repeating tarot meaning"
+    - "three of wands waiting tarot pattern"
+    - "three of wands expansion career tarot"
+  featuredSnippetAnswer: "The Three of Wands repeating in tarot readings signals a pattern of being in the long middle of a genuine expansion — watching for returns on an investment without actively tending the work that would bring them. It often appears when a seeker has made a genuine beginning and sent things out into the world but has not yet resumed the active cultivation."
+  answerEngineSummary: "The Three of Wands repeating in readings marks a seeker who has launched a genuine initiative and is now waiting at a distance rather than returning to active development. The shadow expression includes treating the horizon-watching as productive engagement. Integration involves returning to the practical, daily tending of the developing work — not just watching for results."
+  canonicalUrl: "/repeating-card-meanings/three-of-wands/"
+  openGraphImage: "/images/tarot/rws/three-of-wands.jpg"
+
+wands/four-of-wands:
+  metaTitle: "Four of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Four of Wands keeps appearing, it marks a celebration or homecoming that has not yet been allowed — arrival that is near but not being received with genuine ease."
+  primaryKeyword: "four of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the four of wands keep showing up"
+    - "four of wands repeating tarot meaning"
+    - "four of wands celebration tarot"
+    - "four of wands home tarot pattern"
+  featuredSnippetAnswer: "The Four of Wands repeating in tarot readings signals a pattern around arrival, celebration, and genuine homecoming that is not yet being received. It often appears when a seeker has reached a genuine milestone but cannot rest in it — still moving, still performing, or still waiting for the moment to feel safe enough to actually celebrate and belong."
+  answerEngineSummary: "The Four of Wands repeating in readings marks a seeker who has reached a genuine threshold of arrival or community but has not allowed themselves to inhabit the celebration with ease. The shadow expression includes remaining in forward momentum as a way to avoid the vulnerability of genuine rest and belonging. Integration involves pausing, receiving the arrival, and allowing the celebration to land."
+  canonicalUrl: "/repeating-card-meanings/four-of-wands/"
+  openGraphImage: "/images/tarot/rws/four-of-wands.jpg"
+
+wands/five-of-wands:
+  metaTitle: "Five of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Five of Wands keeps appearing, it marks a pattern of conflict or competitive friction that keeps repeating — either with others or within the seeker's own competing impulses."
+  primaryKeyword: "five of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the five of wands keep showing up"
+    - "five of wands repeating tarot meaning"
+    - "five of wands conflict tarot pattern"
+    - "five of wands competition tarot"
+  featuredSnippetAnswer: "The Five of Wands repeating in tarot readings signals a pattern of recurring conflict, friction, or competitive fragmentation — either in external situations with others or internally among the seeker's own competing drives and directions. It often appears when genuine creative energy has no coherent outlet and turns into noise, argument, or self-undermining competition."
+  answerEngineSummary: "The Five of Wands repeating in readings marks a seeker whose genuine creative or purposive energy is being spent on conflict and competition rather than on directed development. The shadow expression includes maintaining a combative stance past the point where it serves any genuine purpose. Integration involves finding the direction that makes the scattered energy coherent rather than contentious."
+  canonicalUrl: "/repeating-card-meanings/five-of-wands/"
+  openGraphImage: "/images/tarot/rws/five-of-wands.jpg"
+
+wands/six-of-wands:
+  metaTitle: "Six of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Six of Wands keeps appearing, it marks a pattern around recognition — either genuine recognition available but not claimed, or a need for external validation driving choices."
+  primaryKeyword: "six of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the six of wands keep showing up"
+    - "six of wands repeating tarot meaning"
+    - "six of wands recognition tarot pattern"
+    - "six of wands success tarot"
+  featuredSnippetAnswer: "The Six of Wands repeating in tarot readings signals a pattern around recognition, visibility, and public acknowledgement. It often appears when a seeker has genuine achievement or capability that is either not being claimed as authority, or when the need for external recognition is driving choices more than internal conviction and settled confidence."
+  answerEngineSummary: "The Six of Wands repeating in readings marks a seeker whose relationship to recognition and public visibility is unresolved. The shadow expression includes structuring genuine achievement around others' validation rather than around internal authority. Integration involves inhabiting the recognition that is genuinely earned with settled ease — receiving it without being dependent on it."
+  canonicalUrl: "/repeating-card-meanings/six-of-wands/"
+  openGraphImage: "/images/tarot/rws/six-of-wands.jpg"
+
+wands/seven-of-wands:
+  metaTitle: "Seven of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Seven of Wands keeps appearing, it marks a pattern of exhausting defence — standing ground past the point of genuine need, or defending a position whose value has not been examined."
+  primaryKeyword: "seven of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the seven of wands keep showing up"
+    - "seven of wands repeating tarot meaning"
+    - "seven of wands standing ground tarot"
+    - "seven of wands defence tarot pattern"
+  featuredSnippetAnswer: "The Seven of Wands repeating in tarot readings signals a pattern of sustained defensive effort — holding a position against perceived opposition, often past the point where genuine threat exists or where the defended position deserves the cost of its defence. It often appears when a seeker's vigilance has become the primary response to any form of challenge."
+  answerEngineSummary: "The Seven of Wands repeating in readings marks a seeker who is in a habitual posture of defence, maintaining readiness for opposition even when the original threat has passed or was never as real as imagined. The shadow expression includes using the drama of standing ground as a substitute for genuine, settled authority. Integration involves discerning what is genuinely worth defending and letting the rest go."
+  canonicalUrl: "/repeating-card-meanings/seven-of-wands/"
+  openGraphImage: "/images/tarot/rws/seven-of-wands.jpg"
+
+wands/eight-of-wands:
+  metaTitle: "Eight of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Eight of Wands keeps appearing, it marks a pattern of rapid movement without directed landing — energy in motion that is not yet arriving anywhere with sustained impact."
+  primaryKeyword: "eight of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the eight of wands keep showing up"
+    - "eight of wands repeating tarot meaning"
+    - "eight of wands speed tarot pattern"
+    - "eight of wands momentum tarot"
+  featuredSnippetAnswer: "The Eight of Wands repeating in tarot readings signals a pattern of rapid, scattered movement — energy and momentum present but not arriving anywhere with directed impact. It often appears when a seeker is producing activity without clear direction, or when genuine forward momentum is fragmented across too many simultaneous directions to land coherently in any of them."
+  answerEngineSummary: "The Eight of Wands repeating in readings marks a seeker whose energy is in rapid motion but not consistently arriving at meaningful destinations. The shadow expression includes mistaking speed and activity for genuine progress. Integration involves directing the genuine momentum toward a specific, sustained direction so it can land and create real impact."
+  canonicalUrl: "/repeating-card-meanings/eight-of-wands/"
+  openGraphImage: "/images/tarot/rws/eight-of-wands.jpg"
+
+wands/nine-of-wands:
+  metaTitle: "Nine of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Nine of Wands keeps appearing, it marks exhausted resilience — continuing to hold ground past the point of sustainable effort, and past the point of knowing why."
+  primaryKeyword: "nine of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the nine of wands keep showing up"
+    - "nine of wands repeating tarot meaning"
+    - "nine of wands exhaustion tarot"
+    - "nine of wands resilience tarot pattern"
+  featuredSnippetAnswer: "The Nine of Wands repeating in tarot readings signals a pattern of exhausted resilience — continuing to hold a position, carry a weight, or maintain a stance past the point of genuine sustainable capacity. It often appears when a seeker has been in a sustained state of readiness or endurance for so long that it has become their identity rather than a temporary condition."
+  answerEngineSummary: "The Nine of Wands repeating in readings marks a seeker who is carrying the accumulated weight of sustained effort without relief. The shadow expression includes performing endurance as a form of identity rather than addressing the underlying wound that has made the sustained effort necessary. Integration involves recognising that rest and repair are not failures of resilience but its genuine conditions."
+  canonicalUrl: "/repeating-card-meanings/nine-of-wands/"
+  openGraphImage: "/images/tarot/rws/nine-of-wands.jpg"
+
+wands/ten-of-wands:
+  metaTitle: "Ten of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ten of Wands keeps appearing, it marks a pattern of overload — carrying more than is genuinely this seeker's to carry, or carrying everything alone when support is possible."
+  primaryKeyword: "ten of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ten of wands keep showing up"
+    - "ten of wands repeating tarot meaning"
+    - "ten of wands overwhelm tarot"
+    - "ten of wands burden tarot pattern"
+  featuredSnippetAnswer: "The Ten of Wands repeating in tarot readings signals a pattern of chronic overload — taking on more responsibilities than can be sustainably managed, often alone, and often without questioning whether all of it is genuinely this seeker's to carry. It often appears when accumulated obligation has become the primary structure of a seeker's daily life."
+  answerEngineSummary: "The Ten of Wands repeating in readings marks a seeker whose life has become organised around accumulated obligation without genuine direction or sustainable capacity. The shadow expression includes using busyness and burden as a form of identity — defining the self through how much is carried rather than through genuine direction and development. Integration involves releasing what is not genuinely this seeker's responsibility and moving toward what actually is."
+  canonicalUrl: "/repeating-card-meanings/ten-of-wands/"
+  openGraphImage: "/images/tarot/rws/ten-of-wands.jpg"
+
+wands/page-of-wands:
+  metaTitle: "Page of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Page of Wands keeps appearing, it marks a creative beginning that keeps circling without landing — genuine enthusiasm present but not yet converted into sustained commitment."
+  primaryKeyword: "page of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the page of wands keep showing up"
+    - "page of wands repeating tarot meaning"
+    - "page of wands creative beginning tarot"
+    - "page of wands enthusiasm tarot pattern"
+  featuredSnippetAnswer: "The Page of Wands repeating in tarot readings signals a pattern of genuine creative enthusiasm and curiosity that keeps circling beginnings without converting into sustained, committed development. It often appears when a seeker has real creative fire and multiple genuine interests but cannot yet find the specific direction that would sustain daily, disciplined engagement."
+  answerEngineSummary: "The Page of Wands repeating in readings marks a seeker whose creative energy and enthusiasm are genuine but not yet focused into a specific, sustainable direction. The shadow expression includes treating the excitement of new beginnings as a substitute for the less exciting work of sustained practice. Integration involves finding and committing to a specific creative direction rather than keeping every option permanently open."
+  canonicalUrl: "/repeating-card-meanings/page-of-wands/"
+  openGraphImage: "/images/tarot/rws/page-of-wands.jpg"
+
+wands/knight-of-wands:
+  metaTitle: "Knight of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Knight of Wands keeps appearing, it marks a pattern of passionate pursuit without sustained follow-through — moving fast toward the exciting and losing interest before it matures."
+  primaryKeyword: "knight of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the knight of wands keep showing up"
+    - "knight of wands repeating tarot meaning"
+    - "knight of wands impulsive tarot pattern"
+    - "knight of wands commitment tarot"
+  featuredSnippetAnswer: "The Knight of Wands repeating in tarot readings signals a pattern of enthusiastic, rapid movement that does not sustain long enough to develop into genuine mastery or completion. It often appears when a seeker is drawn by excitement and novelty but moves on before the more difficult, less glamorous middle phase of genuine development has been entered and completed."
+  answerEngineSummary: "The Knight of Wands repeating in readings marks a seeker whose genuine creative and purposive fire is real but not yet sustained through the long middle of any one direction. The shadow expression includes using the next exciting beginning to avoid the demands of the current, more difficult development. Integration involves committing to one direction long enough to discover what it actually requires."
+  canonicalUrl: "/repeating-card-meanings/knight-of-wands/"
+  openGraphImage: "/images/tarot/rws/knight-of-wands.jpg"
+
+wands/queen-of-wands:
+  metaTitle: "Queen of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Queen of Wands keeps appearing, it marks genuine creative authority that is present but not fully inhabited — warmth and confidence available but held back or performed."
+  primaryKeyword: "queen of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the queen of wands keep showing up"
+    - "queen of wands repeating tarot meaning"
+    - "queen of wands confidence tarot"
+    - "queen of wands creative authority tarot"
+  featuredSnippetAnswer: "The Queen of Wands repeating in tarot readings signals a pattern of genuine creative authority and charisma that is present but not fully claimed as a settled, inhabited state. It often appears when a seeker holds real warmth, creative vision, and natural leadership capacity but is performing these qualities rather than living from their actual, settled core."
+  answerEngineSummary: "The Queen of Wands repeating in readings marks a seeker who possesses genuine creative authority but is not inhabiting it from a place of grounded ease. The shadow expression includes performing confidence and warmth while maintaining a private core of self-doubt that requires ongoing validation. Integration involves claiming creative authority as a settled, owned quality rather than a role that requires constant maintenance."
+  canonicalUrl: "/repeating-card-meanings/queen-of-wands/"
+  openGraphImage: "/images/tarot/rws/queen-of-wands.jpg"
+
+wands/king-of-wands:
+  metaTitle: "King of Wands Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the King of Wands keeps appearing, it marks visionary authority that is present but not yet integrated with genuine responsibility — leadership claimed without wisdom, or wisdom unclaimed."
+  primaryKeyword: "king of wands keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the king of wands keep showing up"
+    - "king of wands repeating tarot meaning"
+    - "king of wands leadership tarot"
+    - "king of wands authority tarot pattern"
+  featuredSnippetAnswer: "The King of Wands repeating in tarot readings signals a pattern around visionary authority and creative leadership that is unresolved — either genuine authority present but not fully claimed, or authority exercised without the grounded responsibility and wisdom that make it genuinely sustainable. It often appears when a seeker has significant creative or leadership capacity but has not yet fully integrated it."
+  answerEngineSummary: "The King of Wands repeating in readings marks a seeker navigating the full weight of genuine creative authority. The shadow expression includes exercising visionary power without accountability, or repeating inherited patterns of charismatic leadership that serve the leader more than those being led. Integration involves claiming genuine authority with full awareness of its responsibilities and its effects on others."
+  canonicalUrl: "/repeating-card-meanings/king-of-wands/"
+  openGraphImage: "/images/tarot/rws/king-of-wands.jpg"
+
+# === SWORDS ===
+
+swords/ace-of-swords:
+  metaTitle: "Ace of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ace of Swords keeps appearing, it marks a clarity that is present but not being acted on — genuine understanding of truth that has not yet been spoken or applied."
+  primaryKeyword: "ace of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ace of swords keep showing up"
+    - "ace of swords repeating tarot meaning"
+    - "ace of swords clarity tarot pattern"
+    - "ace of swords truth tarot"
+  featuredSnippetAnswer: "The Ace of Swords repeating in tarot readings signals a pattern of genuine clarity or truth that is present but not being acted on or spoken. It often appears when a seeker understands something clearly — about themselves, a relationship, or a situation — but has not yet brought that understanding into honest speech, decision, or action."
+  answerEngineSummary: "The Ace of Swords repeating in readings marks a seeker who holds genuine clarity without yet having the courage or readiness to act from it. The shadow expression includes using the sword as a display of discernment without allowing it to cut — to clarify, decide, or speak the truth. Integration involves taking the clarity that is genuinely present and acting from it with grounded, honest commitment."
+  canonicalUrl: "/repeating-card-meanings/ace-of-swords/"
+  openGraphImage: "/images/tarot/rws/ace-of-swords.jpg"
+
+swords/two-of-swords:
+  metaTitle: "Two of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Two of Swords keeps appearing, it marks a deliberate stalemate — blindfolded, arms crossed, holding a balance that protects the seeker from having to choose."
+  primaryKeyword: "two of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the two of swords keep showing up"
+    - "two of swords repeating tarot meaning"
+    - "two of swords stalemate tarot pattern"
+    - "two of swords decision avoidance tarot"
+  featuredSnippetAnswer: "The Two of Swords repeating in tarot readings signals a pattern of deliberate not-knowing — maintaining a stalemate between two directions as a way to avoid the discomfort of genuine choice. It often appears when a seeker is using the appearance of balance to prevent the acknowledgement of what they actually already know or prefer."
+  answerEngineSummary: "The Two of Swords repeating in readings marks a seeker who is in a self-maintained stalemate — actively sustaining a position of not-choosing as a form of protection from the consequences of clarity. The shadow expression includes using ambivalence as a place to live rather than a state to move through. Integration involves removing the blindfold and looking directly at what is actually present on each side."
+  canonicalUrl: "/repeating-card-meanings/two-of-swords/"
+  openGraphImage: "/images/tarot/rws/two-of-swords.jpg"
+
+swords/three-of-swords:
+  metaTitle: "Three of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Three of Swords keeps appearing, it marks heartbreak or betrayal that has not been fully processed — grief and resentment held in the body rather than moved through."
+  primaryKeyword: "three of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the three of swords keep showing up"
+    - "three of swords repeating tarot meaning"
+    - "three of swords heartbreak tarot"
+    - "three of swords grief tarot pattern"
+  featuredSnippetAnswer: "The Three of Swords repeating in tarot readings signals a pattern of unprocessed heartbreak, betrayal, or relational pain that is being held in the body and mind rather than fully acknowledged and moved through. It often appears when the pain of a specific loss or disappointment has become a persistent lens through which current experiences are being filtered."
+  answerEngineSummary: "The Three of Swords repeating in readings marks a seeker in whom the pain of a specific heartbreak or betrayal has not been fully metabolised. The shadow expression includes organising current relational life around the anticipation of the original pain repeating. Integration involves genuinely feeling and acknowledging the specific hurt so it can complete its passage rather than continuing to shape present experience."
+  canonicalUrl: "/repeating-card-meanings/three-of-swords/"
+  openGraphImage: "/images/tarot/rws/three-of-swords.jpg"
+
+swords/four-of-swords:
+  metaTitle: "Four of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Four of Swords keeps appearing, it marks rest that has not yet been taken — genuine depletion that requires genuine withdrawal, not more effort or more management."
+  primaryKeyword: "four of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the four of swords keep showing up"
+    - "four of swords repeating tarot meaning"
+    - "four of swords rest tarot pattern"
+    - "four of swords recovery tarot"
+  featuredSnippetAnswer: "The Four of Swords repeating in tarot readings signals a pattern of genuine depletion that has not yet been met with genuine rest. It often appears when a seeker has been in sustained effort for so long that they no longer recognise rest as legitimate — or when a necessary withdrawal from activity is being deferred in favour of continued management and performance."
+  answerEngineSummary: "The Four of Swords repeating in readings marks a seeker whose system requires genuine rest and withdrawal but who is continuing in sustained effort rather than allowing real recovery. The shadow expression includes treating rest as weakness or failure rather than as a legitimate and necessary stage in any sustained cycle of effort. Integration involves genuinely stopping and allowing the body and mind to repair without immediately returning to production."
+  canonicalUrl: "/repeating-card-meanings/four-of-swords/"
+  openGraphImage: "/images/tarot/rws/four-of-swords.jpg"
+
+swords/five-of-swords:
+  metaTitle: "Five of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Five of Swords keeps appearing, it marks a pattern of conflict where the cost of winning exceeds its value — or where the seeker is habitually in the losing position of the same dynamic."
+  primaryKeyword: "five of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the five of swords keep showing up"
+    - "five of swords repeating tarot meaning"
+    - "five of swords conflict tarot pattern"
+    - "five of swords winning and losing tarot"
+  featuredSnippetAnswer: "The Five of Swords repeating in tarot readings signals a recurring pattern of conflict where winning comes at significant relational cost, or where a seeker consistently occupies the losing position in a dynamic they continue to re-enter. It often appears when the terms of a conflict have been accepted without examination of whether the battle itself is worth continuing."
+  answerEngineSummary: "The Five of Swords repeating in readings marks a seeker who is repeatedly drawn into a conflict pattern whose costs have not been honestly assessed. The shadow expression includes winning through tactics that damage genuine trust, or accepting defeat as an identity rather than examining the terms of the encounter. Integration involves deciding whether the situation is worth continuing and, if so, on what genuinely different terms."
+  canonicalUrl: "/repeating-card-meanings/five-of-swords/"
+  openGraphImage: "/images/tarot/rws/five-of-swords.jpg"
+
+swords/six-of-swords:
+  metaTitle: "Six of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Six of Swords keeps appearing, it marks a transition that is underway but not yet completed — moving away from what was, without yet fully arriving at what is next."
+  primaryKeyword: "six of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the six of swords keep showing up"
+    - "six of swords repeating tarot meaning"
+    - "six of swords transition tarot"
+    - "six of swords moving on tarot pattern"
+  featuredSnippetAnswer: "The Six of Swords repeating in tarot readings signals a pattern of being in the middle passage of a genuine transition — between what was and what is next — without yet arriving. It often appears when a seeker has genuinely begun to move away from a difficult situation but is not yet fully released from it, carrying the swords of the past into a crossing that is still in progress."
+  answerEngineSummary: "The Six of Swords repeating in readings marks a seeker who is actively in transition but has not yet completed the passage. The shadow expression includes performing departure while remaining emotionally or practically tethered to the original shore. Integration involves allowing the crossing to genuinely complete — arriving fully in the new territory rather than hovering between the two."
+  canonicalUrl: "/repeating-card-meanings/six-of-swords/"
+  openGraphImage: "/images/tarot/rws/six-of-swords.jpg"
+
+swords/seven-of-swords:
+  metaTitle: "Seven of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Seven of Swords keeps appearing, it marks a pattern of strategic avoidance — departing sideways, taking what belongs to another situation, or evading the direct reckoning."
+  primaryKeyword: "seven of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the seven of swords keep showing up"
+    - "seven of swords repeating tarot meaning"
+    - "seven of swords deception tarot pattern"
+    - "seven of swords avoidance tarot"
+  featuredSnippetAnswer: "The Seven of Swords repeating in tarot readings signals a pattern of strategic avoidance — departing situations indirectly, avoiding direct accountability, or using cleverness to evade the honest reckoning that a situation genuinely requires. It often appears when a seeker has developed a pattern of exit strategies that prevent genuine completion."
+  answerEngineSummary: "The Seven of Swords repeating in readings marks a seeker whose characteristic response to difficult situations involves strategic evasion rather than direct engagement. The shadow expression includes using intelligence as a tool for avoidance and treating direct honesty as a threat to be outmanoeuvred. Integration involves choosing the direct path and the honest reckoning, even when the indirect route is available and more comfortable."
+  canonicalUrl: "/repeating-card-meanings/seven-of-swords/"
+  openGraphImage: "/images/tarot/rws/seven-of-swords.jpg"
+
+swords/eight-of-swords:
+  metaTitle: "Eight of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Eight of Swords keeps appearing, it marks a self-constructed entrapment — the blindfold and bindings are real in their effects, but they are maintained by the seeker's own beliefs."
+  primaryKeyword: "eight of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the eight of swords keep showing up"
+    - "eight of swords repeating tarot meaning"
+    - "eight of swords trapped tarot pattern"
+    - "eight of swords mental prison tarot"
+  featuredSnippetAnswer: "The Eight of Swords repeating in tarot readings signals a pattern of self-constructed mental entrapment — a belief system, pattern of thought, or perceived impossibility that functions as genuine constraint without being externally enforced. It often appears when a seeker believes themselves trapped by circumstances that, examined clearly, would reveal more options than the seeker currently allows themselves to see."
+  answerEngineSummary: "The Eight of Swords repeating in readings marks a seeker who is genuinely experiencing constraint but whose constraint is primarily maintained by their own beliefs, fears, and habitual thinking patterns. The shadow expression includes enlisting the environment as evidence that escape is impossible. Integration involves recognising that the bindings are internal and beginning to question the beliefs that have made them feel absolute."
+  canonicalUrl: "/repeating-card-meanings/eight-of-swords/"
+  openGraphImage: "/images/tarot/rws/eight-of-swords.jpg"
+
+swords/nine-of-swords:
+  metaTitle: "Nine of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Nine of Swords keeps appearing, it marks a pattern of night-fear and rumination — anxiety that is not anchored to a specific addressable threat but runs continuously in the background."
+  primaryKeyword: "nine of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the nine of swords keep showing up"
+    - "nine of swords repeating tarot meaning"
+    - "nine of swords anxiety tarot pattern"
+    - "nine of swords worry tarot"
+  featuredSnippetAnswer: "The Nine of Swords repeating in tarot readings signals a pattern of persistent anxiety, rumination, or night-fear — worry that runs continuously and is not anchored to a specific, addressable cause. It often appears when a seeker is caught in a loop of catastrophic thinking that creates genuine suffering without producing the clarity or resolution that genuine problem-solving would offer."
+  answerEngineSummary: "The Nine of Swords repeating in readings marks a seeker whose cognitive and nervous system patterns are generating sustained anxiety that exceeds what any specific situation actually warrants. The shadow expression includes using intellectual precision to elaborate the catastrophe rather than to examine or interrupt the pattern. Integration involves recognising the loop as a pattern rather than a prophecy, and developing the capacity to interrupt it."
+  canonicalUrl: "/repeating-card-meanings/nine-of-swords/"
+  openGraphImage: "/images/tarot/rws/nine-of-swords.jpg"
+
+swords/ten-of-swords:
+  metaTitle: "Ten of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ten of Swords keeps appearing, it marks an ending that is either not yet fully acknowledged, or one whose collapse is being replayed rather than completed."
+  primaryKeyword: "ten of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ten of swords keep showing up"
+    - "ten of swords repeating tarot meaning"
+    - "ten of swords ending tarot pattern"
+    - "ten of swords rock bottom tarot"
+  featuredSnippetAnswer: "The Ten of Swords repeating in tarot readings signals a pattern related to a genuine ending or collapse — either an ending that has not yet been fully acknowledged and released, or a pattern of experiencing repeated collapse in the same territory without yet understanding what needs to change at the foundation. It often appears when the same bottom keeps arriving."
+  answerEngineSummary: "The Ten of Swords repeating in readings marks a seeker for whom a genuine ending has either not been fully completed or is recurring because the conditions that produced it have not been examined. The shadow expression includes dramatising the wound rather than completing the ending. Integration involves genuinely acknowledging the collapse, releasing the swords that have accumulated, and beginning from the honest ground that the ending has revealed."
+  canonicalUrl: "/repeating-card-meanings/ten-of-swords/"
+  openGraphImage: "/images/tarot/rws/ten-of-swords.jpg"
+
+swords/page-of-swords:
+  metaTitle: "Page of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Page of Swords keeps appearing, it marks a sharp, curious mind in early development — intelligence that is not yet directed with purpose, or that is being used defensively."
+  primaryKeyword: "page of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the page of swords keep showing up"
+    - "page of swords repeating tarot meaning"
+    - "page of swords learning tarot pattern"
+    - "page of swords overthinking tarot"
+  featuredSnippetAnswer: "The Page of Swords repeating in tarot readings signals a pattern of genuine intellectual curiosity and mental acuity in early, undirected development — where sharp thinking is present but has not yet been focused into a specific, sustained line of inquiry or action. It often appears when a seeker is using intelligence to observe and analyse rather than to commit and develop."
+  answerEngineSummary: "The Page of Swords repeating in readings marks a seeker whose genuine intellectual capacity is not yet directed with purpose and sustained commitment. The shadow expression includes using cleverness as a defence — keeping everything under observation without fully engaging with anything. Integration involves choosing a specific direction for the intelligence to develop and committing to it with genuine, sustained inquiry."
+  canonicalUrl: "/repeating-card-meanings/page-of-swords/"
+  openGraphImage: "/images/tarot/rws/page-of-swords.jpg"
+
+swords/knight-of-swords:
+  metaTitle: "Knight of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Knight of Swords keeps appearing, it marks a pattern of charging forward without sufficient consideration — urgency that bypasses discernment and creates the messes it seeks to resolve."
+  primaryKeyword: "knight of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the knight of swords keep showing up"
+    - "knight of swords repeating tarot meaning"
+    - "knight of swords impulsive tarot pattern"
+    - "knight of swords hasty decisions tarot"
+  featuredSnippetAnswer: "The Knight of Swords repeating in tarot readings signals a pattern of rapid, forceful movement without sufficient discernment — charging toward goals or into situations with urgency that bypasses genuine consideration of consequences, context, or the human impact of the approach. It often appears when a seeker's speed and certainty are running faster than their wisdom."
+  answerEngineSummary: "The Knight of Swords repeating in readings marks a seeker whose genuine intelligence and decisiveness are moving faster than the situation can absorb or the relationships can sustain. The shadow expression includes using speed and certainty as a way to avoid the vulnerability of genuine deliberation. Integration involves bringing the genuine sharpness of mind into alignment with genuine discernment before acting."
+  canonicalUrl: "/repeating-card-meanings/knight-of-swords/"
+  openGraphImage: "/images/tarot/rws/knight-of-swords.jpg"
+
+swords/queen-of-swords:
+  metaTitle: "Queen of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Queen of Swords keeps appearing, it marks clear-sighted authority that is present but held at a relational distance — wisdom exercised in isolation rather than in genuine connection."
+  primaryKeyword: "queen of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the queen of swords keep showing up"
+    - "queen of swords repeating tarot meaning"
+    - "queen of swords clarity tarot pattern"
+    - "queen of swords isolation tarot"
+  featuredSnippetAnswer: "The Queen of Swords repeating in tarot readings signals a pattern of genuine clear-sighted authority that is being exercised in isolation — wisdom and discernment present but deployed at a relational distance that protects the seeker from the vulnerability of genuine, felt connection. It often appears when intelligence has become a substitute for intimacy."
+  answerEngineSummary: "The Queen of Swords repeating in readings marks a seeker who has developed genuine perceptive authority but is using that authority to remain safely above or apart from genuine relational engagement. The shadow expression includes using clarity as a blade that maintains distance rather than creating understanding. Integration involves bringing the genuine discernment into direct, warm, relational contact with others."
+  canonicalUrl: "/repeating-card-meanings/queen-of-swords/"
+  openGraphImage: "/images/tarot/rws/queen-of-swords.jpg"
+
+swords/king-of-swords:
+  metaTitle: "King of Swords Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the King of Swords keeps appearing, it marks intellectual authority at its threshold — mastery of the mind that has not yet been integrated with emotional truth or relational warmth."
+  primaryKeyword: "king of swords keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the king of swords keep showing up"
+    - "king of swords repeating tarot meaning"
+    - "king of swords authority tarot pattern"
+    - "king of swords coldness tarot"
+  featuredSnippetAnswer: "The King of Swords repeating in tarot readings signals a pattern of genuine intellectual authority and mastery that is not yet integrated with emotional truth or relational warmth. It often appears when a seeker exercises real clarity, precision, and principled thinking in ways that feel authoritative but have become disconnected from genuine feeling and genuine care for others."
+  answerEngineSummary: "The King of Swords repeating in readings marks a seeker whose genuine intellectual authority is operating in a way that has become disconnected from emotional and relational reality. The shadow expression includes using principled thinking as a way to avoid the felt, embodied complexity of genuine relational life. Integration involves bringing the clarity and authority of the mind into genuine, warm, present alignment with emotional truth."
+  canonicalUrl: "/repeating-card-meanings/king-of-swords/"
+  openGraphImage: "/images/tarot/rws/king-of-swords.jpg"
+
+# === PENTACLES ===
+
+pentacles/ace-of-pentacles:
+  metaTitle: "Ace of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ace of Pentacles keeps appearing, it marks a practical opportunity or beginning that is being held in the hand without yet being planted — potential present but not yet grounded."
+  primaryKeyword: "ace of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ace of pentacles keep showing up"
+    - "ace of pentacles repeating tarot meaning"
+    - "ace of pentacles money tarot pattern"
+    - "ace of pentacles new beginning practical tarot"
+  featuredSnippetAnswer: "The Ace of Pentacles repeating in tarot readings signals a pattern of genuine practical potential — a financial opportunity, a project beginning, or a new material direction — that is being held or contemplated without yet being planted and developed. It often appears when a seeker has genuine material opportunity present but is waiting for certainty before committing."
+  answerEngineSummary: "The Ace of Pentacles repeating in readings marks a seeker who holds genuine practical or material potential but has not yet committed to planting and developing it. The shadow expression includes waiting for the perfect conditions or the perfect plan before making the grounded first investment. Integration involves making the practical, embodied first step — planting the seed — without requiring certainty of the harvest."
+  canonicalUrl: "/repeating-card-meanings/ace-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/ace-of-pentacles.jpg"
+
+pentacles/two-of-pentacles:
+  metaTitle: "Two of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Two of Pentacles keeps appearing, it marks a pattern of perpetual juggling — managing competing practical demands without ever arriving at genuine stability or settled direction."
+  primaryKeyword: "two of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the two of pentacles keep showing up"
+    - "two of pentacles repeating tarot meaning"
+    - "two of pentacles balance money tarot"
+    - "two of pentacles overwhelm tarot pattern"
+  featuredSnippetAnswer: "The Two of Pentacles repeating in tarot readings signals a pattern of perpetual practical juggling — managing multiple competing demands, financial pressures, or practical responsibilities without ever arriving at sustainable balance or genuine settled direction. It often appears when a seeker has made complexity into a way of life rather than a temporary condition to be resolved."
+  answerEngineSummary: "The Two of Pentacles repeating in readings marks a seeker whose daily life has become organised around constant practical management without genuine simplification or direction. The shadow expression includes maintaining busyness and complexity as a form of identity. Integration involves reducing complexity to what is genuinely this seeker's to manage and choosing a direction that makes genuine development possible."
+  canonicalUrl: "/repeating-card-meanings/two-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/two-of-pentacles.jpg"
+
+pentacles/three-of-pentacles:
+  metaTitle: "Three of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Three of Pentacles keeps appearing, it marks a pattern around collaborative craft — either skill that is invisible, collaboration that is avoided, or recognition that is not yet being claimed."
+  primaryKeyword: "three of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the three of pentacles keep showing up"
+    - "three of pentacles repeating tarot meaning"
+    - "three of pentacles craft career tarot"
+    - "three of pentacles teamwork tarot pattern"
+  featuredSnippetAnswer: "The Three of Pentacles repeating in tarot readings signals a pattern around collaborative skill development — where genuine craft is being practised but either the contribution is not being made visible, the collaboration is being avoided, or the recognition of genuine developing mastery is not yet being received with settled confidence."
+  answerEngineSummary: "The Three of Pentacles repeating in readings marks a seeker whose genuine practical skill is either not being recognised or not being brought into productive collaborative exchange. The shadow expression includes using perfectionism or invisibility as a way to avoid the accountability of genuine contribution. Integration involves allowing the developing skill to be seen, shared, and confirmed through genuine collaborative engagement."
+  canonicalUrl: "/repeating-card-meanings/three-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/three-of-pentacles.jpg"
+
+pentacles/four-of-pentacles:
+  metaTitle: "Four of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Four of Pentacles keeps appearing, it marks a pattern of gripping material resources or security past the point where holding is necessary — accumulation as the management of fear."
+  primaryKeyword: "four of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the four of pentacles keep showing up"
+    - "four of pentacles repeating tarot meaning"
+    - "four of pentacles money hoarding tarot"
+    - "four of pentacles control tarot pattern"
+  featuredSnippetAnswer: "The Four of Pentacles repeating in tarot readings signals a pattern of gripping material resources, security, or control past the point of genuine need — using accumulation and possession as the primary way of managing anxiety about loss, change, or instability. It often appears when fear of losing what has been built is preventing genuine generosity or genuine growth."
+  answerEngineSummary: "The Four of Pentacles repeating in readings marks a seeker whose relationship to material security has become an anxious grip rather than a settled foundation. The shadow expression includes treating accumulation itself as safety rather than as a resource that serves genuine development. Integration involves developing a relationship to material resources based on trust and genuine discernment rather than fear-based holding."
+  canonicalUrl: "/repeating-card-meanings/four-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/four-of-pentacles.jpg"
+
+pentacles/five-of-pentacles:
+  metaTitle: "Five of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Five of Pentacles keeps appearing, it marks material hardship or exclusion — either real lack being navigated, or a lens of scarcity shaping experience past the point of accuracy."
+  primaryKeyword: "five of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the five of pentacles keep showing up"
+    - "five of pentacles repeating tarot meaning"
+    - "five of pentacles financial hardship tarot"
+    - "five of pentacles scarcity tarot pattern"
+  featuredSnippetAnswer: "The Five of Pentacles repeating in tarot readings signals a pattern around material hardship, exclusion, or a persistent scarcity orientation. It often appears when a seeker is navigating genuine material difficulty without accessing available support, or when a lens of lack has persisted past the circumstances that originally generated it, colouring current experience with a quality of deprivation that is no longer entirely accurate."
+  answerEngineSummary: "The Five of Pentacles repeating in readings marks a seeker whose material experience is shaped by genuine hardship or by a scarcity frame that has outlasted its originating circumstances. The shadow expression includes refusing or not seeing the support that is available. Integration involves both genuinely addressing material reality and examining whether the lens of lack is still a response to present circumstances or an inherited orientation."
+  canonicalUrl: "/repeating-card-meanings/five-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/five-of-pentacles.jpg"
+
+pentacles/six-of-pentacles:
+  metaTitle: "Six of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Six of Pentacles keeps appearing, it marks an unresolved pattern in the exchange of giving and receiving — imbalance, power dynamics, or generosity entangled with control."
+  primaryKeyword: "six of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the six of pentacles keep showing up"
+    - "six of pentacles repeating tarot meaning"
+    - "six of pentacles generosity tarot"
+    - "six of pentacles giving receiving tarot pattern"
+  featuredSnippetAnswer: "The Six of Pentacles repeating in tarot readings signals a persistent pattern in the exchange of material or emotional resources — consistent over-giving without reciprocity, consistent dependency without contribution, or generosity entangled with relational power and control. It often appears when the seeker's characteristic position in material exchange has become unexamined and stuck."
+  answerEngineSummary: "The Six of Pentacles repeating in readings marks a seeker whose position in the cycle of material and relational giving and receiving has become fixed in a pattern of imbalance. The shadow expression includes using generosity as a form of control, or dependency as a form of safety. Integration involves establishing genuinely reciprocal exchange where giving and receiving are both freely and sustainably participated in."
+  canonicalUrl: "/repeating-card-meanings/six-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/six-of-pentacles.jpg"
+
+pentacles/seven-of-pentacles:
+  metaTitle: "Seven of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Seven of Pentacles keeps appearing, it marks the long middle of practical development — standing at the investment and not yet returning to tend it, or losing faith in the slow return."
+  primaryKeyword: "seven of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the seven of pentacles keep showing up"
+    - "seven of pentacles repeating tarot meaning"
+    - "seven of pentacles patience tarot"
+    - "seven of pentacles investment tarot pattern"
+  featuredSnippetAnswer: "The Seven of Pentacles repeating in tarot readings signals a pattern around the long middle of a genuine practical investment — the period where results are not yet visible and sustained patience is required. It often appears when a seeker is standing at an assessment point, either losing faith in the developing investment or unable to return to the active cultivation it still requires."
+  answerEngineSummary: "The Seven of Pentacles repeating in readings marks a seeker who is in the genuinely difficult middle phase of a long-term practical development. The shadow expression includes abandoning the investment at precisely the point where sustained patience would begin to produce visible return. Integration involves making the honest assessment of whether the investment is genuinely developing and, if so, returning to active tending with patient, long-arc commitment."
+  canonicalUrl: "/repeating-card-meanings/seven-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/seven-of-pentacles.jpg"
+
+pentacles/eight-of-pentacles:
+  metaTitle: "Eight of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Eight of Pentacles keeps appearing, it marks deliberate practice as the unresolved territory — genuine skill present or possible, but daily committed repetition absent or deferred."
+  primaryKeyword: "eight of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the eight of pentacles keep showing up"
+    - "eight of pentacles repeating tarot meaning"
+    - "eight of pentacles practice tarot pattern"
+    - "eight of pentacles skill development tarot"
+  featuredSnippetAnswer: "The Eight of Pentacles repeating in tarot readings signals a pattern where genuine skill development or deliberate practice is the unresolved territory. It often appears when a seeker has genuine aptitude or aspiration in a specific domain but has not yet established the daily, repetitive, deliberate practice through which that aptitude actually becomes mastery."
+  answerEngineSummary: "The Eight of Pentacles repeating in readings marks a seeker whose relationship to the daily practice of a developing skill is the core unresolved pattern. The shadow expression includes treating general effort or busyness as equivalent to the specific, deliberate, repetitive engagement that genuine development requires. Integration involves establishing a genuine daily practice in the specific domain where mastery is genuinely being sought."
+  canonicalUrl: "/repeating-card-meanings/eight-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/eight-of-pentacles.jpg"
+
+pentacles/nine-of-pentacles:
+  metaTitle: "Nine of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Nine of Pentacles keeps appearing, it marks earned self-sufficiency that is not being fully inhabited — material or emotional independence achieved but not yet at ease."
+  primaryKeyword: "nine of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the nine of pentacles keep showing up"
+    - "nine of pentacles repeating tarot meaning"
+    - "nine of pentacles self-sufficiency tarot"
+    - "nine of pentacles independence tarot pattern"
+  featuredSnippetAnswer: "The Nine of Pentacles repeating in tarot readings signals a pattern around genuine material self-sufficiency that has been built but is not yet fully inhabited with ease. It often appears when a seeker has achieved real independence and material stability but cannot rest in it — either because vigilance has become habitual, or because the independence has come at the cost of genuine connection."
+  answerEngineSummary: "The Nine of Pentacles repeating in readings marks a seeker who has built genuine practical self-sufficiency but is inhabiting it with guardedness rather than ease. The shadow expression includes maintaining independence as a protected position rather than as a genuine foundation for broader engagement. Integration involves inhabiting the earned sufficiency with genuine, settled ease — and opening from that foundation rather than contracting within it."
+  canonicalUrl: "/repeating-card-meanings/nine-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/nine-of-pentacles.jpg"
+
+pentacles/ten-of-pentacles:
+  metaTitle: "Ten of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Ten of Pentacles keeps appearing, it marks a seeker's unresolved relationship to material legacy — what has been inherited, what is being built, and what will be passed on."
+  primaryKeyword: "ten of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the ten of pentacles keep showing up"
+    - "ten of pentacles repeating tarot meaning"
+    - "ten of pentacles family money tarot"
+    - "ten of pentacles legacy tarot pattern"
+  featuredSnippetAnswer: "The Ten of Pentacles repeating in tarot readings signals a pattern around the long arc of material life — what has been inherited from family systems, what is being built across a lifetime, and what will be passed on to those who come after. It often appears when unresolved questions of inheritance, family wealth, or multigenerational material patterns are pressing without being directly addressed."
+  answerEngineSummary: "The Ten of Pentacles repeating in readings marks a seeker navigating the complexity of inherited material structures, family financial patterns, or the question of what genuine legacy looks like. The shadow expression includes replicating inherited patterns without examination or rejecting them wholesale without discernment. Integration involves consciously engaging with what has been received — choosing what to continue, what to transform, and what to release."
+  canonicalUrl: "/repeating-card-meanings/ten-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/ten-of-pentacles.jpg"
+
+pentacles/page-of-pentacles:
+  metaTitle: "Page of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Page of Pentacles keeps appearing, it marks a practical curiosity that has not yet committed to a specific learning path — interest in the material world without yet building within it."
+  primaryKeyword: "page of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the page of pentacles keep showing up"
+    - "page of pentacles repeating tarot meaning"
+    - "page of pentacles study tarot pattern"
+    - "page of pentacles practical learning tarot"
+  featuredSnippetAnswer: "The Page of Pentacles repeating in tarot readings signals a pattern of genuine practical curiosity and interest in material development — study, craft, business, skill — that has not yet been committed to a specific path of deliberate development. It often appears when a seeker is fascinated by practical knowledge but has not yet made the commitment to go deep in one direction."
+  answerEngineSummary: "The Page of Pentacles repeating in readings marks a seeker whose practical curiosity is genuine but whose commitment to a specific practical learning path is not yet established. The shadow expression includes treating curious interest as equivalent to sustained, disciplined development. Integration involves choosing a specific practical domain and beginning the genuine, patient study that will convert curiosity into actual capacity."
+  canonicalUrl: "/repeating-card-meanings/page-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/page-of-pentacles.jpg"
+
+pentacles/knight-of-pentacles:
+  metaTitle: "Knight of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Knight of Pentacles keeps appearing, it marks methodical effort that has either not yet been developed, or has become so routine that genuine presence and development have been lost."
+  primaryKeyword: "knight of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the knight of pentacles keep showing up"
+    - "knight of pentacles repeating tarot meaning"
+    - "knight of pentacles routine tarot pattern"
+    - "knight of pentacles responsibility tarot"
+  featuredSnippetAnswer: "The Knight of Pentacles repeating in tarot readings signals a pattern around sustained, methodical, responsible practical effort. It appears either when a seeker has not yet developed the capacity for patient, consistent work, or when reliable effort has become so habitual that it has lost genuine direction and presence — duty without development, routine without growth."
+  answerEngineSummary: "The Knight of Pentacles repeating in readings marks a seeker navigating the specific challenge of sustained methodical engagement with practical responsibility. The shadow expression includes confusing reliable effort with genuine development, or staying in a path out of responsibility rather than genuine direction. Integration involves bringing genuine presence and conscious direction back into the sustained practical effort — or recognising when the reliable path must be changed."
+  canonicalUrl: "/repeating-card-meanings/knight-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/knight-of-pentacles.jpg"
+
+pentacles/queen-of-pentacles:
+  metaTitle: "Queen of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the Queen of Pentacles keeps appearing, it marks embodied practical care that is flowing outward without flowing inward — nourishing others while the seeker's own needs go unmet."
+  primaryKeyword: "queen of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the queen of pentacles keep showing up"
+    - "queen of pentacles repeating tarot meaning"
+    - "queen of pentacles nurturing tarot pattern"
+    - "queen of pentacles self-care tarot"
+  featuredSnippetAnswer: "The Queen of Pentacles repeating in tarot readings signals a pattern of embodied, practical care directed outward — toward family, home, work, others — in a way that consistently prioritises others' material and physical wellbeing over the seeker's own. It often appears when genuine nurturing capacity has become a form of self-neglect, or when the seeker's own practical needs and pleasures have been indefinitely deferred."
+  answerEngineSummary: "The Queen of Pentacles repeating in readings marks a seeker who is genuinely skilled at practical care and material nourishment but is not directing that same quality of embodied attention toward the self. The shadow expression includes using care-giving as a way to avoid the seeker's own unlived desires, creative life, or legitimate material needs. Integration involves extending the same quality of grounded, embodied, practical generosity inward."
+  canonicalUrl: "/repeating-card-meanings/queen-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/queen-of-pentacles.jpg"
+
+pentacles/king-of-pentacles:
+  metaTitle: "King of Pentacles Keeps Appearing in Tarot | Tides of Knowing"
+  metaDescription: "When the King of Pentacles keeps appearing, it marks material authority at a significant threshold — either genuine mastery not yet claimed as leadership, or stewardship not yet integrated with wisdom."
+  primaryKeyword: "king of pentacles keeps appearing in tarot"
+  secondaryKeywords:
+    - "why does the king of pentacles keep showing up"
+    - "king of pentacles repeating tarot meaning"
+    - "king of pentacles wealth tarot pattern"
+    - "king of pentacles material authority tarot"
+  featuredSnippetAnswer: "The King of Pentacles repeating in tarot readings signals a pattern around genuine material authority — real practical mastery, financial acumen, or resource stewardship that has been developed but is not yet being fully inhabited as settled, grounded leadership. It often appears when a seeker has the capacity for significant material authority but has not yet claimed it with the ease and wisdom the position requires."
+  answerEngineSummary: "The King of Pentacles repeating in readings marks a seeker navigating the full weight of genuine material authority and stewardship. The shadow expression includes using material accumulation as a form of identity or control rather than as a resource in service of genuine development for oneself and others. Integration involves inhabiting material authority with wisdom, generosity, and settled confidence — neither holding too tight nor abdicating what has been genuinely built."
+  canonicalUrl: "/repeating-card-meanings/king-of-pentacles/"
+  openGraphImage: "/images/tarot/rws/king-of-pentacles.jpg"

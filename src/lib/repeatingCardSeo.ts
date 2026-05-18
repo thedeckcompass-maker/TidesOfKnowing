@@ -1,8 +1,6 @@
 import type { CollectionEntry } from "astro:content";
-import { AUTHOR_NAME } from "./blogSeo";
 import type { BreadcrumbItem } from "./breadcrumbs";
 import { breadcrumbJsonLd } from "./breadcrumbs";
-import { ENTITY_IDS } from "./ecosystem-structured-data";
 import {
   repeatingCardDisplayTitle,
   repeatingCardPanelSummary,
@@ -10,8 +8,10 @@ import {
 } from "./repeatingCardMeanings";
 import { tarotCardImagePath } from "./tarotCardImage";
 import {
+  getRepeatingCardCanonicalPath,
   getRepeatingCardCanonicalUrl,
   getRepeatingCardHubPath,
+  getRepeatingCardSeoHubPath,
   getRepeatingCardSuitPath,
   repeatingCardSuitFromId,
 } from "./repeatingCardUrls";
@@ -20,8 +20,6 @@ type RepeatingCardEntry = CollectionEntry<"repeatingCardMeanings">;
 
 const META_DESCRIPTION_MAX = 160;
 const TITLE_SUFFIX = "Tarot Pattern Interpretation";
-const DEFINED_TERM_SET = "Repeating Card Meanings";
-
 const SUIT_LABELS: Record<string, string> = {
   majors: "Major Arcana",
   cups: "Cups",
@@ -35,7 +33,7 @@ function suitLabelForId(collectionId: string): string {
   return SUIT_LABELS[suit] ?? suit;
 }
 
-function cardHeadline(entry: RepeatingCardEntry): string {
+export function cardHeadline(entry: RepeatingCardEntry): string {
   const fallback = repeatingCardSlugFromId(entry.id)
     .split("-")
     .map((part) => (part ? part.charAt(0).toUpperCase() + part.slice(1) : part))
@@ -80,71 +78,28 @@ export function getRepeatingCardBreadcrumbs(entry: RepeatingCardEntry): Breadcru
   ];
 }
 
-function repeatingCardArticleJsonLd(
-  entry: RepeatingCardEntry,
-  canonical: string,
-  baseHref: string,
-): Record<string, unknown> {
+/** Breadcrumbs for canonical `/repeating-card-meanings/{slug}/` entity pages. */
+export function getRepeatingCardEntityBreadcrumbs(entry: RepeatingCardEntry): BreadcrumbItem[] {
   const headline = cardHeadline(entry);
-  const description = getRepeatingCardMetaDescription(entry);
-  const imagePath = tarotCardImagePath(repeatingCardSlugFromId(entry.id));
-  const image = new URL(imagePath, baseHref).href;
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline,
-    description,
-    author: {
-      "@type": "Person",
-      name: AUTHOR_NAME,
-      "@id": ENTITY_IDS.person,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Tides of Knowing",
-      "@id": ENTITY_IDS.tidesOrg,
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": canonical,
-    },
-    url: canonical,
-    image,
-  };
+  return [
+    { label: "Home", url: "/" },
+    { label: "Repeating Card Meanings", url: getRepeatingCardSeoHubPath() },
+    { label: headline, url: null },
+  ];
 }
 
-function repeatingCardDefinedTermJsonLd(
-  entry: RepeatingCardEntry,
-): Record<string, unknown> {
-  const name = cardHeadline(entry);
-  const description = getRepeatingCardMetaDescription(entry);
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "DefinedTerm",
-    name,
-    description,
-    inDefinedTermSet: {
-      "@type": "DefinedTermSet",
-      name: DEFINED_TERM_SET,
-    },
-  };
-}
-
-/** Article, BreadcrumbList, and DefinedTerm JSON-LD for a card page. */
-export function getRepeatingCardJsonLd(
+export function getRepeatingCardEntityBreadcrumbJsonLd(
   entry: RepeatingCardEntry,
   siteHref: string,
-): Record<string, unknown>[] {
-  const canonical = getRepeatingCardCanonicalUrl(entry, siteHref);
-  const crumbs = getRepeatingCardBreadcrumbs(entry);
-
-  return [
-    repeatingCardArticleJsonLd(entry, canonical, siteHref),
-    breadcrumbJsonLd(crumbs, siteHref),
-    repeatingCardDefinedTermJsonLd(entry),
+): Record<string, unknown> {
+  const headline = cardHeadline(entry);
+  const cardPath = getRepeatingCardCanonicalPath(entry);
+  const items: BreadcrumbItem[] = [
+    { label: "Home", url: "/" },
+    { label: "Repeating Card Meanings", url: getRepeatingCardSeoHubPath() },
+    { label: headline, url: cardPath },
   ];
+  return breadcrumbJsonLd(items, siteHref);
 }
 
 /** Absolute OG image for a card entry. */

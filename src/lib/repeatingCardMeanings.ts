@@ -84,6 +84,34 @@ export function repeatingCardSlugFromId(collectionId: string): string {
   return segment?.trim() || collectionId;
 }
 
+/** Map card slug → collection entry id for SEO routes (`the-fool` → `majors/the-fool`). */
+export function buildRepeatingCardSlugIndex(
+  entries: CollectionEntry<"repeatingCardMeanings">[],
+): Map<string, string> {
+  const index = new Map<string, string>();
+  for (const entry of entries) {
+    const slug = repeatingCardSlugFromId(entry.id);
+    const existing = index.get(slug);
+    if (existing && existing !== entry.id) {
+      throw new Error(
+        `Duplicate repeating card slug "${slug}" (${existing} vs ${entry.id})`,
+      );
+    }
+    index.set(slug, entry.id);
+  }
+  return index;
+}
+
+export function getRepeatingCardEntryByCardSlug(
+  bySlug: Map<string, string>,
+  byId: Map<string, CollectionEntry<"repeatingCardMeanings">>,
+  cardSlug: string,
+): CollectionEntry<"repeatingCardMeanings"> | undefined {
+  const normalized = cardSlug.replace(/^\/+|\/+$/g, "");
+  const id = bySlug.get(normalized);
+  return id ? byId.get(id) : undefined;
+}
+
 export function getRepeatingCardEntry(
   byId: Map<string, CollectionEntry<"repeatingCardMeanings">>,
   collectionId: string,

@@ -1,0 +1,220 @@
+# Schema Field Map
+# Tides of Knowing — Repeating Card Meanings
+# Generated: 2026-05-18
+# Stage: 5 — Schema
+#
+# This file maps each schema.org property to its source field in the card markdown files.
+# Source field references use dot-notation: frontmatter.field or section.SectionName
+# For CMS/SSG template implementation: each source_field indicates where to pull the value.
+
+---
+
+schema_types:
+
+  Article:
+    description: "Foundational document schema applied to all 78 card pages"
+    context: "https://schema.org"
+    type: "Article"
+    properties:
+
+      headline:
+        source_field: metadata.metaTitle
+        notes: "Use the card's metaTitle from card-metadata-map.yaml. 50-60 chars. Pipe separator confirmed."
+        example: "The Fool Keeps Appearing in Tarot | Tides of Knowing"
+
+      name:
+        source_field: frontmatter.title
+        notes: "The H1 page title — matches the frontmatter title field."
+        example: "The Fool Repeating Meaning"
+
+      description:
+        source_field: frontmatter.summary
+        notes: "The frontmatter summary field. 60-110 words. Primary Article description signal."
+        example: "The Fool is the card of threshold — the edge before the leap..."
+
+      url:
+        source_field: metadata.canonicalUrl
+        notes: "Canonical URL from card-metadata-map.yaml. No domain prefix in source; prepend site domain at render time."
+        example: "/repeating-card-meanings/the-fool"
+
+      mainEntityOfPage:
+        source_field: metadata.canonicalUrl
+        notes: "Same as url. Reinforces canonical URL signal."
+        example: "/repeating-card-meanings/the-fool"
+
+      image:
+        source_field: metadata.openGraphImage
+        notes: "OG image path from card-metadata-map.yaml. Confirmed .jpg format. Confirmed path pattern: /images/tarot/rws/{card-slug}.jpg"
+        example: "/images/tarot/rws/the-fool.jpg"
+
+      datePublished:
+        source_field: "frontmatter.datePublished (not yet present — add at publication)"
+        notes: "Human review required: add datePublished to frontmatter at publication. ISO 8601 format."
+        example: "2026-06-01"
+
+      dateModified:
+        source_field: "frontmatter.dateModified (not yet present — update on revision)"
+        notes: "Update manually or via CMS workflow when content is revised. Do not use git timestamps — these reflect development commits, not editorial publication dates."
+        example: "2026-06-15"
+
+      author:
+        source_field: "site_config.author"
+        notes: "Confirmed: Person attribution. Leigh Spencer is the author. Define once in site config."
+        schema_object:
+          "@type": "Person"
+          name: "Leigh Spencer"
+          url: "https://www.tidesofknowing.com/about/"
+
+      publisher:
+        source_field: "site_config.publisher"
+        notes: "Confirmed: Organization attribution. Define once in site config."
+        schema_object:
+          "@type": "Organization"
+          name: "Tides of Knowing"
+          url: "https://www.tidesofknowing.com/"
+
+      inLanguage:
+        source_field: "site_config.language"
+        notes: "Confirmed: en-NZ"
+        example: "en-NZ"
+
+  BreadcrumbList:
+    description: "Breadcrumb trail for all 78 card pages"
+    context: "https://schema.org"
+    type: "BreadcrumbList"
+    items:
+
+      position_1:
+        position: 1
+        name: "Home"
+        source_field: "site_config.homeUrl"
+        item: "/"
+
+      position_2:
+        position: 2
+        name: "Repeating Card Meanings"
+        source_field: "site_config.collectionUrl"
+        item: "/repeating-card-meanings"
+
+      position_3:
+        position: 3
+        name_source_field: frontmatter.title
+        item_source_field: metadata.canonicalUrl
+        notes: "Card name from frontmatter.title; URL from canonicalUrl. Both are card-specific."
+        example_name: "The Fool Repeating Meaning"
+        example_item: "/repeating-card-meanings/the-fool"
+
+  FAQPage:
+    description: "FAQ schema covering life area sections, temporal sections, and key interpretive sections"
+    context: "https://schema.org"
+    type: "FAQPage"
+    question_sources:
+
+      life_area_love:
+        question_pattern: "What does {card_name} mean for love and relationships when it keeps appearing?"
+        answer_source_field: "section.Love & Relationships"
+        priority: 1
+        notes: "Full section text. Do not truncate. Life area sections are the highest-value FAQ candidates."
+
+      life_area_career:
+        question_pattern: "What does {card_name} mean for career and purpose when it keeps appearing?"
+        answer_source_field: "section.Career & Purpose"
+        priority: 1
+
+      life_area_money:
+        question_pattern: "What does {card_name} mean for money and stability when it keeps appearing?"
+        answer_source_field: "section.Money & Stability"
+        priority: 1
+
+      life_area_spiritual:
+        question_pattern: "What does {card_name} mean for spiritual growth when it keeps appearing?"
+        answer_source_field: "section.Spiritual Growth"
+        priority: 1
+
+      life_area_emotional:
+        question_pattern: "What does {card_name} mean for emotional and mental patterns when it keeps appearing?"
+        answer_source_field: "section.Emotional & Mental Patterns"
+        priority: 1
+
+      life_area_family:
+        question_pattern: "What does {card_name} mean for family and generational dynamics when it keeps appearing?"
+        answer_source_field: "section.Family & Generational Dynamics"
+        priority: 1
+
+      life_area_health:
+        question_pattern: "What does {card_name} mean for health and energy when it keeps appearing?"
+        answer_source_field: "section.Health & Energy"
+        priority: 2
+        notes: "Second-priority life area; the Health section is the weakest in some cards per content audit."
+
+      temporal_weekly:
+        question_pattern: "What does it mean when {card_name} keeps appearing every week?"
+        answer_source_field: "section.When This Card Repeats Weekly"
+        priority: 2
+
+      temporal_monthly:
+        question_pattern: "What does it mean when {card_name} keeps appearing every month?"
+        answer_source_field: "section.When This Card Repeats Monthly"
+        priority: 2
+
+      temporal_seasonal:
+        question_pattern: "What does it mean when {card_name} keeps appearing throughout a season?"
+        answer_source_field: "section.When This Card Repeats Seasonally"
+        priority: 3
+
+      temporal_annual:
+        question_pattern: "What does it mean when {card_name} keeps appearing across a year or more?"
+        answer_source_field: "section.When This Card Repeats Across Years"
+        priority: 3
+
+      why_not_released:
+        question_pattern: "Why does {card_name} keep appearing in my tarot readings?"
+        answer_source_field: "section.Why This Energy Has Not Released Yet"
+        priority: 1
+        notes: "This section directly answers the primary seeker intent query. High-value FAQ candidate."
+
+      shadow_expression:
+        question_pattern: "What is the shadow meaning of {card_name} repeating in tarot?"
+        answer_source_field: "section.The Shadow Expression"
+        priority: 3
+        notes: "Include only if question count allows. Shadow sections are psychologically specific."
+
+    implementation_notes:
+      - "question_pattern uses {card_name} as a placeholder — replace with the actual card name at render time"
+      - "answer_source_field references the markdown section heading verbatim"
+      - "Do not alter section text for schema — use the source text as written"
+      - "If the SSG truncates FAQ answers, set a minimum of 50 words and maximum of 300 words"
+      - "Confirmed: use natural seeker-language questions, not mechanical schema-only phrasing. Approved patterns in open-questions.md Q4.5."
+
+  DefinedTerm:
+    description: "Optional schema for Tides of Knowing conceptual terms (future implementation)"
+    context: "https://schema.org"
+    type: "DefinedTerm"
+    status: "future — do not implement until glossary page exists"
+    notes: "Implement only when a glossary or method vocabulary page exists to serve as inDefinedTermSet reference. Preferred URL: https://www.tidesofknowing.com/glossary/"
+    properties:
+      name:
+        notes: "The controlled vocabulary term (e.g., 'threshold-paralysis', 'performing-departure'). Use 'The COMPASS Method' (without trademark symbol) for machine-readable names."
+        source_field: "card-taxonomy-map.yaml vocabulary terms"
+      description:
+        notes: "Definition of the term as it is used in the Tides of Knowing system"
+        source_field: "taxonomy-governance-rules.md term definitions"
+      inDefinedTermSet:
+        notes: "URL of the Tides of Knowing glossary page — not yet created"
+        example: "https://www.tidesofknowing.com/glossary/"
+
+---
+
+# Variable Reference
+
+# {card_name}: Full card name as it appears in the H1 heading
+#   Examples: "The Fool", "Five of Cups", "King of Wands", "The High Priestess"
+#
+# {card_slug}: URL slug from frontmatter
+#   Examples: "the-fool", "five-of-cups", "king-of-wands", "the-high-priestess"
+#
+# Source field notation:
+#   frontmatter.field        — from YAML frontmatter in the card markdown file
+#   metadata.field           — from card-metadata-map.yaml
+#   section.SectionName      — full text of the named markdown section
+#   site_config.field        — from site-level configuration (not per-card)

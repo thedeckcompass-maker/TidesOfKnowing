@@ -11,7 +11,8 @@
     "publish-article": "node scripts/add-article.mjs",
     "astro": "astro",
     "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
-    "diag:headers": "node scripts/diag-fetch-headers.mjs"
+    "diag:headers": "node scripts/diag-fetch-headers.mjs",
+    "validate:related-cards": "node scripts/validate-repeating-card-related-map.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
