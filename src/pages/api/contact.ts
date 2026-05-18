@@ -51,6 +51,17 @@ async function parsePayload(request: Request): Promise<ContactPayload> {
   return {};
 }
 
+const JSON_HEADERS = { "content-type": "application/json" } as const;
+
+export const GET: APIRoute = () =>
+  new Response(JSON.stringify({ error: "Method not allowed" }), {
+    status: 405,
+    headers: {
+      ...JSON_HEADERS,
+      Allow: "POST",
+    },
+  });
+
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const payload = await parsePayload(request);

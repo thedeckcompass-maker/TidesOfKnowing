@@ -29,7 +29,7 @@ secondaryKeywords:
 
 > A Minor Arcana card that keeps returning is pointing at a pattern. A Major Arcana card that keeps returning is pointing at a theme. The difference is in the scale of what is being asked to be recognised.
 
-When Major Arcana cards repeat in your readings, it typically means an archetypal theme is active across situations rather than a single event asking for a one-off message. The experience tends to feel weightier than a recurring minor. There is a quality of inevitability to it, a sense that something significant is pressing for attention. That sense is not wrong, but it does require careful reading. Major Arcana repetition is not a sentence and it is not a prediction. It is sustained symbolic pressure from the archetypal layer of experience, and understanding what kind of pressure it represents is the difference between interpreting the pattern and being overwhelmed by it.
+When a Major Arcana card appears repeatedly in your readings, the experience tends to feel weightier than a recurring minor. There is a quality of inevitability to it, a sense that something significant is pressing for attention. That sense is not wrong, but it does require careful reading. Major Arcana repetition is not a sentence and it is not a prediction. It is sustained symbolic pressure from the archetypal layer of experience, and understanding what kind of pressure it represents is the difference between interpreting the pattern and being overwhelmed by it.
 
 ---
 
@@ -81,7 +81,7 @@ A third assumption, subtler than the other two, is that the card's darkest or mo
 
 [Justice](/repeating-card-meanings/justice/) returning repeatedly is pointing at something that requires an honest accounting: a decision that has been made by default rather than by genuine deliberation, a consequence that has been avoided rather than acknowledged, or a standard being applied inconsistently in ways the reader has not fully examined. The card is asking for the kind of clear-eyed assessment that is uncomfortable but necessary.
 
-[Judgement](/repeating-card-meanings/judgement/) repeating marks a reader who is in the process of being called back to themselves: a summons toward a more authentic version of who they are, a reckoning with choices and directions that have led away from genuine alignment. The card returns when that call is being heard but not yet fully answered, when the reader is on the threshold of a significant reorientation but has not yet committed to the direction it is asking them to move in.
+[Judgement](/repeating-card-meanings/judgement/) repeating marks a reader in the process of being called back to themselves: not toward a better version so much as a truer one. It is a reckoning with the choices, directions, and accumulated compromises that have led away from what the reader actually values and actually knows themselves to be. The card returns when that summons is being heard but not yet fully answered, when a significant reorientation is available but not yet committed to.
 
 ### Disruption: The Tower and Death
 
@@ -107,9 +107,11 @@ A third assumption, subtler than the other two, is that the card's darkest or mo
 
 When a Major Arcana card keeps returning, the most useful question to bring to it is not "what is going to happen?" but "what is this card's archetypal territory, and where is that territory active in my life right now across more than one situation?"
 
-Identify which life areas are touched by the card's symbolic range. A repeating major will almost always be relevant in more than one area simultaneously. The Tower might be touching a professional structure and a relational belief system at the same time. The High Priestess might be relevant to both a creative project and a relationship decision. Seeing the full extent of where the card's territory is active helps clarify the larger theme that the repetition is pointing toward.
+Identify which life areas are touched by the card's symbolic range. A repeating major will almost always be active in more than one area simultaneously. The Tower might be touching a professional structure and a relational belief system at the same time. The High Priestess might be relevant to both a creative project and a relationship decision. Seeing where the card's territory is present across the reader's life helps clarify the larger theme the repetition is pointing toward, rather than narrowing the reading to one situation.
 
-Give the pattern space rather than pulling more cards to decode it. A repeating Major Arcana card is not asking for more interpretation. It is asking for genuine engagement with the territory it has already named.
+It also helps to read the card's full symbolic range rather than its most prominent meaning. The Tower is not only about sudden disruption. Death is not only about endings. Every major carries a wider interpretive field than its headline image, and the repeating card is often asking the reader to look closely at a dimension of its meaning they have not yet examined.
+
+Give the pattern space rather than pulling more cards to decode it. A repeating Major Arcana card is not asking for more interpretation. It is asking for genuine engagement with what it has already named.
 
 ---
 
@@ -119,4 +121,11 @@ Each of the Major Arcana cards has a full interpretive entry in the [Repeating C
 
 The full library covers all 22 Major Arcana and all 56 Minor Arcana cards with the same depth of focus on repetition as a pattern rather than repetition as a series of individual messages.
 
+---
+
+## A Note on the COMPASS Method
+
+When a repeating Major Arcana card has begun to feel oppressive rather than clarifying, or when the reader's emotional state is making it difficult to engage with the card's territory without distortion, the [COMPASS Method](/articles/compass-method/) offers a structured way to stabilise interpretation. Major Arcana cards, precisely because they carry significant symbolic weight, are particularly susceptible to being read through the lens of fear or unresolved expectation. The COMPASS Method is designed to interrupt that distortion and return the reading to what the card is actually pointing toward.
+
 For the general framework on any repeating card, start with [Why the Same Tarot Card Keeps Appearing](/articles/why-the-same-tarot-card-keeps-appearing/). For recurrence versus stalker-card language, see [Repeating Cards vs Stalker Cards](/articles/repeating-cards-vs-stalker-cards/).
+

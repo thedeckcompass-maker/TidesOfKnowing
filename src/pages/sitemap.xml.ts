@@ -64,7 +64,7 @@ export const GET: APIRoute = async () => {
 
   rows.push({ path: "/", changefreq: "weekly", priority: "1.0" });
   rows.push({ path: "/about/", changefreq: "monthly", priority: "0.8" });
-  rows.push({ path: "/subscribe/", changefreq: "weekly", priority: "0.75" });
+  /** /subscribe/ is noindex (parameterised attribution URLs); omit from sitemap. */
   rows.push({
     path: "/ai-and-intuition-field-guide/",
     changefreq: "monthly",

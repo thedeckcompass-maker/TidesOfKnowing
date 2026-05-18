@@ -4,13 +4,15 @@ import NewsletterSignupForm from "../components/NewsletterSignupForm.astro";
 import { MAIN_SUBSCRIBE_SOURCE_COMPONENT } from "../lib/mailerlite";
 import { siteBase } from "../lib/site";
 
-const ogUrl = new URL("/subscribe/", siteBase(Astro)).href;
+/** Parameterised /subscribe/?… URLs must canonicalize here (no query string). */
+const subscribeCanonical = new URL("/subscribe/", siteBase(Astro)).href;
 ---
 
 <BaseLayout
   title="Subscribe | Tides of Knowing"
   description="Get new articles and updates from Tides of Knowing. Join the list to stay close to the work."
-  ogUrl={ogUrl}
+  ogUrl={subscribeCanonical}
+  metaRobots="noindex, follow"
 >
   <article class="tok-subscribe page-inner">
     <header class="tok-subscribe__head">

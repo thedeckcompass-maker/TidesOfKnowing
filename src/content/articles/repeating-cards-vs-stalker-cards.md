@@ -28,11 +28,11 @@ secondaryKeywords:
 
 > A card that follows you is worth taking seriously. The first question is whether it is following you or whether you are following it.
 
-What is the difference between a repeating tarot card and a stalker card? A repeating card names symbolic persistence: a pattern in your life or inner world that keeps recruiting the same image into the field of attention. A stalker card is often the same experience described as if the card has intent toward you. Tides of Knowing prefers repeating card because it keeps interpretation investigative rather than reactive.
+A tarot stalker card is a card that appears with unusual frequency across multiple readings, sometimes across different decks and different questions. The experience is common and does not require special explanation to justify: some cards do return repeatedly, and the repetition is usually pointing at something in the reader's life that has not yet been fully acknowledged or worked with. An emotional pattern, a recurring relational dynamic, a transition that has not been completed, or an aspect of the reader's own inner state that keeps surfacing because it has not been integrated. The card is not pursuing the reader. It is pointing at what the reader is still carrying.
 
-The term "stalker card" has become one of the most searched phrases in tarot communities, and for good reason: it names a real and common experience. A card that appears in reading after reading, across different decks, different questions, and different emotional states can feel like it is pursuing the reader with a persistence that goes beyond coincidence. The language of stalking captures something accurate about the experience: the card's presence feels uninvited, persistent, and slightly uncanny.
+The term "stalker card" names the experience accurately enough: the card's persistence can feel uninvited, relentless, and slightly uncanny. Tides of Knowing uses "repeating card" as the preferred term, and the distinction is not merely stylistic. The language of stalking positions the card as an external force with an agenda toward the reader. The language of repetition points more accurately at what is actually happening: a pattern that is returning, a symbol that is persisting, because something in the reader's life has not yet resolved the territory the card represents.
 
-The language of stalking implies that the card has an agenda toward the reader, that it is an external force pursuing them. The language of repetition points more accurately at what is actually happening: a pattern that is returning, a symbol that is persisting, an energy that is staying in the field because something in the reader's life has not yet resolved the territory the card represents. The difference between these framings shapes everything about how the pattern is approached.
+That distinction matters practically, because it determines whether the reader approaches the pattern with agency or with dread.
 
 ---
 
@@ -96,7 +96,7 @@ There are circumstances in which the right response to a card that keeps appeari
 
 When the repeated card is generating more anxiety than clarity, pausing is appropriate. When the reader is pulling additional cards specifically to counteract or modify what the repeated card is saying, pausing is appropriate. When the readings have begun to feel compulsive rather than clarifying, pausing is appropriate. When the emotional state in which readings are being conducted has become consistently distressed rather than occasionally concerned, pausing is appropriate.
 
-A pause does not mean the pattern has disappeared. It means the reader is creating conditions in which they can engage with what the pattern is pointing toward through means other than more cards: through reflection, conversation, journalling, attention to daily life, or simply through the passage of time and the natural unfolding of the situation the cards have been circling.
+A pause does not mean the pattern has disappeared. It means the reader is creating conditions in which they can engage with what the pattern is pointing toward through means other than more cards: through reflection, conversation, journalling, attention to daily life, or simply by allowing the situation itself to develop without asking the deck about it every few days.
 
 ---
 
