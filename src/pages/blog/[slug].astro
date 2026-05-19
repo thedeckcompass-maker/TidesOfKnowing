@@ -216,6 +216,9 @@ if (post) {
       dateModifiedIso={standaloneView.modifiedIso}
       displayDate={standaloneView.displayDate}
       foundational={isFoundationalFieldNote(standaloneView.post)}
+      heroImage={standaloneView.post.data.heroImage}
+      heroImageAlt={standaloneView.post.data.heroImageAlt}
+      heroCaption={standaloneView.post.data.heroCaption}
     >
       <standaloneView.Content />
     </BlogPostLayout>

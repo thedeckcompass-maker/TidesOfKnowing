@@ -70,6 +70,10 @@ const {
   heroCaption,
 } = Astro.props;
 
+const heroSrc = heroImage?.trim() ?? "";
+const heroAlt = heroImageAlt?.trim() ?? "";
+const heroCaptionText = heroCaption?.trim() ?? "";
+
 const pageTitle = pageTitleProp ?? `${title} | Field Notes | Tides of Knowing`;
 const isoDate = datePublishedIso ?? date.toISOString();
 const modifiedIso =
@@ -143,6 +147,21 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
               {categoryLabel}
             </a>
           </p>
+          {
+            heroSrc ? (
+              <figure class="tok-blog-post-hero">
+                <img
+                  src={heroSrc}
+                  alt={heroAlt}
+                  width="1200"
+                  height="800"
+                  loading="eager"
+                  decoding="async"
+                />
+                {heroCaptionText ? <figcaption>{heroCaptionText}</figcaption> : null}
+              </figure>
+            ) : null
+          }
           <h1 class="tok-blog-post-title">{title}</h1>
           <p class="tok-blog-post-byline">
             <a href={ABOUT_PATH}>Leigh Spencer</a>
@@ -153,22 +172,6 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             <span>{readingMinutes} min read</span>
           </p>
         </header>
-
-        {
-          heroImage ? (
-            <figure class="tok-blog-post-hero" data-reveal>
-              <img
-                src={heroImage}
-                alt={heroImageAlt}
-                width="1200"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-              {heroCaption ? <figcaption>{heroCaption}</figcaption> : null}
-            </figure>
-          ) : null
-        }
 
         <article class="tok-blog-article">
           <div
@@ -340,7 +343,7 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
   }
 
   .tok-blog-post-hero {
-    margin: 0 0 1.75rem;
+    margin: 0.35rem 0 1.35rem;
     padding: 0;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
     border-radius: var(--radius-soft);
