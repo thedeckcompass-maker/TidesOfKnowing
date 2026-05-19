@@ -38,6 +38,9 @@ interface Props {
   nextPost: NavPost | null;
   /** Slower, editorial standalone archive notes (not series or practitioner walkthroughs). */
   foundational?: boolean;
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroCaption?: string;
 }
 
 const {
@@ -62,6 +65,9 @@ const {
   prevPost,
   nextPost,
   foundational = false,
+  heroImage,
+  heroImageAlt = "",
+  heroCaption,
 } = Astro.props;
 
 const pageTitle = pageTitleProp ?? `${title} | Field Notes | Tides of Knowing`;
@@ -147,6 +153,22 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             <span>{readingMinutes} min read</span>
           </p>
         </header>
+
+        {
+          heroImage ? (
+            <figure class="tok-blog-post-hero" data-reveal>
+              <img
+                src={heroImage}
+                alt={heroImageAlt}
+                width="1200"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+              {heroCaption ? <figcaption>{heroCaption}</figcaption> : null}
+            </figure>
+          ) : null
+        }
 
         <article class="tok-blog-article">
           <div
@@ -315,6 +337,36 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-post-meta-sep {
     margin: 0 0.45rem;
+  }
+
+  .tok-blog-post-hero {
+    margin: 0 0 1.75rem;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, var(--tok-surface-reading));
+    overflow: hidden;
+  }
+
+  .tok-blog-post-hero img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .tok-blog-post-hero figcaption {
+    margin: 0;
+    padding: 0.75rem 1rem 0.85rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    text-align: center;
+    color: var(--tok-text-dark);
+    opacity: 0.72;
   }
 
   .tok-blog-article {
