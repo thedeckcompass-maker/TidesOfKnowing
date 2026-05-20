@@ -27,3 +27,6 @@ Reference - Leigh/
 
 # Wrangler temporary build artifacts
 .wrangler/
+
+# Portable editorial duplicate (When Two Cards Meet) — not for commit
+TWOCARDDUPLICATE/
