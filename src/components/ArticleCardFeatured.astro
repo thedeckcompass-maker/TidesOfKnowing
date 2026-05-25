@@ -95,6 +95,7 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     aspect-ratio: 16 / 9;
     overflow: hidden;
     background: var(--tok-surface-reading-soft);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
   }
 
   .feat-card__img {
@@ -105,14 +106,18 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .feat-card__body {
-    padding: 1.25rem 1.35rem 1.5rem;
+    padding: clamp(1.4rem, 3.2vw, 1.65rem) clamp(1.35rem, 3vw, 1.5rem)
+      clamp(1.55rem, 3.5vw, 1.85rem);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.7rem;
     flex: 1;
+    min-height: 0;
   }
 
   .feat-card__badge {
+    display: block;
+    margin: 0 0 0.35rem;
     font-family: var(--font-body);
     font-size: 0.6rem;
     font-weight: 600;
@@ -123,26 +128,27 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 
   .feat-card__title {
     margin: 0;
+    padding-top: 0.1rem;
     font-family: var(--font-heading);
     font-size: clamp(1.35rem, 2.5vw, 1.65rem);
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.32;
     color: var(--tok-teal-dim);
   }
 
   .feat-card__subtitle {
-    margin: 0;
+    margin: 0.05rem 0 0;
     font-size: 0.98rem;
-    line-height: 1.45;
+    line-height: 1.52;
     color: var(--tok-teal-dim);
     font-style: italic;
     opacity: 0.92;
   }
 
   .feat-card__excerpt {
-    margin: 0;
+    margin: 0.1rem 0 0;
     font-size: 1rem;
-    line-height: 1.65;
+    line-height: 1.68;
     color: var(--tok-text-dark);
     opacity: 0.9;
     flex: 1;
@@ -152,6 +158,8 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem 0.75rem;
+    margin-top: 0.2rem;
+    padding-top: 0.35rem;
     font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
@@ -161,7 +169,7 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .feat-card__cta {
-    margin-top: 0.35rem;
+    margin-top: 0.55rem;
     display: inline-flex;
     align-self: flex-start;
     font-family: var(--font-body);

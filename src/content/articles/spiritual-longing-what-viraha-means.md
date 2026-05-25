@@ -10,7 +10,7 @@ previousArticle: null
 nextArticle: collective-longing-age-of-disconnection
 heroImage: /images/articles/spiritual-longing-what-viraha-means/spiritual-longing-what-viraha-means-hero.webp
 heroImageAlt: "Quiet interior light suggesting persistent spiritual longing and orientation toward something beyond the immediate life"
-excerpt: "Persistent longing that doesn't resolve isn't personal failure — the bhakti traditions call it viraha, a sacred orientation that keeps the soul facing toward what it actually seeks."
+excerpt: "Persistent longing that doesn't resolve isn't personal failure – the bhakti traditions call it viraha, a sacred orientation that keeps the soul facing toward what it actually seeks."
 tags:
   - spiritual longing
   - viraha
@@ -20,7 +20,7 @@ tags:
 author: "Leigh Spencer"
 readingTime: 12
 metaTitle: "Spiritual Longing and Viraha | The Burn Series"
-metaDescription: "If you've spent years reaching for something you can't name, the bhakti traditions call it viraha — and reframe it as orientation, not personal deficit."
+metaDescription: "If you've spent years reaching for something you can't name, the bhakti traditions call it viraha – and reframe it as orientation, not personal deficit."
 primaryKeyword: spiritual longing viraha
 secondaryKeywords:
   - unfulfilled longing meaning
@@ -29,13 +29,13 @@ secondaryKeywords:
   - sacred spiritual orientation
 ---
 
-There is a particular kind of longing that doesn't resolve — and most people who carry it assume something is wrong with them.
+There is a particular kind of longing that doesn't resolve – and most people who carry it assume something is wrong with them.
 
 Not grief, which has shape and moves through stages. Not restlessness, which responds to a change of scene. This is more persistent: a sense that something fundamental is missing regardless of what you've built, found, or become. You achieve the thing you were reaching for, and the reaching continues. You build the life that should be enough, and it still isn't. The gap remains.
 
 If this describes you, you are not broken. You are carrying something the mystic traditions recognised long ago, named with precision, and understood as one of the most significant spiritual conditions available to an embodied human being.
 
-I've carried this feeling my whole life. I've called it the burning. It has been low sometimes, almost banked. Sometimes it has flared. It has never gone out, and it has never been satisfied. Three years ago it told me to move to Mexico — permanently, to a country I'd never visited, where I know no one. Not fleeing anything. Moving toward something I couldn't name. The urgency, when it landed, was specific: *if I don't go by September 2026, it will be too late.* Too late for what? I still don't know exactly. But the feeling had the quality of truth that doesn't need explaining.
+I've carried this feeling my whole life. I've called it the burning. It has been low sometimes, almost banked. Sometimes it has flared. It has never gone out, and it has never been satisfied. Three years ago it told me to move to Mexico – permanently, to a country I'd never visited, where I know no one. Not fleeing anything. Moving toward something I couldn't name. The urgency, when it landed, was specific: *if I don't go by September 2026, it will be too late.* Too late for what? I still don't know exactly. But the feeling had the quality of truth that doesn't need explaining.
 
 The burning turned out to have a name.
 
@@ -143,7 +143,7 @@ You have one too. You've felt it. The question isn't whether to acknowledge it. 
 
 ---
 
-*The next article, [Why So Many People Feel Empty Despite Having Enough](/articles/collective-longing-age-of-disconnection/), examines why this longing feels so acute in the contemporary age — and what collapsed when the cultural containers that once held it thinned to almost nothing.*
+*The next article, [Why So Many People Feel Empty Despite Having Enough](/articles/collective-longing-age-of-disconnection/), examines why this longing feels so acute in the contemporary age – and what collapsed when the cultural containers that once held it thinned to almost nothing.*
 
 ---
 

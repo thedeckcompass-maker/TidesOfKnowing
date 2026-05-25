@@ -268,8 +268,9 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
   .tok-library__feat-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19.5rem), 1fr));
+    gap: clamp(1.35rem, 3vw, 1.75rem);
+    align-items: stretch;
   }
 
   .tok-library__grid {

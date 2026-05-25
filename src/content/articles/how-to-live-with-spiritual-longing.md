@@ -10,7 +10,7 @@ previousArticle: collective-longing-age-of-disconnection
 nextArticle: null
 heroImage: /images/articles/how-to-live-with-spiritual-longing/how-to-live-with-spiritual-longing-hero.webp
 heroImageAlt: "Travel bag and quiet practice space suggesting structure, departure, and living with persistent spiritual longing"
-excerpt: "Understanding that longing is sacred doesn't make it liveable. This is the practical piece — what works, what doesn't, and how to build a container for the burning."
+excerpt: "Understanding that longing is sacred doesn't make it liveable. This is the practical piece – what works, what doesn't, and how to build a container for the burning."
 tags:
   - spiritual practice
   - living with longing
@@ -20,7 +20,7 @@ tags:
 author: "Leigh Spencer"
 readingTime: 12
 metaTitle: "How to Live with Spiritual Longing | The Burn Series"
-metaDescription: "Understanding that longing is sacred doesn't make it liveable. This is the practical piece — what works, what doesn't, and how to build a container for the burning."
+metaDescription: "Understanding that longing is sacred doesn't make it liveable. This is the practical piece – what works, what doesn't, and how to build a container for the burning."
 primaryKeyword: how to live with spiritual longing
 secondaryKeywords:
   - spiritual practice container
@@ -31,13 +31,13 @@ secondaryKeywords:
 
 Understanding that longing is sacred doesn't automatically make it liveable.
 
-[The first piece in this series](/articles/spiritual-longing-what-viraha-means/) made the case that persistent longing isn't a malfunction — it's an orientation the bhakti traditions call *viraha*. [The second](/articles/collective-longing-age-of-disconnection/) examined why that longing feels so acute now: the cultural containers that once held it have collapsed, and most of us are carrying sacred reaching without architecture to make it livable. But most people get the insight and then face the practical question — what do I actually do with this? How do I live with something that doesn't resolve, without being consumed by it or numbed to it?
+[The first piece in this series](/articles/spiritual-longing-what-viraha-means/) made the case that persistent longing isn't a malfunction – it's an orientation the bhakti traditions call *viraha*. [The second](/articles/collective-longing-age-of-disconnection/) examined why that longing feels so acute now: the cultural containers that once held it have collapsed, and most of us are carrying sacred reaching without architecture to make it livable. But most people get the insight and then face the practical question – what do I actually do with this? How do I live with something that doesn't resolve, without being consumed by it or numbed to it?
 
 This is the practical piece. Not theory. What works, and what doesn't, drawn from forty years of intuitive practice and a life spent in motion.
 
-There is one central paradox to name before going further: living well with something formless requires structure. This sounds counterintuitive. The traditions speak of releasing, dissolving, letting go. But every major tradition is built on form — daily practices, appointed times, devotional rhythms. The Buddhist monk follows a precise schedule. The Sufi has set times for dhikr. The bhakti devotee has morning practices and evening rhythms. The freedom these traditions point at doesn't come despite structure. It comes *through* it. The container is what makes presence possible.
+There is one central paradox to name before going further: living well with something formless requires structure. This sounds counterintuitive. The traditions speak of releasing, dissolving, letting go. But every major tradition is built on form – daily practices, appointed times, devotional rhythms. The Buddhist monk follows a precise schedule. The Sufi has set times for dhikr. The bhakti devotee has morning practices and evening rhythms. The freedom these traditions point at doesn't come despite structure. It comes *through* it. The container is what makes presence possible.
 
-I'm a gypsy by temperament. Most of my adult life has been in motion — between regions, living situations, identities. House-sitting for three years taught me how to live light, how to slip into a space and out again without leaving much trace. And yet I know, as I prepare to move permanently to Mexico, that the first thing I need is not freedom. It's ground.
+I'm a gypsy by temperament. Most of my adult life has been in motion – between regions, living situations, identities. House-sitting for three years taught me how to live light, how to slip into a space and out again without leaving much trace. And yet I know, as I prepare to move permanently to Mexico, that the first thing I need is not freedom. It's ground.
 
 ---
 
@@ -51,7 +51,7 @@ Forcing doesn't work. I learned this slowly, over years of trying. If I want a d
 
 Obsessive thinking doesn't work. The mind will try to solve the longing by turning it over and over, examining it from every angle, looking for the hidden answer that will make everything click into place. There is no such answer. The mind cannot solve what the soul is reaching for. At some point I have to discipline my own thoughts, kindly but firmly, not let the obsessive ones keep entering the room. This is a practice in itself, and it takes years to get even passably good at it.
 
-Beyond these, what doesn't work is anything that closes you down. Anything that pretends the longing isn't there. Anything that tries to numb it, distract from it, or argue it out of existence. The longing is information. It's pointing at something. Closing off the signal doesn't make the signal stop, it just means you stop receiving it. And then it finds other ways through — as anxiety, as compulsion, as the low-grade restlessness that some people carry for decades without understanding where it comes from.
+Beyond these, what doesn't work is anything that closes you down. Anything that pretends the longing isn't there. Anything that tries to numb it, distract from it, or argue it out of existence. The longing is information. It's pointing at something. Closing off the signal doesn't make the signal stop, it just means you stop receiving it. And then it finds other ways through – as anxiety, as compulsion, as the low-grade restlessness that some people carry for decades without understanding where it comes from.
 
 ---
 
@@ -83,7 +83,7 @@ This is, I think, exactly the same wisdom the longing traditions point at. The r
 
 This is also why tarot has become, for me, one of the most useful practices for living with longing. Because the cards give the longing somewhere to go. They give it form. They give it language. They turn the unnamed yearning into something I can sit with, look at, work with. They don't dissolve the longing, that's not what they're for. They honor it by giving it a container.
 
-This is what I mean when I say that tarot is a glimpse into the gap. The gap the previous articles described, the doorway the mystics whispered about, the space where the longing actually meets what it's reaching for — the cards are a tool for attending to that space. Not for closing it. For attending to it. The same territory [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/) names structurally, and the same attentional discipline [the COMPASS Method](/articles/compass-method/) trains when pressure rises. Readers who want to practise this relationship directly can explore the [tools](/tools/) built for that work.
+This is what I mean when I say that tarot is a glimpse into the gap. The gap the previous articles described, the doorway the mystics whispered about, the space where the longing actually meets what it's reaching for – the cards are a tool for attending to that space. Not for closing it. For attending to it. The same territory [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/) names structurally, and the same attentional discipline [the COMPASS Method](/articles/compass-method/) trains when pressure rises. Readers who want to practise this relationship directly can explore the [tools](/tools/) built for that work.
 
 ---
 

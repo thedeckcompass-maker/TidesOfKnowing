@@ -10,7 +10,7 @@ previousArticle: spiritual-longing-what-viraha-means
 nextArticle: how-to-live-with-spiritual-longing
 heroImage: /images/articles/collective-longing-age-of-disconnection/collective-longing-age-of-disconnection-hero.webp
 heroImageAlt: "Fragmented modern landscape suggesting cultural disconnection and collective spiritual longing without container"
-excerpt: "Persistent dissatisfaction isn't individual failure — it's a collective condition the Vedic traditions call Kali Yuga, when the structures that once held human longing collapsed in a single generation."
+excerpt: "Persistent dissatisfaction isn't individual failure – it's a collective condition the Vedic traditions call Kali Yuga, when the structures that once held human longing collapsed in a single generation."
 tags:
   - Kali Yuga
   - spiritual disconnection
@@ -20,7 +20,7 @@ tags:
 author: "Leigh Spencer"
 readingTime: 11
 metaTitle: "Collective Longing and Kali Yuga | The Burn Series"
-metaDescription: "Persistent dissatisfaction isn't a personal failure — it's a collective condition. Here's what collapsed in modern life and what the traditions say about it."
+metaDescription: "Persistent dissatisfaction isn't a personal failure – it's a collective condition. Here's what collapsed in modern life and what the traditions say about it."
 primaryKeyword: collective spiritual longing
 secondaryKeywords:
   - Kali Yuga modern age
@@ -29,13 +29,13 @@ secondaryKeywords:
   - spiritual hunger material acquisition
 ---
 
-Something has collapsed in the architecture of modern life — and most people feel it without being able to name it.
+Something has collapsed in the architecture of modern life – and most people feel it without being able to name it.
 
-The anxiety, the low-grade dissatisfaction, the sense of reaching for something that keeps receding: these are not individual psychological problems. They are symptoms of a collective condition. The structures that once gave human longing somewhere to go — community, ritual, shared meaning, ceremony — have thinned almost to nothing in a single generation. Most of us are carrying profound yearning with no container for it and no vocabulary to describe what we're carrying.
+The anxiety, the low-grade dissatisfaction, the sense of reaching for something that keeps receding: these are not individual psychological problems. They are symptoms of a collective condition. The structures that once gave human longing somewhere to go – community, ritual, shared meaning, ceremony – have thinned almost to nothing in a single generation. Most of us are carrying profound yearning with no container for it and no vocabulary to describe what we're carrying.
 
 This is the collective dimension of what [the first piece in this series](/articles/spiritual-longing-what-viraha-means/) described individually. The burning that many people feel isn't only personal. It's historical. And the traditions have a name for the age we're living in.
 
-My daughter, born Gabrielle, now lives in an ashram as Govinda-Kāntā. She found what I'm describing — not a solution to the longing, but a container for it. A way of life that honours the reaching rather than trying to dissolve it. Watching her settle into that life helped me understand something I hadn't been able to see clearly when I was only sitting with my own burning in isolation.
+My daughter, born Gabrielle, now lives in an ashram as Govinda-Kāntā. She found what I'm describing – not a solution to the longing, but a container for it. A way of life that honours the reaching rather than trying to dissolve it. Watching her settle into that life helped me understand something I hadn't been able to see clearly when I was only sitting with my own burning in isolation.
 
 There is a difference between carrying longing alone and carrying it within a tradition that recognises what you're carrying. The longing doesn't change. But the loneliness of carrying it does.
 
@@ -103,7 +103,7 @@ The mystics would say we're hungry for the divine and trying to feed that hunger
 
 ## Two Ways to Respond to Persistent Longing
 
-I want to be careful not to romanticise my daughter's path. Not everyone is suited to ashram life, and the bhakti road isn't superior to other roads. Some people honor their longing through art. Some through service. Some through deep relationship. Some through nature. Some through practices like tarot, which is, after all, a way of sitting with uncertainty without trying to dispel it — a discipline explored in [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/) and in the attentional conditions named by [the COMPASS Method](/articles/compass-method/). There are many doorways. What matters is that the longing is *recognised* as the doorway, not avoided as the problem.
+I want to be careful not to romanticise my daughter's path. Not everyone is suited to ashram life, and the bhakti road isn't superior to other roads. Some people honor their longing through art. Some through service. Some through deep relationship. Some through nature. Some through practices like tarot, which is, after all, a way of sitting with uncertainty without trying to dispel it – a discipline explored in [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/) and in the attentional conditions named by [the COMPASS Method](/articles/compass-method/). There are many doorways. What matters is that the longing is *recognised* as the doorway, not avoided as the problem.
 
 And don't get me wrong about the material world either. I love being human. I love having a physical body. I love the explorations available to embodied existence, the food and the dance and the conversations and the work. The longing doesn't ask us to renounce the world. The bhakti tradition is particularly clear about this. We are meant to fully inhabit our human lives. We are also meant to remain oriented toward what's beyond them. Both at once. Always.
 
@@ -141,7 +141,7 @@ You're not alone in standing at it.
 
 ---
 
-*The next article, [How to Actually Live with Longing: A Practitioner's Guide](/articles/how-to-live-with-spiritual-longing/), is the practical piece — what works, what doesn't, and how to build a container for the burning without being consumed by it.*
+*The next article, [How to Actually Live with Longing: A Practitioner's Guide](/articles/how-to-live-with-spiritual-longing/), is the practical piece – what works, what doesn't, and how to build a container for the burning without being consumed by it.*
 
 ---
 
