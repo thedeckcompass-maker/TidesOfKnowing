@@ -23,6 +23,7 @@ import {
   getRepeatingCardCanonicalUrl,
   getRepeatingCardHubPath,
   getRepeatingCardPath,
+  getRepeatingCardSeoHubPath,
 } from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
@@ -84,18 +85,20 @@ const toolDeepLink = getRepeatingCardPath(resolved);
   <RepeatingCardMeaningArticle
     model={model}
     variant="entity"
-    hubHref={getRepeatingCardHubPath()}
-    hubLabel="Open the card selector tool"
+    hubHref={getRepeatingCardSeoHubPath()}
+    hubLabel="All repeating card meanings"
     secondaryHref={toolDeepLink}
-    secondaryLabel="View in tool layout"
+    secondaryLabel="Open in card selector tool"
     relatedLinks={relatedLinks}
     questions={questions}
   >
     <Breadcrumbs items={crumbs} slot="breadcrumbs" />
     <p class="rcm-card__back-wrap" slot="footer">
+      <a class="rcm-card__back" href={getRepeatingCardSeoHubPath()}>Repeating card pattern library</a>
+      <span class="rcm-card__back-sep" aria-hidden="true">·</span>
       <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Card selector tool</a>
       <span class="rcm-card__back-sep" aria-hidden="true">·</span>
-      <a class="rcm-card__back" href="/tools/">Tarot tools</a>
+      <a class="rcm-card__back" href="/articles/compass-method/">The COMPASS Method</a>
     </p>
   </RepeatingCardMeaningArticle>
 </BaseLayout>

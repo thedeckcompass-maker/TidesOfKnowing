@@ -12,11 +12,42 @@ import {
 } from "./repeatingCardSeo";
 import { repeatingCardPanelSummary, repeatingCardSlugFromId } from "./repeatingCardMeanings";
 import { tarotCardImagePath } from "./tarotCardImage";
-import { getRepeatingCardCanonicalUrl } from "./repeatingCardUrls";
+import {
+  getRepeatingCardCanonicalUrl,
+  getRepeatingCardSeoHubPath,
+  repeatingCardSuitFromId,
+} from "./repeatingCardUrls";
 
 type RepeatingCardEntry = CollectionEntry<"repeatingCardMeanings">;
 
 const ABOUT_TOPIC = "repeating tarot card meanings";
+
+const SUIT_SCHEMA_LABELS: Record<string, string> = {
+  majors: "Major Arcana",
+  cups: "Cups",
+  swords: "Swords",
+  wands: "Wands",
+  pentacles: "Pentacles",
+};
+
+function repeatingCardSchemaKeywords(entry: RepeatingCardEntry): string[] {
+  const fromData = [
+    entry.data.primaryKeyword?.trim(),
+    ...entry.data.secondaryKeywords.map((k) => k.trim()),
+  ].filter((k): k is string => Boolean(k));
+  if (fromData.length > 0) return [...new Set(fromData)].slice(0, 8);
+  return [];
+}
+
+function repeatingCardAboutThings(entry: RepeatingCardEntry, headline: string): Record<string, unknown>[] {
+  const suit = repeatingCardSuitFromId(entry.id);
+  const suitName = SUIT_SCHEMA_LABELS[suit] ?? suit;
+  return [
+    { "@type": "Thing", name: headline },
+    { "@type": "Thing", name: ABOUT_TOPIC },
+    { "@type": "Thing", name: `${headline} (${suitName})` },
+  ];
+}
 
 function articleDescription(entry: RepeatingCardEntry): string {
   const summary = repeatingCardPanelSummary(entry)?.trim();
@@ -50,6 +81,7 @@ function buildRepeatingCardSchemaGraph(
       ? getRepeatingCardEntityBreadcrumbJsonLd(entry, siteHref)
       : breadcrumbJsonLd(getRepeatingCardBreadcrumbs(entry), siteHref);
 
+  const keywords = repeatingCardSchemaKeywords(entry);
   const article: Record<string, unknown> = {
     "@type": "Article",
     "@id": articleId,
@@ -60,12 +92,17 @@ function buildRepeatingCardSchemaGraph(
     author: { "@id": ENTITY_IDS.person },
     publisher: { "@id": ENTITY_IDS.tidesOrg },
     image,
-    about: [
-      { "@type": "Thing", name: headline },
-      { "@type": "Thing", name: ABOUT_TOPIC },
-    ],
+    about: repeatingCardAboutThings(entry, headline),
     mentions: [{ "@id": ENTITY_IDS.compassMethod }],
   };
+  if (variant === "entity") {
+    article.isPartOf = {
+      "@type": "CollectionPage",
+      name: "Repeating Card Meanings",
+      url: new URL(getRepeatingCardSeoHubPath(), siteHref).href,
+    };
+    if (keywords.length > 0) article.keywords = keywords.join(", ");
+  }
 
   const datePublished = optionalIsoDate(entry.data.datePublished);
   const dateModified = optionalIsoDate(entry.data.dateModified);
@@ -153,6 +190,7 @@ export function getRepeatingCardToolPageJsonLd(
   const image = new URL(imagePath, siteHref).href;
   const breadcrumbLd = breadcrumbJsonLd(getRepeatingCardBreadcrumbs(entry), siteHref);
 
+  const keywords = repeatingCardSchemaKeywords(entry);
   const article: Record<string, unknown> = {
     "@type": "Article",
     "@id": articleId,
@@ -163,12 +201,15 @@ export function getRepeatingCardToolPageJsonLd(
     author: { "@id": ENTITY_IDS.person },
     publisher: { "@id": ENTITY_IDS.tidesOrg },
     image,
-    about: [
-      { "@type": "Thing", name: headline },
-      { "@type": "Thing", name: ABOUT_TOPIC },
-    ],
+    about: repeatingCardAboutThings(entry, headline),
     mentions: [{ "@id": ENTITY_IDS.compassMethod }],
+    isPartOf: {
+      "@type": "CollectionPage",
+      name: "Repeating Card Meanings",
+      url: new URL(getRepeatingCardSeoHubPath(), siteHref).href,
+    },
   };
+  if (keywords.length > 0) article.keywords = keywords.join(", ");
 
   const datePublished = optionalIsoDate(entry.data.datePublished);
   const dateModified = optionalIsoDate(entry.data.dateModified);

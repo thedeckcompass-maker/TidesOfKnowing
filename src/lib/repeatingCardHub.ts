@@ -16,10 +16,10 @@ import { trimMetaDescription } from "./repeatingCardSeo";
 import { getRepeatingCardSeoHubPath, getRepeatingCardSeoPath } from "./repeatingCardUrls";
 
 export const REPEATING_CARD_HUB_TITLE =
-  "Repeating Card Meanings | Tarot Patterns and Repeated Cards";
+  "Repeating Card Meanings | Symbolic Tarot Pattern Library";
 
 export const REPEATING_CARD_HUB_DESCRIPTION =
-  "Explore the meaning of repeated tarot cards across the Major Arcana, Cups, Swords, Wands, and Pentacles, with psychologically nuanced interpretation from Tides of Knowing.";
+  "Canonical reference pages for when the same tarot card keeps appearing: 78 in-depth repeating-card meanings across Major Arcana and Minors, framed through symbolic interpretation and The COMPASS Method.";
 
 const SUIT_HEADINGS: Record<RepeatingCardSuitFolder, string> = {
   majors: "Major Arcana",
@@ -108,7 +108,7 @@ export function getRepeatingCardHubJsonLd(
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "WebPage",
+        "@type": ["WebPage", "CollectionPage"],
         "@id": pageId,
         name: REPEATING_CARD_HUB_TITLE,
         url: canonical,
@@ -121,6 +121,11 @@ export function getRepeatingCardHubJsonLd(
           name: AUTHOR_NAME,
           "@id": ENTITY_IDS.person,
         },
+        about: [
+          { "@type": "Thing", name: "Repeating tarot card meanings" },
+          { "@type": "Thing", name: "Symbolic tarot interpretation" },
+        ],
+        mentions: [{ "@id": ENTITY_IDS.compassMethod }],
         mainEntity: { "@id": itemListId },
       },
       {

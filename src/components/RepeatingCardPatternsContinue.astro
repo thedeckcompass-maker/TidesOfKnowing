@@ -37,6 +37,10 @@ const siblings = repeatingCardPatternsArticles
           </li>
         ))}
       </ul>
+      <p class="tok-rcm-series-continue__library">
+        <a href="/repeating-card-meanings/">Repeating card pattern library</a>
+        {" "}— all 78 canonical meaning pages
+      </p>
     </section>
   )
 }
@@ -112,5 +116,24 @@ const siblings = repeatingCardPatternsArticles
     font-size: 0.9rem;
     line-height: 1.55;
     color: var(--tok-text-muted);
+  }
+
+  .tok-rcm-series-continue__library {
+    margin: clamp(1.15rem, 3vw, 1.4rem) 0 0;
+    padding-top: 0.85rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-water) 14%, transparent);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .tok-rcm-series-continue__library a {
+    color: var(--tok-teal);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tok-rcm-series-continue__library a:hover {
+    color: var(--tok-teal-dim);
   }
 </style>

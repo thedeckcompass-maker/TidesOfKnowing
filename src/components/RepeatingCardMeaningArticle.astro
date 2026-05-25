@@ -39,12 +39,14 @@ const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav 
   <slot name="breadcrumbs" />
 
   <header class="rcm-card__hero">
-    <p class="rcm-card__eyebrow">Repeating card meaning</p>
+    <p class="rcm-card__eyebrow">
+      {variant === "entity" ? "Canonical repeating card reference" : "Repeating card meaning"}
+    </p>
     <h1 class="rcm-card__title">{displayTitle}</h1>
     <p class="rcm-card__hub-link-wrap">
       <a class="rcm-card__hub-link" href={hubHref}>{hubLabel}</a>
       {
-        variant === "entity" && secondaryHref && secondaryLabel ? (
+        secondaryHref && secondaryLabel ? (
           <>
             <span class="rcm-card__hub-sep" aria-hidden="true"> · </span>
             <a class="rcm-card__hub-link" href={secondaryHref}>{secondaryLabel}</a>

@@ -105,10 +105,11 @@ export const GET: APIRoute = async () => {
   }
 
   for (const a of articles) {
+    const priority = a.data.slug === "compass-method" ? "0.85" : "0.7";
     rows.push({
       path: `/articles/${a.data.slug}/`,
       changefreq: "monthly",
-      priority: "0.7",
+      priority,
     });
   }
 
@@ -123,14 +124,14 @@ export const GET: APIRoute = async () => {
   rows.push({
     path: getRepeatingCardHubPath(),
     changefreq: "monthly",
-    priority: "0.75",
+    priority: "0.76",
   });
 
   /** SEO/AEO cluster hub for canonical entity pages. */
   rows.push({
     path: getRepeatingCardSeoHubPath(),
-    changefreq: "monthly",
-    priority: "0.8",
+    changefreq: "weekly",
+    priority: "0.88",
   });
 
   /** Canonical entity card pages (`/repeating-card-meanings/{slug}/`). */
@@ -140,7 +141,7 @@ export const GET: APIRoute = async () => {
     rows.push({
       path: getRepeatingCardCanonicalPath(entry),
       changefreq: "monthly",
-      priority: "0.72",
+      priority: "0.78",
     });
   }
 

@@ -11,7 +11,7 @@ import {
   REPEATING_CARD_HUB_DESCRIPTION,
   REPEATING_CARD_HUB_TITLE,
 } from "../../lib/repeatingCardHub";
-import { getRepeatingCardHubPath } from "../../lib/repeatingCardUrls";
+import { getRepeatingCardHubPath, getRepeatingCardSeoHubPath } from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
 export const prerender = true;
@@ -40,25 +40,32 @@ const toolHref = getRepeatingCardHubPath();
     <Breadcrumbs items={crumbs} />
 
     <header class="rcm-hub__hero">
-      <p class="rcm-hub__eyebrow">Tarot pattern library</p>
+      <p class="rcm-hub__eyebrow">Canonical pattern library</p>
       <h1 class="rcm-hub__title">Repeating Card Meanings</h1>
       <p class="rcm-hub__lede">
         When the same tarot card keeps appearing across readings, the repetition is usually symbolic
         emphasis: something unresolved, unintegrated, re-emerging, or still unfolding beneath the
-        surface of events. These pages explore what that pattern may be asking from you, without
-        fortune-telling or fixed predictions.
+        surface of events. This library holds the canonical reference pages for each card’s repeating
+        meaning—written for symbolic interpretation, not fortune-telling or fixed predictions.
       </p>
       <p class="rcm-hub__lede">
-        Tides of Knowing treats repeated cards as relational information. Each entry is written for
-        psychologically nuanced interpretation, informed by decades of practice and The COMPASS
-        Method<sup class="rcm-hub__tm">TM</sup>, which names conditions of attention that help
-        intuitive reading stay clear under pressure.
+        Each of the {cardCount} entries below is a full, indexable meaning page. Tides of Knowing
+        treats repeated cards as relational information, informed by decades of practice and{" "}
+        <a href="/articles/compass-method/">The COMPASS Method</a>
+        <sup class="rcm-hub__tm">TM</sup>, which names conditions of attention that help intuitive
+        reading stay clear under pressure.
+      </p>
+      <p class="rcm-hub__lede">
+        Start with the{" "}
+        <a href="/articles/why-the-same-tarot-card-keeps-appearing/">guide to repeating card patterns</a>
+        {" "}if you are new to reading recurrence, or open a specific card below when you already know
+        which symbol keeps returning.
       </p>
       <p class="rcm-hub__tool-wrap">
         <a class="rcm-hub__tool-link" href={toolHref}>Open the interactive card selector tool</a>
         <span class="rcm-hub__tool-note">
-          ({cardCount} card meanings indexed here; use the tool when you already know which card keeps
-          returning.)
+          (dropdown UX for quick lookup; each card’s authoritative long-form page lives on this hub at{" "}
+          <span class="rcm-hub__tool-note-path">{getRepeatingCardSeoHubPath()}</span>.)
         </span>
       </p>
     </header>
@@ -154,6 +161,22 @@ const toolHref = getRepeatingCardHubPath();
 
   .rcm-hub__tool-note {
     color: color-mix(in srgb, var(--tok-text-light-soft) 75%, var(--tok-text-dark));
+  }
+
+  .rcm-hub__tool-note-path {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.88em;
+  }
+
+  .rcm-hub__lede a {
+    color: var(--tok-teal-light);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-hub__lede a:hover {
+    color: var(--tok-text-light);
   }
 
   .rcm-hub__suit {

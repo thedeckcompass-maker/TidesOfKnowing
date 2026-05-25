@@ -17,7 +17,11 @@ import {
   buildScopedSectionNav,
   prefixHeadingIdsInHtml,
 } from "../../lib/rcmHeadingIds";
-import { getRepeatingCardPath } from "../../lib/repeatingCardUrls";
+import {
+  getRepeatingCardCanonicalPath,
+  getRepeatingCardPath,
+  getRepeatingCardSeoHubPath,
+} from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
 const title = "Repeating Card Meanings | Tarot Tool | Tides of Knowing";
@@ -118,6 +122,18 @@ const cards: CardPanel[] = await Promise.all(
         Created by Leigh Spencer for Tides of Knowing, drawing on 40+ years of tarot practice, symbolic
         interpretation, and The COMPASS Method<sup class="rcm-tool__tm">TM</sup>.
       </p>
+      <aside class="rcm-tool__canonical-callout" aria-labelledby="rcm-tool-canonical-heading">
+        <h2 id="rcm-tool-canonical-heading" class="rcm-tool__canonical-title">
+          Canonical meaning pages
+        </h2>
+        <p class="rcm-tool__canonical-text">
+          This page is the interactive selector. Each card’s authoritative, indexable reference lives on
+          the{" "}
+          <a href={getRepeatingCardSeoHubPath()}>repeating card pattern library</a>
+          {" "}({getRepeatingCardSeoHubPath()}). Use the dropdown here for quick lookup; use the library
+          pages when you want the full symbolic interpretation surfaced for search and sharing.
+        </p>
+      </aside>
     </header>
 
     <section class="rcm-tool__selector" aria-labelledby="rcm-selector-heading">
@@ -173,7 +189,11 @@ const cards: CardPanel[] = await Promise.all(
                     ) : null
                   }
                   <p class="rcm-tool__card-page-link">
-                    <a href={getRepeatingCardPath(card.id)}>Open the full card page</a>
+                    <a href={getRepeatingCardCanonicalPath(card.id)}>
+                      Read the canonical meaning page
+                    </a>
+                    <span class="rcm-tool__card-page-sep" aria-hidden="true"> · </span>
+                    <a href={getRepeatingCardPath(card.id)}>Tool layout</a>
                   </p>
                 </div>
               </header>
@@ -400,6 +420,48 @@ const cards: CardPanel[] = await Promise.all(
     vertical-align: super;
     letter-spacing: 0;
     font-weight: 600;
+  }
+
+  .rcm-tool__canonical-callout {
+    margin: clamp(1.15rem, 3vw, 1.5rem) 0 0;
+    padding: clamp(1rem, 2.5vw, 1.25rem);
+    max-width: 44rem;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 35%, transparent);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+  }
+
+  .rcm-tool__canonical-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .rcm-tool__canonical-text {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.58;
+    color: var(--tok-text-dark);
+    opacity: 0.92;
+  }
+
+  .rcm-tool__canonical-text a {
+    color: var(--tok-teal);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-tool__canonical-text a:hover {
+    color: var(--tok-teal-dim);
+  }
+
+  .rcm-tool__card-page-sep {
+    color: color-mix(in srgb, var(--tok-text-light-soft) 70%, transparent);
   }
 
   .rcm-tool__authority {

@@ -60,9 +60,23 @@ export function getRepeatingCardMetaDescription(entry: RepeatingCardEntry): stri
   const custom = entry.data.metaDescription?.trim();
   if (custom) return trimMetaDescription(custom);
   const summary = repeatingCardPanelSummary(entry);
-  if (summary) return trimMetaDescription(summary);
+  const suitLabel = suitLabelForId(entry.id);
+  const headline = cardHeadline(entry);
+  if (summary) {
+    const withSuit =
+      summary.length <= META_DESCRIPTION_MAX - suitLabel.length - 4
+        ? `${summary} (${suitLabel})`
+        : summary;
+    return trimMetaDescription(withSuit);
+  }
+  const keyword = entry.data.primaryKeyword?.trim();
+  if (keyword) {
+    return trimMetaDescription(
+      `${keyword}: symbolic interpretation for ${headline} (${suitLabel}) when the card keeps returning in tarot readings.`,
+    );
+  }
   return trimMetaDescription(
-    `What it means when ${cardHeadline(entry)} keeps appearing in your tarot readings, and how to integrate the repeating pattern.`,
+    `When ${headline} (${suitLabel}) keeps appearing in tarot readings: what the repetition signals and how to work with the pattern.`,
   );
 }
 

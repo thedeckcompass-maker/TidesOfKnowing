@@ -30,6 +30,10 @@ const items = [...repeatingCardPatternsArticles].sort((a, b) => a.order - b.orde
       ))
     }
   </ul>
+  <p class="tok-rcm-editorial-links__library">
+    <a href="/repeating-card-meanings/">Browse all 78 repeating card meanings</a>
+    {" "}(canonical reference library)
+  </p>
 </section>
 
 <style>
@@ -98,5 +102,30 @@ const items = [...repeatingCardPatternsArticles].sort((a, b) => a.order - b.orde
   :global(.rcm-hub) .tok-rcm-editorial-links__link-desc {
     color: var(--tok-text-dark);
     opacity: 0.88;
+  }
+
+  .tok-rcm-editorial-links__library {
+    margin: clamp(1.1rem, 3vw, 1.35rem) 0 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .tok-rcm-editorial-links__library a {
+    color: var(--tok-teal-light);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .tok-rcm-editorial-links__library a:hover {
+    color: var(--tok-text-light);
+  }
+
+  :global(.rcm-hub) .tok-rcm-editorial-links__library a {
+    color: var(--tok-teal);
+  }
+
+  :global(.rcm-hub) .tok-rcm-editorial-links__library a:hover {
+    color: var(--tok-teal-dim);
   }
 </style>

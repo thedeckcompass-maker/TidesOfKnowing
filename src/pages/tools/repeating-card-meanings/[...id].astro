@@ -12,7 +12,12 @@ import {
   getRepeatingCardOgImage,
 } from "../../../lib/repeatingCardSeo";
 import { getRepeatingCardToolPageJsonLd } from "../../../lib/repeatingCardEntitySchema";
-import { getRepeatingCardCanonicalUrl, getRepeatingCardHubPath } from "../../../lib/repeatingCardUrls";
+import {
+  getRepeatingCardCanonicalPath,
+  getRepeatingCardCanonicalUrl,
+  getRepeatingCardHubPath,
+  getRepeatingCardSeoHubPath,
+} from "../../../lib/repeatingCardUrls";
 import { siteBase } from "../../../lib/site";
 
 export const prerender = true;
@@ -63,13 +68,17 @@ const jsonLd = getRepeatingCardToolPageJsonLd(entry, siteHref);
     model={model}
     variant="tool"
     hubHref={getRepeatingCardHubPath()}
-    hubLabel="Open the card selector tool"
+    hubLabel="Card selector tool"
+    secondaryHref={getRepeatingCardCanonicalPath(entry)}
+    secondaryLabel="Canonical meaning page"
   >
     <Breadcrumbs items={crumbs} slot="breadcrumbs" />
     <p class="rcm-card__back-wrap" slot="footer">
-      <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Back to Repeating Card Meanings</a>
+      <a class="rcm-card__back" href={getRepeatingCardSeoHubPath()}>Repeating card pattern library</a>
       <span class="rcm-card__back-sep" aria-hidden="true">·</span>
-      <a class="rcm-card__back" href="/tools/">Back to Tarot tools</a>
+      <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Card selector tool</a>
+      <span class="rcm-card__back-sep" aria-hidden="true">·</span>
+      <a class="rcm-card__back" href="/tools/">Tarot tools</a>
     </p>
   </RepeatingCardMeaningArticle>
 </BaseLayout>
