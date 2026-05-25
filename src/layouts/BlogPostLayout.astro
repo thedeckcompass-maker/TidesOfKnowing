@@ -6,6 +6,7 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { RelatedLink } from "../data/relatedPosts";
 import type { BlogCategoryRow } from "../lib/blogCategories";
 import { FOUNDATIONAL_FIELD_NOTE_FOOTER } from "../lib/blogFieldNotes";
+import { articleAuthorAttribution } from "../lib/authorProfile";
 import { ABOUT_PATH, blogPostingJsonLd } from "../lib/blogSeo";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { siteBase } from "../lib/site";
@@ -163,8 +164,8 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             ) : null
           }
           <h1 class="tok-blog-post-title">{title}</h1>
-          <p class="tok-blog-post-byline">
-            <a href={ABOUT_PATH}>Leigh Spencer</a>
+          <p class="tok-blog-post-trust" data-reveal>
+            By <a href={ABOUT_PATH}>Leigh Spencer</a> · {articleAuthorAttribution}
           </p>
           <p class="tok-blog-post-meta">
             <time datetime={isoDate}>{displayDate}</time>
@@ -301,20 +302,22 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
     color: var(--tok-teal);
   }
 
-  .tok-blog-post-byline {
-    margin: 0 0 0.5rem;
+  .tok-blog-post-trust {
+    margin: 0 0 0.65rem;
     font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-size: 0.88rem;
+    line-height: 1.62;
+    font-weight: 400;
+    color: var(--tok-text-muted);
   }
 
-  .tok-blog-post-byline a {
+  .tok-blog-post-trust a {
     color: var(--tok-teal);
     text-decoration: none;
+    font-weight: 600;
   }
 
-  .tok-blog-post-byline a:hover {
+  .tok-blog-post-trust a:hover {
     color: var(--tok-teal-dim);
   }
 

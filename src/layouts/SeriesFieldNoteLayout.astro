@@ -4,8 +4,9 @@ import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import BlogSidebar from "../components/BlogSidebar.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { BlogCategoryRow } from "../lib/blogCategories";
+import { articleAuthorAttribution } from "../lib/authorProfile";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
-import { blogPostingJsonLd, type BlogSeoResolved } from "../lib/blogSeo";
+import { ABOUT_PATH, blogPostingJsonLd, type BlogSeoResolved } from "../lib/blogSeo";
 import { siteBase } from "../lib/site";
 
 interface NavNote {
@@ -106,6 +107,9 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
               <p class="tok-series-note-positioning">{positioningSentence}</p>
             ) : null
           }
+          <p class="tok-blog-post-trust" data-reveal>
+            By <a href={ABOUT_PATH}>Leigh Spencer</a> · {articleAuthorAttribution}
+          </p>
           <p class="tok-blog-post-meta">
             <time datetime={isoDate}>{displayDate}</time>
             <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
@@ -238,6 +242,25 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
     line-height: 1.65;
     font-style: italic;
     color: color-mix(in srgb, var(--tok-teal-dim) 92%, var(--tok-text-dark));
+  }
+
+  .tok-blog-post-trust {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.62;
+    font-weight: 400;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-blog-post-trust a {
+    color: var(--tok-teal);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .tok-blog-post-trust a:hover {
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-post-meta {
