@@ -20,7 +20,7 @@ ogDescription: "An introduction to Tides of Knowing, The Deck Compass, and the r
 
 If you have carried a deck for more than a season, you already know intuitive tarot is not a party trick. It is a discipline of attention: staying with an image until it yields something truer than your first association. The [methodology articles](/articles/) here are for readers who treat the cards as a conversation, not a verdict machine. They will grow into essays, exercises, and arguments worth revisiting when the world is loud and your practice feels thin.
 
-I am Leigh Spencer. I write as a guide and as someone who has lived with tarot for forty-nine years, including the slow work of separating intuition from wishful thinking. My whakapapa includes a fourth-generation Matakite line. I name that not as a claim to special sight, but as an inheritance that values steadiness over spectacle. I am not here to convince you the cards predict the future. I care how they clarify the present, and how careful language around symbols can return agency instead of stealing it.
+I am Leigh Spencer. I write as a guide and as someone who has lived with tarot for forty-nine years, including the slow work of separating intuition from wishful thinking. My whakapapa includes a fourth-generation Matakite (seer) line. I name that not as a claim to special sight, but as an inheritance that values steadiness over spectacle. I am not here to convince you the cards predict the future. I care how they clarify the present, and how careful language around symbols can return agency instead of stealing it.
 
 ## The journal and the articles
 
