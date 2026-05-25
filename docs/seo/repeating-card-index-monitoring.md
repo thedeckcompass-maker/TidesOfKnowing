@@ -206,7 +206,7 @@ node scripts/analyze-repeating-card-gsc-export.mjs path/to/gsc-pages.csv
 node scripts/analyze-repeating-card-gsc-export.mjs path/to/gsc-pages.csv --update-tracker
 ```
 
-**Export tip:** In GSC, use **Pages** → filter **Not indexed** (or per-reason) → **Export**. Name files with date: `gsc-not-indexed-YYYY-MM-DD.csv`.
+**Export tip:** In GSC, use **Pages** → filter **Not indexed** (or per-reason) → **Export**. Save to [`docs/seo/exports/`](./exports/) as `gsc-not-indexed-YYYY-MM-DD.csv`, then run the analyzer. A baseline report is written to [`docs/seo/baselines/`](./baselines/) (`gsc-baseline-YYYY-MM-DD.md`).
 
 ---
 
