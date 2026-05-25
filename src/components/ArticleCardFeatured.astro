@@ -35,17 +35,15 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 <article class="feat-card">
   <a class="feat-card__link" href={`/articles/${slug}/`}>
     <div class="feat-card__media">
-      <div class="feat-card__media-frame">
-        <img
-          src={heroImage}
-          alt={heroImageAlt}
-          class="feat-card__img"
-          width="800"
-          height="450"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+      <img
+        src={heroImage}
+        alt={heroImageAlt}
+        class="feat-card__img"
+        width="800"
+        height="450"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     <div class="feat-card__body">
       {
@@ -94,16 +92,10 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   }
 
   .feat-card__media {
-    padding: clamp(0.45rem, 1.15vw, 0.55rem) clamp(0.45rem, 1.15vw, 0.55rem) 0;
-    background: var(--tok-surface-reading-soft);
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
-  }
-
-  .feat-card__media-frame {
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: calc(var(--radius-promo) - 2px);
     background: var(--tok-surface-reading-soft);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
   }
 
   .feat-card__img {
