@@ -13,7 +13,9 @@
     "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
     "diag:headers": "node scripts/diag-fetch-headers.mjs",
     "validate:related-cards": "node scripts/validate-repeating-card-related-map.mjs",
-    "validate:repeating-card-metadata": "node scripts/validate-repeating-card-metadata.mjs"
+    "validate:repeating-card-metadata": "node scripts/validate-repeating-card-metadata.mjs",
+    "seo:rcm-tracker": "node scripts/generate-repeating-card-index-tracker.mjs",
+    "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.13",
