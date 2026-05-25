@@ -25,12 +25,15 @@ export function leighSpencerPersonNode() {
     url: `${DECK_COMPASS_ORIGIN}/about`,
     jobTitle: "Founder",
     description:
-      "Founder of Tides of Knowing™ and The Deck Compass™, journalist, and creator of the COMPASS Method.",
+      "Founder of Tides of Knowing™ and The Deck Compass™, journalist, and creator of The COMPASS Method™.",
     worksFor: [{ "@id": IDS.tidesOrg }, { "@id": IDS.deckOrg }],
     knowsAbout: [
-      "Intuitive tarot and oracle reading",
       "Symbolic perception",
-      "the COMPASS Method",
+      "Intuitive discernment",
+      "Interpretive intelligence",
+      "The COMPASS Method",
+      "Tarot and oracle reading",
+      "Reflective practice",
     ],
   };
 }
@@ -39,10 +42,10 @@ export function compassMethodCreativeWorkNode() {
   return {
     "@type": "CreativeWork",
     "@id": IDS.compassMethod,
-    name: "the COMPASS Method",
-    alternateName: "COMPASS Method",
+    name: "The COMPASS Method™",
+    alternateName: ["COMPASS Method", "The COMPASS Method"],
     description:
-      "A shared interpretive framework for relational tarot and oracle reading, organised as seven pillars of attention for live practice.",
+      "An interpretive framework for symbolic perception, intuitive discernment, and relational reading—organised as seven pillars of attention, practised through tarot and oracle.",
     inLanguage: "en",
     creator: { "@id": IDS.person },
     publisher: { "@id": IDS.tidesOrg },
@@ -57,7 +60,7 @@ export function tidesOfKnowingOrganizationNode() {
     name: "Tides of Knowing™",
     url: TIDES_OF_KNOWING_ORIGIN,
     description:
-      "Editorial and methodology environment for symbolic perception, intuitive reading, and long-form work on tarot and oracle practice.",
+      "Editorial home for symbolic perception, interpretive intelligence, and The COMPASS Method™—with tarot and oracle as the disciplined practice environment for reflective reading.",
     founder: { "@id": IDS.person },
     subjectOf: { "@id": IDS.compassMethod },
   };
@@ -70,7 +73,7 @@ export function tidesOfKnowingWebSiteNode() {
     name: "Tides of Knowing™",
     url: TIDES_OF_KNOWING_ORIGIN,
     description:
-      "Essays, research, and conceptual foundations for intuitive reading and the COMPASS Method.",
+      "Essays, tools, and frameworks on symbolic perception, intuitive discernment, and The COMPASS Method™—grounded in tarot and oracle practice and interpretive intelligence for reflective readers.",
     publisher: { "@id": IDS.tidesOrg },
     about: { "@id": IDS.compassMethod },
   };
