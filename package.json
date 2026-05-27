@@ -7,6 +7,7 @@
     "predev": "node scripts/generate-article-audio-manifest.mjs",
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/fix-cloudflare-routes.mjs",
     "preview": "astro preview",
     "publish-article": "node scripts/add-article.mjs",
     "astro": "astro",
