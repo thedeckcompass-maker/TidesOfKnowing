@@ -31,13 +31,13 @@ secondaryKeywords:
 
 Understanding that longing is sacred doesn't automatically make it liveable.
 
-[The first piece in this series](/articles/spiritual-longing-what-viraha-means/) made the case that persistent longing isn't a malfunction – it's an orientation the bhakti traditions call *viraha*. [The second](/articles/collective-longing-age-of-disconnection/) examined why that longing feels so acute now: the cultural containers that once held it have collapsed, and most of us are carrying sacred reaching without architecture to make it livable. But most people get the insight and then face the practical question – what do I actually do with this? How do I live with something that doesn't resolve, without being consumed by it or numbed to it?
+[The first piece in this series](https://www.tidesofknowing.com/articles/spiritual-longing-what-viraha-means/) made the case that persistent longing isn't a malfunction – it's an orientation the bhakti traditions call viraha. [The second](https://www.tidesofknowing.com/articles/collective-longing-age-of-disconnection/) examined why that longing feels so acute now: the cultural containers that once held it have collapsed, and most of us are carrying sacred reaching without architecture to make it livable. But most people get the insight and then face the practical question – what do I actually do with this? How do I live with something that doesn't resolve, without being consumed by it or numbed to it?
 
 This is the practical piece. Not theory. What works, and what doesn't, drawn from forty years of intuitive practice and a life spent in motion.
 
-There is one central paradox to name before going further: living well with something formless requires structure. This sounds counterintuitive. The traditions speak of releasing, dissolving, letting go. But every major tradition is built on form – daily practices, appointed times, devotional rhythms. The Buddhist monk follows a precise schedule. The Sufi has set times for dhikr. The bhakti devotee has morning practices and evening rhythms. The freedom these traditions point at doesn't come despite structure. It comes *through* it. The container is what makes presence possible.
+There is one central paradox to name before going further: living well with something formless requires structure. This sounds counterintuitive. The traditions speak of releasing, dissolving, letting go. But every major tradition is built on form – daily practices, appointed times, devotional rhythms. The Buddhist monk follows a precise schedule. The Sufi has set times for dhikr. The bhakti devotee has morning practices and evening rhythms. The freedom these traditions point at doesn't come despite structure. It comes through it. The container is what makes presence possible.
 
-I'm a gypsy by temperament. Most of my adult life has been in motion – between regions, living situations, identities. House-sitting for three years taught me how to live light, how to slip into a space and out again without leaving much trace. And yet I know, as I prepare to move permanently to Mexico, that the first thing I need is not freedom. It's ground.
+I'm a gypsy by temperament, and for much of my life I believed the longing was driving the movement – that the next place might be the one that finally held what I was reaching for. I've owned two houses. The second, where I raised my daughter, came closest to feeling like home – not because of the house itself, but because of her. When she grew up and I began house-sitting, moving through other people's spaces for three years, I stopped expecting home to arrive through any door I hadn't already walked through in myself. There's a reason we call them possessions. Too much of the stuff and it starts to possess you in return, weighing you to a spot you were only ever passing through. What I'm preparing for now isn't a fixed arrival. It's portable groundedness – an anchor I carry rather than one I inherit from a postcode. The plan isn't to settle into one place. It's to move between more than one base while knowing, finally, where inside myself I'm standing.
 
 ---
 
@@ -71,9 +71,11 @@ The fourth thing is finding tools that give structure to what would otherwise be
 
 ## Tarot as a Practice for Attending to the Inner Life
 
-I've used tarot for over forty years. Not in a hurried way, not in a give-me-an-answer way. The way I've always come to the cards is different. I sit down, I lay them out, and I say something close to this: *be brutally honest with me. I don't want to be let off the hook. I want to understand what has me hooked in the first place.*
+I've used tarot for over forty years. Not in a hurried way, not in a give-me-an-answer way. The way I've always come to the cards is different. I sit down, I lay them out, and I say something close to this: be brutally honest with me. I don't want to be let off the hook. I want to understand what has me hooked in the first place.
 
 The cards are good at this kind of honesty because they bypass the rational mind's defenses. They speak in symbol, in image, in archetype. They tell me things I wouldn't have let myself hear in plain language. They show me what I'm avoiding. They name what I've been circling around. They don't tell me what to do, they show me what's actually happening underneath what I've been telling myself.
+
+Over forty years they have consistently pointed to the same themes: movement, journeying, the soul in perpetual motion. For a long time that was uncomfortable to sit with. Restlessness, when held up by something as unsparing as the cards, can look like a verdict. It took years to understand it as description rather than criticism. As orientation, not diagnosis.
 
 I want to be clear about what I think tarot is and what I don't think it is. I have never used the cards as divination, not in the sense of predicting the future or telling me what's going to happen. I use them as energetic opportunity. The cards show me what's present, what's pressing, what wants attention. They don't tell me destinations. They tell me where I'm standing and what's available to me from here.
 
@@ -83,15 +85,17 @@ This is, I think, exactly the same wisdom the longing traditions point at. The r
 
 This is also why tarot has become, for me, one of the most useful practices for living with longing. Because the cards give the longing somewhere to go. They give it form. They give it language. They turn the unnamed yearning into something I can sit with, look at, work with. They don't dissolve the longing, that's not what they're for. They honor it by giving it a container.
 
-This is what I mean when I say that tarot is a glimpse into the gap. The gap the previous articles described, the doorway the mystics whispered about, the space where the longing actually meets what it's reaching for – the cards are a tool for attending to that space. Not for closing it. For attending to it. The same territory [Tarot as a Pre-Symbolic Interface](/articles/tarot-pre-symbolic-interface/) names structurally, and the same attentional discipline [the COMPASS Method](/articles/compass-method/) trains when pressure rises. Readers who want to practise this relationship directly can explore the [tools](/tools/) built for that work.
+This is what I mean when I say that tarot is a glimpse into the gap. The gap the previous articles described, the doorway the mystics whispered about, the space where the longing actually meets what it's reaching for – the cards are a tool for attending to that space. Not for closing it. For attending to it. The same territory [Tarot as a Pre-Symbolic Interface](https://www.tidesofknowing.com/articles/tarot-pre-symbolic-interface/) names structurally, and the same attentional discipline [the COMPASS Method](https://www.tidesofknowing.com/articles/compass-method/) trains when pressure rises. Readers who want to practise this relationship directly can explore the [tools](https://www.tidesofknowing.com/tools/) built for that work.
 
 ---
 
 ## Why Structure Enables Presence (Not Despite It)
 
-This is the practical truth the traditions have always known and that contemporary spiritual life often forgets. The longing the previous articles have explored, the *viraha*, the reed's complaint, the wound of love that does not heal, all of it requires *practice*. Not as a way of solving the longing, but as a way of being present with it. And practice requires container. The container is what makes presence possible.
+This is the practical truth the traditions have always known and that contemporary spiritual life often forgets. The longing the previous articles have explored, the viraha, the reed's complaint, the wound of love that does not heal, all of it requires practice. Not as a way of solving the longing, but as a way of being present with it. And practice requires container. The container is what makes presence possible.
 
-What I mean by container is the structure within which the practice happens. It might be a time of day. A physical space. A set of objects. A ritual sequence. A community of others. It doesn't matter much what form it takes. What matters is that it's consistent, that it tells the body and the nervous system that *now is the time to arrive*. The container isn't the practice itself. It's the holder that makes the practice possible.
+What I mean by container is the structure within which the practice happens. It might be a time of day. A physical space. A set of objects. A ritual sequence. A community of others. It doesn't matter much what form it takes. What matters is that it's consistent, that it tells the body and the nervous system that now is the time to arrive. The container isn't the practice itself. It's the holder that makes the practice possible.
+
+One of the containers I've carried throughout years of moving is as simple as a doorway. I've learned to treat doors as portals – pausing at any threshold before entering a new space, setting a conscious intention for how I want to arrive. It marks the transition in a way the nervous system understands. Something is ending here, something is beginning. I contain my own energy enough that my presence, which can be strong, doesn't simply arrive and overwhelm what is already there. It honours what I'm walking into. This is a portable practice, built over years of moving through other people's spaces, and it will travel with me into every room I open in Mexico.
 
 > Container is what closes the gap between knowing and doing. It makes the abstract liveable.
 
@@ -113,7 +117,7 @@ The exploration during the days will be to suss out other parts of the city, to 
 
 I don't fully know why Mexico. I have my best guesses. Something about the layers of culture there. New Zealand is comparatively new, the European settlement is recent, the cultural strata are thin. Mexico has been inhabited for thousands of years by civilisations that built and fell and built again. The layers are deep. I feel called to those layers in a way I can't fully explain. There's a kind of richness available in old ground that new ground, however beautiful, doesn't offer.
 
-Something also about not speaking the language. Being forced to be quiet. Being forced to observe rather than to perform fluency. There is a particular enforced humility in having no words for a while. My words have always been my work, my tool, my currency. Going somewhere I have no words might be exactly the kind of disruption I need in order to learn whatever comes next. The burning knows something I don't. I'm following it into that not-knowing.
+Something also about not speaking the language. For thirty years as a journalist – in daily print, in magazines, in broadcasting – words have been my primary medium: my tool for thinking, for exploring places and ideas, for making meaning and offering it to others. Language has been the current I've moved through most of my conscious life. Going to a country where I have none of that is not a loss I'm dreading. It's a disruption I'm actively seeking. We live in a relentlessly Yang world – do more, achieve more, acquire more, signal more. The Yin in me is ready for something quieter: finding expression through art, through silence, through simply being rather than translating being into performance. I've decided to buy an old manual typewriter. Not for nostalgia, but because it enforces a slowing – the mind must quieten to the pace the fingers can manage. That discipline of intentional communication, saying exactly what you mean and nothing more, is part of what Tides of Knowing is built on. The burning knows something I don't. I'm following it into that not-knowing.
 
 ---
 
@@ -121,25 +125,11 @@ Something also about not speaking the language. Being forced to be quiet. Being 
 
 I'll bring the practice. That's the only thing I'm certain I need to bring. The cards. The discipline of morning attention. The willingness to sit with the gap rather than running from it. The evening community once a week, the chanting, the shared space.
 
-I'll bring the understanding I've spent these three articles trying to articulate. That the longing is not a malfunction. That the gap is the doorway. That the reed's crying is the music. That the burning is not evidence that something is wrong with me, but evidence that something is alive in me.
+I'll bring what a Vedic chart confirmed not long ago in a way that was, frankly, startling in its obviousness – the kind of clarity that arrives not as revelation but as recognition. The chart mapped what I had already lived with a precision that felt almost comic. An elephant in the room I had somehow moved around for decades without naming. Born in the Chinese Year of the Fire Horse, it pointed unmistakably to a life of motion: someone who finds home on the hoof, not at a fixed address. But it also pointed to peace, and the nature of that peace was specific. Not the peace of arrival. The peace of knowing, with full acceptance, that this world is not our true home – and choosing to love it deeply anyway, in full knowledge of the gap.
 
-I'll bring the knowledge that structure enables freedom, that the gypsy needs ground to fly from, that the container is not the enemy of presence but the condition for it. I'll build that container in a new country, piece by piece, day by day, and it will eventually hold me the way the flat in Wellington held me, inadequately but genuinely, for the years I was there.
+I'll bring the knowledge that structure enables freedom, that the container travels with whoever builds it, that the Fire Horse doesn't need to stop moving to find ground. I'll build that container in a new country, piece by piece, day by day. Not a permanent address. A practised arriving.
 
-For a personal account of how the attentional framework behind this work developed over time, see [The origin of the COMPASS Method](/blog/origin-of-the-compass-method/).
-
----
-
-## The Practice: A Summary of What Actually Works
-
-This is the practice, as I've come to understand it.
-
-Honest attention to what's actually here. Permission to stop. Recognition that you're human, not perfect. Tools that give structure to the yearning. Container that holds the practice so the practice can hold you. And the willingness to keep returning, day after day, to the gap.
-
-The longing doesn't end. The traditions are clear about this. The reed continues to cry. The wound continues to ache. The reaching never stops. But the practice transforms the relationship to all of it. The longing becomes the orientation. The reaching becomes the path. The gap becomes the doorway through which the divine becomes accessible.
-
-You can't bypass any of this. There's no shortcut. The traditions know it. The mystics know it. Anyone who's tried to silence their longing through acquisition or achievement or numbing eventually knows it too. The longing was always going to win. The only question is whether you let it teach you, or keep fighting it.
-
-I've fought it most of my life. I'm tired of fighting it. I'm ready to let it teach me.
+For a personal account of how the attentional framework behind this work developed over time, see [The origin of the COMPASS Method](https://www.tidesofknowing.com/blog/origin-of-the-compass-method/).
 
 ---
 
@@ -149,11 +139,9 @@ I will arrive in a city I have never seen. I will not speak the language of the 
 
 This is the practice. Not arrival. Departure. Not the resolution of the longing. The willingness to let it move me. Not the closing of the gap. The trust that the gap is a doorway worth walking through.
 
-The reed has been crying my whole life. I'm only just learning to hear it as music.
+Mind the gap, the voice says in the London Underground. Mind the space where you could fall. But the mystics whisper something else.
 
-*Mind the gap*, the voice says in the London Underground. Mind the space where you could fall. But the mystics whisper something else.
-
-> Mind the gap. Tend to it. Stay with it. The gap is not the danger. The gap is the doorway you came here to walk through.
+Mind the gap. Tend to it. Stay with it. The gap is not the danger. The gap is the doorway you came here to walk through.
 
 So I'm walking through it. Three articles, sixty years, and the same instruction the traditions have been offering since they began: trust the burning. Follow it. Let it bring you where it's been bringing you all along.
 
@@ -161,4 +149,4 @@ I'll see you on the other side.
 
 ---
 
-*Leigh Spencer is the founder of Tides of Knowing and founder of [the COMPASS Method](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
+*Leigh Spencer is the founder of Tides of Knowing and founder of [the COMPASS Method](https://www.tidesofknowing.com/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*

@@ -28,7 +28,17 @@ const blog = defineCollection({
 });
 
 const articles = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: articlesBase }),
+  loader: glob({
+    pattern: "**/*.md",
+    base: articlesBase,
+    /**
+     * Stable ids from filenames (e.g. `how-to-live-with-spiritual-longing`).
+     * Do not use frontmatter `slug` for ids — Astro's glob loader treats `slug`
+     * as an id override, which duplicates the path-derived id when they match.
+     * Public URLs continue to use `entry.data.slug`.
+     */
+    generateId: ({ entry }) => entry.replace(/\.md$/i, "").replace(/\\/g, "/"),
+  }),
   schema: articlesSchema,
 });
 
