@@ -94,11 +94,11 @@ export const compassTrainingMexico: CompassTrainingPage = {
     availabilityItems: [
       { period: "June", status: "Booked" },
       { period: "July", status: "Booked" },
-      { period: "August", status: "Unavailable due to relocation" },
+      { period: "August", status: "Booked" },
       { period: "Next available cohort", status: "Interest opens in August" },
     ],
     timezoneParagraphs: [
-      "From the next available cohort onward, sessions will run on Central Time (Mexico City). Two cohort windows will be offered where possible to support readers across regions. Exact session times will be confirmed before enrolment opens.",
+      "Future cohorts will run on Central Time (Mexico City). Session times will be confirmed before enrolment opens.",
     ],
     closingParagraph:
       "Each cohort stays small on purpose: discussion-based work, minimum two participants to run, maximum six, so attention stays practical and mentorship-led.",
@@ -179,7 +179,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
       },
       {
         q: "When does the next intake open?",
-        a: "June and July cohorts are fully booked. August is unavailable due to relocation. Interest for the next cohort opens in August, with enrolment details shared once session times are set.",
+        a: "June, July, and August cohorts are fully booked. Interest for the next cohort opens in August, with enrolment details shared once session times are set.",
       },
       {
         q: "What happens after I register interest?",
