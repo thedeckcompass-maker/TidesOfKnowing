@@ -10,6 +10,16 @@ export type SeriesMeta = {
   publishedDate: string;
 };
 
+/** Filter/library lede — no leading “the” or trailing “series” (titles may already include “The”). */
+export function seriesFilterDescription(seriesTitle: string): string {
+  return `Articles in “${seriesTitle}” from Tides of Knowing.`;
+}
+
+/** Series landing fallback when `seriesData[slug]` has no description. */
+export function seriesLandingFallbackDescription(seriesTitle: string): string {
+  return seriesFilterDescription(seriesTitle);
+}
+
 export const seriesData: Record<string, SeriesMeta> = {
   "the-ai-and-intuition-series": {
     title: "The AI and Intuition Series",
@@ -34,5 +44,13 @@ export const seriesData: Record<string, SeriesMeta> = {
     totalParts: 3,
     status: "complete",
     publishedDate: "2026-05-18",
+  },
+  "the-burn-series": {
+    title: "The Burn Series",
+    description:
+      "The Burn Series explores spiritual longing, devotional fire, disconnection, and the human need for living connection in an age of noise. Written through the Tides of Knowing lens, the series traces how longing can become a path of discernment rather than a wound to be solved. It draws from viraha, bhakti, Krishna devotion, mystic traditions, and the lived experience of seeking meaning when modern life has become thin, fast, and disconnected.",
+    totalParts: 3,
+    status: "complete",
+    publishedDate: "2026-05-25",
   },
 };

@@ -17,6 +17,7 @@ import LibraryToolbar from "../../../../components/LibraryToolbar.astro";
 import LibraryPagination from "../../../../components/LibraryPagination.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../../lib/breadcrumbs";
 import { siteBase } from "../../../../lib/site";
+import { seriesFilterDescription } from "../../../../data/series";
 
 const { series: seriesParam } = Astro.params;
 const articles = await getCollection("articles");
@@ -30,7 +31,7 @@ const tp = totalPages(sorted.length, LIBRARY_PER_PAGE);
 const seriesTitle =
   sorted[0]?.data.seriesName ?? seriesParam.replace(/-/g, " ");
 
-const PAGE_DESCRIPTION = `Articles in the “${seriesTitle}” series on Tides of Knowing.`;
+const PAGE_DESCRIPTION = seriesFilterDescription(seriesTitle);
 
 const base = siteBase(Astro);
 const siteHref = base.href;

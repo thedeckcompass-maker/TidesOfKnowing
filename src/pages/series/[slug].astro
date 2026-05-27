@@ -3,7 +3,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { slugify } from "../../utils/slugify";
 import { sortArticles } from "../../utils/sortArticles";
-import { seriesData } from "../../data/series";
+import {
+  seriesData,
+  seriesLandingFallbackDescription,
+} from "../../data/series";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
@@ -22,8 +25,7 @@ const seriesTitle =
 
 const meta = seriesData[slug!];
 const description =
-  meta?.description ??
-  `Articles in the “${seriesTitle}” series from Tides of Knowing.`;
+  meta?.description ?? seriesLandingFallbackDescription(seriesTitle);
 
 const base = siteBase(Astro);
 const siteHref = base.href;
