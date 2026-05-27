@@ -351,29 +351,29 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 </html>
 
 <style>
+  /* Masthead: fixed light-brand treatment (Bluff Hill + nav) in all color schemes. */
   .site-header {
+    --masthead-bg: #F2EFE9;
+    --masthead-text: #0B1F3A;
+    --masthead-text-muted: color-mix(in srgb, #0b1f3a 82%, transparent);
+    --masthead-border: color-mix(in srgb, #0b1f3a 14%, transparent);
+    --masthead-control-border: color-mix(in srgb, #0b1f3a 28%, transparent);
+    --masthead-water: #1e3a5f;
+    --masthead-gold-deep: #8a6a1f;
+    --masthead-gold: #c6a85a;
+    --masthead-gold-light: #d9bc7a;
+
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: var(--z-header);
-    background-color: var(--tok-surface-reading);
+    background-color: var(--masthead-bg);
     background-image: url("/images/brand/tok-landscape-bluff-hill-narrow.svg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    border-bottom: 1px solid var(--tok-on-reading-border);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .site-header {
-      background-image:
-        linear-gradient(
-          color-mix(in srgb, var(--tok-surface-reading) 90%, transparent),
-          color-mix(in srgb, var(--tok-surface-reading) 90%, transparent)
-        ),
-        url("/images/brand/tok-landscape-bluff-hill-narrow.svg");
-    }
+    border-bottom: 1px solid var(--masthead-border);
   }
 
   .site-header__inner {
@@ -390,17 +390,17 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-style: italic;
     font-weight: 400;
     font-size: 1.35rem;
-    color: var(--tok-on-reading);
+    color: var(--masthead-text);
     text-decoration: none;
     letter-spacing: 0.02em;
   }
 
   .site-logo:hover {
-    color: var(--tok-water);
+    color: var(--masthead-water);
   }
 
   .site-logo:focus-visible {
-    outline: 2px solid var(--tok-gold);
+    outline: 2px solid var(--masthead-gold);
     outline-offset: 3px;
     border-radius: var(--radius-2);
   }
@@ -443,51 +443,51 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--tok-on-reading-muted);
+    color: var(--masthead-text-muted);
     border-bottom: 2px solid transparent;
     padding-bottom: 0.15rem;
   }
 
   .site-nav__link:hover {
-    color: var(--tok-on-reading);
+    color: var(--masthead-text);
   }
 
   .site-nav__link:hover:not([aria-current="page"]) {
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--tok-gold) 48%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--masthead-gold) 48%, transparent);
     text-underline-offset: 0.22em;
     text-decoration-thickness: 1px;
   }
 
   .site-nav__link:focus-visible {
-    outline: 2px solid var(--tok-gold);
+    outline: 2px solid var(--masthead-gold);
     outline-offset: 3px;
     border-radius: var(--radius-2);
   }
 
   .site-nav__link[aria-current="page"] {
-    color: var(--tok-on-reading);
-    border-bottom-color: var(--tok-gold);
+    color: var(--masthead-text);
+    border-bottom-color: var(--masthead-gold);
     text-decoration: none;
   }
 
   .site-nav__link--training {
-    color: var(--tok-gold-deep);
+    color: var(--masthead-gold-deep);
     font-weight: 800;
     background: transparent;
     box-shadow: none;
   }
 
   .site-nav__link--training:hover:not([aria-current="page"]) {
-    color: var(--tok-on-reading);
+    color: var(--masthead-text);
     text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, var(--tok-gold) 65%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--masthead-gold) 65%, transparent);
     text-underline-offset: 0.22em;
     text-decoration-thickness: 1px;
   }
 
   .site-nav__link--training[aria-current="page"] {
-    color: var(--tok-on-reading);
+    color: var(--masthead-text);
   }
 
   .site-nav__dropdown {
@@ -500,7 +500,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-weight: 600;
     letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
-    color: var(--tok-on-reading-muted);
+    color: var(--masthead-text-muted);
     list-style: none;
     cursor: pointer;
   }
@@ -511,7 +511,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav__dropdown[open] .site-nav__dropdown-summary,
   .site-nav__dropdown-summary:hover {
-    color: var(--tok-on-reading);
+    color: var(--masthead-text);
   }
 
   .site-nav__dropdown-list {
@@ -567,19 +567,19 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       font-weight: 600;
       letter-spacing: var(--tok-letter-upper-tdc);
       text-transform: uppercase;
-      color: var(--tok-on-reading);
+      color: var(--masthead-text);
       background: transparent;
-      border: 1px solid var(--tok-on-reading-control-border);
+      border: 1px solid var(--masthead-control-border);
       border-radius: var(--radius-soft);
       cursor: pointer;
     }
 
     .site-nav-toggle:hover {
-      background: color-mix(in srgb, var(--tok-gold) 22%, transparent);
+      background: color-mix(in srgb, var(--masthead-gold) 22%, transparent);
     }
 
     .site-nav-toggle:focus-visible {
-      outline: 2px solid var(--tok-gold);
+      outline: 2px solid var(--masthead-gold);
       outline-offset: 3px;
     }
 
@@ -624,21 +624,21 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
     .site-nav__link:hover:not([aria-current="page"]) {
       text-decoration: underline;
-      text-decoration-color: color-mix(in srgb, var(--tok-gold) 45%, transparent);
+      text-decoration-color: color-mix(in srgb, var(--masthead-gold) 45%, transparent);
       text-underline-offset: 0.22em;
       text-decoration-thickness: 1px;
     }
 
     .site-nav__link[aria-current="page"] {
       color: var(--tok-text-light);
-      border-bottom-color: var(--tok-gold);
+      border-bottom-color: var(--masthead-gold);
       text-decoration: none;
     }
 
     .site-nav__link--training {
       display: block;
       width: auto;
-      color: var(--tok-gold);
+      color: var(--masthead-gold);
       font-weight: 800;
       background: transparent;
       border-left: none;
@@ -646,9 +646,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     }
 
     .site-nav__link--training:hover:not([aria-current="page"]) {
-      color: var(--tok-gold-light);
+      color: var(--masthead-gold-light);
       text-decoration: underline;
-      text-decoration-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
+      text-decoration-color: color-mix(in srgb, var(--masthead-gold) 55%, transparent);
       text-underline-offset: 0.22em;
       text-decoration-thickness: 1px;
     }
