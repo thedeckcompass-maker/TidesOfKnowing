@@ -362,7 +362,18 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 14%, transparent);
+    border-bottom: 1px solid var(--tok-on-reading-border);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .site-header {
+      background-image:
+        linear-gradient(
+          color-mix(in srgb, var(--tok-surface-reading) 90%, transparent),
+          color-mix(in srgb, var(--tok-surface-reading) 90%, transparent)
+        ),
+        url("/images/brand/tok-landscape-bluff-hill-narrow.svg");
+    }
   }
 
   .site-header__inner {
@@ -379,7 +390,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-style: italic;
     font-weight: 400;
     font-size: 1.35rem;
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
     text-decoration: none;
     letter-spacing: 0.02em;
   }
@@ -432,13 +443,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
     text-decoration: none;
-    color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
+    color: var(--tok-on-reading-muted);
     border-bottom: 2px solid transparent;
     padding-bottom: 0.15rem;
   }
 
   .site-nav__link:hover {
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
   }
 
   .site-nav__link:hover:not([aria-current="page"]) {
@@ -455,7 +466,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   }
 
   .site-nav__link[aria-current="page"] {
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
     border-bottom-color: var(--tok-gold);
     text-decoration: none;
   }
@@ -468,7 +479,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   }
 
   .site-nav__link--training:hover:not([aria-current="page"]) {
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
     text-decoration: underline;
     text-decoration-color: color-mix(in srgb, var(--tok-gold) 65%, transparent);
     text-underline-offset: 0.22em;
@@ -476,7 +487,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
   }
 
   .site-nav__link--training[aria-current="page"] {
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
   }
 
   .site-nav__dropdown {
@@ -489,7 +500,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     font-weight: 600;
     letter-spacing: var(--tok-letter-upper-nav);
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
+    color: var(--tok-on-reading-muted);
     list-style: none;
     cursor: pointer;
   }
@@ -500,7 +511,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav__dropdown[open] .site-nav__dropdown-summary,
   .site-nav__dropdown-summary:hover {
-    color: var(--tok-deep-ocean);
+    color: var(--tok-on-reading);
   }
 
   .site-nav__dropdown-list {
@@ -556,9 +567,9 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       font-weight: 600;
       letter-spacing: var(--tok-letter-upper-tdc);
       text-transform: uppercase;
-      color: var(--tok-deep-ocean);
+      color: var(--tok-on-reading);
       background: transparent;
-      border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 28%, transparent);
+      border: 1px solid var(--tok-on-reading-control-border);
       border-radius: var(--radius-soft);
       cursor: pointer;
     }

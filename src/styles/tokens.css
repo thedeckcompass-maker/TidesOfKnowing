@@ -125,4 +125,60 @@
   --shadow-sys-sm: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
   --shadow-sys-md: 0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.25);
   --shadow-gold: 0 0 24px rgba(198,168,90,0.15);
+
+  /* ── Reading chrome (nav, logo on surface-reading header) ── */
+  --tok-on-reading: var(--tok-deep-ocean);
+  --tok-on-reading-muted: color-mix(in srgb, var(--tok-deep-ocean) 82%, transparent);
+  --tok-on-reading-border: color-mix(in srgb, var(--tok-deep-ocean) 14%, transparent);
+  --tok-on-reading-control-border: color-mix(in srgb, var(--tok-deep-ocean) 28%, transparent);
+
+  /* Filled controls (gold / teal buttons) */
+  --tok-on-gold: var(--tok-text-dark);
+  --tok-btn-filled-bg: var(--tok-teal-dim);
+  --tok-btn-filled-fg: var(--tok-text-light);
+}
+
+/* Night reading: remap Surface A tokens; brand navy/gold identity unchanged in role. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    /* Surface A — deep ocean page, elevated panels for cards/articles */
+    --tok-surface-reading:     #0B1F3A;
+    --tok-surface-reading-soft:#152D4A;
+    --tok-text-dark:           #E8E4D8;
+    --tok-text-muted:          #A8B4C2;
+    --tok-border-light:        rgba(232, 228, 216, 0.16);
+
+    /* Editorial accents — lighter on navy (not the light-mode panel hex) */
+    --tok-water:               #A8C8E8;
+    --tok-teal:                #6BC9E0;
+    --tok-teal-dim:            #8DD8EA;
+    --tok-teal-light:          #9DE4F2;
+
+    /* Gold — slightly softened for contrast on dark surfaces */
+    --tok-gold:                #C9AE72;
+    --tok-gold-deep:           #D4BC82;
+    --tok-gold-light:          #DFC992;
+    --tok-fire:                #E8C060;
+
+    /* Neutrals on dark UI */
+    --tok-slate:               rgba(232, 228, 216, 0.22);
+    --tok-slate-mid:           #9AA8B8;
+
+    /* Reading chrome */
+    --tok-on-reading:          #E8E4D8;
+    --tok-on-reading-muted:    color-mix(in srgb, var(--tok-on-reading) 78%, transparent);
+    --tok-on-reading-border:   var(--tok-border-light);
+    --tok-on-reading-control-border: color-mix(in srgb, var(--tok-on-reading) 32%, transparent);
+
+    --tok-on-gold: #0B1F3A;
+    --tok-btn-filled-bg: #065e73;
+    --tok-btn-filled-fg: var(--tok-text-light);
+
+    /* Elevation — deeper shadows on navy */
+    --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.22);
+    --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.28);
+    --shadow-gold: 0 0 24px rgba(201, 174, 114, 0.12);
+  }
 }

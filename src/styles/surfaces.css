@@ -51,3 +51,11 @@
 .tok-body--system #main-content a:focus-visible {
   outline-color: var(--tok-gold);
 }
+
+/* On navy tool routes, Surface A tokens act as elevated panels (like cream on light). */
+@media (prefers-color-scheme: dark) {
+  .tok-body--system {
+    --tok-surface-reading: #152D4A;
+    --tok-surface-reading-soft: #1E3A5F;
+  }
+}

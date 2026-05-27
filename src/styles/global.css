@@ -10,6 +10,17 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  a:hover {
+    color: var(--tok-teal-light);
+  }
 }
 
 body {

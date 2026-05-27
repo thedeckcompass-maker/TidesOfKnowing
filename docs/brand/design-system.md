@@ -30,6 +30,8 @@ Rule: article main column stays on reading surfaces; blue appears as bands, pane
 
 Do not remove these pairs; the split is semantic, not a duplicate mistake.
 
+**Dark mode (automatic):** `@media (prefers-color-scheme: dark)` in `tokens.css` remaps Surface A tokens (reading backgrounds, body text, borders, editorial accents, shadows). Brand navy (`--tok-deep-ocean`) and system surfaces stay unchanged. Header/nav on reading routes use `--tok-on-reading` / `--tok-on-reading-muted` (see `BaseLayout.astro`). No manual toggle yet.
+
 ---
 
 ## Canonical tokens (overview)
