@@ -25,6 +25,16 @@ secondaryKeywords:
   - "major arcana repeating"
   - "recurring tarot archetypes"
   - "repeating tarot card meaning"
+shortAnswer: "When Major Arcana cards repeat, they usually mark a sustained life theme or archetypal pressure, not a single event or fixed prediction. The card persists because that larger territory has not yet been fully recognised or integrated. Read repetition at the scale of theme, not situational doom."
+furtherReading:
+  - title: "Why the same tarot card keeps appearing"
+    href: "/articles/why-the-same-tarot-card-keeps-appearing/"
+  - title: "Repeating card pattern library"
+    href: "/repeating-card-meanings/"
+  - title: "Interactive repeating card selector"
+    href: "/tools/repeating-card-meanings/"
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
 ---
 
 > A Minor Arcana card that keeps returning is pointing at a pattern. A Major Arcana card that keeps returning is pointing at a theme. The difference is in the scale of what is being asked to be recognised.
@@ -118,6 +128,8 @@ Give the pattern space rather than pulling more cards to decode it. A repeating 
 ## The Repeating Card Meanings Library
 
 Each of the Major Arcana cards has a full interpretive entry in the [Repeating Card Meanings library](/repeating-card-meanings/) that explores specifically what the card is pointing toward when it repeats. These entries go beyond general card meanings to address why the energy persists, what sustains the pattern, what would allow it to shift, and how to work with what the card is pointing at across every major life area.
+
+Use the [interactive repeating card selector](/tools/repeating-card-meanings/) when you want to jump straight to one card's full entry.
 
 The full library covers all 22 Major Arcana and all 56 Minor Arcana cards with the same depth of focus on repetition as a pattern rather than repetition as a series of individual messages.
 

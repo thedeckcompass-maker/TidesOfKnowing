@@ -71,6 +71,7 @@ const relatedLinks = resolveRepeatingCardRelatedLinks(resolved, byId);
 const questions = buildRepeatingCardQuestions(resolved, model.displayTitle);
 const jsonLd = getRepeatingCardEntityPageJsonLd(resolved, siteHref, questions);
 const toolDeepLink = getRepeatingCardPath(resolved);
+const featuredSnippetAnswer = resolved.data.featuredSnippetAnswer?.trim() || null;
 ---
 
 <BaseLayout
@@ -91,6 +92,7 @@ const toolDeepLink = getRepeatingCardPath(resolved);
     secondaryLabel="Open in card selector tool"
     relatedLinks={relatedLinks}
     questions={questions}
+    featuredSnippetAnswer={featuredSnippetAnswer}
   >
     <Breadcrumbs items={crumbs} slot="breadcrumbs" />
     <p class="rcm-card__back-wrap" slot="footer">

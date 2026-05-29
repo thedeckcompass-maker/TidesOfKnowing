@@ -1,4 +1,5 @@
 import { z } from "astro:content";
+import { furtherReadingSchema } from "../lib/furtherReading";
 
 const blogSeoFields = z.object({
   /** Overrides `<title>` when set. */
@@ -55,6 +56,9 @@ export const blogSchema = z
     featured: z.boolean().default(false),
     /** Standalone archive notes: slower, conceptual Field Notes (not series or practitioner walkthroughs). */
     fieldNoteKind: z.enum(["foundational"]).optional(),
+    /** Optional compact direct answer (40–70 words) for AEO; rendered when set. */
+    shortAnswer: z.string().optional(),
+    furtherReading: furtherReadingSchema,
   })
   .merge(blogSeoFields)
   .merge(blogDates)
@@ -136,6 +140,9 @@ export const articlesSchema = z.object({
       transcript: z.string().optional(),
     })
     .optional(),
+  /** Optional compact direct answer (40–70 words) for AEO; rendered when set. */
+  shortAnswer: z.string().optional(),
+  furtherReading: furtherReadingSchema,
 });
 
 /**

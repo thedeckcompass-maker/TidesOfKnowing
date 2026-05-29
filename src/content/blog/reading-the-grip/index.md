@@ -23,10 +23,11 @@ ogImage: "/images/blog/reading-the-grip/full-spread-overview.jpg"
 heroImage: "/images/blog/reading-the-grip/full-spread-overview.jpg"
 heroImageAlt: "Tarot spread overview for the Reading the Grip series"
 heroCaption: "After drawing the pre-read cards, this was the final spread that was offered and that incorporated the structure these Field Notes lay out."
+shortAnswer: "When a seeker arrives gripping a specific outcome, the reading has to honour the pressure without turning into performance. These four Field Notes follow one real high-stakes reading: recognising grip, reading what is actually on the table, and carrying structure when the stakes feel life-or-death."
 ---
 
 This series of Field Notes addresses one of the most demanding situations a tarot reader encounters: a seeker who arrives with obvious weight attached to their situation and a tight grip on a specific outcome.
 
 Recognising that grip early, and knowing what to do with it, is the difference between a reading that lands and one that doesn't. These four Field Notes document the decisions made across one real reading, from first contact to delivery. Each one is standalone and can be read in any order. Each covers a specific decision point that will sharpen how you approach high-stakes readings in your own practice.
 
-A downloadable cheat sheet accompanies the series. It distills the full framework into a practical guide you can use before any reading where a seeker is holding tight to outcomes.
+A downloadable cheat sheet accompanies the series. It distills the full framework into a practical guide you can use before any reading where a seeker is holding tight to outcomes. The structure aligns with attention conditions named in [The COMPASS Method](/articles/compass-method/), applied here to live reading conditions rather than theory.

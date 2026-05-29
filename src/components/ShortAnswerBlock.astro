@@ -1,0 +1,53 @@
+---
+interface Props {
+  text: string;
+  /** Accessible label for the block; visible label defaults to "In brief". */
+  label?: string;
+  class?: string;
+}
+
+const { text, label = "In brief", class: className } = Astro.props;
+const trimmed = text.trim();
+---
+
+{
+  trimmed ? (
+    <aside
+      class:list={["tok-short-answer", className]}
+      aria-label={label}
+      data-reveal
+    >
+      <p class="tok-short-answer__label">{label}</p>
+      <p class="tok-short-answer__text">{trimmed}</p>
+    </aside>
+  ) : null
+}
+
+<style>
+  .tok-short-answer {
+    margin: 0 auto 1.25rem;
+    padding: 0.85rem 1rem;
+    max-width: 65ch;
+    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, transparent);
+    border-radius: 0 var(--radius-soft) var(--radius-soft) 0;
+  }
+
+  .tok-short-answer__label {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-gold);
+  }
+
+  .tok-short-answer__text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--tok-text-dark);
+  }
+</style>

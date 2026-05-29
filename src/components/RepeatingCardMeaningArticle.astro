@@ -6,8 +6,10 @@
 import type { RepeatingCardRelatedLink } from "../lib/repeatingCardRelated";
 import type { RepeatingCardPageModel } from "../lib/repeatingCardPageModel";
 import type { RepeatingCardQuestionsModel } from "../lib/repeatingCardQuestions";
+import { textIsContainedIn, textsAreEquivalent } from "../lib/textNormalize";
 import RepeatingCardQuestions from "./RepeatingCardQuestions.astro";
 import RepeatingCardRelatedMeanings from "./RepeatingCardRelatedMeanings.astro";
+import ShortAnswerBlock from "./ShortAnswerBlock.astro";
 
 export type RepeatingCardMeaningArticleVariant = "tool" | "entity";
 
@@ -20,6 +22,8 @@ interface Props {
   secondaryLabel?: string;
   relatedLinks?: RepeatingCardRelatedLink[];
   questions?: RepeatingCardQuestionsModel | null;
+  /** Direct AEO answer; entity pages only. Omitted when duplicate of panel summary. */
+  featuredSnippetAnswer?: string | null;
 }
 
 const {
@@ -31,8 +35,17 @@ const {
   secondaryLabel,
   relatedLinks = [],
   questions = null,
+  featuredSnippetAnswer = null,
 } = Astro.props;
 const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav } = model;
+
+const snippetTrimmed = featuredSnippetAnswer?.trim() ?? "";
+const showFeaturedSnippet =
+  variant === "entity" &&
+  snippetTrimmed.length > 0 &&
+  (!panelSummary ||
+    (!textsAreEquivalent(snippetTrimmed, panelSummary) &&
+      !textIsContainedIn(snippetTrimmed, panelSummary)));
 ---
 
 <article class="rcm-card page-inner" id="rcm-card-page">
@@ -73,6 +86,15 @@ const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav 
       </div>
       <div class="rcm-card__card-intro">
         {panelSummary ? <p class="rcm-card__card-summary">{panelSummary}</p> : null}
+        {
+          showFeaturedSnippet ? (
+            <ShortAnswerBlock
+              text={snippetTrimmed}
+              label="Short answer"
+              class="rcm-card__short-answer"
+            />
+          ) : null
+        }
       </div>
     </header>
 
@@ -208,6 +230,16 @@ const { displayTitle, panelSummary, imageSrc, imageAlt, articleHtml, sectionNav 
     line-height: 1.65;
     color: var(--tok-text-dark);
     opacity: 0.92;
+  }
+
+  .rcm-card__card-intro :global(.rcm-card__short-answer) {
+    margin: 0.85rem 0 0;
+    max-width: none;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .rcm-card__card-intro :global(.rcm-card__short-answer .tok-short-answer__text) {
+    font-size: 0.92rem;
   }
 
   .rcm-card__reading-body {

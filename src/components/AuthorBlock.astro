@@ -1,0 +1,64 @@
+---
+import {
+  ABOUT_PATH,
+  articleAuthorAttribution,
+  authorBlockExtended,
+  AUTHOR_NAME,
+} from "../lib/authorProfile";
+
+interface Props {
+  /** `inline` matches existing article/Field Note trust lines; `extended` for cornerstone pages. */
+  variant?: "inline" | "extended";
+  /** Link the author name to the about page (Field Notes default). */
+  linkToAbout?: boolean;
+  class?: string;
+}
+
+const { variant = "inline", linkToAbout = false, class: className } = Astro.props;
+
+const bodyText =
+  variant === "extended" ? authorBlockExtended : articleAuthorAttribution;
+---
+
+<p class:list={["tok-author-block", className]} data-reveal>
+  {
+    variant === "extended" ? (
+      <span>{bodyText}</span>
+    ) : linkToAbout ? (
+      <>
+        <span class="tok-author-block__prefix">By </span>
+        <a class="tok-author-block__name" href={ABOUT_PATH}>{AUTHOR_NAME}</a>
+        <span class="tok-author-block__sep" aria-hidden="true"> · </span>
+        <span>{bodyText}</span>
+      </>
+    ) : (
+      <>
+        <span class="tok-author-block__prefix">By {AUTHOR_NAME}</span>
+        <span class="tok-author-block__sep" aria-hidden="true"> · </span>
+        <span>{bodyText}</span>
+      </>
+    )
+  }
+</p>
+
+<style>
+  .tok-author-block {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.62;
+    font-weight: 400;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-author-block__name {
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    text-decoration-thickness: 1px;
+  }
+
+  .tok-author-block__name:hover {
+    color: var(--tok-teal-dim);
+  }
+</style>

@@ -190,6 +190,7 @@ if (post) {
       heroImage={seriesView.series.data.heroImage}
       heroImageAlt={seriesView.series.data.heroImageAlt}
       heroCaption={seriesView.series.data.heroCaption}
+      shortAnswer={seriesView.series.data.shortAnswer}
     >
       <seriesView.IntroductionContent slot="introduction" />
     </FieldNoteSeriesLayout>
@@ -219,6 +220,8 @@ if (post) {
       heroImage={standaloneView.post.data.heroImage}
       heroImageAlt={standaloneView.post.data.heroImageAlt}
       heroCaption={standaloneView.post.data.heroCaption}
+      shortAnswer={standaloneView.post.data.shortAnswer}
+      furtherReading={standaloneView.post.data.furtherReading}
     >
       <standaloneView.Content />
     </BlogPostLayout>

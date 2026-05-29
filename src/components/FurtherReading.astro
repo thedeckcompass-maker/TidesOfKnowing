@@ -1,0 +1,94 @@
+---
+import type { FurtherReadingItem } from "../lib/furtherReading";
+
+interface Props {
+  items?: FurtherReadingItem[];
+  heading?: string;
+  class?: string;
+}
+
+const { items = [], heading = "Further reading", class: className } = Astro.props;
+const list = items.filter((item) => item.title.trim() && item.href.trim());
+---
+
+{
+  list.length > 0 ? (
+    <nav
+      class:list={["tok-further-reading", className]}
+      aria-labelledby="tok-further-reading-heading"
+      data-reveal
+    >
+      <h2 id="tok-further-reading-heading" class="tok-further-reading__title">
+        {heading}
+      </h2>
+      <ul class="tok-further-reading__list" role="list">
+        {list.map((item) => (
+          <li class="tok-further-reading__item">
+            <a
+              class="tok-further-reading__link"
+              href={item.href}
+              {...(item.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              {item.title}
+              {item.external ? (
+                <span class="tok-further-reading__external"> (external)</span>
+              ) : null}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  ) : null
+}
+
+<style>
+  .tok-further-reading {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 0 1rem 1.75rem;
+    border-top: 1px solid var(--tok-border-light);
+    padding-top: clamp(1.25rem, 3vw, 1.65rem);
+  }
+
+  .tok-further-reading__title {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--tok-water);
+  }
+
+  .tok-further-reading__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tok-further-reading__link {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--tok-teal);
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+    text-decoration-thickness: 1px;
+  }
+
+  .tok-further-reading__link:hover {
+    color: var(--tok-teal-dim);
+  }
+
+  .tok-further-reading__external {
+    font-size: 0.85em;
+    font-weight: 400;
+    color: var(--tok-text-muted);
+  }
+</style>

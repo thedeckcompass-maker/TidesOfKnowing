@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 
 const ogUrl = new URL("/about/", siteBase(Astro)).href;
@@ -8,7 +9,7 @@ const ogImage = new URL(profilePath, siteBase(Astro)).href;
 
 const pageTitle = "About Leigh Spencer | Tides of Knowing";
 const pageDescription =
-  "Leigh Spencer on symbolic perception, tarot education, The COMPASS Method, and the Tides of Knowing ecosystem for relational reading, intuitive development, and discernment.";
+  "Leigh Spencer, founder of Tides of Knowing and The COMPASS Method™. Symbolic interpretation, intuitive literacy, and reflective tarot practice grounded in 40+ years of reading and 30 years in journalism.";
 
 const onPageAnchors = [
   { id: "the-work", label: "The Work" },
@@ -22,36 +23,15 @@ const onPageAnchors = [
   { id: "a-note-on-experience", label: "A Note on Experience" },
 ] as const;
 
+/** Person entity is defined once in the site-wide ecosystem graph (`ENTITY_IDS.person`). */
 const aboutPageLd = {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      name: pageTitle,
-      url: ogUrl,
-      description: pageDescription,
-      about: { "@id": `${ogUrl}#leigh-spencer` },
-    },
-    {
-      "@type": "Person",
-      "@id": `${ogUrl}#leigh-spencer`,
-      name: "Leigh Spencer",
-      url: ogUrl,
-      jobTitle: "Founder",
-      worksFor: {
-        "@type": "Organization",
-        name: "Tides of Knowing",
-        url: siteBase(Astro).href,
-      },
-      knowsAbout: [
-        "tarot education",
-        "symbolic perception",
-        "intuitive development",
-        "relational tarot reading",
-        "The COMPASS Method",
-      ],
-    },
-  ],
+  "@type": "WebPage",
+  name: pageTitle,
+  url: ogUrl,
+  description: pageDescription,
+  about: { "@id": ENTITY_IDS.person },
+  mainEntity: { "@id": ENTITY_IDS.person },
 };
 ---
 
@@ -69,7 +49,7 @@ const aboutPageLd = {
         <h1 class="about__title">About Leigh Spencer</h1>
 
         <p class="about__lede">
-          Tides of Knowing was created for readers, thinkers, and intuitive practitioners who sense that symbolic work is far deeper than memorised meanings, aesthetic spirituality, or performance intuition.
+          Tides of Knowing is structured work on symbolic interpretation, intuitive literacy, and reflective tarot practice, for readers and thinkers who sense that symbolic work runs deeper than memorised meanings, aesthetic spirituality, or performance intuition.
         </p>
         <p class="about__lede">
           It was built from decades of lived observation across journalism, business, education, mentoring, and tarot practice.

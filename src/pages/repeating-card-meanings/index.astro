@@ -43,34 +43,18 @@ const toolHref = getRepeatingCardHubPath();
       <p class="rcm-hub__eyebrow">Canonical pattern library</p>
       <h1 class="rcm-hub__title">Repeating Card Meanings</h1>
       <p class="rcm-hub__lede">
-        When the same tarot card keeps appearing across readings, the repetition is usually symbolic
-        emphasis: something unresolved, unintegrated, re-emerging, or still unfolding beneath the
-        surface of events. This library holds the canonical reference pages for each card’s repeating
-        meaning—written for symbolic interpretation, not fortune-telling or fixed predictions.
+        Full searchable reference library: {cardCount} indexable pages on what each tarot card may be
+        pointing toward when it keeps returning. Written for symbolic interpretation, not
+        fortune-telling or fixed predictions.
       </p>
-      <p class="rcm-hub__lede">
-        Each of the {cardCount} entries below is a full, indexable meaning page. Tides of Knowing
-        treats repeated cards as relational information, informed by decades of practice and{" "}
-        <a href="/articles/compass-method/">The COMPASS Method</a>
-        <sup class="rcm-hub__tm">TM</sup>, which names conditions of attention that help intuitive
-        reading stay clear under pressure.
-      </p>
-      <p class="rcm-hub__lede">
-        Start with the{" "}
-        <a href="/articles/why-the-same-tarot-card-keeps-appearing/">guide to repeating card patterns</a>
-        {" "}if you are new to reading recurrence, or open a specific card below when you already know
-        which symbol keeps returning.
-      </p>
-      <p class="rcm-hub__tool-wrap">
-        <a class="rcm-hub__tool-link" href={toolHref}>Open the interactive card selector tool</a>
-        <span class="rcm-hub__tool-note">
-          (dropdown UX for quick lookup; each card’s authoritative long-form page lives on this hub at{" "}
-          <span class="rcm-hub__tool-note-path">{getRepeatingCardSeoHubPath()}</span>.)
-        </span>
+      <p class="rcm-hub__lede rcm-hub__lede--links">
+        New to recurrence? Read the{" "}
+        <a href="/articles/why-the-same-tarot-card-keeps-appearing/">guide to repeating card patterns</a>.
+        For quick lookup, use the{" "}
+        <a href={toolHref}>interactive card selector tool</a>
+        {" "}(authoritative long-form pages are listed below).
       </p>
     </header>
-
-    <RepeatingCardPatternsEditorialLinks heading="Understanding Repeating Card Patterns" />
 
     {
       sections.map((section) => (
@@ -93,6 +77,17 @@ const toolHref = getRepeatingCardHubPath();
         </section>
       ))
     }
+
+    <footer class="rcm-hub__footer">
+      <p class="rcm-hub__lede">
+        Tides of Knowing treats repeated cards as relational information, informed by decades of
+        practice and{" "}
+        <a href="/articles/compass-method/">The COMPASS Method</a>
+        <sup class="rcm-hub__tm">TM</sup>, which names conditions of attention that help intuitive
+        reading stay clear under pressure.
+      </p>
+      <RepeatingCardPatternsEditorialLinks heading="Understanding Repeating Card Patterns" />
+    </footer>
   </article>
 </BaseLayout>
 
@@ -103,9 +98,20 @@ const toolHref = getRepeatingCardHubPath();
   }
 
   .rcm-hub__hero {
-    margin-bottom: clamp(2rem, 5vw, 2.75rem);
-    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: clamp(1.15rem, 3vw, 1.5rem);
+    padding-bottom: clamp(0.85rem, 2.5vw, 1.15rem);
     border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .rcm-hub__lede--links {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .rcm-hub__footer {
+    margin-top: clamp(2rem, 5vw, 2.75rem);
+    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
   }
 
   .rcm-hub__eyebrow {

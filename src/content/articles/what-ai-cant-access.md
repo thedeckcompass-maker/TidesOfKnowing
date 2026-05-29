@@ -23,6 +23,14 @@ secondaryKeywords:
   - "pre-symbolic tarot"
   - "LLM and intuition"
   - "tarot and AI debate"
+shortAnswer: "Large language models operate on encoded language, not on the pre-symbolic layer where much intuitive reading begins. They can reorganise meanings already stored as text, but they cannot register what you perceive before it becomes words. That limit is structural: it shapes what AI can simulate, not what human attention can access in live practice."
+furtherReading:
+  - title: "Pre-Verbal Knowing and AI"
+    href: "/articles/pre-verbal-knowing-ai/"
+  - title: "Tarot as a Pre-Symbolic Interface"
+    href: "/articles/tarot-pre-symbolic-interface/"
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
 ---
 
 There is a small piece of driftwood on my desk. It fits in the palm of my hand. I picked it up on a beach, not because I was looking for anything, not because it seemed significant in any way I could have articulated at the time. It caught my eye. That was enough.
@@ -46,7 +54,7 @@ No AI system on earth could have done that. Not because it lacks sufficient proc
 
 > It existed entirely in the pre-symbolic space, the space before experience becomes language, before knowing becomes record.
 
-That is not a small distinction. It is the distinction this entire series is built on.
+That is not a small distinction. It is the distinction this entire series is built on, and it is why work on [symbolic interpretation and attention](/articles/compass-method/) belongs to human practice rather than to larger datasets alone.
 
 ---
 

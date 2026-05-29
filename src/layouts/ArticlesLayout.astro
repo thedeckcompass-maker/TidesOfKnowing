@@ -9,7 +9,9 @@ import ArticleSeries from "../components/ArticleSeries.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { getArticleAudio } from "../lib/articleAudio";
-import { articleAuthorAttribution } from "../lib/authorProfile";
+import AuthorBlock from "../components/AuthorBlock.astro";
+import FurtherReading from "../components/FurtherReading.astro";
+import ShortAnswerBlock from "../components/ShortAnswerBlock.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
@@ -120,7 +122,8 @@ const articleAudio = getArticleAudio({
   frontmatterAudio: d.audio,
 });
 
-const isLeighSpencer = d.author.trim() === "Leigh Spencer";
+const shortAnswer = d.shortAnswer?.trim() ?? "";
+const furtherReading = d.furtherReading ?? [];
 
 /** Repeating Card Patterns heroes are portrait compositions; avoid cover crop. */
 const heroImageFit =
@@ -189,24 +192,24 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
               </div>
             ) : null
           }
-          <p class="tok-article-trust" data-reveal>
-            {
-              authorBioOverride ? (
-                <>{authorBioOverride}</>
-              ) : isLeighSpencer ? (
-                <>
-                  By Leigh Spencer · {articleAuthorAttribution}
-                </>
-              ) : (
-                <>By {d.author}.</>
-              )
-            }
-          </p>
+          {
+            authorBioOverride ? (
+              <p class="tok-article-trust" data-reveal>{authorBioOverride}</p>
+            ) : d.author.trim() === "Leigh Spencer" ? (
+              <AuthorBlock class="tok-article-trust" />
+            ) : (
+              <p class="tok-article-trust" data-reveal>By {d.author}.</p>
+            )
+          }
+          {shortAnswer ? (
+            <ShortAnswerBlock text={shortAnswer} class="tok-articles-short-answer" />
+          ) : null}
           <div class="article-prose article__body tok-articles-body">
             <slot name="prepend" />
             <slot />
           </div>
           <slot name="append" />
+          <FurtherReading items={furtherReading} class="tok-articles-further-reading" />
           {
             !hideSystemPathway && (
               <section
@@ -295,11 +298,11 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
     max-width: 65ch;
     margin: 0 auto;
     padding: 0 1rem 1.15rem;
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    line-height: 1.62;
-    font-weight: 400;
-    color: var(--tok-text-muted);
+  }
+
+  .tok-articles-short-answer {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .tok-article-pathway {

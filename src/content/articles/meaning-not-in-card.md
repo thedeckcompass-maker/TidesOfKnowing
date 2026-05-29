@@ -21,6 +21,16 @@ secondaryKeywords:
   - "heavy cards in tarot"
   - "tarot reading technique"
   - "context first tarot"
+shortAnswer: "Tarot meaning is not fixed inside the card. It emerges from position, question, and the relationship between cards in a specific spread. The card opens a possibility space; context decides which part of that space is active in the reading you are giving now."
+furtherReading:
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
+  - title: "From More to Better"
+    href: "/articles/from-more-to-better/"
+  - title: "The Flow Problem"
+    href: "/articles/the-flow-problem/"
+  - title: "Practice with The Deck Compass"
+    href: "/practice/"
 ---
 
 The hardest thing I ever had to unlearn about tarot took me years to articulate. I'd been reading for over two decades before I could state it clearly. And once I did, it changed everything about how I taught, how I read, and how I understood what had been going wrong for the students I'd watched struggle despite years of genuine effort.
@@ -133,7 +143,7 @@ The reason this transition is difficult isn't intellectual. Most experienced rea
 
 We have years, sometimes decades, of pattern-matching built around card definitions. When we see the Tower, we reach for the Tower's meaning. The reach is so fast it's almost involuntary. Slowing that process down, reading the position and the question first, building the interpretive frame before pulling from the card vocabulary, requires a deliberate restructuring of the reading process itself.
 
-This is what The Deck Compass methodology addresses at a structural level: not what the cards mean, but the sequence in which you engage with what you know. It's a process architecture for reading, not a new meaning system.
+This is what [The COMPASS Method](/articles/compass-method/) and The Deck Compass methodology address at a structural level: not what the cards mean, but the sequence in which you engage with what you know. It's a process architecture for reading, not a new meaning system.
 
 You already have the meanings. The question is whether you're using them in the right order, through the right frame.
 

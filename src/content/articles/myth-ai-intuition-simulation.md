@@ -23,6 +23,16 @@ secondaryKeywords:
   - "simulation vs sensing"
   - "LLM outputs feel intuitive"
   - "intuitive practice AI"
+shortAnswer: "AI outputs feel intuitive because compression, familiar patterns, and projection mimic insight. That is simulation, not embodied sensing. Intuition originates in pre-symbolic perception before language; AI operates only on encoded text after that stage. Treating simulation as intuition weakens the perceptual capacity practitioners most need."
+furtherReading:
+  - title: "What AI Can't Access"
+    href: "/articles/what-ai-cant-access/"
+  - title: "Pre-Verbal Knowing"
+    href: "/articles/pre-verbal-knowing-ai/"
+  - title: "Tarot as a Pre-Symbolic Interface"
+    href: "/articles/tarot-pre-symbolic-interface/"
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
 ---
 
 I was a girl the first time I visited Ngamatea Station. It is one of New Zealand's great high-country stations: 36,000 hectares of sheep and beef country in the central North Island, running along the Taihape-Napier Road. I was there with a group of friends, visiting the daughter of the owner, Kate Apatu. I remember the scale of the land, the particular quality of the light in that part of the country. But what I remember most clearly, forty years later, is the homestead.
@@ -125,7 +135,7 @@ The clearest way to hold this distinction is through a simple contrast.
 
 Simulation operates within symbolic systems. It recombines existing patterns into outputs that resemble intuitive insight. It does this well enough that the resemblance is often convincing. This is precisely what produces the three-factor illusion described above: the compression, the familiar pattern, the invitation to project meaning onto a structure that has been optimised to receive it.
 
-Origination requires access to the pre-symbolic stage. It requires perception before language, not after it. It requires something to arise from within the practitioner's own perceptual system, from the accumulated, unencoded, unarchived knowing that lives in the body and the attending and the years of practice.
+Origination requires access to the pre-symbolic stage. It requires perception before language, not after it. In tarot, that shows up when [cards activate meaning rather than contain it](/articles/tarot-pre-symbolic-interface/). It requires something to arise from within the practitioner's own perceptual system, from the accumulated, unencoded, unarchived knowing that lives in the body and the attending and the years of practice.
 
 The homestead at Ngamatea did not arise from a database of architectural decisions. It arose from six weeks of unstructured attending, and from the trained capacity of one practitioner to receive what that attending produced and bring it, carefully, into concrete form.
 

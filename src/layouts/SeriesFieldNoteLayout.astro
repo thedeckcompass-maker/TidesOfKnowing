@@ -4,9 +4,12 @@ import TdcConversionBlock from "../components/TdcConversionBlock.astro";
 import BlogSidebar from "../components/BlogSidebar.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { BlogCategoryRow } from "../lib/blogCategories";
-import { articleAuthorAttribution } from "../lib/authorProfile";
+import AuthorBlock from "../components/AuthorBlock.astro";
+import FurtherReading from "../components/FurtherReading.astro";
+import ShortAnswerBlock from "../components/ShortAnswerBlock.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
-import { ABOUT_PATH, blogPostingJsonLd, type BlogSeoResolved } from "../lib/blogSeo";
+import { blogPostingJsonLd, type BlogSeoResolved } from "../lib/blogSeo";
+import type { FurtherReadingItem } from "../lib/furtherReading";
 import { siteBase } from "../lib/site";
 
 interface NavNote {
@@ -30,6 +33,8 @@ interface Props {
   cheatSheetHref: string | null;
   displayDate: string;
   isoDate: string;
+  shortAnswer?: string;
+  furtherReading?: FurtherReadingItem[];
 }
 
 const {
@@ -48,7 +53,11 @@ const {
   cheatSheetHref,
   displayDate,
   isoDate,
+  shortAnswer: shortAnswerProp,
+  furtherReading = [],
 } = Astro.props;
+
+const shortAnswer = shortAnswerProp?.trim() ?? "";
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -107,9 +116,10 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
               <p class="tok-series-note-positioning">{positioningSentence}</p>
             ) : null
           }
-          <p class="tok-blog-post-trust" data-reveal>
-            By <a href={ABOUT_PATH}>Leigh Spencer</a> · {articleAuthorAttribution}
-          </p>
+          <AuthorBlock class="tok-blog-post-trust" linkToAbout />
+          {shortAnswer ? (
+            <ShortAnswerBlock text={shortAnswer} class="tok-blog-short-answer" />
+          ) : null}
           <p class="tok-blog-post-meta">
             <time datetime={isoDate}>{displayDate}</time>
             <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
@@ -122,6 +132,8 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             <slot />
           </div>
         </article>
+
+        <FurtherReading items={furtherReading} class="tok-blog-further-reading" />
 
         <hr class="tok-series-note-rule" />
 

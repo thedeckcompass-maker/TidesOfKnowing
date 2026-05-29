@@ -23,6 +23,16 @@ secondaryKeywords:
   - "tarot meaning activation"
   - "AI tarot interpretation limits"
   - "card as trigger not source"
+shortAnswer: "Tarot cards do not contain fixed meaning; they act as a pre-symbolic interface. Dense imagery activates signal in attention and the body before dictionary definitions arrive. Meaning emerges from the encounter between image, question, and practitioner, which is why live reading cannot be reduced to stored definitions or AI pattern matching alone."
+furtherReading:
+  - title: "What AI Can't Access"
+    href: "/articles/what-ai-cant-access/"
+  - title: "Pre-Verbal Knowing"
+    href: "/articles/pre-verbal-knowing-ai/"
+  - title: "The Myth of AI Intuition"
+    href: "/articles/myth-ai-intuition-simulation/"
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
 ---
 
 The question arrived in a tarot Facebook group I was part of at the time. The group has since disbanded, but the reading has stayed with me. A woman had posted a question about the fair distribution of an estate. She had already drawn a single card from her Robert M. Place deck and was inviting members of the group to share what they perceived from it relative to the question. Everyone was working from the same card. She did not disclose whose estate it was, or what her personal connection to the situation was. No context, no relationship, no information beyond the question and the card.

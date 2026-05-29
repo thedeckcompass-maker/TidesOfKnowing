@@ -24,6 +24,16 @@ secondaryKeywords:
   - "repeating cards vs stalker cards"
   - "tarot stalker cards"
   - "recurring tarot card patterns"
+shortAnswer: "A stalker card names recurrence that feels relentless; a repeating card names the same pattern with interpretive agency. The card is not pursuing you. It marks symbolic territory still active in your life. Grounded repetition language supports investigation; stalker framing tends toward dread and distorted reading."
+furtherReading:
+  - title: "Why the same tarot card keeps appearing"
+    href: "/articles/why-the-same-tarot-card-keeps-appearing/"
+  - title: "Repeating Major Arcana cards"
+    href: "/articles/repeating-major-arcana-cards/"
+  - title: "Repeating card pattern library"
+    href: "/repeating-card-meanings/"
+  - title: "Interactive repeating card selector"
+    href: "/tools/repeating-card-meanings/"
 ---
 
 > A card that follows you is worth taking seriously. The first question is whether it is following you or whether you are following it.
@@ -110,7 +120,7 @@ This kind of documentation prevents the retrospective inflation of a card's freq
 
 ## The Repeating Card Meanings Library
 
-Every card in the tarot has a dedicated entry in the [Repeating Card Meanings library](/repeating-card-meanings/) at Tides of Knowing. These entries are built specifically around what a card is pointing toward when it recurs, not its general meaning in any single reading. Each entry explores why the energy persists, which life areas are most affected, what is sustaining the pattern, and how to work with what the card is genuinely asking.
+For majors specifically, see [Repeating Major Arcana Cards](/articles/repeating-major-arcana-cards/). Every card in the tarot has a dedicated entry in the [Repeating Card Meanings library](/repeating-card-meanings/) at Tides of Knowing. These entries are built specifically around what a card is pointing toward when it recurs, not its general meaning in any single reading. Each entry explores why the energy persists, which life areas are most affected, what is sustaining the pattern, and how to work with what the card is genuinely asking.
 
 The [interactive repeating card tool](/tools/repeating-card-meanings/) allows you to go directly to any card's entry to begin the work of understanding what its recurrence is actually pointing toward.
 

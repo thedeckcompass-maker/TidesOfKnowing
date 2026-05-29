@@ -21,6 +21,16 @@ secondaryKeywords:
   - "intuitive reading framework"
   - "structured tarot practice"
   - "attention in tarot reading"
+shortAnswer: "The COMPASS Method™ is an original interpretive framework from Tides of Knowing. It names seven conditions of attention (Center, Open, Map, Perceive, Align, Sense, Seal) that support structured symbolic interpretation, intuitive discernment, and reflective tarot practice when stakes or ambiguity run high."
+furtherReading:
+  - title: "The origin of the COMPASS Method"
+    href: "/blog/origin-of-the-compass-method/"
+  - title: "Meaning Is Not in the Card"
+    href: "/articles/meaning-not-in-card/"
+  - title: "Practice with The Deck Compass"
+    href: "/practice/"
+  - title: "COMPASS training"
+    href: "/compass/"
 ---
 
 As a framework, the COMPASS Method names **conditions of attention**, not a new dictionary of card meanings. It describes what has to be present, in you, before and during a reading, for intuition to stay stable when stakes, emotion, or ambiguity run high.

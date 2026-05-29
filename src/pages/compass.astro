@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { faqPageJsonLd } from "../lib/faqPageJsonLd";
 import { siteBase } from "../lib/site";
 import { activeCompassTraining as T } from "../data/training/active-training";
 
@@ -8,9 +9,20 @@ const description = T.meta.description;
 const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
 const cs = T.cohortSchedule;
+
+const compassFaqJsonLd = faqPageJsonLd(
+  T.faq.items.map((item) => ({ question: item.q, answerHtml: item.a })),
+  ogUrl,
+);
 ---
 
-<BaseLayout title={title} description={description} ogUrl={ogUrl} tdcPlacement="none">
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={ogUrl}
+  tdcPlacement="none"
+  jsonLd={compassFaqJsonLd}
+>
   <article class="compass page-inner">
     <section class="compass__hero">
       <div class="compass__hero-copy compass__panel">
@@ -25,6 +37,10 @@ const cs = T.cohortSchedule;
         <a class="compass__sub-link" href="/articles/compass-method/">
           Read the COMPASS Method article
         </a>
+        <p class="compass__sub-note">
+          The COMPASS Method™ is Tides of Knowing's original interpretive framework. Training installs
+          it; <a href="/practice/">practice on The Deck Compass</a> stabilises it.
+        </p>
       </div>
 
       <figure class="compass__hero-figure compass__panel">
@@ -674,6 +690,24 @@ const cs = T.cohortSchedule;
   }
 
   .compass__sub-link:hover {
+    color: var(--tok-text-light-strong);
+  }
+
+  .compass__sub-note {
+    margin: 0.75rem 0 0;
+    max-width: 36rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+
+  .compass__sub-note a {
+    color: var(--tok-teal-light);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .compass__sub-note a:hover {
     color: var(--tok-text-light-strong);
   }
 

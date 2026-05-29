@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import { ABOUT_PATH, AUTHOR_NAME } from "./authorProfile";
 import { ENTITY_IDS } from "./ecosystem-structured-data";
 
 type BlogEntry = CollectionEntry<"blog">;
@@ -26,8 +27,6 @@ export type BlogSeoResolved = {
 };
 
 const DEFAULT_SUFFIX = "Field Notes | Tides of Knowing";
-const AUTHOR_NAME = "Leigh Spencer";
-const ABOUT_PATH = "/about/";
 
 export { AUTHOR_NAME, ABOUT_PATH };
 

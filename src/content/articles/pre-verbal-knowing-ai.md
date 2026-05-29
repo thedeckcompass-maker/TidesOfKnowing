@@ -24,6 +24,16 @@ secondaryKeywords:
   - "implicit memory tarot"
   - "AI translation stage"
   - "intuition before language"
+shortAnswer: "Pre-verbal knowing is cognition before language: signal, impression, and felt sense that have not yet been encoded as words. AI operates only after that stage, at translation. Intuitive reading depends on cultivating reception and recognition before meaning is named."
+furtherReading:
+  - title: "What AI Can't Access"
+    href: "/articles/what-ai-cant-access/"
+  - title: "The Myth of AI Intuition"
+    href: "/articles/myth-ai-intuition-simulation/"
+  - title: "Tarot as a Pre-Symbolic Interface"
+    href: "/articles/tarot-pre-symbolic-interface/"
+  - title: "The COMPASS Method"
+    href: "/articles/compass-method/"
 ---
 
 The protocol is deceptively simple. You are given a lexicon: a string of random numbers that corresponds to a target, a person, a place, or a situation you have been given no information about. Your task is to perceive what is there. Not to think about it, not to analyse it, not to construct a plausible answer from available evidence. To perceive it while the usual pull of time, distance, and expectation is held deliberately light, so interpretation does not arrive early and overwrite what you are trying to notice.

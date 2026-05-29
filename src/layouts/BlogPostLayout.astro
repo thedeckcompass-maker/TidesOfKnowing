@@ -6,8 +6,11 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { RelatedLink } from "../data/relatedPosts";
 import type { BlogCategoryRow } from "../lib/blogCategories";
 import { FOUNDATIONAL_FIELD_NOTE_FOOTER } from "../lib/blogFieldNotes";
-import { articleAuthorAttribution } from "../lib/authorProfile";
-import { ABOUT_PATH, blogPostingJsonLd } from "../lib/blogSeo";
+import AuthorBlock from "../components/AuthorBlock.astro";
+import FurtherReading from "../components/FurtherReading.astro";
+import ShortAnswerBlock from "../components/ShortAnswerBlock.astro";
+import { blogPostingJsonLd } from "../lib/blogSeo";
+import type { FurtherReadingItem } from "../lib/furtherReading";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { siteBase } from "../lib/site";
 
@@ -42,6 +45,8 @@ interface Props {
   heroImage?: string;
   heroImageAlt?: string;
   heroCaption?: string;
+  shortAnswer?: string;
+  furtherReading?: FurtherReadingItem[];
 }
 
 const {
@@ -69,7 +74,11 @@ const {
   heroImage,
   heroImageAlt = "",
   heroCaption,
+  shortAnswer: shortAnswerProp,
+  furtherReading = [],
 } = Astro.props;
+
+const shortAnswer = shortAnswerProp?.trim() ?? "";
 
 const heroSrc = heroImage?.trim() ?? "";
 const heroAlt = heroImageAlt?.trim() ?? "";
@@ -164,9 +173,10 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             ) : null
           }
           <h1 class="tok-blog-post-title">{title}</h1>
-          <p class="tok-blog-post-trust" data-reveal>
-            By <a href={ABOUT_PATH}>Leigh Spencer</a> · {articleAuthorAttribution}
-          </p>
+          <AuthorBlock class="tok-blog-post-trust" linkToAbout />
+          {shortAnswer ? (
+            <ShortAnswerBlock text={shortAnswer} class="tok-blog-short-answer" />
+          ) : null}
           <p class="tok-blog-post-meta">
             <time datetime={isoDate}>{displayDate}</time>
             <span class="tok-blog-post-meta-sep" aria-hidden="true">·</span>
@@ -184,6 +194,8 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
             <slot />
           </div>
         </article>
+
+        <FurtherReading items={furtherReading} class="tok-blog-further-reading" />
 
         {
           foundational ? (
@@ -304,21 +316,11 @@ const jsonLd = [blogPostingLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-post-trust {
     margin: 0 0 0.65rem;
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    line-height: 1.62;
-    font-weight: 400;
-    color: var(--tok-text-muted);
   }
 
-  .tok-blog-post-trust a {
-    color: var(--tok-teal);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .tok-blog-post-trust a:hover {
-    color: var(--tok-teal-dim);
+  .tok-blog-short-answer {
+    margin-bottom: 0.85rem;
+    max-width: none;
   }
 
   .tok-blog-post-title {

@@ -3,6 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import BlogSidebar from "../components/BlogSidebar.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import type { BlogCategoryRow } from "../lib/blogCategories";
+import ShortAnswerBlock from "../components/ShortAnswerBlock.astro";
 import { FIELD_NOTES_DEFINITION } from "../lib/blogFieldNotes";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
 import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
@@ -32,6 +33,7 @@ interface Props {
   heroImage?: string;
   heroImageAlt?: string;
   heroCaption?: string;
+  shortAnswer?: string;
 }
 
 const {
@@ -51,7 +53,10 @@ const {
   heroImage,
   heroImageAlt = "",
   heroCaption,
+  shortAnswer: shortAnswerProp,
 } = Astro.props;
+
+const shortAnswer = shortAnswerProp?.trim() ?? "";
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -130,6 +135,9 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
               <p class="tok-blog-series-subtitle">{subtitle}</p>
             ) : null
           }
+          {shortAnswer ? (
+            <ShortAnswerBlock text={shortAnswer} class="tok-blog-series-short-answer" />
+          ) : null}
           <p class="tok-blog-series-intro">{description}</p>
         </header>
 
@@ -283,6 +291,11 @@ const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
     text-align: center;
     color: var(--tok-text-dark);
     opacity: 0.72;
+  }
+
+  .tok-blog-series-short-answer {
+    margin-bottom: 1rem;
+    max-width: none;
   }
 
   .tok-blog-series-intro {

@@ -92,66 +92,54 @@ const cards: CardPanel[] = await Promise.all(
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
   <article class="rcm-tool page-inner" id="rcm-tool">
-    <header class="rcm-tool__hero">
-      <p class="rcm-tool__eyebrow">Tarot interpretation tool</p>
-      <h1 class="rcm-tool__title">Repeating Card Meanings</h1>
-      <p class="rcm-tool__lede">
-        When the same tarot card continues appearing across readings, the repetition often points toward
-        something unresolved, unintegrated, re-emerging, or still unfolding beneath the surface of events.
-      </p>
-      <p class="rcm-tool__lede">
-        This tool explores what recurring cards may be attempting to stabilise across time: across days,
-        seasons, relationships, transitions, emotional cycles, and longer life patterns.
-      </p>
-      <p class="rcm-tool__lede">
-        Rather than treating repeated cards as isolated meanings, the readings examine:
-      </p>
-      <ul class="rcm-tool__hero-list">
-        <li>what continues returning into awareness</li>
-        <li>where pressure, timing, avoidance, or unfinished movement may exist</li>
-        <li>
-          how the meaning of repetition shifts as the Seeker's circumstances and relationship to the
-          pattern evolve
-        </li>
-      </ul>
-      <p class="rcm-tool__lede rcm-tool__lede--closing">
-        Choose the card that keeps appearing. There is no draw here. The interpretation unfolds from the
-        card already present in your life.
-      </p>
-      <p class="rcm-tool__authority">
-        Created by Leigh Spencer for Tides of Knowing, drawing on 40+ years of tarot practice, symbolic
-        interpretation, and The COMPASS Method<sup class="rcm-tool__tm">TM</sup>.
-      </p>
-      <aside class="rcm-tool__canonical-callout" aria-labelledby="rcm-tool-canonical-heading">
-        <h2 id="rcm-tool-canonical-heading" class="rcm-tool__canonical-title">
-          Canonical meaning pages
-        </h2>
-        <p class="rcm-tool__canonical-text">
-          This page is the interactive selector. Each card’s authoritative, indexable reference lives on
-          the{" "}
-          <a href={getRepeatingCardSeoHubPath()}>repeating card pattern library</a>
-          {" "}({getRepeatingCardSeoHubPath()}). Use the dropdown here for quick lookup; use the library
-          pages when you want the full symbolic interpretation surfaced for search and sharing.
-        </p>
-      </aside>
-    </header>
+    <p class="rcm-tool__eyebrow">Tarot interpretation tool</p>
 
-    <section class="rcm-tool__selector" aria-labelledby="rcm-selector-heading">
-      <h2 class="visually-hidden" id="rcm-selector-heading">Choose a card</h2>
-      <div class="rcm-tool__selector-panel">
-        <label class="rcm-tool__label" for="rcm-card-select">Choose the card that keeps appearing</label>
-        <select class="rcm-tool__select" id="rcm-card-select" name="card">
-          <option value="">Select a card</option>
-          {
-            cards.map((card) => (
-              <option value={card.id}>{card.label}</option>
-            ))
-          }
-        </select>
-        <p class="rcm-tool__selector-hint" id="rcm-empty-hint">
-          Select a card above to read its repeating meaning.
+    <section class="rcm-tool__workspace" aria-labelledby="rcm-tool-title">
+      <div class="rcm-tool__workspace-main">
+        <h1 class="rcm-tool__title" id="rcm-tool-title">Repeating Card Meanings</h1>
+        <p class="rcm-tool__intro">
+          Choose the tarot card that keeps appearing to explore what the pattern may be asking you to
+          notice.
+        </p>
+
+        <section class="rcm-tool__selector" aria-labelledby="rcm-selector-heading">
+          <h2 class="visually-hidden" id="rcm-selector-heading">Choose a card</h2>
+          <div class="rcm-tool__selector-panel">
+            <label class="rcm-tool__label" for="rcm-card-select">
+              Choose the card that keeps appearing
+            </label>
+            <select class="rcm-tool__select" id="rcm-card-select" name="card">
+              <option value="">Select a card</option>
+              {
+                cards.map((card) => (
+                  <option value={card.id}>{card.label}</option>
+                ))
+              }
+            </select>
+            <p class="rcm-tool__selector-hint" id="rcm-empty-hint">
+              Select a card above to read its repeating meaning.
+            </p>
+          </div>
+        </section>
+
+        <p class="rcm-tool__library-note">
+          For full searchable reference pages, visit the{" "}
+          <a href={getRepeatingCardSeoHubPath()}>repeating card pattern library</a>.
         </p>
       </div>
+
+      <aside class="rcm-tool__canonical-callout" aria-labelledby="rcm-tool-canonical-heading">
+        <h2 id="rcm-tool-canonical-heading" class="rcm-tool__canonical-title">
+          Full reference library
+        </h2>
+        <p class="rcm-tool__canonical-text">
+          This page is the interactive selector for quick lookup. Each card’s authoritative, indexable
+          meaning lives in the{" "}
+          <a href={getRepeatingCardSeoHubPath()}>repeating card pattern library</a>
+          {" "}at <span class="rcm-tool__canonical-path">{getRepeatingCardSeoHubPath()}</span>. Use
+          those pages for search, sharing, and the complete symbolic interpretation.
+        </p>
+      </aside>
     </section>
 
     <div id="rcm-results" class="rcm-tool__results" aria-live="polite">
@@ -269,6 +257,36 @@ const cards: CardPanel[] = await Promise.all(
       }
     </div>
 
+    <section class="rcm-tool__context" aria-labelledby="rcm-tool-context-heading">
+      <h2 id="rcm-tool-context-heading" class="visually-hidden">About repeating card patterns</h2>
+      <p class="rcm-tool__lede">
+        When the same tarot card continues appearing across readings, the repetition often points toward
+        something unresolved, unintegrated, re-emerging, or still unfolding beneath the surface of events.
+      </p>
+      <p class="rcm-tool__lede">
+        This tool explores what recurring cards may be attempting to stabilise across time: across days,
+        seasons, relationships, transitions, emotional cycles, and longer life patterns.
+      </p>
+      <p class="rcm-tool__lede">
+        Rather than treating repeated cards as isolated meanings, the readings examine:
+      </p>
+      <ul class="rcm-tool__hero-list">
+        <li>what continues returning into awareness</li>
+        <li>where pressure, timing, avoidance, or unfinished movement may exist</li>
+        <li>
+          how the meaning of repetition shifts as the Seeker's circumstances and relationship to the
+          pattern evolve
+        </li>
+      </ul>
+      <p class="rcm-tool__lede rcm-tool__lede--closing">
+        There is no draw here. The interpretation unfolds from the card already present in your life.
+      </p>
+      <p class="rcm-tool__authority">
+        Created by Leigh Spencer for Tides of Knowing, drawing on 40+ years of tarot practice, symbolic
+        interpretation, and The COMPASS Method<sup class="rcm-tool__tm">TM</sup>.
+      </p>
+    </section>
+
     <RepeatingCardPatternsEditorialLinks
       class="rcm-tool__learn-more"
       heading="Learn More About Repeating Cards"
@@ -353,18 +371,12 @@ const cards: CardPanel[] = await Promise.all(
   }
 
   .rcm-tool {
-    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 52rem;
-  }
-
-  .rcm-tool__hero {
-    margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
-    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    padding: clamp(1.35rem, 4vw, 2.25rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 56rem;
   }
 
   .rcm-tool__eyebrow {
-    margin: 0 0 0.55rem;
+    margin: 0 0 0.65rem;
     font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
@@ -373,14 +385,66 @@ const cards: CardPanel[] = await Promise.all(
     color: var(--tok-gold);
   }
 
+  .rcm-tool__workspace {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.35rem);
+    margin-bottom: clamp(1.25rem, 3.5vw, 1.75rem);
+    padding-bottom: clamp(1rem, 3vw, 1.35rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  @media (min-width: 900px) {
+    .rcm-tool__workspace {
+      grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+      align-items: start;
+      gap: clamp(1.25rem, 3vw, 2rem);
+    }
+  }
+
+  .rcm-tool__workspace-main {
+    min-width: 0;
+  }
+
   .rcm-tool__title {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.55rem;
     font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
     font-size: clamp(2rem, 4.5vw, 2.65rem);
     line-height: 1.15;
     color: var(--tok-text-light);
+  }
+
+  .rcm-tool__intro {
+    margin: 0 0 1rem;
+    max-width: 40rem;
+    font-size: 1.05rem;
+    line-height: 1.62;
+    color: var(--tok-text-light-soft);
+  }
+
+  .rcm-tool__library-note {
+    margin: 0.85rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 88%, transparent);
+  }
+
+  .rcm-tool__library-note a {
+    color: var(--tok-teal-light);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .rcm-tool__library-note a:hover {
+    color: var(--tok-text-light);
+  }
+
+  .rcm-tool__context {
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
   }
 
   .rcm-tool__lede {
@@ -423,12 +487,18 @@ const cards: CardPanel[] = await Promise.all(
   }
 
   .rcm-tool__canonical-callout {
-    margin: clamp(1.15rem, 3vw, 1.5rem) 0 0;
-    padding: clamp(1rem, 2.5vw, 1.25rem);
-    max-width: 44rem;
-    border: 1px solid color-mix(in srgb, var(--tok-teal) 35%, transparent);
+    margin: 0;
+    padding: clamp(0.85rem, 2.5vw, 1.1rem);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 22%, transparent);
     border-radius: var(--radius-soft);
-    background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 38%, transparent);
+  }
+
+  @media (min-width: 900px) {
+    .rcm-tool__canonical-callout {
+      position: sticky;
+      top: var(--tok-sticky-under-header);
+    }
   }
 
   .rcm-tool__canonical-title {
@@ -460,15 +530,25 @@ const cards: CardPanel[] = await Promise.all(
     color: var(--tok-teal-dim);
   }
 
+  .rcm-tool__canonical-path {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    word-break: break-word;
+    color: var(--tok-text-muted);
+    opacity: 0.9;
+  }
+
   .rcm-tool__card-page-sep {
     color: color-mix(in srgb, var(--tok-text-light-soft) 70%, transparent);
   }
 
   .rcm-tool__authority {
-    margin: clamp(1.15rem, 3vw, 1.5rem) 0 0;
-    padding-top: clamp(0.9rem, 2.5vw, 1.15rem);
+    margin: clamp(1rem, 2.5vw, 1.25rem) 0 0;
+    padding-top: clamp(0.85rem, 2.5vw, 1rem);
     max-width: 44rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
     font-family: var(--font-body);
     font-size: 0.86rem;
     font-weight: 400;
@@ -478,16 +558,17 @@ const cards: CardPanel[] = await Promise.all(
   }
 
   .rcm-tool__selector {
-    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+    margin: 0;
   }
 
   .rcm-tool__selector-panel {
     display: grid;
     gap: 0.55rem;
     padding: clamp(1rem, 3vw, 1.35rem);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 48%, transparent);
     border-radius: var(--radius-soft);
-    background: color-mix(in srgb, var(--tok-surface-reading) 48%, transparent);
+    background: var(--tok-surface-reading);
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--tok-gold) 18%, transparent);
     color: var(--tok-text-dark);
   }
 
