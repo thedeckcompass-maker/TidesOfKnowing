@@ -19,7 +19,7 @@ draft: false
 featured: false
 heroImage: "/images/blog/how-i-use-the-four-knights-in-tarot/hero.jpg"
 heroImageAlt: "The four Knights from Tarot of Traditions arranged as working companions, with The High Priestess visible on the card box."
-heroCaption: "The four Knights as working companions: practical steadiness, emotional attunement, clear thinking, and creative momentum."
+heroCaption: "The four Knights as working companions: steadiness, attunement, clarity, and creative momentum."
 ogImage: "/images/blog/how-i-use-the-four-knights-in-tarot/hero.jpg"
 metaTitle: "How I Use the Four Knights in Tarot for Focus, Work, and Direction | Field Notes | Tides of Knowing"
 metaDescription: "How I use the four Knights in tarot as focused working energies for motivation, creative direction, emotional attunement, and practical momentum when work needs to move."
