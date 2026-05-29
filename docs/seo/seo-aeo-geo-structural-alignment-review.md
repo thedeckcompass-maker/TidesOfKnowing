@@ -241,7 +241,7 @@ No change to the structural rules in §2–§8; Phase 3 applied them rather than
 3. **Field Notes visual taxonomy:** Differences between foundational notes, standalone notes, and series must be reader-legible and intentional (badges: Foundational Field Note, Field Note, Field Note Series), without database-style clutter. Cards use colour and label to signal attention weight: foundational notes use a grounding earth/green treatment; standalone notes use a lighter blue treatment; series use a deeper blue treatment and capped left-stripe count (1–3) to suggest multi-part depth, with exact part count in text (e.g. “4-part series”). Visual distinction must never feel accidental.
 
 4. **Affirmative interpretive positioning:** Tides of Knowing defines its approach affirmatively. SEO, AEO, and GEO copy must not create defensive positioning by dismissing fortune-telling, divination, prediction, or other tarot practices. Describe the site's own method, vocabulary, and reader value (symbolic interpretation, recurrence, relational meaning, reflective practice, The COMPASS Method™).
-5. **Tools hub ordering:** On `/tools/`, live tools precede coming-soon tools so the primary visitor action is not buried behind future-state cards.
+5. **Tools hub ordering:** On `/tools/`, live tools precede coming-soon tools so the primary visitor action is not buried behind future-state cards. Live tool cards use a single CTA (title to the tool); canonical library links belong on the tool page and hub, not on the directory card.
 
 ---
 

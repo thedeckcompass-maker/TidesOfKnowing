@@ -10,7 +10,6 @@ const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 
 const tableBetweenThemUrl = "/tools/three-card-relationship-tarot-reading/";
 const repeatedCardMeaningUrl = "/tools/repeating-card-meanings/";
-const repeatingCardLibraryUrl = "/repeating-card-meanings/";
 
 const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
   pagePathname: Astro.url.pathname,
@@ -42,11 +41,6 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
         <p class="tools-hub__card-desc">
           Explore what it means when the same tarot card keeps appearing across readings, whether for a
           reason, a season, or a lifetime.
-        </p>
-        <p class="tools-hub__card-library">
-          <a href={repeatingCardLibraryUrl}>Canonical pattern library</a>
-          {" "}(indexable reference pages) ·{" "}
-          <a href={repeatedCardMeaningUrl}>Interactive selector</a>
         </p>
         <p class="tools-hub__status tools-hub__status--live">Available now</p>
       </li>
@@ -201,25 +195,6 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     line-height: 1.62;
     color: var(--tok-text-dark);
     flex: 1;
-  }
-
-  .tools-hub__card-library {
-    margin: 0;
-    font-size: 0.84rem;
-    line-height: 1.55;
-    color: var(--tok-text-dark);
-    opacity: 0.9;
-  }
-
-  .tools-hub__card-library a {
-    color: var(--tok-teal);
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-  }
-
-  .tools-hub__card-library a:hover {
-    color: var(--tok-teal-dim);
   }
 
   .tools-hub__compass {
