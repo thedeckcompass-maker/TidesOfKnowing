@@ -195,8 +195,14 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           type="button"
           aria-expanded="false"
           aria-controls="site-primary-nav"
+          aria-label="Open primary navigation"
         >
-          Menu
+          <span class="site-nav-toggle__icon" aria-hidden="true">
+            <span class="site-nav-toggle__bar"></span>
+            <span class="site-nav-toggle__bar"></span>
+            <span class="site-nav-toggle__bar"></span>
+          </span>
+          <span class="site-nav-toggle__label">Menu</span>
         </button>
         <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
           <a
@@ -292,14 +298,22 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         var nav = document.getElementById("site-primary-nav");
         if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) return;
 
+        function setMenuOpen(isOpen) {
+          nav.classList.toggle("site-nav--open", isOpen);
+          document.body.classList.toggle("site-nav-body--open", isOpen);
+          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          toggle.setAttribute(
+            "aria-label",
+            isOpen ? "Close primary navigation" : "Open primary navigation"
+          );
+        }
+
         function closeMenu() {
-          nav.classList.remove("site-nav--open");
-          toggle.setAttribute("aria-expanded", "false");
+          setMenuOpen(false);
         }
 
         toggle.addEventListener("click", function () {
-          var isOpen = nav.classList.toggle("site-nav--open");
-          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          setMenuOpen(!nav.classList.contains("site-nav--open"));
         });
 
         nav.addEventListener("click", function (event) {
@@ -314,7 +328,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         });
 
         window.addEventListener("resize", function () {
-          if (window.innerWidth > 900) closeMenu();
+          if (window.matchMedia("(min-width: 901px)").matches) closeMenu();
         });
       })();
     </script>
@@ -361,6 +375,10 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
 <style>
   /* Masthead: fixed light-brand treatment (Bluff Hill + nav) in all color schemes. */
+  :global(body.site-nav-body--open) {
+    overflow-x: clip;
+  }
+
   .site-header {
     --masthead-bg: #F2EFE9;
     --masthead-text: #0B1F3A;
@@ -443,6 +461,30 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   .site-nav-toggle {
     display: none;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .site-nav-toggle__icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 1.1rem;
+    height: 0.85rem;
+  }
+
+  .site-nav-toggle__bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    border-radius: 1px;
+  }
+
+  .site-nav-toggle__label {
+    display: inline-block;
   }
 
   .site-nav__link {
@@ -559,15 +601,16 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     padding-top: var(--tok-header-height);
   }
 
-  @media (max-width: var(--bp-nav)) {
+  /* Literal px: custom properties in @media are unsupported on many mobile browsers. */
+  @media (max-width: 900px) {
     .site-header__inner {
       flex-wrap: nowrap;
       min-height: var(--tok-header-height);
+      position: relative;
     }
 
     .site-nav-toggle {
       display: inline-flex;
-      align-items: center;
       justify-content: center;
       margin-left: auto;
       padding: 0.45rem 0.75rem;
@@ -598,20 +641,40 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       top: 100%;
       left: 0;
       right: 0;
+      z-index: calc(var(--z-header) + 1);
       flex-direction: column;
       align-items: stretch;
       gap: 0;
+      margin: 0;
       padding: 0.4rem 1.25rem 0.9rem;
       background: var(--tok-deep-ocean);
       border-top: 1px solid var(--tok-border-system);
       border-bottom: 1px solid var(--tok-border-system);
+      box-shadow: var(--shadow-sys-md);
       max-height: calc(100dvh - var(--tok-header-height));
+      overflow-x: hidden;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
 
     .site-nav.site-nav--open {
       display: flex;
+    }
+
+    .site-nav-toggle[aria-expanded="true"] .site-nav-toggle__bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .site-nav-toggle[aria-expanded="true"] .site-nav-toggle__bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .site-nav-toggle[aria-expanded="true"] .site-nav-toggle__bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    .site-nav-toggle__bar {
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
     .site-nav__link {
@@ -667,14 +730,22 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     }
   }
 
-  @media (min-width: var(--bp-nav-min)) {
+  @media (min-width: 901px) {
     .site-header__inner {
       flex-wrap: nowrap;
     }
 
     .site-nav {
+      display: flex;
+      position: static;
       margin-left: auto;
       flex-wrap: nowrap;
+      max-height: none;
+      overflow: visible;
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
 
     .site-nav-toggle {
@@ -682,7 +753,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     }
   }
 
-  @media (max-width: var(--bp-sm)) {
+  @media (max-width: 720px) {
     .site-brand__icon {
       width: 28px;
       height: 28px;
