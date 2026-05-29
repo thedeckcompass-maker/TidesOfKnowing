@@ -283,7 +283,6 @@ const aboutPageLd = {
   }
 
   .about__hero {
-    display: flow-root;
     margin-bottom: clamp(2rem, 5vw, 2.75rem);
     padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
     border-bottom: 1px solid color-mix(in srgb, var(--tok-border-light) 85%, transparent);
@@ -291,6 +290,30 @@ const aboutPageLd = {
 
   .about__hero-text {
     max-width: 42rem;
+  }
+
+  @media (min-width: 720px) {
+    .about__hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(11.5rem, 14.75rem);
+      column-gap: clamp(1.5rem, 4vw, 2.25rem);
+      align-items: start;
+    }
+
+    .about__hero-text {
+      grid-column: 1;
+      grid-row: 1;
+      max-width: none;
+    }
+
+    .about__figure {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      align-self: start;
+      margin: 0;
+      max-width: 14.75rem;
+    }
   }
 
   .about__title {
@@ -312,7 +335,7 @@ const aboutPageLd = {
   }
 
   .about__figure {
-    margin: 0 0 1.5rem;
+    margin: clamp(1.5rem, 4vw, 2rem) auto 0;
     max-width: min(100%, 17.5rem);
   }
 
@@ -323,14 +346,8 @@ const aboutPageLd = {
     border-radius: var(--radius-soft);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
     box-shadow: var(--shadow-md);
-  }
-
-  @media (min-width: 720px) {
-    .about__figure {
-      float: right;
-      margin: 0.15rem 0 1.25rem clamp(1.5rem, 4vw, 2.25rem);
-      max-width: 14.75rem;
-    }
+    object-fit: cover;
+    object-position: center top;
   }
 
   .about__pull {
