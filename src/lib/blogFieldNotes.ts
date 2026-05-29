@@ -208,6 +208,11 @@ export type BlogIndexStandaloneCard = {
 
 export type BlogIndexItem = BlogIndexSeriesCard | BlogIndexStandaloneCard;
 
+/** Left stripe count on Field Notes index series cards (1–3; label carries exact part count). */
+export function fieldNoteSeriesStripeCount(noteCount: number): number {
+  return Math.min(Math.max(noteCount, 1), 3);
+}
+
 export function buildBlogIndexItems(
   entries: BlogEntry[],
   categoryLabelFn: (entry: BlogEntry) => string,

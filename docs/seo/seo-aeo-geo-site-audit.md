@@ -672,7 +672,7 @@ Hero note (“Training installs it; practice stabilises it”) and the `training
 
 - **The COMPASS Method™** naming aligned on `/compass/`, `/articles/compass-method/`, `/practice/`, training data, and Phase 3 priority articles (formal framework references; conversational “COMPASS training” retained where appropriate).
 - **Field Notes** added to primary navigation (`/blog/`, label “Field Notes”).
-- **`/blog/` index** badge taxonomy clarified: Foundational Field Note, Field Note, Field Note Series (+ part count).
+- **`/blog/` index** badge taxonomy clarified: Foundational Field Note, Field Note, Field Note Series (+ part count). Card colour and series stripe treatment added for attention-weight cues (earth / light blue / deep blue).
 - **Mobile primary nav:** Collapsed menu at ≤900px (literal media-query px; CSS variables in `@media` fail on many phones). Burger opens vertical panel with all seven items; horizontal nav from 901px up.
 - **Repeating Card hub voice:** Removed defensive “not fortune-telling / fixed predictions” framing from `/repeating-card-meanings/` and aligned Repeating Card Patterns article short answers with affirmative symbolic-interpretation language.
 
