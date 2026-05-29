@@ -109,6 +109,8 @@ const isArticlesSection =
   (pathname === "/articles" || pathname.startsWith("/articles/")) &&
   !isCompassMethodRoute;
 const isAboutRoute = pathname.startsWith("/about");
+const isFieldNotesSection =
+  pathname === "/blog" || pathname.startsWith("/blog/");
 const baseBodySurface =
   isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
 const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
@@ -217,6 +219,13 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
             aria-current={isArticlesSection ? "page" : undefined}
           >
             Articles
+          </a>
+          <a
+            class="site-nav__link"
+            href="/blog/"
+            aria-current={isFieldNotesSection ? "page" : undefined}
+          >
+            Field Notes
           </a>
           <a
             class="site-nav__link"

@@ -135,9 +135,9 @@ The full library covers all 22 Major Arcana and all 56 Minor Arcana cards with t
 
 ---
 
-## A Note on the COMPASS Method
+## A Note on The COMPASS Method™
 
-When a repeating Major Arcana card has begun to feel oppressive rather than clarifying, or when the reader's emotional state is making it difficult to engage with the card's territory without distortion, the [COMPASS Method](/articles/compass-method/) offers a structured way to stabilise interpretation. Major Arcana cards, precisely because they carry significant symbolic weight, are particularly susceptible to being read through the lens of fear or unresolved expectation. The COMPASS Method is designed to interrupt that distortion and return the reading to what the card is actually pointing toward.
+When a repeating Major Arcana card has begun to feel oppressive rather than clarifying, or when the reader's emotional state is making it difficult to engage with the card's territory without distortion, [The COMPASS Method™](/articles/compass-method/) offers a structured way to stabilise interpretation. Major Arcana cards, precisely because they carry significant symbolic weight, are particularly susceptible to being read through the lens of fear or unresolved expectation. The method is designed to interrupt that distortion and return the reading to what the card is actually pointing toward.
 
 For the general framework on any repeating card, start with [Why the Same Tarot Card Keeps Appearing](/articles/why-the-same-tarot-card-keeps-appearing/). For recurrence versus stalker-card language, see [Repeating Cards vs Stalker Cards](/articles/repeating-cards-vs-stalker-cards/).
 

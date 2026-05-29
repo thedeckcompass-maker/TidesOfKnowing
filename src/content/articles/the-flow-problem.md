@@ -65,7 +65,7 @@ The shift required is from card-centric attention to *spread-centric* attention.
 
 **Position confusion.** Flow also breaks down when readers haven't fully internalised the sequential or logical relationship between positions in a spread. If you're using a Celtic Cross and you can describe what each position represents but you don't have a felt sense of how Position 3 relates to Position 10, the reading will have gaps where the logic should be. Each position is a node. Flow is what happens on the connections between nodes.
 
-This is one of the reasons The Deck Compass methodology, and the attention conditions named in [The COMPASS Method](/articles/compass-method/), pay particular attention to spread architecture: not just what each position means in isolation, but the logic of their relationships to each other. A spread is a map, and maps have territories. You need to understand the territory before you can guide someone through it.
+This is one of the reasons The Deck Compass methodology, and the attention conditions named in [The COMPASS Method™](/articles/compass-method/), pay particular attention to spread architecture: not just what each position means in isolation, but the logic of their relationships to each other. A spread is a map, and maps have territories. You need to understand the territory before you can guide someone through it.
 
 **Confidence hesitation.** This is the interpersonal version of the problem. Readers often stall at transition points between cards not because they don't know what to say next, but because they're uncertain whether what they're about to say is "right." So they qualify, they circle back, they hedge. And the reading loses its forward momentum.
 

@@ -109,11 +109,17 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
                   <li class="tok-blog-feed__item tok-blog-feed__item--series" data-reveal>
                     <article class="tok-blog-feed__article tok-blog-feed__article--series">
                       <p class="tok-blog-feed__meta">
-                        <span class="tok-blog-feed__badge">Series</span>
+                        <span class="tok-blog-feed__badge tok-blog-feed__badge--series">
+                          Field Note Series
+                        </span>
                         <span class="tok-blog-feed__sep" aria-hidden="true">
                           ·
                         </span>
-                        <span>{item.noteCount} Field Notes</span>
+                        <span>
+                          {item.noteCount === 1
+                            ? "1 part"
+                            : `${item.noteCount}-part series`}
+                        </span>
                         {item.cheatSheetAvailable ? (
                           <>
                             <span class="tok-blog-feed__sep" aria-hidden="true">
@@ -160,7 +166,7 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
                               : "tok-blog-feed__badge--note",
                           ]}
                         >
-                          {item.foundational ? "Foundational" : "Field Note"}
+                          {item.foundational ? "Foundational Field Note" : "Field Note"}
                         </span>
                         <span class="tok-blog-feed__sep" aria-hidden="true">
                           ·
@@ -315,6 +321,10 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
 
   .tok-blog-feed__badge {
     color: var(--tok-teal);
+  }
+
+  .tok-blog-feed__badge--series {
+    color: var(--tok-teal-dim);
   }
 
   .tok-blog-feed__badge--note {

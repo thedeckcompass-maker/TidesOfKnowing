@@ -128,6 +128,6 @@ For a broader understanding of why the same card keeps appearing across your rea
 
 ---
 
-## A Note on the COMPASS Method
+## A Note on The COMPASS Method™
 
-When a repeating card has generated significant anxiety, or when the reader is no longer sure whether they are interpreting the card or interpreting their own fear about the situation, the [COMPASS Method](/articles/compass-method/) provides a structured framework for returning to clear, grounded interpretation. It is designed precisely for the moments when emotional charge has begun to distort the quality of the reading, and it offers a reliable way to separate what the card is actually saying from what the reader's current emotional state is projecting onto it.
+When a repeating card has generated significant anxiety, or when the reader is no longer sure whether they are interpreting the card or interpreting their own fear about the situation, [The COMPASS Method™](/articles/compass-method/) provides a structured framework for returning to clear, grounded interpretation. It is designed precisely for the moments when emotional charge has begun to distort the quality of the reading, and it offers a reliable way to separate what the card is actually saying from what the reader's current emotional state is projecting onto it.

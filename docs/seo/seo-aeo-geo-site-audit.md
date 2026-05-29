@@ -668,6 +668,12 @@ Hero note (“Training installs it; practice stabilises it”) and the `training
 - FAQPage JSON-LD on `/compass/`
 - Person `@id` alignment on About
 
+### Pre-commit correction pass (2026-05-29)
+
+- **The COMPASS Method™** naming aligned on `/compass/`, `/articles/compass-method/`, `/practice/`, training data, and Phase 3 priority articles (formal framework references; conversational “COMPASS training” retained where appropriate).
+- **Field Notes** added to primary navigation (`/blog/`, label “Field Notes”).
+- **`/blog/` index** badge taxonomy clarified: Foundational Field Note, Field Note, Field Note Series (+ part count).
+
 ### Operational next steps (post-deploy)
 
 1. Deploy Phase 2–3 commit to production.

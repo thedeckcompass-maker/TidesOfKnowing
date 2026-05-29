@@ -234,6 +234,12 @@ No change to the structural rules in §2–§8; Phase 3 applied them rather than
 
 **Wave 3 (2026-05-29):** Cluster-capstone articles may already contain strong body links; wave passes should add `shortAnswer` / `furtherReading` and only one or two missing contextual links rather than duplicating link blocks at the foot of every article.
 
+**Pre-commit correction (2026-05-29):**
+
+1. **Formal naming:** Use **The COMPASS Method™** when naming the framework. Use **COMPASS** only in conversational or derivative labels (COMPASS training, COMPASS practice, COMPASS programme, COMPASS section). Do not shorten formal references to “COMPASS Method” or “the COMPASS method” in visible copy.
+2. **Field Notes visibility:** Field Notes (`/blog/`) are a primary authority pathway and belong in primary navigation alongside Articles, not only in footers or sidebars.
+3. **Field Notes visual taxonomy:** Differences between foundational notes, standalone notes, and series must be reader-legible and intentional (badges: Foundational Field Note, Field Note, Field Note Series), without database-style clutter.
+
 ---
 
 *End of structural alignment review.*

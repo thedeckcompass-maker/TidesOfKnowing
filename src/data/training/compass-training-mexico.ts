@@ -6,7 +6,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
   meta: {
     title: "COMPASS Training: Build Intuition. Work Live.",
     description:
-      "Structured 4-week live training in the COMPASS Method for tarot and oracle readers. Small, mentorship-led cohorts on Central Time (Mexico City), with practice inside The Deck Compass.",
+      "Structured 4-week live training in The COMPASS Method™ for tarot and oracle readers. Small, mentorship-led cohorts on Central Time (Mexico City), with practice inside The Deck Compass.",
   },
   hero: {
     eyebrow: "4-week live programme",
@@ -14,7 +14,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     paragraphs: [
       "You already know the cards. The harder work is perceptual: staying with what is actually occurring in a spread, naming it cleanly, and trusting the thread before doubt or over-explanation takes over.",
       "For readers who know something real is happening in their readings and want a clearer way to work with it.",
-      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation: the seven conditions of attention in the COMPASS Method, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
+      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation: the seven conditions of attention in The COMPASS Method™, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
       "The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work (not a performance, and not theory for its own sake).",
     ],
   },
@@ -42,7 +42,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
   },
   method: {
     label: "Method",
-    heading: "the COMPASS Method",
+    heading: "The COMPASS Method™",
     pillars: [
       "Center",
       "Open",
@@ -54,7 +54,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     ],
     paragraphs: [
       "This is not about collecting more card meanings. It is about practical intuitive development: how attention is held before interpretation, while it forms, and when the reading closes.",
-      "An original interpretive framework created by Tides of Knowing: the COMPASS Method (structured symbolic perception you can use under the pressure of live work).",
+      "An original interpretive framework created by Tides of Knowing: The COMPASS Method™ (structured symbolic perception you can use under the pressure of live work).",
     ],
   },
   learningOutcomes: {
@@ -74,7 +74,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     intro:
       "This is a four-week, live, discussion-based programme in a deliberately small cohort so mentorship and direct feedback stay central.",
     bullets: [
-      "Weeks one and two: the COMPASS Method and the seven conditions of attention, taught in alternate-day sessions",
+      "Weeks one and two: The COMPASS Method™ and the seven conditions of attention, taught in alternate-day sessions",
       "Weeks three and four: live practice and guided integration inside The Deck Compass platform",
       "Maximum six participants per cohort",
       "Minimum two participants to run",
@@ -163,7 +163,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
       },
       {
         q: "What is The Deck Compass?",
-        a: "The Deck Compass is the practice platform built specifically around the COMPASS Method. It is where you log readings, work with reflection prompts, and build the habit of structured intuitive practice over time. Training gives you the method. The Deck Compass gives you the environment to make it stick.",
+        a: "The Deck Compass is the practice platform built specifically around The COMPASS Method™. It is where you log readings, work with reflection prompts, and build the habit of structured intuitive practice over time. COMPASS training gives you the method. The Deck Compass gives you the environment to make it stick.",
       },
       {
         q: "What does a mentor observer session involve?",
@@ -206,5 +206,5 @@ export const compassTrainingMexico: CompassTrainingPage = {
     ctaHref: "/compass/apply/",
   },
   footerAttribution:
-    "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
+    "An original interpretive framework created by Tides of Knowing: The COMPASS Method™.",
 };

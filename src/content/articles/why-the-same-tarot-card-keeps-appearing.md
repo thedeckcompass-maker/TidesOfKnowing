@@ -140,11 +140,11 @@ The [interactive repeating card tool](/tools/repeating-card-meanings/) allows yo
 
 ---
 
-## A Note on the COMPASS Method
+## A Note on The COMPASS Method™
 
-The COMPASS Method is Tides of Knowing's framework for stabilising interpretation when emotional charge, confusion, or urgency is affecting the quality of a reading. It is particularly useful when a repeating card has begun to generate anxiety rather than clarity, or when the reader is no longer sure whether they are reading the card or reading their own fears.
+The COMPASS Method™ is Tides of Knowing's framework for stabilising interpretation when emotional charge, confusion, or urgency is affecting the quality of a reading. It is particularly useful when a repeating card has begun to generate anxiety rather than clarity, or when the reader is no longer sure whether they are reading the card or reading their own fears.
 
-Working with a repeating card through the [COMPASS Method](/articles/compass-method/) provides a structured way to separate what the card is actually saying from what the reader's emotional state is projecting onto it, and to arrive at an interpretation that is both honest and genuinely useful.
+Working with a repeating card through [The COMPASS Method™](/articles/compass-method/) provides a structured way to separate what the card is actually saying from what the reader's emotional state is projecting onto it, and to arrive at an interpretation that is both honest and genuinely useful.
 
 For majors specifically, see [Repeating Major Arcana Cards](/articles/repeating-major-arcana-cards/). To distinguish genuine recurrence from fixation language, see [Repeating Cards vs Stalker Cards](/articles/repeating-cards-vs-stalker-cards/).
 

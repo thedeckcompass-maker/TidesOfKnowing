@@ -39,7 +39,7 @@ export const compassTrainingNz: CompassTrainingPage = {
   },
   method: {
     label: "Method",
-    heading: "the COMPASS Method",
+    heading: "The COMPASS Method™",
     pillars: [
       "Center",
       "Open",
@@ -51,7 +51,7 @@ export const compassTrainingNz: CompassTrainingPage = {
     ],
     paragraphs: [
       "This is not about learning more tarot. It is about learning how to read.",
-      "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
+      "An original interpretive framework created by Tides of Knowing: The COMPASS Method™.",
     ],
   },
   learningOutcomes: {
@@ -70,7 +70,7 @@ export const compassTrainingNz: CompassTrainingPage = {
     heading: "How It Works",
     intro: "This is a 4-week live programme for a small cohort of readers.",
     bullets: [
-      "Weeks one and two: the COMPASS Method and the seven conditions of attention, taught in alternate-day sessions",
+      "Weeks one and two: The COMPASS Method™ and the seven conditions of attention, taught in alternate-day sessions",
       "Weeks three and four: live practice and guided integration inside The Deck Compass platform",
       "Maximum six participants per cohort",
       "Minimum two participants to run",
@@ -194,7 +194,7 @@ export const compassTrainingNz: CompassTrainingPage = {
       },
       {
         q: "What is The Deck Compass?",
-        a: "The Deck Compass is the practice platform built specifically around the COMPASS Method. It is where you log readings, work with reflection prompts, and build the habit of structured intuitive practice over time. Training gives you the method. The Deck Compass gives you the environment to make it stick.",
+        a: "The Deck Compass is the practice platform built specifically around The COMPASS Method™. It is where you log readings, work with reflection prompts, and build the habit of structured intuitive practice over time. COMPASS training gives you the method. The Deck Compass gives you the environment to make it stick.",
       },
       {
         q: "What does a mentor observer session involve?",
@@ -241,5 +241,5 @@ export const compassTrainingNz: CompassTrainingPage = {
     ctaHref: "/compass/apply/",
   },
   footerAttribution:
-    "An original interpretive framework created by Tides of Knowing: the COMPASS Method.",
+    "An original interpretive framework created by Tides of Knowing: The COMPASS Method™.",
 };

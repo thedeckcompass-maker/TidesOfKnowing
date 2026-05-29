@@ -1,13 +1,13 @@
 ---
-title: "the COMPASS Method: Seven conditions for clear intuitive reading"
+title: "The COMPASS Method™: Seven conditions for clear intuitive reading"
 subtitle: "How attention, not card knowledge, stabilises perception in tarot and related intuitive work"
 slug: "compass-method"
 listBadge: "Method"
 publishDate: 2026-04-10
 heroImage: "/images/articles/compass-method/compass-method-light.png"
-heroImageAlt: "the COMPASS Method framework graphic showing Center, Open, Map, Perceive, Align, Sense, and Seal."
+heroImageAlt: "The COMPASS Method™ framework graphic showing Center, Open, Map, Perceive, Align, Sense, and Seal."
 heroImageFit: "contain"
-excerpt: "the COMPASS Method names seven conditions of attention, Center, Open, Map, Perceive, Align, Sense, and Seal, that help intuitive reading stay clear, grounded, and trustworthy under pressure."
+excerpt: "The COMPASS Method™ names seven conditions of attention, Center, Open, Map, Perceive, Align, Sense, and Seal, that help intuitive reading stay clear, grounded, and trustworthy under pressure."
 tags:
   - compass-method
   - intuitive-reading
@@ -33,7 +33,7 @@ furtherReading:
     href: "/compass/"
 ---
 
-As a framework, the COMPASS Method names **conditions of attention**, not a new dictionary of card meanings. It describes what has to be present, in you, before and during a reading, for intuition to stay stable when stakes, emotion, or ambiguity run high.
+As a framework, The COMPASS Method™ names **conditions of attention**, not a new dictionary of card meanings. It describes what has to be present, in you, before and during a reading, for intuition to stay stable when stakes, emotion, or ambiguity run high.
 
 I developed it over decades of reading and of working as a journalist: two practices that both reward observation without distortion, patience with ambiguity, and the discipline of not deciding the story before the facts (or the spread) are actually in view.
 

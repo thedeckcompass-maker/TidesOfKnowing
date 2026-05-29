@@ -143,7 +143,7 @@ The reason this transition is difficult isn't intellectual. Most experienced rea
 
 We have years, sometimes decades, of pattern-matching built around card definitions. When we see the Tower, we reach for the Tower's meaning. The reach is so fast it's almost involuntary. Slowing that process down, reading the position and the question first, building the interpretive frame before pulling from the card vocabulary, requires a deliberate restructuring of the reading process itself.
 
-This is what [The COMPASS Method](/articles/compass-method/) and The Deck Compass methodology address at a structural level: not what the cards mean, but the sequence in which you engage with what you know. It's a process architecture for reading, not a new meaning system.
+This is what [The COMPASS Method™](/articles/compass-method/) and The Deck Compass methodology address at a structural level: not what the cards mean, but the sequence in which you engage with what you know. It's a process architecture for reading, not a new meaning system.
 
 You already have the meanings. The question is whether you're using them in the right order, through the right frame.
 

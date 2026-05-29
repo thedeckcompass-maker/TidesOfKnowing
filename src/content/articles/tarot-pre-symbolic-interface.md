@@ -129,7 +129,7 @@ This is why experienced practitioners often describe the experience of a spread 
 
 For structured practice at how two-card relationships behave as *relationship* rather than isolated keywords, the site’s [Tarot Combination Interpreter](/tools/tarot-combination-interpreter/) is a useful companion: it keeps imagery, arcana, suit, and rank in view while you learn to describe the *movement* between cards.
 
-The practitioner's skill is in holding that field open long enough for the signal to stabilise before reaching for interpretation. In remaining present with the activation before collapsing it into meaning. This is the discipline the [COMPASS method](/articles/compass-method/) addresses at its foundation: the conditions of attention that make it possible to stay with a spread as a field rather than rushing toward the safety of sequential interpretation.
+The practitioner's skill is in holding that field open long enough for the signal to stabilise before reaching for interpretation. In remaining present with the activation before collapsing it into meaning. This is the discipline [The COMPASS Method™](/articles/compass-method/) addresses at its foundation: the conditions of attention that make it possible to stay with a spread as a field rather than rushing toward the safety of sequential interpretation.
 
 Map, in the COMPASS framework, is not about assigning meanings to positions. It is about establishing what is actually present before deciding what anything means. Perceive is not about analysis. It is about noticing what is relating, what is pulling attention, what is creating tension or resonance across the field, before the analytical mind arrives with its explanations.
 
@@ -157,6 +157,6 @@ That is the interface. That is the practice.
 
 ---
 
-*Leigh Spencer is the founder of Tides of Knowing and founder of [the COMPASS Method](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
+*Leigh Spencer is the founder of Tides of Knowing and founder of [The COMPASS Method™](/articles/compass-method/), a framework for the conditions of attention that make intuitive reading reliable under pressure. With 30 years in professional journalism and 40 years as a tarot reader and intuitive practitioner, she writes at the intersection of symbolic literacy, perceptual development, and the changing landscape of human knowing.*
 
 ---
