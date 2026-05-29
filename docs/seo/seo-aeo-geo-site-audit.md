@@ -298,7 +298,7 @@ Pages that can build authority fastest with lowest editorial risk.
 | `/practice/` | Deck Compass bridge | Med | Med | Med | WebPage schema; one definitional line | Low | |
 | `/compass/` | Training conversion | Med | **High** | Med | FAQPage JSON-LD | Low | FAQ already visible |
 | `/blog/reading-the-grip/` (series) | Practitioner Field Notes | Med | Med | Med | Series framing + method links | Low | |
-| `/tools/` | Tool discovery | Med | Med | Low | Improve tool blurbs | Low | |
+| `/tools/` | Tool discovery | Med | Med | Low | Hub intro consolidated (one H1 + paragraph); sitemap `0.7` | Low | 2026-05-29: action-first intro; title/meta unchanged |
 | `/ai-and-intuition-field-guide/` | Lead magnet | Med | Med | Med | Audit meta + extractable summary | Low | |
 
 ---
@@ -675,6 +675,7 @@ Hero note (“Training installs it; practice stabilises it”) and the `training
 - **`/blog/` index** badge taxonomy clarified: Foundational Field Note, Field Note, Field Note Series (+ part count). Card colour and series stripe treatment added for attention-weight cues (earth / light blue / deep blue).
 - **Mobile primary nav:** Collapsed menu at ≤900px (literal media-query px; CSS variables in `@media` fail on many phones). Burger opens vertical panel with all seven items; horizontal nav from 901px up.
 - **Repeating Card hub voice:** Removed defensive “not fortune-telling / fixed predictions” framing from `/repeating-card-meanings/` and aligned Repeating Card Patterns article short answers with affirmative symbolic-interpretation language.
+- **Tools hub (`/tools/`):** Consolidated two intro bands (COMPASS kicker + “Tarot Interpretation Tools” H1 and duplicate paragraphs) into one H1 (“The COMPASS Method in Practice”) and one merged paragraph so the tool card grid appears sooner on mobile. `<title>` and meta description unchanged (tarot-tool keywords preserved). `/tools/` added to sitemap at priority `0.7`.
 
 ### Operational next steps (post-deploy)
 

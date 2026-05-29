@@ -18,18 +18,13 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl}>
   <article class="tools-hub page-inner">
-    <div class="tools-hub__frame">
-      <p class="tools-hub__frame-label">the COMPASS Method in practice</p>
-      <p class="tools-hub__frame-lede">
-        These tools are not here to give you more meanings to memorise. They are controlled practice
-        spaces for noticing how symbolic information behaves, how patterns form, and where your
-        attention begins to stabilise.
-      </p>
-    </div>
-
-    <h1 class="tools-hub__title">Tarot Interpretation Tools</h1>
+    <h1 class="tools-hub__title">The COMPASS Method in Practice</h1>
     <p class="tools-hub__intro">
-      These tools help tarot readers practise card relationships, spread flow, and repeated pattern recognition, so readings stay relational instead of collapsing into isolated keywords.
+      These tools are not here to give you more meanings to memorise. They are controlled practice
+      spaces for noticing how symbolic information behaves, how patterns form, and where your
+      attention begins to stabilise, helping you work with card relationships, spread flow, and
+      repeated pattern recognition so readings stay relational rather than collapsing into isolated
+      keywords.
     </p>
 
     <ul class="tools-hub__grid" role="list">
@@ -85,50 +80,25 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
 
 <style>
   .tools-hub {
-    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
     max-width: 48rem;
   }
 
-  .tools-hub__frame {
-    margin: 0 0 clamp(1.5rem, 4vw, 2rem);
-    padding-bottom: clamp(1.25rem, 3vw, 1.75rem);
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
-  }
-
-  .tools-hub__frame-label {
-    margin: 0 0 0.65rem;
-    font-family: var(--font-body);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--tok-gold);
-  }
-
-  .tools-hub__frame-lede {
-    margin: 0;
-    max-width: 42rem;
-    font-size: 1.02rem;
-    line-height: 1.7;
-    color: var(--tok-text-light-soft);
-    opacity: 0.96;
-  }
-
   .tools-hub__title {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.55rem;
     font-family: var(--font-accent);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(2rem, 4.5vw, 2.65rem);
-    line-height: 1.15;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.18;
     color: var(--tok-text-light);
   }
 
   .tools-hub__intro {
-    margin: 0 0 1.35rem;
-    font-size: 1.05rem;
-    line-height: 1.72;
-    max-width: 40rem;
+    margin: 0 0 0.9rem;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    max-width: 42rem;
     color: var(--tok-text-light-soft);
   }
 

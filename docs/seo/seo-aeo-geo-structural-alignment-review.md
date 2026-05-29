@@ -85,7 +85,16 @@ The Repeating Card Meanings tool (`/tools/repeating-card-meanings/`) exposed a s
 
 ### Tools hub (`/tools/`)
 
-**Moderate risk:** COMPASS framing block appears **before** H1. Acceptable for a directory page (intent is choose a tool), but card grid should remain visible without deep scroll. When adding tools, list live tools before long framing copy or keep framing to one short paragraph above grid.
+**Standard (2026-05-29):** One concise intro block above the tool grid: a single H1 plus one paragraph. Method framing supports the action; it must not delay access to the tools.
+
+| Rule | Requirement |
+|------|-------------|
+| Intro | One H1 + one paragraph only (no second heading band, no duplicate lede + H1 stack) |
+| Order | Live tools before coming-soon tools |
+| Metadata | `<title>` and meta description stay tarot-tool oriented; visible H1 may be method-first (same pattern as `/practice/`) |
+| CTAs | Live tool cards: single CTA to the tool; library links on tool pages and SEO hub, not on the directory card |
+
+Card grid should remain visible without deep scroll on mobile. Tight spacing above the grid is preferred over extra framing copy.
 
 ---
 
@@ -215,7 +224,7 @@ Phase 3 must **not** be site-wide rewriting. It should be a controlled pass on p
 - Tag indexing policy (57 URLs)
 - `/field-notes/` URL migration
 - Two-card tool SEO (see `docs/two-card-system/TWO-CARD-SEO-AEO-PLAN.md`)
-- Tools hub framing-before-H1 layout
+- ~~Tools hub framing-before-H1 layout~~ (resolved: single H1 + paragraph, 2026-05-29)
 - Generic article pathway block replacement with semantic links
 
 ---
@@ -241,7 +250,7 @@ No change to the structural rules in §2–§8; Phase 3 applied them rather than
 3. **Field Notes visual taxonomy:** Differences between foundational notes, standalone notes, and series must be reader-legible and intentional (badges: Foundational Field Note, Field Note, Field Note Series), without database-style clutter. Cards use colour and label to signal attention weight: foundational notes use a grounding earth/green treatment; standalone notes use a lighter blue treatment; series use a deeper blue treatment and capped left-stripe count (1–3) to suggest multi-part depth, with exact part count in text (e.g. “4-part series”). Visual distinction must never feel accidental.
 
 4. **Affirmative interpretive positioning:** Tides of Knowing defines its approach affirmatively. SEO, AEO, and GEO copy must not create defensive positioning by dismissing fortune-telling, divination, prediction, or other tarot practices. Describe the site's own method, vocabulary, and reader value (symbolic interpretation, recurrence, relational meaning, reflective practice, The COMPASS Method™).
-5. **Tools hub ordering:** On `/tools/`, live tools precede coming-soon tools so the primary visitor action is not buried behind future-state cards. Live tool cards use a single CTA (title to the tool); canonical library links belong on the tool page and hub, not on the directory card.
+5. **Tools hub ordering:** On `/tools/`, live tools precede coming-soon tools so the primary visitor action is not buried behind future-state cards. Live tool cards use a single CTA (title to the tool); canonical library links belong on the tool page and hub, not on the directory card. The hub uses one intro block (H1 + paragraph) above the grid; see §4 Tools hub.
 
 ---
 
