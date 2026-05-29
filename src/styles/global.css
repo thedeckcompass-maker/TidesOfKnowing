@@ -325,48 +325,41 @@ a:focus-visible {
 .article-prose figure.tarot-spread {
   clear: both;
   margin: 2.25rem 0;
+  max-width: 100%;
 }
 
 .article-prose .tarot-spread__cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: clamp(0.35rem, 1.2vw, 0.65rem);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.35rem;
-  scrollbar-width: thin;
-}
-
-@media (min-width: var(--bp-md)) {
-  .article-prose .tarot-spread__cards {
-    overflow-x: visible;
-    justify-content: space-between;
-  }
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(0.45rem, 1vw, 0.85rem);
+  align-items: start;
+  justify-items: center;
+  max-width: 100%;
+  overflow-x: visible;
 }
 
 .article-prose .tarot-spread__card {
-  flex: 0 0 auto;
-  width: clamp(4.25rem, 15vw, 7.25rem);
+  min-width: 0;
+  width: 100%;
 }
 
-@media (min-width: var(--bp-md)) {
-  .article-prose .tarot-spread--six .tarot-spread__card {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 7.25rem;
-  }
-}
-
-.article-prose .tarot-spread__card img {
+.article-prose .tarot-spread__card img,
+.article-prose .tarot-spread__image {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 120 / 209;
   object-fit: contain;
   border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
   border-radius: 2px;
+}
+
+@media (max-width: 760px) {
+  .article-prose .tarot-spread--six .tarot-spread__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.4rem, 2vw, 0.7rem);
+  }
 }
 
 .article-prose .tarot-spread__caption {
