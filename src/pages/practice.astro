@@ -1,84 +1,143 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../lib/breadcrumbs";
+import { ENTITY_IDS } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
 
 const tdcUrl = "https://www.thedeckcompass.com/";
 const title = "Practice with The Deck Compass | Tides of Knowing";
 const description =
-  "The Deck Compass is a live practice environment where readers and seekers meet, practise readings, and use guided journaling to reinforce The COMPASS Method™.";
+  "The Deck Compass is Tides of Knowing's live practice environment for readers and seekers. Apply The COMPASS Method™ through real sessions, reflective journaling, and repetition that strengthens symbolic perception.";
 const ogUrl = new URL("/practice/", siteBase(Astro)).href;
+const siteHref = siteBase(Astro);
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Practice", url: null },
+];
+
+const practicePageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  url: ogUrl,
+  description,
+  about: [{ "@id": ENTITY_IDS.deckOrg }, { "@id": ENTITY_IDS.compassMethod }],
+  isPartOf: { "@id": ENTITY_IDS.tidesWebSite },
+};
+
+const jsonLd = [practicePageLd, breadcrumbJsonLd(crumbs, siteHref)];
 ---
 
-<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+<BaseLayout title={title} description={description} ogUrl={ogUrl} jsonLd={jsonLd}>
   <article class="practice page-inner">
     <header class="practice__hero">
-      <h1 class="practice__h1">Where symbolic perception becomes practice.</h1>
+      <p class="practice__eyebrow">Tides of Knowing · Live practice</p>
+      <h1 class="practice__h1">Where The COMPASS Method™ becomes embodied practice.</h1>
       <p class="practice__lede">
-        The Deck Compass is a live practice environment for readers and seekers who want to move beyond memorised meanings and strengthen the habits that make readings hold together.
+        <a href="/">Tides of Knowing</a> is the editorial home for symbolic interpretation, intuitive literacy, and reflective tarot practice. <strong>The COMPASS Method™</strong> is the interpretive framework that organises that work. <strong>The Deck Compass</strong> is the live practice environment where readers and seekers apply the method under real conditions, with reflective journaling designed to reinforce what holds.
       </p>
-      <p class="practice__cta-row">
-        <a class="practice__cta" href={tdcUrl}>Continue to The Deck Compass</a>
+      <p class="practice__bridge">
+        Training installs the method. Practice stabilises the method.
       </p>
       <p class="practice__support">
-        Live practice on The Deck Compass. Structured by the{" "}
-        <a href="/articles/compass-method/">The COMPASS Method™</a>. For cohort training, see{" "}
-        <a href="/compass/">COMPASS training</a>.
+        This page explains how those three parts fit together before you continue to the platform itself.
       </p>
     </header>
 
-    <section class="practice__section" aria-labelledby="practice-why-heading">
-      <h2 id="practice-why-heading" class="practice__h2">Why Practice Matters</h2>
+    <section class="practice__section" aria-labelledby="practice-what-heading">
+      <h2 id="practice-what-heading" class="practice__h2">What The Deck Compass Is</h2>
       <p class="practice__p">
-        Reading changes when it happens under live conditions. It is one thing to understand a method in theory. It is another to notice what appears, stay with it, and reflect on what happened afterwards.
+        The Deck Compass is a live, method-aware practice environment for tarot and oracle readers and for seekers who want thoughtful, reflective readings. It is designed to support reader development through repeated use: real reader-seeker interaction, interpretive work under attention and pacing, and guided reflection afterwards.
       </p>
-      <p class="practice__pull">
-        Most readers accumulate meanings. Very few develop perception under live conditions.
+      <p class="practice__p">
+        It is not a tarot reading marketplace, a passive content library, or a generic study group. It is the practical counterpart to the editorial and methodological work published on <a href="/">Tides of Knowing</a>, where Leigh Spencer develops symbolic interpretation, intuitive literacy, and reflective tarot practice in the open.
       </p>
     </section>
 
-    <section class="practice__section" aria-labelledby="practice-inside-heading">
-      <h2 id="practice-inside-heading" class="practice__h2">What Happens Inside</h2>
+    <section class="practice__section" aria-labelledby="practice-why-heading">
+      <h2 id="practice-why-heading" class="practice__h2">Why Live Practice Matters</h2>
+      <p class="practice__p">
+        Readers can understand a framework in theory and still lose the thread when attention shifts, a seeker speaks in unexpected language, or symbolic patterning moves faster than explanation. Live practice matters because perception develops under real conditions: uncertainty, relational pacing, and the need to stay with what appears before naming it.
+      </p>
+      <p class="practice__p">
+        Reflective journaling after sessions helps readers notice what actually happened: what they perceived, what they rushed, and what held. Repetition under those conditions is what turns method into habit and strengthens symbolic perception over time.
+      </p>
+      <p class="practice__pull">
+        Most readers accumulate meanings. Fewer develop perception under live conditions.
+      </p>
+    </section>
+
+    <section class="practice__section" aria-labelledby="practice-how-heading">
+      <h2 id="practice-how-heading" class="practice__h2">How Practice Works</h2>
+      <p class="practice__p practice__p--intro">
+        The Deck Compass is organised around a simple rhythm: meet, read, reflect, reinforce. Each stage supports the next.
+      </p>
       <div class="practice__cards">
         <div class="practice__card">
           <h3 class="practice__card-label">Meet</h3>
           <p class="practice__card-text">
-            Readers and seekers connect for practice readings.
+            Readers and seekers enter a live practice space for intentional sessions. The emphasis is on practice and development, not performance or spectacle.
           </p>
         </div>
         <div class="practice__card">
           <h3 class="practice__card-label">Read</h3>
           <p class="practice__card-text">
-            Sessions give the method a live symbolic field.
+            The COMPASS Method™ is applied in real interpretive conditions: attention, relational pacing, symbolic patterning, and the discipline of staying with what emerges.
           </p>
         </div>
         <div class="practice__card">
           <h3 class="practice__card-label">Reflect</h3>
           <p class="practice__card-text">
-            Guided journaling helps you notice what occurred.
+            Guided journaling and reflection prompts help readers record what occurred, what shifted, and what they would read differently next time.
           </p>
         </div>
         <div class="practice__card">
           <h3 class="practice__card-label">Reinforce</h3>
           <p class="practice__card-text">
-            Repeated practice strengthens the habits behind clearer interpretation.
+            Structured repetition builds the habits behind clearer interpretation: perception before explanation, discernment under pressure, and trustworthy languaging.
           </p>
         </div>
       </div>
     </section>
 
+    <section class="practice__section" aria-labelledby="practice-different-heading">
+      <h2 id="practice-different-heading" class="practice__h2">What Makes The Deck Compass Different</h2>
+      <p class="practice__p">
+        The platform is designed to support development that ordinary tarot groups, casual reading exchanges, or memorisation-heavy study rarely provide on their own:
+      </p>
+      <ul class="practice__feature-list">
+        <li>Live reader-seeker practice in a held environment</li>
+        <li>Method-aware sessions aligned with The COMPASS Method™, not ad hoc card lists</li>
+        <li>Reflective journaling designed to strengthen perception after the reading</li>
+        <li>Structured repetition so habits form through use, not theory alone</li>
+        <li>Space to develop symbolic perception and intuitive literacy, not only recall card meanings</li>
+        <li>Seeker participation as reflective dialogue, not passive consumption of a performance</li>
+      </ul>
+      <p class="practice__p">
+        Platform features and access may evolve; this page describes the intent and role of The Deck Compass within the wider ecosystem. It does not replace training materials or in-platform guidance.
+      </p>
+    </section>
+
     <section class="practice__section" aria-labelledby="practice-compass-heading">
-      <h2 id="practice-compass-heading" class="practice__h2">How It Connects to COMPASS</h2>
+      <h2 id="practice-compass-heading" class="practice__h2">Connection to The COMPASS Method™</h2>
+      <p class="practice__p">
+        Tides of Knowing publishes the interpretive framework in depth. <a href="/compass/">COMPASS training</a> teaches The COMPASS Method™ in a live cohort. The Deck Compass gives readers a place to practise and integrate it between sessions.
+      </p>
       <ul class="practice__method-lines">
         <li class="practice__method-line">
-          <a href="/articles/compass-method/">The COMPASS Method™</a> gives the framework.
+          <a href="/articles/compass-method/">The COMPASS Method™</a> gives the interpretive framework for symbolic perception and reflective tarot practice.
         </li>
         <li class="practice__method-line">
-          <a href="/compass/">COMPASS training</a> installs it in a live cohort.
+          <a href="/compass/">COMPASS training</a> installs the method with direct teaching and cohort structure.
         </li>
         <li class="practice__method-line">
-          The Deck Compass gives repetition, reflection, and live conditions.
+          The Deck Compass provides live conditions, reflection, and repetition so the method can stabilise in use.
         </li>
       </ul>
+      <p class="practice__p">
+        For the full methodological argument, start with the <a href="/articles/compass-method/">article on The COMPASS Method™</a>. For shorter reflections on craft and practice, browse <a href="/blog/">Field Notes</a> or the <a href="/articles/">Articles</a> archive.
+      </p>
       <p class="tok-ip-attribution">
         An original interpretive framework created by Tides of Knowing: The COMPASS Method™.
       </p>
@@ -88,28 +147,34 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
       <h2 id="practice-for-heading" class="practice__h2">Who It Is For</h2>
       <div class="practice__audience">
         <div class="practice__audience-col">
-          <h3 class="practice__audience-title">For readers who:</h3>
+          <h3 class="practice__audience-title">Readers who</h3>
           <ul class="practice__list">
-            <li>know meanings but lose the thread</li>
-            <li>want to practise without performance pressure</li>
-            <li>need repetition to develop confidence</li>
-            <li>want to strengthen perception before explanation</li>
-            <li>are ready to move from insight into habit</li>
+            <li>know card meanings but lose the thread in live readings</li>
+            <li>want repetition without performance pressure or public spectacle</li>
+            <li>need a structured place to log sessions and reflect honestly</li>
+            <li>are strengthening perception before explanation</li>
+            <li>have completed COMPASS training or are working with The COMPASS Method™ independently</li>
+            <li>are ready to move from insight into dependable habit</li>
           </ul>
         </div>
         <div class="practice__audience-col">
-          <h3 class="practice__audience-title">For seekers who:</h3>
+          <h3 class="practice__audience-title">Seekers who</h3>
           <ul class="practice__list">
-            <li>want thoughtful readings</li>
-            <li>are open to reflective dialogue</li>
-            <li>want to participate in a more conscious reading environment</li>
+            <li>want readings held with method and care, not generic scripts</li>
+            <li>are open to reflective dialogue about what emerged</li>
+            <li>want to participate in a conscious practice environment</li>
+            <li>understand sessions may support a reader's development as well as their own question</li>
           </ul>
         </div>
       </div>
     </section>
 
     <section class="practice__section practice__section--final" aria-labelledby="practice-final-heading">
-      <h2 id="practice-final-heading" class="practice__visually-hidden">Continue to The Deck Compass</h2>
+      <h2 id="practice-final-heading" class="practice__h2">Continue to practice</h2>
+      <p class="practice__p">
+        If you are still mapping the framework, read <a href="/articles/compass-method/">The COMPASS Method™</a> first or explore whether <a href="/compass/">COMPASS training</a> fits your stage of development. When you are ready to practise under live conditions with reflection built in, continue to The Deck Compass at{" "}
+        <a href={tdcUrl}>thedeckcompass.com</a>.
+      </p>
       <p class="practice__cta-row practice__cta-row--final">
         <a class="practice__cta" href={tdcUrl}>Continue to The Deck Compass</a>
       </p>
@@ -130,22 +195,48 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
     border-bottom: 1px solid var(--tok-border-light);
   }
 
+  .practice__eyebrow {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-meta);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
   .practice__h1 {
     margin: 0 0 1rem;
-    font-family: var(--font-accent);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(2rem, 4.8vw, 2.75rem);
-    line-height: 1.12;
-    color: var(--tok-teal-dim);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-style: normal;
+    font-size: clamp(1.85rem, 4.2vw, 2.45rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--tok-water);
   }
 
   .practice__lede {
-    margin: 0 0 1.35rem;
-    max-width: 40rem;
+    margin: 0 0 1.1rem;
+    max-width: 42rem;
     font-size: 1.06rem;
     line-height: 1.75;
     color: var(--tok-text-dark);
+  }
+
+  .practice__lede strong {
+    font-weight: 600;
+    color: var(--tok-water);
+  }
+
+  .practice__bridge {
+    margin: 0 0 1.35rem;
+    max-width: 36rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: clamp(1.12rem, 2.3vw, 1.28rem);
+    line-height: 1.5;
+    color: var(--tok-teal-dim);
   }
 
   .practice__cta-row {
@@ -173,18 +264,26 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
 
   .practice__support {
     margin: 0;
-    max-width: 36rem;
+    max-width: 40rem;
     font-size: 0.9rem;
     line-height: 1.55;
     color: var(--tok-text-muted);
   }
 
-  .practice__section {
-    margin-top: clamp(2.25rem, 5vw, 3rem);
+  .practice__support a,
+  .practice__lede a,
+  .practice__p a {
+    color: var(--tok-teal);
   }
 
-  .practice__section:first-of-type {
-    margin-top: 0;
+  .practice__support a:hover,
+  .practice__lede a:hover,
+  .practice__p a:hover {
+    color: var(--tok-water);
+  }
+
+  .practice__section {
+    margin-top: clamp(2.25rem, 5vw, 3rem);
   }
 
   .practice__section--final {
@@ -210,6 +309,10 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
     color: var(--tok-text-dark);
   }
 
+  .practice__p--intro {
+    margin-bottom: 1.25rem;
+  }
+
   .practice__pull {
     margin: 0;
     font-family: var(--font-accent);
@@ -219,6 +322,22 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
     color: var(--tok-water);
     padding-left: 1rem;
     border-left: 3px solid var(--tok-gold);
+  }
+
+  .practice__feature-list {
+    margin: 0 0 1.15rem;
+    padding-left: 1.25rem;
+    font-size: 1.04rem;
+    line-height: 1.72;
+    color: var(--tok-text-dark);
+  }
+
+  .practice__feature-list li {
+    margin-bottom: 0.45rem;
+  }
+
+  .practice__feature-list li::marker {
+    color: color-mix(in srgb, var(--tok-gold) 75%, var(--tok-text-muted));
   }
 
   .practice__cards {
@@ -259,7 +378,7 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
   }
 
   .practice__method-lines {
-    margin: 0;
+    margin: 0 0 1.15rem;
     padding: 0;
     list-style: none;
     display: flex;
@@ -275,6 +394,15 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
     padding: 0.65rem 0.85rem 0.65rem 1rem;
     border-left: 3px solid color-mix(in srgb, var(--tok-teal) 55%, transparent);
     background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, transparent);
+  }
+
+  .practice__method-line a {
+    color: var(--tok-teal);
+    font-weight: 600;
+  }
+
+  .practice__method-line a:hover {
+    color: var(--tok-water);
   }
 
   .practice__audience {
@@ -314,17 +442,5 @@ const ogUrl = new URL("/practice/", siteBase(Astro)).href;
 
   .practice__list li:last-child {
     margin-bottom: 0;
-  }
-
-  .practice__visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 </style>
