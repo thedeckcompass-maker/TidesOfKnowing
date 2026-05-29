@@ -240,6 +240,8 @@ No change to the structural rules in §2–§8; Phase 3 applied them rather than
 2. **Field Notes visibility:** Field Notes (`/blog/`) are a primary authority pathway and belong in primary navigation alongside Articles, not only in footers or sidebars. Adding Field Notes to the seven-item primary nav exposed the need for a proper collapsed mobile menu (burger + vertical panel). Primary navigation must never hide, clip, or make authority pathways unreachable on mobile. Responsive navigation is part of action-first optimisation.
 3. **Field Notes visual taxonomy:** Differences between foundational notes, standalone notes, and series must be reader-legible and intentional (badges: Foundational Field Note, Field Note, Field Note Series), without database-style clutter.
 
+4. **Affirmative interpretive positioning:** Tides of Knowing defines its approach affirmatively. SEO, AEO, and GEO copy must not create defensive positioning by dismissing fortune-telling, divination, prediction, or other tarot practices. Describe the site's own method, vocabulary, and reader value (symbolic interpretation, recurrence, relational meaning, reflective practice, The COMPASS Method™).
+
 ---
 
 *End of structural alignment review.*

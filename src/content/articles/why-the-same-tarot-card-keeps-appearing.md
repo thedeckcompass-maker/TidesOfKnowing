@@ -24,7 +24,7 @@ secondaryKeywords:
   - "repeating tarot cards"
   - "same tarot card keeps appearing"
   - "recurring tarot card meaning"
-shortAnswer: "When the same tarot card keeps appearing, it usually marks a recurring symbolic pattern in your life, not escalating doom or a fixed prediction. The card persists until what it points toward has been genuinely seen and worked with. Repetition measures persistence of the underlying theme, not urgency."
+shortAnswer: "When the same tarot card keeps appearing, it usually marks a recurring symbolic pattern in your life. The card persists until what it points toward has been genuinely seen and worked with. Repetition measures persistence of the underlying theme and what keeps returning to attention."
 furtherReading:
   - title: "Repeating card pattern library"
     href: "/repeating-card-meanings/"

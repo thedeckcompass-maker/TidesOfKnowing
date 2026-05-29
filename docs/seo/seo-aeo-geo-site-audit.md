@@ -674,6 +674,7 @@ Hero note (“Training installs it; practice stabilises it”) and the `training
 - **Field Notes** added to primary navigation (`/blog/`, label “Field Notes”).
 - **`/blog/` index** badge taxonomy clarified: Foundational Field Note, Field Note, Field Note Series (+ part count).
 - **Mobile primary nav:** Collapsed menu at ≤900px (literal media-query px; CSS variables in `@media` fail on many phones). Burger opens vertical panel with all seven items; horizontal nav from 901px up.
+- **Repeating Card hub voice:** Removed defensive “not fortune-telling / fixed predictions” framing from `/repeating-card-meanings/` and aligned Repeating Card Patterns article short answers with affirmative symbolic-interpretation language.
 
 ### Operational next steps (post-deploy)
 

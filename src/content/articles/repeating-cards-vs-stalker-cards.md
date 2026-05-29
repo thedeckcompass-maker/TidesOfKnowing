@@ -78,7 +78,7 @@ Distinguishing between these four phenomena, pattern, pressure, obsession, and p
 
 Do not assume that frequency means urgency. A card that appears three times in a week is not necessarily more urgent than a card that appeared once six months ago and once again last week. Frequency is not a measure of intensity. It is a measure of how sustained the underlying pattern is, and how consistently the symbol is being recruited into the field of the reader's attention.
 
-Do not assume that the card is independently commenting on a specific outcome. Tarot cards do not make predictions about specific events. A repeating card is pointing at a quality of experience, a pattern of behaviour, an emotional or relational dynamic, a theme in the reader's inner life. It is not announcing what will happen.
+Do not assume that the card is independently commenting on a specific outcome. A repeating card points at a quality of experience, a pattern of behaviour, an emotional or relational dynamic, a theme in the reader's inner life. Read it as symbolic pattern: context, timing, relationship, and what keeps returning to attention.
 
 Do not assume that you need more cards to interpret the pattern. When a card keeps appearing, the instinct is often to pull more cards around it, to build a more complex reading that might reveal what the repeated card is really trying to say. This instinct is usually counterproductive. The card that keeps appearing has already delivered its message. The work is not to decode it further but to engage honestly with the territory it is naming.
 

@@ -25,7 +25,7 @@ secondaryKeywords:
   - "major arcana repeating"
   - "recurring tarot archetypes"
   - "repeating tarot card meaning"
-shortAnswer: "When Major Arcana cards repeat, they usually mark a sustained life theme or archetypal pressure, not a single event or fixed prediction. The card persists because that larger territory has not yet been fully recognised or integrated. Read repetition at the scale of theme, not situational doom."
+shortAnswer: "When Major Arcana cards repeat, they usually mark a sustained life theme or archetypal pressure. The card persists because that larger territory has not yet been fully recognised or integrated. Read repetition at the scale of theme, relational meaning, and reflective practice."
 furtherReading:
   - title: "Why the same tarot card keeps appearing"
     href: "/articles/why-the-same-tarot-card-keeps-appearing/"
@@ -39,7 +39,7 @@ furtherReading:
 
 > A Minor Arcana card that keeps returning is pointing at a pattern. A Major Arcana card that keeps returning is pointing at a theme. The difference is in the scale of what is being asked to be recognised.
 
-When a Major Arcana card appears repeatedly in your readings, the experience tends to feel weightier than a recurring minor. There is a quality of inevitability to it, a sense that something significant is pressing for attention. That sense is not wrong, but it does require careful reading. Major Arcana repetition is not a sentence and it is not a prediction. It is sustained symbolic pressure from the archetypal layer of experience, and understanding what kind of pressure it represents is the difference between interpreting the pattern and being overwhelmed by it.
+When a Major Arcana card appears repeatedly in your readings, the experience tends to feel weightier than a recurring minor. There is a quality of inevitability to it, a sense that something significant is pressing for attention. That sense is not wrong, but it does require careful reading. Major Arcana repetition is sustained symbolic pressure from the archetypal layer of experience, and understanding what kind of pressure it represents is the difference between interpreting the pattern and being overwhelmed by it.
 
 ---
 
@@ -47,7 +47,7 @@ When a Major Arcana card appears repeatedly in your readings, the experience ten
 
 The Major Arcana cards represent archetypal forces: the large-scale themes of human experience that do not belong to any single situation but to the recurring patterns of a life. The Tower does not mean only this particular disruption. It names a quality of disruption, the kind that reveals a false foundation, that appears again and again across a life in many different forms. The High Priestess does not mean only this particular moment of uncertainty. She names an entire territory of inner knowing and its relationship to outer action.
 
-When a Major Arcana card repeats, it is almost always pointing toward one of these larger territories rather than a specific event. The card is not announcing that something will happen. It is naming something that is already present in the reader's life as a sustained pattern, an active theme, a recurring quality of experience that has not yet been fully recognised, understood, or integrated.
+When a Major Arcana card repeats, it is almost always pointing toward one of these larger territories rather than a single situational headline. The card names something that is already present in the reader's life as a sustained pattern, an active theme, a recurring quality of experience that has not yet been fully recognised, understood, or integrated.
 
 This is why Major Arcana repetition tends to feel significant. It is significant, in the specific sense that it is pointing at something of genuine weight. But significance is not the same as doom, and the appropriate response to a repeating major is not anxiety but investigation: what large-scale theme is this card naming in my life right now, and what remains unresolved within it?
 
