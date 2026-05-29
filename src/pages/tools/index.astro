@@ -8,7 +8,6 @@ const description =
   "Practise tarot card relationships, spread flow, and repeated pattern recognition with free interpretation tools from Tides of Knowing.";
 const ogUrl = new URL("/tools/", siteBase(Astro)).href;
 
-const tableBetweenThemUrl = "/tools/three-card-relationship-tarot-reading/";
 const repeatedCardMeaningUrl = "/tools/repeating-card-meanings/";
 
 const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
@@ -34,18 +33,18 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     </p>
 
     <ul class="tools-hub__grid" role="list">
-      <li class="tools-hub__card">
-        <a class="tools-hub__card-link" href={repeatedCardMeaningUrl}>
+      <li class="tools-hub__grid-item">
+        <a class="tools-hub__card tools-hub__card--live" href={repeatedCardMeaningUrl}>
           <span class="tools-hub__card-name">Repeating Card Meanings</span>
+          <p class="tools-hub__card-desc">
+            Explore what it means when the same tarot card keeps appearing across readings, whether for a
+            reason, a season, or a lifetime.
+          </p>
+          <p class="tools-hub__status tools-hub__status--live">Available now</p>
         </a>
-        <p class="tools-hub__card-desc">
-          Explore what it means when the same tarot card keeps appearing across readings, whether for a
-          reason, a season, or a lifetime.
-        </p>
-        <p class="tools-hub__status tools-hub__status--live">Available now</p>
       </li>
-      <li class="tools-hub__card">
-        <span class="tools-hub__card-name--plain">When Two Cards Meet</span>
+      <li class="tools-hub__card tools-hub__card--soon">
+        <span class="tools-hub__card-name tools-hub__card-name--plain">When Two Cards Meet</span>
         <p class="tools-hub__card-desc">Two-card relational reading: room and entering force.</p>
         <p class="tools-hub__compass">
           This tool trains Map and Sense: noticing the relationship between two cards before forcing
@@ -53,10 +52,8 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
         </p>
         <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
-      <li class="tools-hub__card">
-        <a class="tools-hub__card-link" href={tableBetweenThemUrl}>
-          <span class="tools-hub__card-name">The Table Between Them</span>
-        </a>
+      <li class="tools-hub__card tools-hub__card--soon">
+        <span class="tools-hub__card-name tools-hub__card-name--plain">The Table Between Them</span>
         <p class="tools-hub__card-desc">Three-card interpreter: movement, sequence, and story.</p>
         <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
@@ -156,36 +153,61 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     }
   }
 
+  .tools-hub__grid-item {
+    margin: 0;
+    min-height: 0;
+  }
+
   .tools-hub__card {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
+    height: 100%;
     padding: 0.85rem 1rem;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--tok-surface-reading) 40%, transparent);
     min-height: 0;
-  }
-
-  .tools-hub__card-link {
     text-decoration: none;
-    color: var(--tok-teal-light);
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.35;
+    color: inherit;
+    transition:
+      border-color var(--dur-base) var(--ease-out),
+      background var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
   }
 
-  .tools-hub__card-link:hover {
-    color: var(--tok-water);
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
+  .tools-hub__card--live {
+    border-width: 2px;
+    border-color: color-mix(in srgb, var(--tok-gold) 72%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 52%, transparent);
+    cursor: pointer;
   }
 
-  .tools-hub__card-name--plain {
+  .tools-hub__card--live:hover {
+    border-color: var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-surface-reading) 68%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+
+  .tools-hub__card--live:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+
+  .tools-hub__card--live:hover .tools-hub__card-name {
+    color: var(--tok-text-light-strong);
+  }
+
+  .tools-hub__card-name {
     display: block;
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.35;
+    color: var(--tok-teal-light);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+
+  .tools-hub__card-name--plain {
     color: var(--tok-teal-light);
   }
 
@@ -284,10 +306,10 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
   }
 
   .tools-hub__status--next {
-    color: var(--tok-gold);
+    color: var(--tok-teal-light);
   }
 
   .tools-hub__status--live {
-    color: var(--tok-teal-light);
+    color: var(--tok-gold);
   }
 </style>
