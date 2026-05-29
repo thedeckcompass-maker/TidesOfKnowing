@@ -111,16 +111,18 @@ const cards: CardPanel[] = await Promise.all(
             <label class="rcm-tool__label" for="rcm-card-select">
               Choose the card that keeps appearing
             </label>
-            <select class="rcm-tool__select" id="rcm-card-select" name="card">
-              <option value="" selected={!initialCardId}>Select a card</option>
-              {
-                cards.map((card) => (
-                  <option value={card.id} selected={card.id === initialCardId}>
-                    {card.label}
-                  </option>
-                ))
-              }
-            </select>
+            <div class="rcm-tool__select-wrap">
+              <select class="rcm-tool__select" id="rcm-card-select" name="card">
+                <option value="" selected={!initialCardId}>Select a card</option>
+                {
+                  cards.map((card) => (
+                    <option value={card.id} selected={card.id === initialCardId}>
+                      {card.label}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
             <p
               class="rcm-tool__selector-hint"
               id="rcm-empty-hint"
@@ -608,17 +610,43 @@ const cards: CardPanel[] = await Promise.all(
     color: var(--tok-water);
   }
 
-  .rcm-tool__select {
+  .rcm-tool__select-wrap {
+    position: relative;
     width: 100%;
     max-width: 28rem;
-    padding: 0.68rem 2rem 0.68rem 0.75rem;
+  }
+
+  .rcm-tool__select-wrap::after {
+    content: "";
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-right: 2px solid color-mix(in srgb, var(--tok-water) 82%, transparent);
+    border-bottom: 2px solid color-mix(in srgb, var(--tok-water) 82%, transparent);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  .rcm-tool__select {
+    width: 100%;
+    padding: 0.68rem 2.75rem 0.68rem 0.75rem;
     font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.45;
     color: var(--tok-text-dark);
-    background: var(--tok-surface-reading);
+    background-color: var(--tok-surface-reading);
     border: 1px solid color-mix(in srgb, var(--tok-water) 28%, transparent);
     border-radius: var(--radius-soft);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+  }
+
+  .rcm-tool__select::-ms-expand {
+    display: none;
   }
 
   .rcm-tool__selector-hint {
