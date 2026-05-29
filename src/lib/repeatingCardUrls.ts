@@ -48,6 +48,17 @@ export function getRepeatingCardPath(idOrEntry: string | RepeatingCardEntry): st
 }
 
 /**
+ * Tool hub URL with `?card=` query so the interactive selector opens on that card.
+ * Prefer this over {@link getRepeatingCardPath} when linking from the main selector UI.
+ */
+export function getRepeatingCardToolSelectorPath(
+  idOrEntry: string | RepeatingCardEntry,
+): string {
+  const id = normalizeCollectionId(idOrEntry);
+  return `${getRepeatingCardHubPath()}?card=${encodeURIComponent(id)}`;
+}
+
+/**
  * Absolute URL for the interactive tool deep-link (`/tools/repeating-card-meanings/{id}/`).
  */
 export function getRepeatingCardToolUrl(
@@ -82,7 +93,7 @@ export function getRepeatingCardCanonicalPath(
   cardSlugOrEntry: string | RepeatingCardEntry,
 ): string {
   if (typeof cardSlugOrEntry === "string") {
-    return getRepeatingCardSeoPath(cardSlugOrEntry);
+    return getRepeatingCardSeoPath(normalizeCardSlug(cardSlugOrEntry));
   }
   return resolveCanonicalPath(cardSlugOrEntry);
 }

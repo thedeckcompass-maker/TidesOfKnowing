@@ -19,8 +19,8 @@ import {
 } from "../../lib/rcmHeadingIds";
 import {
   getRepeatingCardCanonicalPath,
-  getRepeatingCardPath,
   getRepeatingCardSeoHubPath,
+  getRepeatingCardToolSelectorPath,
 } from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
@@ -178,10 +178,12 @@ const cards: CardPanel[] = await Promise.all(
                   }
                   <p class="rcm-tool__card-page-link">
                     <a href={getRepeatingCardCanonicalPath(card.id)}>
-                      Read the canonical meaning page
+                      Read the full meaning page
                     </a>
                     <span class="rcm-tool__card-page-sep" aria-hidden="true"> · </span>
-                    <a href={getRepeatingCardPath(card.id)}>Tool layout</a>
+                    <a href={getRepeatingCardToolSelectorPath(card.id)}>
+                      View in interactive selector
+                    </a>
                   </p>
                 </div>
               </header>
@@ -341,7 +343,8 @@ const cards: CardPanel[] = await Promise.all(
   function applyInitialSelection() {
     if (!(select instanceof HTMLSelectElement)) return;
     const initial = cardFromLocation();
-    if (initial && select.querySelector(`option[value="${initial}"]`)) {
+    const hasOption = [...select.options].some((opt) => opt.value === initial);
+    if (initial && hasOption) {
       select.value = initial;
       showCard(initial);
     }

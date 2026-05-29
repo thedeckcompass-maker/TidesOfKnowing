@@ -22,8 +22,8 @@ import { resolveRepeatingCardRelatedLinks } from "../../lib/repeatingCardRelated
 import {
   getRepeatingCardCanonicalUrl,
   getRepeatingCardHubPath,
-  getRepeatingCardPath,
   getRepeatingCardSeoHubPath,
+  getRepeatingCardToolSelectorPath,
 } from "../../lib/repeatingCardUrls";
 import { siteBase } from "../../lib/site";
 
@@ -70,7 +70,7 @@ const crumbs = getRepeatingCardEntityBreadcrumbs(resolved);
 const relatedLinks = resolveRepeatingCardRelatedLinks(resolved, byId);
 const questions = buildRepeatingCardQuestions(resolved, model.displayTitle);
 const jsonLd = getRepeatingCardEntityPageJsonLd(resolved, siteHref, questions);
-const toolDeepLink = getRepeatingCardPath(resolved);
+const toolSelectorHref = getRepeatingCardToolSelectorPath(resolved);
 const featuredSnippetAnswer = resolved.data.featuredSnippetAnswer?.trim() || null;
 ---
 
@@ -88,8 +88,8 @@ const featuredSnippetAnswer = resolved.data.featuredSnippetAnswer?.trim() || nul
     variant="entity"
     hubHref={getRepeatingCardSeoHubPath()}
     hubLabel="All repeating card meanings"
-    secondaryHref={toolDeepLink}
-    secondaryLabel="Open in card selector tool"
+    secondaryHref={toolSelectorHref}
+    secondaryLabel="View in interactive selector"
     relatedLinks={relatedLinks}
     questions={questions}
     featuredSnippetAnswer={featuredSnippetAnswer}
