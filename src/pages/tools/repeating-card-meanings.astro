@@ -400,8 +400,8 @@ const cards: CardPanel[] = await Promise.all(
   .rcm-tool__workspace {
     display: grid;
     gap: clamp(1rem, 3vw, 1.35rem);
-    margin-bottom: clamp(1.25rem, 3.5vw, 1.75rem);
-    padding-bottom: clamp(1rem, 3vw, 1.35rem);
+    margin-bottom: clamp(0.75rem, 2vw, 1rem);
+    padding-bottom: clamp(0.75rem, 2vw, 1rem);
     border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
   }
 
@@ -454,9 +454,23 @@ const cards: CardPanel[] = await Promise.all(
   }
 
   .rcm-tool__context {
-    margin-top: clamp(1.75rem, 4vw, 2.5rem);
-    padding-top: clamp(1.25rem, 3vw, 1.75rem);
+    margin-top: clamp(1.15rem, 3vw, 1.5rem);
+    padding-top: clamp(0.85rem, 2.5vw, 1.15rem);
     border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+
+  /* No visible card panel: avoid a blank band between workspace divider and context */
+  .rcm-tool__results:not(:has(.rcm-tool__result:not([hidden]))) {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-height: 0;
+  }
+
+  .rcm-tool__results:not(:has(.rcm-tool__result:not([hidden]))) + .rcm-tool__context {
+    margin-top: clamp(0.35rem, 1.2vw, 0.55rem);
+    padding-top: 0;
+    border-top: none;
   }
 
   .rcm-tool__lede {
@@ -618,6 +632,11 @@ const cards: CardPanel[] = await Promise.all(
   .rcm-tool__results {
     display: grid;
     gap: 0;
+    margin-bottom: 0;
+  }
+
+  .rcm-tool__results:has(.rcm-tool__result:not([hidden])) {
+    margin-bottom: clamp(0.5rem, 1.5vw, 0.75rem);
   }
 
   .rcm-tool__result {
