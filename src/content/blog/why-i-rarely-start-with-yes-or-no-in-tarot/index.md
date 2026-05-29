@@ -22,7 +22,7 @@ metaTitle: "Why I Rarely Start with Yes or No Tarot Questions | Field Notes | Ti
 metaDescription: "Why yes/no tarot questions often compress a situation before the cards can describe it accurately, and how symbolic evidence in the image reveals yes, no, or not clear yet."
 ogTitle: "Why I Rarely Start with Yes or No Tarot Questions | Field Notes | Tides of Knowing"
 ogDescription: "A practitioner Field Note on why binary tarot questions often compress the situation, and how to read opening, closure, and withheld light in the image."
-shortAnswer: "Yes/no tarot works when terms and method are fixed before the draw; many questions narrow the reading too early. Read symbolic evidence first: whether the image opens or closes, figures move toward or away, and whether suit energy begins, blocks, or depletes."
+shortAnswer: "Yes/no tarot works best when the cards are read as symbolic evidence before the answer is reduced to yes or no. Look first at whether the image opens or closes the question, where figures appear to move, and whether the suit energy supports, blocks, or drains the outcome."
 ---
 
 A question came up recently in a tarot group about whether a new collaboration was trustworthy. The person asking did not want to use a blunt yes/no question, but the suggestions quickly moved in that direction: "Can I trust this person?" or "Will this work out?"
