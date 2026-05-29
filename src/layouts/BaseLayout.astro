@@ -120,6 +120,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    {/* Required for mobile breakpoints and collapsed nav; must stay immediately after charset. */}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -603,9 +604,16 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
 
   /* Literal px: custom properties in @media are unsupported on many mobile browsers. */
   @media (max-width: 900px) {
+    :global(:root) {
+      /* Logo + Menu row exceeds 4.25rem; align main offset with rendered masthead height. */
+      --tok-header-height: 5.25rem;
+      --site-header-height: 5.25rem;
+    }
+
     .site-header__inner {
       flex-wrap: nowrap;
       min-height: var(--tok-header-height);
+      padding: 0.75rem 0;
       position: relative;
     }
 
