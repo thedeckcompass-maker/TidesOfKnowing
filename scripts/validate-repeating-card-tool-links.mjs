@@ -1,6 +1,6 @@
 /**
  * Ensures collection ids map to entity canonical paths and tool selector query URLs.
- * Mirrors normalizeCardSlug / getRepeatingCardCanonicalPath string branch in repeatingCardUrls.ts.
+ * Mirrors repeatingCardUrls.ts helpers used by the rendered tool UI.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -14,17 +14,23 @@ import {
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const ENTITY_ROUTE_DIR = path.join(ROOT, "src/pages/repeating-card-meanings");
+const SUIT_FOLDERS = ["majors", "cups", "swords", "wands", "pentacles"];
+
+/** Same as normalizeCardSlug() in src/lib/repeatingCardUrls.ts for string ids. */
+function cardSlugFromCollectionIdOrSlug(value) {
+  const segment = value.replace(/^\/+|\/+$/g, "");
+  return segment.includes("/")
+    ? (segment.split("/").pop() ?? segment)
+    : segment;
+}
 
 function canonicalPathFromCollectionId(collectionId) {
-  return expectedCanonicalPath(slugFromCollectionId(collectionId));
+  return expectedCanonicalPath(cardSlugFromCollectionIdOrSlug(collectionId));
 }
 
 function toolSelectorPath(collectionId) {
-  return `/tools/repeating-card-meanings/?card=${encodeURIComponent(collectionId)}`;
-}
-
-function toolDeepPath(collectionId) {
-  return `/tools/repeating-card-meanings/${collectionId}/`;
+  const encoded = encodeURIComponent(collectionId);
+  return `/tools/repeating-card-meanings/?card=${encoded}#rcm-card-select`;
 }
 
 const errors = [];
@@ -33,6 +39,10 @@ const files = listCardMarkdownFiles();
 
 if (files.length !== 78) {
   errors.push(`Expected 78 card files, found ${files.length}.`);
+}
+
+if (!fs.existsSync(path.join(ENTITY_ROUTE_DIR, "[...slug].astro"))) {
+  errors.push("Missing entity route src/pages/repeating-card-meanings/[...slug].astro");
 }
 
 for (const filePath of files) {
@@ -47,35 +57,33 @@ for (const filePath of files) {
     );
   }
 
+  if (canonical !== `/repeating-card-meanings/${slug}/`) {
+    errors.push(
+      `${collectionId}: expected canonical /repeating-card-meanings/${slug}/, got "${canonical}".`,
+    );
+  }
+
+  for (const suit of SUIT_FOLDERS) {
+    if (canonical.includes(`/repeating-card-meanings/${suit}/`)) {
+      errors.push(`${collectionId}: canonical must not include suit folder "${suit}".`);
+    }
+  }
+
   const wrongPath = `/repeating-card-meanings/${collectionId}/`;
   if (canonical === wrongPath) {
-    errors.push(`${collectionId}: canonical path incorrectly includes suit folder.`);
+    errors.push(`${collectionId}: canonical path incorrectly includes full collection id.`);
   }
 
   const selector = toolSelectorPath(collectionId);
-  if (!selector.includes(encodeURIComponent(collectionId))) {
-    errors.push(`${collectionId}: tool selector URL encoding failed.`);
-  }
-
-  const decoded = new URL(selector, "https://www.tidesofknowing.com").searchParams.get("card");
+  const parsed = new URL(selector, "https://www.tidesofknowing.com");
+  const decoded = parsed.searchParams.get("card");
   if (decoded !== collectionId) {
     errors.push(
       `${collectionId}: tool selector decode mismatch (got "${decoded ?? ""}").`,
     );
   }
-
-  if (!fs.existsSync(path.join(ENTITY_ROUTE_DIR, "[...slug].astro"))) {
-    errors.push("Missing entity route src/pages/repeating-card-meanings/[...slug].astro");
-    break;
-  }
-
-  const entityPrerenderMarker = slug;
-  if (!canonical.includes(`/${slug}/`)) {
-    errors.push(`${collectionId}: canonical path missing slug "${slug}".`);
-  }
-
-  if (toolDeepPath(collectionId).includes("//")) {
-    errors.push(`${collectionId}: malformed tool deep path.`);
+  if (parsed.hash !== "#rcm-card-select") {
+    errors.push(`${collectionId}: tool selector URL missing #rcm-card-select hash.`);
   }
 }
 
@@ -86,5 +94,5 @@ if (errors.length) {
 }
 
 console.log(
-  `OK: ${files.length} cards — canonical paths use card slug only; tool selector ?card= URLs round-trip.`,
+  `OK: ${files.length} cards — canonical /repeating-card-meanings/{slug}/; selector ?card= with #rcm-card-select; no suit segments in canonicals.`,
 );

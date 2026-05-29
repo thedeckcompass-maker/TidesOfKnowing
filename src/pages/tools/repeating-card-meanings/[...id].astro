@@ -17,6 +17,7 @@ import {
   getRepeatingCardCanonicalUrl,
   getRepeatingCardHubPath,
   getRepeatingCardSeoHubPath,
+  getRepeatingCardToolSelectorPath,
 } from "../../../lib/repeatingCardUrls";
 import { siteBase } from "../../../lib/site";
 
@@ -67,16 +68,16 @@ const jsonLd = getRepeatingCardToolPageJsonLd(entry, siteHref);
   <RepeatingCardMeaningArticle
     model={model}
     variant="tool"
-    hubHref={getRepeatingCardHubPath()}
-    hubLabel="Card selector tool"
+    hubHref={getRepeatingCardToolSelectorPath(entry)}
+    hubLabel="View in interactive selector"
     secondaryHref={getRepeatingCardCanonicalPath(entry)}
-    secondaryLabel="Canonical meaning page"
+    secondaryLabel="Read the full meaning page"
   >
     <Breadcrumbs items={crumbs} slot="breadcrumbs" />
     <p class="rcm-card__back-wrap" slot="footer">
       <a class="rcm-card__back" href={getRepeatingCardSeoHubPath()}>Repeating card pattern library</a>
       <span class="rcm-card__back-sep" aria-hidden="true">·</span>
-      <a class="rcm-card__back" href={getRepeatingCardHubPath()}>Card selector tool</a>
+      <a class="rcm-card__back" href={getRepeatingCardToolSelectorPath(entry)}>View in interactive selector</a>
       <span class="rcm-card__back-sep" aria-hidden="true">·</span>
       <a class="rcm-card__back" href="/tools/">Tarot tools</a>
     </p>

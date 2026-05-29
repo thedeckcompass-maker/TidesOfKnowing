@@ -45,6 +45,9 @@ type CardPanel = {
 };
 
 const toolOptions = getAllRepeatingCardToolOptions(collection);
+const validCardIds = new Set(toolOptions.map((o) => o.id));
+const rawCardParam = Astro.url.searchParams.get("card")?.trim() ?? "";
+const initialCardId = validCardIds.has(rawCardParam) ? rawCardParam : "";
 
 const cards: CardPanel[] = await Promise.all(
   toolOptions.map(async ({ id, label }) => {
@@ -109,14 +112,20 @@ const cards: CardPanel[] = await Promise.all(
               Choose the card that keeps appearing
             </label>
             <select class="rcm-tool__select" id="rcm-card-select" name="card">
-              <option value="">Select a card</option>
+              <option value="" selected={!initialCardId}>Select a card</option>
               {
                 cards.map((card) => (
-                  <option value={card.id}>{card.label}</option>
+                  <option value={card.id} selected={card.id === initialCardId}>
+                    {card.label}
+                  </option>
                 ))
               }
             </select>
-            <p class="rcm-tool__selector-hint" id="rcm-empty-hint">
+            <p
+              class="rcm-tool__selector-hint"
+              id="rcm-empty-hint"
+              hidden={initialCardId ? true : undefined}
+            >
               Select a card above to read its repeating meaning.
             </p>
           </div>
@@ -150,7 +159,7 @@ const cards: CardPanel[] = await Promise.all(
               class="rcm-tool__result"
               id={`rcm-panel-${card.panelDomId}`}
               data-rcm-panel={card.id}
-              hidden
+              hidden={initialCardId ? card.id !== initialCardId : true}
               aria-labelledby={`rcm-heading-${card.panelDomId}`}
             >
               <header class="rcm-tool__card-head">
@@ -227,7 +236,7 @@ const cards: CardPanel[] = await Promise.all(
               class="rcm-tool__result rcm-tool__result--preparing"
               id={`rcm-panel-${card.panelDomId}`}
               data-rcm-panel={card.id}
-              hidden
+              hidden={initialCardId ? card.id !== initialCardId : true}
               aria-labelledby={`rcm-heading-${card.panelDomId}`}
             >
               <header class="rcm-tool__card-head rcm-tool__card-head--preparing">

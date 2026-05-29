@@ -55,7 +55,7 @@ export function getRepeatingCardToolSelectorPath(
   idOrEntry: string | RepeatingCardEntry,
 ): string {
   const id = normalizeCollectionId(idOrEntry);
-  return `${getRepeatingCardHubPath()}?card=${encodeURIComponent(id)}`;
+  return `${getRepeatingCardHubPath()}?card=${encodeURIComponent(id)}#rcm-card-select`;
 }
 
 /**
