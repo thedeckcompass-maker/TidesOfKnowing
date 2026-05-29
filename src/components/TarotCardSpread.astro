@@ -1,0 +1,40 @@
+---
+import { tarotCardImagePath } from "../lib/tarotCardImage";
+
+export interface TarotSpreadCard {
+  slug: string;
+  name: string;
+}
+
+interface Props {
+  cards: TarotSpreadCard[];
+  caption: string;
+  label?: string;
+}
+
+const { cards, caption, label } = Astro.props;
+const count = cards.length;
+---
+
+<figure
+  class:list={["tarot-spread", count > 0 && `tarot-spread--${count}`]}
+  aria-label={label}
+>
+  <div class="tarot-spread__cards">
+    {
+      cards.map((card) => (
+        <div class="tarot-spread__card">
+          <img
+            src={tarotCardImagePath(card.slug)}
+            alt={`Rider Waite Smith ${card.name} tarot card`}
+            width="120"
+            height="209"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ))
+    }
+  </div>
+  <figcaption class="tarot-spread__caption">{caption}</figcaption>
+</figure>
