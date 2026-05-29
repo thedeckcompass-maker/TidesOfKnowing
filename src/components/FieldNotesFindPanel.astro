@@ -1,0 +1,32 @@
+---
+import { FIELD_NOTE_TOPICS_HUB_PATH } from "../data/fieldNoteTopics";
+import { FIELD_NOTE_SERIES_HUB_PATH } from "../lib/fieldNoteSeriesIndex";
+import { libraryLanePath } from "../lib/blogFieldNotes";
+
+const foundationalPath = libraryLanePath("foundational");
+const initialQuery = Astro.url.searchParams.get("q")?.trim() ?? "";
+---
+
+<nav class="tok-fn-find" aria-label="Find Field Notes">
+  <div class="tok-fn-find__strip">
+    <form class="tok-fn-find__search" role="search" action="/blog/" method="get">
+      <label class="tok-fn-find__search-label" for="fn-find-q">Search Field Notes</label>
+      <input
+        id="fn-find-q"
+        class="tok-fn-find__search-input"
+        type="search"
+        name="q"
+        value={initialQuery}
+        placeholder="Search Field Notes"
+        autocomplete="off"
+        enterkeyhint="search"
+        data-fn-find-input
+      />
+    </form>
+
+    <a class="tok-fn-find__action" href={FIELD_NOTE_TOPICS_HUB_PATH}>Browse topics</a>
+    <a class="tok-fn-find__action" href={FIELD_NOTE_SERIES_HUB_PATH}>Browse series</a>
+    <a class="tok-fn-find__action" href={foundationalPath}>Foundational notes</a>
+    <a class="tok-fn-find__action" href="#all-field-notes">All Field Notes</a>
+  </div>
+</nav>

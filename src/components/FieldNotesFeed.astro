@@ -1,0 +1,304 @@
+---
+
+import { blogCategorySlugFromLabel } from "../lib/blogCategories";
+
+import {
+  fieldNoteFeedItemSearchHaystack,
+  type BlogIndexItem,
+} from "../lib/blogFieldNotes";
+
+import FieldNoteSeriesMarker from "./FieldNoteSeriesMarker.astro";
+
+import FieldNoteTopicChips from "./FieldNoteTopicChips.astro";
+
+
+
+interface Props {
+
+  items: BlogIndexItem[];
+
+  emptyMessage?: string;
+
+}
+
+
+
+const {
+
+  items,
+
+  emptyMessage = "No Field Notes are currently published in this section.",
+
+} = Astro.props;
+
+---
+
+
+
+{
+
+  items.length === 0 ? (
+
+    <p class="tok-blog-index-empty" data-reveal>
+
+      {emptyMessage}{" "}
+
+      <a href="/blog/">Back to Field Notes</a>.
+
+    </p>
+
+  ) : (
+
+    <ul class="tok-blog-feed" data-fn-find-grid>
+
+      {items.map((item) =>
+
+        item.kind === "series" ? (
+
+          <li
+            class="tok-blog-feed__item tok-blog-feed__item--series"
+            data-fn-search={fieldNoteFeedItemSearchHaystack(item)}
+            data-reveal
+          >
+
+            <article class="tok-blog-feed__article tok-blog-feed__article--series">
+
+              <FieldNoteSeriesMarker class="tok-blog-feed__series-marker" />
+
+              <div class="tok-blog-feed__series-body">
+
+                <p class="tok-blog-feed__meta">
+
+                  <span class="tok-blog-feed__badge tok-blog-feed__badge--series">
+
+                    Field Note Series
+
+                  </span>
+
+                  <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                  <time datetime={item.date.toISOString()}>
+
+                    {
+
+                      item.date.toLocaleDateString("en-AU", {
+
+                        year: "numeric",
+
+                        month: "long",
+
+                        day: "numeric",
+
+                      })
+
+                    }
+
+                  </time>
+
+                  <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                  <span>
+
+                    {item.noteCount === 1 ? "1 part" : `${item.noteCount}-part series`}
+
+                  </span>
+
+                  {item.cheatSheetAvailable ? (
+
+                    <>
+
+                      <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                      <span class="tok-blog-feed__cheat-flag">Cheat sheet</span>
+
+                    </>
+
+                  ) : null}
+
+                </p>
+
+                <h2 class="tok-blog-feed__title">
+
+                  <a href={item.href}>{item.title}</a>
+
+                </h2>
+
+                {item.subtitle ? (
+
+                  <p class="tok-blog-feed__subtitle">{item.subtitle}</p>
+
+                ) : null}
+
+                <p class="tok-blog-feed__excerpt">{item.description}</p>
+
+                <FieldNoteTopicChips chips={item.topicChips} />
+
+                <p class="tok-blog-feed__more-wrap">
+
+                  <a class="tok-blog-feed__more" href={item.href}>
+
+                    View series
+
+                  </a>
+
+                </p>
+
+              </div>
+
+            </article>
+
+          </li>
+
+        ) : (
+
+          <li
+            class:list={[
+              "tok-blog-feed__item tok-blog-feed__item--standalone",
+              item.foundational
+                ? "tok-blog-feed__item--foundational"
+                : "tok-blog-feed__item--note",
+            ]}
+            data-fn-search={fieldNoteFeedItemSearchHaystack(item)}
+            data-reveal
+          >
+
+            <article
+
+              class:list={[
+
+                "tok-blog-feed__article",
+
+                item.foundational
+
+                  ? "tok-blog-feed__article--foundational"
+
+                  : "tok-blog-feed__article--note",
+
+              ]}
+
+            >
+
+              <p class="tok-blog-feed__meta">
+
+                <span
+
+                  class:list={[
+
+                    "tok-blog-feed__badge",
+
+                    item.foundational
+
+                      ? "tok-blog-feed__badge--foundational"
+
+                      : "tok-blog-feed__badge--note",
+
+                  ]}
+
+                >
+
+                  {
+
+                    item.foundational
+
+                      ? "Foundational Field Note"
+
+                      : "Individual Field Note"
+
+                  }
+
+                </span>
+
+                <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                <time datetime={item.date.toISOString()}>
+
+                  {
+
+                    item.date.toLocaleDateString("en-AU", {
+
+                      year: "numeric",
+
+                      month: "long",
+
+                      day: "numeric",
+
+                    })
+
+                  }
+
+                </time>
+
+                {
+
+                  !item.foundational ? (
+
+                    <>
+
+                      <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                      <a
+
+                        class="tok-blog-feed__cat"
+
+                        href={`/blog/category/${blogCategorySlugFromLabel(item.categoryLabel)}/`}
+
+                      >
+
+                        {item.categoryLabel}
+
+                      </a>
+
+                    </>
+
+                  ) : null
+
+                }
+
+                {item.cheatSheetAvailable ? (
+
+                  <>
+
+                    <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+
+                    <span class="tok-blog-feed__cheat-flag">Cheat sheet</span>
+
+                  </>
+
+                ) : null}
+
+              </p>
+
+              <h2 class="tok-blog-feed__title">
+
+                <a href={item.href}>{item.title}</a>
+
+              </h2>
+
+              <p class="tok-blog-feed__excerpt">{item.description}</p>
+
+              <FieldNoteTopicChips chips={item.topicChips} />
+
+              <p class="tok-blog-feed__more-wrap">
+
+                <a class="tok-blog-feed__more" href={item.href}>
+
+                  Read more
+
+                </a>
+
+              </p>
+
+            </article>
+
+          </li>
+
+        ),
+
+      )}
+
+    </ul>
+
+  )
+
+}
+

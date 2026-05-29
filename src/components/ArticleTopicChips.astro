@@ -1,0 +1,24 @@
+---
+import type { ArticleTopicChip } from "../lib/articleLibraryNav";
+
+interface Props {
+  chips: ArticleTopicChip[];
+  class?: string;
+}
+
+const { chips, class: className } = Astro.props;
+---
+
+{
+  chips.length > 0 ? (
+    <ul class:list={["tok-art-topic-chips", className]} aria-label="Topics">
+      {chips.map((chip) => (
+        <li class="tok-art-topic-chips__item">
+          <a class="tok-art-topic-chips__link" href={chip.href}>
+            {chip.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : null
+}

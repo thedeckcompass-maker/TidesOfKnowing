@@ -1,0 +1,17 @@
+---
+import { FIELD_NOTE_SERIES_MARKER_LINES } from "../lib/blogFieldNotes";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["tok-fn-series-marker", className]} aria-hidden="true">
+  {
+    Array.from({ length: FIELD_NOTE_SERIES_MARKER_LINES }).map(() => (
+      <span class="tok-fn-series-marker__line" />
+    ))
+  }
+</div>

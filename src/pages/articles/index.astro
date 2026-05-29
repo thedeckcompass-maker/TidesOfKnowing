@@ -6,26 +6,34 @@ import {
   sortArticlesLibraryNewest,
 } from "../../lib/articleLibraryOrder";
 import {
+  articleSearchHaystack,
+  topicChipsFromArticleTags,
+} from "../../lib/articleLibraryNav";
+import {
   LIBRARY_FEATURED_COUNT,
   LIBRARY_PER_PAGE,
   slicePage,
   totalPages,
 } from "../../lib/libraryPagination";
 import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
-import { groupArticlesBySeries, seriesOptionsFromArticles } from "../../lib/librarySeries";
+import { seriesOptionsFromArticles } from "../../lib/librarySeries";
 import { libraryPaginationState } from "../../lib/libraryPageUrls";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import ArticleCardFeatured from "../../components/ArticleCardFeatured.astro";
+import ArticlesFindPanel from "../../components/ArticlesFindPanel.astro";
 import LibraryToolbar from "../../components/LibraryToolbar.astro";
 import LibraryPagination from "../../components/LibraryPagination.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
+import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 
 const PAGE_TITLE =
   "Articles | Tides of Knowing | Tarot Methodology & Intuition Development";
 const PAGE_DESCRIPTION =
-  "Browse methodology articles on tarot, precision reading, and intuition development, with series, topics, and pagination. Insights from 40+ years of professional practice.";
+  "Evergreen essays on symbolic interpretation, tarot methodology, AI and intuition, and reflective practice from Tides of Knowing.";
+const AUTHORITY_LINE =
+  "Articles by Leigh Spencer, founder of The COMPASS Method™, drawing on 40+ years of tarot practice and 30 years of professional journalism.";
 
 const articles = await getCollection("articles");
 const sortedNewest = sortArticlesLibraryNewest(articles);
@@ -39,7 +47,6 @@ const listPage = slicePage(sortedNewest, 1, LIBRARY_PER_PAGE);
 const tp = totalPages(sortedNewest.length, LIBRARY_PER_PAGE);
 
 const seriesOpts = seriesOptionsFromArticles(articles);
-const seriesGroups = groupArticlesBySeries(articles);
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -51,17 +58,27 @@ const minutesById = new Map(
 
 const articlesItemListLd = {
   "@context": "https://schema.org",
-  "@type": "ItemList",
+  "@type": "CollectionPage",
   name: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   url: canonical,
-  numberOfItems: sortedNewest.length,
-  itemListElement: sortedNewest.map((a, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name: a.data.title,
-    url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
-  })),
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  about: [
+    { "@type": "Thing", name: "Symbolic interpretation" },
+    { "@type": "Thing", name: "Tarot methodology" },
+    { "@id": ENTITY_IDS.compassMethod },
+  ],
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: sortedNewest.length,
+    itemListElement: sortedNewest.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: a.data.title,
+      url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
+    })),
+  },
 };
 
 const crumbs: BreadcrumbItem[] = [
@@ -90,20 +107,28 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
   }}
   jsonLd={jsonLd}
 >
-  <div class="tok-library page-inner">
-    <Breadcrumbs items={crumbs} />
+  <div class="tok-library tok-library--articles page-inner">
+    <div class="tok-library__crumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
 
-    <header class="tok-library__hero tok-library__hero--brand surface-system" data-reveal>
+    <header class="tok-library__hero tok-library__hero--brand surface-system">
       <h1 class="tok-library__title">Articles</h1>
       <p class="tok-library__lede">{PAGE_DESCRIPTION}</p>
+      <p class="tok-library__authority">{AUTHORITY_LINE}</p>
     </header>
 
+    <ArticlesFindPanel />
+
+    <p class="tok-library__notes-aside">
+      For shorter observational practice notes, <a href="/blog/">browse Field Notes</a>.
+    </p>
+
     {
-      featured.length > 0 && (
+      featured.length > 0 ? (
         <section
-          class="tok-library__section"
+          class="tok-library__section tok-library__section--featured"
           aria-labelledby={featuredHeadingId}
-          data-reveal
         >
           <h2 id={featuredHeadingId} class="tok-library__h2">
             {featuredHeading}
@@ -113,56 +138,18 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
               <ArticleCardFeatured
                 article={a}
                 readingMinutes={minutesById.get(a.id) ?? 1}
+                archiveFeatured
               />
             ))}
           </div>
         </section>
-      )
-    }
-
-    {
-      seriesGroups.length > 0 && (
-        <section class="tok-library__section" aria-labelledby="series-heading" data-reveal>
-          <h2 id="series-heading" class="tok-library__h2">
-            Series collections
-          </h2>
-          <div class="tok-library__series">
-            {seriesGroups.map((g, i) => (
-              <details class="tok-series-acc" open={i === 0}>
-                <summary class="tok-series-acc__summary">
-                  <span class="tok-series-acc__name">{g.seriesName}</span>
-                  <span class="tok-series-acc__count">({g.items.length})</span>
-                </summary>
-                <ol class="tok-series-acc__parts">
-                  {g.items.map((a) => (
-                    <li>
-                      <a href={`/articles/${a.data.slug}/`}>{a.data.title}</a>
-                      {a.data.seriesOrder != null && (
-                        <span class="tok-series-acc__part">
-                          {" "}
-                          · Part {a.data.seriesOrder}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ol>
-                <p class="tok-series-acc__more">
-                  <a href={`/articles/${g.items[0].data.slug}/`}>Start reading →</a>
-                  {" · "}
-                  <a href={`/series/${g.seriesSlug}/`}>Series overview</a>
-                </p>
-              </details>
-            ))}
-          </div>
-        </section>
-      )
+      ) : null
     }
 
     <section
       class="tok-library__section"
       id="all-articles"
       aria-labelledby="all-heading"
-      data-reveal
     >
       <h2 id="all-heading" class="tok-library__h2">All articles</h2>
 
@@ -173,18 +160,27 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
         seriesOptions={seriesOpts}
       />
 
+      <p class="tok-art-find-count" data-art-find-count hidden></p>
+
       {
         listPage.length === 0 ? (
           <p class="tok-library__empty">
-            Articles will appear here as they are published.
+            No articles are currently published in this library.
           </p>
         ) : (
           <>
-            <div class="tok-library__grid">
+            <p class="tok-library__empty tok-library__empty--search" data-art-find-empty hidden>
+              No articles match your search on this page. Try{" "}
+              <a href="/articles/topics/">browse topics</a> or{" "}
+              <a href="/articles/">clear the search</a>.
+            </p>
+            <div class="tok-library__grid" data-art-find-grid>
               {listPage.map((a) => (
                 <ArticleCard
                   article={a}
                   readingMinutes={minutesById.get(a.id) ?? 1}
+                  topicChips={topicChipsFromArticleTags(a.data.tags)}
+                  searchHaystack={articleSearchHaystack(a)}
                 />
               ))}
             </div>
@@ -198,155 +194,68 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
       }
     </section>
   </div>
+
+  <script>
+    function normalizeQuery(s: string): string {
+      return s.toLowerCase().trim();
+    }
+
+    function initArticleFind() {
+      const input = document.querySelector<HTMLInputElement>("[data-art-find-input]");
+      const grid = document.querySelector("[data-art-find-grid]");
+      if (!input || !grid) return;
+
+      const cards = grid.querySelectorAll<HTMLElement>("[data-art-search]");
+      const empty = document.querySelector<HTMLElement>("[data-art-find-empty]");
+      const countEl = document.querySelector<HTMLElement>("[data-art-find-count]");
+
+      function applyFilter() {
+        const raw = input!.value.trim();
+        const q = raw ? normalizeQuery(raw) : "";
+        let visible = 0;
+
+        cards.forEach((card) => {
+          if (!q) {
+            card.hidden = false;
+            visible += 1;
+            return;
+          }
+          const haystack = card.getAttribute("data-art-search") ?? "";
+          const match = haystack.includes(q);
+          card.hidden = !match;
+          if (match) visible += 1;
+        });
+
+        if (empty) {
+          empty.hidden = !q || visible > 0;
+        }
+        if (countEl) {
+          countEl.hidden = !q;
+          countEl.textContent =
+            visible === 1
+              ? "1 article matches your search."
+              : `${visible} articles match your search.`;
+        }
+
+        const url = new URL(window.location.href);
+        if (q) url.searchParams.set("q", raw);
+        else url.searchParams.delete("q");
+        window.history.replaceState({}, "", url);
+      }
+
+      input.addEventListener("input", applyFilter);
+
+      const initial = input.value.trim();
+      if (initial) applyFilter();
+      else {
+        cards.forEach((card) => {
+          card.hidden = false;
+        });
+      }
+    }
+
+    initArticleFind();
+    document.addEventListener("astro:page-load", initArticleFind);
+  </script>
 </BaseLayout>
 
-<style>
-  .tok-library {
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 72rem;
-  }
-
-  .tok-library__hero {
-    margin-bottom: 2.5rem;
-    padding: var(--space-lg) 0;
-    border-radius: 0;
-  }
-
-  .tok-library__hero--brand {
-    margin-left: calc(-1 * var(--space-md));
-    margin-right: calc(-1 * var(--space-md));
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-    border-bottom: 1px solid var(--tok-border-system);
-  }
-
-  @media (min-width: var(--bp-md)) {
-    .tok-library__hero--brand {
-      margin-left: calc(-1 * var(--space-lg));
-      margin-right: calc(-1 * var(--space-lg));
-      padding-left: var(--space-lg);
-      padding-right: var(--space-lg);
-    }
-  }
-
-  .tok-library__title {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(2.25rem, 5vw, 2.85rem);
-    color: var(--tok-text-light);
-  }
-
-  .tok-library__hero--brand .tok-library__title {
-    color: var(--tok-text-light);
-  }
-
-  .tok-library__lede {
-    margin: 0;
-    max-width: 42rem;
-    font-size: 1.08rem;
-    line-height: 1.75;
-    color: var(--tok-text-light-soft);
-  }
-
-  .tok-library__hero--brand .tok-library__lede a {
-    color: var(--tok-teal-light);
-  }
-
-  .tok-library__section {
-    margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
-  }
-
-  .tok-library__h2 {
-    margin: 0 0 1.25rem;
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 3vw, 1.85rem);
-    font-weight: 600;
-    color: var(--tok-teal-dim);
-  }
-
-  .tok-library__feat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19.5rem), 1fr));
-    gap: clamp(1.35rem, 3vw, 1.75rem);
-    align-items: stretch;
-  }
-
-  .tok-library__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-    gap: 1.15rem;
-  }
-
-  .tok-library__empty {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--tok-teal-dim);
-  }
-
-  .tok-library__series {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .tok-series-acc {
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--tok-surface-reading) 25%, transparent);
-    padding: 0 1rem 0.75rem;
-  }
-
-  .tok-series-acc__summary {
-    cursor: pointer;
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.85rem 0;
-    list-style: none;
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    color: var(--tok-text-dark);
-  }
-
-  .tok-series-acc__summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .tok-series-acc__name {
-    flex: 1;
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
-    font-style: italic;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    color: var(--tok-teal-dim);
-  }
-
-  .tok-series-acc__count {
-    color: var(--tok-gold);
-    font-size: 0.65rem;
-  }
-
-  .tok-series-acc__parts {
-    margin: 0 0 0.75rem;
-    padding-left: 1.25rem;
-    line-height: 1.65;
-  }
-
-  .tok-series-acc__part {
-    font-size: 0.88rem;
-    color: var(--tok-teal-dim);
-  }
-
-  .tok-series-acc__more {
-    margin: 0;
-    font-size: 0.9rem;
-  }
-</style>

@@ -1,0 +1,24 @@
+---
+import type { FieldNoteTopicChip } from "../lib/blogFieldNotes";
+
+interface Props {
+  chips: FieldNoteTopicChip[];
+  class?: string;
+}
+
+const { chips, class: className } = Astro.props;
+---
+
+{
+  chips.length > 0 ? (
+    <ul class:list={["tok-fn-topic-chips", className]} aria-label="Topics">
+      {chips.map((chip) => (
+        <li class="tok-fn-topic-chips__item">
+          <a class="tok-fn-topic-chips__link" href={chip.href}>
+            {chip.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  ) : null
+}

@@ -1,0 +1,104 @@
+---
+/**
+ * Crawlable Field Notes topic listings (tag-based filters).
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogSidebar from "../../../components/BlogSidebar.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import FieldNotesFeed from "../../../components/FieldNotesFeed.astro";
+import { getCollection } from "astro:content";
+import {
+  blogCategoryIndex,
+  blogCategoryLabel,
+} from "../../../lib/blogCategories";
+import {
+  buildBlogFeedItemsFromEntries,
+  entryMatchesTopicFilter,
+  FIELD_NOTE_TOPICS,
+  getStandaloneFieldNotes,
+  getTopicIndexEntries,
+  topicFilterPath,
+} from "../../../lib/blogFieldNotes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { siteBase } from "../../../lib/site";
+
+const tagParam = Astro.params.tag;
+const filter = FIELD_NOTE_TOPICS.find((f) => f.slug === tagParam);
+
+if (!filter || !filter.indexable) {
+  return Astro.redirect("/blog/");
+}
+
+const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+const matched = getTopicIndexEntries(allEntries).filter((e) =>
+  entryMatchesTopicFilter(e, filter),
+);
+
+const items = buildBlogFeedItemsFromEntries(
+  matched,
+  allEntries,
+  blogCategoryLabel,
+);
+
+const standaloneForSidebar = getStandaloneFieldNotes(allEntries);
+const categoryRows = blogCategoryIndex(standaloneForSidebar);
+
+const PAGE_TITLE = `${filter.label} | Field Notes | Tides of Knowing`;
+const PAGE_DESCRIPTION = `${filter.description} Field Notes on ${filter.label.toLowerCase()} from Tides of Knowing.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(topicFilterPath(filter.slug), base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: filter.label, url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-index page-inner">
+    <div class="tok-blog-index-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-index-grid">
+      <div class="tok-blog-index-main">
+        <header class="tok-blog-index-head" data-reveal>
+          <h1 class="tok-blog-index-title">{filter.label}</h1>
+          <p class="tok-blog-index-lede">{filter.description}</p>
+          <p class="tok-blog-index-lede tok-blog-index-lede--follow">
+            <a href="/blog/">All Field Notes</a>
+            ·
+            <a href="/blog/topics/">Browse topics</a>
+          </p>
+        </header>
+
+        <FieldNotesFeed
+          items={items}
+          emptyMessage="No Field Notes are currently published in this section."
+        />
+      </div>
+
+      <BlogSidebar categories={categoryRows} />
+    </div>
+  </div>
+</BaseLayout>

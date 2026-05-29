@@ -1,0 +1,29 @@
+---
+import { ARTICLE_TOPICS_HUB_PATH } from "../data/articleTopics";
+import { ARTICLE_SERIES_HUB_PATH } from "../lib/articleSeriesIndex";
+
+const initialQuery = Astro.url.searchParams.get("q")?.trim() ?? "";
+---
+
+<nav class="tok-art-find" aria-label="Find articles">
+  <div class="tok-art-find__strip">
+    <form class="tok-art-find__search" role="search" action="/articles/" method="get">
+      <label class="tok-art-find__search-label" for="art-find-q">Search articles</label>
+      <input
+        id="art-find-q"
+        class="tok-art-find__search-input"
+        type="search"
+        name="q"
+        value={initialQuery}
+        placeholder="Search articles"
+        autocomplete="off"
+        enterkeyhint="search"
+        data-art-find-input
+      />
+    </form>
+
+    <a class="tok-art-find__action" href={ARTICLE_TOPICS_HUB_PATH}>Browse topics</a>
+    <a class="tok-art-find__action" href={ARTICLE_SERIES_HUB_PATH}>Browse series</a>
+    <a class="tok-art-find__action" href="#all-articles">All articles</a>
+  </div>
+</nav>

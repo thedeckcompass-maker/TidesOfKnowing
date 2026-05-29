@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import { getCollection } from "astro:content";
+import {
+  ARTICLE_SERIES_HUB_PATH,
+  getArticleSeriesIndexRows,
+} from "../../../lib/articleSeriesIndex";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../../lib/ecosystem-structured-data";
+import { siteBase } from "../../../lib/site";
+
+const articles = await getCollection("articles");
+const seriesRows = getArticleSeriesIndexRows(articles);
+
+if (seriesRows.length === 0) {
+  return Astro.redirect("/articles/");
+}
+
+const PAGE_TITLE = "Article series | Tides of Knowing";
+const PAGE_DESCRIPTION =
+  "Browse multi-part article series on tarot methodology, AI and intuition, repeating cards, and spiritual longing from Tides of Knowing.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(ARTICLE_SERIES_HUB_PATH, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Series", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: seriesRows.length,
+    itemListElement: seriesRows.map((row, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: row.seriesName,
+      url: new URL(row.seriesPageHref, siteHref).href,
+    })),
+  },
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+
+const ogImage = seriesRows[0]
+  ? new URL(seriesRows[0].heroImage, base).href
+  : new URL("/favicon.svg", base).href;
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-art-hub tok-art-hub--series page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-art-hub__head">
+      <h1 class="tok-art-hub__title">Article series</h1>
+      <p class="tok-art-hub__lede">
+        Multi-part essay arcs from Tides of Knowing. Each series develops a line of
+        inquiry across several articles. For the newest work in any series, start from
+        the <a href="/articles/">articles archive</a>.
+      </p>
+      <p class="tok-art-hub__authority">
+        Series are written by Leigh Spencer and grounded in The COMPASS Method™ and
+        symbolic interpretation practice.
+      </p>
+    </header>
+
+    <ul class="tok-art-hub__series-grid">
+      {
+        seriesRows.map((row) => (
+          <li class="tok-art-hub__series-card">
+            <a class="tok-art-hub__series-link" href={row.seriesPageHref}>
+              <div class="tok-art-hub__series-media">
+                <img
+                  src={row.heroImage}
+                  alt={row.heroImageAlt}
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="tok-art-hub__series-body">
+                <h2 class="tok-art-hub__series-title">{row.seriesName}</h2>
+                <p class="tok-art-hub__series-excerpt">{row.description}</p>
+                <p class="tok-art-hub__series-meta">
+                  {row.partCount} parts
+                  {row.status === "complete" ? " · Complete" : ""}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="tok-art-hub__back">
+      <a href="/articles/">Back to all articles</a>
+      <span class="tok-art-hub__back-sep" aria-hidden="true">·</span>
+      <a href="/series/">Series overview index</a>
+    </p>
+  </div>
+</BaseLayout>

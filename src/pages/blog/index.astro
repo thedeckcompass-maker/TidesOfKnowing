@@ -6,31 +6,36 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BlogSidebar from "../../components/BlogSidebar.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import FieldNotesFeed from "../../components/FieldNotesFeed.astro";
+import FieldNotesFindPanel from "../../components/FieldNotesFindPanel.astro";
+import FieldNoteSeriesMarker from "../../components/FieldNoteSeriesMarker.astro";
+import FieldNoteTopicChips from "../../components/FieldNoteTopicChips.astro";
 import { getCollection } from "astro:content";
 import { siteBase } from "../../lib/site";
 import {
   blogCategoryIndex,
   blogCategoryLabel,
-  blogCategorySlugFromLabel,
 } from "../../lib/blogCategories";
 import {
-  buildBlogIndexItems,
-  fieldNoteSeriesStripeCount,
+  buildBlogFeedItems,
   getStandaloneFieldNotes,
-  type BlogIndexItem,
 } from "../../lib/blogFieldNotes";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 
+const AUTHORITY_LINE =
+  "Field Notes by Leigh Spencer trace the practical reality of symbolic reading, drawing on 40+ years of tarot practice, professional journalism, and The COMPASS Method™.";
+
 const allEntries = await getCollection("blog", ({ data }) => !data.draft);
-const items = buildBlogIndexItems(allEntries, blogCategoryLabel);
+const feedItems = buildBlogFeedItems(allEntries, blogCategoryLabel);
+const seriesHighlight = feedItems.filter((item) => item.kind === "series").slice(0, 3);
 
 const standaloneForSidebar = getStandaloneFieldNotes(allEntries);
 const categoryRows = blogCategoryIndex(standaloneForSidebar);
 
 const PAGE_TITLE = "Field Notes | Tides of Knowing | Observations & shorter writing";
 const PAGE_DESCRIPTION =
-  "Field Notes: practitioner notes, reflective fragments, and shorter pieces drawn from real interpretive work. Methodology and framework writing lives elsewhere on the site.";
+  "Field Notes: practitioner observations, reflective fragments, and shorter writing drawn from real interpretive work at Tides of Knowing.";
 
 const base = siteBase(Astro);
 const siteHref = base.href;
@@ -41,7 +46,7 @@ const crumbs: BreadcrumbItem[] = [
   { label: "Field Notes", url: null },
 ];
 
-const blogPostSummaries = items.flatMap((item: BlogIndexItem) => {
+const blogPostSummaries = feedItems.flatMap((item) => {
   if (item.kind === "standalone") {
     return [
       {
@@ -61,7 +66,9 @@ const blogLd = {
   name: "Tides of Knowing | Field Notes",
   description: PAGE_DESCRIPTION,
   url: canonical,
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
   publisher: { "@id": ENTITY_IDS.tidesOrg },
+  about: { "@id": ENTITY_IDS.compassMethod },
   blogPost: blogPostSummaries,
 };
 
@@ -86,381 +93,160 @@ const jsonLd = [blogLd, breadcrumbJsonLd(crumbs, siteHref)];
         <header class="tok-blog-index-head" data-reveal>
           <h1 class="tok-blog-index-title">Field Notes</h1>
           <p class="tok-blog-index-lede">
-            The living observational layer of Tides of Knowing: practitioner notes, reflections,
-            and shorter pieces drawn from real interpretive work.
+            The living observational layer of Tides of Knowing: practitioner notes,
+            reflections, and shorter pieces drawn from real interpretive work.
           </p>
           <p class="tok-blog-index-lede tok-blog-index-lede--follow">
-            Longer-form methodology and framework writing lives in Articles. Field Notes focus on
-            the practical application of symbolic perception, helping readers create deeper
-            readings and stronger resonance with clients.
+            Longer-form methodology and framework writing lives in{" "}
+            <a href="/articles/">Articles</a>. Field Notes focus on symbolic reading in
+            practice: what showed up in the reading field and how attention moved.
           </p>
+          <p class="tok-blog-index-authority">{AUTHORITY_LINE}</p>
         </header>
 
+        <FieldNotesFindPanel />
+
         {
-          items.length === 0 ? (
-            <p class="tok-blog-index-empty" data-reveal>
-              The first Field Notes are on their way. Browse the{" "}
-              <a href="/articles/">articles</a> or learn more{" "}
-              <a href="/about/">about this publication</a>.
-            </p>
-          ) : (
-            <ul class="tok-blog-feed">
-              {items.map((item) =>
-                item.kind === "series" ? (
-                  <li class="tok-blog-feed__item tok-blog-feed__item--series" data-reveal>
+          seriesHighlight.length > 0 ? (
+            <section
+              class="tok-blog-index-series-highlight"
+              aria-labelledby="fn-series-highlight-heading"
+              data-reveal
+            >
+              <h2 id="fn-series-highlight-heading" class="tok-blog-feed-section-title">
+                Field Note series
+              </h2>
+              <ul class="tok-blog-index-series-highlight__list">
+                {seriesHighlight.map((item) => (
+                  <li class="tok-blog-index-series-highlight__item">
                     <article class="tok-blog-feed__article tok-blog-feed__article--series">
-                      <div
-                        class="tok-blog-feed__series-stripes"
-                        aria-hidden="true"
-                      >
-                        {
-                          Array.from({
-                            length: fieldNoteSeriesStripeCount(item.noteCount),
-                          }).map(() => <span class="tok-blog-feed__series-stripe" />)
-                        }
-                      </div>
+                      <FieldNoteSeriesMarker class="tok-blog-feed__series-marker" />
                       <div class="tok-blog-feed__series-body">
-                      <p class="tok-blog-feed__meta">
-                        <span class="tok-blog-feed__badge tok-blog-feed__badge--series">
-                          Field Note Series
-                        </span>
-                        <span class="tok-blog-feed__sep" aria-hidden="true">
-                          ·
-                        </span>
-                        <span>
-                          {item.noteCount === 1
-                            ? "1 part"
-                            : `${item.noteCount}-part series`}
-                        </span>
-                        {item.cheatSheetAvailable ? (
-                          <>
-                            <span class="tok-blog-feed__sep" aria-hidden="true">
-                              ·
-                            </span>
-                            <span class="tok-blog-feed__cheat-flag">Cheat sheet</span>
-                          </>
+                        <p class="tok-blog-feed__meta">
+                          <span class="tok-blog-feed__badge tok-blog-feed__badge--series">
+                            Field Note Series
+                          </span>
+                          <span class="tok-blog-feed__sep" aria-hidden="true">·</span>
+                          <span>
+                            {item.noteCount === 1
+                              ? "1 part"
+                              : `${item.noteCount}-part series`}
+                          </span>
+                        </p>
+                        <h3 class="tok-blog-feed__title">
+                          <a href={item.href}>{item.title}</a>
+                        </h3>
+                        {item.subtitle ? (
+                          <p class="tok-blog-feed__subtitle">{item.subtitle}</p>
                         ) : null}
-                      </p>
-                      <h2 class="tok-blog-feed__title">
-                        <a href={item.href}>{item.title}</a>
-                      </h2>
-                      {item.subtitle ? (
-                        <p class="tok-blog-feed__subtitle">{item.subtitle}</p>
-                      ) : null}
-                      <p class="tok-blog-feed__excerpt">{item.description}</p>
-                      <p class="tok-blog-feed__more-wrap">
-                        <a class="tok-blog-feed__more" href={item.href}>
-                          View series
-                        </a>
-                      </p>
+                        <p class="tok-blog-feed__excerpt">{item.description}</p>
+                        <FieldNoteTopicChips chips={item.topicChips} />
+                        <p class="tok-blog-feed__more-wrap">
+                          <a class="tok-blog-feed__more" href={item.href}>
+                            View series
+                          </a>
+                        </p>
                       </div>
                     </article>
                   </li>
-                ) : (
-                  <li
-                    class:list={[
-                      "tok-blog-feed__item tok-blog-feed__item--standalone",
-                      item.foundational
-                        ? "tok-blog-feed__item--foundational"
-                        : "tok-blog-feed__item--note",
-                    ]}
-                    data-reveal
-                  >
-                    <article
-                      class:list={[
-                        "tok-blog-feed__article",
-                        item.foundational
-                          ? "tok-blog-feed__article--foundational"
-                          : "tok-blog-feed__article--note",
-                      ]}
-                    >
-                      <p class="tok-blog-feed__meta">
-                        <span
-                          class:list={[
-                            "tok-blog-feed__badge",
-                            item.foundational
-                              ? "tok-blog-feed__badge--foundational"
-                              : "tok-blog-feed__badge--note",
-                          ]}
-                        >
-                          {item.foundational ? "Foundational Field Note" : "Field Note"}
-                        </span>
-                        <span class="tok-blog-feed__sep" aria-hidden="true">
-                          ·
-                        </span>
-                        <time datetime={item.date.toISOString()}>
-                          {item.date.toLocaleDateString("en-AU", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
-                        </time>
-                        {
-                          !item.foundational ? (
-                            <>
-                              <span class="tok-blog-feed__sep" aria-hidden="true">
-                                ·
-                              </span>
-                              <a
-                                class="tok-blog-feed__cat"
-                                href={`/blog/category/${blogCategorySlugFromLabel(item.categoryLabel)}/`}
-                              >
-                                {item.categoryLabel}
-                              </a>
-                            </>
-                          ) : null
-                        }
-                        {item.cheatSheetAvailable ? (
-                          <>
-                            <span class="tok-blog-feed__sep" aria-hidden="true">
-                              ·
-                            </span>
-                            <span class="tok-blog-feed__cheat-flag">Cheat sheet</span>
-                          </>
-                        ) : null}
-                      </p>
-                      <h2 class="tok-blog-feed__title">
-                        <a href={item.href}>{item.title}</a>
-                      </h2>
-                      <p class="tok-blog-feed__excerpt">{item.description}</p>
-                      <p class="tok-blog-feed__more-wrap">
-                        <a class="tok-blog-feed__more" href={item.href}>
-                          Read more
-                        </a>
-                      </p>
-                    </article>
-                  </li>
-                ),
-              )}
-            </ul>
-          )
+                ))}
+              </ul>
+            </section>
+          ) : null
         }
+
+        <section
+          id="all-field-notes"
+          class="tok-blog-index-all"
+          aria-labelledby="fn-all-heading"
+        >
+          <h2 id="fn-all-heading" class="tok-blog-feed-section-title" data-reveal>
+            All Field Notes
+          </h2>
+
+          <p class="tok-fn-find-count" data-fn-find-count hidden></p>
+
+          <p
+            class="tok-blog-index-empty tok-blog-index-empty--search"
+            data-fn-find-empty
+            hidden
+          >
+            No Field Notes match your search on this page. Try{" "}
+            <a href="/blog/topics/">browse topics</a> or{" "}
+            <a href="/blog/">clear the search</a>.
+          </p>
+
+          <FieldNotesFeed
+            items={feedItems}
+            emptyMessage="No Field Notes are currently published in this section."
+          />
+        </section>
       </div>
 
       <BlogSidebar categories={categoryRows} />
     </div>
   </div>
-</BaseLayout>
 
-<style>
-  .tok-blog-index-breadcrumbs {
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .tok-blog-index-grid {
-    display: grid;
-    gap: 2.5rem;
-    padding: 0 0 clamp(3rem, 8vw, 5rem);
-    align-items: start;
-  }
-
-  @media (min-width: 960px) {
-    .tok-blog-index-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(14rem, var(--tok-blog-sidebar-max));
-      gap: 2.75rem;
+  <script>
+    function normalizeQuery(s: string): string {
+      return s.toLowerCase().trim();
     }
-  }
 
-  .tok-blog-index-head {
-    margin-bottom: 2.25rem;
-    padding-bottom: 1.35rem;
-    border-bottom: 1px solid var(--tok-gold);
-  }
+    function initFieldNoteFind() {
+      const input = document.querySelector<HTMLInputElement>("[data-fn-find-input]");
+      const grid = document.querySelector("[data-fn-find-grid]");
+      if (!input || !grid) return;
 
-  .tok-blog-index-title {
-    margin: 0 0 0.65rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(2.25rem, 5vw, 2.85rem);
-    color: var(--tok-teal-dim);
-  }
+      const cards = grid.querySelectorAll<HTMLElement>("[data-fn-search]");
+      const empty = document.querySelector<HTMLElement>("[data-fn-find-empty]");
+      const countEl = document.querySelector<HTMLElement>("[data-fn-find-count]");
 
-  .tok-blog-index-lede {
-    margin: 0;
-    font-size: 1.08rem;
-    line-height: 1.75;
-    max-width: 40rem;
-  }
+      function applyFilter() {
+        const raw = input!.value.trim();
+        const q = raw ? normalizeQuery(raw) : "";
+        let visible = 0;
 
-  .tok-blog-index-lede--follow {
-    margin-top: 0.85rem;
-  }
+        cards.forEach((card) => {
+          if (!q) {
+            card.hidden = false;
+            visible += 1;
+            return;
+          }
+          const haystack = card.getAttribute("data-fn-search") ?? "";
+          const match = haystack.includes(q);
+          card.hidden = !match;
+          if (match) visible += 1;
+        });
 
-  .tok-blog-index-empty {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.75;
-    max-width: 36rem;
-  }
+        if (empty) {
+          empty.hidden = !q || visible > 0;
+        }
+        if (countEl) {
+          countEl.hidden = !q;
+          countEl.textContent =
+            visible === 1
+              ? "1 Field Note matches your search."
+              : `${visible} Field Notes match your search.`;
+        }
 
-  .tok-blog-feed {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2.25rem;
-  }
+        const url = new URL(window.location.href);
+        if (q) url.searchParams.set("q", raw);
+        else url.searchParams.delete("q");
+        window.history.replaceState({}, "", url);
+      }
 
-  .tok-blog-feed__article {
-    padding-bottom: 2rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
-  }
+      input.addEventListener("input", applyFilter);
 
-  .tok-blog-feed__article--foundational,
-  .tok-blog-feed__article--note,
-  .tok-blog-feed__article--series {
-    border-bottom: none;
-    border-radius: var(--radius-soft);
-  }
+      const initial = input.value.trim();
+      if (initial) applyFilter();
+      else {
+        cards.forEach((card) => {
+          card.hidden = false;
+        });
+      }
+    }
 
-  .tok-blog-feed__article--foundational {
-    padding: 1.1rem 1.05rem 1.35rem;
-    border-left: 3px solid var(--tok-earth);
-    background: color-mix(in srgb, var(--tok-earth) 11%, var(--tok-surface-reading-soft));
-  }
-
-  .tok-blog-feed__article--note {
-    padding: 1.05rem 1rem 1.3rem;
-    border-left: 2px solid color-mix(in srgb, var(--tok-air) 50%, var(--tok-water));
-    background: color-mix(in srgb, var(--tok-air) 16%, var(--tok-surface-reading));
-  }
-
-  .tok-blog-feed__article--series {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 0.85rem;
-    align-items: start;
-    padding: 1.15rem 1.1rem 1.35rem;
-    background: color-mix(in srgb, var(--tok-water) 12%, var(--tok-surface-reading-soft));
-  }
-
-  .tok-blog-feed__series-stripes {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 4px;
-    min-height: 3.25rem;
-    padding-top: 0.15rem;
-  }
-
-  .tok-blog-feed__series-stripe {
-    display: block;
-    width: 3px;
-    border-radius: 1px;
-    background: color-mix(in srgb, var(--tok-air) 45%, var(--tok-water));
-  }
-
-  .tok-blog-feed__series-body {
-    min-width: 0;
-  }
-
-  .tok-blog-feed__item:last-child .tok-blog-feed__article {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .tok-blog-feed__item:last-child .tok-blog-feed__article--foundational,
-  .tok-blog-feed__item:last-child .tok-blog-feed__article--note,
-  .tok-blog-feed__item:last-child .tok-blog-feed__article--series {
-    padding-bottom: 1.35rem;
-  }
-
-  .tok-blog-feed__meta {
-    margin: 0 0 0.45rem;
-    font-family: var(--font-body);
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--tok-gold);
-  }
-
-  .tok-blog-feed__badge--series {
-    color: var(--tok-water);
-  }
-
-  .tok-blog-feed__badge--note {
-    color: color-mix(in srgb, var(--tok-water) 88%, var(--tok-teal-dim));
-  }
-
-  .tok-blog-feed__badge--foundational {
-    color: var(--tok-earth);
-  }
-
-  .tok-blog-feed__item--foundational .tok-blog-feed__excerpt {
-    line-height: 1.72;
-  }
-
-  .tok-blog-feed__cheat-flag {
-    color: var(--tok-teal-dim);
-  }
-
-  .tok-blog-feed__sep {
-    margin: 0 0.4rem;
-    opacity: 0.85;
-  }
-
-  .tok-blog-feed__cat {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .tok-blog-feed__cat:hover {
-    color: var(--tok-teal);
-  }
-
-  .tok-blog-feed__title {
-    margin: 0 0 0.65rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.45rem, 3.5vw, 1.85rem);
-    line-height: 1.2;
-  }
-
-  .tok-blog-feed__subtitle {
-    margin: -0.35rem 0 0.55rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-size: 1.05rem;
-    line-height: 1.4;
-    opacity: 0.9;
-  }
-
-  .tok-blog-feed__title a {
-    color: var(--tok-teal-dim);
-    text-decoration: none;
-  }
-
-  .tok-blog-feed__title a:hover {
-    color: var(--tok-teal);
-  }
-
-  .tok-blog-feed__excerpt {
-    margin: 0 0 0.85rem;
-    font-size: 1.02rem;
-    line-height: 1.7;
-    opacity: 0.92;
-  }
-
-  .tok-blog-feed__more-wrap {
-    margin: 0;
-  }
-
-  .tok-blog-feed__more {
-    font-family: var(--font-body);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--tok-teal);
-  }
-
-  .tok-blog-feed__more:hover {
-    color: var(--tok-teal-dim);
-  }
-</style>
+    initFieldNoteFind();
+    document.addEventListener("astro:page-load", initFieldNoteFind);
+  </script>
+</BaseLayout>

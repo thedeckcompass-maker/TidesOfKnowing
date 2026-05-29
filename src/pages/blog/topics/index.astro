@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import { getCollection } from "astro:content";
+import {
+  FIELD_NOTE_TOPICS_HUB_PATH,
+  getFieldNoteTopicIndexRows,
+} from "../../../data/fieldNoteTopics";
+import { getTopicIndexEntries } from "../../../lib/blogFieldNotes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../../lib/ecosystem-structured-data";
+import { siteBase } from "../../../lib/site";
+
+const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+const indexEntries = getTopicIndexEntries(allEntries);
+const topicRows = getFieldNoteTopicIndexRows(indexEntries);
+
+if (topicRows.length === 0) {
+  return Astro.redirect("/blog/");
+}
+
+const PAGE_TITLE = "Field Notes topics | Tides of Knowing";
+const PAGE_DESCRIPTION =
+  "Browse curated Field Notes topics on symbolic reading, tarot methodology, seeker dynamics, AI and intuition, and reader development from Tides of Knowing.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(FIELD_NOTE_TOPICS_HUB_PATH, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: "Topics", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  about: [
+    { "@type": "Thing", name: "Symbolic reading" },
+    { "@type": "Thing", name: "Reader development" },
+    { "@id": ENTITY_IDS.compassMethod },
+  ],
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: topicRows.length,
+    itemListElement: topicRows.map((row, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: row.label,
+      url: new URL(row.href, siteHref).href,
+    })),
+  },
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-fn-hub page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-fn-hub__head">
+      <h1 class="tok-fn-hub__title">Field Notes topics</h1>
+      <p class="tok-fn-hub__lede">
+        Curated entry points into observational practice writing at Tides of Knowing.
+        Each topic gathers Field Notes on symbolic reading, seeker dynamics, and live
+        interpretive work.
+      </p>
+      <p class="tok-fn-hub__authority">
+        These topic collections gather Field Notes written by Leigh Spencer, founder of
+        The COMPASS Method™, drawing on 40+ years of tarot practice and 30 years of
+        professional journalism. They complement Field Note series and the main{" "}
+        <a href="/blog/">Field Notes archive</a>.
+      </p>
+    </header>
+
+    <ul class="tok-fn-hub__list">
+      {
+        topicRows.map((row) => (
+          <li class="tok-fn-hub__item">
+            <a class="tok-fn-hub__link" href={row.href}>
+              <span class="tok-fn-hub__item-title">{row.label}</span>
+              <span class="tok-fn-hub__item-meta">
+                {row.noteCount} note{row.noteCount === 1 ? "" : "s"}
+              </span>
+            </a>
+            <p class="tok-fn-hub__item-desc">{row.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="tok-fn-hub__back">
+      <a href="/blog/">Back to all Field Notes</a>
+    </p>
+  </div>
+</BaseLayout>

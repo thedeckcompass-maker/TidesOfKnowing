@@ -1,0 +1,119 @@
+---
+/**
+ * Curated article topic listings at /articles/topic/{slug}/.
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import ArticleCard from "../../../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+import {
+  ARTICLE_TOPICS,
+  articleTopicFilterPath,
+  entryMatchesArticleTopic,
+  topicChipsFromArticleTags,
+} from "../../../lib/articleLibraryNav";
+import { sortArticlesLibraryNewest } from "../../../lib/articleLibraryOrder";
+import { readingMinutesForArticle } from "../../../lib/articleReadingMinutes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { siteBase } from "../../../lib/site";
+
+const tagParam = Astro.params.tag;
+const topic = ARTICLE_TOPICS.find((t) => t.slug === tagParam);
+
+if (!topic || !topic.indexable) {
+  return Astro.redirect("/articles/");
+}
+
+const articles = await getCollection("articles");
+const matched = sortArticlesLibraryNewest(
+  articles.filter((a) => entryMatchesArticleTopic(a, topic)),
+);
+
+if (matched.length === 0) {
+  return Astro.redirect("/articles/");
+}
+
+const PAGE_TITLE = `${topic.label} | Articles | Tides of Knowing`;
+
+const PAGE_DESCRIPTION = `${topic.description} Browse articles on ${topic.label.toLowerCase()} from Tides of Knowing.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(articleTopicFilterPath(topic.slug), base).href;
+
+const minutesById = new Map(
+  articles.map((a) => [a.id, readingMinutesForArticle(a)]),
+);
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: topic.label, url: null },
+];
+
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: matched.length,
+    itemListElement: matched.map((a, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: a.data.title,
+      url: new URL(`/articles/${a.data.slug}/`, siteHref).href,
+    })),
+  },
+};
+
+const jsonLd = [itemListLd, breadcrumbJsonLd(crumbs, siteHref)];
+
+const ogImage = matched[0]
+  ? new URL(matched[0].data.heroImage, base).href
+  : new URL("/favicon.svg", base).href;
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={ogImage}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-art-topic page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-art-topic__head" data-reveal>
+      <h1 class="tok-art-topic__title">{topic.label}</h1>
+      <p class="tok-art-topic__lede">{topic.description}</p>
+      <p class="tok-art-topic__follow">
+        <a href="/articles/">All articles</a>
+        ·
+        <a href="/blog/">Field Notes</a>
+      </p>
+    </header>
+
+    <div class="tok-art-topic__grid" data-reveal>
+      {
+        matched.map((a) => (
+          <ArticleCard
+            article={a}
+            readingMinutes={minutesById.get(a.id) ?? 1}
+            topicChips={topicChipsFromArticleTags(a.data.tags)}
+            variant={
+              a.data.seriesName?.trim()
+                ? "series"
+                : a.data.listBadge?.trim()
+                  ? "method"
+                  : "default"
+            }
+          />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import FieldNoteSeriesMarker from "../../../components/FieldNoteSeriesMarker.astro";
+import { getCollection } from "astro:content";
+import {
+  FIELD_NOTE_SERIES_HUB_PATH,
+  getFieldNoteSeriesIndexRows,
+} from "../../../lib/fieldNoteSeriesIndex";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../../lib/ecosystem-structured-data";
+import { siteBase } from "../../../lib/site";
+
+const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+const seriesRows = getFieldNoteSeriesIndexRows(allEntries);
+
+if (seriesRows.length === 0) {
+  return Astro.redirect("/blog/");
+}
+
+const PAGE_TITLE = "Field Note series | Tides of Knowing";
+const PAGE_DESCRIPTION =
+  "Browse multi-part Field Note series on seeker dynamics, symbolic reading, and tarot practice from Tides of Knowing.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(FIELD_NOTE_SERIES_HUB_PATH, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: "Series", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: seriesRows.length,
+    itemListElement: seriesRows.map((row, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: row.title,
+      url: new URL(row.seriesPageHref, siteHref).href,
+    })),
+  },
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-fn-hub tok-fn-hub--series page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-fn-hub__head">
+      <h1 class="tok-fn-hub__title">Field Note series</h1>
+      <p class="tok-fn-hub__lede">
+        Multi-part observational arcs from live reading work. Each series follows one
+        line of practice across several connected notes. For the newest entries, start
+        from the <a href="/blog/">Field Notes archive</a>.
+      </p>
+      <p class="tok-fn-hub__authority">
+        Series Field Notes are written by Leigh Spencer and grounded in The COMPASS
+        Method™ and symbolic reading practice.
+      </p>
+    </header>
+
+    <ul class="tok-fn-hub__series-list">
+      {
+        seriesRows.map((row) => (
+          <li class="tok-fn-hub__series-item">
+            <a class="tok-fn-hub__series-link" href={row.seriesPageHref}>
+              <FieldNoteSeriesMarker class="tok-fn-hub__series-marker" />
+              <div class="tok-fn-hub__series-body">
+                <h2 class="tok-fn-hub__series-title">{row.title}</h2>
+                <p class="tok-fn-hub__series-excerpt">{row.description}</p>
+                <p class="tok-fn-hub__series-meta">
+                  {row.noteCount} part{row.noteCount === 1 ? "" : "s"}
+                  {row.cheatSheetAvailable ? " · Cheat sheet" : ""}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="tok-fn-hub__back">
+      <a href="/blog/">Back to all Field Notes</a>
+      <span class="tok-fn-hub__back-sep" aria-hidden="true">·</span>
+      <a href="/blog/library/series/">Series library archive</a>
+    </p>
+  </div>
+</BaseLayout>

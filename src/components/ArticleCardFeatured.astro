@@ -4,9 +4,11 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
   article: CollectionEntry<"articles">;
   readingMinutes: number;
+  /** Tighter card body on /articles/ Latest series strip (hero image priority). */
+  archiveFeatured?: boolean;
 }
 
-const { article, readingMinutes } = Astro.props;
+const { article, readingMinutes, archiveFeatured = false } = Astro.props;
 const {
   title,
   subtitle,
@@ -21,7 +23,7 @@ const {
 
 const cardBadge = seriesName?.trim() || listBadge?.trim();
 
-const maxExcerpt = 200;
+const maxExcerpt = archiveFeatured ? 120 : 200;
 const longExcerpt =
   excerpt.length > maxExcerpt ? `${excerpt.slice(0, maxExcerpt).trim()}…` : excerpt;
 
@@ -32,7 +34,7 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 });
 ---
 
-<article class="feat-card">
+<article class:list={["feat-card", archiveFeatured && "feat-card--archive"]}>
   <a class="feat-card__link" href={`/articles/${slug}/`}>
     <div class="feat-card__media">
       <img
@@ -52,7 +54,7 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
         )
       }
       <h2 class="feat-card__title">{title}</h2>
-      {subtitle && <p class="feat-card__subtitle">{subtitle}</p>}
+      {subtitle && !archiveFeatured && <p class="feat-card__subtitle">{subtitle}</p>}
       <p class="feat-card__excerpt">{longExcerpt}</p>
       <div class="feat-card__meta">
         <time datetime={publishDate.toISOString()}>{displayDate}</time>
@@ -187,5 +189,34 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
   .feat-card__link:hover .feat-card__cta {
     background: var(--tok-btn-filled-bg);
     color: var(--tok-btn-filled-fg);
+  }
+
+  .feat-card--archive .feat-card__body {
+    padding: 0.85rem 0.95rem 1rem;
+    gap: 0.45rem;
+  }
+
+  .feat-card--archive .feat-card__title {
+    font-size: clamp(1.1rem, 2vw, 1.28rem);
+    line-height: 1.28;
+  }
+
+  .feat-card--archive .feat-card__excerpt {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .feat-card--archive .feat-card__meta {
+    margin-top: 0;
+    padding-top: 0.15rem;
+  }
+
+  .feat-card--archive .feat-card__cta {
+    margin-top: 0.35rem;
+    padding: 0.4rem 0.75rem;
   }
 </style>

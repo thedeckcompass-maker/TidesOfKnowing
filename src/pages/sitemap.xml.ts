@@ -2,14 +2,38 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { slugify } from "../utils/slugify";
 import { blogCategoryIndex } from "../lib/blogCategories";
+import { getIndexableArticleTopicsWithContent } from "../lib/articleLibraryNav";
 import {
+  ARTICLE_TOPICS_HUB_ENABLED,
+  ARTICLE_TOPICS_HUB_PATH,
+  articleTopicFilterPath,
+  getArticleTopicIndexRows,
+} from "../data/articleTopics";
+import {
+  ARTICLE_SERIES_HUB_PATH,
+  getArticleSeriesIndexRows,
+} from "../lib/articleSeriesIndex";
+import {
+  FIELD_NOTE_LIBRARY_LANES,
   fieldNoteSlugFromEntry,
+  getIndexableFieldNoteTopicsWithContent,
   getSeriesEntries,
   getSeriesFieldNotes,
   getStandaloneFieldNotes,
+  getTopicIndexEntries,
   seriesSlugFromEntry,
   standaloneSlugFromEntry,
+  topicFilterPath,
 } from "../lib/blogFieldNotes";
+import {
+  FIELD_NOTE_TOPICS_HUB_ENABLED,
+  FIELD_NOTE_TOPICS_HUB_PATH,
+  getFieldNoteTopicIndexRows,
+} from "../data/fieldNoteTopics";
+import {
+  FIELD_NOTE_SERIES_HUB_PATH,
+  getFieldNoteSeriesIndexRows,
+} from "../lib/fieldNoteSeriesIndex";
 import { LIBRARY_PER_PAGE, totalPages } from "../lib/libraryPagination";
 import { libraryListPath, type LibraryListMode } from "../lib/libraryPageUrls";
 import { isRepeatingMeaningReady } from "../lib/repeatingCardMeanings";
@@ -122,6 +146,32 @@ export const GET: APIRoute = async () => {
     rows.push({ path: `/tags/${t}/`, changefreq: "monthly", priority: "0.6" });
   }
 
+  const topicIndexRows = getArticleTopicIndexRows(articles);
+  if (ARTICLE_TOPICS_HUB_ENABLED && topicIndexRows.length > 0) {
+    rows.push({
+      path: ARTICLE_TOPICS_HUB_PATH,
+      changefreq: "monthly",
+      priority: "0.68",
+    });
+  }
+
+  for (const topic of getIndexableArticleTopicsWithContent(articles)) {
+    rows.push({
+      path: articleTopicFilterPath(topic.slug),
+      changefreq: "monthly",
+      priority: "0.62",
+    });
+  }
+
+  const seriesIndexRows = getArticleSeriesIndexRows(articles);
+  if (seriesIndexRows.length > 0) {
+    rows.push({
+      path: ARTICLE_SERIES_HUB_PATH,
+      changefreq: "monthly",
+      priority: "0.68",
+    });
+  }
+
   /** Interactive tool hub (not individual tool deep-links). */
   rows.push({
     path: getRepeatingCardHubPath(),
@@ -154,6 +204,41 @@ export const GET: APIRoute = async () => {
       path: `/blog/category/${c.slug}/`,
       changefreq: "weekly",
       priority: "0.55",
+    });
+  }
+
+  for (const lane of FIELD_NOTE_LIBRARY_LANES) {
+    rows.push({
+      path: lane.path,
+      changefreq: "weekly",
+      priority: "0.62",
+    });
+  }
+
+  const fnTopicIndexEntries = getTopicIndexEntries(blog);
+  const fnTopicRows = getFieldNoteTopicIndexRows(fnTopicIndexEntries);
+  if (FIELD_NOTE_TOPICS_HUB_ENABLED && fnTopicRows.length > 0) {
+    rows.push({
+      path: FIELD_NOTE_TOPICS_HUB_PATH,
+      changefreq: "weekly",
+      priority: "0.64",
+    });
+  }
+
+  for (const topic of getIndexableFieldNoteTopicsWithContent(fnTopicIndexEntries)) {
+    rows.push({
+      path: topicFilterPath(topic.slug),
+      changefreq: "weekly",
+      priority: "0.58",
+    });
+  }
+
+  const fnSeriesRows = getFieldNoteSeriesIndexRows(blog);
+  if (fnSeriesRows.length > 0) {
+    rows.push({
+      path: FIELD_NOTE_SERIES_HUB_PATH,
+      changefreq: "weekly",
+      priority: "0.64",
     });
   }
 

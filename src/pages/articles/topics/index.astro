@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import { getCollection } from "astro:content";
+import {
+  ARTICLE_TOPICS_HUB_PATH,
+  getArticleTopicIndexRows,
+} from "../../../data/articleTopics";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../../lib/ecosystem-structured-data";
+import { siteBase } from "../../../lib/site";
+
+const articles = await getCollection("articles");
+const topicRows = getArticleTopicIndexRows(articles);
+
+if (topicRows.length === 0) {
+  return Astro.redirect("/articles/");
+}
+
+const PAGE_TITLE = "Article topics | Tides of Knowing";
+const PAGE_DESCRIPTION =
+  "Browse curated article topics on symbolic interpretation, tarot methodology, AI and intuition, repeating cards, and reflective practice from Tides of Knowing.";
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(ARTICLE_TOPICS_HUB_PATH, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Articles", url: "/articles/" },
+  { label: "Topics", url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  author: { "@type": "Person", name: "Leigh Spencer", "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  about: [
+    { "@type": "Thing", name: "Symbolic interpretation" },
+    { "@type": "Thing", name: "Tarot methodology" },
+    { "@id": ENTITY_IDS.compassMethod },
+  ],
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: topicRows.length,
+    itemListElement: topicRows.map((row, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: row.label,
+      url: new URL(row.href, siteHref).href,
+    })),
+  },
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-art-hub page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="tok-art-hub__head">
+      <h1 class="tok-art-hub__title">Article topics</h1>
+      <p class="tok-art-hub__lede">
+        Curated entry points into the Tides of Knowing article library. Each topic
+        gathers evergreen essays on symbolic interpretation, tarot methodology, and
+        related practice themes.
+      </p>
+      <p class="tok-art-hub__authority">
+        These topic collections gather articles written by Leigh Spencer, founder of
+        The COMPASS Method™, drawing on 40+ years of tarot practice and 30 years of
+        professional journalism. They complement the article series and the main
+        articles archive.
+      </p>
+    </header>
+
+    <ul class="tok-art-hub__list">
+      {
+        topicRows.map((row) => (
+          <li class="tok-art-hub__item">
+            <a class="tok-art-hub__link" href={row.href}>
+              <span class="tok-art-hub__item-title">{row.label}</span>
+              <span class="tok-art-hub__item-meta">
+                {row.articleCount} article{row.articleCount === 1 ? "" : "s"}
+              </span>
+            </a>
+            <p class="tok-art-hub__item-desc">{row.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="tok-art-hub__back">
+      <a href="/articles/">Back to all articles</a>
+    </p>
+  </div>
+</BaseLayout>

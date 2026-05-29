@@ -1,0 +1,122 @@
+---
+/**
+ * Crawlable Field Notes library lanes: series, individual, foundational.
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BlogSidebar from "../../../components/BlogSidebar.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import FieldNoteSeriesMarker from "../../../components/FieldNoteSeriesMarker.astro";
+import FieldNotesFeed from "../../../components/FieldNotesFeed.astro";
+import { getCollection } from "astro:content";
+import {
+  blogCategoryIndex,
+  blogCategoryLabel,
+} from "../../../lib/blogCategories";
+import {
+  buildLaneFeedItems,
+  FIELD_NOTE_LIBRARY_LANES,
+  getStandaloneFieldNotes,
+  type FieldNoteLibraryLaneId,
+} from "../../../lib/blogFieldNotes";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../../lib/breadcrumbs";
+import { siteBase } from "../../../lib/site";
+
+const laneParam = Astro.params.lane;
+const lane = FIELD_NOTE_LIBRARY_LANES.find((l) => l.id === laneParam);
+
+if (!lane) {
+  return Astro.redirect("/blog/");
+}
+
+const allEntries = await getCollection("blog", ({ data }) => !data.draft);
+const items = buildLaneFeedItems(
+  allEntries,
+  lane.id as FieldNoteLibraryLaneId,
+  blogCategoryLabel,
+);
+
+const standaloneForSidebar = getStandaloneFieldNotes(allEntries);
+const categoryRows = blogCategoryIndex(standaloneForSidebar);
+
+const PAGE_TITLE = `${lane.label} | Field Notes | Tides of Knowing`;
+const PAGE_DESCRIPTION = `${lane.pageIntro} Browse all ${lane.label.toLowerCase()} on Tides of Knowing.`;
+
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(lane.path, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Field Notes", url: "/blog/" },
+  { label: lane.label, url: null },
+];
+
+const collectionLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+};
+
+const jsonLd = [collectionLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  ogImage={new URL("/favicon.svg", base).href}
+  metaAuthor="Leigh Spencer"
+  jsonLd={jsonLd}
+>
+  <div class="tok-blog-index page-inner">
+    <div class="tok-blog-index-breadcrumbs">
+      <Breadcrumbs items={crumbs} />
+    </div>
+
+    <div class="tok-blog-index-grid">
+      <div class="tok-blog-index-main">
+        <header
+          class:list={[
+            "tok-blog-index-head",
+            `tok-blog-index-head--lane-${lane.id}`,
+          ]}
+          data-reveal
+        >
+          {
+            lane.id === "series" ? (
+              <FieldNoteSeriesMarker class="tok-blog-index-head__series-marker" />
+            ) : (
+              <span
+                class:list={[
+                  "tok-blog-index-head__lane-accent",
+                  `tok-blog-index-head__lane-accent--${lane.id}`,
+                ]}
+                aria-hidden="true"
+              />
+            )
+          }
+          <h1 class="tok-blog-index-title">{lane.label}</h1>
+          <p class="tok-blog-index-lede">{lane.pageIntro}</p>
+          <p class="tok-blog-index-lede tok-blog-index-lede--follow">
+            <a href="/blog/">All Field Notes</a>
+            ·
+            <a href="/blog/library/series/">Series</a>
+            ·
+            <a href="/blog/library/individual/">Individual</a>
+            ·
+            <a href="/blog/library/foundational/">Foundational</a>
+          </p>
+        </header>
+
+        <FieldNotesFeed
+          items={items}
+          emptyMessage="No Field Notes are currently published in this section."
+        />
+      </div>
+
+      <BlogSidebar categories={categoryRows} />
+    </div>
+  </div>
+</BaseLayout>

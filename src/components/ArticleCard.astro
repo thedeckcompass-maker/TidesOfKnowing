@@ -1,12 +1,26 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import type { ArticleTopicChip } from "../lib/articleLibraryNav";
+import ArticleTopicChips from "./ArticleTopicChips.astro";
+
+type CardVariant = "default" | "method" | "series";
 
 interface Props {
   article: CollectionEntry<"articles">;
   readingMinutes: number;
+  topicChips?: ArticleTopicChip[];
+  variant?: CardVariant;
+  /** Client-side filter haystack for /articles/ search (optional). */
+  searchHaystack?: string;
 }
 
-const { article, readingMinutes } = Astro.props;
+const {
+  article,
+  readingMinutes,
+  topicChips = [],
+  variant = "default",
+  searchHaystack,
+} = Astro.props;
 const {
   title,
   slug,
@@ -19,6 +33,11 @@ const {
 } = article.data;
 
 const cardBadge = seriesName?.trim() || listBadge?.trim();
+const resolvedVariant: CardVariant = seriesName?.trim()
+  ? "series"
+  : listBadge?.trim()
+    ? "method"
+    : variant;
 
 const maxExcerpt = 120;
 const shortExcerpt =
@@ -31,7 +50,10 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 });
 ---
 
-<article class="article-card">
+<article
+  class:list={["article-card", `article-card--${resolvedVariant}`]}
+  {...searchHaystack ? { "data-art-search": searchHaystack } : {}}
+>
   <a class="article-card__link" href={`/articles/${slug}/`}>
     <div class="article-card__media">
       <img
@@ -47,7 +69,15 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     <div class="article-card__body">
       {
         cardBadge && (
-          <span class="article-card__badge">{cardBadge}</span>
+          <span
+            class:list={[
+              "article-card__badge",
+              resolvedVariant === "series" && "article-card__badge--series",
+              resolvedVariant === "method" && "article-card__badge--method",
+            ]}
+          >
+            {cardBadge}
+          </span>
         )
       }
       <h3 class="article-card__title">{title}</h3>
@@ -58,18 +88,31 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
       </div>
     </div>
   </a>
+  <ArticleTopicChips chips={topicChips} class="article-card__topics" />
 </article>
 
 <style>
   .article-card {
     margin: 0;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-card--method .article-card__link {
+    border-left: 3px solid var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-gold) 8%, var(--tok-surface-reading));
+  }
+
+  .article-card--series .article-card__link {
+    border-left: 3px solid var(--tok-water);
+    background: color-mix(in srgb, var(--tok-water) 10%, var(--tok-surface-reading-soft));
   }
 
   .article-card__link {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
     text-decoration: none;
     color: inherit;
     background: color-mix(in srgb, var(--tok-surface-reading) 35%, transparent);
@@ -116,6 +159,14 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
     color: var(--tok-gold);
   }
 
+  .article-card__badge--series {
+    color: var(--tok-water);
+  }
+
+  .article-card__badge--method {
+    color: var(--tok-teal-dim);
+  }
+
   .article-card__title {
     margin: 0;
     font-family: var(--font-heading);
@@ -153,5 +204,9 @@ const displayDate = publishDate.toLocaleDateString("en-US", {
 
   .article-card__read {
     color: color-mix(in srgb, var(--tok-teal-dim) 75%, var(--tok-surface-reading));
+  }
+
+  .article-card__topics {
+    margin: 0.45rem 0 0 0.15rem;
   }
 </style>
