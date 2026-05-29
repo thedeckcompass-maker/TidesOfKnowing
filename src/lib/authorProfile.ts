@@ -8,4 +8,4 @@ export const articleAuthorAttribution =
 
 /** Optional extended framing for cornerstone methodology pages. */
 export const authorBlockExtended =
-  "Written by Leigh Spencer, founder of Tides of Knowing and creator of The COMPASS Method™. Leigh brings 40+ years of tarot practice, 30 years of professional journalism, and deep experience in symbolic interpretation, reflective practice, and intuitive literacy.";
+  "Written by Leigh Spencer, fourth-generation Matakite (seer), founder of Tides of Knowing and creator of The COMPASS Method™. Leigh brings 40+ years of tarot practice, 30 years of professional journalism, and deep experience in symbolic interpretation, reflective practice, and intuitive literacy.";

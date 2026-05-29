@@ -30,10 +30,12 @@ import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 
 const PAGE_TITLE =
   "Articles | Tides of Knowing | Tarot Methodology & Intuition Development";
-const PAGE_DESCRIPTION =
-  "Evergreen essays on symbolic interpretation, tarot methodology, AI and intuition, and reflective practice from Tides of Knowing.";
+const PAGE_LEDE =
+  "The Articles archive develops the core ideas behind Tides of Knowing: symbolic interpretation, intuitive literacy, reflective tarot practice, and the deeper perception that sits beneath surface meanings. These long-form essays explore tarot methodology, intuitive development, reading flow, spiritual longing, and the patterns that help readers move beyond memorised interpretations into clearer symbolic understanding.";
 const AUTHORITY_LINE =
-  "Articles by Leigh Spencer, founder of The COMPASS Method™, drawing on 40+ years of tarot practice and 30 years of professional journalism.";
+  "Articles by Leigh Spencer, fourth-generation Matakite (seer), founder of The COMPASS Method™, drawing on 40+ years of tarot practice and 30 years of professional journalism.";
+/** Meta and CollectionPage description aligned with visible lede. */
+const PAGE_DESCRIPTION = PAGE_LEDE;
 
 const articles = await getCollection("articles");
 const sortedNewest = sortArticlesLibraryNewest(articles);
@@ -114,7 +116,7 @@ const pager = libraryPaginationState({ kind: "newest" }, 1, tp, base);
 
     <header class="tok-library__hero tok-library__hero--brand surface-system">
       <h1 class="tok-library__title">Articles</h1>
-      <p class="tok-library__lede">{PAGE_DESCRIPTION}</p>
+      <p class="tok-library__lede">{PAGE_LEDE}</p>
       <p class="tok-library__authority">{AUTHORITY_LINE}</p>
     </header>
 

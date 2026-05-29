@@ -24,7 +24,7 @@ import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 
 const AUTHORITY_LINE =
-  "Field Notes by Leigh Spencer trace the practical reality of symbolic reading, drawing on 40+ years of tarot practice, professional journalism, and The COMPASS Method™.";
+  "Field Notes by Leigh Spencer, fourth-generation Matakite (seer), trace the practical reality of symbolic reading, drawing on 40+ years of tarot practice, professional journalism, and The COMPASS Method™.";
 
 const allEntries = await getCollection("blog", ({ data }) => !data.draft);
 const feedItems = buildBlogFeedItems(allEntries, blogCategoryLabel);
