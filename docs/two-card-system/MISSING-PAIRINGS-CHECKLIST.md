@@ -1,7 +1,7 @@
 # Missing Pairings Checklist
 
 **Source:** `content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md`  
-**Generated:** 2026-05-31T05:27:59.475Z  
+**Generated:** 2026-05-31T06:10:31.673Z  
 **Audit script:** `node scripts/audit-two-card-corpus.mjs`
 
 Scope: Major Arcana · upright only · ordered pairs · self-pairs excluded · expected **462** pairings (22 × 21).
@@ -13,14 +13,14 @@ Scope: Major Arcana · upright only · ordered pairs · self-pairs excluded · e
 | Metric | Count |
 |--------|------:|
 | Expected pairings | 462 |
-| Complete pairings (chunk + template) | **336** |
-| Missing pairings | **126** |
-| Complete chunks (incl. duplicates) | 343 |
+| Complete pairings (chunk + template) | **363** |
+| Missing pairings | **99** |
+| Complete chunks (incl. duplicates) | 370 |
 | Duplicate pairings (extra entries) | **7** |
 | Tail `## The Sun Enters` defects | **7** |
 | Invalid self-pairings | **0** |
 | Malformed / uncertain headings | **0** |
-| Pairing headings scanned (line pass) | 400 (393 unique) |
+| Pairing headings scanned (line pass) | 427 (418 unique) |
 
 _Counting method: chunk_template (split on \---, plus plain --- before markdown # pairing headings in tail). See `docs/two-card-system/MANUAL-COMPLETION-PLAN.md` and `major-arcana-upright-completion-audit.md`._
 
@@ -63,55 +63,33 @@ _No missing pairings for this first card._
 
 ## The Hierophant
 
-_Found 8/21 · Missing 13/21_
+_Found 21/21 · Missing 0/21_
 
-- [ ] The Hierophant → The Hermit
-- [ ] The Hierophant → Wheel of Fortune
-- [ ] The Hierophant → Justice
-- [ ] The Hierophant → The Hanged Man
-- [ ] The Hierophant → Death
-- [ ] The Hierophant → Temperance
-- [ ] The Hierophant → The Devil
-- [ ] The Hierophant → The Tower
-- [ ] The Hierophant → The Star
-- [ ] The Hierophant → The Moon
-- [ ] The Hierophant → The Sun
-- [ ] The Hierophant → Judgement
-- [ ] The Hierophant → The World
+_No missing pairings for this first card._
 
 ## The Lovers
 
-_Found 18/21 · Missing 3/21_
+_Found 21/21 · Missing 0/21_
 
-- [ ] The Lovers → The Empress
-- [ ] The Lovers → The Emperor
-- [ ] The Lovers → The Hierophant
+_No missing pairings for this first card._
 
 ## The Chariot
 
-_Found 18/21 · Missing 3/21_
+_Found 21/21 · Missing 0/21_
 
-- [ ] The Chariot → The Empress
-- [ ] The Chariot → The Emperor
-- [ ] The Chariot → The Hierophant
+_No missing pairings for this first card._
 
 ## Strength
 
-_Found 18/21 · Missing 3/21_
+_Found 21/21 · Missing 0/21_
 
-- [ ] Strength → The Empress
-- [ ] Strength → The Emperor
-- [ ] Strength → The Hierophant
+_No missing pairings for this first card._
 
 ## The Hermit
 
-_Found 16/21 · Missing 5/21_
+_Found 21/21 · Missing 0/21_
 
-- [ ] The Hermit → The Empress
-- [ ] The Hermit → The Emperor
-- [ ] The Hermit → The Hierophant
-- [ ] The Hermit → Death
-- [ ] The Hermit → The Tower
+_No missing pairings for this first card._
 
 ## Wheel of Fortune
 
@@ -275,38 +253,38 @@ _Found 10/21 · Missing 11/21_
 
 ### The Hermit → Justice
 
-- Line **21569**: `The Hermit — Justice` (title_case, em_dash)
-- Line **21811**: `The Hermit — Justice` (title_case, em_dash)
+- Line **24431**: `The Hermit — Justice` (title_case, em_dash)
+- Line **24673**: `The Hermit — Justice` (title_case, em_dash)
 
 ### The Hanged Man → The Hermit
 
-- Line **22177**: `The Hanged Man — The Hermit` (title_case, em_dash)
-- Line **22417**: `The Hanged Man — The Hermit` (title_case, em_dash)
+- Line **25039**: `The Hanged Man — The Hermit` (title_case, em_dash)
+- Line **25279**: `The Hanged Man — The Hermit` (title_case, em_dash)
 
 ### The Hermit → Temperance
 
-- Line **22779**: `The Hermit — Temperance` (title_case, em_dash)
-- Line **23017**: `The Hermit — Temperance` (title_case, em_dash)
+- Line **25641**: `The Hermit — Temperance` (title_case, em_dash)
+- Line **25879**: `The Hermit — Temperance` (title_case, em_dash)
 
 ### The Devil → The Hermit
 
-- Line **23379**: `The Devil — The Hermit` (title_case, em_dash)
-- Line **23619**: `The Devil — The Hermit` (title_case, em_dash)
+- Line **26241**: `The Devil — The Hermit` (title_case, em_dash)
+- Line **26481**: `The Devil — The Hermit` (title_case, em_dash)
 
 ### The Tower → The Hermit
 
-- Line **23865**: `The Tower — The Hermit` (title_case, em_dash)
-- Line **24113**: `The Tower - The Hermit` (title_case, hyphen)
+- Line **26727**: `The Tower — The Hermit` (title_case, em_dash)
+- Line **26975**: `The Tower - The Hermit` (title_case, hyphen)
 
 ### The Hermit → The Star
 
-- Line **23989**: `The Hermit — The Star` (title_case, em_dash)
-- Line **24239**: `The Hermit — The Star` (title_case, em_dash)
+- Line **26851**: `The Hermit — The Star` (title_case, em_dash)
+- Line **27101**: `The Hermit — The Star` (title_case, em_dash)
 
 ### The Star → Wheel of Fortune
 
-- Line **27401**: `The Star — Wheel of Fortune` (title_case, em_dash)
-- Line **27651**: `The Star — Wheel of Fortune` (title_case, em_dash)
+- Line **30263**: `The Star — Wheel of Fortune` (title_case, em_dash)
+- Line **30513**: `The Star — Wheel of Fortune` (title_case, em_dash)
 
 ---
 
@@ -445,40 +423,12 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 - [ ] The Empress → The Fool
 - [ ] The Empress → Justice
 
-**Step 2 — First-card block: The Hierophant** (8/21 found, 13 missing)
-
-- [ ] The Hierophant → The Hermit
-- [ ] The Hierophant → Wheel of Fortune
-- [ ] The Hierophant → Justice
-- [ ] The Hierophant → The Hanged Man
-- [ ] The Hierophant → Death
-- [ ] The Hierophant → Temperance
-- [ ] The Hierophant → The Devil
-- [ ] The Hierophant → The Tower
-- [ ] The Hierophant → The Star
-- [ ] The Hierophant → The Moon
-- [ ] The Hierophant → The Sun
-- [ ] The Hierophant → Judgement
-- [ ] The Hierophant → The World
-
-**Step 3 — E / E / H as second card** (52 items)
+**Step 2 — E / E / H as second card** (40 items)
 
 - [ ] The High Priestess → The Hierophant
 - [ ] The Empress → The Empress
 - [ ] The Emperor → The Emperor
 - [ ] The Hierophant → The Hierophant
-- [ ] The Lovers → The Empress
-- [ ] The Lovers → The Emperor
-- [ ] The Lovers → The Hierophant
-- [ ] The Chariot → The Empress
-- [ ] The Chariot → The Emperor
-- [ ] The Chariot → The Hierophant
-- [ ] Strength → The Empress
-- [ ] Strength → The Emperor
-- [ ] Strength → The Hierophant
-- [ ] The Hermit → The Empress
-- [ ] The Hermit → The Emperor
-- [ ] The Hermit → The Hierophant
 - [ ] Wheel of Fortune → The Empress
 - [ ] Wheel of Fortune → The Emperor
 - [ ] Wheel of Fortune → The Hierophant
@@ -516,7 +466,7 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 - [ ] The World → The Emperor
 - [ ] The World → The Hierophant
 
-**Step 4 — Late arc gaps** (95 items)
+**Step 3 — Late arc gaps** (90 items)
 
 - [ ] The World → The Empress
 - [ ] The World → The Emperor
@@ -599,11 +549,6 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 - [ ] The Tower → The Sun
 - [ ] The Tower → Judgement
 - [ ] The Tower → The World
-- [ ] The Hermit → The Empress
-- [ ] The Hermit → The Emperor
-- [ ] The Hermit → The Hierophant
-- [ ] The Hermit → Death
-- [ ] The Hermit → The Tower
 - [ ] Justice → The Magician
 - [ ] Justice → The Empress
 - [ ] Justice → The Emperor
@@ -614,25 +559,12 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 - [ ] Wheel of Fortune → The Hierophant
 - [ ] Wheel of Fortune → The Moon
 
-**Step 5 — Remaining gaps** (15 items)
+**Step 4 — Remaining gaps** (2 items)
 
 - [ ] The Empress → The Fool
 - [ ] The Empress → Justice
-- [ ] The Hierophant → The Hermit
-- [ ] The Hierophant → Wheel of Fortune
-- [ ] The Hierophant → Justice
-- [ ] The Hierophant → The Hanged Man
-- [ ] The Hierophant → Death
-- [ ] The Hierophant → Temperance
-- [ ] The Hierophant → The Devil
-- [ ] The Hierophant → The Tower
-- [ ] The Hierophant → The Star
-- [ ] The Hierophant → The Moon
-- [ ] The Hierophant → The Sun
-- [ ] The Hierophant → Judgement
-- [ ] The Hierophant → The World
 
-**Step 6 — Duplicate cleanup** (7 items)
+**Step 5 — Duplicate cleanup** (7 items)
 
 - [ ] The Hermit → Justice
 - [ ] The Hanged Man → The Hermit
@@ -642,7 +574,7 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 - [ ] The Hermit → The Star
 - [ ] The Star → Wheel of Fortune
 
-**Step 7 — Tail Sun Enters heading fixes** (7 items)
+**Step 6 — Tail Sun Enters heading fixes** (7 items)
 
 - [ ] Judgement → The Star
 - [ ] The World → The Star
@@ -654,13 +586,13 @@ Re-run `node scripts/audit-two-card-corpus.mjs` until complete = 462, missing = 
 
 ### Tail heading defect detail
 
-- **Judgement → The Star** — pairing title ~line 34774, defect ~line 34796: `## The Sun Enters`
-- **The World → The Star** — pairing title ~line 34946, defect ~line 34968: `## The Sun Enters`
-- **Judgement → The Moon** — pairing title ~line 35288, defect ~line 35310: `## The Sun Enters`
-- **The World → The Moon** — pairing title ~line 35460, defect ~line 35482: `## The Sun Enters`
-- **Judgement → The Sun** — pairing title ~line 35632, defect ~line 35654: `## The Sun Enters`
-- **The World → The Sun** — pairing title ~line 35804, defect ~line 35826: `## The Sun Enters`
-- **Judgement → The World** — pairing title ~line 35890, defect ~line 35912: `## The Sun Enters`
+- **Judgement → The Star** — pairing title ~line 37636, defect ~line 37658: `## The Sun Enters`
+- **The World → The Star** — pairing title ~line 37808, defect ~line 37830: `## The Sun Enters`
+- **Judgement → The Moon** — pairing title ~line 38150, defect ~line 38172: `## The Sun Enters`
+- **The World → The Moon** — pairing title ~line 38322, defect ~line 38344: `## The Sun Enters`
+- **Judgement → The Sun** — pairing title ~line 38494, defect ~line 38516: `## The Sun Enters`
+- **The World → The Sun** — pairing title ~line 38666, defect ~line 38688: `## The Sun Enters`
+- **Judgement → The World** — pairing title ~line 38752, defect ~line 38774: `## The Sun Enters`
 
 
 ---
@@ -673,7 +605,7 @@ Detected separator/style combinations:
 - `all_caps/hyphen`: 3
 - `markdown_h1/em_dash`: 20
 - `title_case/em_dash`: 254
-- `title_case/en_dash`: 52
+- `title_case/en_dash`: 79
 - `title_case/hyphen`: 2
 
 ---

@@ -1,15 +1,15 @@
 # Complete Pairings List
 
-**Generated:** 2026-05-31T05:27:59.475Z  
+**Generated:** 2026-05-31T06:10:31.673Z  
 **Source:** `content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md`  
 **Audit:** `node scripts/audit-two-card-corpus.mjs`  
 **Counting:** chunk_template (split on \---, plus plain --- before markdown # pairing headings in tail)
 
 | Metric | Count |
 |--------|------:|
-| **Complete pairings** | **336** |
+| **Complete pairings** | **363** |
 | Expected ordered slots | 462 |
-| Missing pairings | 126 |
+| Missing pairings | 99 |
 
 Complete entries only (chunk + template markers). Duplicates in the corpus count once here.
 
@@ -132,7 +132,7 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] The Emperor → Judgement
 - [x] The Emperor → The World
 
-## The Hierophant (8/21)
+## The Hierophant (21/21)
 
 - [x] The Hierophant → The Fool
 - [x] The Hierophant → The Magician
@@ -142,12 +142,28 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] The Hierophant → The Lovers
 - [x] The Hierophant → The Chariot
 - [x] The Hierophant → Strength
+- [x] The Hierophant → The Hermit
+- [x] The Hierophant → Wheel of Fortune
+- [x] The Hierophant → Justice
+- [x] The Hierophant → The Hanged Man
+- [x] The Hierophant → Death
+- [x] The Hierophant → Temperance
+- [x] The Hierophant → The Devil
+- [x] The Hierophant → The Tower
+- [x] The Hierophant → The Star
+- [x] The Hierophant → The Moon
+- [x] The Hierophant → The Sun
+- [x] The Hierophant → Judgement
+- [x] The Hierophant → The World
 
-## The Lovers (18/21)
+## The Lovers (21/21)
 
 - [x] The Lovers → The Fool
 - [x] The Lovers → The Magician
 - [x] The Lovers → The High Priestess
+- [x] The Lovers → The Empress
+- [x] The Lovers → The Emperor
+- [x] The Lovers → The Hierophant
 - [x] The Lovers → The Chariot
 - [x] The Lovers → Strength
 - [x] The Lovers → The Hermit
@@ -164,11 +180,14 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] The Lovers → Judgement
 - [x] The Lovers → The World
 
-## The Chariot (18/21)
+## The Chariot (21/21)
 
 - [x] The Chariot → The Fool
 - [x] The Chariot → The Magician
 - [x] The Chariot → The High Priestess
+- [x] The Chariot → The Empress
+- [x] The Chariot → The Emperor
+- [x] The Chariot → The Hierophant
 - [x] The Chariot → The Lovers
 - [x] The Chariot → Strength
 - [x] The Chariot → The Hermit
@@ -185,11 +204,14 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] The Chariot → Judgement
 - [x] The Chariot → The World
 
-## Strength (18/21)
+## Strength (21/21)
 
 - [x] Strength → The Fool
 - [x] Strength → The Magician
 - [x] Strength → The High Priestess
+- [x] Strength → The Empress
+- [x] Strength → The Emperor
+- [x] Strength → The Hierophant
 - [x] Strength → The Lovers
 - [x] Strength → The Chariot
 - [x] Strength → The Hermit
@@ -206,19 +228,24 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] Strength → Judgement
 - [x] Strength → The World
 
-## The Hermit (16/21)
+## The Hermit (21/21)
 
 - [x] The Hermit → The Fool
 - [x] The Hermit → The Magician
 - [x] The Hermit → The High Priestess
+- [x] The Hermit → The Empress
+- [x] The Hermit → The Emperor
+- [x] The Hermit → The Hierophant
 - [x] The Hermit → The Lovers
 - [x] The Hermit → The Chariot
 - [x] The Hermit → Strength
 - [x] The Hermit → Wheel of Fortune
 - [x] The Hermit → Justice
 - [x] The Hermit → The Hanged Man
+- [x] The Hermit → Death
 - [x] The Hermit → Temperance
 - [x] The Hermit → The Devil
+- [x] The Hermit → The Tower
 - [x] The Hermit → The Star
 - [x] The Hermit → The Moon
 - [x] The Hermit → The Sun
