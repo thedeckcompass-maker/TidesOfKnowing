@@ -1,0 +1,451 @@
+{
+  "metadata": {
+    "schemaName": "Tides of Knowing Symbolic Lexicon Card Record",
+    "schemaVersion": "1.0.0",
+    "recordVersion": "1.0.0",
+    "status": "draft",
+    "createdBy": "Leigh Spencer",
+    "createdFor": "Tides of Knowing",
+    "lastUpdated": null,
+    "lastReviewed": null,
+    "reviewStatus": {
+      "interpretive": "draft",
+      "contextual": "draft",
+      "lineage": "draft",
+      "spanish": "needsReview",
+      "seo": "draft",
+      "cultural": "notApplicable"
+    },
+    "sourcePolicy": "Original Tides of Knowing interpretation. No copied commercial guidebook text.",
+    "publicationStatus": {
+      "approvedForPublicWebsite": false,
+      "approvedForGameUse": false,
+      "approvedForEmailUse": false,
+      "approvedForPaidTraining": false,
+      "approvedForInternalAiPrompting": true
+    }
+  },
+  "identity": {
+    "cardId": "",
+    "slug": "",
+    "cardName": "",
+    "number": null,
+    "arcana": "",
+    "suit": null,
+    "rank": null,
+    "element": null,
+    "astrologicalAssociation": {
+      "primary": null,
+      "secondary": null,
+      "notes": ""
+    },
+    "visualEssence": "",
+    "archetypalRole": "",
+    "primaryMovement": "",
+    "shadowMovement": ""
+  },
+  "interpretation": {
+    "upright": {
+      "summary": "",
+      "teachingNote": "",
+      "practicalMeaning": "",
+      "emotionalMeaning": "",
+      "relationalMeaning": "",
+      "creativeMeaning": "",
+      "spiritualMeaning": "",
+      "shadowMeaning": ""
+    },
+    "reversed": {
+      "summary": "",
+      "teachingNote": "",
+      "practicalMeaning": "",
+      "emotionalMeaning": "",
+      "relationalMeaning": "",
+      "creativeMeaning": "",
+      "spiritualMeaning": "",
+      "shadowMeaning": ""
+    }
+  },
+  "contexts": {
+    "relationship": {
+      "upright": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "romance": {
+      "upright": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "business": {
+      "upright": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "innerDevelopment": {
+      "upright": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "",
+        "keywords": [],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    }
+  },
+  "vocabulary": {
+    "upright": {
+      "clearCurrent": {
+        "keywords": [],
+        "phrases": []
+      },
+      "deepCurrent": {
+        "keywords": [],
+        "phrases": []
+      },
+      "hiddenCurrent": {
+        "keywords": [],
+        "phrases": []
+      }
+    },
+    "reversed": {
+      "clearCurrent": {
+        "keywords": [],
+        "phrases": []
+      },
+      "deepCurrent": {
+        "keywords": [],
+        "phrases": []
+      },
+      "hiddenCurrent": {
+        "keywords": [],
+        "phrases": []
+      }
+    }
+  },
+  "lineages": {
+    "oldEnglishInspired": {
+      "id": "old-english-inspired",
+      "displayName": "Old English Inspired",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by Old English and early Germanic diction. Not presented as scholarly Old English translation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "norseSagaInspired": {
+      "id": "norse-saga-inspired",
+      "displayName": "Norse Saga Inspired",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by saga, ordeal, fate, exile, oath, and sea-crossing motifs. Not presented as Old Norse translation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "biblicalProphetic": {
+      "id": "biblical-prophetic",
+      "displayName": "Biblical Prophetic",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by prophetic, wilderness, calling, exile, and revelation language. Not presented as religious doctrine.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "alchemical": {
+      "id": "alchemical",
+      "displayName": "Alchemical",
+      "registerType": "symbolicRegister",
+      "status": "draft",
+      "notes": "Draws on alchemical transformation language.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "hermetic": {
+      "id": "hermetic",
+      "displayName": "Hermetic",
+      "registerType": "symbolicRegister",
+      "status": "draft",
+      "notes": "Draws on Hermetic themes of correspondence, hidden order, threshold knowledge, and the relation between inner and outer worlds.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "greekMythicPhilosophical": {
+      "id": "greek-mythic-philosophical",
+      "displayName": "Greek Mythic Philosophical",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by Greek mythic and philosophical vocabulary.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "jungianArchetypal": {
+      "id": "jungian-archetypal",
+      "displayName": "Jungian Archetypal",
+      "registerType": "interpretiveRegister",
+      "status": "draft",
+      "notes": "Useful for symbolic interpretation, individuation, shadow work, projection, and archetypal coaching.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "somaticEmbodied": {
+      "id": "somatic-embodied",
+      "displayName": "Somatic Embodied",
+      "registerType": "interpretiveRegister",
+      "status": "draft",
+      "notes": "Useful for grounding intuitive reading in body awareness, nervous-system response, pacing, and felt sense.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "businessStrategic": {
+      "id": "business-strategic",
+      "displayName": "Business Strategic",
+      "registerType": "appliedRegister",
+      "status": "draft",
+      "notes": "Useful for business readings, strategic decision-making, product development, leadership, and entrepreneurial interpretation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "editorialJournalistic": {
+      "id": "editorial-journalistic",
+      "displayName": "Editorial Journalistic",
+      "registerType": "appliedRegister",
+      "status": "draft",
+      "notes": "Reflects Tides of Knowing's journalistic intelligence: evidence, framing, signal, omission, pattern, and verification.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "poeticImaginal": {
+      "id": "poetic-imaginal",
+      "displayName": "Poetic Imaginal",
+      "registerType": "brandRegister",
+      "status": "draft",
+      "notes": "Supports Tides of Knowing's poetic and imaginal voice.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "oceanicTidal": {
+      "id": "oceanic-tidal",
+      "displayName": "Oceanic Tidal",
+      "registerType": "brandRegister",
+      "status": "draft",
+      "notes": "Proprietary Tides of Knowing symbolic language using tide, vessel, crossing, depth, current, undertow, and shore.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "aotearoaEcological": {
+      "id": "aotearoa-ecological",
+      "displayName": "Aotearoa Ecological",
+      "registerType": "englishLanguageEcologicalRegister",
+      "status": "draft",
+      "notes": "Uses English-language ecological, coastal, bird, weather, and land-based imagery from an Aotearoa sensibility. Does not include te reo Māori terms unless separately reviewed.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    }
+  },
+  "translations": {
+    "spanish": {
+      "id": "spanish",
+      "displayName": "Spanish",
+      "status": "learningAndReview",
+      "notes": "Spanish terms are included as a learning layer and should be checked by a fluent speaker before publication.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "plainMeaning": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "plainMeaning": ""
+      }
+    }
+  },
+  "semanticTags": [],
+  "usageFlags": {
+    "showOnPublicCardPage": false,
+    "useInDailyPuzzle": false,
+    "useInEmail": false,
+    "useInPaidTraining": false,
+    "useAsInternalAiSourceMaterial": true,
+    "useInPairingSystem": false,
+    "requiresReviewBeforePublication": true,
+    "containsCulturallySpecificMaterial": false,
+    "containsTranslationMaterial": true
+  },
+  "gameMetadata": {
+    "difficultyRating": {
+      "clearCurrent": null,
+      "deepCurrent": null,
+      "hiddenCurrent": null
+    },
+    "confusionPairs": [],
+    "dailyPuzzleSuitability": {
+      "suitable": false,
+      "recommendedUse": "",
+      "bestPairedWith": [],
+      "avoidOveruseWith": []
+    },
+    "beginnerFriendly": false,
+    "explanationAfterSolving": {
+      "upright": "",
+      "reversed": ""
+    },
+    "spoilerText": {
+      "upright": "",
+      "reversed": ""
+    },
+    "sharePrompt": ""
+  },
+  "seo": {
+    "metaTitle": "",
+    "metaDescription": "",
+    "canonicalTopic": "",
+    "schemaReadyDescription": "",
+    "relatedEntities": [],
+    "faqSeeds": [],
+    "internalLinkTargets": []
+  }
+}

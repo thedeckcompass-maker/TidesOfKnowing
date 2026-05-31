@@ -1,0 +1,10 @@
+{
+  "configName": "Tides of Knowing Tarot Game Vocabulary Config",
+  "version": "1.0.0",
+  "defaultVocabularyPaths": {
+    "clearCurrent": "vocabulary.{orientation}.clearCurrent.keywords",
+    "deepCurrent": "vocabulary.{orientation}.deepCurrent.keywords",
+    "hiddenCurrent": "vocabulary.{orientation}.hiddenCurrent.keywords"
+  },
+  "notes": "Game mechanics must live outside individual card records. This config tells tools where to read vocabulary from card records."
+}

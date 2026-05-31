@@ -1,0 +1,17 @@
+{
+  "indexName": "Tides of Knowing Tarot Card Index",
+  "version": "1.0.0",
+  "cards": [
+    {
+      "cardId": "the-fool",
+      "slug": "the-fool",
+      "cardName": "The Fool",
+      "arcana": "Major Arcana",
+      "suit": null,
+      "rank": null,
+      "path": "src/data/symbolic-lexicon/tarot/cards/major-arcana/the-fool.json",
+      "exampleRecordPath": "src/data/symbolic-lexicon/tarot/schema/card-record.example.the-fool.json",
+      "status": "example-only"
+    }
+  ]
+}

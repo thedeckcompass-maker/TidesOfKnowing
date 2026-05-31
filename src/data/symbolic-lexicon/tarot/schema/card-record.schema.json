@@ -1,0 +1,499 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tidesofknowing.com/schemas/symbolic-lexicon/card-record.schema.json",
+  "title": "Tides of Knowing Symbolic Lexicon Card Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metadata",
+    "identity",
+    "interpretation",
+    "contexts",
+    "vocabulary",
+    "lineages",
+    "translations",
+    "semanticTags",
+    "usageFlags",
+    "gameMetadata",
+    "seo"
+  ],
+  "properties": {
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "identity": { "$ref": "#/$defs/identity" },
+    "interpretation": { "$ref": "#/$defs/interpretation" },
+    "contexts": { "$ref": "#/$defs/contexts" },
+    "vocabulary": { "$ref": "#/$defs/vocabulary" },
+    "lineages": { "$ref": "#/$defs/lineages" },
+    "translations": { "$ref": "#/$defs/translations" },
+    "semanticTags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "usageFlags": { "$ref": "#/$defs/usageFlags" },
+    "gameMetadata": { "$ref": "#/$defs/gameMetadata" },
+    "seo": { "$ref": "#/$defs/seo" }
+  },
+  "$defs": {
+    "nullableString": {
+      "type": ["string", "null"]
+    },
+    "nullableNumber": {
+      "type": ["number", "null"]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "interpretationSide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "teachingNote",
+        "practicalMeaning",
+        "emotionalMeaning",
+        "relationalMeaning",
+        "creativeMeaning",
+        "spiritualMeaning",
+        "shadowMeaning"
+      ],
+      "properties": {
+        "summary": { "type": "string" },
+        "teachingNote": { "type": "string" },
+        "practicalMeaning": { "type": "string" },
+        "emotionalMeaning": { "type": "string" },
+        "relationalMeaning": { "type": "string" },
+        "creativeMeaning": { "type": "string" },
+        "spiritualMeaning": { "type": "string" },
+        "shadowMeaning": { "type": "string" }
+      }
+    },
+    "contextOrientation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["essence", "keywords", "phrases", "watchFor", "readerNote"],
+      "properties": {
+        "essence": { "type": "string" },
+        "keywords": { "$ref": "#/$defs/stringArray" },
+        "phrases": { "$ref": "#/$defs/stringArray" },
+        "watchFor": { "$ref": "#/$defs/stringArray" },
+        "readerNote": { "type": "string" }
+      }
+    },
+    "contextBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["upright", "reversed"],
+      "properties": {
+        "upright": { "$ref": "#/$defs/contextOrientation" },
+        "reversed": { "$ref": "#/$defs/contextOrientation" }
+      }
+    },
+    "vocabularyLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keywords", "phrases"],
+      "properties": {
+        "keywords": { "$ref": "#/$defs/stringArray" },
+        "phrases": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "vocabularyOrientation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clearCurrent", "deepCurrent", "hiddenCurrent"],
+      "properties": {
+        "clearCurrent": { "$ref": "#/$defs/vocabularyLevel" },
+        "deepCurrent": { "$ref": "#/$defs/vocabularyLevel" },
+        "hiddenCurrent": { "$ref": "#/$defs/vocabularyLevel" }
+      }
+    },
+    "lineageRegister": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "displayName",
+        "registerType",
+        "status",
+        "notes",
+        "upright",
+        "reversed"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "displayName": { "type": "string" },
+        "registerType": {
+          "type": "string",
+          "enum": [
+            "inspiredRegister",
+            "symbolicRegister",
+            "interpretiveRegister",
+            "appliedRegister",
+            "brandRegister",
+            "englishLanguageEcologicalRegister"
+          ]
+        },
+        "status": { "type": "string" },
+        "notes": { "type": "string" },
+        "upright": { "$ref": "#/$defs/lineageSide" },
+        "reversed": { "$ref": "#/$defs/lineageSide" }
+      }
+    },
+    "lineageSide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keywords", "phrases", "readerNote"],
+      "properties": {
+        "keywords": { "$ref": "#/$defs/stringArray" },
+        "phrases": { "$ref": "#/$defs/stringArray" },
+        "readerNote": { "type": "string" }
+      }
+    },
+    "translationSide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keywords", "phrases", "plainMeaning"],
+      "properties": {
+        "keywords": { "$ref": "#/$defs/stringArray" },
+        "phrases": { "$ref": "#/$defs/stringArray" },
+        "plainMeaning": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaName",
+        "schemaVersion",
+        "recordVersion",
+        "status",
+        "createdBy",
+        "createdFor",
+        "lastUpdated",
+        "lastReviewed",
+        "reviewStatus",
+        "sourcePolicy",
+        "publicationStatus"
+      ],
+      "properties": {
+        "schemaName": { "type": "string" },
+        "schemaVersion": { "type": "string" },
+        "recordVersion": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "reviewed", "approved", "published", "archived"]
+        },
+        "createdBy": { "type": "string" },
+        "createdFor": { "type": "string" },
+        "lastUpdated": { "$ref": "#/$defs/nullableString" },
+        "lastReviewed": { "$ref": "#/$defs/nullableString" },
+        "reviewStatus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "interpretive",
+            "contextual",
+            "lineage",
+            "spanish",
+            "seo",
+            "cultural"
+          ],
+          "properties": {
+            "interpretive": { "type": "string" },
+            "contextual": { "type": "string" },
+            "lineage": { "type": "string" },
+            "spanish": { "type": "string" },
+            "seo": { "type": "string" },
+            "cultural": { "type": "string" }
+          }
+        },
+        "sourcePolicy": { "type": "string" },
+        "publicationStatus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "approvedForPublicWebsite",
+            "approvedForGameUse",
+            "approvedForEmailUse",
+            "approvedForPaidTraining",
+            "approvedForInternalAiPrompting"
+          ],
+          "properties": {
+            "approvedForPublicWebsite": { "type": "boolean" },
+            "approvedForGameUse": { "type": "boolean" },
+            "approvedForEmailUse": { "type": "boolean" },
+            "approvedForPaidTraining": { "type": "boolean" },
+            "approvedForInternalAiPrompting": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cardId",
+        "slug",
+        "cardName",
+        "number",
+        "arcana",
+        "suit",
+        "rank",
+        "element",
+        "astrologicalAssociation",
+        "visualEssence",
+        "archetypalRole",
+        "primaryMovement",
+        "shadowMovement"
+      ],
+      "properties": {
+        "cardId": { "type": "string" },
+        "slug": { "type": "string" },
+        "cardName": { "type": "string" },
+        "number": { "$ref": "#/$defs/nullableNumber" },
+        "arcana": { "type": "string" },
+        "suit": { "$ref": "#/$defs/nullableString" },
+        "rank": { "$ref": "#/$defs/nullableString" },
+        "element": { "$ref": "#/$defs/nullableString" },
+        "astrologicalAssociation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary", "secondary", "notes"],
+          "properties": {
+            "primary": { "$ref": "#/$defs/nullableString" },
+            "secondary": { "$ref": "#/$defs/nullableString" },
+            "notes": { "type": "string" }
+          }
+        },
+        "visualEssence": { "type": "string" },
+        "archetypalRole": { "type": "string" },
+        "primaryMovement": { "type": "string" },
+        "shadowMovement": { "type": "string" }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["upright", "reversed"],
+      "properties": {
+        "upright": { "$ref": "#/$defs/interpretationSide" },
+        "reversed": { "$ref": "#/$defs/interpretationSide" }
+      }
+    },
+    "contexts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relationship", "romance", "business", "innerDevelopment"],
+      "properties": {
+        "relationship": { "$ref": "#/$defs/contextBlock" },
+        "romance": { "$ref": "#/$defs/contextBlock" },
+        "business": { "$ref": "#/$defs/contextBlock" },
+        "innerDevelopment": { "$ref": "#/$defs/contextBlock" }
+      }
+    },
+    "vocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["upright", "reversed"],
+      "properties": {
+        "upright": { "$ref": "#/$defs/vocabularyOrientation" },
+        "reversed": { "$ref": "#/$defs/vocabularyOrientation" }
+      }
+    },
+    "lineages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "oldEnglishInspired",
+        "norseSagaInspired",
+        "biblicalProphetic",
+        "alchemical",
+        "hermetic",
+        "greekMythicPhilosophical",
+        "jungianArchetypal",
+        "somaticEmbodied",
+        "businessStrategic",
+        "editorialJournalistic",
+        "poeticImaginal",
+        "oceanicTidal",
+        "aotearoaEcological"
+      ],
+      "properties": {
+        "oldEnglishInspired": { "$ref": "#/$defs/lineageRegister" },
+        "norseSagaInspired": { "$ref": "#/$defs/lineageRegister" },
+        "biblicalProphetic": { "$ref": "#/$defs/lineageRegister" },
+        "alchemical": { "$ref": "#/$defs/lineageRegister" },
+        "hermetic": { "$ref": "#/$defs/lineageRegister" },
+        "greekMythicPhilosophical": { "$ref": "#/$defs/lineageRegister" },
+        "jungianArchetypal": { "$ref": "#/$defs/lineageRegister" },
+        "somaticEmbodied": { "$ref": "#/$defs/lineageRegister" },
+        "businessStrategic": { "$ref": "#/$defs/lineageRegister" },
+        "editorialJournalistic": { "$ref": "#/$defs/lineageRegister" },
+        "poeticImaginal": { "$ref": "#/$defs/lineageRegister" },
+        "oceanicTidal": { "$ref": "#/$defs/lineageRegister" },
+        "aotearoaEcological": { "$ref": "#/$defs/lineageRegister" }
+      }
+    },
+    "translations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spanish"],
+      "properties": {
+        "spanish": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "displayName",
+            "status",
+            "notes",
+            "upright",
+            "reversed"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "displayName": { "type": "string" },
+            "status": { "type": "string" },
+            "notes": { "type": "string" },
+            "upright": { "$ref": "#/$defs/translationSide" },
+            "reversed": { "$ref": "#/$defs/translationSide" }
+          }
+        }
+      }
+    },
+    "usageFlags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "showOnPublicCardPage",
+        "useInDailyPuzzle",
+        "useInEmail",
+        "useInPaidTraining",
+        "useAsInternalAiSourceMaterial",
+        "useInPairingSystem",
+        "requiresReviewBeforePublication",
+        "containsCulturallySpecificMaterial",
+        "containsTranslationMaterial"
+      ],
+      "properties": {
+        "showOnPublicCardPage": { "type": "boolean" },
+        "useInDailyPuzzle": { "type": "boolean" },
+        "useInEmail": { "type": "boolean" },
+        "useInPaidTraining": { "type": "boolean" },
+        "useAsInternalAiSourceMaterial": { "type": "boolean" },
+        "useInPairingSystem": { "type": "boolean" },
+        "requiresReviewBeforePublication": { "type": "boolean" },
+        "containsCulturallySpecificMaterial": { "type": "boolean" },
+        "containsTranslationMaterial": { "type": "boolean" }
+      }
+    },
+    "gameMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "difficultyRating",
+        "confusionPairs",
+        "dailyPuzzleSuitability",
+        "beginnerFriendly",
+        "explanationAfterSolving",
+        "spoilerText",
+        "sharePrompt"
+      ],
+      "properties": {
+        "difficultyRating": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["clearCurrent", "deepCurrent", "hiddenCurrent"],
+          "properties": {
+            "clearCurrent": { "$ref": "#/$defs/nullableNumber" },
+            "deepCurrent": { "$ref": "#/$defs/nullableNumber" },
+            "hiddenCurrent": { "$ref": "#/$defs/nullableNumber" }
+          }
+        },
+        "confusionPairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["cardId", "similarityType", "distinction"],
+            "properties": {
+              "cardId": { "type": "string" },
+              "similarityType": { "type": "string" },
+              "distinction": { "type": "string" }
+            }
+          }
+        },
+        "dailyPuzzleSuitability": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "suitable",
+            "recommendedUse",
+            "bestPairedWith",
+            "avoidOveruseWith"
+          ],
+          "properties": {
+            "suitable": { "type": "boolean" },
+            "recommendedUse": { "type": "string" },
+            "bestPairedWith": { "$ref": "#/$defs/stringArray" },
+            "avoidOveruseWith": { "$ref": "#/$defs/stringArray" }
+          }
+        },
+        "beginnerFriendly": { "type": "boolean" },
+        "explanationAfterSolving": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["upright", "reversed"],
+          "properties": {
+            "upright": { "type": "string" },
+            "reversed": { "type": "string" }
+          }
+        },
+        "spoilerText": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["upright", "reversed"],
+          "properties": {
+            "upright": { "type": "string" },
+            "reversed": { "type": "string" }
+          }
+        },
+        "sharePrompt": { "type": "string" }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metaTitle",
+        "metaDescription",
+        "canonicalTopic",
+        "schemaReadyDescription",
+        "relatedEntities",
+        "faqSeeds",
+        "internalLinkTargets"
+      ],
+      "properties": {
+        "metaTitle": { "type": "string" },
+        "metaDescription": { "type": "string" },
+        "canonicalTopic": { "type": "string" },
+        "schemaReadyDescription": { "type": "string" },
+        "relatedEntities": { "$ref": "#/$defs/stringArray" },
+        "faqSeeds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question", "answer"],
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" }
+            }
+          }
+        },
+        "internalLinkTargets": { "$ref": "#/$defs/stringArray" }
+      }
+    }
+  }
+}

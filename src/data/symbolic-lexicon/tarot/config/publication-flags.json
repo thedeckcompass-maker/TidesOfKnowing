@@ -1,0 +1,13 @@
+{
+  "flags": {
+    "showOnPublicCardPage": "May appear on public card meaning pages.",
+    "useInDailyPuzzle": "May be used in daily puzzle tools.",
+    "useInEmail": "May be used in email content.",
+    "useInPaidTraining": "May be used in paid training or member materials.",
+    "useAsInternalAiSourceMaterial": "May be used by Leigh Spencer as structured source material inside internal AI-assisted workflows. This does not license the content for external AI training, public scraping, outside reuse, or third-party extraction.",
+    "useInPairingSystem": "May be referenced by the separate pairing system, but exact pair meanings must remain outside the single-card record.",
+    "requiresReviewBeforePublication": "Must be reviewed before public use.",
+    "containsCulturallySpecificMaterial": "Contains material that may require cultural or specialist review.",
+    "containsTranslationMaterial": "Contains language translation or language-learning material."
+  }
+}

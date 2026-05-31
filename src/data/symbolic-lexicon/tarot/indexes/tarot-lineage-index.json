@@ -1,0 +1,71 @@
+{
+  "indexName": "Tides of Knowing Tarot Lineage Index",
+  "version": "1.0.0",
+  "lineages": [
+    {
+      "id": "old-english-inspired",
+      "displayName": "Old English Inspired",
+      "registerType": "inspiredRegister"
+    },
+    {
+      "id": "norse-saga-inspired",
+      "displayName": "Norse Saga Inspired",
+      "registerType": "inspiredRegister"
+    },
+    {
+      "id": "biblical-prophetic",
+      "displayName": "Biblical Prophetic",
+      "registerType": "inspiredRegister"
+    },
+    {
+      "id": "alchemical",
+      "displayName": "Alchemical",
+      "registerType": "symbolicRegister"
+    },
+    {
+      "id": "hermetic",
+      "displayName": "Hermetic",
+      "registerType": "symbolicRegister"
+    },
+    {
+      "id": "greek-mythic-philosophical",
+      "displayName": "Greek Mythic Philosophical",
+      "registerType": "inspiredRegister"
+    },
+    {
+      "id": "jungian-archetypal",
+      "displayName": "Jungian Archetypal",
+      "registerType": "interpretiveRegister"
+    },
+    {
+      "id": "somatic-embodied",
+      "displayName": "Somatic Embodied",
+      "registerType": "interpretiveRegister"
+    },
+    {
+      "id": "business-strategic",
+      "displayName": "Business Strategic",
+      "registerType": "appliedRegister"
+    },
+    {
+      "id": "editorial-journalistic",
+      "displayName": "Editorial Journalistic",
+      "registerType": "appliedRegister"
+    },
+    {
+      "id": "poetic-imaginal",
+      "displayName": "Poetic Imaginal",
+      "registerType": "brandRegister"
+    },
+    {
+      "id": "oceanic-tidal",
+      "displayName": "Oceanic Tidal",
+      "registerType": "brandRegister"
+    },
+    {
+      "id": "aotearoa-ecological",
+      "displayName": "Aotearoa Ecological",
+      "registerType": "englishLanguageEcologicalRegister"
+    }
+  ]
+}

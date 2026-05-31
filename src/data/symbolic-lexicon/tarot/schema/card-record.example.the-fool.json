@@ -1,0 +1,570 @@
+{
+  "metadata": {
+    "schemaName": "Tides of Knowing Symbolic Lexicon Card Record",
+    "schemaVersion": "1.0.0",
+    "recordVersion": "0.1.0-example",
+    "status": "draft",
+    "createdBy": "Leigh Spencer",
+    "createdFor": "Tides of Knowing",
+    "lastUpdated": null,
+    "lastReviewed": null,
+    "reviewStatus": {
+      "interpretive": "draft",
+      "contextual": "draft",
+      "lineage": "draft",
+      "spanish": "needsReview",
+      "seo": "draft",
+      "cultural": "notApplicable"
+    },
+    "sourcePolicy": "Original Tides of Knowing interpretation. No copied commercial guidebook text.",
+    "publicationStatus": {
+      "approvedForPublicWebsite": false,
+      "approvedForGameUse": false,
+      "approvedForEmailUse": false,
+      "approvedForPaidTraining": false,
+      "approvedForInternalAiPrompting": true
+    }
+  },
+  "identity": {
+    "cardId": "the-fool",
+    "slug": "the-fool",
+    "cardName": "The Fool",
+    "number": 0,
+    "arcana": "Major Arcana",
+    "suit": null,
+    "rank": null,
+    "element": "Air",
+    "astrologicalAssociation": {
+      "primary": "Uranus",
+      "secondary": null,
+      "notes": "Associated with breakthrough, disruption, and unconditioned movement."
+    },
+    "visualEssence": "A figure at the edge of a threshold, carrying little, moving forward before the whole path can be seen.",
+    "archetypalRole": "The Sacred Beginner",
+    "primaryMovement": "From unformed possibility into lived experience.",
+    "shadowMovement": "From openness into recklessness, avoidance, or refusal to recognise consequence."
+  },
+  "interpretation": {
+    "upright": {
+      "summary": "Movement begins from openness, before structure or expectation has formed.",
+      "teachingNote": "The Fool is unconditioned readiness, not naivety. It opens the field without yet defining what will grow there.",
+      "practicalMeaning": "A genuine beginning, leap, or first step without a complete map.",
+      "emotionalMeaning": "Lightness, trust, and willingness to feel forward without full certainty.",
+      "relationalMeaning": "Fresh contact, low history, and openness that has not yet been tested by consequence.",
+      "creativeMeaning": "Raw impulse, unformed project energy, and creative risk before refinement.",
+      "spiritualMeaning": "Sacred threshold, initiation, and trust in movement before the path is visible.",
+      "shadowMeaning": "The shadow here is not evil but unintegrated risk: moving without sensing, or refusing to begin."
+    },
+    "reversed": {
+      "summary": "Beginning is attempted without the openness or sensing that makes real movement possible.",
+      "teachingNote": "Reversed does not simply mean bad. It may show recklessness, delay, avoidance, or false starts.",
+      "practicalMeaning": "False starts, unprepared leaps, chronic restart, or refusal to commit to a real first step.",
+      "emotionalMeaning": "Anxiety masquerading as freedom, or numbness that blocks genuine feeling.",
+      "relationalMeaning": "Evasive contact, overpromising without follow-through, or withdrawal at the threshold.",
+      "creativeMeaning": "Scattered starts, performative risk, or creative avoidance dressed as experimentation.",
+      "spiritualMeaning": "Stalled initiation, dissociation from the body of experience, or spiritual bypass through endless newness.",
+      "shadowMeaning": "Heedlessness, untethering, or refusal disguised as openness."
+    }
+  },
+  "contexts": {
+    "relationship": {
+      "upright": {
+        "essence": "Open contact and low accumulated weight between people.",
+        "keywords": [
+          "openness",
+          "threshold",
+          "fresh contact"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "Movement without enough sensing or follow-through.",
+        "keywords": [
+          "hesitation",
+          "evasion"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "romance": {
+      "upright": {
+        "essence": "New attraction, flirtation with possibility, or love before roles harden.",
+        "keywords": [
+          "new attraction",
+          "play",
+          "leap"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "Romantic impulse without readiness for real intimacy.",
+        "keywords": [
+          "false start",
+          "avoidance"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "business": {
+      "upright": {
+        "essence": "Launch energy, prototype phase, or entering a market before the model is complete.",
+        "keywords": [
+          "launch",
+          "prototype",
+          "risk"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "Reckless spend, unfocused pivoting, or refusing to commit to strategy.",
+        "keywords": [
+          "delay",
+          "unfocused risk"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    },
+    "innerDevelopment": {
+      "upright": {
+        "essence": "Identity before definition; selfhood at the edge of becoming.",
+        "keywords": [
+          "initiation",
+          "becoming",
+          "open self"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "essence": "Perpetual restart, spiritual shopping, or refusing inner consequence.",
+        "keywords": [
+          "dissociation",
+          "stall"
+        ],
+        "phrases": [],
+        "watchFor": [],
+        "readerNote": ""
+      }
+    }
+  },
+  "vocabulary": {
+    "upright": {
+      "clearCurrent": {
+        "keywords": [
+          "beginning",
+          "freedom",
+          "leap",
+          "innocence"
+        ],
+        "phrases": []
+      },
+      "deepCurrent": {
+        "keywords": [
+          "threshold",
+          "emergence",
+          "trust",
+          "openness"
+        ],
+        "phrases": []
+      },
+      "hiddenCurrent": {
+        "keywords": [
+          "liminality",
+          "surrender",
+          "unformed",
+          "initiation"
+        ],
+        "phrases": []
+      }
+    },
+    "reversed": {
+      "clearCurrent": {
+        "keywords": [
+          "hesitation",
+          "recklessness",
+          "fear",
+          "delay"
+        ],
+        "phrases": []
+      },
+      "deepCurrent": {
+        "keywords": [
+          "avoidance",
+          "naivety",
+          "misstep",
+          "unreadiness"
+        ],
+        "phrases": []
+      },
+      "hiddenCurrent": {
+        "keywords": [
+          "false freedom",
+          "refusal",
+          "dissociation",
+          "untethering"
+        ],
+        "phrases": []
+      }
+    }
+  },
+  "lineages": {
+    "oldEnglishInspired": {
+      "id": "old-english-inspired",
+      "displayName": "Old English Inspired",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by Old English and early Germanic diction. Not presented as scholarly Old English translation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "norseSagaInspired": {
+      "id": "norse-saga-inspired",
+      "displayName": "Norse Saga Inspired",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by saga, ordeal, fate, exile, oath, and sea-crossing motifs. Not presented as Old Norse translation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "biblicalProphetic": {
+      "id": "biblical-prophetic",
+      "displayName": "Biblical Prophetic",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by prophetic, wilderness, calling, exile, and revelation language. Not presented as religious doctrine.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "alchemical": {
+      "id": "alchemical",
+      "displayName": "Alchemical",
+      "registerType": "symbolicRegister",
+      "status": "draft",
+      "notes": "Draws on alchemical transformation language.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "hermetic": {
+      "id": "hermetic",
+      "displayName": "Hermetic",
+      "registerType": "symbolicRegister",
+      "status": "draft",
+      "notes": "Draws on Hermetic themes of correspondence, hidden order, threshold knowledge, and the relation between inner and outer worlds.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "greekMythicPhilosophical": {
+      "id": "greek-mythic-philosophical",
+      "displayName": "Greek Mythic Philosophical",
+      "registerType": "inspiredRegister",
+      "status": "draft",
+      "notes": "Inspired by Greek mythic and philosophical vocabulary.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "jungianArchetypal": {
+      "id": "jungian-archetypal",
+      "displayName": "Jungian Archetypal",
+      "registerType": "interpretiveRegister",
+      "status": "draft",
+      "notes": "Useful for symbolic interpretation, individuation, shadow work, projection, and archetypal coaching.",
+      "upright": {
+        "keywords": [
+          "puer",
+          "beginning-self",
+          "potential"
+        ],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [
+          "inflation",
+          "avoidant shadow",
+          "arrested individuation"
+        ],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "somaticEmbodied": {
+      "id": "somatic-embodied",
+      "displayName": "Somatic Embodied",
+      "registerType": "interpretiveRegister",
+      "status": "draft",
+      "notes": "Useful for grounding intuitive reading in body awareness, nervous-system response, pacing, and felt sense.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "businessStrategic": {
+      "id": "business-strategic",
+      "displayName": "Business Strategic",
+      "registerType": "appliedRegister",
+      "status": "draft",
+      "notes": "Useful for business readings, strategic decision-making, product development, leadership, and entrepreneurial interpretation.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "editorialJournalistic": {
+      "id": "editorial-journalistic",
+      "displayName": "Editorial Journalistic",
+      "registerType": "appliedRegister",
+      "status": "draft",
+      "notes": "Reflects Tides of Knowing's journalistic intelligence: evidence, framing, signal, omission, pattern, and verification.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "poeticImaginal": {
+      "id": "poetic-imaginal",
+      "displayName": "Poetic Imaginal",
+      "registerType": "brandRegister",
+      "status": "draft",
+      "notes": "Supports Tides of Knowing's poetic and imaginal voice.",
+      "upright": {
+        "keywords": [],
+        "phrases": [
+          "step before the path writes itself"
+        ],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [
+          "a door opened only in imagination"
+        ],
+        "readerNote": ""
+      }
+    },
+    "oceanicTidal": {
+      "id": "oceanic-tidal",
+      "displayName": "Oceanic Tidal",
+      "registerType": "brandRegister",
+      "status": "draft",
+      "notes": "Proprietary Tides of Knowing symbolic language using tide, vessel, crossing, depth, current, undertow, and shore.",
+      "upright": {
+        "keywords": [
+          "shore-leap",
+          "open tide",
+          "unmoored vessel"
+        ],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [
+          "undertow",
+          "drift",
+          "false crossing"
+        ],
+        "phrases": [],
+        "readerNote": ""
+      }
+    },
+    "aotearoaEcological": {
+      "id": "aotearoa-ecological",
+      "displayName": "Aotearoa Ecological",
+      "registerType": "englishLanguageEcologicalRegister",
+      "status": "draft",
+      "notes": "Uses English-language ecological, coastal, bird, weather, and land-based imagery from an Aotearoa sensibility. Does not include te reo Māori terms unless separately reviewed.",
+      "upright": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      },
+      "reversed": {
+        "keywords": [],
+        "phrases": [],
+        "readerNote": ""
+      }
+    }
+  },
+  "translations": {
+    "spanish": {
+      "id": "spanish",
+      "displayName": "Spanish",
+      "status": "learningAndReview",
+      "notes": "Spanish terms are included as a learning layer and should be checked by a fluent speaker before publication.",
+      "upright": {
+        "keywords": [
+          "comienzo",
+          "libertad",
+          "salto",
+          "inocencia"
+        ],
+        "phrases": [],
+        "plainMeaning": "Un nuevo comienzo con confianza y apertura."
+      },
+      "reversed": {
+        "keywords": [
+          "vacilacion",
+          "temeridad",
+          "miedo",
+          "retraso"
+        ],
+        "phrases": [],
+        "plainMeaning": "Un comienzo bloqueado, apresurado o evitado."
+      }
+    }
+  },
+  "semanticTags": [
+    "beginning",
+    "threshold",
+    "risk",
+    "freedom",
+    "trust",
+    "initiation",
+    "openness",
+    "unformed-potential"
+  ],
+  "usageFlags": {
+    "showOnPublicCardPage": false,
+    "useInDailyPuzzle": false,
+    "useInEmail": false,
+    "useInPaidTraining": false,
+    "useAsInternalAiSourceMaterial": true,
+    "useInPairingSystem": false,
+    "requiresReviewBeforePublication": true,
+    "containsCulturallySpecificMaterial": false,
+    "containsTranslationMaterial": true
+  },
+  "gameMetadata": {
+    "difficultyRating": {
+      "clearCurrent": 1,
+      "deepCurrent": 2,
+      "hiddenCurrent": 3
+    },
+    "confusionPairs": [
+      {
+        "cardId": "ace-of-wands",
+        "similarityType": "beginning-energy",
+        "distinction": "The Fool is existential beginning. Ace of Wands is creative ignition."
+      }
+    ],
+    "dailyPuzzleSuitability": {
+      "suitable": true,
+      "recommendedUse": "Clear Current upright keywords for beginner puzzles",
+      "bestPairedWith": [
+        "the-magician"
+      ],
+      "avoidOveruseWith": []
+    },
+    "beginnerFriendly": true,
+    "explanationAfterSolving": {
+      "upright": "The Fool marks a real threshold: openness before the path is fully known.",
+      "reversed": "Reversed, the Fool shows blocked, careless, or evasive beginning rather than sacred openness."
+    },
+    "spoilerText": {
+      "upright": "Beginning, freedom, leap, innocence",
+      "reversed": "Hesitation, recklessness, fear, delay"
+    },
+    "sharePrompt": "Did you recognise the Sacred Beginner at the threshold?"
+  },
+  "seo": {
+    "metaTitle": "The Fool Tarot Meaning | Tides of Knowing",
+    "metaDescription": "Upright and reversed Fool meanings: threshold, beginning, trust, risk, and unformed potential in Tides of Knowing language.",
+    "canonicalTopic": "The Fool tarot card meaning",
+    "schemaReadyDescription": "The Fool represents unconditioned beginning at a threshold before structure forms.",
+    "relatedEntities": [
+      "Major Arcana",
+      "Uranus",
+      "Air",
+      "initiation"
+    ],
+    "faqSeeds": [
+      {
+        "question": "What does The Fool mean in tarot?",
+        "answer": "The Fool marks sacred beginning, openness, and movement before the full path is visible."
+      }
+    ],
+    "internalLinkTargets": [
+      "the-magician",
+      "ace-of-wands",
+      "majors/the-fool"
+    ]
+  }
+}

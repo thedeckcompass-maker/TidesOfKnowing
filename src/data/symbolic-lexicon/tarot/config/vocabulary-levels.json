@@ -1,0 +1,17 @@
+{
+  "clearCurrent": {
+    "displayName": "Clear Current",
+    "difficultyRating": 1,
+    "description": "Recognisable tarot vocabulary for accessible interpretation."
+  },
+  "deepCurrent": {
+    "displayName": "Deep Current",
+    "difficultyRating": 2,
+    "description": "More nuanced interpretive language for readers developing precision."
+  },
+  "hiddenCurrent": {
+    "displayName": "Hidden Current",
+    "difficultyRating": 3,
+    "description": "More challenging symbolic, liminal, psychological, archetypal, or shadow-aware language."
+  }
+}
