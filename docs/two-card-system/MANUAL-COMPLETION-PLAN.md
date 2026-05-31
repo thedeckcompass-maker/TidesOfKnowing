@@ -35,6 +35,8 @@ Counts use separator chunking (`\---` between entries, plus plain `---` before m
 
 | Doc | Use for |
 |-----|---------|
+| [PAIRING-WRITING-RULES.md](./PAIRING-WRITING-RULES.md) | Locked structure, voice, format, validation checklist |
+| [PAIRING-PROSE-EXAMPLES.md](./PAIRING-PROSE-EXAMPLES.md) | Verbatim readings for rhythm and density |
 | [MISSING-PAIRINGS-CHECKLIST.md](./MISSING-PAIRINGS-CHECKLIST.md) | Checkbox list of missing pairings by first card, duplicates, manual work order |
 | [major-arcana-upright-completion-audit.md](./major-arcana-upright-completion-audit.md) | Duplicate line refs, tail heading defects, coverage table, methodology |
 | [TWO-CARD-CORPUS-AUDIT.md](./TWO-CARD-CORPUS-AUDIT.md) | Pre-ingest format, template, naming, export hygiene |

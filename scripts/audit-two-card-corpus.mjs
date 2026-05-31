@@ -2,6 +2,7 @@
  * Audit major-arcana-upright-ordered-pairs-master.md
  * Writes: docs/two-card-system/missing-pairings.json
  *         docs/two-card-system/MISSING-PAIRINGS-CHECKLIST.md
+ *         docs/two-card-system/COMPLETE-PAIRINGS-LIST.md
  * Run: node scripts/audit-two-card-corpus.mjs
  */
 import fs from "fs";
@@ -17,6 +18,7 @@ const CORPUS_PATH = path.join(
 const OUT_DIR = path.join(ROOT, "docs/two-card-system");
 const JSON_PATH = path.join(OUT_DIR, "missing-pairings.json");
 const CHECKLIST_PATH = path.join(OUT_DIR, "MISSING-PAIRINGS-CHECKLIST.md");
+const COMPLETE_LIST_PATH = path.join(OUT_DIR, "COMPLETE-PAIRINGS-LIST.md");
 
 const MAJORS = [
   "The Fool",
@@ -829,6 +831,54 @@ Machine-readable output: \`docs/two-card-system/missing-pairings.json\`
 
 fs.writeFileSync(CHECKLIST_PATH, md, "utf8");
 
+// --- Complete pairings list (human-readable index) ---
+let completeMd = `# Complete Pairings List
+
+**Generated:** ${report.generatedAt}  
+**Source:** \`${report.sourceFile}\`  
+**Audit:** \`node scripts/audit-two-card-corpus.mjs\`  
+**Counting:** ${report.countingMethod}
+
+| Metric | Count |
+|--------|------:|
+| **Complete pairings** | **${report.completeCount}** |
+| Expected ordered slots | ${report.expectedCount} |
+| Missing pairings | ${report.missingCount} |
+
+Complete entries only (chunk + template markers). Duplicates in the corpus count once here.
+
+---
+
+`;
+
+for (const first of MAJORS) {
+  const found = coverageByFirstCard[first];
+  const completeForFirst = [];
+  for (const second of MAJORS) {
+    if (first === second) continue;
+    const key = pairingKey(first, second);
+    if (uniqueKeys.has(key)) {
+      completeForFirst.push(formatPairLabel(first, second));
+    }
+  }
+  completeMd += `## ${first} (${found}/21)\n\n`;
+  if (completeForFirst.length === 0) {
+    completeMd += `_No complete pairings for this first card._\n\n`;
+    continue;
+  }
+  for (const label of completeForFirst) {
+    completeMd += `- [x] ${label}\n`;
+  }
+  completeMd += "\n";
+}
+
+completeMd += `---
+
+Regenerate: \`node scripts/audit-two-card-corpus.mjs\`
+`;
+
+fs.writeFileSync(COMPLETE_LIST_PATH, completeMd, "utf8");
+
 // Console summary
 console.log(
   JSON.stringify(
@@ -843,6 +893,7 @@ console.log(
       detectedHeadingUniqueCount: report.detectedHeadingUniqueCount,
       completelyMissingFirstCards: report.completelyMissingFirstCards,
       checklist: CHECKLIST_PATH,
+      completeList: COMPLETE_LIST_PATH,
       json: JSON_PATH,
     },
     null,
