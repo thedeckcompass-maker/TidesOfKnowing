@@ -1,15 +1,15 @@
 # Complete Pairings List
 
-**Generated:** 2026-05-31T04:00:58.532Z  
+**Generated:** 2026-05-31T05:27:59.475Z  
 **Source:** `content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md`  
 **Audit:** `node scripts/audit-two-card-corpus.mjs`  
 **Counting:** chunk_template (split on \---, plus plain --- before markdown # pairing headings in tail)
 
 | Metric | Count |
 |--------|------:|
-| **Complete pairings** | **290** |
+| **Complete pairings** | **336** |
 | Expected ordered slots | 462 |
-| Missing pairings | 172 |
+| Missing pairings | 126 |
 
 Complete entries only (chunk + template markers). Duplicates in the corpus count once here.
 
@@ -86,18 +86,62 @@ Complete entries only (chunk + template markers). Duplicates in the corpus count
 - [x] The High Priestess → Judgement
 - [x] The High Priestess → The World
 
-## The Empress (2/21)
+## The Empress (19/21)
 
 - [x] The Empress → The Magician
 - [x] The Empress → The High Priestess
+- [x] The Empress → The Emperor
+- [x] The Empress → The Hierophant
+- [x] The Empress → The Lovers
+- [x] The Empress → The Chariot
+- [x] The Empress → Strength
+- [x] The Empress → The Hermit
+- [x] The Empress → Wheel of Fortune
+- [x] The Empress → The Hanged Man
+- [x] The Empress → Death
+- [x] The Empress → Temperance
+- [x] The Empress → The Devil
+- [x] The Empress → The Tower
+- [x] The Empress → The Star
+- [x] The Empress → The Moon
+- [x] The Empress → The Sun
+- [x] The Empress → Judgement
+- [x] The Empress → The World
 
-## The Emperor (0/21)
+## The Emperor (21/21)
 
-_No complete pairings for this first card._
+- [x] The Emperor → The Fool
+- [x] The Emperor → The Magician
+- [x] The Emperor → The High Priestess
+- [x] The Emperor → The Empress
+- [x] The Emperor → The Hierophant
+- [x] The Emperor → The Lovers
+- [x] The Emperor → The Chariot
+- [x] The Emperor → Strength
+- [x] The Emperor → The Hermit
+- [x] The Emperor → Wheel of Fortune
+- [x] The Emperor → Justice
+- [x] The Emperor → The Hanged Man
+- [x] The Emperor → Death
+- [x] The Emperor → Temperance
+- [x] The Emperor → The Devil
+- [x] The Emperor → The Tower
+- [x] The Emperor → The Star
+- [x] The Emperor → The Moon
+- [x] The Emperor → The Sun
+- [x] The Emperor → Judgement
+- [x] The Emperor → The World
 
-## The Hierophant (0/21)
+## The Hierophant (8/21)
 
-_No complete pairings for this first card._
+- [x] The Hierophant → The Fool
+- [x] The Hierophant → The Magician
+- [x] The Hierophant → The High Priestess
+- [x] The Hierophant → The Empress
+- [x] The Hierophant → The Emperor
+- [x] The Hierophant → The Lovers
+- [x] The Hierophant → The Chariot
+- [x] The Hierophant → Strength
 
 ## The Lovers (18/21)
 

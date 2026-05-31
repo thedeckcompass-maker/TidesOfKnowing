@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-05-31T04:00:58.532Z",
+  "generatedAt": "2026-05-31T05:27:59.475Z",
   "sourceFile": "content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md",
   "expectedCount": 462,
   "countingMethod": "chunk_template (split on \\---, plus plain --- before markdown # pairing headings in tail)",
-  "completeCount": 290,
-  "completeChunkCount": 297,
-  "missingCount": 172,
-  "detectedHeadingCount": 354,
-  "detectedHeadingUniqueCount": 347,
+  "completeCount": 336,
+  "completeChunkCount": 343,
+  "missingCount": 126,
+  "detectedHeadingCount": 400,
+  "detectedHeadingUniqueCount": 393,
   "duplicatePairingCount": 7,
   "invalidSelfPairingCount": 0,
   "uncertainHeadingCount": 0,
@@ -18,9 +18,9 @@
     "The Fool": 21,
     "The Magician": 21,
     "The High Priestess": 20,
-    "The Empress": 2,
-    "The Emperor": 0,
-    "The Hierophant": 0,
+    "The Empress": 19,
+    "The Emperor": 21,
+    "The Hierophant": 8,
     "The Lovers": 18,
     "The Chariot": 18,
     "Strength": 18,
@@ -38,65 +38,62 @@
     "Judgement": 11,
     "The World": 10
   },
-  "completelyMissingFirstCards": [
-    "The Emperor",
-    "The Hierophant"
-  ],
+  "completelyMissingFirstCards": [],
   "tailHeadingDefects": [
     {
       "firstCard": "Judgement",
       "secondCard": "The Star",
       "label": "Judgement → The Star",
-      "pairingTitleLine": 31184,
-      "defectLine": 31206,
+      "pairingTitleLine": 34774,
+      "defectLine": 34796,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "The World",
       "secondCard": "The Star",
       "label": "The World → The Star",
-      "pairingTitleLine": 31356,
-      "defectLine": 31378,
+      "pairingTitleLine": 34946,
+      "defectLine": 34968,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "Judgement",
       "secondCard": "The Moon",
       "label": "Judgement → The Moon",
-      "pairingTitleLine": 31698,
-      "defectLine": 31720,
+      "pairingTitleLine": 35288,
+      "defectLine": 35310,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "The World",
       "secondCard": "The Moon",
       "label": "The World → The Moon",
-      "pairingTitleLine": 31870,
-      "defectLine": 31892,
+      "pairingTitleLine": 35460,
+      "defectLine": 35482,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "Judgement",
       "secondCard": "The Sun",
       "label": "Judgement → The Sun",
-      "pairingTitleLine": 32042,
-      "defectLine": 32064,
+      "pairingTitleLine": 35632,
+      "defectLine": 35654,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "The World",
       "secondCard": "The Sun",
       "label": "The World → The Sun",
-      "pairingTitleLine": 32214,
-      "defectLine": 32236,
+      "pairingTitleLine": 35804,
+      "defectLine": 35826,
       "defectHeading": "## The Sun Enters"
     },
     {
       "firstCard": "Judgement",
       "secondCard": "The World",
       "label": "Judgement → The World",
-      "pairingTitleLine": 32300,
-      "defectLine": 32322,
+      "pairingTitleLine": 35890,
+      "defectLine": 35912,
       "defectHeading": "## The Sun Enters"
     }
   ],
@@ -107,14 +104,14 @@
       "label": "The Hermit → Justice",
       "occurrences": [
         {
-          "line": 17979,
+          "line": 21569,
           "raw": "The Hermit — Justice",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 18221,
+          "line": 21811,
           "raw": "The Hermit — Justice",
           "style": "title_case",
           "sep": "em_dash",
@@ -128,14 +125,14 @@
       "label": "The Hanged Man → The Hermit",
       "occurrences": [
         {
-          "line": 18587,
+          "line": 22177,
           "raw": "The Hanged Man — The Hermit",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 18827,
+          "line": 22417,
           "raw": "The Hanged Man — The Hermit",
           "style": "title_case",
           "sep": "em_dash",
@@ -149,14 +146,14 @@
       "label": "The Hermit → Temperance",
       "occurrences": [
         {
-          "line": 19189,
+          "line": 22779,
           "raw": "The Hermit — Temperance",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 19427,
+          "line": 23017,
           "raw": "The Hermit — Temperance",
           "style": "title_case",
           "sep": "em_dash",
@@ -170,14 +167,14 @@
       "label": "The Devil → The Hermit",
       "occurrences": [
         {
-          "line": 19789,
+          "line": 23379,
           "raw": "The Devil — The Hermit",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 20029,
+          "line": 23619,
           "raw": "The Devil — The Hermit",
           "style": "title_case",
           "sep": "em_dash",
@@ -191,14 +188,14 @@
       "label": "The Tower → The Hermit",
       "occurrences": [
         {
-          "line": 20275,
+          "line": 23865,
           "raw": "The Tower — The Hermit",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 20523,
+          "line": 24113,
           "raw": "The Tower - The Hermit",
           "style": "title_case",
           "sep": "hyphen",
@@ -212,14 +209,14 @@
       "label": "The Hermit → The Star",
       "occurrences": [
         {
-          "line": 20399,
+          "line": 23989,
           "raw": "The Hermit — The Star",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 20649,
+          "line": 24239,
           "raw": "The Hermit — The Star",
           "style": "title_case",
           "sep": "em_dash",
@@ -233,14 +230,14 @@
       "label": "The Star → Wheel of Fortune",
       "occurrences": [
         {
-          "line": 23811,
+          "line": 27401,
           "raw": "The Star — Wheel of Fortune",
           "style": "title_case",
           "sep": "em_dash",
           "detectionMethod": "chunk_template"
         },
         {
-          "line": 24061,
+          "line": 27651,
           "raw": "The Star — Wheel of Fortune",
           "style": "title_case",
           "sep": "em_dash",
@@ -269,243 +266,12 @@
       },
       {
         "firstCard": "The Empress",
-        "secondCard": "The Emperor",
-        "label": "The Empress → The Emperor"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Hierophant",
-        "label": "The Empress → The Hierophant"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Lovers",
-        "label": "The Empress → The Lovers"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Chariot",
-        "label": "The Empress → The Chariot"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "Strength",
-        "label": "The Empress → Strength"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Hermit",
-        "label": "The Empress → The Hermit"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "Wheel of Fortune",
-        "label": "The Empress → Wheel of Fortune"
-      },
-      {
-        "firstCard": "The Empress",
         "secondCard": "Justice",
         "label": "The Empress → Justice"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Hanged Man",
-        "label": "The Empress → The Hanged Man"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "Death",
-        "label": "The Empress → Death"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "Temperance",
-        "label": "The Empress → Temperance"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Devil",
-        "label": "The Empress → The Devil"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Tower",
-        "label": "The Empress → The Tower"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Star",
-        "label": "The Empress → The Star"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Moon",
-        "label": "The Empress → The Moon"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The Sun",
-        "label": "The Empress → The Sun"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "Judgement",
-        "label": "The Empress → Judgement"
-      },
-      {
-        "firstCard": "The Empress",
-        "secondCard": "The World",
-        "label": "The Empress → The World"
       }
     ],
-    "The Emperor": [
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Fool",
-        "label": "The Emperor → The Fool"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Magician",
-        "label": "The Emperor → The Magician"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The High Priestess",
-        "label": "The Emperor → The High Priestess"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Empress",
-        "label": "The Emperor → The Empress"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Hierophant",
-        "label": "The Emperor → The Hierophant"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Lovers",
-        "label": "The Emperor → The Lovers"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Chariot",
-        "label": "The Emperor → The Chariot"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Strength",
-        "label": "The Emperor → Strength"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Hermit",
-        "label": "The Emperor → The Hermit"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Wheel of Fortune",
-        "label": "The Emperor → Wheel of Fortune"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Justice",
-        "label": "The Emperor → Justice"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Hanged Man",
-        "label": "The Emperor → The Hanged Man"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Death",
-        "label": "The Emperor → Death"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Temperance",
-        "label": "The Emperor → Temperance"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Devil",
-        "label": "The Emperor → The Devil"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Tower",
-        "label": "The Emperor → The Tower"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Star",
-        "label": "The Emperor → The Star"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Moon",
-        "label": "The Emperor → The Moon"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The Sun",
-        "label": "The Emperor → The Sun"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "Judgement",
-        "label": "The Emperor → Judgement"
-      },
-      {
-        "firstCard": "The Emperor",
-        "secondCard": "The World",
-        "label": "The Emperor → The World"
-      }
-    ],
+    "The Emperor": [],
     "The Hierophant": [
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Fool",
-        "label": "The Hierophant → The Fool"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Magician",
-        "label": "The Hierophant → The Magician"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The High Priestess",
-        "label": "The Hierophant → The High Priestess"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Empress",
-        "label": "The Hierophant → The Empress"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Emperor",
-        "label": "The Hierophant → The Emperor"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Lovers",
-        "label": "The Hierophant → The Lovers"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "The Chariot",
-        "label": "The Hierophant → The Chariot"
-      },
-      {
-        "firstCard": "The Hierophant",
-        "secondCard": "Strength",
-        "label": "The Hierophant → Strength"
-      },
       {
         "firstCard": "The Hierophant",
         "secondCard": "The Hermit",
@@ -1159,7 +925,7 @@
     "all_caps/hyphen": 3,
     "all_caps/em_dash": 69,
     "title_case/hyphen": 2,
-    "title_case/en_dash": 6,
+    "title_case/en_dash": 52,
     "title_case/em_dash": 254,
     "markdown_h1/em_dash": 20
   },
@@ -1305,75 +1071,20 @@
       "tier": 1,
       "label": "complete_first_card_block",
       "firstCard": "The Empress",
-      "missing": 19,
-      "found": 2,
+      "missing": 2,
+      "found": 19,
       "missingPairings": [
         "The Empress → The Fool",
-        "The Empress → The Emperor",
-        "The Empress → The Hierophant",
-        "The Empress → The Lovers",
-        "The Empress → The Chariot",
-        "The Empress → Strength",
-        "The Empress → The Hermit",
-        "The Empress → Wheel of Fortune",
-        "The Empress → Justice",
-        "The Empress → The Hanged Man",
-        "The Empress → Death",
-        "The Empress → Temperance",
-        "The Empress → The Devil",
-        "The Empress → The Tower",
-        "The Empress → The Star",
-        "The Empress → The Moon",
-        "The Empress → The Sun",
-        "The Empress → Judgement",
-        "The Empress → The World"
+        "The Empress → Justice"
       ]
     },
     {
       "tier": 2,
       "label": "complete_first_card_block",
-      "firstCard": "The Emperor",
-      "missing": 21,
-      "found": 0,
-      "missingPairings": [
-        "The Emperor → The Fool",
-        "The Emperor → The Magician",
-        "The Emperor → The High Priestess",
-        "The Emperor → The Empress",
-        "The Emperor → The Hierophant",
-        "The Emperor → The Lovers",
-        "The Emperor → The Chariot",
-        "The Emperor → Strength",
-        "The Emperor → The Hermit",
-        "The Emperor → Wheel of Fortune",
-        "The Emperor → Justice",
-        "The Emperor → The Hanged Man",
-        "The Emperor → Death",
-        "The Emperor → Temperance",
-        "The Emperor → The Devil",
-        "The Emperor → The Tower",
-        "The Emperor → The Star",
-        "The Emperor → The Moon",
-        "The Emperor → The Sun",
-        "The Emperor → Judgement",
-        "The Emperor → The World"
-      ]
-    },
-    {
-      "tier": 3,
-      "label": "complete_first_card_block",
       "firstCard": "The Hierophant",
-      "missing": 21,
-      "found": 0,
+      "missing": 13,
+      "found": 8,
       "missingPairings": [
-        "The Hierophant → The Fool",
-        "The Hierophant → The Magician",
-        "The Hierophant → The High Priestess",
-        "The Hierophant → The Empress",
-        "The Hierophant → The Emperor",
-        "The Hierophant → The Lovers",
-        "The Hierophant → The Chariot",
-        "The Hierophant → Strength",
         "The Hierophant → The Hermit",
         "The Hierophant → Wheel of Fortune",
         "The Hierophant → Justice",
@@ -1390,20 +1101,14 @@
       ]
     },
     {
-      "tier": 4,
+      "tier": 3,
       "label": "fill_empress_emperor_hierophant_as_second_card",
       "firstCard": null,
-      "missing": 58,
+      "missing": 52,
       "missingPairings": [
         "The High Priestess → The Hierophant",
         "The Empress → The Empress",
-        "The Empress → The Emperor",
-        "The Empress → The Hierophant",
-        "The Emperor → The Empress",
         "The Emperor → The Emperor",
-        "The Emperor → The Hierophant",
-        "The Hierophant → The Empress",
-        "The Hierophant → The Emperor",
         "The Hierophant → The Hierophant",
         "The Lovers → The Empress",
         "The Lovers → The Emperor",
@@ -1456,7 +1161,7 @@
       ]
     },
     {
-      "tier": 5,
+      "tier": 4,
       "label": "complete_late_arc_gaps",
       "firstCard": null,
       "missing": 95,
@@ -1559,53 +1264,13 @@
       ]
     },
     {
-      "tier": 6,
+      "tier": 5,
       "label": "remaining_gaps",
       "firstCard": null,
-      "missing": 55,
+      "missing": 15,
       "missingPairings": [
         "The Empress → The Fool",
-        "The Empress → The Lovers",
-        "The Empress → The Chariot",
-        "The Empress → Strength",
-        "The Empress → The Hermit",
-        "The Empress → Wheel of Fortune",
         "The Empress → Justice",
-        "The Empress → The Hanged Man",
-        "The Empress → Death",
-        "The Empress → Temperance",
-        "The Empress → The Devil",
-        "The Empress → The Tower",
-        "The Empress → The Star",
-        "The Empress → The Moon",
-        "The Empress → The Sun",
-        "The Empress → Judgement",
-        "The Empress → The World",
-        "The Emperor → The Fool",
-        "The Emperor → The Magician",
-        "The Emperor → The High Priestess",
-        "The Emperor → The Lovers",
-        "The Emperor → The Chariot",
-        "The Emperor → Strength",
-        "The Emperor → The Hermit",
-        "The Emperor → Wheel of Fortune",
-        "The Emperor → Justice",
-        "The Emperor → The Hanged Man",
-        "The Emperor → Death",
-        "The Emperor → Temperance",
-        "The Emperor → The Devil",
-        "The Emperor → The Tower",
-        "The Emperor → The Star",
-        "The Emperor → The Moon",
-        "The Emperor → The Sun",
-        "The Emperor → Judgement",
-        "The Emperor → The World",
-        "The Hierophant → The Fool",
-        "The Hierophant → The Magician",
-        "The Hierophant → The High Priestess",
-        "The Hierophant → The Lovers",
-        "The Hierophant → The Chariot",
-        "The Hierophant → Strength",
         "The Hierophant → The Hermit",
         "The Hierophant → Wheel of Fortune",
         "The Hierophant → Justice",
@@ -1622,11 +1287,11 @@
       ]
     },
     {
-      "tier": 7,
+      "tier": 6,
       "label": "duplicate_cleanup",
       "firstCard": null,
       "missing": 7,
-      "found": 290,
+      "found": 336,
       "missingPairings": [
         "The Hermit → Justice",
         "The Hanged Man → The Hermit",
@@ -1638,7 +1303,7 @@
       ]
     },
     {
-      "tier": 8,
+      "tier": 7,
       "label": "fix_tail_sun_enters_heading_defects",
       "firstCard": null,
       "missing": 7,
