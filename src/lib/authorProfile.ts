@@ -9,3 +9,7 @@ export const articleAuthorAttribution =
 /** Optional extended framing for cornerstone methodology pages. */
 export const authorBlockExtended =
   "Written by Leigh Spencer, fourth-generation Matakite (seer), founder of Tides of Knowing and creator of The COMPASS Method™. Leigh brings 40+ years of tarot practice, 30 years of professional journalism, and deep experience in symbolic interpretation, reflective practice, and intuitive literacy.";
+
+/** Visible trust line on canonical `/repeating-card-meanings/{slug}/` entity pages. */
+export const repeatingCardEntityAuthorAttribution =
+  "By Leigh Spencer, fourth-generation Matakite (seer), founder of The COMPASS Method™, 40+ years tarot experience and 30 years in journalism.";

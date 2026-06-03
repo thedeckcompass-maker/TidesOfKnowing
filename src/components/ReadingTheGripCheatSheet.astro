@@ -6,6 +6,7 @@ interface Props {
   pageTitle: string;
   metaDescription: string;
   canonicalUrl: string;
+  metaRobots?: string;
   ogTitle: string;
   ogDescription: string;
   ogImage: string;
@@ -17,6 +18,7 @@ const {
   pageTitle,
   metaDescription,
   canonicalUrl,
+  metaRobots = "noindex, follow",
   ogTitle,
   ogDescription,
   ogImage,
@@ -34,6 +36,7 @@ const img = (name: string) => `/images/blog/reading-the-grip/${name}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={metaDescription} />
+    {metaRobots && <meta name="robots" content={metaRobots} />}
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={ogDescription} />

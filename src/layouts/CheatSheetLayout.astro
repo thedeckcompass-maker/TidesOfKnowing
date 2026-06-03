@@ -12,10 +12,21 @@ interface Props {
   defaultOgImage: string;
   backHref?: string;
   backLabel?: string;
+  /** Parent Field Note or series URL; overrides self-referential cheat-sheet canonical. */
+  canonicalUrl?: string;
+  metaRobots?: string;
 }
 
-const { entry, pageUrl, baseHref, defaultOgImage, backHref, backLabel } =
-  Astro.props;
+const {
+  entry,
+  pageUrl,
+  baseHref,
+  defaultOgImage,
+  backHref,
+  backLabel,
+  canonicalUrl: canonicalUrlProp,
+  metaRobots = "noindex, follow",
+} = Astro.props;
 
 const seo = resolveBlogSeo({
   entry,
@@ -26,6 +37,8 @@ const seo = resolveBlogSeo({
 });
 
 const { title, corePrinciple, distinction, cheatSheetFooter } = entry.data;
+
+const canonicalHref = canonicalUrlProp?.trim() || seo.ogUrl;
 ---
 
 <!doctype html>
@@ -35,10 +48,11 @@ const { title, corePrinciple, distinction, cheatSheetFooter } = entry.data;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{seo.pageTitle}</title>
     <meta name="description" content={seo.metaDescription} />
-    <link rel="canonical" href={seo.ogUrl} />
+    {metaRobots && <meta name="robots" content={metaRobots} />}
+    <link rel="canonical" href={canonicalHref} />
     <meta property="og:title" content={seo.ogTitle} />
     <meta property="og:description" content={seo.ogDescription} />
-    <meta property="og:url" content={seo.ogUrl} />
+    <meta property="og:url" content={canonicalHref} />
     <meta property="og:type" content="article" />
     <meta property="og:image" content={seo.ogImageAbsolute} />
     <meta name="twitter:card" content="summary" />

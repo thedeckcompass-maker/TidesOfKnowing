@@ -22,7 +22,8 @@ export function leighSpencerPersonNode() {
     "@type": "Person",
     "@id": IDS.person,
     name: "Leigh Spencer",
-    url: `${DECK_COMPASS_ORIGIN}/about`,
+    url: `${TIDES_OF_KNOWING_ORIGIN}/about/`,
+    sameAs: [`${DECK_COMPASS_ORIGIN}/about`],
     jobTitle: "Founder",
     description:
       "Fourth-generation Matakite (seer), founder of Tides of Knowing™ and The Deck Compass™, journalist, and creator of The COMPASS Method™.",

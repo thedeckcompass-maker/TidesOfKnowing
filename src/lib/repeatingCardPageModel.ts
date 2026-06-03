@@ -1,6 +1,10 @@
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
-import { buildScopedSectionNav, prefixHeadingIdsInHtml } from "./rcmHeadingIds";
+import {
+  buildScopedSectionNav,
+  normalizeRepeatingCardArticleHtml,
+  prefixHeadingIdsInHtml,
+} from "./rcmHeadingIds";
 import {
   isRepeatingMeaningReady,
   repeatingCardDisplayTitle,
@@ -47,7 +51,13 @@ export async function buildRepeatingCardPageModel(
 
   const { headings } = await render(entry);
   const rawHtml = entry.rendered?.html ?? "";
-  const articleHtml = rawHtml ? prefixHeadingIdsInHtml(rawHtml, panelDomId) : null;
+  const articleHtml = rawHtml
+    ? normalizeRepeatingCardArticleHtml(
+        prefixHeadingIdsInHtml(rawHtml, panelDomId),
+        displayTitle,
+        entry.data.title,
+      )
+    : null;
   const sectionNav = articleHtml ? buildScopedSectionNav(headings, panelDomId) : [];
 
   return {

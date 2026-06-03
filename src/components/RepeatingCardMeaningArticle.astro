@@ -10,6 +10,7 @@ import { textIsContainedIn, textsAreEquivalent } from "../lib/textNormalize";
 import RepeatingCardQuestions from "./RepeatingCardQuestions.astro";
 import RepeatingCardRelatedMeanings from "./RepeatingCardRelatedMeanings.astro";
 import ShortAnswerBlock from "./ShortAnswerBlock.astro";
+import { repeatingCardEntityAuthorAttribution } from "../lib/authorProfile";
 
 export type RepeatingCardMeaningArticleVariant = "tool" | "entity";
 
@@ -68,6 +69,12 @@ const showFeaturedSnippet =
       }
     </p>
   </header>
+
+  {
+    variant === "entity" ? (
+      <p class="rcm-card__trust" data-reveal>{repeatingCardEntityAuthorAttribution}</p>
+    ) : null
+  }
 
   <div class="rcm-card__body">
     <header class="rcm-card__card-head">
@@ -189,6 +196,14 @@ const showFeaturedSnippet =
 
   .rcm-card__hub-sep {
     color: color-mix(in srgb, var(--tok-text-light-soft) 55%, transparent);
+  }
+
+  .rcm-card__trust {
+    margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.62;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 82%, transparent);
   }
 
   .rcm-card__card-head {
@@ -325,18 +340,6 @@ const showFeaturedSnippet =
   .rcm-card__article-content {
     min-width: 0;
     max-width: var(--reading-width);
-  }
-
-  .rcm-card__prose > h1:first-child {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 
   .rcm-card__prose h2 {

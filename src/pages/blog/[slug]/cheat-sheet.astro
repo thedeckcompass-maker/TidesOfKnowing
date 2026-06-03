@@ -48,6 +48,7 @@ if (series && seriesSheet && segment === "reading-the-grip") {
     "/images/blog/reading-the-grip/full-spread-overview.jpg",
     base,
   ).href;
+  const parentHref = seriesLandingPath(segment);
   readingTheGripSeo = resolveBlogSeo({
     entry: seriesSheet,
     pageUrl,
@@ -56,7 +57,7 @@ if (series && seriesSheet && segment === "reading-the-grip") {
     titleSuffix: "Cheat sheet | Tides of Knowing",
   });
   readingTheGripBack = {
-    href: seriesLandingPath(segment),
+    href: parentHref,
     label: series.data.title,
   };
 } else if (series && seriesSheet) {
@@ -90,7 +91,8 @@ if (!view && !readingTheGripSeo) {
     <ReadingTheGripCheatSheet
       pageTitle={readingTheGripSeo.pageTitle}
       metaDescription={readingTheGripSeo.metaDescription}
-      canonicalUrl={readingTheGripSeo.ogUrl}
+      canonicalUrl={new URL(readingTheGripBack.href, base).href}
+      metaRobots="noindex, follow"
       ogTitle={readingTheGripSeo.ogTitle}
       ogDescription={readingTheGripSeo.ogDescription}
       ogImage={readingTheGripSeo.ogImageAbsolute}
@@ -103,6 +105,8 @@ if (!view && !readingTheGripSeo) {
       pageUrl={pageUrl}
       baseHref={base.href}
       defaultOgImage={defaultOg}
+      canonicalUrl={new URL(view.backHref, base).href}
+      metaRobots="noindex, follow"
       backHref={view.backHref}
       backLabel={view.backLabel}
     >

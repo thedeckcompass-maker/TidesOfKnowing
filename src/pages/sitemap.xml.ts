@@ -47,7 +47,28 @@ export const prerender = true;
 
 const SITE = "https://www.tidesofknowing.com";
 
-type Row = { path: string; changefreq: string; priority: string };
+type Row = { path: string; changefreq: string; priority: string; lastmod?: string };
+
+function toSitemapLastmod(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function parseOptionalIsoDate(value: string | undefined): Date | undefined {
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+  const parsed = new Date(trimmed);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+}
+
+/** Latest valid date as W3C date (YYYY-MM-DD); omit when no dates supplied. */
+function lastmodFromDates(...dates: (Date | undefined)[]): string | undefined {
+  const valid = dates.filter(
+    (d): d is Date => d instanceof Date && !Number.isNaN(d.getTime()),
+  );
+  if (valid.length === 0) return undefined;
+  const latest = valid.reduce((max, d) => (d > max ? d : max));
+  return toSitemapLastmod(latest);
+}
 
 function absPath(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
@@ -136,6 +157,7 @@ export const GET: APIRoute = async () => {
       path: `/articles/${a.data.slug}/`,
       changefreq: "monthly",
       priority,
+      lastmod: lastmodFromDates(a.data.updatedDate, a.data.publishDate),
     });
   }
 
@@ -194,6 +216,10 @@ export const GET: APIRoute = async () => {
       path: getRepeatingCardCanonicalPath(entry),
       changefreq: "monthly",
       priority: "0.78",
+      lastmod: lastmodFromDates(
+        parseOptionalIsoDate(entry.data.dateModified),
+        parseOptionalIsoDate(entry.data.datePublished),
+      ),
     });
   }
 
@@ -248,6 +274,7 @@ export const GET: APIRoute = async () => {
       path: `/blog/${slug}/`,
       changefreq: "monthly",
       priority: "0.65",
+      lastmod: lastmodFromDates(post.data.modifiedDate, post.data.date),
     });
   }
 
@@ -258,6 +285,7 @@ export const GET: APIRoute = async () => {
       path: `/blog/${seriesSlug}/`,
       changefreq: "monthly",
       priority: "0.68",
+      lastmod: lastmodFromDates(series.data.modifiedDate, series.data.date),
     });
     for (const note of getSeriesFieldNotes(blog, seriesSlug)) {
       const noteSlug = fieldNoteSlugFromEntry(note);
@@ -265,6 +293,7 @@ export const GET: APIRoute = async () => {
         path: `/blog/${seriesSlug}/${noteSlug}/`,
         changefreq: "monthly",
         priority: "0.64",
+        lastmod: lastmodFromDates(note.data.modifiedDate, note.data.date),
       });
     }
   }
@@ -283,9 +312,13 @@ export const GET: APIRoute = async () => {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...[...seen.values()].map((r) => {
       const loc = xmlEscape(absPath(r.path));
+      const lastmodTag = r.lastmod
+        ? `<lastmod>${xmlEscape(r.lastmod)}</lastmod>`
+        : "";
       return [
         "<url>",
         `<loc>${loc}</loc>`,
+        lastmodTag,
         `<changefreq>${r.changefreq}</changefreq>`,
         `<priority>${r.priority}</priority>`,
         "</url>",
