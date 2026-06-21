@@ -57,6 +57,10 @@ What if I have been optimistic all my life, and reality is finally catching up w
 
 At sixty, that question carries a different weight than it might have at thirty.
 
+---
+
+## How We Know Before Language
+
 This piece sits beside a wider body of work about perception. Some of that writing began with tarot and intuitive practice, but the deeper question has always been how we know what we know before we have language for it. I have been tracing three layers. Material perception sees objects. It looks at the flight booked, the money in the account, the visa stamped or not yet stamped. Symbolic perception sees relationships. It builds the story: brave or foolish, wise or naive, the person who finally did it or the person who should have known better. Intuitive perception senses pattern-change before language catches up to it. It is the layer underneath the other two, registering that something has shifted long before you have a sentence ready to describe what.
 
 Standing at the edge of my own threshold, I have been living out all three at once. And I have learned something about where I keep getting it wrong.
@@ -73,9 +77,19 @@ And underneath that, the real question.
 
 What if I have got myself wrong?
 
+---
+
+## Asking a Symbolic Question of an Intuitive Experience
+
 Here is the problem, named plainly. I have been asking a symbolic question of an intuitive experience. I have been trying to find out whether I am wise or foolish, brave or reckless, right or wrong, when the thing actually present in me has never been a verdict at all. It has been a feeling. And a feeling is not waiting to be judged. It is waiting to be read.
 
+> A feeling is not waiting to be judged. It is waiting to be read.
+
 This is where most of us go wrong at a threshold, and it is worth slowing down to see why.
+
+---
+
+## Readiness on Paper and Readiness in the Body
 
 Material perception is the easiest register to default to, because it gives you something to check. Did I save enough. Did I plan enough. Are the documents in order. It feels productive because it produces answers. But it cannot tell you whether you should go. It can only tell you whether you are ready to.
 
@@ -84,6 +98,10 @@ I have a ledger for this. Visa requirements, bank statements, a checklist that g
 Symbolic perception is the register most of us reach for next, because it gives us a story, and a story is something we can live inside. We turn the decision into a character study. If it works out, I was brave. If it doesn't, I was naive. This register feels like wisdom because it has the shape of reflection. But it is retrospective by design. It can only deliver its verdict after the fact, which means in the present moment all it can offer is anxiety dressed as foresight. You cannot get the verdict early. You can only imagine getting it, and the imagining is what keeps you up at night.
 
 I notice it in how people talk to me about the move. Some call it brave. Some, more carefully, call it a big decision, which is what people say when they aren't sure brave is the right word. I do the same thing internally, auditioning the language I might need afterward. That is the symbolic register at work, and it is exhausting, because it is trying to settle in advance a question that can only be settled in arrears, if it needs settling at all.
+
+---
+
+## Where Viraha Enters
 
 That is where viraha enters.
 
@@ -107,6 +125,8 @@ But longing does not disappear. And I no longer think it is supposed to.
 
 Longing is not a symbolic signal asking to be resolved into a verdict. It is an intuitive one. It is the third layer of perception doing exactly what it is built to do: registering that something is shifting, before there is language ready to describe what. The ache is not evidence that I have mistaken hope for wisdom. The ache is the intuitive layer working correctly. It is simply the one we have the least practice trusting, because it never arrives with proof attached.
 
+> Longing is not a symbolic signal asking to be resolved into a verdict. It is an intuitive one.
+
 Longing says: I want.
 
 Attachment says: I must have.
@@ -125,6 +145,10 @@ And reality has already caught up with me many times. Journalism changed. Busine
 
 That is what brought me back to the ledger.
 
+---
+
+## The Second Ledger
+
 For most of my life I have kept one without admitting it. One column for the practical: did the bank balance hold, did the plan survive contact with reality, did everything line up the way a responsible life is supposed to. I have spent most of my big decisions trying to make that column balance before letting myself do anything else.
 
 But there is another column. It doesn't get audited the way the first one does, so most of us forget we're keeping it. It records what was learned. What was lived. What was created. What was loved, and who. It isn't measured in currency, and it doesn't balance against the first column, because the two were never meant to be reconciled against each other. They simply track different things.
@@ -135,13 +159,21 @@ Viraha says: I love, therefore I long.
 
 The second ledger says: show me what that longing built.
 
+> The second ledger says: show me what that longing built.
+
 Longing and creation. Desire and participation. Hope and what gets made because of it. I no longer think they are opposites. I think they are the same motion, read at two different depths.
+
+---
+
+## The Test I Have Started Applying
 
 Here is the test I have started applying, in place of the one I used to run. Not: will this work out. Not: will I be proven wise or foolish. Instead, I imagine someone else living this exact story. I imagine them saying, I moved to another country at sixty. I tried. I lived. I learned. I created. I loved the experience. And eventually life led me somewhere else.
 
 I do not think that person is foolish. I think they are brave.
 
 If I run the material register on that story, I am checking their bank balance. If I run the symbolic register, I am waiting to find out whether it worked, so I know which word to use: brave or naive. But read intuitively, the verdict was never the point. The walking was. Bravery is not something a story confirms afterward. It is something the walking already contains, the moment it begins.
+
+> Bravery is not something a story confirms afterward. It is something the walking already contains, the moment it begins.
 
 I can run the same test backward. I imagine someone who stayed, who looked at the same spreadsheet, felt the same ache, and chose to stay close to family, to a garden they had spent twenty years building, to a life that was already whole. I do not think that person is foolish either. I think they were reading the same intuitive signal and arriving at a different answer, because the pattern they were sensing was their own, not mine. The point was never which choice was correct. The point was whether the choice came from the register built to make it.
 
@@ -153,7 +185,13 @@ But I have been asking a symbolic question of an intuitive layer that was never 
 
 Mexico does not have to justify itself. The move does not have to prove I was right. My work does not have to become a grand success. Life does not have to reward me for trying.
 
+---
+
+## What Is Being Asked of Me
+
 What is being asked of me is participation. To keep writing. To keep learning. To keep carrying what feels worth carrying. To walk towards what calls me without demanding the guarantee that the symbolic mind keeps asking for, and was never going to receive.
+
+> What is being asked of me is participation.
 
 This changes the shape of an ordinary day. A delayed visa stops being evidence the plan was wrong and becomes simply a delay. A friend's doubt stops requiring a defence and becomes simply their own register speaking, not mine. The ache itself stops being something to resolve before I can move, and becomes the thing telling me I am moving towards something that matters. The practical work doesn't change. What changes is what I think the ache means while I do it.
 
