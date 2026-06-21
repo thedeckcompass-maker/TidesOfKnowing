@@ -1,0 +1,76 @@
+---
+description: Editorial architecture rules for articles, series, Field Notes, topics, and Further Reading
+globs: "src/content/articles/**/*.md, src/content/blog/**/*.md, docs/editorial/**/*.md, content-intake/**/*.md"
+alwaysApply: false
+---
+
+# Editorial Architecture
+
+## Emergent Series Principle
+
+Articles and Field Notes are standalone by default.
+
+Standalone status refers only to metadata and navigation. It does not imply a different editorial standard, article structure, or content depth.
+
+A standalone article should be treated identically to any article that later becomes part of a series.
+
+## Editorial Standards Remain Identical
+
+Whether or not an article belongs to a series, maintain the existing Tides of Knowing article standards:
+
+- Long-form essay structure.
+- Typical target length approximately 2,200-2,500 words, allowing exceptions where warranted.
+- Standard headline hierarchy.
+- Standard pull quotes and highlighted passages.
+- Standard introduction and conclusion structure.
+- Standard metadata requirements.
+- Standard hero image treatment.
+- Standard Further Reading relationships.
+- Standard SEO expectations.
+- Standard E-E-A-T expectations.
+- Standard authority-building posture.
+
+The absence of series metadata does not change the article itself.
+
+## Relationship Hierarchy
+
+Topics answer: "What is this about?"
+
+Further Reading answers: "What should I read next?"
+
+Series answer: "In what order should I read these?"
+
+These are separate concepts and should not be conflated.
+
+## Publishing Rules
+
+When publishing a new article:
+
+- Assume standalone status unless a formal series already exists.
+- Do not assign `seriesName`, `seriesOrder`, `seriesTotal`, `previousArticle`, or `nextArticle` merely because future related pieces may be written.
+- Continue using the same article architecture, metadata, pull quotes, image treatment, and word-count expectations as any other article.
+- Use topics for subject grouping.
+- Use Further Reading for conceptual adjacency.
+
+## Retrospective Series Formation
+
+If subsequent articles reveal an ordered conceptual, narrative, or practice arc, series metadata may be added retrospectively.
+
+When this occurs:
+
+- Preserve existing URLs.
+- Preserve existing article structure.
+- Add series metadata only.
+- Create a series landing page.
+- Add previous/next navigation.
+- Do not imply that the series was planned from the outset.
+
+The article itself should not be rewritten simply because it later becomes part of a series.
+
+## Guiding Principle
+
+Series are discovered, not declared.
+
+Structure follows meaning, not anticipation.
+
+A standalone article today may become part of a series tomorrow, but it should be written and published as a complete article in every sense from the beginning.
