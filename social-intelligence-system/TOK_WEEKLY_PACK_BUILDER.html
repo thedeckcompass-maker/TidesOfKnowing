@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tides of Knowing Weekly Pack Builder</title>
+  <style>
+    :root {
+      --ink: #0b1b3b;
+      --cream: #f7f3eb;
+      --teal: #4b9a9a;
+      --gold: #c9a052;
+      --muted: #8a8ea0;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #eceff4 0, var(--cream) 40%, #f2ece3 100%);
+      color: #161b27;
+    }
+    .page { max-width: 720px; margin: 28px auto 48px; padding: 0 20px 40px; }
+    .header {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      color: #fdfaf4;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .subtitle { margin: 4px 0 0; font-size: 13px; color: rgba(248, 245, 236, 0.88); }
+    .explain {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(75, 154, 154, 0.12);
+      border: 1px solid rgba(75, 154, 154, 0.35);
+      font-size: 12px;
+      line-height: 1.55;
+      color: #e8f4f4;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      border: 2px solid rgba(11, 27, 59, 0.06);
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    label.primary-label { font-size: 12px; color: var(--ink); }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(11, 27, 59, 0.12);
+      font-size: 14px;
+      font-family: inherit;
+      background: #fdfbf7;
+    }
+    input.primary-field, select.primary-field, input[type="date"].primary-field {
+      padding: 14px 14px;
+      font-size: 16px;
+      border-width: 2px;
+      border-color: rgba(75, 154, 154, 0.35);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(75, 154, 154, 0.55);
+      box-shadow: 0 0 0 3px rgba(75, 154, 154, 0.12);
+    }
+    .field-hint {
+      margin: 6px 0 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #5a6278;
+    }
+    .field-block { margin-bottom: 16px; }
+    .field-block.hidden { display: none; }
+    .optional-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    .optional-grid .full { grid-column: 1 / -1; }
+    textarea.prompt-output {
+      min-height: 280px;
+      font-size: 12px;
+      line-height: 1.5;
+      font-family: Consolas, "Courier New", monospace;
+      background: #f7f4ee;
+    }
+    .next-panel {
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #f3f7f7;
+      border: 1px solid rgba(75, 154, 154, 0.25);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #273047;
+    }
+    .next-panel ol { margin: 8px 0 0; padding-left: 20px; }
+    .next-panel li { margin: 6px 0; }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 27, 59, 0.12);
+      background: linear-gradient(135deg, #fff, #f3eee3);
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .btn:hover { background: #fff; }
+    .btn-primary {
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      border-color: rgba(75, 154, 154, 0.55);
+      background: linear-gradient(135deg, #fff, #eef6f6);
+      color: var(--teal);
+    }
+    .btn-gold { border-color: rgba(201, 160, 82, 0.5); color: var(--gold); font-weight: 600; }
+    .btn-muted { color: var(--muted); }
+    .action-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; align-items: center; }
+    .feedback {
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 600;
+      min-height: 20px;
+      margin-top: 10px;
+    }
+    .feedback.error { color: #b45309; }
+    .schedule-box {
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #f7f4ee;
+      border: 1px solid rgba(11, 27, 59, 0.08);
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: #273047;
+      margin-top: 8px;
+    }
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .checkbox-row input[type="checkbox"] { width: auto; }
+    .checkbox-row label {
+      margin: 0;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 13px;
+      color: #273047;
+      font-weight: 500;
+    }
+    details.collapsible {
+      background: #fff;
+      border-radius: 12px;
+      padding: 0;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      border: 2px solid rgba(11, 27, 59, 0.06);
+    }
+    details.collapsible summary {
+      cursor: pointer;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      list-style: none;
+    }
+    details.collapsible summary::-webkit-details-marker { display: none; }
+    details.collapsible .collapsible-body {
+      padding: 0 16px 16px;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #273047;
+    }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link-btn {
+      display: inline-flex;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 27, 59, 0.1);
+      background: linear-gradient(135deg, #fff, #f0ece2);
+      font-size: 12px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .link-btn:hover { background: #fff; text-decoration: none; }
+    .campaign-notes-hint {
+      margin: 6px 0 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #5a6278;
+    }
+    .campaign-notes-status {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .campaign-notes-status.blank {
+      background: #fff8ee;
+      border: 1px solid rgba(201, 160, 82, 0.35);
+      color: #7a5a20;
+    }
+    .campaign-notes-status.supplied {
+      background: #eef6f6;
+      border: 1px solid rgba(75, 154, 154, 0.35);
+      color: #2a5a5a;
+      font-weight: 600;
+    }
+    .campaign-governing-label {
+      font-size: 12px !important;
+      color: var(--ink) !important;
+      letter-spacing: 0.04em;
+    }
+    .sys-nav {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      border-radius: 12px;
+      padding: 12px 16px 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .sys-nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .sys-nav-link {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #e8f4f4;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .sys-nav-link:hover {
+      background: rgba(75, 154, 154, 0.22);
+      border-color: rgba(75, 154, 154, 0.45);
+    }
+    .sys-nav-link.active {
+      background: rgba(75, 154, 154, 0.32);
+      border-color: rgba(201, 160, 82, 0.55);
+      color: #fdfaf4;
+      font-weight: 650;
+    }
+    .sys-breadcrumb {
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(248, 245, 236, 0.78);
+      letter-spacing: 0.02em;
+    }
+    .sys-breadcrumb a {
+      color: #b8e8e4;
+      text-decoration: none;
+    }
+    .sys-breadcrumb a:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .optional-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="sys-nav" aria-label="System navigation">
+      <div class="sys-nav-links">
+        <a class="sys-nav-link" href="START_HERE_TOK_SOCIAL_SYSTEM.html">Home</a>
+        <a class="sys-nav-link active" href="TOK_WEEKLY_PACK_BUILDER.html">Weekly Pack Builder</a>
+        <a class="sys-nav-link" href="2026%20Social%20Packs/SOCIAL_PACK_USAGE_LEDGER.csv">Usage Ledger</a>
+        <a class="sys-nav-link" href="01%20Strategy%20and%20Operating%20Rules/TOK_EDITORIAL_VOICE_AND_GENERATION_GOVERNOR.md">Editorial Governor</a>
+        <a class="sys-nav-link" href="01%20Strategy%20and%20Operating%20Rules/TOK_WEEKLY_SOCIAL_PACK_GENERATOR_RULES.md">Generator Rules</a>
+      </div>
+      <div class="sys-breadcrumb"><a href="START_HERE_TOK_SOCIAL_SYSTEM.html">Home</a> &gt; Weekly Pack Builder</div>
+    </nav>
+
+    <header class="header">
+      <h1 class="title">Weekly Pack Builder</h1>
+      <p class="subtitle">Prepare one weekly pack request. Paste it into Cursor. Generate the week, review and approve copy, set image instructions, then export one Executive Assistant handoff HTML.</p>
+      <div class="explain">
+        You do not need to read the Cursor prompt. Click PREPARE WEEKLY PACK, paste the copied request into Cursor, then open START_HERE_FOR_POSTING.html inside the generated weekly folder.
+      </div>
+    </header>
+
+    <section class="card">
+      <h2 class="section-title">Prepare weekly pack</h2>
+
+      <div class="field-block">
+        <label for="sourceMode" class="primary-label">Source mode</label>
+        <select id="sourceMode" class="primary-field">
+          <option value="new-url">New URL Pack</option>
+          <option value="first-social-introduction">First Social Introduction Pack</option>
+          <option value="training-invitation">Training Invitation Pack</option>
+          <option value="evergreen">Evergreen Catch-Up Pack</option>
+          <option value="tool">Tool or Repeating Card Pack</option>
+          <option value="offer">Offer Pack</option>
+        </select>
+        <p class="field-hint" id="sourceModeHint">Best for new articles and Field Notes. Source URL required.</p>
+        <p class="field-hint" style="margin-top:8px; padding:8px 10px; border-radius:6px; background:#f3f7f7; border:1px solid rgba(75,154,154,0.2);">The system records when a URL has been used to generate a pack. If you reuse the URL later, Cursor will report the previous usage, but you decide what to do.</p>
+      </div>
+
+      <div class="field-block" id="sourceUrlBlock">
+        <label for="sourceUrl" class="primary-label">Source URL</label>
+        <input type="url" id="sourceUrl" class="primary-field" placeholder="https://www.tidesofknowing.com/articles/...">
+        <p class="field-hint" id="sourceUrlHint">Paste the published Tides of Knowing URL. Cursor will look up or assign the TOK ID and infer the title.</p>
+      </div>
+
+      <div class="field-block">
+        <label for="weekStart" class="primary-label">Week start date</label>
+        <input type="date" id="weekStart" class="primary-field" value="">
+        <p class="field-hint">Choose the Monday the weekly pack should begin.</p>
+      </div>
+
+      <div class="optional-grid">
+        <div id="contentTypeBlock">
+          <label for="contentType">Content type (optional)</label>
+          <select id="contentType">
+            <option value="">Let Cursor decide</option>
+            <option value="About Page">About Page</option>
+            <option value="Article">Article</option>
+            <option value="Field Note">Field Note</option>
+            <option value="Tool">Tool</option>
+            <option value="Repeating Card Page">Repeating Card Page</option>
+            <option value="Offer Page">Offer Page</option>
+          </select>
+        </div>
+        <div class="full">
+          <label for="notes" class="campaign-governing-label">Campaign Focus / Notes, governing instruction for this pack</label>
+          <textarea id="notes" rows="3" placeholder="Example: Because this will be our first social media posting across all platforms, use the /about page introducing me."></textarea>
+          <p class="campaign-notes-hint">Use this when the pack needs a specific strategic treatment. These notes are treated as governing instructions for this generation run, not as background metadata.</p>
+          <div class="campaign-notes-status blank" id="campaignNotesStatus">No campaign focus supplied. The generator will use default rules for the selected pack type.</div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary" type="button" id="prepareBtn">PREPARE WEEKLY PACK</button>
+        <button class="btn btn-gold" type="button" id="copyAgainBtn">Copy Cursor Prompt Again</button>
+        <button class="btn btn-muted" type="button" id="downloadBtn">Download Prompt</button>
+        <button class="btn btn-muted" type="button" id="clearBtn">Clear Form</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">What happens next?</h2>
+      <div class="next-panel">
+        <ol>
+          <li>Click <strong>PREPARE WEEKLY PACK</strong>.</li>
+          <li>Paste the copied request into Cursor.</li>
+          <li>Cursor creates the weekly folder and review page.</li>
+          <li>After Cursor finishes, open <strong>START_HERE_FOR_POSTING.html</strong> inside the new weekly folder. This file is not at the social-intelligence-system root. It only exists inside the generated week folder.</li>
+          <li>Review and approve copy, then set the plain Image to use instruction.</li>
+          <li>Click <strong>Export Executive Assistant Posting Handoff</strong>.</li>
+          <li>Optional delivery: after exporting the Executive Assistant handoff, upload the HTML file and any images folder to Google Drive, email, or another shared location.</li>
+        </ol>
+        <p style="margin:14px 0 6px; font-weight:600;">Expected posting page after generation:</p>
+        <div class="schedule-box" id="expectedPostingPath">Select a week start date to preview the expected path.</div>
+        <p class="field-hint" style="margin-top:10px;">This file is created by Cursor during generation. It will not exist until the weekly pack has been generated.</p>
+      </div>
+    </section>
+
+    <details class="collapsible">
+      <summary>Advanced business settings</summary>
+      <div class="collapsible-body">
+        <label for="deckCompassUrl">The Deck Compass™ training URL</label>
+        <input type="url" id="deckCompassUrl" placeholder="Optional dedicated training URL">
+        <p class="field-hint">Optional. If left blank, training invitation posts will link to the source article or Field Note as the bridge destination. No placeholder will appear in public copy.</p>
+      </div>
+    </details>
+
+    <details class="collapsible">
+      <summary>Advanced: Cursor prompt</summary>
+      <div class="collapsible-body">
+        <p class="field-hint" style="margin-bottom:10px;">You do not need to read this. It is generated automatically when you click PREPARE WEEKLY PACK.</p>
+        <textarea class="prompt-output" id="promptOutput" rows="16" readonly placeholder="Click PREPARE WEEKLY PACK to generate the Cursor request."></textarea>
+      </div>
+    </details>
+
+    <details class="collapsible">
+      <summary>View generated weekly schedule</summary>
+      <div class="collapsible-body">
+        <div class="schedule-box" id="scheduleSummary">Select source mode and week start to preview schedule.</div>
+      </div>
+    </details>
+
+    <section class="card" style="padding:14px 18px;">
+      <div class="links">
+        <a class="link-btn" href="START_HERE_TOK_SOCIAL_SYSTEM.html">System launch page</a>
+        <a class="link-btn" href="_archived_test_social_packs_2026-06-05/">Archived setup packs</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Button wiring verified for local file use. -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    var modeHints = {
+      "new-url": "Best for new articles and Field Notes. Source URL required.",
+      "first-social-introduction": "First social launch or cold-audience reintroduction. Usually the About page. Loads Prompt Library first-introduction rules. Training invitations deferred or softened.",
+      "training-invitation": "Generates exactly 3 Deck Compass training invitation assets only. Source URL required. Uses source URL as CTA bridge if no dedicated training URL is supplied.",
+      "evergreen": "Use when no new article or Field Note is ready. Source URL optional. Cursor selects a suitable evergreen source from inventory if no URL is supplied.",
+      "tool": "For strategic tools or repeating card pages. Source URL required unless manually selected from inventory. Generates a 6-asset pack.",
+      "offer": "For offer pages. Source URL required. Generates a 4-asset pack."
+    };
+
+    var introNoteKeywords = ["first social posting", "first posts", "first posting", "first social", "first launch", "introduction", "introducing me", "introducing leigh", "new audience", "start here", "about page", "reintroduction", "starting social", "new here", "cold audience", "launch week"];
+
+    var trainingRotations = {
+      A: "Week A:\n* Tuesday: Deck Compass training invitation, Facebook, 7:30 p.m.\n* Thursday: Deck Compass training invitation, X / Twitter, 10:30 a.m.\n* Sunday: Deck Compass training invitation, Instagram, 6:30 p.m.",
+      B: "Week B:\n* Monday: Deck Compass training invitation, X / Twitter, 10:30 a.m.\n* Wednesday: Deck Compass training invitation, Facebook, 7:30 p.m.\n* Friday: Deck Compass training invitation, Instagram, 6:30 p.m.",
+      C: "Week C:\n* Tuesday: Deck Compass training invitation, Instagram, 1:30 p.m.\n* Friday: Deck Compass training invitation, Facebook, 12:30 p.m.\n* Saturday: Deck Compass training invitation, X / Twitter, 9:00 a.m.",
+      D: "Week D:\n* Monday: Deck Compass training invitation, Facebook, 12:30 p.m.\n* Thursday: Deck Compass training invitation, Instagram, 6:30 p.m.\n* Sunday: Deck Compass training invitation, X / Twitter, 9:00 a.m."
+    };
+
+    var schedules = {
+      article: "TOTAL: 17 assets (14 source-led + 3 Deck Compass training invitation)\n\nSOURCE-LED (14):\nMonday: X thesis 9:00 a.m., Facebook reflective 12:30 p.m.\nTuesday: X insight 10:30 a.m., Instagram carousel 1:30 p.m.\nWednesday: X question 9:00 a.m., Pinterest pin 8:30 p.m.\nThursday: X method 10:30 a.m., Facebook practical 12:30 p.m.\nFriday: X thread 9:00 a.m., Instagram quote 6:30 p.m.\nSaturday: Substack Note 9:30 a.m., Pinterest pin 2 8:30 p.m.\nSunday: X reflective 9:00 a.m., Facebook conversation 7:30 p.m.",
+      "about-introduction": "TOTAL: 17 assets (About Introduction Pack)\n\nINTRODUCTION ARC:\n1. Who Leigh is\n2. What Tides of Knowing is\n3. Why tarot is symbolic literacy and reflective practice\n4. How journalism, intuition and method combine\n5. What kind of reader this work serves\n6. Where to start\n7. How to deepen later\n\nTRAINING INVITATIONS: zero to one recommended. Soft bridge only near end of week unless Leigh explicitly requests three.\n\nSame weekly handoff schedule shape as full pack, but campaign mode overrides angle priority and training timing.",
+      "training-invitation": "TOTAL: 3 training invitation assets only\n\nDEFAULT TRAINING INVITATION PACK:\nTuesday: Facebook training invitation, 7:30 p.m.\nThursday: X / Twitter training invitation, 10:30 a.m.\nSunday: Instagram training invitation, 6:30 p.m.\n\nConflict rule: if the same week already has training invitations from a full source pack, do not place two training invitations on the same platform on the same day. Move conflicts to the next available non-conflicting slot and report in the generation report.",
+      tool: "6 assets:\nMonday: Pinterest utility pin\nTuesday: Instagram educational carousel\nWednesday: Facebook practical post\nThursday: X / Twitter utility post\nFriday: Pinterest second pin\nSaturday: Facebook conversation post\nSunday: open for catch-up",
+      offer: "4 assets:\nMonday: Facebook trust-building post\nWednesday: X / Twitter positioning post\nFriday: Instagram or Pinterest visual brief\nSunday: Facebook soft CTA post"
+    };
+
+    var currentPrompt = "";
+
+    function pad2(n) { return n < 10 ? "0" + n : String(n); }
+
+    function formatDate(d) {
+      return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+    }
+
+    function parseDate(str) {
+      if (!str) return null;
+      var parts = str.split("-");
+      return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    }
+
+    function addDays(date, days) {
+      var d = new Date(date.getTime());
+      d.setDate(d.getDate() + days);
+      return d;
+    }
+
+    function weekOfMonth(date) {
+      return Math.floor((date.getDate() - 1) / 7) + 1;
+    }
+
+    function calcDerived(weekStartStr) {
+      var start = parseDate(weekStartStr);
+      if (!start) return null;
+      var end = addDays(start, 6);
+      var monthFolder = start.getFullYear() + "-" + pad2(start.getMonth() + 1) + " " + monthNames[start.getMonth()];
+      var weekNum = pad2(weekOfMonth(start));
+      var weekFolder = "Week " + weekNum + " - " + formatDate(start) + " to " + formatDate(end);
+      var folderPath = "2026 Social Packs/" + monthFolder + "/" + weekFolder + "/";
+      return {
+        weekStart: formatDate(start),
+        weekEnd: formatDate(end),
+        monthFolder: monthFolder,
+        weekFolder: weekFolder,
+        weekNum: weekNum,
+        folderPath: folderPath
+      };
+    }
+
+    function calcWeeklyNavPaths(folderPath) {
+      var segments = folderPath.replace(/\/$/, "").split("/").filter(function(s) { return s.length > 0; });
+      var depth = segments.length;
+      function up(n) {
+        var p = "";
+        for (var i = 0; i < n; i++) p += "../";
+        return p;
+      }
+      return {
+        toRoot: up(depth),
+        toSocialPacks: up(Math.max(0, depth - 1)),
+        home: up(depth) + "START_HERE_TOK_SOCIAL_SYSTEM.html",
+        builder: up(depth) + "TOK_WEEKLY_PACK_BUILDER.html",
+        ledger: up(Math.max(0, depth - 1)) + "SOCIAL_PACK_USAGE_LEDGER.csv",
+        monthFolder: segments.length >= 2 ? segments[1] : "",
+        weekFolder: segments.length >= 3 ? segments[2] : ""
+      };
+    }
+
+    function buildWeeklyNavPromptSection(derived) {
+      var nav = calcWeeklyNavPaths(derived.folderPath);
+      return [
+        "WEEKLY PACK NAVIGATION (required in START_HERE_FOR_POSTING.html):",
+        "* Every generated START_HERE_FOR_POSTING.html must include a top navigation bar and breadcrumbs.",
+        "* Week-at-a-glance pages must always provide a clear route back to Home and Weekly Pack Builder.",
+        "* Use the same visual style as the root system pages: deep blue nav bar, cream page background, teal/gold active highlight.",
+        "",
+        "Navigation links for this weekly folder (relative paths from week folder):",
+        "* Home: " + nav.home,
+        "* Weekly Pack Builder: " + nav.builder,
+        "* Usage Ledger: " + nav.ledger,
+        "* Executive Assistant Instructions: EXECUTIVE_ASSISTANT_POSTING_INSTRUCTIONS.md",
+        "",
+        "Breadcrumb for this week:",
+        "Home > 2026 Social Packs > " + derived.monthFolder + " > " + derived.weekFolder,
+        "",
+        "Breadcrumb link targets:",
+        "* Home: " + nav.home,
+        "* 2026 Social Packs: " + nav.toSocialPacks,
+        "* Month folder: ../ (parent month folder)",
+        "* Week folder: current page (no link or plain text)",
+        "",
+        "Place navigation at the top of START_HERE_FOR_POSTING.html before the week header."
+      ];
+    }
+
+    function val(id) {
+      var el = document.getElementById(id);
+      if (!el) return "";
+      if (el.type === "checkbox") return el.checked;
+      return el.value.trim();
+    }
+
+    function sourceMode() {
+      return val("sourceMode") || "new-url";
+    }
+
+    function urlRequired() {
+      var mode = sourceMode();
+      return mode === "new-url" || mode === "first-social-introduction" || mode === "training-invitation" || mode === "tool" || mode === "offer";
+    }
+
+    function notesIndicateFirstIntroduction(notes) {
+      if (!notes) return false;
+      var lower = notes.toLowerCase();
+      return introNoteKeywords.some(function(kw) { return lower.indexOf(kw) !== -1; });
+    }
+
+    function isAboutUrl(url) {
+      if (!url) return false;
+      return /\/about\/?$/i.test(url.replace(/#.*$/, "")) || url.toLowerCase().indexOf("/about/") !== -1;
+    }
+
+    function isFirstIntroductionContext(mode, contentType, notes, sourceUrl) {
+      if (mode === "first-social-introduction") return true;
+      if (contentType === "About Page") return true;
+      if (isAboutUrl(sourceUrl) && notesIndicateFirstIntroduction(notes)) return true;
+      if (notesIndicateFirstIntroduction(notes)) return true;
+      return false;
+    }
+
+    function packTypeFromInputs(mode, contentType, notes, sourceUrl) {
+      if (mode === "training-invitation") return "training-invitation";
+      if (mode === "tool") return "tool";
+      if (mode === "offer") return "offer";
+      if (mode === "first-social-introduction") return "about-introduction";
+      if (contentType === "About Page" || (isAboutUrl(sourceUrl) && isFirstIntroductionContext(mode, contentType, notes, sourceUrl))) return "about-introduction";
+      if (contentType === "Tool" || contentType === "Repeating Card Page") return "tool";
+      if (contentType === "Offer Page") return "offer";
+      return "article";
+    }
+
+    function assetCount(pt) {
+      if (pt === "article") return "17 (14 source-led + 3 training invitation)";
+      if (pt === "about-introduction") return "17 (About Introduction Pack; training deferred or softened)";
+      if (pt === "training-invitation") return "3 (training invitation only)";
+      if (pt === "tool") return "6";
+      if (pt === "offer") return "4";
+      return "varies";
+    }
+
+    function packTypeLabel(mode, pt, contentType) {
+      if (mode === "training-invitation") return "Training Invitation Pack, 3 assets";
+      if (mode === "evergreen") return "Evergreen Catch-Up Pack";
+      if (pt === "about-introduction") return "About Introduction Pack, 17 assets";
+      if (pt === "tool") return "Tool or Repeating Card Pack, 6 assets";
+      if (pt === "offer") return "Offer Pack, 4 assets";
+      if (contentType === "Field Note") return "Full Field Note Pack, 17 assets";
+      return "Full Article Pack, 17 assets";
+    }
+
+    function assetCountNumber(pt) {
+      if (pt === "article" || pt === "about-introduction") return "17";
+      if (pt === "training-invitation") return "3";
+      if (pt === "tool") return "6";
+      if (pt === "offer") return "4";
+      return "";
+    }
+
+    function buildCampaignFocusGoverningSection(notes, firstIntro, pt) {
+      var lines = [
+        "================================================================================",
+        "CAMPAIGN FOCUS / NOTES, GOVERNING INPUT:",
+        notes ? notes : "(none supplied - default pack rules apply)",
+        "================================================================================",
+        "",
+        "CAMPAIGN FOCUS WEIGHTING (required):",
+        "* Campaign Focus / Notes are a high-weight governing input for this generation run.",
+        "* They are not metadata. They must materially change the pack when supplied.",
+        "* Before generating assets, interpret the Campaign Focus / Notes into operational rules.",
+        "* Apply those rules to every asset.",
+        "* Report how the Campaign Focus / Notes changed the generation strategy.",
+        "* Audit every asset against the Campaign Focus / Notes in the final report.",
+        ""
+      ];
+      if (notes) {
+        lines.push("REQUIRED PRE-GENERATION STEP:");
+        lines.push("Create a Campaign Focus Interpretation section before generating any assets. Include:");
+        lines.push("* Exact Campaign Focus / Notes received (verbatim)");
+        lines.push("* What the notes require the pack to do");
+        lines.push("* Which Prompt Library files are triggered by the notes");
+        lines.push("* Which default behaviours are overridden");
+        lines.push("* Any risks or ambiguities");
+        lines.push("");
+        lines.push("REQUIRED POST-GENERATION AUDIT:");
+        lines.push("Audit every asset. For each asset report: asset file, platform, campaign focus reflected (Strong/Partial/Weak), stand-alone for cold reader (Yes/Partial/No), prior knowledge assumed (Yes/No), platform compliance classification (Strong/Acceptable/Needs Review/Needs Regeneration), required correction if any.");
+        lines.push("Platform compliance audit must check: platform fit, length fit, opening line fit, CTA fit, image instruction fit, Tides of Knowing voice fit, risk of generic social copy, risk of overpromising, and risk of fortune-telling style language.");
+        lines.push("If more than 20 percent of assets are Weak against the notes, mark the pack Needs Regeneration and do not present it as handoff-ready.");
+        lines.push("");
+      }
+      if (firstIntro || pt === "about-introduction") {
+        lines.push("FIRST-INTRODUCTION TRIGGER ACTIVE:");
+        lines.push("* Use the first-social-introduction-week prompt layer.");
+        lines.push("* Do not generate a standard article-style pack.");
+        lines.push("* Load: campaign-modes/first-social-introduction-week.md, pack-types/about-introduction-pack.md");
+        if (isAboutUrl(val("sourceUrl")) || val("contentType") === "About Page") {
+          lines.push("* Load: content-types/about-page.md");
+        }
+        lines.push("* Person and platform introduction before method and product.");
+        lines.push("* Defer, reduce or soften business invitation assets unless notes explicitly request more.");
+        lines.push("");
+      }
+      return lines;
+    }
+
+    function updateNotesStatus() {
+      var notes = val("notes");
+      var el = document.getElementById("campaignNotesStatus");
+      if (!el) return;
+      if (notes) {
+        el.className = "campaign-notes-status supplied";
+        el.textContent = "Campaign focus supplied. This will be treated as a governing instruction in the generated Cursor request.";
+      } else {
+        el.className = "campaign-notes-status blank";
+        el.textContent = "No campaign focus supplied. The generator will use default rules for the selected pack type.";
+      }
+      updateSchedulePreview();
+    }
+
+    function buildPromptLibrarySection(mode, contentType, notes, sourceUrl, pt) {
+      var lines = [
+        "PROMPT LIBRARY (load before generating):",
+        "01 Strategy and Operating Rules/Prompt Library/README.md",
+        "",
+        "Campaign Focus / Notes is a governing input. Apply it to pack shape, angle priority, CTA stage and first-line orientation.",
+        ""
+      ];
+      var files = [];
+      var firstIntro = isFirstIntroductionContext(mode, contentType, notes, sourceUrl);
+
+      if (firstIntro || pt === "about-introduction") {
+        files.push("campaign-modes/first-social-introduction-week.md");
+        files.push("pack-types/about-introduction-pack.md");
+      }
+      if (contentType === "About Page" || isAboutUrl(sourceUrl)) {
+        files.push("content-types/about-page.md");
+      }
+      if (contentType === "Article" || (!contentType && pt === "article")) {
+        files.push("content-types/article.md");
+      }
+      if (contentType === "Field Note") {
+        files.push("content-types/field-note.md");
+      }
+      if (contentType === "Tool" || pt === "tool") {
+        files.push("content-types/tool.md");
+      }
+      if (contentType === "Repeating Card Page") {
+        files.push("content-types/repeating-card-page.md");
+      }
+      if (pt === "article" && !firstIntro) {
+        files.push("pack-types/full-article-field-note-pack.md");
+        files.push("campaign-modes/standard-week.md");
+      }
+      if (pt === "about-introduction") {
+        files.push("campaign-modes/first-social-introduction-week.md");
+        files.push("pack-types/about-introduction-pack.md");
+        files.push("content-types/about-page.md");
+      }
+      if (mode === "evergreen") {
+        files.push("campaign-modes/evergreen-catch-up-week.md");
+      }
+      if (mode === "training-invitation") {
+        files.push("pack-types/training-invitation-pack.md");
+      }
+
+      files = files.filter(function(f, i, arr) { return arr.indexOf(f) === i; });
+      lines.push("Required Prompt Library files for this run:");
+      files.forEach(function(f) {
+        lines.push("* 01 Strategy and Operating Rules/Prompt Library/" + f);
+      });
+      lines.push("");
+      lines.push("Load the matching platform prompt file for each asset:");
+      lines.push("* X single posts: platforms/x-twitter-single.md");
+      lines.push("* X threads: platforms/x-twitter-thread.md");
+      lines.push("* Facebook posts: platforms/facebook-reflective.md");
+      lines.push("* Instagram carousels: platforms/instagram-carousel.md");
+      lines.push("* Instagram quote, concept or soft training visuals: platforms/instagram-quote-concept.md");
+      lines.push("* Pinterest pins: platforms/pinterest-pin.md");
+      lines.push("* Substack notes: platforms/substack-note.md");
+      lines.push("");
+      lines.push("PLATFORM BEST-PRACTICE REQUIREMENT:");
+      lines.push("* For every platform-specific asset, load the matching platform prompt before drafting.");
+      lines.push("* Apply the platform prompt to length, tone, opening line, CTA, hashtag or keyword use, image instruction, accessibility, Tides of Knowing voice adaptation and Executive Assistant handoff readiness.");
+      lines.push("* Do not recycle the same post across platforms without platform adaptation.");
+      lines.push("* Do not add platforms outside the approved set for this system.");
+      lines.push("* In the generation report, include the platform prompt loaded for each platform, whether the asset passed the platform checklist, and any platform-specific warning.");
+      lines.push("");
+      if (firstIntro || pt === "about-introduction") {
+        lines.push("FIRST-INTRODUCTION OVERRIDE:");
+        lines.push("* If the campaign focus indicates first introduction, first social posting or new audience context, do not use the standard full article pack without applying first-social-introduction-week rules.");
+        lines.push("* Person and platform introduction come before method and product.");
+        lines.push("* Every post must stand alone. Every first line must orient a new reader.");
+        lines.push("* Recommended training invitation count: zero to one unless Leigh explicitly requests three.");
+        lines.push("* Avoid hard training CTAs on Monday or early in the week.");
+        lines.push("* Default CTAs: Read the About page, Meet the work, Start here.");
+        lines.push("* After generation, append Campaign Focus / Notes to Prompt Library/feedback/CAMPAIGN_FOCUS_LOG.md");
+      }
+      return lines;
+    }
+
+    function trainingWeekLetter(weekStartStr) {
+      var start = parseDate(weekStartStr);
+      if (!start) return "A";
+      var letters = ["A", "B", "C", "D"];
+      return letters[(weekOfMonth(start) - 1) % 4];
+    }
+
+    function updateFormForMode() {
+      var mode = sourceMode();
+      document.getElementById("sourceModeHint").textContent = modeHints[mode] || "";
+      var urlBlock = document.getElementById("sourceUrlBlock");
+      var urlLabel = urlBlock.querySelector("label");
+      var urlHint = document.getElementById("sourceUrlHint");
+
+      if (mode === "training-invitation") {
+        urlLabel.textContent = "Source URL";
+        urlHint.textContent = "Required. Article, Field Note, tool or training-relevant page URL. Used as thematic basis and CTA bridge if no dedicated training URL is supplied.";
+      } else if (mode === "evergreen") {
+        urlLabel.textContent = "Source URL (optional)";
+        urlHint.textContent = "Optional. If blank, Cursor selects a suitable evergreen source from existing inventory.";
+      } else if (mode === "tool") {
+        urlLabel.textContent = "Source URL";
+        urlHint.textContent = "Paste the tool or repeating card page URL. Required unless manually selected from inventory in notes.";
+      } else if (mode === "offer") {
+        urlLabel.textContent = "Source URL";
+        urlHint.textContent = "Paste the offer page URL.";
+      } else {
+        urlLabel.textContent = "Source URL";
+        urlHint.textContent = "Paste the published Tides of Knowing URL. Cursor will look up or assign the TOK ID and infer the title.";
+      }
+
+      if (mode === "first-social-introduction") {
+        document.getElementById("contentType").value = document.getElementById("contentType").value || "About Page";
+        if (!val("sourceUrl")) {
+          document.getElementById("sourceUrl").placeholder = "https://www.tidesofknowing.com/about/";
+        }
+      } else if (mode === "tool") {
+        document.getElementById("contentType").value = document.getElementById("contentType").value || "Tool";
+      } else if (mode === "offer") {
+        document.getElementById("contentType").value = "Offer Page";
+      }
+
+      updateSchedulePreview();
+    }
+
+    function suggestAboutContentType() {
+      var sourceUrl = val("sourceUrl");
+      if (isAboutUrl(sourceUrl)) {
+        var ct = document.getElementById("contentType");
+        if (!ct.value || ct.value === "") {
+          ct.value = "About Page";
+        }
+      }
+      updateSchedulePreview();
+    }
+
+    function updateSchedulePreview() {
+      var weekStart = val("weekStart");
+      var mode = sourceMode();
+      var contentType = val("contentType");
+      var notes = val("notes");
+      var sourceUrl = val("sourceUrl");
+      var pt = packTypeFromInputs(mode, contentType, notes, sourceUrl);
+      var schedText = schedules[pt] || schedules.article;
+
+      if (pt === "article") {
+        var letter = trainingWeekLetter(weekStart);
+        schedText = schedText + "\n\nTRAINING INVITATION (3) - Week " + letter + ":\n" + trainingRotations[letter];
+        schedText = schedText + "\n\nTraining destination: dedicated training URL if supplied, otherwise source URL bridge. No placeholder in public copy.";
+      }
+
+      if (pt === "about-introduction") {
+        schedText = schedText + "\n\nPrompt Library: first-social-introduction-week + about-introduction-pack + about-page content type.";
+        schedText = schedText + "\nCampaign mode overrides standard training rotation unless Leigh explicitly requests three training invitations.";
+      }
+
+      if (pt === "training-invitation") {
+        schedText = schedText + "\n\nTraining destination: dedicated training URL if supplied, otherwise source URL bridge. No placeholder in public copy.";
+      }
+
+      if (mode === "evergreen") {
+        schedText = "EVERGREEN CATCH-UP MODE\nPack size depends on selected source type.\nArticle or Field Note: 17 assets.\nTool or Repeating Card Page: 6 assets.\n\n" + schedText;
+      }
+
+      document.getElementById("scheduleSummary").textContent = schedText;
+      updateExpectedPostingPath();
+    }
+
+    function updateExpectedPostingPath() {
+      var el = document.getElementById("expectedPostingPath");
+      if (!el) return;
+      var derived = calcDerived(val("weekStart"));
+      if (!derived) {
+        el.textContent = "Select a week start date to preview the expected path.";
+        return;
+      }
+      el.textContent = derived.folderPath + "START_HERE_FOR_POSTING.html";
+    }
+
+    function getPostingPagePath() {
+      var derived = calcDerived(val("weekStart"));
+      return derived ? derived.folderPath + "START_HERE_FOR_POSTING.html" : "";
+    }
+
+    function validate() {
+      var weekStart = val("weekStart");
+      var sourceUrl = val("sourceUrl");
+      var mode = sourceMode();
+
+      if (!weekStart) {
+        return "Week start date is required.";
+      }
+      if (!parseDate(weekStart)) {
+        return "Week start date is not valid.";
+      }
+      if (urlRequired() && !sourceUrl) {
+        return "Source URL is required for this source mode.";
+      }
+      return "";
+    }
+
+    function buildPrompt() {
+      var mode = sourceMode();
+      var sourceUrl = val("sourceUrl");
+      var contentType = val("contentType");
+      var weekStart = val("weekStart");
+      var notes = val("notes");
+      var deckUrl = val("deckCompassUrl");
+      var derived = calcDerived(weekStart);
+      var resolvedContentType = contentType || (mode === "first-social-introduction" ? "About Page" : mode === "tool" ? "Tool" : mode === "offer" ? "Offer Page" : "Article");
+      var pt = packTypeFromInputs(mode, resolvedContentType, notes, sourceUrl);
+      var count = assetCount(pt);
+      var trainLetter = trainingWeekLetter(weekStart);
+      var firstIntro = isFirstIntroductionContext(mode, resolvedContentType, notes, sourceUrl);
+
+      var lines = [
+        "Generate a Tides of Knowing weekly social pack.",
+        "",
+        "Context:",
+        "The canonical external folder is:",
+        "",
+        "C:\\Users\\DELL 7410\\Projects\\TidesOfKnowing\\social-intelligence-system",
+        "",
+        "Supreme editorial governor:",
+        "01 Strategy and Operating Rules/TOK_EDITORIAL_VOICE_AND_GENERATION_GOVERNOR.md",
+        "",
+        "Weekly generator rules:",
+        "01 Strategy and Operating Rules/TOK_WEEKLY_SOCIAL_PACK_GENERATOR_RULES.md",
+        "(includes Campaign Focus Weighting Law)",
+        ""
+      ];
+
+      lines.push.apply(lines, buildCampaignFocusGoverningSection(notes, firstIntro, pt));
+
+      lines.push(
+        "Source mode: " + mode,
+        "* Week start date (Monday): " + derived.weekStart,
+        "* Week end date (Sunday): " + derived.weekEnd,
+        "* Month folder label: " + derived.monthFolder,
+        "* Week folder label: " + derived.weekFolder,
+        "* Full folder path: " + derived.folderPath,
+        "* Content type: " + (resolvedContentType || "Infer from source"),
+        "* Deck Compass training URL: " + (deckUrl || "Not supplied (use source URL as training bridge destination)")
+      );
+
+      if (sourceUrl) {
+        lines.push("* Source URL: " + sourceUrl);
+      } else {
+        lines.push("* Source URL: Not supplied");
+      }
+
+      lines.push("");
+      lines.push.apply(lines, buildPromptLibrarySection(mode, resolvedContentType, notes, sourceUrl, pt));
+      lines.push("");
+      lines.push("SOURCE MODE INSTRUCTIONS:");
+
+      if (mode === "first-social-introduction") {
+        lines.push("* FIRST SOCIAL INTRODUCTION PACK mode.");
+        lines.push("* Load Prompt Library files listed above before generating any assets.");
+        lines.push("* Treat Campaign Focus / Notes as a governing input, not a metadata note.");
+        lines.push("* Use the About page or another approved introductory source.");
+        lines.push("* Apply about-introduction-pack and first-social-introduction-week rules.");
+        lines.push("* Person and platform introduction come before method and product.");
+        lines.push("* Every post must stand alone. Every first line must orient a new reader.");
+        lines.push("* Recommended training invitation count: zero to one unless Leigh explicitly requests three.");
+        lines.push("* If campaign focus indicates first introduction, do not use the standard full article pack without first-social-introduction-week rules.");
+        lines.push("* Generate up to 17 assets using the weekly handoff format, but override angle priority and training timing per Prompt Library.");
+      } else if (mode === "new-url") {
+        lines.push("* Use the supplied URL as the source.");
+        lines.push("* Check inventory for an existing TOK ID in TOK_CONTENT_INVENTORY_INDEX.md and 02 Website Content Inventory/TOK_CONTENT_INVENTORY.md.");
+        lines.push("* If absent, assign the next available TOK ID.");
+        lines.push("* Infer source title from page or slug.");
+        lines.push("* Generate the correct fixed pack for the selected content type.");
+        lines.push("* For Article or Field Note packs: generate exactly 17 assets (14 source-led + 3 Deck Compass training invitation).");
+      } else if (mode === "training-invitation") {
+        lines.push("* TRAINING INVITATION PACK mode.");
+        lines.push("* Generate exactly 3 training invitation assets only.");
+        lines.push("* Do not generate the 14 source-led assets.");
+        lines.push("* Source URL required. Content type may be Article, Field Note, Tool or Training Relevant Page.");
+        lines.push("* Use the selected source URL as the thematic basis.");
+        lines.push("* Default schedule: Tuesday Facebook 7:30 p.m., Thursday X / Twitter 10:30 a.m., Sunday Instagram 6:30 p.m.");
+        lines.push("* If the same week already contains training invitations from a full source pack, apply conflict rule: no two training invitations on the same platform on the same day; prefer no more than two training invitations on the same day; move conflicts and report.");
+        lines.push("* Vary angle across the 3 posts: method, practice continuity, discernment, pattern recognition, symbolic literacy, article insight to lived practice.");
+      } else if (mode === "evergreen") {
+        lines.push("* EVERGREEN CATCH-UP PACK mode.");
+        if (sourceUrl) {
+          lines.push("* A source URL was supplied. Use that URL.");
+        } else {
+          lines.push("* No source URL was supplied. Select a suitable evergreen source from existing inventory.");
+          lines.push("* Priority order:");
+          lines.push("  1. Existing Articles");
+          lines.push("  2. Existing Field Notes");
+          lines.push("  3. Strategic Tools");
+          lines.push("  4. Repeating Card Pages");
+          lines.push("  5. Offer Pages only if manually selected in notes");
+          lines.push("* Check 2026 Social Packs/SOCIAL_PACK_USAGE_LEDGER.csv when selecting a source and report any prior usage.");
+          lines.push("* Do not recommend what pack type or source to use next.");
+          lines.push("* Exclude two-card pairing pages.");
+          lines.push("* Exclude hub pages unless explicitly selected in notes.");
+          lines.push("* Report which source was selected and why.");
+        }
+        lines.push("* Generate the correct weekly pack from the selected source.");
+      } else if (mode === "tool") {
+        lines.push("* TOOL OR REPEATING CARD PACK mode.");
+        lines.push("* Use the supplied URL unless notes request manual inventory selection.");
+        lines.push("* Generate exactly 6 assets using the tool or repeating card pack schedule.");
+        lines.push("* Assume designed or generated images are needed unless the source has a strong existing visual.");
+      } else if (mode === "offer") {
+        lines.push("* OFFER PACK mode.");
+        lines.push("* Use the supplied offer page URL.");
+        lines.push("* Generate exactly 4 assets using the offer pack schedule.");
+      }
+
+      lines.push("");
+      lines.push("Cursor must resolve source identity:");
+      lines.push("1. Check whether the URL already exists in TOK_CONTENT_INVENTORY_INDEX.md and 02 Website Content Inventory/TOK_CONTENT_INVENTORY.md.");
+      lines.push("2. If the URL already exists, use the existing Source ID and source title.");
+      lines.push("3. If the URL does not exist, assign the next available TOK ID by scanning existing TOK numbers.");
+      lines.push("4. Infer the source title from the URL or page content where possible.");
+      lines.push("5. If the title cannot be verified, create a clear title from the slug and flag it for Leigh review.");
+      lines.push("6. Use source card and angle bank files for the resolved Source ID if they exist.");
+
+      if (firstIntro && pt !== "about-introduction") {
+        lines.push("");
+        lines.push("CAMPAIGN NOTE OVERRIDE:");
+        lines.push("* Campaign focus indicates first introduction or new audience context.");
+        lines.push("* Apply campaign-modes/first-social-introduction-week.md even though source mode is not First Social Introduction Pack.");
+        lines.push("* Do not use the standard full article pack without first-social-introduction-week rules.");
+      }
+
+      if (pt === "article") {
+        lines.push("");
+        lines.push("Training invitation rotation for this week: Week " + trainLetter);
+        lines.push(trainingRotations[trainLetter]);
+      }
+
+      if (pt === "about-introduction") {
+        lines.push("");
+        lines.push("ABOUT INTRODUCTION PACK:");
+        lines.push("* Training invitations deferred or softened per Prompt Library.");
+        lines.push("* Recommended: zero to one training invitation near end of week.");
+        lines.push("* If Leigh explicitly requests three training invitations, soften all three and keep them late in the week.");
+      }
+
+      if ((pt === "article" && !firstIntro) || pt === "training-invitation") {
+        lines.push("");
+        lines.push("TRAINING INVITATION DESTINATION RULES:");
+        if (deckUrl) {
+          lines.push("* Dedicated training URL supplied. Use it as the CTA destination for training invitation posts.");
+          lines.push("* Internal metadata per training asset: Training Destination: Dedicated training URL");
+        } else {
+          lines.push("* No dedicated training URL supplied. Use the source URL as the CTA bridge destination.");
+          lines.push("* Internal metadata per training asset: Training Destination: Source URL bridge");
+        }
+        lines.push("* Do not print [DECK_COMPASS_TRAINING_URL_REQUIRED] in public post copy, START_HERE_FOR_POSTING.html copy blocks, or Executive Assistant posting instructions.");
+        lines.push("* The placeholder may appear only in internal audit notes if needed.");
+        lines.push("* Training invitation posts must vary angle within the week.");
+      }
+
+      lines.push("");
+      lines.push("SOCIAL PACK USAGE LEDGER:");
+      lines.push("* Before generating, check 2026 Social Packs/SOCIAL_PACK_USAGE_LEDGER.csv.");
+      if (sourceUrl) {
+        lines.push("* If source URL " + sourceUrl + " has been used before, report previous usage:");
+        lines.push("  This URL has previously generated:");
+        lines.push("  * Pack type");
+        lines.push("  * Date generated");
+        lines.push("  * Posting week");
+        lines.push("  * Week folder");
+        lines.push("* Do not recommend another pack type.");
+        lines.push("* Do not block generation unless Leigh explicitly asks to stop.");
+        lines.push("* Continue only if the requested pack type is still what Leigh asked for.");
+      } else {
+        lines.push("* No source URL supplied yet. Check ledger after source is resolved and report any prior usage for that URL.");
+        lines.push("* Do not recommend another pack type.");
+        lines.push("* Do not block generation unless Leigh explicitly asks to stop.");
+      }
+      lines.push("* After generation, append one factual row to 2026 Social Packs/SOCIAL_PACK_USAGE_LEDGER.csv with:");
+      lines.push("  date_generated: today's date");
+      lines.push("  posting_week_start: " + derived.weekStart);
+      lines.push("  posting_week_end: " + derived.weekEnd);
+      lines.push("  source_id: resolved TOK ID");
+      lines.push("  source_title: resolved title");
+      lines.push("  source_url: resolved URL");
+      lines.push("  content_type: " + (resolvedContentType || "Infer from source"));
+      lines.push("  pack_type: " + packTypeLabel(mode, pt, resolvedContentType));
+      lines.push("  asset_count: " + (assetCountNumber(pt) || count));
+      lines.push("  week_folder: " + derived.folderPath);
+      lines.push("  status: Created");
+      lines.push("  notes: factual notes only, no recommendations");
+      lines.push("");
+      lines.push("Expected asset count: " + count);
+      lines.push("");
+      lines.push("Task:");
+      lines.push("0. If Campaign Focus / Notes are supplied: complete Campaign Focus Interpretation before generating. Apply notes to every asset. Audit every asset against notes after generation.");
+      lines.push("1. Use the supreme editorial governor, weekly generator rules (including Campaign Focus Weighting Law), and relevant Prompt Library files as governing authority.");
+      lines.push("2. Create the weekly folder under 2026 Social Packs/ using the calculated month and week folder labels.");
+      lines.push("3. Do not create platform subfolders inside the weekly folder.");
+      lines.push("4. Each asset must use simple asset fields: Source ID, Source title, Source URL, Platform, Posting date, Scheduled time, Asset type, Status, Asset headline, Business objective, CTA type, Post copy, CTA, Image to use, Supplied image filename only if applicable, Image brief for designer only if applicable, Posting instructions for Executive Assistant, Notes.");
+      lines.push("5. Do not generate image files. Use only the Image to use states: No separate image needed, Use source page image, Use supplied image from handoff folder, Image still needed.");
+      lines.push("6. Do not use em dashes. Do not use AI overlay language. Do not touch website files.");
+      lines.push("7. Two-card pairing pages are blocked. Do not add platforms outside the approved platform set.");
+      lines.push("");
+      lines.push("Create the simplified weekly folder:");
+      lines.push("* START_HERE_FOR_POSTING.html is not only a handoff page. It is the review, edit, approve and export page for the week.");
+      lines.push("* START_HERE_FOR_POSTING.html must be a full review workspace with embedded JavaScript only (no dependencies, no Node, no external libraries).");
+      lines.push("* START_HERE_FOR_POSTING.html required features:");
+      lines.push("  - Top navigation bar and breadcrumbs");
+      lines.push("  - Review dashboard labels: Copy Approved, Ready to Post, Image Still Needed, On Hold, Unsaved Edits");
+      lines.push("  - Main visible controls near dashboard: Approve All Copy, Clear All Approvals, Export Executive Assistant Posting Handoff");
+      lines.push("  - Primary export button: Export Executive Assistant Posting Handoff. Downloads one file only: EXECUTIVE_ASSISTANT_POSTING_HANDOFF.html");
+      lines.push("  - Export confirmation message: Executive Assistant posting handoff exported.");
+      lines.push("  - If no copy-approved non-held posts exist, show: No approved posts are ready for handoff yet.");
+      lines.push("  - Handoff folder convention: Executive Assistant Handoff/EXECUTIVE_ASSISTANT_POSTING_HANDOFF.html and Executive Assistant Handoff/images/ for supplied images");
+      lines.push("  - Visible note near export: For supplied images, place the final image files in Executive Assistant Handoff/images/ before sending the handoff to the Executive Assistant.");
+      lines.push("  - Use Executive Assistant terminology everywhere in user-facing text.");
+      lines.push("  - Do not include legacy assistant terminology in generated packs.");
+      lines.push("  - Remove legacy alternate export and diagnostic tools from the ordinary workflow. If any legacy tools remain, place them inside a collapsed Advanced Exports and Diagnostics section.");
+      lines.push("  - Approve All Copy: approve copy on all generated and manual assets; do not remove holds; preserve saved edits and image settings; persist to localStorage");
+      lines.push("  - Clear All Approvals: remove copy approval from all assets; preserve holds, saved edits and image settings; persist to localStorage");
+      lines.push("  - How to use this review page panel");
+      lines.push("  - Week at a Glance with clickable Post # row numbers that open, scroll to and briefly highlight matching post details");
+      lines.push("  - Workflow numbering: separate visible Post Number (sequential 1..total posts) from internal Asset ID or Manual ID (secondary reference only). Do not use raw asset IDs as primary visible sequence.");
+      lines.push("  - Week at a Glance: group by platform (Facebook, Instagram, Pinterest, Substack, X / Twitter), sort by date then time inside each platform, number rows sequentially 1..total visible posts");
+      lines.push("  - Week at a Glance columns: Post #, Platform, Date, Time, Headline, Status, Image to use, Internal ID (Asset ID: A01 or Manual ID: M02)");
+      lines.push("  - Post card headings: Post N - Platform - Date - type/headline with secondary line Asset ID: A01 or Manual ID: M02. Update headings via embedded JS on load and after manual post changes.");
+      lines.push("  - Executive Assistant handoff HTML: group by platform first, sort by date/time inside platform, use sequential Post 1..N for included export items only, heading Post N - Platform with secondary Asset ID or Manual ID line. Executive Assistant works from Post Number, not asset ID.");
+      lines.push("  - EXECUTIVE_ASSISTANT_POSTING_HANDOFF.html must be portable: standalone HTML, inline CSS only, no external JS/CSS, no Windows paths, no file:/// links, no local image tags, full absolute source URLs only");
+      lines.push("  - Handoff includes all copy-approved non-held items. Status labels only: Ready to post or Copy approved, image still needed");
+      lines.push("  - Handoff card fields only: post number, internal ID, date, time, platform, headline, status, post copy, image instruction, image file when applicable, source URL, Leigh notes if present, collapsed Image brief for designer only when image still needed");
+      lines.push("  - Approval column in Week at a Glance showing single primary status: Hold, Needs Review, Ready to Post, Image Still Needed (no contradictory dual badges)");
+      lines.push("  - Per asset: editable textarea for post copy, Save Edit, Reset to Original, Copy Post, Approve Copy, Hold, Image to use dropdown, Supplied image filename when relevant, Leigh review notes field");
+      lines.push("  - Per asset detail section order (required): 1) Post Copy editable textarea first; 2) Save Edit / Reset / Copy / Approve / Hold controls; 3) Image to use dropdown with four states only; 4) Supplied image filename field when Use supplied image from handoff folder is selected; 5) collapsed Image brief for designer only when Image still needed; 6) Leigh review notes last");
+      lines.push("  - Image to use options (exact labels only): No separate image needed; Use source page image; Use supplied image from handoff folder; Image still needed");
+      lines.push("  - Ready to Post = Copy Approved + not on Hold + image state is No separate image needed, Use source page image, or Use supplied image from handoff folder with filename present");
+      lines.push("  - Image Still Needed = Copy Approved + not on Hold + image state is Image still needed, or Use supplied image from handoff folder without filename");
+      lines.push("  - Add Manual Post section: date, time, platform, headline, post text, source URL, Image to use, Supplied image filename, notes for Executive Assistant");
+      lines.push("  - Manual Post Assistant section (separate from Add Manual Post): for rough thoughts Leigh wants shaped before adding to the week");
+      lines.push("  - Manual Post Assistant is a drafting support tool, not an automatic posting tool. It creates a prompt Leigh can paste into ChatGPT or Cursor, then lets Leigh paste the finished draft back into the review page.");
+      lines.push("  - Manual Post Assistant must not call ChatGPT, Cursor or any external AI API. Use embedded JavaScript only to generate a copy-ready drafting prompt.");
+      lines.push("  - Manual Post Assistant layout must be compact. Use a collapsible assistant section, two-column parameter grid, full-width rough thought, CTA and drafting notes side by side.");
+      lines.push("  - Drafting prompt and Finished draft textareas must be collapsed by default inside details sections labelled Drafting prompt and Finished draft.");
+      lines.push("  - PREPARE DRAFTING PROMPT must open the Drafting prompt details section, generate the prompt and copy to clipboard if possible.");
+      lines.push("  - Manual Post Assistant form: rough thought, platform, post purpose, audience context, optional CTA or link, desired length, Image to use, optional notes for drafting");
+      lines.push("  - Manual Post Assistant buttons: PREPARE DRAFTING PROMPT, Copy Drafting Prompt, Clear Assistant, Add Draft to Manual Post Details");
+      lines.push("  - Drafting prompt must instruct ChatGPT or Cursor to write one Tides of Knowing post from Leigh rough thought, use TOK voice, match platform, preserve idea, avoid prediction/fortune telling framing, avoid em dashes, do not invent offers/dates/pricing, include CTA if supplied, return finished post copy only");
+      lines.push("  - Drafting prompt must include system context: Tides of Knowing platform for intuitive thinking, symbolic literacy, reflective practice, tarot as trained perception, human discernment; Leigh Spencer background in journalism, card reading, intuitive practice, adult education, business mentoring");
+      lines.push("  - Add Draft to Manual Post Details copies draft into Manual Add Post post text, platform, Image to use and CTA link. Then collapse Manual Post Assistant, scroll to Add Manual Post and highlight that section. Do not auto-add or auto-approve.");
+      lines.push("  - Do not auto-approve assistant-created posts. Assistant handoff does not bypass edit, approve, hold or export rules.");
+      lines.push("  - Supplied image filename field with Suggest Filename button. Example placeholder: TOK-W02-A05-instagram.png. Block Add Manual Post if Image to use is Use supplied image from handoff folder and no filename is entered.");
+      lines.push("  - Manual post cards must match generated post cards visually and structurally. Render manual cards inside the All posts section, not a separate Manual posts section.");
+      lines.push("  - Manual post cards collapsed by default on page refresh. After Add Manual Post to Week: collapse Add Manual Post form, close all other cards, open only the new manual card, scroll to it and highlight briefly.");
+      lines.push("  - Status priority (single label, no contradiction): Hold, Needs Review, Ready to Post, Image Still Needed. Week at a Glance approval badge and card status pill must match.");
+      lines.push("  - Remove Manual Post button only on manual cards, below Leigh review notes.");
+      lines.push("  - Manual posts use IDs manual-01, manual-02, etc. Persist in localStorage. Appear in Week at a Glance. Support edit, save, approve, hold, export.");
+      lines.push("  - localStorage review state with week-specific key: tok-week-review-" + derived.weekStart + "-{resolved Source ID}");
+      lines.push("  - On page load restore: edited copy, approval status, hold status, image to use settings, supplied image filenames, review notes, manual posts");
+      lines.push("  - Visible note: edits and approvals saved in browser; use Export Executive Assistant Posting Handoff for the primary handoff file");
+      lines.push("  - Browser downloads only; the primary handoff is exported by Leigh from the review page");
+      lines.push("  - Optional delivery: after exporting the Executive Assistant handoff, upload the HTML file and any images folder to Google Drive, email, or another shared location");
+      lines.push("  - Thread instructions when relevant (e.g. X thread). Include any image brief for designer inside the page data only when Image still needed");
+      lines.push.apply(lines, buildWeeklyNavPromptSection(derived));
+      lines.push("* EXECUTIVE_ASSISTANT_POSTING_INSTRUCTIONS.md");
+      lines.push("* Asset Markdown files as supporting records");
+      lines.push("* Optional images/ folder only when useful for supplied images");
+      lines.push("");
+      lines.push("After generation, audit the weekly folder and report: Campaign Focus Interpretation, how notes changed generation strategy, per-asset campaign focus audit table, per-asset platform compliance audit table, platform prompt loaded for each platform, platform checklist pass status, any platform-specific warning, prior URL usage if any, resolved Source ID and title, folder path, list of files created, usage ledger row appended, obey rating (Strong/Partial/Weak), pack status (Created or Needs Regeneration), and any editorial concerns for Leigh review.");
+      lines.push("Platform compliance audit classification must be one of: Strong, Acceptable, Needs Review, Needs Regeneration.");
+      lines.push("For each future asset, platform compliance audit must check: platform fit, length fit, opening line fit, CTA fit, image instruction fit, Tides of Knowing voice fit, risk of generic social copy, risk of overpromising, and risk of fortune-telling style language.");
+      if (notes) {
+        lines.push("Append to Prompt Library/feedback/CAMPAIGN_FOCUS_LOG.md: verbatim notes, operational interpretation, did output obey notes, weak asset count, pack status.");
+      }
+      lines.push("");
+      lines.push("REQUIRED FINAL REPORT PATHS (Cursor must include these full paths in the completion report):");
+      lines.push("* Full weekly folder path: social-intelligence-system/" + derived.folderPath);
+      lines.push("* Full START_HERE_FOR_POSTING.html path: social-intelligence-system/" + derived.folderPath + "START_HERE_FOR_POSTING.html");
+      lines.push("* START_HERE_FOR_POSTING.html is created inside the weekly folder during generation. It does not exist at the social-intelligence-system root before generation.");
+
+      return lines.join("\n");
+    }
+
+    function setFeedback(msg, isError) {
+      var fb = document.getElementById("feedback");
+      if (!fb) return;
+      fb.textContent = msg;
+      fb.className = isError ? "feedback error" : "feedback";
+    }
+
+    function refreshPromptOutput() {
+      var err = validate();
+      if (err) {
+        setFeedback(err, true);
+        return false;
+      }
+      currentPrompt = buildPrompt();
+      var ta = document.getElementById("promptOutput");
+      if (ta) ta.value = currentPrompt;
+      return true;
+    }
+
+    function selectPromptForManualCopy() {
+      var ta = document.getElementById("promptOutput");
+      if (!ta) return;
+      ta.focus();
+      ta.select();
+      try {
+        ta.setSelectionRange(0, ta.value.length);
+      } catch (e) { /* older browsers */ }
+    }
+
+    function copyPromptToClipboard(onSuccess, onFallback) {
+      if (!currentPrompt) {
+        setFeedback("No prompt to copy. Click PREPARE WEEKLY PACK first.", true);
+        return;
+      }
+      var ta = document.getElementById("promptOutput");
+      if (ta) ta.value = currentPrompt;
+
+      function manualFallback() {
+        selectPromptForManualCopy();
+        if (onFallback) onFallback();
+      }
+
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        navigator.clipboard.writeText(currentPrompt).then(function() {
+          if (onSuccess) onSuccess();
+        }).catch(function() {
+          manualFallback();
+        });
+      } else {
+        manualFallback();
+      }
+    }
+
+    function prepareWeeklyPack() {
+      if (!refreshPromptOutput()) return;
+      var postingPath = getPostingPagePath();
+      var afterCursorMsg = postingPath
+        ? " After Cursor finishes, open the START_HERE_FOR_POSTING.html path shown in Cursor's report: " + postingPath
+        : " After Cursor finishes, open the START_HERE_FOR_POSTING.html path shown in Cursor's report.";
+      copyPromptToClipboard(
+        function() {
+          setFeedback("Weekly pack request prepared. Prompt copied. Paste it into Cursor." + afterCursorMsg);
+        },
+        function() {
+          setFeedback("Weekly pack request prepared. Copy the prompt from Advanced: Cursor prompt and paste it into Cursor." + afterCursorMsg + " Press Ctrl+C after selecting.");
+        }
+      );
+    }
+
+    function copyPromptAgain() {
+      if (!currentPrompt || !document.getElementById("promptOutput").value) {
+        if (!refreshPromptOutput()) return;
+      }
+      copyPromptToClipboard(
+        function() {
+          setFeedback("Cursor prompt copied again.");
+        },
+        function() {
+          setFeedback("Prompt ready. Text selected in Advanced: Cursor prompt. Press Ctrl+C to copy.");
+        }
+      );
+    }
+
+    function downloadPrompt() {
+      if (!currentPrompt || !document.getElementById("promptOutput").value) {
+        if (!refreshPromptOutput()) return;
+      }
+      try {
+        var blob = new Blob([currentPrompt], { type: "text/plain" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "tok-weekly-pack-request.txt";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+        setFeedback("Prompt downloaded as tok-weekly-pack-request.txt");
+      } catch (e) {
+        setFeedback("Download failed. Copy the prompt from Advanced: Cursor prompt instead.", true);
+      }
+    }
+
+    function clearForm() {
+      document.getElementById("sourceMode").value = "new-url";
+      document.getElementById("sourceUrl").value = "";
+      document.getElementById("weekStart").value = "";
+      document.getElementById("contentType").value = "Article";
+      document.getElementById("notes").value = "";
+      document.getElementById("deckCompassUrl").value = "";
+      document.getElementById("promptOutput").value = "";
+      currentPrompt = "";
+      setFeedback("Form cleared.");
+      updateFormForMode();
+      updateNotesStatus();
+    }
+
+    var prepareBtn = document.getElementById("prepareBtn");
+    var copyAgainBtn = document.getElementById("copyAgainBtn");
+    var downloadBtn = document.getElementById("downloadBtn");
+    var clearBtn = document.getElementById("clearBtn");
+
+    if (prepareBtn) prepareBtn.addEventListener("click", prepareWeeklyPack);
+    if (copyAgainBtn) copyAgainBtn.addEventListener("click", copyPromptAgain);
+    if (downloadBtn) downloadBtn.addEventListener("click", downloadPrompt);
+    if (clearBtn) clearBtn.addEventListener("click", clearForm);
+
+    document.getElementById("sourceMode").addEventListener("change", updateFormForMode);
+    document.getElementById("sourceUrl").addEventListener("input", suggestAboutContentType);
+    document.getElementById("sourceUrl").addEventListener("change", suggestAboutContentType);
+    document.getElementById("weekStart").addEventListener("change", updateSchedulePreview);
+    document.getElementById("contentType").addEventListener("change", updateSchedulePreview);
+    document.getElementById("notes").addEventListener("input", updateNotesStatus);
+
+    updateFormForMode();
+    updateNotesStatus();
+    updateExpectedPostingPath();
+
+    }); /* DOMContentLoaded - Button wiring verified for local file use. */
+  </script>
+</body>
+</html>

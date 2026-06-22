@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import LeadMagnetCta from "../../components/lead-magnets/LeadMagnetCta.astro";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
+import { siteBase } from "../../lib/site";
+
+const PAGE_TITLE =
+  "The Discernment Checklist: 21 Questions to Ask Before Pulling Another Tarot Card";
+const PAGE_DESCRIPTION =
+  "Download The Discernment Checklist, a practical tarot reader's guide with 21 questions for clarifying the right question, recognising the cards carrying the answer, and knowing when a reading is complete.";
+const canonicalPath = "/resources/discernment-checklist/";
+const seriesHref = "/series/the-discernment-series/";
+const base = siteBase(Astro);
+const siteHref = base.href;
+const canonical = new URL(canonicalPath, base).href;
+
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "The Discernment Checklist", url: null },
+];
+
+const pageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  url: canonical,
+  author: { "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+  isPartOf: {
+    "@type": "CreativeWorkSeries",
+    name: "The Discernment Series",
+    url: new URL(seriesHref, siteHref).href,
+  },
+};
+
+const jsonLd = [pageLd, breadcrumbJsonLd(crumbs, siteHref)];
+---
+
+<BaseLayout
+  title={`${PAGE_TITLE} | Tides of Knowing`}
+  description={PAGE_DESCRIPTION}
+  ogUrl={canonical}
+  metaAuthor="Leigh Spencer"
+  tdcPlacement="none"
+  jsonLd={jsonLd}
+>
+  <article class="tok-resource page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <section class="tok-resource__hero" aria-labelledby="discernment-checklist-title">
+      <p class="tok-resource__eyebrow">Free resource</p>
+      <h1 id="discernment-checklist-title" class="tok-resource__title">
+        The Discernment Checklist
+      </h1>
+      <p class="tok-resource__subtitle">21 Questions to Ask Before Pulling Another Card</p>
+      <p class="tok-resource__lede">
+        A practical companion to <a href={seriesHref}>The Discernment Series</a> for tarot
+        readers who want cleaner questions, clearer card interpretation, and stronger
+        reading closure.
+      </p>
+
+      <LeadMagnetCta
+        title="The Discernment Checklist"
+        subtitle="21 Questions to Ask Before Pulling Another Card"
+        description="Get the practical checklist for clarifying the right question, recognising which cards carry the answer, and knowing when a reading is complete."
+        buttonLabel="Send Me the Checklist"
+        resourceSlug="discernment-checklist"
+        redirectUrl="/resources/discernment-checklist/thank-you/"
+        placement="resource"
+      />
+    </section>
+
+    <section class="tok-resource__section" aria-labelledby="helps-heading">
+      <h2 id="helps-heading" class="tok-resource__h2">What this checklist helps you do</h2>
+      <ul class="tok-resource__list">
+        <li>Clarify whether the right question is actually in the room.</li>
+        <li>Recognise which cards are carrying the answer and which are contextual.</li>
+        <li>Notice when the reading has landed before extra cards create noise.</li>
+        <li>Close a reading cleanly instead of talking past the point of completion.</li>
+      </ul>
+    </section>
+
+    <section class="tok-resource__section" aria-labelledby="inside-heading">
+      <h2 id="inside-heading" class="tok-resource__h2">What is inside</h2>
+      <p>
+        The PDF contains 21 questions across three stages: before the reading, during the
+        reading, and closing the reading. It also includes a self-assessment worksheet for
+        personal readings or client readings.
+      </p>
+    </section>
+
+    <section class="tok-resource__section" aria-labelledby="for-heading">
+      <h2 id="for-heading" class="tok-resource__h2">Who it is for</h2>
+      <p>
+        This checklist is for tarot readers who can read the cards, but want more precision
+        around question framing, card weight, clarifiers, and endings.
+      </p>
+    </section>
+
+    <section class="tok-resource__section tok-resource__section--series" aria-labelledby="series-heading">
+      <h2 id="series-heading" class="tok-resource__h2">Read the full series</h2>
+      <p>
+        The checklist is a practical companion to the three-part Discernment Series.
+      </p>
+      <p>
+        <a class="tok-resource__series-link" href={seriesHref}>Read The Discernment Series →</a>
+      </p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .tok-resource {
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: min(52rem, 100% - 2rem);
+    margin-inline: auto;
+  }
+
+  .tok-resource__hero {
+    margin-top: 1.25rem;
+    margin-bottom: clamp(1.75rem, 4vw, 2.25rem);
+    padding-bottom: clamp(1.75rem, 4vw, 2.25rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .tok-resource__eyebrow {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-nav-compact);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper-tdc);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .tok-resource__title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.15rem, 5vw, 3.1rem);
+    line-height: 1.1;
+    color: var(--tok-water);
+  }
+
+  .tok-resource__subtitle {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+    line-height: 1.35;
+    color: var(--tok-text-dark);
+  }
+
+  .tok-resource__lede,
+  .tok-resource__section p,
+  .tok-resource__list {
+    font-size: 1.05rem;
+    line-height: var(--tok-line-body);
+  }
+
+  .tok-resource__lede {
+    margin: 0;
+    max-width: 42rem;
+  }
+
+  .tok-resource__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .tok-resource__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.35rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-meta);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--tok-water);
+    border: 2px solid var(--tok-gold);
+    border-radius: var(--radius-2);
+    transition:
+      background var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .tok-resource__btn:hover {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  .tok-resource__text-link,
+  .tok-resource__series-link {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--tok-teal);
+  }
+
+  .tok-resource__section {
+    max-width: 42rem;
+    margin: 0 0 clamp(1.75rem, 4vw, 2.25rem);
+  }
+
+  .tok-resource__section--series {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--tok-border-light);
+  }
+
+  .tok-resource__h2 {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .tok-resource__section p {
+    margin: 0 0 0.85rem;
+  }
+
+  .tok-resource__section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tok-resource__list {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+
+  .tok-resource__list li {
+    margin-bottom: 0.45rem;
+  }
+</style>

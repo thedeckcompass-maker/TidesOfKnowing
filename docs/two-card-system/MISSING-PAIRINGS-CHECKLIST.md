@@ -1,7 +1,7 @@
 # Missing Pairings Checklist
 
 **Source:** `content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md`  
-**Generated:** 2026-05-31T06:10:31.673Z  
+**Generated:** 2026-05-31T06:19:55.667Z  
 **Audit script:** `node scripts/audit-two-card-corpus.mjs`
 
 Scope: Major Arcana · upright only · ordered pairs · self-pairs excluded · expected **462** pairings (22 × 21).

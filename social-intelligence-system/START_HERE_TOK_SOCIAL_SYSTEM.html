@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tides of Knowing Weekly Social System</title>
+  <style>
+    :root {
+      --ink: #0b1b3b;
+      --cream: #f7f3eb;
+      --teal: #4b9a9a;
+      --gold: #c9a052;
+      --muted: #8a8ea0;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #eceff4 0, var(--cream) 40%, #f2ece3 100%);
+      color: #161b27;
+      line-height: 1.55;
+    }
+    .page { max-width: 920px; margin: 32px auto 48px; padding: 0 20px 40px; }
+    .header {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      color: #fdfaf4;
+      border-radius: 16px;
+      padding: 22px 26px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .title {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .subtitle { margin: 0; font-size: 14px; color: rgba(248, 245, 236, 0.88); }
+    .explain {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 8px;
+      background: rgba(75, 154, 154, 0.12);
+      border: 1px solid rgba(75, 154, 154, 0.35);
+      font-size: 13px;
+      color: #e8f4f4;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 14px;
+    }
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .action-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(11, 27, 59, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+    .action-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: var(--ink);
+    }
+    .action-card p {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: #3a4258;
+      flex: 1;
+    }
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 154, 154, 0.45);
+      background: linear-gradient(135deg, #fff, #f3eee3);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      align-self: flex-start;
+    }
+    .card-btn:hover { background: #fff; text-decoration: none; }
+    .card-btn-gold {
+      border-color: rgba(201, 160, 82, 0.5);
+      color: var(--gold);
+    }
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      border: 2px solid rgba(11, 27, 59, 0.06);
+    }
+    .panel p, .panel li { font-size: 13px; color: #273047; }
+    .panel ul, .panel ol { margin: 8px 0 0; padding-left: 20px; }
+    .panel li { margin: 5px 0; }
+    .folder-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 10px;
+    }
+    .link-list { list-style: none; padding: 0; margin: 0; }
+    .link-list li { margin: 6px 0; }
+    .link-list a {
+      color: var(--teal);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .link-list a:hover { text-decoration: underline; }
+    .rules-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    .blocked-list li { color: #4a5060; }
+    .sys-nav {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      border-radius: 12px;
+      padding: 12px 16px 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .sys-nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .sys-nav-link {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #e8f4f4;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .sys-nav-link:hover {
+      background: rgba(75, 154, 154, 0.22);
+      border-color: rgba(75, 154, 154, 0.45);
+    }
+    .sys-nav-link.active {
+      background: rgba(75, 154, 154, 0.32);
+      border-color: rgba(201, 160, 82, 0.55);
+      color: #fdfaf4;
+      font-weight: 650;
+    }
+    .sys-breadcrumb {
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(248, 245, 236, 0.78);
+      letter-spacing: 0.02em;
+    }
+    .sys-breadcrumb a {
+      color: #b8e8e4;
+      text-decoration: none;
+    }
+    .sys-breadcrumb a:hover { text-decoration: underline; }
+    @media (max-width: 800px) {
+      .action-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="sys-nav" aria-label="System navigation">
+      <div class="sys-nav-links">
+        <a class="sys-nav-link active" href="START_HERE_TOK_SOCIAL_SYSTEM.html">Home</a>
+        <a class="sys-nav-link" href="TOK_WEEKLY_PACK_BUILDER.html">Weekly Pack Builder</a>
+        <a class="sys-nav-link" href="2026%20Social%20Packs/SOCIAL_PACK_USAGE_LEDGER.csv">Usage Ledger</a>
+        <a class="sys-nav-link" href="01%20Strategy%20and%20Operating%20Rules/TOK_EDITORIAL_VOICE_AND_GENERATION_GOVERNOR.md">Editorial Governor</a>
+        <a class="sys-nav-link" href="01%20Strategy%20and%20Operating%20Rules/TOK_WEEKLY_SOCIAL_PACK_GENERATOR_RULES.md">Generator Rules</a>
+      </div>
+      <div class="sys-breadcrumb">Home</div>
+    </nav>
+
+    <header class="header">
+      <h1 class="title">Tides of Knowing Weekly Social System</h1>
+      <p class="subtitle">Start here to generate, review and hand off weekly social packs.</p>
+      <div class="explain">
+        One source URL or evergreen source selection in. One weekly social pack out. Generate the week, review and approve copy, set image instructions, then export one Executive Assistant handoff HTML.
+      </div>
+    </header>
+
+    <section class="action-grid">
+      <article class="action-card">
+        <h3>Prepare a Weekly Pack</h3>
+        <p>Choose source mode, week and optional notes. Click PREPARE WEEKLY PACK, then paste the copied request into Cursor.</p>
+        <a class="card-btn" href="TOK_WEEKLY_PACK_BUILDER.html">Open Weekly Pack Builder</a>
+      </article>
+      <article class="action-card">
+        <h3>No Current Week Yet</h3>
+        <p>Generate the first active weekly pack from the Weekly Pack Builder.</p>
+        <a class="card-btn" href="TOK_WEEKLY_PACK_BUILDER.html">Create First Weekly Pack</a>
+      </article>
+      <article class="action-card">
+        <h3>Executive Assistant Handoff</h3>
+        <p>After copy is approved, export the Executive Assistant handoff HTML. Optional delivery: upload the HTML file and any images folder to Google Drive, email, or another shared location.</p>
+        <a class="card-btn card-btn-gold" href="2026%20Social%20Packs/">Open Social Packs Folder</a>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Current weekly folder</h2>
+      <p class="folder-name">No active weekly pack selected.</p>
+      <p style="margin:0; font-size:13px; color:#3a4258;">Use the Weekly Pack Builder to generate your first active pack. After generation, this section will point to the new weekly folder and START_HERE_FOR_POSTING.html.</p>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Archived setup packs</h2>
+      <p style="margin:0 0 10px; font-size:13px; color:#3a4258;">Archived setup packs are retained for reference only. They are not active posting packs.</p>
+      <ul class="link-list">
+        <li><a href="_archived_test_social_packs_2026-06-05/">_archived_test_social_packs_2026-06-05/</a></li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Usage ledger</h2>
+      <p style="margin:0 0 10px; font-size:13px; color:#3a4258;">The usage ledger records which URLs have already been used to create social packs. Factual tracking only. Leigh decides whether to reuse a URL.</p>
+      <ul class="link-list">
+        <li><a href="2026%20Social%20Packs/SOCIAL_PACK_USAGE_LEDGER.csv">SOCIAL_PACK_USAGE_LEDGER.csv</a></li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">System rules</h2>
+      <p class="rules-note">Source records and governing documents. Not daily working pages.</p>
+      <ul class="link-list">
+        <li><a href="01%20Strategy%20and%20Operating%20Rules/TOK_EDITORIAL_VOICE_AND_GENERATION_GOVERNOR.md">Editorial Governor</a></li>
+        <li><a href="01%20Strategy%20and%20Operating%20Rules/TOK_WEEKLY_SOCIAL_PACK_GENERATOR_RULES.md">Weekly Generator Rules</a></li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Simple weekly workflow</h2>
+      <ol>
+        <li>Open the <strong>Weekly Pack Builder</strong>.</li>
+        <li>Choose source mode and week start date.</li>
+        <li>Click <strong>PREPARE WEEKLY PACK</strong>.</li>
+        <li>Paste the copied request into Cursor.</li>
+        <li>Cursor creates the weekly folder.</li>
+        <li>Open <strong>START_HERE_FOR_POSTING.html</strong> inside the generated folder.</li>
+        <li>Review posts, image needs and copy buttons.</li>
+        <li>Export the Executive Assistant handoff HTML.</li>
+        <li>Optionally upload the HTML file and any images folder to Google Drive, email, or another shared location.</li>
+        <li>Send the Drive link to the Executive Assistant.</li>
+        <li>They post or schedule from START_HERE_FOR_POSTING.html only.</li>
+      </ol>
+      <p style="margin-top:12px; font-size:13px; color:#3a4258;"><strong>Evergreen Catch-Up:</strong> Use Evergreen Catch-Up Pack in the builder when no new article or Field Note is ready. Cursor can select a suitable source from existing inventory.</p>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Posting rules for Executive Assistant</h2>
+      <ul>
+        <li>Use START_HERE_FOR_POSTING.html only.</li>
+        <li>Use copy buttons.</li>
+        <li>Post or schedule only items marked ready.</li>
+        <li>Do not post needs-image items until the expected files are in the weekly <code>images/</code> folder.</li>
+        <li>Do not alter wording, links, hashtags or CTAs without Leigh's permission.</li>
+        <li>If uncertain, ask Leigh.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Blocked or excluded</h2>
+      <ul class="blocked-list">
+        <li>Two-card pairing pages are blocked until Leigh confirms they are live.</li>
+        <li>Use only the approved platform set for weekly packs.</li>
+        <li>Hub pages are excluded unless Leigh manually selects them.</li>
+        <li>No automatic posting to social platforms yet.</li>
+        <li>No image generation unless Leigh explicitly requests it.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

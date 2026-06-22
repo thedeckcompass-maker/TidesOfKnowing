@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 03 Posting - TOK-0001</title>
+  <style>
+    :root {
+      --ink: #0b1b3b;
+      --ink-soft: #1b2748;
+      --cream: #f7f3eb;
+      --panel: #ffffff;
+      --teal: #4b9a9a;
+      --gold: #c9a052;
+      --rose: #b05353;
+      --muted: #8a8ea0;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #eceff4 0, var(--cream) 40%, #f2ece3 100%);
+      color: #161b27;
+    }
+    .page { max-width: 1080px; margin: 28px auto 48px; padding: 0 20px 40px; }
+    .header {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      color: #fdfaf4;
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .title { margin: 0 0 6px; font-size: 22px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; }
+    .subtitle { margin: 0; font-size: 13px; color: rgba(248, 245, 236, 0.88); }
+    .notice {
+      margin-top: 12px;
+      font-size: 12px;
+      padding: 9px 11px;
+      border-radius: 8px;
+      background: rgba(239, 216, 179, 0.12);
+      border: 1px solid rgba(245, 219, 179, 0.4);
+      color: #fff6e9;
+      line-height: 1.5;
+    }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .summary-card {
+      background: linear-gradient(135deg, #fff, #f1ece3);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .summary-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .summary-value { font-size: 14px; font-weight: 600; color: var(--ink-soft); margin-top: 3px; }
+    .section-title {
+      font-size: 14px; font-weight: 650; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(11, 27, 59, 0.06);
+      margin-bottom: 16px;
+    }
+    .card-ready { border-color: rgba(75, 154, 154, 0.45); }
+    .card-needs-image { border-color: rgba(201, 160, 82, 0.5); }
+    .card-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .card-title { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink); }
+    .status {
+      display: inline-flex; padding: 4px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .status-ready { background: rgba(75, 154, 154, 0.12); color: var(--teal); }
+    .status-needs-image { background: rgba(201, 160, 82, 0.12); color: var(--gold); }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: rgba(11, 27, 59, 0.04); color: var(--muted); }
+    .pill-strong { background: rgba(75, 154, 154, 0.1); color: var(--teal); }
+    .copy-block {
+      margin-top: 8px; padding: 12px 14px; border-radius: 8px;
+      background: #f7f4ee; border: 1px solid rgba(11, 27, 59, 0.06);
+      font-size: 13px; line-height: 1.55; white-space: pre-wrap;
+    }
+    .brief-panel {
+      margin-top: 10px; padding: 10px 12px; border-radius: 8px;
+      background: #f3f7f7; border: 1px solid rgba(75, 154, 154, 0.25);
+      font-size: 12px; line-height: 1.5;
+    }
+    .brief-title { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+    .instructions { font-size: 13px; line-height: 1.6; color: #273047; }
+    .instructions ul { margin: 6px 0 0; padding-left: 18px; }
+    .instructions li { margin: 4px 0; }
+    a { color: var(--teal); }
+    @media (max-width: 800px) { .summary { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Start Here for Posting</h1>
+      <p class="subtitle">Week 03: Monday 2026-06-15 to Sunday 2026-06-21</p>
+      <p class="subtitle">Source: TOK-0001 - The Future Tension: Augmented Intuition vs Replaced Thinking</p>
+      <p class="subtitle"><a href="https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/" style="color:#d4efe9;">https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</a></p>
+      <div class="notice">
+        Post or schedule only items marked <strong>ready</strong>. Do not post Instagram or Pinterest until images are supplied. Copy text exactly unless Leigh gives permission to change it.
+      </div>
+    </header>
+
+    <section class="summary">
+      <div class="summary-card">
+        <div class="summary-label">Total posts</div>
+        <div class="summary-value">7</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Ready to post</div>
+        <div class="summary-value" style="color:var(--teal);">5</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Needs image</div>
+        <div class="summary-value" style="color:var(--gold);">2</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Content type</div>
+        <div class="summary-value">Article pack</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Posting overview</h2>
+      <div class="card">
+        <div class="instructions">
+          <ul>
+            <li><strong>Monday 2026-06-15</strong> - X / Twitter thesis - ready</li>
+            <li><strong>Tuesday 2026-06-16</strong> - Facebook reflective - ready</li>
+            <li><strong>Wednesday 2026-06-17</strong> - Instagram carousel - needs image</li>
+            <li><strong>Thursday 2026-06-18</strong> - Pinterest pin - needs image</li>
+            <li><strong>Friday 2026-06-19</strong> - X / Twitter thread - ready</li>
+            <li><strong>Saturday 2026-06-20</strong> - Substack Note - ready</li>
+            <li><strong>Sunday 2026-06-21</strong> - Facebook conversation - ready</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Posts in date order</h2>
+
+      <article class="card card-ready">
+        <div class="card-header">
+          <h3 class="card-title">Monday 2026-06-15 - X / Twitter thesis</h3>
+          <span class="status status-ready">ready</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-15_x-twitter_TOK-0001_post-01_ready.md</span>
+          <span class="pill-strong">Image: No</span>
+        </div>
+        <div class="copy-block">Augmented intuition keeps you upstream of the tool. Replaced thinking lets the interpretive layer arrive before you have done the perceptual work. The issue is not whether AI is good or bad. It is sequence.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+      </article>
+
+      <article class="card card-ready">
+        <div class="card-header">
+          <h3 class="card-title">Tuesday 2026-06-16 - Facebook reflective</h3>
+          <span class="status status-ready">ready</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-16_facebook_TOK-0001_post-01_ready.md</span>
+          <span class="pill-strong">Image: No</span>
+        </div>
+        <div class="copy-block">The more useful question in AI and intuitive practice is not whether the tool will ruin intuition. It is where the tool sits in your sequence.
+
+When interpretation arrives before you have taken soft eyes to the situation, named what you actually noticed, and observed the structure in front of you, the output may feel accurate while bypassing the work that trains discernment.
+
+Perception gives specificity. Interpretation alone gives plausible generality. That difference matters more than most people realise, especially in self-reading.
+
+Tarot is the visible practice in this article, but the principle is broader. Symbolic literacy depends on trained perception, not on faster interpretation.
+
+If you are thinking about how to use AI without weakening intuitive perception or replacing human discernment, this piece offers a clear framework:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</div>
+      </article>
+
+      <article class="card card-needs-image">
+        <div class="card-header">
+          <h3 class="card-title">Wednesday 2026-06-17 - Instagram carousel</h3>
+          <span class="status status-needs-image">needs image</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-17_instagram_TOK-0001_carousel-01_needs-image.md</span>
+          <span class="pill" style="background:rgba(201,160,82,0.12);color:var(--gold);">Image: Yes - do not post yet</span>
+        </div>
+        <div class="brief-panel">
+          <p class="brief-title">Carousel slides (6)</p>
+          <p><strong>Slide 1:</strong> Augmented intuition or replaced thinking? / The distinction is sequence, not technology.</p>
+          <p><strong>Slide 2:</strong> Augmented intuition - Keeps the practitioner upstream of the tool.</p>
+          <p><strong>Slide 3:</strong> Replaced thinking - Interpretation arrives before perceptual work.</p>
+          <p><strong>Slide 4:</strong> The practitioner sequence - Soft eyes first. Structure second. AI consulted last.</p>
+          <p><strong>Slide 5:</strong> Perception gives specificity - Interpretation alone gives plausible generality.</p>
+          <p><strong>Slide 6:</strong> Your edge is trained perception - Read the full article. Link in bio.</p>
+        </div>
+        <div class="copy-block">CAPTION:
+
+The debate about AI and intuition is often framed as pro-tool versus anti-tool. That framing misses the point.
+
+The real distinction is augmented intuition versus replaced thinking. Augmentation keeps you upstream of the tool. Replacement lets interpretation arrive before you have done the perceptual work.
+
+The useful sequence is simple: soft eyes first, structural observation second, AI consulted last if at all, only as comparison or support. Perception before interpretation. Human noticing before algorithmic plausibility.
+
+Tarot is the visible practice here, but the principle applies wherever symbolic literacy and human discernment matter.
+
+Read the full article at tidesofknowing.com (link in bio).
+
+#AIAndIntuition #TrainedPerception #SymbolicLiteracy #ReflectivePractice #TidesOfKnowing</div>
+        <div class="brief-panel">
+          <p class="brief-title">Image brief summary</p>
+          <p>6 slides, 4:5 ratio. Cream and deep blue palette, teal accents. One idea per slide. See IMAGE_BRIEFS.md for full direction.</p>
+        </div>
+      </article>
+
+      <article class="card card-needs-image">
+        <div class="card-header">
+          <h3 class="card-title">Thursday 2026-06-18 - Pinterest pin</h3>
+          <span class="status status-needs-image">needs image</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-18_pinterest_TOK-0001_pin-01_needs-image.md</span>
+          <span class="pill" style="background:rgba(201,160,82,0.12);color:var(--gold);">Image: Yes - do not post yet</span>
+        </div>
+        <div class="brief-panel">
+          <p class="brief-title">Text overlay</p>
+          <p>Headline: Augmented Intuition vs Replaced Thinking</p>
+          <p>Sub-headline: Soft eyes first. Structure second. AI consulted last.</p>
+          <p>CTA: Read the Article</p>
+          <p>Aspect ratio: 2:3 vertical pin</p>
+        </div>
+        <div class="copy-block">How to use AI in tarot and intuitive practice without replacing your own thinking.
+
+The useful sequence: soft eyes first, structural observation second, AI consulted last if at all, only as comparison or bias checking. Perception before interpretation.
+
+Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking lets the interpretive layer arrive before you have done the perceptual work.
+
+Read the full article on augmented intuition versus replaced thinking:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TarotPractice #TrainedPerception #HumanDiscernment #TidesOfKnowing</div>
+      </article>
+
+      <article class="card card-ready">
+        <div class="card-header">
+          <h3 class="card-title">Friday 2026-06-19 - X / Twitter thread</h3>
+          <span class="status status-ready">ready</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-19_x-twitter_TOK-0001_thread-01_ready.md</span>
+          <span class="pill-strong">Image: No</span>
+        </div>
+        <div class="copy-block">1/ Most arguments about AI and intuition ask the wrong question. The issue is not whether the tool is good or bad. It is whether human perception still comes first.
+
+2/ Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking lets interpretation arrive before you have done the perceptual work.
+
+3/ The useful sequence is simple: soft eyes first, structural observation second, AI consulted last, if at all, as comparison or bias checking. Perception before interpretation.
+
+4/ Perception gives specificity. Interpretation alone gives plausible generality. When AI answers before you have named what you actually saw, the output may feel accurate while bypassing discernment.
+
+5/ Replacement rarely arrives as a dramatic decision. It arrives as a small shortcut. One session at a time, the tool moves upstream of your own noticing.
+
+6/ In an AI-saturated world, the practitioner's edge is still trained perception: the capacity to perceive what tools cannot originate.
+
+7/ Read the full article on augmented intuition versus replaced thinking:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+      </article>
+
+      <article class="card card-ready">
+        <div class="card-header">
+          <h3 class="card-title">Saturday 2026-06-20 - Substack Note</h3>
+          <span class="status status-ready">ready</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-20_substack_TOK-0001_note-01_ready.md</span>
+          <span class="pill-strong">Image: No</span>
+        </div>
+        <div class="copy-block">Part 6 of the AI and Intuition series asks a harder question than most technology debates allow.
+
+Not whether AI is useful.
+Not whether practitioners should resist change.
+But whether your practice still begins with your own noticing.
+
+Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking is quieter. It arrives when interpretation feels easier than perception, when a plausible summary arrives before you have named what you actually saw in the spread, the situation, or your own inner response.
+
+Perception gives specificity. Interpretation alone gives plausible generality. That distinction sounds academic until you recognise how often generic output feels satisfying precisely because it bypasses the slower work of trained perception.
+
+The useful sequence remains steady: soft eyes first, structural observation second, AI consulted last if at all, only as comparison, challenge, language support or bias checking. AI must not become the interpretive authority. It must not move upstream of the practitioner's noticing.
+
+Tarot is the visible practice in this piece. The deeper issue is symbolic literacy in an age of instant interpretation.
+
+Read the full article here:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</div>
+      </article>
+
+      <article class="card card-ready">
+        <div class="card-header">
+          <h3 class="card-title">Sunday 2026-06-21 - Facebook conversation</h3>
+          <span class="status status-ready">ready</span>
+        </div>
+        <div class="meta">
+          <span class="pill">2026-06-21_facebook_TOK-0001_conversation-01_ready.md</span>
+          <span class="pill-strong">Image: No</span>
+        </div>
+        <div class="copy-block">A question for practitioners using AI in tarot or intuitive work:
+
+Can you describe what you noticed in the spread, the situation, or your own inner response before you asked for interpretation?
+
+That single audit often reveals whether you are practising augmented intuition or replaced thinking. Not because the tool is wrong, but because sequence determines whether it supports discernment or quietly moves upstream of it.
+
+Soft eyes first. Structural observation second. AI consulted last, if at all, as comparison or support.
+
+Where are you in that sequence right now?</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">Executive Assistant instructions</h2>
+      <div class="card">
+        <div class="instructions">
+          <ol>
+            <li>Open this file first every time you work from this weekly folder.</li>
+            <li>Post or schedule only items marked <strong>ready</strong>.</li>
+            <li>Do not post Instagram or Pinterest until Leigh supplies images.</li>
+            <li>Copy text exactly. Do not change captions, links, hashtags or CTAs without Leigh's permission.</li>
+            <li>Use the posting date and platform shown on each card.</li>
+            <li>If uncertain, ask Leigh before posting.</li>
+          </ol>
+          <p>Full instructions are also in <a href="EXECUTIVE_ASSISTANT_POSTING_INSTRUCTIONS.md">EXECUTIVE_ASSISTANT_POSTING_INSTRUCTIONS.md</a>. Scheduler export: <a href="SCHEDULER_EXPORT.csv">SCHEDULER_EXPORT.csv</a>. Image briefs: <a href="IMAGE_BRIEFS.md">IMAGE_BRIEFS.md</a>.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

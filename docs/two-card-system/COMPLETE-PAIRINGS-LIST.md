@@ -1,6 +1,6 @@
 # Complete Pairings List
 
-**Generated:** 2026-05-31T06:10:31.673Z  
+**Generated:** 2026-05-31T06:19:55.667Z  
 **Source:** `content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md`  
 **Audit:** `node scripts/audit-two-card-corpus.mjs`  
 **Counting:** chunk_template (split on \---, plus plain --- before markdown # pairing headings in tail)

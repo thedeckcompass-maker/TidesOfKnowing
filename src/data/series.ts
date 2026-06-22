@@ -53,4 +53,12 @@ export const seriesData: Record<string, SeriesMeta> = {
     status: "complete",
     publishedDate: "2026-05-25",
   },
+  "the-discernment-series": {
+    title: "The Discernment Series",
+    description:
+      "A three-part tarot methodology series on recognising the right question, knowing when more cards add noise instead of clarity, and closing a reading when the answer has landed.",
+    totalParts: 3,
+    status: "complete",
+    publishedDate: "2026-06-22",
+  },
 };

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 04 Posting - TOK-0013 (17 assets)</title>
+  <style>
+    :root { --ink:#0b1b3b; --cream:#f7f3eb; --teal:#4b9a9a; --gold:#c9a052; --muted:#8a8ea0; --shadow:0 10px 24px rgba(0,0,0,0.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%); color:#161b27; }
+    .page { max-width:1140px; margin:28px auto 48px; padding:0 20px 40px; }
+    .header { background:linear-gradient(135deg,var(--ink),#152449); color:#fdfaf4; border-radius:16px; padding:20px 24px; box-shadow:var(--shadow); margin-bottom:20px; }
+    .title { margin:0 0 6px; font-size:22px; font-weight:650; letter-spacing:0.04em; text-transform:uppercase; }
+    .subtitle { margin:4px 0 0; font-size:13px; color:rgba(248,245,236,0.88); }
+    .instruction-block { margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(75,154,154,0.12); border:1px solid rgba(75,154,154,0.35); font-size:12px; line-height:1.6; color:#e8f4f4; }
+    .instruction-block ol { margin:8px 0 0; padding-left:18px; }
+    .section-title { font-size:14px; font-weight:650; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); margin:0 0 12px; }
+    .glance-wrap { background:#fff; border-radius:12px; box-shadow:var(--shadow); overflow:auto; margin-bottom:24px; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th { text-align:left; padding:10px 12px; background:#f0ece3; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; border-bottom:2px solid rgba(11,27,59,0.08); }
+    td { padding:10px 12px; border-bottom:1px solid rgba(11,27,59,0.06); vertical-align:top; }
+    tr:hover td { background:rgba(75,154,154,0.04); }
+    .badge { display:inline-flex; padding:3px 8px; border-radius:999px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+    .badge-ready { background:rgba(75,154,154,0.12); color:var(--teal); }
+    .badge-needs { background:rgba(201,160,82,0.14); color:var(--gold); }
+    .badge-link { background:rgba(11,27,59,0.1); color:var(--ink); }
+    details.asset { background:#fff; border-radius:12px; box-shadow:var(--shadow); margin-bottom:12px; border:2px solid rgba(11,27,59,0.06); }
+    details.asset[open] { border-color:rgba(75,154,154,0.35); }
+    details.asset.needs-image { border-color:rgba(201,160,82,0.45); }
+    details.asset.needs-link { border-color:rgba(11,27,59,0.2); }
+    summary { cursor:pointer; padding:14px 16px; list-style:none; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
+    summary::-webkit-details-marker { display:none; }
+    .sum-left { flex:1; min-width:200px; }
+    .sum-title { font-size:15px; font-weight:600; color:var(--ink); margin:0 0 4px; }
+    .sum-meta { font-size:11px; color:var(--muted); }
+    .sum-arrow { color:var(--teal); font-size:12px; }
+    .asset-body { padding:0 16px 16px; border-top:1px solid rgba(11,27,59,0.06); }
+    .btn-row { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .btn { padding:7px 14px; border-radius:999px; border:1px solid rgba(11,27,59,0.12); background:linear-gradient(135deg,#fff,#f3eee3); font-size:12px; cursor:pointer; color:var(--ink); }
+    .btn:hover { background:#fff; }
+    .btn-copy { border-color:rgba(75,154,154,0.45); color:var(--teal); font-weight:600; }
+    .btn-brief { border-color:rgba(201,160,82,0.5); color:var(--gold); }
+    .copy-feedback { font-size:11px; color:var(--teal); min-height:16px; }
+    .copy-block { padding:12px 14px; border-radius:8px; background:#f7f4ee; border:1px solid rgba(11,27,59,0.06); font-size:13px; line-height:1.55; white-space:pre-wrap; }
+    .notes-block { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f8f6f0; font-size:12px; line-height:1.5; color:#4a5060; }
+    .thread-box { margin-top:10px; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .thread-box strong { color:var(--ink); }
+    .warn { color:var(--gold); font-weight:600; font-size:12px; margin-top:8px; }
+    .image-slot { margin-top:10px; padding:10px 12px; border-radius:8px; background:#fff8ee; border:1px solid rgba(201,160,82,0.35); font-size:12px; line-height:1.55; }
+    .image-slot strong { color:var(--ink); display:block; margin-bottom:6px; }
+    .image-slot code { font-size:11px; color:var(--gold); word-break:break-all; }
+    .image-slot ul { margin:6px 0 0; padding-left:18px; }
+    .visual-meta { margin:12px 0; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .visual-meta strong { color:var(--ink); display:block; margin-bottom:6px; }
+    .visual-meta p { margin:4px 0; }
+    .visual-meta span { color:var(--muted); font-weight:600; }
+    .btn-filename { border-color:rgba(11,27,59,0.2); color:var(--ink); }
+    a { color:var(--teal); }
+    .jump-link {
+      color: var(--teal);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .jump-link:hover { text-decoration: underline; }
+    details.asset.asset-highlight {
+      border-color: rgba(75, 154, 154, 0.65);
+      box-shadow: 0 0 0 3px rgba(75, 154, 154, 0.22), var(--shadow);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    @media (max-width:700px) { table { font-size:11px; } th,td { padding:8px; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Start Here for Posting</h1>
+      <p class="subtitle">Week 04: Monday 2026-06-22 to Sunday 2026-06-28</p>
+      <p class="subtitle">TOK-0013: Rethinking Timing (From More to Better series capstone)</p>
+      <p class="subtitle"><a href="https://www.tidesofknowing.com/articles/rethinking-timing/" style="color:#d4efe9;">Source article</a> | 17 assets (14 source-led + 3 Deck Compass training invitation) | Week D rotation | Markdown files are backup only</p>
+      <div class="instruction-block">
+        <strong>How to use this weekly pack:</strong>
+        <ol>
+          <li>Open this page.</li>
+          <li>Check the week-at-a-glance table. Click a row number to jump to that post below.</li>
+          <li>Only post items marked Ready.</li>
+          <li>Training invitation posts use the source article as the CTA destination unless Leigh supplies a dedicated training URL.</li>
+          <li>Do not post Needs Image items until expected files are in the <code>images/</code> folder.</li>
+          <li>Monday and Sunday have two posts at the same time on one platform. Stagger by 30 to 60 minutes unless Leigh directs otherwise.</li>
+          <li>Use Copy Post to copy caption or post text.</li>
+          <li>For X / Twitter threads, post Tweet 1 first, then reply in order.</li>
+          <li>Do not alter wording, links, hashtags or CTAs without Leigh's permission.</li>
+        </ol>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">Week at a glance</h2>
+      <div class="glance-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Date</th><th>Time</th><th>Platform</th><th>Headline</th><th>Status</th><th>CTA</th><th>Visual Strategy</th><th>Creation Needed</th><th>Expected Filename</th><th>Req. Before Post</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><a class="jump-link" href="#a01" data-jump="a01">1</a></td><td>Mon 22</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Tarot is not a calendar</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a02" data-jump="a02">2</a></td><td>Mon 22</td><td>12:30 p.m.</td><td>Facebook</td><td>What timing systems actually read</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a03" data-jump="a03">3</a></td><td>Mon 22</td><td>12:30 p.m.</td><td>Facebook</td><td>Train discernment, not accumulation</td><td><span class="badge badge-ready">Ready</span></td><td>Training</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a04" data-jump="a04">4</a></td><td>Tue 23</td><td>10:30 a.m.</td><td>X / Twitter</td><td>Predictive vs conditional timing</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Optional visual</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a05" data-jump="a05">5</a></td><td>Tue 23</td><td>1:30 p.m.</td><td>Instagram</td><td>Readiness is a timing variable</td><td><span class="badge badge-needs">Needs Image</span></td><td>Read article</td><td>Carousel slides</td><td>Yes</td><td>6 slides</td><td>Yes</td></tr>
+            <tr><td><a class="jump-link" href="#a06" data-jump="a06">6</a></td><td>Wed 24</td><td>9:00 a.m.</td><td>X / Twitter</td><td>How close to the threshold?</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a07" data-jump="a07">7</a></td><td>Wed 24</td><td>8:30 p.m.</td><td>Pinterest</td><td>Rethinking tarot timing</td><td><span class="badge badge-needs">Needs Image</span></td><td>Read article</td><td>Pinterest pin</td><td>Yes</td><td>pin-01.png</td><td>Yes</td></tr>
+            <tr><td><a class="jump-link" href="#a08" data-jump="a08">8</a></td><td>Thu 25</td><td>10:30 a.m.</td><td>X / Twitter</td><td>Four things to track</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a09" data-jump="a09">9</a></td><td>Thu 25</td><td>12:30 p.m.</td><td>Facebook</td><td>Practical language shift</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a10" data-jump="a10">10</a></td><td>Thu 25</td><td>6:30 p.m.</td><td>Instagram</td><td>Symbolic literacy into practice</td><td><span class="badge badge-needs">Needs Image</span></td><td>Training</td><td>Quote card</td><td>Yes</td><td>deck-compass-training-01.png</td><td>Yes</td></tr>
+            <tr><td><a class="jump-link" href="#a11" data-jump="a11">11</a></td><td>Fri 26</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Date prediction to threshold (thread)</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a12" data-jump="a12">12</a></td><td>Fri 26</td><td>6:30 p.m.</td><td>Instagram</td><td>Threshold proximity</td><td><span class="badge badge-needs">Needs Image</span></td><td>Read article</td><td>Quote card</td><td>Yes</td><td>quote-post-01.png</td><td>Yes</td></tr>
+            <tr><td><a class="jump-link" href="#a13" data-jump="a13">13</a></td><td>Sat 27</td><td>9:30 a.m.</td><td>Substack</td><td>From More to Better capstone</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a14" data-jump="a14">14</a></td><td>Sat 27</td><td>8:30 p.m.</td><td>Pinterest</td><td>When will it happen?</td><td><span class="badge badge-needs">Needs Image</span></td><td>Read article</td><td>Pinterest pin</td><td>Yes</td><td>pin-02.png</td><td>Yes</td></tr>
+            <tr><td><a class="jump-link" href="#a15" data-jump="a15">15</a></td><td>Sun 28</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Agency beats waiting</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Optional visual</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a16" data-jump="a16">16</a></td><td>Sun 28</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Article insight to lived practice</td><td><span class="badge badge-ready">Ready</span></td><td>Training</td><td>Optional visual</td><td>No</td><td>Source image</td><td>No</td></tr>
+            <tr><td><a class="jump-link" href="#a17" data-jump="a17">17</a></td><td>Sun 28</td><td>7:30 p.m.</td><td>Facebook</td><td>What timing question do you need?</td><td><span class="badge badge-ready">Ready</span></td><td>Read article</td><td>Use article image</td><td>No</td><td>Source image</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">All posts (expand to view full copy)</h2>
+
+      <details class="asset" id="a01">
+        <summary><div class="sum-left"><p class="sum-title">1. Mon 2026-06-22 - X / Twitter thesis</p><p class="sum-meta">Ready | Source promotion | Use article image</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-01">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-01"></div>
+          <div class="copy-block" id="display-01">The most asked tarot question is some version of "when will it happen?" After forty years of reading, the miss is often not technique. It is the question itself.
+
+Tarot reads conditions, momentum and threshold proximity. It is not a calendar.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotMethodology #SymbolicLiteracy #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a02">
+        <summary><div class="sum-left"><p class="sum-title">2. Mon 2026-06-22 - Facebook reflective</p><p class="sum-meta">Ready | Source promotion | Stagger with asset 3</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Image Creation Needed:</span> No</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-02">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-02"></div>
+          <div class="copy-block" id="display-02">Traditional tarot timing systems are not useless. At their most accurate, they read conditions.
+
+Fire energy moves fast. Water energy unfolds slowly. When a reader says "this feels like weeks rather than months," that is shorthand for momentum, alignment and resistance in the situation. Not a literal calendar calculation.
+
+The problem begins when energetic observation gets treated as a fixed date. A rich piece of interpretive information collapses into a specific expectation. And specific expectations fail in specific, painful ways.
+
+The more precise move is to read what is present, what is absent, and what threshold the situation is approaching.
+
+This is the final article in the From More to Better series. It closes a through-line about moving from accumulated knowledge toward present, actionable clarity in real readings.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a03">
+        <summary><div class="sum-left"><p class="sum-title">3. Mon 2026-06-22 - Facebook Deck Compass training</p><p class="sum-meta">Ready | Training invitation | Source article bridge | Stagger with asset 2</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Training destination</strong><p><span>Training Destination:</span> Source article bridge</p><p><span>CTA destination:</span> Source URL (no dedicated training URL supplied)</p><p><span>Visual Strategy:</span> Use article image</p><p><span>Image Creation Needed:</span> No</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-03">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-03"></div>
+          <div class="copy-block" id="display-03">This week's article asks a hard question about tarot timing: are we reading conditions, or pretending to read dates?
+
+The shift from more content to better perception does not happen by collecting more interpretations. It happens through trained symbolic discernment, clearer pattern recognition and reflective practice that holds up in live readings.
+
+Read the full article, then notice whether this is the kind of discernment you want to practise more deliberately:
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+This is the kind of practice The Deck Compass™ training is designed to strengthen. The article is the doorway. The training is the practice path.</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a04">
+        <summary><div class="sum-left"><p class="sum-title">4. Tue 2026-06-23 - X / Twitter insight</p><p class="sum-meta">Ready | Optional visual</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-04">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-04"></div>
+          <div class="copy-block" id="display-04">Predictive timing gives the Seeker something to wait for. Conditional timing gives the Seeker something to work with.
+
+Tarot reads the present moment: energy patterns, tendencies in motion, forces converging or diverging. That is what it does well.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotMethodology #ReflectivePractice #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset needs-image" id="a05">
+        <summary><div class="sum-left"><p class="sum-title">5. Tue 2026-06-23 - Instagram carousel</p><p class="sum-meta">Needs Image | 6 carousel slides required</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot"><strong>6 carousel slides required</strong><ul>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-01.png</code></li>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-02.png</code></li>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-03.png</code></li>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-04.png</code></li>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-05.png</code></li>
+            <li><code>images/2026-06-23_instagram_TOK-0013_carousel-01_slide-06.png</code></li>
+          </ul></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-05">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-05">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-05">Copy Expected Filenames</button></div>
+          <div class="copy-feedback" data-feedback="post-05"></div>
+          <div class="copy-block" id="display-05">The aspect of timing that traditional frameworks consistently underweight: the Seeker's readiness is itself a timing variable.
+
+You can ask "when will this happen?" while still carrying unresolved patterns that make the asked-for outcome genuinely unavailable. Not because something is withholding. Because you are not yet in a position to receive it.
+
+The more useful questions: What conditions would enable this outcome? What is currently absent? What would readiness look like, and where are you relative to it right now?
+
+Read the full article at tidesofknowing.com (link in bio).
+
+#TarotMethodology #SymbolicLiteracy #ReflectivePractice #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a06">
+        <summary><div class="sum-left"><p class="sum-title">6. Wed 2026-06-24 - X / Twitter question</p><p class="sum-meta">Ready</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-06">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-06"></div>
+          <div class="copy-block" id="display-06">Not "when will this happen?" but "how close are you to the point where this can happen?"
+
+That reframe changes the entire texture of a reading. It moves the Seeker from passive waiting to active participation in what unfolds.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotMethodology #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset needs-image" id="a07">
+        <summary><div class="sum-left"><p class="sum-title">7. Wed 2026-06-24 - Pinterest pin 1</p><p class="sum-meta">Needs Image</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot"><strong>Expected file:</strong> <code>images/2026-06-24_pinterest_TOK-0013_pin-01.png</code></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-07">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-07">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-07">Copy Expected Filename</button></div>
+          <div class="copy-feedback" data-feedback="post-07"></div>
+          <div class="copy-block" id="display-07">PIN TITLE: Rethinking Tarot Timing: Read Conditions, Not Dates
+
+PIN DESCRIPTION:
+
+The most asked tarot question is "when will it happen?" This article reframes timing work around conditions, readiness and threshold proximity instead of fixed date prediction.
+
+Learn when to read momentum, obstacles, readiness markers and threshold proximity in a spread. Move from passivity to agency in timing readings.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotTiming #TarotMethodology #SymbolicLiteracy #ReflectivePractice</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a08">
+        <summary><div class="sum-left"><p class="sum-title">8. Thu 2026-06-25 - X / Twitter method</p><p class="sum-meta">Ready</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-08">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-08"></div>
+          <div class="copy-block" id="display-08">When a Seeker asks a timing question, track four things in the spread:
+
+1. Momentum: how much energy is already in motion?
+2. Resistance: external obstacle or internal readiness gap?
+3. Readiness: prepared, or still developing?
+4. Threshold proximity: building toward change, or significant distance remains?
+
+Not a date. A description of state.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotMethodology #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a09">
+        <summary><div class="sum-left"><p class="sum-title">9. Thu 2026-06-25 - Facebook practical</p><p class="sum-meta">Ready</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-09">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-09"></div>
+          <div class="copy-block" id="display-09">For readers who want to integrate conditional timing, the language shift is small but significant.
+
+Instead of: "This looks like it could happen within about three months."
+
+Try: "The conditions for this are building. The momentum here is strong. Watch for [specific energetic marker] as a signal that the threshold is approaching."
+
+Instead of: "When will this relationship come?"
+
+Try: "What does your readiness for this look like right now, and what does the path to it involve?"
+
+This is not hedging. It is precision. The language is more accurate to what tarot actually reads, and it gives the Seeker something more substantial to work with than a timeline they will obsess over or feel crushed by if it does not materialise.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/</div>
+        </div>
+      </details>
+
+      <details class="asset needs-image" id="a10">
+        <summary><div class="sum-left"><p class="sum-title">10. Thu 2026-06-25 - Instagram Deck Compass training</p><p class="sum-meta">Needs Image | Training invitation | Source article bridge</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="visual-meta"><strong>Training destination</strong><p><span>Training Destination:</span> Source article bridge</p><p><span>CTA destination:</span> Source URL in bio (no dedicated training URL supplied)</p></div>
+          <div class="image-slot"><strong>Expected file:</strong> <code>images/2026-06-25_instagram_TOK-0013_deck-compass-training-01.png</code></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-10">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-10">Copy Image Creation Brief</button></div>
+          <div class="copy-feedback" data-feedback="post-10"></div>
+          <div class="copy-block" id="display-10">If conditional timing resonated this week, you have already touched the heart of symbolic literacy: reading what is present, not what you wish were fixed.
+
+Read the full article, then ask whether you want to keep practising this kind of reading with more structure:
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+The Deck Compass™ training is designed to strengthen this kind of symbolic discernment in live practice.
+
+#SymbolicLiteracy #TarotMethodology #ReflectivePractice #TheDeckCompass #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a11">
+        <summary><div class="sum-left"><p class="sum-title">11. Fri 2026-06-26 - X / Twitter thread</p><p class="sum-meta">Ready | Post as replies in order</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="thread-box"><strong>How to post this thread</strong><br>1. Post Tweet 1 first (attach article image to Tweet 1).<br>2. Reply to Tweet 1 with Tweet 2.<br>3. Continue replying in order through Tweet 7.<br>Do not post all tweets as separate top-level posts.</div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-11">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-11"></div>
+          <div class="copy-block" id="display-11">Tweet 1:
+The most asked tarot question is "when will it happen?" After forty years of reading, I know the miss is often not technique. It is the question itself.
+
+Tweet 2:
+Tarot is not a calendar. When energetic shorthand becomes a literal date, rich interpretive information collapses into a specific expectation.
+
+Tweet 3:
+The more accurate frame is conditional timing. What conditions are present? What is absent? What threshold is this situation approaching?
+
+Tweet 4:
+Readiness is itself a timing variable. The spread often shows whether external conditions are aligning or internal readiness is still developing.
+
+Tweet 5:
+Threshold-adjacent is different from threshold-crossed. Naming proximity gives the Seeker a map, not a date to obsess over or feel crushed by.
+
+Tweet 6:
+This is the capstone of the From More to Better series: away from accumulated knowledge toward present, actionable clarity in real readings.
+
+Tweet 7:
+Read the full article on rethinking timing:
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotMethodology #SymbolicLiteracy #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset needs-image" id="a12">
+        <summary><div class="sum-left"><p class="sum-title">12. Fri 2026-06-26 - Instagram quote card</p><p class="sum-meta">Needs Image</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot"><strong>Expected file:</strong> <code>images/2026-06-26_instagram_TOK-0013_quote-post-01.png</code></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-12">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-12">Copy Image Creation Brief</button></div>
+          <div class="copy-feedback" data-feedback="post-12"></div>
+          <div class="copy-block" id="display-12">A threshold is a point of sufficient condition. The moment when enough has shifted for an outcome to become possible. Not guaranteed. Possible. The difference matters.
+
+Tarot can read threshold proximity remarkably well. Knowing where you are is more useful than hoping for a specific destination.
+
+Read the full article at tidesofknowing.com (link in bio).
+
+#TarotMethodology #SymbolicLiteracy #ReflectivePractice #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a13">
+        <summary><div class="sum-left"><p class="sum-title">13. Sat 2026-06-27 - Substack Note</p><p class="sum-meta">Ready</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-13">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-13"></div>
+          <div class="copy-block" id="display-13">Across four articles, I have traced a single through-line in serious tarot practice: the quiet shift away from accumulation and toward precision.
+
+From collecting meanings to eliminating them. From reading cards in isolation to reading them in context. From lists of interpretations to readings with flow. From predictive timing to conditional timing.
+
+This final piece on timing closes that arc. Tarot does not stop being powerful when you read with precision. It becomes more powerful. Because it stops speaking generally and starts speaking specifically: about this situation, this person, this moment, and what it actually calls for.
+
+The Deck Compass methodology exists in this space. Not to replace what you already know about tarot, but to give you the structural framework to use it differently.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/</div>
+        </div>
+      </details>
+
+      <details class="asset needs-image" id="a14">
+        <summary><div class="sum-left"><p class="sum-title">14. Sat 2026-06-27 - Pinterest pin 2</p><p class="sum-meta">Needs Image</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot"><strong>Expected file:</strong> <code>images/2026-06-27_pinterest_TOK-0013_pin-02.png</code></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-14">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-14">Copy Image Creation Brief</button></div>
+          <div class="copy-feedback" data-feedback="post-14"></div>
+          <div class="copy-block" id="display-14">PIN TITLE: When Will It Happen? A Better Tarot Timing Question
+
+PIN DESCRIPTION:
+
+If you keep asking tarot "when will it happen?" try this instead: how close are you to the threshold where this can happen?
+
+Search-led guide to conditional timing in tarot. Covers readiness, threshold-adjacent states, momentum indicators and the language shift from date prediction to condition reading.
+
+Final article in the From More to Better series on precision tarot practice.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#TarotTiming #WhenWillItHappen #TarotReading #SymbolicLiteracy</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a15">
+        <summary><div class="sum-left"><p class="sum-title">15. Sun 2026-06-28 - X / Twitter reflective</p><p class="sum-meta">Ready | Stagger with asset 16</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-15">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-15"></div>
+          <div class="copy-block" id="display-15">"This will happen in three months" gives the Seeker something to wait for.
+
+"These are the conditions that would enable this, and here is your current readiness relative to them" gives the Seeker something to work with.
+
+The first produces passivity. The second produces agency. That is why conditional timing is more useful, not softer.
+
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+#ReflectivePractice #TarotMethodology #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a16">
+        <summary><div class="sum-left"><p class="sum-title">16. Sun 2026-06-28 - X / Twitter Deck Compass training</p><p class="sum-meta">Ready | Training invitation | Source article bridge | Stagger with asset 15</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Training destination</strong><p><span>Training Destination:</span> Source article bridge</p><p><span>CTA destination:</span> Source URL (no dedicated training URL supplied)</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-16">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-16"></div>
+          <div class="copy-block" id="display-16">Conditional timing reads readiness, not dates. That discipline is practised, not collected.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/
+
+Then notice whether this is work you want to carry into deliberate practice. The Deck Compass™ training is the continuing pathway.
+
+#TrainedPerception #SymbolicLiteracy #TheDeckCompass #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <details class="asset" id="a17">
+        <summary><div class="sum-left"><p class="sum-title">17. Sun 2026-06-28 - Facebook conversation</p><p class="sum-meta">Ready | Respond to comments only if authorised</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-17">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-17"></div>
+          <div class="copy-block" id="display-17">When you sit down with tarot and ask about timing, what is the question underneath the question?
+
+Is it really "when will this happen?" Or is it "how close am I?" Or "what would need to shift for this to become possible?" Or "am I almost ready, or still negotiating my own needs?"
+
+In live readings, I have found that reframing from calendar language to readiness language often opens the most honest part of the conversation. The Seeker stops waiting for a date and starts seeing the gap clearly.
+
+I would be interested to hear from readers and practitioners: when you ask about timing, what are you actually trying to orient yourself toward?
+
+Read the full article:
+https://www.tidesofknowing.com/articles/rethinking-timing/</div>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <script>
+    var briefs = {
+      "brief-05": "IMAGE CREATION BRIEF - Instagram carousel\nPurpose: Educational carousel on readiness as timing variable.\nPlatform: Instagram | Aspect ratio: 4:5\nVisual concept: Six text-based slides. Cream, deep blue, teal.\nText overlay: Slide 1 Readiness is a timing variable. Slide 2 External conditions matter. Slide 3 Internal readiness matters too. Slide 4 Almost-ready is not fully available. Slide 5 How close are you? Slide 6 Read the full article.\nExpected filenames: images/2026-06-23_instagram_TOK-0013_carousel-01_slide-01.png through slide-06.png",
+      "brief-07": "IMAGE CREATION BRIEF - Pinterest pin 1\nPurpose: Evergreen search pin on rethinking tarot timing.\nPlatform: Pinterest | Aspect ratio: 2:3\nText overlay: Rethinking Tarot Timing / Read conditions, readiness and thresholds / Read the Article\nExpected filename: images/2026-06-24_pinterest_TOK-0013_pin-01.png",
+      "brief-10": "IMAGE CREATION BRIEF - Instagram Deck Compass training\nPurpose: Training invitation card bridging timing theme to Deck Compass.\nPlatform: Instagram | Aspect ratio: 4:5\nText overlay: Better perception, not more content. / Practise symbolic discernment inside The Deck Compass.\nExpected filename: images/2026-06-25_instagram_TOK-0013_deck-compass-training-01.png",
+      "brief-12": "IMAGE CREATION BRIEF - Instagram quote card\nPurpose: Quote card on threshold concept.\nPlatform: Instagram | Aspect ratio: 4:5 or 1:1\nText overlay: A threshold is a point of sufficient condition. / Not guaranteed. Possible.\nExpected filename: images/2026-06-26_instagram_TOK-0013_quote-post-01.png",
+      "brief-14": "IMAGE CREATION BRIEF - Pinterest pin 2\nPurpose: Search pin reframing when will it happen to threshold proximity.\nPlatform: Pinterest | Aspect ratio: 2:3\nText overlay: When Will It Happen? / How close are you to the threshold? / Read the Article\nExpected filename: images/2026-06-27_pinterest_TOK-0013_pin-02.png"
+    };
+    var filenames = {
+      "file-05": "images/2026-06-23_instagram_TOK-0013_carousel-01_slide-01.png\nimages/2026-06-23_instagram_TOK-0013_carousel-01_slide-02.png\nimages/2026-06-23_instagram_TOK-0013_carousel-01_slide-03.png\nimages/2026-06-23_instagram_TOK-0013_carousel-01_slide-04.png\nimages/2026-06-23_instagram_TOK-0013_carousel-01_slide-05.png\nimages/2026-06-23_instagram_TOK-0013_carousel-01_slide-06.png",
+      "file-07": "images/2026-06-24_pinterest_TOK-0013_pin-01.png",
+      "file-12": "images/2026-06-26_instagram_TOK-0013_quote-post-01.png",
+      "file-14": "images/2026-06-27_pinterest_TOK-0013_pin-02.png"
+    };
+    function getPostText(id) {
+      var n = id.replace("post-", "");
+      var el = document.getElementById("display-" + (n.length === 1 ? "0" + n : n));
+      if (!el && n.length === 1) el = document.getElementById("display-0" + n);
+      return el ? el.textContent.trim() : "";
+    }
+    function feedbackKey(key) {
+      if (key.indexOf("brief-") === 0) return key.replace("brief-", "post-");
+      if (key.indexOf("file-") === 0) return key.replace("file-", "post-");
+      return key;
+    }
+    function copyText(key, label) {
+      var text;
+      if (key.indexOf("brief-") === 0) text = briefs[key];
+      else if (key.indexOf("file-") === 0) text = filenames[key];
+      else text = getPostText(key);
+      var fb = document.querySelector('[data-feedback="' + feedbackKey(key) + '"]');
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          if (fb) fb.textContent = label + " copied to clipboard.";
+        });
+      } else if (fb) fb.textContent = "Clipboard not available. Select and copy manually.";
+    }
+    document.querySelectorAll(".btn-copy").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Post"); });
+    });
+    document.querySelectorAll(".btn-brief").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Image creation brief"); });
+    });
+    document.querySelectorAll(".btn-filename").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Expected filename"); });
+    });
+
+    var highlightTimer = null;
+    function jumpToAsset(assetId) {
+      var el = document.getElementById(assetId);
+      if (!el) return;
+      el.open = true;
+      if (highlightTimer) {
+        clearTimeout(highlightTimer);
+        document.querySelectorAll("details.asset.asset-highlight").forEach(function(item) {
+          item.classList.remove("asset-highlight");
+        });
+      }
+      el.classList.add("asset-highlight");
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      highlightTimer = setTimeout(function() {
+        el.classList.remove("asset-highlight");
+        highlightTimer = null;
+      }, 2000);
+    }
+    document.querySelectorAll(".jump-link").forEach(function(link) {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+        jumpToAsset(link.getAttribute("data-jump"));
+      });
+    });
+    if (window.location.hash) {
+      var hashId = window.location.hash.replace("#", "");
+      if (hashId && document.getElementById(hashId)) {
+        jumpToAsset(hashId);
+      }
+    }
+  </script>
+</body>
+</html>

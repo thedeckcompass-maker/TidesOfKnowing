@@ -10,6 +10,7 @@
     "postbuild": "node scripts/fix-cloudflare-routes.mjs",
     "preview": "astro preview",
     "publish-article": "node scripts/add-article.mjs",
+    "generate:lead-magnets": "node scripts/generate-lead-magnets.mjs",
     "astro": "astro",
     "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
     "diag:headers": "node scripts/diag-fetch-headers.mjs",
@@ -25,6 +26,9 @@
     "resend": "^6.12.2"
   },
   "devDependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.2.0",
+    "puppeteer": "^25.1.0",
     "wrangler": "^4.54.0"
   }
 }

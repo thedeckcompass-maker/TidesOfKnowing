@@ -118,6 +118,11 @@ export const GET: APIRoute = async () => {
   rows.push({ path: "/blog/", changefreq: "weekly", priority: "0.7" });
   /** Tools directory hub (live + coming-soon tools); not individual tool deep-links. */
   rows.push({ path: "/tools/", changefreq: "monthly", priority: "0.7" });
+  rows.push({
+    path: "/resources/discernment-checklist/",
+    changefreq: "monthly",
+    priority: "0.62",
+  });
   rows.push({ path: "/series/", changefreq: "monthly", priority: "0.75" });
   rows.push({ path: "/tags/", changefreq: "monthly", priority: "0.65" });
 

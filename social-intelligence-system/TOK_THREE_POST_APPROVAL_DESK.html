@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tides of Knowing Three-Post Approval Desk</title>
+  <style>
+    :root {
+      --ink: #0b1b3b;
+      --ink-soft: #1b2748;
+      --cream: #f7f3eb;
+      --panel: #ffffff;
+      --teal: #4b9a9a;
+      --gold: #c9a052;
+      --muted: #8a8ea0;
+      --danger: #b05353;
+      --border-radius: 12px;
+      --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #eceff4 0, #f7f3eb 40%, #f2ece3 100%);
+      color: #161b27;
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      max-width: 1120px;
+      margin: 32px auto 48px;
+      padding: 0 20px 40px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--ink), #152449);
+      color: #fdfaf4;
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 22px;
+    }
+
+    .title {
+      margin: 0 0 4px;
+      font-size: 24px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: rgba(248, 245, 236, 0.85);
+    }
+
+    .notice, .editing-note {
+      margin-top: 10px;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    .notice {
+      background: rgba(239, 216, 179, 0.12);
+      border: 1px solid rgba(245, 219, 179, 0.4);
+      color: #fff6e9;
+    }
+
+    .editing-note {
+      background: rgba(75, 154, 154, 0.12);
+      border: 1px solid rgba(75, 154, 154, 0.35);
+      color: #e8f4f4;
+    }
+
+    .header-actions {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 219, 179, 0.5);
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 12px;
+      color: #fff6e9;
+      cursor: pointer;
+    }
+
+    .action-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .copy-feedback {
+      font-size: 11px;
+      color: #d4efe9;
+      align-self: center;
+      min-height: 16px;
+    }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0 26px;
+    }
+
+    .summary-card {
+      background: linear-gradient(135deg, #ffffff, #f1ece3);
+      border-radius: 999px;
+      padding: 9px 12px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+
+    .summary-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .summary-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .summary-value-strong { color: var(--teal); }
+    .summary-value-warn { color: var(--gold); }
+
+    .section { margin-bottom: 28px; }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 10px;
+    }
+
+    .review-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--border-radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid rgba(11, 27, 59, 0.06);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-decision-approved {
+      border-color: rgba(75, 154, 154, 0.55);
+      box-shadow: 0 10px 24px rgba(75, 154, 154, 0.12);
+    }
+
+    .card-decision-revision {
+      border-color: rgba(201, 160, 82, 0.55);
+      box-shadow: 0 10px 24px rgba(201, 160, 82, 0.12);
+    }
+
+    .card-decision-hold {
+      border-color: rgba(176, 83, 83, 0.45);
+      box-shadow: 0 10px 24px rgba(176, 83, 83, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .decision-banner {
+      display: none;
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .decision-banner.visible { display: block; }
+
+    .decision-banner-approved {
+      background: rgba(75, 154, 154, 0.12);
+      color: var(--teal);
+      border: 1px solid rgba(75, 154, 154, 0.3);
+    }
+
+    .decision-banner-revision {
+      background: rgba(201, 160, 82, 0.12);
+      color: var(--gold);
+      border: 1px solid rgba(201, 160, 82, 0.35);
+    }
+
+    .decision-banner-hold {
+      background: rgba(176, 83, 83, 0.1);
+      color: var(--danger);
+      border: 1px solid rgba(176, 83, 83, 0.3);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 550;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(75, 154, 154, 0.08);
+      color: var(--teal);
+    }
+
+    .status-pill-warn {
+      background: rgba(201, 160, 82, 0.10);
+      color: var(--gold);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 4px 0 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .meta-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(11, 27, 59, 0.03);
+    }
+
+    .meta-pill-strong {
+      background: rgba(75, 154, 154, 0.10);
+      color: var(--teal);
+    }
+
+    .meta-pill-danger {
+      background: rgba(176, 83, 83, 0.10);
+      color: var(--danger);
+    }
+
+    .meta-pill-gold {
+      background: rgba(201, 160, 82, 0.10);
+      color: var(--gold);
+    }
+
+    .asset-links {
+      font-size: 11px;
+      margin: 4px 0 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .asset-links li { margin: 2px 0; }
+
+    .copy-block {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f7f4ee;
+      border: 1px solid rgba(11, 27, 59, 0.06);
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .image-brief-panel {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f3f7f7;
+      border: 1px solid rgba(75, 154, 154, 0.25);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .image-brief-title {
+      margin: 0 0 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+    }
+
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 27, 59, 0.08);
+      background: linear-gradient(135deg, #ffffff, #f3eee3);
+      font-size: 12px;
+      color: var(--ink-soft);
+      cursor: pointer;
+    }
+
+    .btn:hover { background: #ffffff; }
+
+    .btn-approve { border-color: rgba(75, 154, 154, 0.45); color: var(--teal); }
+    .btn-revision { border-color: rgba(201, 160, 82, 0.5); color: var(--gold); }
+    .btn-hold { border-color: rgba(176, 83, 83, 0.5); color: var(--danger); }
+
+    .btn.active-approve {
+      background: rgba(75, 154, 154, 0.15);
+      border-color: var(--teal);
+      font-weight: 600;
+    }
+
+    .btn.active-revision {
+      background: rgba(201, 160, 82, 0.15);
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    .btn.active-hold {
+      background: rgba(176, 83, 83, 0.12);
+      border-color: var(--danger);
+      font-weight: 600;
+    }
+
+    .shortcuts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .shortcut-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 27, 59, 0.08);
+      background: linear-gradient(135deg, #ffffff, #f0ece2);
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .shortcut-link:hover { background: #ffffff; text-decoration: none; }
+
+    .body-text {
+      font-size: 13px;
+      color: #273047;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .summary-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Tides of Knowing Three-Post Approval Desk</h1>
+      <p class="subtitle">Browser review surface for copy approval, image requirements and scheduling readiness.</p>
+      <div class="notice">
+        Nothing on this page is approved for posting or scheduling until Leigh explicitly approves it.
+      </div>
+      <div class="notice">
+        Browser approvals are review decisions only. Canonical files are updated by Cursor after Leigh confirms the decision.
+      </div>
+      <div class="editing-note">
+        <strong>Editing note:</strong> To edit copy, either ask Cursor to revise the relevant asset file, or use the copy block as review text and request changes. The browser approval desk is the review surface, not the canonical writing editor.
+      </div>
+      <div class="header-actions">
+        <button class="action-btn" id="copySummaryBtn" type="button">Copy decision summary</button>
+        <span class="copy-feedback" id="copyFeedback"></span>
+      </div>
+    </header>
+
+    <section class="summary-strip">
+      <div class="summary-card">
+        <div class="summary-label">Total assets for review</div>
+        <div class="summary-value summary-value-strong">3</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Ready to post</div>
+        <div class="summary-value">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Text-only assets</div>
+        <div class="summary-value">2</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Image required</div>
+        <div class="summary-value">1</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Approval state</div>
+        <div class="summary-value summary-value-warn" id="globalApprovalState">Pending Leigh review</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Assets for review</h2>
+      <div class="review-grid">
+
+        <article class="card" id="card-twitter" data-card="twitter">
+          <div class="card-header">
+            <h3 class="card-title">TOK-0001 X / Twitter Thread</h3>
+            <span class="status-pill status-pill-warn">Drafted</span>
+          </div>
+          <div class="decision-banner" id="banner-twitter"></div>
+          <div class="meta-row">
+            <span class="meta-pill">Asset ID: SA-TOK-0001-2026-06-06-x-twitter</span>
+            <span class="meta-pill meta-pill-strong">Platform: X / Twitter</span>
+            <span class="meta-pill">Format: Short thought-leadership thread</span>
+            <span class="meta-pill">Image needed: No</span>
+            <span class="meta-pill-danger">Ready to post: No</span>
+            <span class="meta-pill-gold">Next action: Leigh review</span>
+          </div>
+          <ul class="asset-links">
+            <li><strong>Asset file:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md">SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md</a></li>
+          </ul>
+          <div class="copy-block">1/ The real tension in AI and intuitive practice is not whether the tool is good or bad. It is whether you are practising augmented intuition or replaced thinking. The distinction is sequence.
+
+2/ Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking lets the interpretive layer arrive before you have done the perceptual work. That drift is gradual, and it is easy to miss.
+
+3/ The useful sequence is simple: soft eyes first, structural observation second, AI consulted last, if at all, as a comparison or bias-checking layer. Perception before interpretation. Human noticing before algorithmic plausibility.
+
+4/ Perception gives specificity. Interpretation alone gives plausible generality. When AI answers before you have named what you actually saw, the output may feel accurate while bypassing the work that trains discernment.
+
+5/ In an AI-saturated world, the practitioner's edge is the capacity to perceive what tools cannot originate. That edge is not anti-technology. It is pro-attention, pro-sequence and pro-human knowing.
+
+6/ Tarot is the visible practice here, but the principle is broader: symbolic literacy depends on trained perception, not on faster interpretation. The question is whether your practice still begins with your own noticing.
+
+7/ Read the full article on augmented intuition versus replaced thinking:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+          <div class="buttons" data-group="twitter">
+            <button class="btn btn-approve" type="button" data-decision="Approve">Approve</button>
+            <button class="btn btn-revision" type="button" data-decision="Needs Revision">Needs Revision</button>
+            <button class="btn btn-hold" type="button" data-decision="Hold">Hold</button>
+          </div>
+        </article>
+
+        <article class="card" id="card-facebook" data-card="facebook">
+          <div class="card-header">
+            <h3 class="card-title">TOK-0001 Facebook Reflective Post</h3>
+            <span class="status-pill status-pill-warn">Drafted</span>
+          </div>
+          <div class="decision-banner" id="banner-facebook"></div>
+          <div class="meta-row">
+            <span class="meta-pill">Asset ID: SA-TOK-0001-2026-06-07-facebook</span>
+            <span class="meta-pill meta-pill-strong">Platform: Facebook</span>
+            <span class="meta-pill">Format: Reflective text post</span>
+            <span class="meta-pill">Image needed: No</span>
+            <span class="meta-pill-danger">Ready to post: No</span>
+            <span class="meta-pill-gold">Next action: Leigh review</span>
+          </div>
+          <ul class="asset-links">
+            <li><strong>Asset file:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0001-2026-06-07-facebook-augmented-intuition-vs-replaced-thinking.md">SA-TOK-0001-2026-06-07-facebook-augmented-intuition-vs-replaced-thinking.md</a></li>
+          </ul>
+          <div class="copy-block">Many people ask whether AI will ruin intuition.
+
+The more useful question is where AI sits in the sequence of your practice.
+
+When AI answers before you have taken soft eyes to the situation, noticed the structure of what is in front of you, and named your own observations, it quietly moves upstream of your thinking. The result can feel accurate while bypassing the work that trains discernment.
+
+Perception gives specificity. Interpretation alone gives plausible generality. Generic AI output often feels comforting because it sounds right enough, but it has not been anchored in what you actually saw, felt and noticed.
+
+In an AI-saturated world, the practitioner's edge is the capacity to perceive what tools cannot originate. Tarot is simply the visible practice in this article. The deeper question is whether your sequence still begins with your own noticing.
+
+If you are thinking about how to use AI without weakening intuitive perception or replacing human discernment, this piece will give you a clear framework to work with:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+Read the full article.</div>
+          <div class="buttons" data-group="facebook">
+            <button class="btn btn-approve" type="button" data-decision="Approve">Approve</button>
+            <button class="btn btn-revision" type="button" data-decision="Needs Revision">Needs Revision</button>
+            <button class="btn btn-hold" type="button" data-decision="Hold">Hold</button>
+          </div>
+        </article>
+
+        <article class="card" id="card-pinterest" data-card="pinterest">
+          <div class="card-header">
+            <h3 class="card-title">TOK-0034 Pinterest Pin</h3>
+            <span class="status-pill">Ready for Image</span>
+          </div>
+          <div class="decision-banner" id="banner-pinterest-copy"></div>
+          <div class="decision-banner" id="banner-pinterest-brief"></div>
+          <div class="meta-row">
+            <span class="meta-pill">Asset ID: SA-TOK-0034-2026-06-05-pinterest</span>
+            <span class="meta-pill meta-pill-strong">Platform: Pinterest</span>
+            <span class="meta-pill">Format: Pin</span>
+            <span class="meta-pill meta-pill-gold">Image needed: Yes</span>
+            <span class="meta-pill-danger">Ready to post: No</span>
+            <span class="meta-pill-gold">Next action: Approve image brief or authorise image generation</span>
+          </div>
+          <ul class="asset-links">
+            <li><strong>Social asset file:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0034-2026-06-05-pinterest.md">SA-TOK-0034-2026-06-05-pinterest.md</a></li>
+            <li><strong>Image brief file:</strong> <a href="06%20Image%20Briefs%20for%20ChatGPT/IB-TOK-0034-2026-06-05-pinterest.md">IB-TOK-0034-2026-06-05-pinterest.md</a></li>
+          </ul>
+          <div class="copy-block">Repeating tarot cards can reveal patterns that have not yet fully resolved.
+
+When the same card keeps appearing across readings, the useful question is not "what is the card trying to tell me?" but "where is this pattern still active in my attention, choices, relationships, timing or inner response?"
+
+The Repeating Card Meanings tool gives grounded interpretations for all 78 tarot cards in a recurring context, helping you move from fixation into clearer symbolic pattern recognition.
+
+Explore the tool:
+https://www.tidesofknowing.com/tools/repeating-card-meanings/
+
+#RepeatingTarotCards #TarotMeanings #TarotTools #SymbolicPatterns #TidesOfKnowing #TarotPractice</div>
+          <div class="image-brief-panel">
+            <p class="image-brief-title">Image brief summary</p>
+            <p class="body-text"><strong>Image purpose:</strong> Drive click-through to the Repeating Card Meanings tool by visually representing the concept of recurring tarot cards and offering a solution.</p>
+            <p class="body-text"><strong>Visual concept:</strong> A central, prominent tarot card subtly repeated or echoed in the background to create a sense of pattern or recurring theme. Thoughtful, slightly mysterious but ultimately empowering, with a clean, modern aesthetic.</p>
+            <p class="body-text"><strong>Required elements:</strong> Recognisable tarot card; subtle repetition cues; elements evoking knowing, insight or discovery.</p>
+            <p class="body-text"><strong>Text overlay:</strong> Headline "78 Repeating Tarot Card Meanings"; sub-headline "Unlock the patterns in your readings."; CTA "Explore Now".</p>
+            <p class="body-text"><strong>Aspect ratio:</strong> 2:3 (Pinterest standard vertical pin).</p>
+            <p class="body-text"><strong>Alt text draft:</strong> A Pinterest pin featuring a tarot card with subtle repeating patterns and text overlayed: "78 Repeating Tarot Card Meanings. Unlock the patterns in your readings. Explore Now."</p>
+          </div>
+          <div class="buttons" data-group="pinterest-copy">
+            <button class="btn btn-approve" type="button" data-decision="Approve Copy">Approve Copy</button>
+            <button class="btn btn-revision" type="button" data-decision="Needs Revision">Needs Revision</button>
+            <button class="btn btn-hold" type="button" data-decision="Hold">Hold</button>
+          </div>
+          <div class="buttons" data-group="pinterest-brief" style="margin-top:6px;">
+            <button class="btn btn-approve" type="button" data-decision="Approve Image Brief">Approve Image Brief</button>
+            <button class="btn btn-revision" type="button" data-decision="Needs Revision">Needs Revision</button>
+            <button class="btn btn-hold" type="button" data-decision="Hold">Hold</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">What happens after approval?</h2>
+      <div class="card">
+        <div class="body-text">
+          <p>Approved text-only assets can move to a <strong>Ready to Schedule</strong> state after any revisions are applied.</p>
+          <p>Approved Pinterest copy still requires image generation, image approval and alignment with the brief before it can become Ready to Schedule.</p>
+          <p>Ledger and calendar rows should only be created after Leigh approves the asset direction and any image work is complete.</p>
+          <p>A Executive Assistant can schedule only items clearly marked Ready to Schedule or Scheduled in the control records.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Not ready to post because…</h2>
+      <div class="card">
+        <div class="body-text">
+          <ul style="margin: 4px 0 0; padding-left: 18px;">
+            <li><strong>TOK-0001 X / Twitter</strong> needs Leigh review and any revisions before scheduling.</li>
+            <li><strong>TOK-0001 Facebook</strong> needs Leigh review and any revisions before scheduling.</li>
+            <li><strong>TOK-0034 Pinterest</strong> needs image approval or image generation authorisation before scheduling.</li>
+            <li>No item is currently marked Ready to Schedule.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Shortcuts</h2>
+      <div class="card">
+        <div class="shortcuts">
+          <a class="shortcut-link" href="TOK_SOCIAL_POSTING_DESK.html">Posting Desk</a>
+          <a class="shortcut-link" href="TOK_SOCIAL_COMMAND_CENTRE.md">Command Centre</a>
+          <a class="shortcut-link" href="12%20System%20Updates%20and%20Change%20Log/THREE_POST_APPROVAL_PACK_2026-06-05.md">Approval Pack Markdown</a>
+          <a class="shortcut-link" href="TOK_SOCIAL_ASSET_INDEX.md">Social Asset Index</a>
+          <a class="shortcut-link" href="07%20Visual%20Calendar/TOK_VISUAL_SOCIAL_CALENDAR.md">Visual Calendar</a>
+          <a class="shortcut-link" href="08%20Social%20Rotation%20Ledger/TOK_SOCIAL_ROTATION_LEDGER.md">Social Rotation Ledger</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'tokThreePostApprovalDecisions';
+
+    const GROUP_CONFIG = {
+      twitter: { bannerId: 'banner-twitter', cardId: 'card-twitter', label: 'TOK-0001 X / Twitter' },
+      facebook: { bannerId: 'banner-facebook', cardId: 'card-facebook', label: 'TOK-0001 Facebook' },
+      'pinterest-copy': { bannerId: 'banner-pinterest-copy', cardId: 'card-pinterest', label: 'TOK-0034 Pinterest copy' },
+      'pinterest-brief': { bannerId: 'banner-pinterest-brief', cardId: 'card-pinterest', label: 'TOK-0034 Pinterest image brief' }
+    };
+
+    function loadDecisions() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveDecisions(decisions) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(decisions));
+    }
+
+    function decisionClass(decision) {
+      if (!decision) return '';
+      if (decision === 'Approve' || decision === 'Approve Copy' || decision === 'Approve Image Brief') return 'approved';
+      if (decision === 'Needs Revision') return 'revision';
+      if (decision === 'Hold') return 'hold';
+      return '';
+    }
+
+    function applyDecisionUI(group, decision) {
+      const config = GROUP_CONFIG[group];
+      const banner = document.getElementById(config.bannerId);
+      const card = document.getElementById(config.cardId);
+      const buttons = document.querySelectorAll('[data-group="' + group + '"] .btn');
+
+      buttons.forEach(function(btn) {
+        btn.classList.remove('active-approve', 'active-revision', 'active-hold');
+        if (btn.getAttribute('data-decision') === decision) {
+          const cls = decisionClass(decision);
+          if (cls === 'approved') btn.classList.add('active-approve');
+          if (cls === 'revision') btn.classList.add('active-revision');
+          if (cls === 'hold') btn.classList.add('active-hold');
+        }
+      });
+
+      if (banner) {
+        if (decision) {
+          banner.textContent = 'Review decision: ' + decision;
+          banner.classList.add('visible');
+          banner.classList.remove('decision-banner-approved', 'decision-banner-revision', 'decision-banner-hold');
+          const cls = decisionClass(decision);
+          if (cls === 'approved') banner.classList.add('decision-banner-approved');
+          if (cls === 'revision') banner.classList.add('decision-banner-revision');
+          if (cls === 'hold') banner.classList.add('decision-banner-hold');
+        } else {
+          banner.textContent = '';
+          banner.classList.remove('visible', 'decision-banner-approved', 'decision-banner-revision', 'decision-banner-hold');
+        }
+      }
+
+      if (card && (group === 'twitter' || group === 'facebook')) {
+        card.classList.remove('card-decision-approved', 'card-decision-revision', 'card-decision-hold');
+        const cls = decisionClass(decision);
+        if (cls === 'approved') card.classList.add('card-decision-approved');
+        if (cls === 'revision') card.classList.add('card-decision-revision');
+        if (cls === 'hold') card.classList.add('card-decision-hold');
+      }
+
+      if (card && group.startsWith('pinterest')) {
+        updatePinterestCardState(card, loadDecisions());
+      }
+    }
+
+    function updatePinterestCardState(card, decisions) {
+      const copyDecision = decisions['pinterest-copy'];
+      const briefDecision = decisions['pinterest-brief'];
+      card.classList.remove('card-decision-approved', 'card-decision-revision', 'card-decision-hold');
+
+      const classes = [decisionClass(copyDecision), decisionClass(briefDecision)].filter(Boolean);
+      if (classes.includes('hold')) card.classList.add('card-decision-hold');
+      else if (classes.includes('revision')) card.classList.add('card-decision-revision');
+      else if (classes.length === 2 && classes.every(function(c) { return c === 'approved'; })) {
+        card.classList.add('card-decision-approved');
+      } else if (classes.includes('approved')) {
+        card.classList.add('card-decision-approved');
+      }
+    }
+
+    function updateGlobalState(decisions) {
+      const values = Object.values(decisions).filter(Boolean);
+      const global = document.getElementById('globalApprovalState');
+      if (!global) return;
+      if (values.length === 0) {
+        global.textContent = 'Pending Leigh review';
+      } else if (values.length < 4) {
+        global.textContent = 'Partially reviewed';
+      } else {
+        global.textContent = 'All items reviewed in browser';
+      }
+    }
+
+    function setDecision(group, decision) {
+      const decisions = loadDecisions();
+      decisions[group] = decision;
+      saveDecisions(decisions);
+      applyDecisionUI(group, decision);
+      updateGlobalState(decisions);
+    }
+
+    function initButtons() {
+      document.querySelectorAll('.buttons[data-group]').forEach(function(container) {
+        const group = container.getAttribute('data-group');
+        container.querySelectorAll('.btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            setDecision(group, btn.getAttribute('data-decision'));
+          });
+        });
+      });
+    }
+
+    function initFromStorage() {
+      const decisions = loadDecisions();
+      Object.keys(GROUP_CONFIG).forEach(function(group) {
+        if (decisions[group]) applyDecisionUI(group, decisions[group]);
+      });
+      updateGlobalState(decisions);
+    }
+
+    function buildSummaryText() {
+      const decisions = loadDecisions();
+      const now = new Date().toLocaleString();
+      return [
+        'Tides of Knowing Three-Post Approval Summary',
+        'Copied: ' + now,
+        '',
+        'TOK-0001 X / Twitter decision: ' + (decisions.twitter || 'Not set'),
+        'TOK-0001 Facebook decision: ' + (decisions.facebook || 'Not set'),
+        'TOK-0034 Pinterest copy decision: ' + (decisions['pinterest-copy'] || 'Not set'),
+        'TOK-0034 Pinterest image brief decision: ' + (decisions['pinterest-brief'] || 'Not set'),
+        '',
+        'Note: Browser decisions are review notes only. Canonical files are updated by Cursor after Leigh confirms.'
+      ].join('\n');
+    }
+
+    function initCopySummary() {
+      const btn = document.getElementById('copySummaryBtn');
+      const feedback = document.getElementById('copyFeedback');
+      if (!btn) return;
+      btn.addEventListener('click', function() {
+        const text = buildSummaryText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function() {
+            if (feedback) feedback.textContent = 'Summary copied to clipboard.';
+          }).catch(function() {
+            if (feedback) feedback.textContent = 'Could not copy automatically. Select and copy manually if needed.';
+          });
+        } else {
+          if (feedback) feedback.textContent = 'Clipboard not available in this browser.';
+        }
+      });
+    }
+
+    initButtons();
+    initFromStorage();
+    initCopySummary();
+  </script>
+</body>
+</html>

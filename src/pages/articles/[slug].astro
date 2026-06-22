@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import ArticlesLayout from "../../layouts/ArticlesLayout.astro";
 import AiIntuitionCta from "../../components/lead-magnets/AiIntuitionCta.astro";
+import LeadMagnetCta from "../../components/lead-magnets/LeadMagnetCta.astro";
 import RepeatingCardPatternsContinue from "../../components/RepeatingCardPatternsContinue.astro";
 import { estimateReadingMinutes } from "../../lib/readingTime";
 import { isRepeatingCardPatternsArticle } from "../../lib/repeatingCardPatternsSeries";
@@ -17,6 +18,22 @@ const AI_INTUITION_SERIES_SLUGS = new Set([
   "practitioners-edge-perceptual-capacity",
 ]);
 
+const DISCERNMENT_SERIES_SLUGS = new Set([
+  "second-guessing-tarot-readings",
+  "too-many-tarot-cards",
+  "when-is-a-tarot-reading-complete",
+]);
+
+const DISCERNMENT_CHECKLIST_CTA = {
+  title: "The Discernment Checklist",
+  subtitle: "21 Questions to Ask Before Pulling Another Card",
+  description:
+    "Get the practical checklist for clarifying the right question, recognising which cards carry the answer, and knowing when a reading is complete.",
+  buttonLabel: "Send Me the Checklist",
+  resourceSlug: "discernment-checklist",
+  redirectUrl: "/resources/discernment-checklist/thank-you/",
+};
+
 const slug = Astro.params.slug;
 const articles = await getCollection("articles");
 const article = articles.find((entry) => entry.data.slug === slug);
@@ -30,11 +47,29 @@ const body = article.body ?? "";
 const readingMinutes =
   article.data.readingTime ?? estimateReadingMinutes(body);
 const isAiIntuitionSeriesArticle = AI_INTUITION_SERIES_SLUGS.has(article.data.slug);
+const isDiscernmentSeriesArticle = DISCERNMENT_SERIES_SLUGS.has(article.data.slug);
 const isRepeatingCardPatterns = isRepeatingCardPatternsArticle(article.data.slug);
 ---
 
 <ArticlesLayout article={article} readingMinutes={readingMinutes} mailerLite={isAiIntuitionSeriesArticle}>
+  {
+    isDiscernmentSeriesArticle ? (
+      <LeadMagnetCta
+        slot="prepend"
+        {...DISCERNMENT_CHECKLIST_CTA}
+        placement="top"
+        compact
+      />
+    ) : null
+  }
   <Content />
+  {
+    isDiscernmentSeriesArticle ? (
+      <div class="tok-article-discernment-signup-wrap" slot="append">
+        <LeadMagnetCta {...DISCERNMENT_CHECKLIST_CTA} placement="bottom" compact />
+      </div>
+    ) : null
+  }
   {
     isRepeatingCardPatterns ? (
       <RepeatingCardPatternsContinue slot="append" currentSlug={article.data.slug} />

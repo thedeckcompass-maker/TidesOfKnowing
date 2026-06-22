@@ -58,6 +58,7 @@ export const ARTICLE_TOPICS: ArticleTopic[] = [
       "tarot-methodology",
       "tarot-interpretation",
       "contextual-reading",
+      "question-framing",
       "spread-architecture",
       "the-deck-compass",
       "precision-reading",

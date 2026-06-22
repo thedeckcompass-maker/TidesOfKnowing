@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 02 Review - TOK-0202 About Introduction Pack (17 assets)</title>
+  <style>
+    :root { --ink:#0b1b3b; --cream:#f7f3eb; --teal:#4b9a9a; --gold:#c9a052; --muted:#8a8ea0; --shadow:0 10px 24px rgba(0,0,0,0.08); --hold:#8b5a2b; --export:#2d6a4f; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%); color:#161b27; }
+    .page { max-width:1140px; margin:28px auto 48px; padding:0 20px 40px; }
+    .sys-nav { background:linear-gradient(135deg,var(--ink),#152449); border-radius:12px; padding:12px 16px 14px; box-shadow:var(--shadow); margin-bottom:18px; }
+    .sys-nav-links { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .sys-nav-link { display:inline-flex; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:500; text-decoration:none; color:#e8f4f4; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.04); }
+    .sys-nav-link:hover { background:rgba(75,154,154,0.22); border-color:rgba(75,154,154,0.45); }
+    .sys-nav-link.active { background:rgba(75,154,154,0.32); border-color:rgba(201,160,82,0.55); color:#fdfaf4; font-weight:650; }
+    .sys-breadcrumb { margin-top:10px; font-size:11px; color:rgba(248,245,236,0.78); }
+    .sys-breadcrumb a { color:#b8e8e4; text-decoration:none; }
+    .header { background:linear-gradient(135deg,var(--ink),#152449); color:#fdfaf4; border-radius:16px; padding:20px 24px; box-shadow:var(--shadow); margin-bottom:20px; }
+    .title { margin:0 0 6px; font-size:22px; font-weight:650; letter-spacing:0.04em; text-transform:uppercase; }
+    .subtitle { margin:4px 0 0; font-size:13px; color:rgba(248,245,236,0.88); }
+    .review-toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:14px; }
+    .btn-export { padding:10px 18px; border-radius:999px; border:1px solid rgba(45,106,79,0.5); background:linear-gradient(135deg,#e8f5ee,#d4eddf); font-size:13px; font-weight:700; cursor:pointer; color:var(--export); }
+    .btn-export:hover { background:#fff; }
+    .btn-export-review { padding:10px 18px; border-radius:999px; border:1px solid rgba(201,160,82,0.55); background:linear-gradient(135deg,#fff8ee,#fff); font-size:13px; font-weight:700; cursor:pointer; color:#8a6520; }
+    .btn-export-review:hover { background:#fff; }
+    .btn-bulk { padding:8px 16px; border-radius:999px; border:1px solid rgba(75,154,154,0.45); background:linear-gradient(135deg,#eef6f6,#fff); font-size:12px; font-weight:650; cursor:pointer; color:var(--teal); }
+    .btn-bulk-clear { border-color:rgba(138,142,160,0.45); color:#5a6278; background:linear-gradient(135deg,#f5f5f7,#fff); }
+    .bulk-toolbar { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; align-items:center; }
+    .export-toolbar { display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+    .export-row { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-start; }
+    .export-hint { font-size:11px; color:rgba(248,245,236,0.82); line-height:1.45; max-width:320px; margin:2px 0 0; }
+    .storage-note { margin-top:10px; font-size:12px; color:#d4efe9; line-height:1.5; }
+    .dashboard { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:18px; }
+    .dash-card { background:#fff; border-radius:10px; padding:12px 14px; box-shadow:var(--shadow); border:1px solid rgba(11,27,59,0.06); }
+    .dash-card strong { display:block; font-size:22px; color:var(--ink); }
+    .dash-card span { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; }
+    .instruction-block, .review-how { margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(75,154,154,0.12); border:1px solid rgba(75,154,154,0.35); font-size:12px; line-height:1.6; color:#e8f4f4; }
+    .instruction-block ol, .review-how ol { margin:8px 0 0; padding-left:18px; }
+    .section-title { font-size:14px; font-weight:650; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); margin:0 0 12px; }
+    .glance-wrap { background:#fff; border-radius:12px; box-shadow:var(--shadow); overflow:auto; margin-bottom:24px; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th { text-align:left; padding:10px 12px; background:#f0ece3; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; border-bottom:2px solid rgba(11,27,59,0.08); }
+    td { padding:10px 12px; border-bottom:1px solid rgba(11,27,59,0.06); vertical-align:top; }
+    tr:hover td { background:rgba(75,154,154,0.04); }
+    .row-jump { width:32px; height:32px; border-radius:50%; border:1px solid rgba(75,154,154,0.45); background:#eef6f6; color:var(--teal); font-weight:700; cursor:pointer; font-size:12px; }
+    .row-jump:hover { background:var(--teal); color:#fff; }
+    .badge { display:inline-flex; padding:3px 8px; border-radius:999px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+    .badge-ready { background:rgba(75,154,154,0.12); color:var(--teal); }
+    .badge-needs { background:rgba(201,160,82,0.14); color:var(--gold); }
+    .badge-review { background:rgba(138,142,160,0.15); color:#5a6278; }
+    .badge-approved { background:rgba(75,154,154,0.18); color:#2a6a6a; }
+    .badge-export { background:rgba(45,106,79,0.15); color:var(--export); }
+    .badge-hold { background:rgba(139,90,43,0.15); color:var(--hold); }
+    .badge-image { background:rgba(201,160,82,0.2); color:#8a6520; }
+    .badge-supplied { background:rgba(75,154,154,0.22); color:#1f5555; }
+    details.asset { background:#fff; border-radius:12px; box-shadow:var(--shadow); margin-bottom:12px; border:2px solid rgba(11,27,59,0.06); scroll-margin-top:80px; transition:box-shadow 0.3s, border-color 0.3s; }
+    details.asset.highlight { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,160,82,0.35); }
+    details.asset[open] { border-color:rgba(75,154,154,0.35); }
+    details.asset.needs-image { border-color:rgba(201,160,82,0.35); }
+    details.asset.on-hold { border-color:rgba(139,90,43,0.4); }
+    details.asset.ready-export { border-color:rgba(45,106,79,0.45); }
+    summary { cursor:pointer; padding:14px 16px; list-style:none; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
+    summary::-webkit-details-marker { display:none; }
+    .sum-left { flex:1; min-width:200px; }
+    .sum-title { font-size:15px; font-weight:600; color:var(--ink); margin:0 0 4px; }
+    .sum-asset-id { font-size:11px; color:var(--muted); margin:0 0 4px; }
+    .sum-meta { font-size:11px; color:var(--muted); }
+    tr.platform-group td { background:#f0ece3; font-size:12px; font-weight:650; color:var(--ink); padding:8px 12px; }
+    .sum-arrow { color:var(--teal); font-size:12px; }
+    .approval-pill { margin-left:auto; margin-right:8px; }
+    .asset-body { padding:0 16px 16px; border-top:1px solid rgba(11,27,59,0.06); }
+    .field-label { display:block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin:12px 0 6px; }
+    .edit-copy, .review-notes { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(11,27,59,0.12); font-size:13px; line-height:1.55; font-family:inherit; background:#fdfbf7; resize:vertical; }
+    .edit-copy.dirty { border-color:rgba(201,160,82,0.55); background:#fffaf3; }
+    .btn-row { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .btn { padding:7px 14px; border-radius:999px; border:1px solid rgba(11,27,59,0.12); background:linear-gradient(135deg,#fff,#f3eee3); font-size:12px; cursor:pointer; color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; }
+    .btn:hover { background:#fff; }
+    .btn-copy { border-color:rgba(75,154,154,0.45); color:var(--teal); font-weight:600; }
+    .btn-save { border-color:rgba(75,154,154,0.45); color:var(--teal); font-weight:600; }
+    .btn-reset { color:var(--muted); }
+    .btn-approve { border-color:rgba(45,106,79,0.45); color:var(--export); font-weight:600; }
+    .btn-approve.active { background:#e8f5ee; }
+    .btn-hold { border-color:rgba(139,90,43,0.45); color:var(--hold); }
+    .btn-hold.active { background:#fff5eb; }
+    .btn-brief, .btn-filename { border-color:rgba(201,160,82,0.5); color:var(--gold); }
+    .copy-feedback { font-size:11px; color:var(--teal); min-height:16px; }
+    .unsaved-flag { font-size:11px; color:var(--gold); font-weight:600; margin-bottom:6px; }
+    .thread-box { margin-top:10px; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .image-slot { margin-top:10px; padding:10px 12px; border-radius:8px; background:#fff8ee; border:1px solid rgba(201,160,82,0.35); font-size:12px; line-height:1.55; }
+    .image-warn { color:#8a6520; font-weight:600; margin:6px 0; }
+    .check-label { display:flex; align-items:center; gap:8px; margin-top:8px; font-size:13px; }
+
+    .visual-action-box { margin:14px 0; padding:12px 14px; border-radius:10px; background:#f3f7f7; border:1px solid rgba(75,154,154,0.28); font-size:13px; line-height:1.55; }
+    .visual-action-box strong { display:block; margin-bottom:6px; color:var(--ink); font-size:12px; text-transform:uppercase; letter-spacing:0.05em; }
+    .visual-action-msg { margin:0 0 10px; color:#273047; }
+    .visual-action-meta { font-size:12px; color:#5a6278; margin:4px 0; }
+    .visual-action-meta span { font-weight:600; color:var(--muted); }
+    .collapse-panel { margin:10px 0; background:#faf8f4; border:1px solid rgba(11,27,59,0.08); border-radius:10px; }
+    .collapse-panel summary { cursor:pointer; padding:10px 14px; font-size:12px; font-weight:650; color:var(--ink); list-style:none; }
+    .collapse-panel summary::-webkit-details-marker { display:none; }
+    .collapse-panel .collapse-body { padding:0 14px 14px; font-size:12px; line-height:1.55; color:#4a5060; }
+    .collapse-panel .collapse-body p { margin:4px 0; }
+    .collapse-panel .collapse-body span { font-weight:600; color:var(--muted); }
+    .brief-text { white-space:pre-wrap; background:#fff; border:1px solid rgba(11,27,59,0.06); border-radius:8px; padding:10px 12px; margin:8px 0; font-size:12px; max-height:200px; overflow:auto; }
+
+    .visual-meta { margin:12px 0; display:none; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .visual-meta span { color:var(--muted); font-weight:600; }
+    .export-note { font-size:12px; color:#5a6278; line-height:1.55; margin-top:8px; }
+    .export-feedback { margin-top:10px; font-size:13px; font-weight:600; min-height:20px; }
+    .export-feedback.error { color:#b45309; }
+    .export-feedback.ok { color:var(--export); }
+    a { color:var(--teal); }
+    .original-store { display:none; }
+
+    .export-primary-note { margin-top:10px; padding:10px 12px; border-radius:8px; background:rgba(201,160,82,0.15); border:1px solid rgba(201,160,82,0.35); font-size:12px; color:#f7f4ee; line-height:1.55; }
+    .advanced-exports-wrap { margin-top:16px; background:#faf8f4; border:1px solid rgba(11,27,59,0.1); border-radius:12px; padding:12px 16px; }
+    .advanced-exports-summary { cursor:pointer; font-size:13px; font-weight:650; color:var(--ink); list-style:none; }
+    .advanced-exports-summary::-webkit-details-marker { display:none; }
+    .image-to-use-panel { margin:14px 0; padding:12px 14px; border-radius:10px; background:#f3f7f7; border:1px solid rgba(75,154,154,0.28); }
+    .image-to-use-panel select, .image-to-use-panel input[type="text"] { width:100%; padding:8px 10px; border-radius:8px; border:1px solid rgba(11,27,59,0.12); font-size:13px; font-family:inherit; margin-top:4px; }
+    .manual-section { background:#fff; border-radius:12px; padding:18px 20px; box-shadow:var(--shadow); margin-bottom:24px; border:2px solid rgba(75,154,154,0.2); }
+    .manual-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .manual-grid .full { grid-column:1 / -1; }
+    .manual-grid input, .manual-grid select, .manual-grid textarea { width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(11,27,59,0.12); font-size:13px; font-family:inherit; }
+    .manual-grid label { font-size:11px; font-weight:600; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:4px; }
+    .btn-add-manual { padding:10px 18px; border-radius:999px; border:1px solid rgba(75,154,154,0.55); background:linear-gradient(135deg,#eef6f6,#fff); font-weight:700; color:var(--teal); cursor:pointer; margin-top:12px; }
+    .assistant-section { border-color:rgba(201,160,82,0.35); padding:14px 16px; }
+    .assistant-wrap { margin-bottom:24px; }
+    .assistant-wrap > summary { cursor:pointer; list-style:none; padding:4px 0 10px; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; }
+    .assistant-wrap > summary::-webkit-details-marker { display:none; }
+    .assistant-summary-hint { font-size:12px; color:var(--muted); font-weight:500; }
+    .assistant-intro { font-size:13px; color:#5a6278; margin:0 0 12px; line-height:1.5; }
+    .assistant-compact-grid { gap:10px; }
+    .assistant-compact-grid textarea { min-height:72px; }
+    .assistant-pair-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; grid-column:1 / -1; }
+    .assistant-collapse { margin:10px 0 0; background:#faf8f4; border:1px solid rgba(11,27,59,0.08); border-radius:10px; }
+    .assistant-collapse summary { cursor:pointer; padding:8px 12px; font-size:12px; font-weight:650; color:var(--ink); list-style:none; }
+    .assistant-collapse summary::-webkit-details-marker { display:none; }
+    .assistant-collapse .collapse-inner { padding:0 12px 12px; }
+    .assistant-collapse textarea { width:100%; margin:0; }
+    .btn-prepare-prompt { padding:8px 16px; border-radius:999px; border:1px solid rgba(201,160,82,0.55); background:linear-gradient(135deg,#fff8ee,#fff); font-weight:700; color:#8a6520; cursor:pointer; font-size:12px; }
+    .btn-send-draft { padding:8px 16px; border-radius:999px; border:1px solid rgba(75,154,154,0.55); background:linear-gradient(135deg,#eef6f6,#fff); font-weight:700; color:var(--teal); cursor:pointer; margin-top:8px; font-size:12px; }
+    .prompt-output { background:#f8f6f2; font-size:12px; line-height:1.55; }
+    .assistant-feedback { font-size:12px; color:var(--teal); min-height:16px; margin:6px 0; font-weight:600; }
+    .assistant-feedback.error { color:#b45309; }
+    .field-highlight { outline:2px solid rgba(201,160,82,0.55); transition:outline 0.3s; }
+    .section-highlight { box-shadow:0 0 0 3px rgba(201,160,82,0.4); transition:box-shadow 0.3s; }
+    .field-hint { font-size:11px; color:var(--muted); margin:0 0 6px; line-height:1.45; font-weight:400; text-transform:none; letter-spacing:0; }
+    .filename-input-row { display:flex; gap:8px; align-items:stretch; }
+    .filename-input-row input { flex:1; }
+    .btn-generate-fn { padding:8px 12px; border-radius:8px; border:1px solid rgba(201,160,82,0.5); background:#fff8ee; font-size:11px; font-weight:650; color:#8a6520; cursor:pointer; white-space:nowrap; }
+    @media (max-width:700px) { .assistant-pair-row { grid-template-columns:1fr; } .filename-input-row { flex-direction:column; } }
+    details.asset.manual-asset { border-color:rgba(75,154,154,0.35); }
+    .manual-add-wrap > summary { cursor:pointer; list-style:none; padding:0 0 10px; }
+    .manual-add-wrap > summary::-webkit-details-marker { display:none; }
+    .btn-row-manual-only { margin-top:0; }
+    .btn-delete-manual { color:#8a4a4a; border-color:rgba(138,74,74,0.35); font-size:11px; }
+    .badge-manual { background:rgba(11,27,59,0.08); color:var(--ink); }
+    .row-jump.manual { font-size:10px; width:auto; min-width:32px; padding:0 6px; border-radius:8px; }
+    @media (max-width:700px) { .manual-grid { grid-template-columns:1fr; } }
+
+    @media (max-width:700px) { table { font-size:11px; } th,td { padding:8px; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="sys-nav" aria-label="Weekly pack navigation">
+      <div class="sys-nav-links">
+        <a class="sys-nav-link" href="../../../START_HERE_TOK_SOCIAL_SYSTEM.html">Home</a>
+        <a class="sys-nav-link" href="../../../TOK_WEEKLY_PACK_BUILDER.html">Weekly Pack Builder</a>
+        <a class="sys-nav-link active" href="START_HERE_FOR_POSTING.html">This Week</a>
+        <a class="sys-nav-link" href="../../SOCIAL_PACK_USAGE_LEDGER.csv">Usage Ledger</a>
+        <a class="sys-nav-link" href="images/IMAGE_SLOTS.md">Image Slots</a>
+        <a class="sys-nav-link" href="EXECUTIVE_ASSISTANT_POSTING_INSTRUCTIONS.md">Executive Assistant Instructions</a>
+      </div>
+      <div class="sys-breadcrumb"><a href="../../../START_HERE_TOK_SOCIAL_SYSTEM.html">Home</a> &gt; <a href="../../">2026 Social Packs</a> &gt; <a href="../">2026-06 June</a> &gt; Week 02 - 2026-06-08 to 2026-06-14</div>
+    </nav>
+
+    <header class="header">
+      <h1 class="title">Review, Approve and Export</h1>
+      <p class="subtitle">Week 02: Monday 2026-06-08 to Sunday 2026-06-14</p>
+      <p class="subtitle">TOK-0202: About Leigh Spencer | About Introduction Pack</p>
+      <p class="subtitle"><a href="https://www.tidesofknowing.com/about/" style="color:#d4efe9;">Source page</a> | 17 assets | Review workspace</p>
+      <p class="storage-note">Edits and approvals are saved in this browser for this weekly pack. When ready, export the Executive Assistant posting handoff as a single HTML file.</p>
+      <div class="review-how">
+        <strong>How to use this review page</strong>
+        <ol>
+          <li>Review and edit copy if needed.</li>
+          <li>Approve Copy or Approve All Copy.</li>
+          <li>Set Image to use.</li>
+          <li>For supplied images, enter the filename and place the file in Executive Assistant Handoff/images/ before export.</li>
+          <li>Click Export Executive Assistant Posting Handoff.</li>
+        </ol>
+      </div>
+      <div class="instruction-block">
+        <strong>First-introduction week:</strong> Person and platform before method and product. Only one softened training invitation (Sunday 6:30 p.m. Instagram).
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">Review dashboard</h2>
+      <div class="dashboard" id="reviewDashboard">
+        <div class="dash-card"><strong id="dashApproved">0</strong><span>Copy Approved</span></div>
+        <div class="dash-card"><strong id="dashExport">0</strong><span>Ready to Post</span></div>
+        <div class="dash-card"><strong id="dashNeedsImage">0</strong><span>Image Still Needed</span></div>
+        <div class="dash-card"><strong id="dashHold">0</strong><span>On Hold</span></div>
+        <div class="dash-card"><strong id="dashUnsaved">0</strong><span>Unsaved Edits</span></div>
+      </div>
+      <div class="bulk-toolbar">
+        <button type="button" class="btn-bulk" id="approveAllBtn">Approve All Copy</button>
+        <button type="button" class="btn-bulk btn-bulk-clear" id="clearAllApprovalsBtn">Clear All Approvals</button>
+        <button class="btn-export" type="button" id="eaHandoffBtn">Export Executive Assistant Posting Handoff</button>
+      </div>
+      <p class="export-note">For supplied images, place the final image files in Executive Assistant Handoff/images/ before sending the handoff to the Executive Assistant.</p>
+      <p class="export-hint">Downloads one file: EXECUTIVE_ASSISTANT_POSTING_HANDOFF.html for the Executive Assistant.</p>
+      <div class="export-feedback" id="exportFeedback"></div>
+      <div class="copy-feedback" id="bulkFeedback" style="margin-top:8px;min-height:18px;"></div>
+      <details class="advanced-exports-wrap" id="advancedExports">
+        <summary class="advanced-exports-summary">Advanced Exports and Diagnostics</summary>
+        <p class="export-note">Legacy export tools have been removed from the working flow. Use the Executive Assistant posting handoff export above.</p>
+      </details>
+    </section>
+
+    <section>
+      <h2 class="section-title">Week at a glance</h2>
+      <div class="glance-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Post #</th><th>Platform</th><th>Date</th><th>Time</th><th>Headline</th><th>Status</th><th>Image to use</th><th>Internal ID</th>
+            </tr>
+          </thead>
+          <tbody id="glanceBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">All posts (review, edit, approve)</h2>
+      <details class="asset" id="a01" data-asset-id="1">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">1. Mon 08 2026-06-08 - X / Twitter Thesis post</p>
+        <p class="sum-meta" data-sum-meta="1">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="1">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-01">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-01" data-edit="1" rows="10">If you are new here: Tides of Knowing is a platform for tarot, symbolic literacy, reflective practice and trained perception.
+
+Leigh Spencer built it after decades in journalism, business and card reading. The work is grounded, practical and not prediction-led.
+
+Start with the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="1">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="1">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="1">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="1">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="1">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="1"></div>
+      <div class="unsaved-flag" data-unsaved="1" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="1"></div>
+      <label class="field-label" for="notes-01">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-01" data-notes="1" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="1" hidden>If you are new here: Tides of Knowing is a platform for tarot, symbolic literacy, reflective practice and trained perception.
+
+Leigh Spencer built it after decades in journalism, business and card reading. The work is grounded, practical and not prediction-led.
+
+Start with the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice</textarea>
+    </div>
+  </details>
+<details class="asset" id="a02" data-asset-id="2">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">2. Mon 08 2026-06-08 - X / Twitter Introduction post</p>
+        <p class="sum-meta" data-sum-meta="2">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="2">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-02">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-02" data-edit="2" rows="10">Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader across four decades of practice.
+
+Her work combines editorial discipline with intuitive perception. Tarot is the visible practice. The deeper aim is symbolic literacy and clearer seeing.
+
+Read the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #TrainedPerception</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="2">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="2">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="2">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="2">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="2">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="2"></div>
+      <div class="unsaved-flag" data-unsaved="2" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="2"></div>
+      <label class="field-label" for="notes-02">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-02" data-notes="2" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="2" hidden>Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader across four decades of practice.
+
+Her work combines editorial discipline with intuitive perception. Tarot is the visible practice. The deeper aim is symbolic literacy and clearer seeing.
+
+Read the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #TrainedPerception</textarea>
+    </div>
+  </details>
+<details class="asset" id="a03" data-asset-id="3">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">3. Mon 08 2026-06-08 - Facebook Reflective post</p>
+        <p class="sum-meta" data-sum-meta="3">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="3">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-03">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-03" data-edit="3" rows="10">If you are new here, this may help orient you.
+
+Tides of Knowing is a long-form editorial and educational platform. It explores tarot as symbolic language, reflective practice and trained perception.
+
+It is not entertainment tarot. It is not prediction content. It is not generic spirituality.
+
+The site brings together articles, field notes, interpretive tools and teaching frameworks designed to strengthen symbolic literacy over time.
+
+Leigh Spencer built this work across decades of journalism, business, mentoring and card reading.
+
+Read the About page:
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="3">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="3">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="3">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="3">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="3">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="3"></div>
+      <div class="unsaved-flag" data-unsaved="3" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="3"></div>
+      <label class="field-label" for="notes-03">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-03" data-notes="3" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="3" hidden>If you are new here, this may help orient you.
+
+Tides of Knowing is a long-form editorial and educational platform. It explores tarot as symbolic language, reflective practice and trained perception.
+
+It is not entertainment tarot. It is not prediction content. It is not generic spirituality.
+
+The site brings together articles, field notes, interpretive tools and teaching frameworks designed to strengthen symbolic literacy over time.
+
+Leigh Spencer built this work across decades of journalism, business, mentoring and card reading.
+
+Read the About page:
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset" id="a04" data-asset-id="4">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">4. Tue 09 2026-06-09 - X / Twitter Insight post</p>
+        <p class="sum-meta" data-sum-meta="4">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="4">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-04">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-04" data-edit="4" rows="10">Tides of Knowing exists because many readers want structure without losing intuition.
+
+Leigh Spencer spent decades in journalism and business before building a platform where tarot becomes symbolic literacy, not fortune telling.
+
+If you want grounded practice with editorial clarity, start here:
+https://www.tidesofknowing.com/about/
+
+#SymbolicLiteracy #TidesOfKnowing</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="4">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="4">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="4">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="4">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="4">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="4"></div>
+      <div class="unsaved-flag" data-unsaved="4" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="4"></div>
+      <label class="field-label" for="notes-04">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-04" data-notes="4" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="4" hidden>Tides of Knowing exists because many readers want structure without losing intuition.
+
+Leigh Spencer spent decades in journalism and business before building a platform where tarot becomes symbolic literacy, not fortune telling.
+
+If you want grounded practice with editorial clarity, start here:
+https://www.tidesofknowing.com/about/
+
+#SymbolicLiteracy #TidesOfKnowing</textarea>
+    </div>
+  </details>
+<details class="asset needs-image" id="a05" data-asset-id="5">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">5. Tue 09 2026-06-09 - Instagram Carousel</p>
+        <p class="sum-meta" data-sum-meta="5">Needs Review | Carousel, 6 slides, editorial calm | Creation: Yes | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="5">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-05">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-05" data-edit="5" rows="10">**Slide 1 (cover):** New here? Meet Tides of Knowing
+
+**Slide 2:** Leigh Spencer: journalist, editor, business owner and card reader across four decades
+
+**Slide 3:** Tides of Knowing explores tarot as symbolic language and reflective practice
+
+**Slide 4:** This is not entertainment tarot or prediction content
+
+**Slide 5:** The work strengthens symbolic literacy and trained perception over time
+
+**Slide 6:** Start with the About page. Link in bio.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice #TarotPractice</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="5">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="5">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="5">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="5">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="5">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="5"></div>
+      <div class="unsaved-flag" data-unsaved="5" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="5"></div>
+      <label class="field-label" for="notes-05">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-05" data-notes="5" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="5" hidden>**Slide 1 (cover):** New here? Meet Tides of Knowing
+
+**Slide 2:** Leigh Spencer: journalist, editor, business owner and card reader across four decades
+
+**Slide 3:** Tides of Knowing explores tarot as symbolic language and reflective practice
+
+**Slide 4:** This is not entertainment tarot or prediction content
+
+**Slide 5:** The work strengthens symbolic literacy and trained perception over time
+
+**Slide 6:** Start with the About page. Link in bio.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice #TarotPractice</textarea>
+    </div>
+  </details>
+<details class="asset" id="a06" data-asset-id="6">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">6. Wed 10 2026-06-10 - X / Twitter Question post</p>
+        <p class="sum-meta" data-sum-meta="6">Needs Review | Optional visual, page image preferred | Creation: No | Engagement</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="6">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-06">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-06" data-edit="6" rows="10">New to Tides of Knowing?
+
+What drew you here: tarot practice, symbolic literacy, or something you cannot quite name yet?
+
+Leigh Spencer built this platform for readers who want structure without losing intuition.
+
+About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="6">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="6">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="6">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="6">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="6">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="6"></div>
+      <div class="unsaved-flag" data-unsaved="6" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="6"></div>
+      <label class="field-label" for="notes-06">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-06" data-notes="6" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="6" hidden>New to Tides of Knowing?
+
+What drew you here: tarot practice, symbolic literacy, or something you cannot quite name yet?
+
+Leigh Spencer built this platform for readers who want structure without losing intuition.
+
+About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing</textarea>
+    </div>
+  </details>
+<details class="asset needs-image" id="a07" data-asset-id="7">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">7. Wed 10 2026-06-10 - Pinterest Pin</p>
+        <p class="sum-meta" data-sum-meta="7">Needs Review | Vertical pin, portrait orientation, editorial calm | Creation: Yes | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="7">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-07">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-07" data-edit="7" rows="10">**Pin title:** Meet Leigh Spencer | Tides of Knowing
+
+**Pin description:** Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader. Discover tarot as symbolic literacy and reflective practice, not prediction. Read the About page.
+
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="7">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="7">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="7">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="7">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="7">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="7"></div>
+      <div class="unsaved-flag" data-unsaved="7" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="7"></div>
+      <label class="field-label" for="notes-07">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-07" data-notes="7" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="7" hidden>**Pin title:** Meet Leigh Spencer | Tides of Knowing
+
+**Pin description:** Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader. Discover tarot as symbolic literacy and reflective practice, not prediction. Read the About page.
+
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset" id="a08" data-asset-id="8">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">8. Wed 10 2026-06-10 - Facebook Reflective post</p>
+        <p class="sum-meta" data-sum-meta="8">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="8">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-08">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-08" data-edit="8" rows="10">Leigh Spencer brings two worlds together at Tides of Knowing.
+
+Thirty years of journalism and editorial work taught her precision, context and responsibility with language.
+
+Decades of card reading taught her that symbols move before stories settle.
+
+The platform exists so readers can practice tarot with both: structure and intuition, symbolic literacy and reflective discipline.
+
+If that combination interests you, meet the work here:
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="8">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="8">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="8">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="8">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="8">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="8"></div>
+      <div class="unsaved-flag" data-unsaved="8" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="8"></div>
+      <label class="field-label" for="notes-08">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-08" data-notes="8" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="8" hidden>Leigh Spencer brings two worlds together at Tides of Knowing.
+
+Thirty years of journalism and editorial work taught her precision, context and responsibility with language.
+
+Decades of card reading taught her that symbols move before stories settle.
+
+The platform exists so readers can practice tarot with both: structure and intuition, symbolic literacy and reflective discipline.
+
+If that combination interests you, meet the work here:
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset" id="a09" data-asset-id="9">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">9. Thu 11 2026-06-11 - X / Twitter Method post</p>
+        <p class="sum-meta" data-sum-meta="9">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="9">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-09">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-09" data-edit="9" rows="10">After you meet Leigh Spencer and Tides of Knowing, you may notice one teaching framework: the COMPASS Method.
+
+Center, Open, Map, Perceive, Align, Sense, Seal. A structured path through symbolic reading, not a shortcut to answers.
+
+It supports reflective practice, not prediction.
+
+About page:
+https://www.tidesofknowing.com/about/
+
+#COMPASSMethod #TidesOfKnowing</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="9">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="9">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="9">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="9">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="9">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="9"></div>
+      <div class="unsaved-flag" data-unsaved="9" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="9"></div>
+      <label class="field-label" for="notes-09">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-09" data-notes="9" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="9" hidden>After you meet Leigh Spencer and Tides of Knowing, you may notice one teaching framework: the COMPASS Method.
+
+Center, Open, Map, Perceive, Align, Sense, Seal. A structured path through symbolic reading, not a shortcut to answers.
+
+It supports reflective practice, not prediction.
+
+About page:
+https://www.tidesofknowing.com/about/
+
+#COMPASSMethod #TidesOfKnowing</textarea>
+    </div>
+  </details>
+<details class="asset" id="a10" data-asset-id="10">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">10. Thu 11 2026-06-11 - Facebook Practical post</p>
+        <p class="sum-meta" data-sum-meta="10">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="10">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-10">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-10" data-edit="10" rows="10">Tides of Knowing is for readers who already work with cards or intuition and want more structure.
+
+It is for journalists of the inner life: people who notice patterns, question assumptions and want symbolic literacy without losing depth.
+
+It is for practitioners who are tired of prediction culture and entertainment tarot.
+
+If that sounds like you, Leigh Spencer's About page is the right starting point:
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="10">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="10">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="10">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="10">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="10">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="10"></div>
+      <div class="unsaved-flag" data-unsaved="10" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="10"></div>
+      <label class="field-label" for="notes-10">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-10" data-notes="10" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="10" hidden>Tides of Knowing is for readers who already work with cards or intuition and want more structure.
+
+It is for journalists of the inner life: people who notice patterns, question assumptions and want symbolic literacy without losing depth.
+
+It is for practitioners who are tired of prediction culture and entertainment tarot.
+
+If that sounds like you, Leigh Spencer's About page is the right starting point:
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset" id="a11" data-asset-id="11">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">11. Fri 12 2026-06-12 - X / Twitter Thread</p>
+        <p class="sum-meta" data-sum-meta="11">Needs Review | Optional visual on tweet 1, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="11">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-11">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-11" data-edit="11" rows="10">**Tweet 1/6:** New to Tides of Knowing? This thread orients you in under a minute.
+
+**Tweet 2/6:** Leigh Spencer built the platform after decades in journalism, business and card reading. Tarot is the visible practice. Symbolic literacy is the deeper aim.
+
+**Tweet 3/6:** Tides of Knowing is editorial and educational. Not entertainment tarot. Not prediction. Reflective practice with structure.
+
+**Tweet 4/6:** The COMPASS Method offers a structured path: Center, Open, Map, Perceive, Align, Sense, Seal. Method comes after you understand who and what this is.
+
+**Tweet 5/6:** This work serves experienced readers and intuitive practitioners who want clearer perception without losing depth.
+
+**Tweet 6/6:** Start with the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="11">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="11">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="11">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="11">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="11">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="11"></div>
+      <div class="unsaved-flag" data-unsaved="11" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="11"></div>
+      <label class="field-label" for="notes-11">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-11" data-notes="11" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="11" hidden>**Tweet 1/6:** New to Tides of Knowing? This thread orients you in under a minute.
+
+**Tweet 2/6:** Leigh Spencer built the platform after decades in journalism, business and card reading. Tarot is the visible practice. Symbolic literacy is the deeper aim.
+
+**Tweet 3/6:** Tides of Knowing is editorial and educational. Not entertainment tarot. Not prediction. Reflective practice with structure.
+
+**Tweet 4/6:** The COMPASS Method offers a structured path: Center, Open, Map, Perceive, Align, Sense, Seal. Method comes after you understand who and what this is.
+
+**Tweet 5/6:** This work serves experienced readers and intuitive practitioners who want clearer perception without losing depth.
+
+**Tweet 6/6:** Start with the About page:
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy</textarea>
+    </div>
+  </details>
+<details class="asset needs-image" id="a12" data-asset-id="12">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">12. Fri 12 2026-06-12 - Instagram Quote post</p>
+        <p class="sum-meta" data-sum-meta="12">Needs Review | Quote card, editorial calm, Leigh attribution visible | Creation: Yes | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="12">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-12">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-12" data-edit="12" rows="10">&quot;Tarot is not information retrieval. It is a language of movement.&quot;
+
+Leigh Spencer, Tides of Knowing
+
+Read the full About page for context on how this platform approaches symbolic literacy and reflective practice.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="12">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="12">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="12">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="12">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="12">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="12"></div>
+      <div class="unsaved-flag" data-unsaved="12" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="12"></div>
+      <label class="field-label" for="notes-12">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-12" data-notes="12" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="12" hidden>&quot;Tarot is not information retrieval. It is a language of movement.&quot;
+
+Leigh Spencer, Tides of Knowing
+
+Read the full About page for context on how this platform approaches symbolic literacy and reflective practice.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice</textarea>
+    </div>
+  </details>
+<details class="asset" id="a13" data-asset-id="13">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">13. Sat 13 2026-06-13 - Substack Note</p>
+        <p class="sum-meta" data-sum-meta="13">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="13">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-13">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-13" data-edit="13" rows="10">A note for new readers.
+
+Leigh Spencer did not arrive at Tides of Knowing through a single moment. Journalism, editorial leadership, business building and decades of card reading converged into one question: what if tarot were taught as symbolic literacy instead of fortune telling?
+
+That question became a platform. Articles, field notes, interpretive tools and teaching frameworks now live under one editorial roof.
+
+If you want the fuller origin story and what the work is not, the About page is the clearest entry:
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="13">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="13">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="13">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="13">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="13">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="13"></div>
+      <div class="unsaved-flag" data-unsaved="13" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="13"></div>
+      <label class="field-label" for="notes-13">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-13" data-notes="13" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="13" hidden>A note for new readers.
+
+Leigh Spencer did not arrive at Tides of Knowing through a single moment. Journalism, editorial leadership, business building and decades of card reading converged into one question: what if tarot were taught as symbolic literacy instead of fortune telling?
+
+That question became a platform. Articles, field notes, interpretive tools and teaching frameworks now live under one editorial roof.
+
+If you want the fuller origin story and what the work is not, the About page is the clearest entry:
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset needs-image" id="a14" data-asset-id="14">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">14. Sat 13 2026-06-13 - Pinterest Pin</p>
+        <p class="sum-meta" data-sum-meta="14">Needs Review | Vertical pin, editorial calm, symbolic literacy theme | Creation: Yes | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="14">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-14">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-14" data-edit="14" rows="10">**Pin title:** Tarot as Perceptual Practice | Tides of Knowing
+
+**Pin description:** New to symbolic literacy? Leigh Spencer's Tides of Knowing treats tarot as reflective practice and trained perception, not prediction. Learn how the platform approaches cards for experienced readers and intuitive practitioners.
+
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="14">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="14">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="14">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="14">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="14">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="14"></div>
+      <div class="unsaved-flag" data-unsaved="14" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="14"></div>
+      <label class="field-label" for="notes-14">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-14" data-notes="14" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="14" hidden>**Pin title:** Tarot as Perceptual Practice | Tides of Knowing
+
+**Pin description:** New to symbolic literacy? Leigh Spencer's Tides of Knowing treats tarot as reflective practice and trained perception, not prediction. Learn how the platform approaches cards for experienced readers and intuitive practitioners.
+
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+<details class="asset" id="a15" data-asset-id="15">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">15. Sun 14 2026-06-14 - X / Twitter Reflective post</p>
+        <p class="sum-meta" data-sum-meta="15">Needs Review | Optional visual, page image preferred | Creation: No | Source promotion</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="15">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-15">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-15" data-edit="15" rows="10">If you have followed Tides of Knowing this week and want one clear next step: read the About page.
+
+Leigh Spencer explains who she is, what the platform teaches and how tarot becomes symbolic literacy here.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #StartHere</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="15">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="15">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="15">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="15">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="15">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="15"></div>
+      <div class="unsaved-flag" data-unsaved="15" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="15"></div>
+      <label class="field-label" for="notes-15">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-15" data-notes="15" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="15" hidden>If you have followed Tides of Knowing this week and want one clear next step: read the About page.
+
+Leigh Spencer explains who she is, what the platform teaches and how tarot becomes symbolic literacy here.
+
+https://www.tidesofknowing.com/about/
+
+#TidesOfKnowing #StartHere</textarea>
+    </div>
+  </details>
+<details class="asset needs-image" id="a16" data-asset-id="16">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">16. Sun 14 2026-06-14 - Instagram Soft training invitation</p>
+        <p class="sum-meta" data-sum-meta="16">Needs Review | Soft invitation card, editorial calm, no product-forward language | Creation: Yes | Training invitation</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="16">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-16">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-16" data-edit="16" rows="10">If you have spent the week meeting Leigh Spencer and Tides of Knowing, you may already sense whether this kind of practice fits you.
+
+This work is about symbolic literacy and reflective discipline, not quick answers.
+
+When you are ready to explore practice further, the About page points toward how Leigh teaches:
+https://www.tidesofknowing.com/about/
+
+No pressure. Notice first.
+
+#TidesOfKnowing #ReflectivePractice</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="16">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="16">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="16">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="16">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="16">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="16"></div>
+      <div class="unsaved-flag" data-unsaved="16" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="16"></div>
+      <label class="field-label" for="notes-16">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-16" data-notes="16" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      <textarea class="original-store" data-original="16" hidden>If you have spent the week meeting Leigh Spencer and Tides of Knowing, you may already sense whether this kind of practice fits you.
+
+This work is about symbolic literacy and reflective discipline, not quick answers.
+
+When you are ready to explore practice further, the About page points toward how Leigh teaches:
+https://www.tidesofknowing.com/about/
+
+No pressure. Notice first.
+
+#TidesOfKnowing #ReflectivePractice</textarea>
+    </div>
+  </details>
+<details class="asset" id="a17" data-asset-id="17">
+    <summary>
+      <div class="sum-left">
+        <p class="sum-title">17. Sun 14 2026-06-14 - Facebook Conversation post</p>
+        <p class="sum-meta" data-sum-meta="17">Needs Review | Optional visual, page image preferred | Creation: No | Engagement</p>
+      </div>
+      <span class="approval-pill badge badge-review" data-approval-pill="17">Needs Review</span>
+      <span class="sum-arrow">Expand</span>
+    </summary>
+    <div class="asset-body">
+      <label class="field-label" for="edit-17">Post copy (editable)</label>
+      <textarea class="edit-copy" id="edit-17" data-edit="17" rows="10">New here this week?
+
+We introduced Leigh Spencer and Tides of Knowing across platforms for the first time. Tarot as symbolic literacy. Reflective practice. Not prediction culture.
+
+What would you like to understand better about this work?
+
+The About page remains the best starting point:
+https://www.tidesofknowing.com/about/</textarea>
+      <div class="btn-row">
+        <button class="btn btn-save" type="button" data-save="17">Save Edit</button>
+        <button class="btn btn-reset" type="button" data-reset="17">Reset to Original</button>
+        <button class="btn btn-copy" type="button" data-copy="17">Copy Post</button>
+        <button class="btn btn-approve" type="button" data-approve="17">Approve Copy</button>
+        <button class="btn btn-hold" type="button" data-hold="17">Hold</button>
+      </div>
+      <div class="copy-feedback" data-feedback="17"></div>
+      <div class="unsaved-flag" data-unsaved="17" hidden>Unsaved edits</div>
+      <div class="visual-panels-host" data-visual-host="17"></div>
+      <label class="field-label" for="notes-17">Leigh review notes</label>
+      <textarea class="review-notes" id="notes-17" data-notes="17" rows="2" placeholder="Optional review notes for this asset"></textarea>
+      
+      <textarea class="original-store" data-original="17" hidden>New here this week?
+
+We introduced Leigh Spencer and Tides of Knowing across platforms for the first time. Tarot as symbolic literacy. Reflective practice. Not prediction culture.
+
+What would you like to understand better about this work?
+
+The About page remains the best starting point:
+https://www.tidesofknowing.com/about/</textarea>
+    </div>
+  </details>
+      <div id="manualPostsContainer"></div>
+    </section>
+
+    <details class="manual-section assistant-section assistant-wrap" id="manualAssistantWrap" open>
+      <summary><span class="section-title">Manual Post Assistant</span><span class="assistant-summary-hint">Shape a rough thought into a draft</span></summary>
+      <p class="assistant-intro">Use this when you have a rough thought and want it shaped into a platform-specific post. This page prepares a drafting request for ChatGPT or Cursor. Paste the result back into Add Manual Post when ready.</p>
+      <div class="manual-grid assistant-compact-grid">
+        <div class="full"><label for="assistantRoughThought">Rough thought or note</label><textarea id="assistantRoughThought" rows="3" placeholder="Your rough idea, note or bullet points"></textarea></div>
+        <div><label for="assistantPlatform">Platform</label>
+          <select id="assistantPlatform">
+            <option value="">Select platform</option>
+            <option value="X / Twitter">X / Twitter</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Pinterest">Pinterest</option>
+            <option value="Substack">Substack</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div><label for="assistantPurpose">Post purpose</label>
+          <select id="assistantPurpose">
+            <option value="Thought leadership">Thought leadership</option>
+            <option value="Personal reflection">Personal reflection</option>
+            <option value="Training invitation">Training invitation</option>
+            <option value="Conversation starter">Conversation starter</option>
+            <option value="Authority-building">Authority-building</option>
+            <option value="Soft CTA">Soft CTA</option>
+            <option value="Announcement">Announcement</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div><label for="assistantAudience">Audience context</label>
+          <select id="assistantAudience">
+            <option value="Cold audience">Cold audience</option>
+            <option value="Existing followers">Existing followers</option>
+            <option value="Tarot readers">Tarot readers</option>
+            <option value="Deck Compass prospects">Deck Compass prospects</option>
+            <option value="General intuitive practice audience">General intuitive practice audience</option>
+          </select>
+        </div>
+        <div><label for="assistantLength">Desired length</label>
+          <select id="assistantLength">
+            <option value="Short">Short</option>
+            <option value="Medium">Medium</option>
+            <option value="Long">Long</option>
+            <option value="Thread">Thread</option>
+            <option value="Carousel caption">Carousel caption</option>
+          </select>
+        </div>
+        <div><label for="assistantImageToUse">Image to use</label>
+          <select id="assistantImageToUse">
+            <option value="No separate image needed">No separate image needed</option>
+            <option value="Use source page image">Use source page image</option>
+            <option value="Use supplied image from handoff folder">Use supplied image from handoff folder</option>
+            <option value="Image still needed">Image still needed</option>
+          </select>
+        </div>
+        <div class="assistant-pair-row">
+          <div><label for="assistantCta">CTA or link (optional)</label><input type="url" id="assistantCta" placeholder="https://www.tidesofknowing.com/about/"></div>
+          <div><label for="assistantDraftNotes">Notes for drafting (optional)</label><textarea id="assistantDraftNotes" rows="2" placeholder="Extra guidance for the drafting tool"></textarea></div>
+        </div>
+      </div>
+      <div class="btn-row" style="margin-top:10px;">
+        <button type="button" class="btn-prepare-prompt" id="prepareDraftPromptBtn">PREPARE DRAFTING PROMPT</button>
+        <button type="button" class="btn btn-copy" id="copyDraftPromptBtn">Copy Drafting Prompt</button>
+        <button type="button" class="btn btn-reset" id="clearAssistantBtn">Clear Assistant</button>
+      </div>
+      <div class="assistant-feedback" id="assistantFeedback"></div>
+      <details class="assistant-collapse" id="assistantPromptDetails">
+        <summary>Drafting prompt</summary>
+        <div class="collapse-inner"><textarea class="prompt-output" id="assistantPromptOutput" rows="10" readonly placeholder="Click PREPARE DRAFTING PROMPT to generate"></textarea></div>
+      </details>
+      <details class="assistant-collapse" id="assistantFinishedDetails">
+        <summary>Finished draft</summary>
+        <div class="collapse-inner"><textarea id="assistantFinishedDraft" rows="6" placeholder="Paste the finished post copy from ChatGPT or Cursor"></textarea></div>
+      </details>
+      <button type="button" class="btn-send-draft" id="addDraftToManualBtn">Add Draft to Manual Post Details</button>
+    </details>
+
+    <details class="manual-section manual-add-wrap" id="manualPostWrap" open>
+      <summary class="manual-add-summary"><span class="section-title">Add Manual Post</span></summary>
+      <p style="font-size:13px;color:#5a6278;margin:0 0 14px;">Add Leigh thought-piece posts directly to this week. Manual posts are saved in this browser and included in approval and export.</p>
+      <div class="manual-grid">
+        <div><label for="manualDate">Date</label><input type="date" id="manualDate" min="2026-06-08" max="2026-06-14"></div>
+        <div><label for="manualTime">Time</label><input type="text" id="manualTime" placeholder="e.g. 2:00 p.m."></div>
+        <div><label for="manualPlatform">Platform</label>
+          <select id="manualPlatform">
+            <option value="X / Twitter">X / Twitter</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+            <option value="Pinterest">Pinterest</option>
+            <option value="Substack">Substack</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div><label for="manualImageToUse">Image to use</label>
+          <select id="manualImageToUse">
+            <option value="No separate image needed">No separate image needed</option>
+            <option value="Use source page image">Use source page image</option>
+            <option value="Use supplied image from handoff folder">Use supplied image from handoff folder</option>
+            <option value="Image still needed">Image still needed</option>
+          </select>
+        </div>
+        <div class="full"><label for="manualHeadline">Asset headline</label><input type="text" id="manualHeadline" placeholder="Short headline for Week at a Glance"></div>
+        <div class="full"><label for="manualPostText">Post text</label><textarea id="manualPostText" rows="6" placeholder="Full post copy"></textarea></div>
+        <div class="full"><label for="manualSourceUrl">Source URL or CTA link (optional)</label><input type="url" id="manualSourceUrl" placeholder="https://www.tidesofknowing.com/about/"></div>
+        <div class="full" id="manualSuppliedFilenameWrap">
+          <label for="manualSuppliedImage">Supplied image filename</label>
+          <p class="field-hint">Required when Image to use is "Use supplied image from handoff folder". Example: TOK-W02-A05-instagram.png</p>
+          <div class="filename-input-row">
+            <input type="text" id="manualSuppliedImage" placeholder="TOK-W02-A05-instagram.png">
+            <button type="button" class="btn-generate-fn" id="generateFilenameBtn">Suggest Filename</button>
+          </div>
+        </div>
+        <div class="full"><label for="manualEaNotes">Notes for Executive Assistant (optional)</label><textarea id="manualEaNotes" rows="2" placeholder="Optional notes for the Executive Assistant"></textarea></div>
+      </div>
+      <button type="button" class="btn-add-manual" id="addManualBtn">Add Manual Post to Week</button>
+      <div class="copy-feedback" id="manualFormFeedback"></div>
+    </details>
+
+  </div>
+
+  <script id="briefs-data" type="application/json">{"2026-06-09_instagram_TOK-0202_carousel-01_needs-image.md":"Brief 1: Instagram carousel (6 slides)\nFormat: 1080 x 1080 px each\nFilenames: slide-01 through slide-06 in images/\n\nOn-slide text:\n1. New here? Meet Tides of Knowing\n2. Leigh Spencer: journalist, editor, business owner and card reader across four decades\n3. Tides of Knowing explores tarot as symbolic language and reflective practice\n4. This is not entertainment tarot or prediction content\n5. The work strengthens symbolic literacy and trained perception over time\n6. Start with the About page. Link in bio.\n\nFooter on each slide: Tides of Knowing","2026-06-10_pinterest_TOK-0202_pin-01_needs-image.md":"Brief 2: Pinterest pin 01\nFilename: images/2026-06-10_pinterest_TOK-0202_pin-01.png\nFormat: 1000 x 1500 px vertical\n\nOn-pin text:\nHeadline: Meet Leigh Spencer\nSubline: Founder of Tides of Knowing\nFooter: Symbolic literacy and reflective practice","2026-06-12_instagram_TOK-0202_quote-post-01_needs-image.md":"Brief 3: Instagram quote card\nFilename: images/2026-06-12_instagram_TOK-0202_quote-post-01.png\nFormat: 1080 x 1080 px\n\nQuote: \"Tarot is not information retrieval. It is a language of movement.\"\nAttribution: Leigh Spencer, Tides of Knowing","2026-06-13_pinterest_TOK-0202_pin-02_needs-image.md":"Brief 4: Pinterest pin 02\nFilename: images/2026-06-13_pinterest_TOK-0202_pin-02.png\nFormat: 1000 x 1500 px vertical\n\nOn-pin text:\nHeadline: Tarot as Perceptual Practice\nSubline: Symbolic literacy for experienced readers\nFooter: Tides of Knowing","2026-06-14_instagram_TOK-0202_training-invitation-01_needs-image.md":"Brief 5: Instagram soft training invitation\nFilename: images/2026-06-14_instagram_TOK-0202_training-invitation-01.png\nFormat: 1080 x 1080 px\n\nOn-image text:\nHeadline: Notice whether this practice fits you\nSubline: Symbolic literacy and reflective discipline\nFooter: Tides of Knowing | About page in bio\n\nTone: Soft invitation. No product-forward language."}</script>
+  <script id="assets-data" type="application/json">[{"num":1,"id":"a01","scheduled_date":"2026-06-08","scheduled_time":"9:00 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-08_x-twitter_TOK-0202_thesis-post-01_ready.md","headline":"Meet Tides of Knowing","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"If you are new here: Tides of Knowing is a platform for tarot, symbolic literacy, reflective practice and trained perception.\r\n\r\nLeigh Spencer built it after decades in journalism, business and card reading. The work is grounded, practical and not prediction-led.\r\n\r\nStart with the About page:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice","assetType":"Thesis post","isThread":false,"dayShort":"Mon","dayNum":"08","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":2,"id":"a02","scheduled_date":"2026-06-08","scheduled_time":"10:30 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-08_x-twitter_TOK-0202_who-leigh-post-01_ready.md","headline":"Who is Leigh Spencer?","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader across four decades of practice.\r\n\r\nHer work combines editorial discipline with intuitive perception. Tarot is the visible practice. The deeper aim is symbolic literacy and clearer seeing.\r\n\r\nRead the About page:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #TrainedPerception","assetType":"Introduction post","isThread":false,"dayShort":"Mon","dayNum":"08","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":3,"id":"a03","scheduled_date":"2026-06-08","scheduled_time":"12:30 p.m.","platform":"Facebook","status":"ready","asset_file":"2026-06-08_facebook_TOK-0202_reflective-post-01_ready.md","headline":"What Tides of Knowing is","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"If you are new here, this may help orient you.\r\n\r\nTides of Knowing is a long-form editorial and educational platform. It explores tarot as symbolic language, reflective practice and trained perception.\r\n\r\nIt is not entertainment tarot. It is not prediction content. It is not generic spirituality.\r\n\r\nThe site brings together articles, field notes, interpretive tools and teaching frameworks designed to strengthen symbolic literacy over time.\r\n\r\nLeigh Spencer built this work across decades of journalism, business, mentoring and card reading.\r\n\r\nRead the About page:\r\nhttps://www.tidesofknowing.com/about/","assetType":"Reflective post","isThread":false,"dayShort":"Mon","dayNum":"08","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":4,"id":"a04","scheduled_date":"2026-06-09","scheduled_time":"10:30 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-09_x-twitter_TOK-0202_insight-post-01_ready.md","headline":"Why this work exists","business_objective":"Source promotion","cta_type":"Meet the work","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"Tides of Knowing exists because many readers want structure without losing intuition.\r\n\r\nLeigh Spencer spent decades in journalism and business before building a platform where tarot becomes symbolic literacy, not fortune telling.\r\n\r\nIf you want grounded practice with editorial clarity, start here:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#SymbolicLiteracy #TidesOfKnowing","assetType":"Insight post","isThread":false,"dayShort":"Tue","dayNum":"09","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":5,"id":"a05","scheduled_date":"2026-06-09","scheduled_time":"1:30 p.m.","platform":"Instagram","status":"needs-image","asset_file":"2026-06-09_instagram_TOK-0202_carousel-01_needs-image.md","headline":"Who Leigh is and what Tides of Knowing teaches","business_objective":"Source promotion","cta_type":"Start here","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Carousel, 6 slides, editorial calm","visual_source":"Create from source themes and About page","image_creation_needed":"Yes","expected_image_filename":"2026-06-09_instagram_TOK-0202_carousel-01_slide-01.png through slide-06.png","image_folder":"images/","required_before_posting":"Yes","imageRequired":true,"needsImage":true,"originalCopy":"**Slide 1 (cover):** New here? Meet Tides of Knowing\r\n\r\n**Slide 2:** Leigh Spencer: journalist, editor, business owner and card reader across four decades\r\n\r\n**Slide 3:** Tides of Knowing explores tarot as symbolic language and reflective practice\r\n\r\n**Slide 4:** This is not entertainment tarot or prediction content\r\n\r\n**Slide 5:** The work strengthens symbolic literacy and trained perception over time\r\n\r\n**Slide 6:** Start with the About page. Link in bio.\r\n\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice #TarotPractice","assetType":"Carousel","isThread":false,"dayShort":"Tue","dayNum":"09","expDisplay":"6 slides in images/","visualMode":"Needs carousel slides"},{"num":6,"id":"a06","scheduled_date":"2026-06-10","scheduled_time":"9:00 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-10_x-twitter_TOK-0202_question-post-01_ready.md","headline":"New here question","business_objective":"Engagement","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"New to Tides of Knowing?\r\n\r\nWhat drew you here: tarot practice, symbolic literacy, or something you cannot quite name yet?\r\n\r\nLeigh Spencer built this platform for readers who want structure without losing intuition.\r\n\r\nAbout page:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing","assetType":"Question post","isThread":false,"dayShort":"Wed","dayNum":"10","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":7,"id":"a07","scheduled_date":"2026-06-10","scheduled_time":"8:30 p.m.","platform":"Pinterest","status":"needs-image","asset_file":"2026-06-10_pinterest_TOK-0202_pin-01_needs-image.md","headline":"Meet Leigh Spencer","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Vertical pin, portrait orientation, editorial calm","visual_source":"Create from About page themes","image_creation_needed":"Yes","expected_image_filename":"2026-06-10_pinterest_TOK-0202_pin-01.png","image_folder":"images/","required_before_posting":"Yes","imageRequired":true,"needsImage":true,"originalCopy":"**Pin title:** Meet Leigh Spencer | Tides of Knowing\r\n\r\n**Pin description:** Leigh Spencer is the founder of Tides of Knowing. Journalist, editor, business owner and card reader. Discover tarot as symbolic literacy and reflective practice, not prediction. Read the About page.\r\n\r\nhttps://www.tidesofknowing.com/about/","assetType":"Pin","isThread":false,"dayShort":"Wed","dayNum":"10","expDisplay":"images/2026-06-10_pinterest_TOK-0202_pin-01.png","visualMode":"Needs Pinterest pin image"},{"num":8,"id":"a08","scheduled_date":"2026-06-10","scheduled_time":"7:30 p.m.","platform":"Facebook","status":"ready","asset_file":"2026-06-10_facebook_TOK-0202_journalism-intuition-post-01_ready.md","headline":"Journalism meets intuition","business_objective":"Source promotion","cta_type":"Meet the work","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"Leigh Spencer brings two worlds together at Tides of Knowing.\r\n\r\nThirty years of journalism and editorial work taught her precision, context and responsibility with language.\r\n\r\nDecades of card reading taught her that symbols move before stories settle.\r\n\r\nThe platform exists so readers can practice tarot with both: structure and intuition, symbolic literacy and reflective discipline.\r\n\r\nIf that combination interests you, meet the work here:\r\nhttps://www.tidesofknowing.com/about/","assetType":"Reflective post","isThread":false,"dayShort":"Wed","dayNum":"10","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":9,"id":"a09","scheduled_date":"2026-06-11","scheduled_time":"10:30 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-11_x-twitter_TOK-0202_method-post-01_ready.md","headline":"COMPASS Method introduction","business_objective":"Source promotion","cta_type":"Learn approach","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"After you meet Leigh Spencer and Tides of Knowing, you may notice one teaching framework: the COMPASS Method.\r\n\r\nCenter, Open, Map, Perceive, Align, Sense, Seal. A structured path through symbolic reading, not a shortcut to answers.\r\n\r\nIt supports reflective practice, not prediction.\r\n\r\nAbout page:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#COMPASSMethod #TidesOfKnowing","assetType":"Method post","isThread":false,"dayShort":"Thu","dayNum":"11","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":10,"id":"a10","scheduled_date":"2026-06-11","scheduled_time":"12:30 p.m.","platform":"Facebook","status":"ready","asset_file":"2026-06-11_facebook_TOK-0202_practical-post-01_ready.md","headline":"Who this work serves","business_objective":"Source promotion","cta_type":"Start here","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"Tides of Knowing is for readers who already work with cards or intuition and want more structure.\r\n\r\nIt is for journalists of the inner life: people who notice patterns, question assumptions and want symbolic literacy without losing depth.\r\n\r\nIt is for practitioners who are tired of prediction culture and entertainment tarot.\r\n\r\nIf that sounds like you, Leigh Spencer's About page is the right starting point:\r\nhttps://www.tidesofknowing.com/about/","assetType":"Practical post","isThread":false,"dayShort":"Thu","dayNum":"11","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":11,"id":"a11","scheduled_date":"2026-06-12","scheduled_time":"9:00 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-12_x-twitter_TOK-0202_thread-01_ready.md","headline":"Introduction thread","business_objective":"Source promotion","cta_type":"Start here","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual on tweet 1, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"**Tweet 1/6:** New to Tides of Knowing? This thread orients you in under a minute.\r\n\r\n**Tweet 2/6:** Leigh Spencer built the platform after decades in journalism, business and card reading. Tarot is the visible practice. Symbolic literacy is the deeper aim.\r\n\r\n**Tweet 3/6:** Tides of Knowing is editorial and educational. Not entertainment tarot. Not prediction. Reflective practice with structure.\r\n\r\n**Tweet 4/6:** The COMPASS Method offers a structured path: Center, Open, Map, Perceive, Align, Sense, Seal. Method comes after you understand who and what this is.\r\n\r\n**Tweet 5/6:** This work serves experienced readers and intuitive practitioners who want clearer perception without losing depth.\r\n\r\n**Tweet 6/6:** Start with the About page:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #SymbolicLiteracy","assetType":"Thread","isThread":true,"dayShort":"Fri","dayNum":"12","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":12,"id":"a12","scheduled_date":"2026-06-12","scheduled_time":"6:30 p.m.","platform":"Instagram","status":"needs-image","asset_file":"2026-06-12_instagram_TOK-0202_quote-post-01_needs-image.md","headline":"Leigh Spencer on symbolic literacy","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Quote card, editorial calm, Leigh attribution visible","visual_source":"Create from About page quote themes","image_creation_needed":"Yes","expected_image_filename":"2026-06-12_instagram_TOK-0202_quote-post-01.png","image_folder":"images/","required_before_posting":"Yes","imageRequired":true,"needsImage":true,"originalCopy":"\"Tarot is not information retrieval. It is a language of movement.\"\r\n\r\nLeigh Spencer, Tides of Knowing\r\n\r\nRead the full About page for context on how this platform approaches symbolic literacy and reflective practice.\r\n\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #SymbolicLiteracy #ReflectivePractice","assetType":"Quote post","isThread":false,"dayShort":"Fri","dayNum":"12","expDisplay":"images/2026-06-12_instagram_TOK-0202_quote-post-01.png","visualMode":"Needs quote card"},{"num":13,"id":"a13","scheduled_date":"2026-06-13","scheduled_time":"9:30 a.m.","platform":"Substack","status":"ready","asset_file":"2026-06-13_substack_TOK-0202_note-01_ready.md","headline":"Leigh Spencer origin story","business_objective":"Source promotion","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"A note for new readers.\r\n\r\nLeigh Spencer did not arrive at Tides of Knowing through a single moment. Journalism, editorial leadership, business building and decades of card reading converged into one question: what if tarot were taught as symbolic literacy instead of fortune telling?\r\n\r\nThat question became a platform. Articles, field notes, interpretive tools and teaching frameworks now live under one editorial roof.\r\n\r\nIf you want the fuller origin story and what the work is not, the About page is the clearest entry:\r\nhttps://www.tidesofknowing.com/about/","assetType":"Note","isThread":false,"dayShort":"Sat","dayNum":"13","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":14,"id":"a14","scheduled_date":"2026-06-13","scheduled_time":"8:30 p.m.","platform":"Pinterest","status":"needs-image","asset_file":"2026-06-13_pinterest_TOK-0202_pin-02_needs-image.md","headline":"Tarot as perceptual practice","business_objective":"Source promotion","cta_type":"Learn approach","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Vertical pin, editorial calm, symbolic literacy theme","visual_source":"Create from About page themes","image_creation_needed":"Yes","expected_image_filename":"2026-06-13_pinterest_TOK-0202_pin-02.png","image_folder":"images/","required_before_posting":"Yes","imageRequired":true,"needsImage":true,"originalCopy":"**Pin title:** Tarot as Perceptual Practice | Tides of Knowing\r\n\r\n**Pin description:** New to symbolic literacy? Leigh Spencer's Tides of Knowing treats tarot as reflective practice and trained perception, not prediction. Learn how the platform approaches cards for experienced readers and intuitive practitioners.\r\n\r\nhttps://www.tidesofknowing.com/about/","assetType":"Pin","isThread":false,"dayShort":"Sat","dayNum":"13","expDisplay":"images/2026-06-13_pinterest_TOK-0202_pin-02.png","visualMode":"Needs Pinterest pin image"},{"num":15,"id":"a15","scheduled_date":"2026-06-14","scheduled_time":"9:00 a.m.","platform":"X / Twitter","status":"ready","asset_file":"2026-06-14_x-twitter_TOK-0202_reflective-post-01_ready.md","headline":"Where to start","business_objective":"Source promotion","cta_type":"Start here","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"If you have followed Tides of Knowing this week and want one clear next step: read the About page.\r\n\r\nLeigh Spencer explains who she is, what the platform teaches and how tarot becomes symbolic literacy here.\r\n\r\nhttps://www.tidesofknowing.com/about/\r\n\r\n#TidesOfKnowing #StartHere","assetType":"Reflective post","isThread":false,"dayShort":"Sun","dayNum":"14","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"},{"num":16,"id":"a16","scheduled_date":"2026-06-14","scheduled_time":"6:30 p.m.","platform":"Instagram","status":"needs-image","asset_file":"2026-06-14_instagram_TOK-0202_training-invitation-01_needs-image.md","headline":"Notice whether you want to deepen","business_objective":"Training invitation","cta_type":"Notice practice fit","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Soft invitation card, editorial calm, no product-forward language","visual_source":"Create from About page themes","image_creation_needed":"Yes","expected_image_filename":"2026-06-14_instagram_TOK-0202_training-invitation-01.png","image_folder":"images/","required_before_posting":"Yes","imageRequired":true,"needsImage":true,"originalCopy":"If you have spent the week meeting Leigh Spencer and Tides of Knowing, you may already sense whether this kind of practice fits you.\r\n\r\nThis work is about symbolic literacy and reflective discipline, not quick answers.\r\n\r\nWhen you are ready to explore practice further, the About page points toward how Leigh teaches:\r\nhttps://www.tidesofknowing.com/about/\r\n\r\nNo pressure. Notice first.\r\n\r\n#TidesOfKnowing #ReflectivePractice","assetType":"Soft training invitation","isThread":false,"dayShort":"Sun","dayNum":"14","expDisplay":"images/2026-06-14_instagram_TOK-0202_training-invitation-01.png","visualMode":"Needs designed image"},{"num":17,"id":"a17","scheduled_date":"2026-06-14","scheduled_time":"7:30 p.m.","platform":"Facebook","status":"ready","asset_file":"2026-06-14_facebook_TOK-0202_conversation-post-01_ready.md","headline":"New here conversation","business_objective":"Engagement","cta_type":"Read About page","source_url":"https://www.tidesofknowing.com/about/","visual_strategy":"Optional visual, page image preferred","visual_source":"Image embedded in source page","image_creation_needed":"No","expected_image_filename":"Page image from source URL (no pack slot)","image_folder":"Not required for posting","required_before_posting":"No","imageRequired":false,"needsImage":false,"originalCopy":"New here this week?\r\n\r\nWe introduced Leigh Spencer and Tides of Knowing across platforms for the first time. Tarot as symbolic literacy. Reflective practice. Not prediction culture.\r\n\r\nWhat would you like to understand better about this work?\r\n\r\nThe About page remains the best starting point:\r\nhttps://www.tidesofknowing.com/about/","assetType":"Conversation post","isThread":false,"dayShort":"Sun","dayNum":"14","expDisplay":"Page image from source (no slot)","visualMode":"Use article/About/source image"}]</script>
+  <script>
+(function() {
+  var STORAGE_KEY = 'tok-week-review-2026-06-08-TOK-0202';
+  var IMAGE_TO_USE_OPTIONS = [
+    'No separate image needed',
+    'Use source page image',
+    'Use supplied image from handoff folder',
+    'Image still needed'
+  ];
+  var PACK_META = {
+    weekStart: '2026-06-08',
+    weekEnd: '2026-06-14',
+    weekLabel: 'Week 02',
+    sourceId: 'TOK-0202',
+    sourceTitle: 'About Leigh Spencer',
+    sourceUrl: 'https://www.tidesofknowing.com/about/',
+    packType: 'About Introduction Pack'
+  };
+  var ASSETS = JSON.parse(document.getElementById('assets-data').textContent);
+
+  function mapLegacyVisualMode(mode) {
+    if (IMAGE_TO_USE_OPTIONS.indexOf(mode) >= 0) return mode;
+    if (mode === 'No separate image required') return 'No separate image needed';
+    if (mode === 'Use article/About/source image') return 'Use source page image';
+    if (mode === 'Use supplied image') return 'Use supplied image from handoff folder';
+    return 'Image still needed';
+  }
+
+  function extractPackFilename(raw) {
+    if (!raw || raw.indexOf('Page image') >= 0) return '';
+    var s = String(raw).trim();
+    if (s.indexOf('images/') === 0) s = s.slice(7);
+    if (s.indexOf(',') >= 0) s = s.split(',')[0].trim();
+    if (s.indexOf(' through ') >= 0) s = s.split(' through ')[0].trim();
+    if (s.indexOf('/') >= 0) s = s.split('/').pop();
+    return s;
+  }
+
+  ASSETS.forEach(function(a) {
+    if (!a.visualMode) a.visualMode = 'Use article/About/source image';
+    a.isManual = false;
+  });
+
+  function defaultAssetState() {
+    return { savedCopy: null, copyApproved: false, hold: false, reviewNotes: '', imageToUse: null, suppliedImageFilename: '' };
+  }
+
+  function ensureImageState(a) {
+    var st = assetState(assetKey(a));
+    if (!st.imageToUse) {
+      st.imageToUse = mapLegacyVisualMode(a.visualMode || 'No separate image required');
+      if (st.imageSupplied && (a.imageRequired || st.imageToUse === 'Image still needed')) {
+        st.imageToUse = 'Use supplied image from handoff folder';
+      }
+      if (!st.suppliedImageFilename) {
+        var fn = extractPackFilename(a.expected_image_filename);
+        if (fn) st.suppliedImageFilename = fn;
+      }
+    }
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { assets: {}, manualPosts: [], manualCounter: 0 };
+      var s = JSON.parse(raw);
+      if (!s.manualPosts) s.manualPosts = [];
+      if (!s.manualCounter) s.manualCounter = 0;
+      return s;
+    } catch (e) {
+      return { assets: {}, manualPosts: [], manualCounter: 0 };
+    }
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  var state = loadState();
+  if (!state.assets) state.assets = {};
+  if (!state.manualPosts) state.manualPosts = [];
+  if (!state.manualCounter) state.manualCounter = 0;
+
+  function assetKey(a) {
+    return a.isManual ? a.id : String(a.num);
+  }
+
+  function assetState(key) {
+    if (!state.assets[key]) state.assets[key] = defaultAssetState();
+    return state.assets[key];
+  }
+
+  function getAllAssets() {
+    var all = ASSETS.slice().concat(state.manualPosts || []);
+    all.sort(function(x, y) {
+      var dx = (x.scheduled_date || '') + ' ' + (x.scheduled_time || '');
+      var dy = (y.scheduled_date || '') + ' ' + (y.scheduled_time || '');
+      return dx < dy ? -1 : dx > dy ? 1 : 0;
+    });
+    return all;
+  }
+
+  function getOriginal(a) {
+    var key = assetKey(a);
+    if (a.isManual) return a.originalCopy || '';
+    var el = document.querySelector('[data-original="' + key + '"]');
+    return el ? el.textContent : a.originalCopy || '';
+  }
+
+  function getSavedCopy(a) {
+    var st = assetState(assetKey(a));
+    return st.savedCopy !== null ? st.savedCopy : getOriginal(a);
+  }
+
+  function getEditValue(a) {
+    var key = assetKey(a);
+    var el = document.querySelector('[data-edit="' + key + '"]');
+    return el ? el.value : getSavedCopy(a);
+  }
+
+  function isDirty(a) {
+    return getEditValue(a) !== getSavedCopy(a);
+  }
+
+  function getImageToUseState(a) {
+    ensureImageState(a);
+    return assetState(assetKey(a)).imageToUse || 'No separate image needed';
+  }
+
+  function getSuppliedFilename(a) {
+    ensureImageState(a);
+    return (assetState(assetKey(a)).suppliedImageFilename || '').trim();
+  }
+
+  function isReadyForHandoffPosting(a) {
+    var st = assetState(assetKey(a));
+    if (st.hold || !st.copyApproved) return false;
+    var img = getImageToUseState(a);
+    if (img === 'Image still needed') return false;
+    if (img === 'Use supplied image from handoff folder' && !getSuppliedFilename(a)) return false;
+    return true;
+  }
+
+  function computeStatus(a) {
+    var st = assetState(assetKey(a));
+    if (st.hold) return { label: 'Hold', cls: 'badge-hold' };
+    if (!st.copyApproved) return { label: 'Needs Review', cls: 'badge-review' };
+    if (isReadyForHandoffPosting(a)) return { label: 'Ready to Post', cls: 'badge-export' };
+    return { label: 'Image Still Needed', cls: 'badge-image' };
+  }
+
+  function isHandoffItem(a) {
+    var st = assetState(assetKey(a));
+    return st.copyApproved && !st.hold;
+  }
+
+  function getHandoffStatus(a) {
+    return isReadyForHandoffPosting(a) ? 'Ready to post' : 'Copy approved, image still needed';
+  }
+
+  function isReadyForExport(a) { return isReadyForHandoffPosting(a); }
+  function isReviewExportItem(a) { return isHandoffItem(a); }
+  function getPostingStatus(a) { return getHandoffStatus(a); }
+  function getImageStatus(a) { return getImageToUseState(a); }
+
+  function assetLabel(a) {
+    return a.isManual ? a.id : String(a.num);
+  }
+
+  var PLATFORM_ORDER = {
+    'Facebook': 1,
+    'Instagram': 2,
+    'Pinterest': 3,
+    'Substack': 4,
+    'X / Twitter': 5,
+    'LinkedIn': 6,
+    'Other': 7
+  };
+
+  var postNumberMap = {};
+  var exportPostNumberMap = {};
+
+  function platformSortKey(platform) {
+    return PLATFORM_ORDER[platform] || 99;
+  }
+
+  function sortAssetsWorkflowOrder(assets) {
+    return assets.slice().sort(function(x, y) {
+      var px = platformSortKey(x.platform);
+      var py = platformSortKey(y.platform);
+      if (px !== py) return px - py;
+      var dx = (x.scheduled_date || '') + ' ' + (x.scheduled_time || '');
+      var dy = (y.scheduled_date || '') + ' ' + (y.scheduled_time || '');
+      if (dx !== dy) return dx < dy ? -1 : 1;
+      var ox = x.isManual ? 1000 + (parseInt(String(x.id).replace('manual-', ''), 10) || 0) : (x.num || 0);
+      var oy = y.isManual ? 1000 + (parseInt(String(y.id).replace('manual-', ''), 10) || 0) : (y.num || 0);
+      return ox - oy;
+    });
+  }
+
+  function refreshWorkflowNumbers() {
+    postNumberMap = {};
+    sortAssetsWorkflowOrder(getAllAssets()).forEach(function(a, i) {
+      postNumberMap[assetKey(a)] = i + 1;
+    });
+  }
+
+  function getPostNumber(a) {
+    return postNumberMap[assetKey(a)] || 0;
+  }
+
+  function refreshExportPostNumbers(items) {
+    exportPostNumberMap = {};
+    sortAssetsWorkflowOrder(items).forEach(function(a, i) {
+      exportPostNumberMap[assetKey(a)] = i + 1;
+    });
+  }
+
+  function getExportPostNumber(a) {
+    return exportPostNumberMap[assetKey(a)] || 0;
+  }
+
+  function workflowPostLabel(a) {
+    return 'Post ' + getPostNumber(a);
+  }
+
+  function exportPostLabel(a) {
+    return 'Post ' + getExportPostNumber(a);
+  }
+
+  function internalAssetRef(a) {
+    if (a.isManual) {
+      return 'Manual ID: M' + String(a.id.replace('manual-', '')).padStart(2, '0');
+    }
+    return 'Asset ID: A' + String(a.num).padStart(2, '0');
+  }
+
+  function shortDateLabel(dateStr) {
+    if (!dateStr) return '';
+    var d = new Date(dateStr + 'T12:00:00');
+    var names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return names[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()];
+  }
+
+  function buildCardHeading(a) {
+    var pn = getPostNumber(a);
+    var platform = a.platform || '';
+    var date = shortDateLabel(a.scheduled_date);
+    if (a.isManual) {
+      return 'Post ' + pn + ' - ' + platform + ' Manual Post - ' + date;
+    }
+    var typeShort = a.assetType || a.headline || 'Post';
+    return 'Post ' + pn + ' - ' + platform + ' - ' + date + ' - ' + typeShort;
+  }
+
+  function getImageToUse(a) {
+    return getImageToUseState(a);
+  }
+
+  function getHandoffImageBlock(a) {
+    var state = getImageToUseState(a);
+    var out = { line: '', file: null, warn: null, source: null };
+    if (state === 'No separate image needed') {
+      out.line = 'Image: No separate image needed.';
+    } else if (state === 'Use source page image') {
+      out.line = 'Image: Use the image from the source page.';
+      out.source = a.source_url || PACK_META.sourceUrl || '';
+    } else if (state === 'Use supplied image from handoff folder') {
+      out.line = 'Image: Use supplied image from handoff folder.';
+      var fn = getSuppliedFilename(a);
+      if (fn) out.file = 'images/' + fn;
+    } else {
+      out.line = 'Image: Image still needed.';
+      out.warn = 'Do not post until image is supplied.';
+    }
+    return out;
+  }
+
+  function groupByPlatform(orderedItems) {
+    var groups = [];
+    var current = null;
+    orderedItems.forEach(function(a) {
+      if (!current || current.platform !== a.platform) {
+        current = { platform: a.platform, items: [] };
+        groups.push(current);
+      }
+      current.items.push(a);
+    });
+    return groups;
+  }
+
+  function renderWorkflowCardHeadings() {
+    refreshWorkflowNumbers();
+    getAllAssets().forEach(function(a) {
+      var el = document.getElementById(a.id);
+      if (!el) return;
+      var sumLeft = el.querySelector('.sum-left');
+      if (!sumLeft) return;
+      var title = sumLeft.querySelector('.sum-title');
+      if (title) title.textContent = buildCardHeading(a);
+      var idLine = sumLeft.querySelector('.sum-asset-id');
+      if (!idLine) {
+        idLine = document.createElement('p');
+        idLine.className = 'sum-asset-id';
+        var meta = sumLeft.querySelector('.sum-meta');
+        if (meta) sumLeft.insertBefore(idLine, meta);
+        else sumLeft.appendChild(idLine);
+      }
+      idLine.textContent = internalAssetRef(a);
+    });
+  }
+
+  function snapshotImageSuppliedFlags() {
+    var snap = {};
+    getAllAssets().forEach(function(a) {
+      snap[assetKey(a)] = !!assetState(assetKey(a)).imageSupplied;
+    });
+    return snap;
+  }
+
+  function imageSuppliedFlagsUnchanged(before) {
+    return getAllAssets().every(function(a) {
+      var key = assetKey(a);
+      return !!assetState(key).imageSupplied === !!before[key];
+    });
+  }
+
+  function approveAllCopy() {
+    var before = snapshotImageSuppliedFlags();
+    getAllAssets().forEach(function(a) {
+      assetState(assetKey(a)).copyApproved = true;
+    });
+    if (!state.qaMeta) state.qaMeta = {};
+    state.qaMeta.approvePreservedImageSupplied = imageSuppliedFlagsUnchanged(before);
+    saveState();
+    updateUI();
+  }
+
+  function clearAllApprovals() {
+    var before = snapshotImageSuppliedFlags();
+    getAllAssets().forEach(function(a) {
+      assetState(assetKey(a)).copyApproved = false;
+    });
+    if (!state.qaMeta) state.qaMeta = {};
+    state.qaMeta.clearPreservedImageSupplied = imageSuppliedFlagsUnchanged(before);
+    saveState();
+    updateUI();
+  }
+
+  function getExportStats() {
+    var all = getAllAssets();
+    var generated = ASSETS.length;
+    var manual = (state.manualPosts || []).length;
+    var approved = 0;
+    var ready = 0;
+    var imagePending = 0;
+    var hold = 0;
+    var unsaved = 0;
+    all.forEach(function(a) {
+      ensureImageState(a);
+      var st = assetState(assetKey(a));
+      if (st.copyApproved) approved++;
+      if (isReadyForHandoffPosting(a)) ready++;
+      if (st.copyApproved && !st.hold && !isReadyForHandoffPosting(a)) imagePending++;
+      if (st.hold) hold++;
+      if (isDirty(a)) unsaved++;
+    });
+    refreshWorkflowNumbers();
+    var strictItems = sortAssetsWorkflowOrder(all.filter(isReadyForExport));
+    var reviewItems = sortAssetsWorkflowOrder(all.filter(isReviewExportItem));
+    return {
+      total: all.length,
+      generated: generated,
+      manual: manual,
+      approved: approved,
+      ready: ready,
+      imagePending: imagePending,
+      hold: hold,
+      unsaved: unsaved,
+      strictCount: strictItems.length,
+      reviewCount: reviewItems.length,
+      strictItems: strictItems,
+      reviewItems: reviewItems
+    };
+  }
+
+  function runExportLogicChecks(stats) {
+    var all = getAllAssets();
+    var strict = stats.strictItems;
+    var review = stats.reviewItems;
+    var imagePendingInReview = review.filter(function(a) {
+      return a.imageRequired && !assetState(assetKey(a)).imageSupplied;
+    });
+    var checks = [];
+
+    var strictHasImagePending = strict.filter(function(a) {
+      return a.imageRequired && !assetState(assetKey(a)).imageSupplied;
+    });
+    checks.push({
+      name: 'Legacy export excludes image-pending items',
+      pass: strictHasImagePending.length === 0,
+      diag: strictHasImagePending.map(assetLabel)
+    });
+
+    var reviewMissingImagePending = stats.imagePending.filter(function(a) {
+      return assetState(assetKey(a)).copyApproved && !assetState(assetKey(a)).hold;
+    }).filter(function(a) {
+      return !review.some(function(r) { return assetKey(r) === assetKey(a); });
+    });
+    checks.push({
+      name: 'Approval export includes copy-approved image-pending items',
+      pass: stats.imagePending.length === 0 || stats.imagePending.every(function(a) {
+        return review.some(function(r) { return assetKey(r) === assetKey(a); });
+      }),
+      diag: reviewMissingImagePending.map(assetLabel)
+    });
+
+    var heldInStrict = strict.filter(function(a) { return assetState(assetKey(a)).hold; });
+    checks.push({
+      name: 'Held items excluded from legacy export',
+      pass: heldInStrict.length === 0,
+      diag: heldInStrict.map(assetLabel)
+    });
+
+    var heldInReview = review.filter(function(a) { return assetState(assetKey(a)).hold; });
+    checks.push({
+      name: 'Held items excluded from approval export',
+      pass: heldInReview.length === 0,
+      diag: heldInReview.map(assetLabel)
+    });
+
+    var badImageStatus = imagePendingInReview.filter(function(a) {
+      return getImageStatus(a) !== 'Image pending';
+    });
+    checks.push({
+      name: 'Image-pending items have image status Image pending',
+      pass: badImageStatus.length === 0,
+      diag: badImageStatus.map(assetLabel)
+    });
+
+    var badReadyPosting = strict.filter(function(a) {
+      return getPostingStatus(a) !== 'Ready to post';
+    });
+    checks.push({
+      name: 'Ready items have posting status Ready to post',
+      pass: badReadyPosting.length === 0,
+      diag: badReadyPosting.map(assetLabel)
+    });
+
+    var badReviewPosting = imagePendingInReview.filter(function(a) {
+      return getPostingStatus(a) !== 'Copy approved, image pending';
+    });
+    checks.push({
+      name: 'Review image-pending items have posting status Copy approved, image pending',
+      pass: badReviewPosting.length === 0,
+      diag: badReviewPosting.map(assetLabel)
+    });
+
+    var heldAndReady = all.filter(function(a) {
+      return assetState(assetKey(a)).hold && isReadyForExport(a);
+    });
+    checks.push({
+      name: 'No item is simultaneously held and ready to post',
+      pass: heldAndReady.length === 0,
+      diag: heldAndReady.map(assetLabel)
+    });
+
+    var approveOk = state.qaMeta && state.qaMeta.approvePreservedImageSupplied;
+    checks.push({
+      name: 'Approve All Copy does not mark images supplied',
+      pass: approveOk !== false,
+      diag: approveOk === false ? ['Image supplied flags changed after last Approve All Copy'] : (approveOk === undefined ? ['Run Approve All Copy to verify'] : [])
+    });
+
+    var clearOk = state.qaMeta && state.qaMeta.clearPreservedImageSupplied;
+    checks.push({
+      name: 'Clear All Approvals does not clear image supplied flags',
+      pass: clearOk !== false,
+      diag: clearOk === false ? ['Image supplied flags changed after last Clear All Approvals'] : (clearOk === undefined ? ['Run Clear All Approvals to verify'] : [])
+    });
+
+    return checks;
+  }
+
+  function renderQaSummary(stats) {
+    var el = document.getElementById('qaSummary');
+    if (!el) return;
+    el.innerHTML = [
+      '<strong>Total assets:</strong> ' + stats.total,
+      ' | <strong>Generated:</strong> ' + stats.generated,
+      ' | <strong>Manual:</strong> ' + stats.manual,
+      ' | <strong>Copy Approved:</strong> ' + stats.approved,
+      ' | <strong>Ready to Post:</strong> ' + stats.ready,
+      ' | <strong>Image Pending:</strong> ' + stats.imagePending,
+      ' | <strong>On Hold:</strong> ' + stats.hold,
+      ' | <strong>Legacy export:</strong> ' + stats.strictCount,
+      ' | <strong>Approval export:</strong> ' + stats.reviewCount,
+      ' | <strong>Unsaved Edits:</strong> ' + stats.unsaved
+    ].join('');
+  }
+
+  function renderQaChecks(checks) {
+    var el = document.getElementById('qaChecks');
+    if (!el) return;
+    var html = '<strong>Pass/fail checks</strong><br>';
+    checks.forEach(function(c) {
+      html += '<div class="' + (c.pass ? 'legacy-check-pass' : 'legacy-check-fail') + '">' + (c.pass ? 'PASS' : 'FAIL') + ': ' + esc(c.name) + '</div>';
+      if (!c.pass && c.diag && c.diag.length) {
+        html += '<div class="legacy-check-diag">Affected: ' + esc(c.diag.join(', ')) + '</div>';
+      } else if (c.pass === true && c.diag && c.diag.length && c.diag[0].indexOf('Run ') === 0) {
+        html += '<div class="legacy-check-diag">' + esc(c.diag.join(', ')) + '</div>';
+      }
+    });
+    el.innerHTML = html;
+    return checks;
+  }
+
+  function buildPreviewTableHtml(items, mode) {
+    if (!items.length) return '<div class="legacy-preview-empty">No items match this export preview.</div>';
+    refreshExportPostNumbers(items);
+    var html = '<table><thead><tr>';
+    if (mode === 'strict') {
+      html += '<th>Post #</th><th>Internal ID</th><th>Date</th><th>Time</th><th>Platform</th><th>Headline</th><th>Visual mode</th><th>Image status</th><th>Posting status</th>';
+    } else {
+      html += '<th>Post #</th><th>Internal ID</th><th>Date</th><th>Time</th><th>Platform</th><th>Headline</th><th>Visual mode</th><th>Expected image filename</th><th>Image status</th><th>Posting status</th>';
+    }
+    html += '</tr></thead><tbody>';
+    sortAssetsWorkflowOrder(items).forEach(function(a) {
+      html += '<tr>';
+      html += '<td>' + esc(String(getExportPostNumber(a))) + '</td>';
+      html += '<td>' + esc(internalAssetRef(a)) + '</td>';
+      html += '<td>' + esc(a.scheduled_date || '') + '</td>';
+      html += '<td>' + esc(a.scheduled_time || '') + '</td>';
+      html += '<td>' + esc(a.platform || '') + '</td>';
+      html += '<td>' + esc(a.headline || '') + '</td>';
+      html += '<td>' + esc(a.visualMode || '') + '</td>';
+      if (mode === 'review') html += '<td>' + esc(a.expected_image_filename || '') + '</td>';
+      html += '<td>' + esc(getImageStatus(a)) + '</td>';
+      html += '<td>' + esc(getPostingStatus(a)) + '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    return html;
+  }
+
+  function buildLegacyReportText(stats, checks) {
+    var lines = [
+      '# Legacy Export Report',
+      '',
+      '**Timestamp:** ' + new Date().toISOString(),
+      '**Week:** ' + PACK_META.weekStart + ' to ' + PACK_META.weekEnd,
+      '**Source:** ' + PACK_META.sourceTitle + ' (' + PACK_META.sourceId + ')',
+      '',
+      '## Counts',
+      '- Total assets: ' + stats.total,
+      '- Generated assets: ' + stats.generated,
+      '- Manual posts: ' + stats.manual,
+      '- Copy approved: ' + stats.approved,
+      '- Ready to post: ' + stats.ready,
+      '- Image pending: ' + stats.imagePending,
+      '- On hold: ' + stats.hold,
+      '- Legacy export count: ' + stats.strictCount,
+      '- Approval export count: ' + stats.reviewCount,
+      '- Unsaved edits: ' + stats.unsaved,
+      '',
+      '## Pass/fail checks',
+      ''
+    ];
+    checks.forEach(function(c) {
+      lines.push('- ' + (c.pass ? 'PASS' : 'FAIL') + ': ' + c.name);
+      if (!c.pass && c.diag && c.diag.length) lines.push('  - Affected: ' + c.diag.join(', '));
+      if (c.diag && c.diag.length && c.diag[0].indexOf('Run ') === 0) lines.push('  - Note: ' + c.diag.join(', '));
+    });
+    refreshExportPostNumbers(stats.strictItems);
+    lines.push('', '## Legacy export items', '');
+    stats.strictItems.forEach(function(a) {
+      lines.push('- ' + exportPostLabel(a) + ' (' + internalAssetRef(a) + ') | ' + a.scheduled_date + ' ' + a.scheduled_time + ' | ' + a.platform + ' | ' + a.headline + ' | ' + getPostingStatus(a));
+    });
+    if (!stats.strictItems.length) lines.push('- None');
+    refreshExportPostNumbers(stats.reviewItems);
+    lines.push('', '## Approval export items', '');
+    stats.reviewItems.forEach(function(a) {
+      lines.push('- ' + exportPostLabel(a) + ' (' + internalAssetRef(a) + ') | ' + a.scheduled_date + ' ' + a.scheduled_time + ' | ' + a.platform + ' | ' + a.headline + ' | ' + getPostingStatus(a) + (a.expected_image_filename ? ' | Image: ' + a.expected_image_filename : ''));
+    });
+    if (!stats.reviewItems.length) lines.push('- None');
+    lines.push('', '## Diagnostics', '');
+    var failures = checks.filter(function(c) { return !c.pass; });
+    if (!failures.length) lines.push('- All checks passed or pending verification.');
+    else failures.forEach(function(c) {
+      lines.push('- ' + c.name + ': ' + (c.diag && c.diag.length ? c.diag.join(', ') : 'See checks above'));
+    });
+    return lines.join('\n');
+  }
+
+  var lastQaStats = null;
+  var lastQaChecks = null;
+
+  function expandAllAssetCards() {
+    document.querySelectorAll('details.asset').forEach(function(d) { d.open = true; });
+  }
+
+  function collapseAllAssetCards() {
+    document.querySelectorAll('details.asset').forEach(function(d) { d.open = false; });
+  }
+
+  function badgeHtml(a) {
+    var status = computeStatus(a);
+    return '<span class="badge ' + status.cls + '">' + status.label + '</span>';
+  }
+
+  function buildAssetSumMeta(a, statusLabel) {
+    return statusLabel + ' | Image to use: ' + getImageToUseState(a);
+  }
+
+  function manualDisplayNum(id) {
+    return 'M' + id.replace('manual-', '');
+  }
+
+  function buildManualSumTitle(a) {
+    var day = a.scheduled_date ? dayLabel(a.scheduled_date) + ' ' + a.scheduled_date : '';
+    var typeLabel = a.assetType || 'Manual post';
+    return manualDisplayNum(a.id) + '. ' + day + ' - ' + a.platform + ' ' + typeLabel;
+  }
+
+  function dayLabel(dateStr) {
+    if (!dateStr) return '';
+    var d = new Date(dateStr + 'T12:00:00');
+    var names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return names[d.getDay()] + ' ' + dateStr.slice(-2);
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  var BRIEFS = {};
+  try {
+    var briefsEl = document.getElementById('briefs-data');
+    if (briefsEl) BRIEFS = JSON.parse(briefsEl.textContent);
+  } catch (e) { BRIEFS = {}; }
+
+  function getBriefText(a) {
+    if (a.isManual) return a.eaNotes || '';
+    return BRIEFS[a.asset_file] || '';
+  }
+
+  function buildImageToUsePanelHtml(a, key) {
+    ensureImageState(a);
+    var st = assetState(key);
+    var current = st.imageToUse || 'No separate image needed';
+    var out = '<div class="image-to-use-panel">';
+    out += '<label class="field-label" for="img-use-' + esc(key) + '">Image to use</label>';
+    out += '<select id="img-use-' + esc(key) + '" data-image-to-use="' + esc(key) + '">';
+    IMAGE_TO_USE_OPTIONS.forEach(function(opt) {
+      out += '<option value="' + esc(opt) + '"' + (opt === current ? ' selected' : '') + '>' + esc(opt) + '</option>';
+    });
+    out += '</select>';
+    var showFilename = current === 'Use supplied image from handoff folder';
+    out += '<div data-supplied-wrap="' + esc(key) + '"' + (showFilename ? '' : ' hidden') + ' style="margin-top:10px;">';
+    out += '<label class="field-label" for="img-fn-' + esc(key) + '">Supplied image filename</label>';
+    out += '<input type="text" id="img-fn-' + esc(key) + '" data-supplied-filename="' + esc(key) + '" placeholder="TOK-W02-A05-instagram.png" value="' + esc(st.suppliedImageFilename || '') + '">';
+    out += '<p class="field-hint">Place the file in Executive Assistant Handoff/images/ before sending the handoff.</p>';
+    out += '</div>';
+    out += '</div>';
+    if (a.isThread) {
+      out += '<div class="thread-box"><strong>Thread instructions:</strong> Post Tweet 1 first, then reply in order through Tweet 6/6. Do not post as separate unlinked tweets.</div>';
+    }
+    if (current === 'Image still needed') {
+      var briefText = getBriefText(a);
+      if (briefText) {
+        out += '<details class="collapse-panel"><summary>Image brief for designer</summary><div class="collapse-body">';
+        out += '<div class="brief-text">' + esc(briefText) + '</div>';
+        out += '<div class="btn-row"><button class="btn btn-brief" type="button" data-copy-brief="' + esc(key) + '">Copy Image Brief</button></div>';
+        out += '</div></details>';
+      }
+    }
+    return out;
+  }
+
+  function renderImageToUsePanels() {
+    getAllAssets().forEach(function(a) {
+      ensureImageState(a);
+      var key = assetKey(a);
+      var host = document.querySelector('[data-visual-host="' + key + '"]');
+      if (!host) return;
+      host.innerHTML = buildImageToUsePanelHtml(a, key);
+    });
+  }
+
+  function renderVisualPanels() { renderImageToUsePanels(); }
+
+  function renderGlanceTable() {
+    refreshWorkflowNumbers();
+    var tbody = document.getElementById('glanceBody');
+    if (!tbody) return;
+    var html = '';
+    var groups = groupByPlatform(sortAssetsWorkflowOrder(getAllAssets()));
+    groups.forEach(function(g) {
+      html += '<tr class="platform-group"><td colspan="8">' + esc(g.platform) + '</td></tr>';
+      g.items.forEach(function(a) {
+        var key = assetKey(a);
+        var jumpId = a.id;
+        var pn = getPostNumber(a);
+        html += '<tr data-asset-key="' + esc(key) + '">';
+        html += '<td><button type="button" class="row-jump' + (a.isManual ? ' manual' : '') + '" data-jump="' + esc(jumpId) + '" title="Open Post ' + pn + '">' + pn + '</button></td>';
+        html += '<td>' + esc(a.platform) + '</td>';
+        html += '<td>' + esc(a.scheduled_date ? dayLabel(a.scheduled_date) : '') + '</td>';
+        html += '<td>' + esc(a.scheduled_time) + '</td>';
+        html += '<td>' + esc(a.headline) + '</td>';
+        html += '<td class="approval-cell" data-approval-cell="' + esc(key) + '">' + badgeHtml(a) + '</td>';
+        html += '<td>' + esc(getImageToUse(a)) + '</td>';
+        html += '<td>' + esc(internalAssetRef(a)) + '</td>';
+        html += '</tr>';
+      });
+    });
+    tbody.innerHTML = html;
+    tbody.querySelectorAll('.row-jump').forEach(function(btn) {
+      btn.addEventListener('click', function() { jumpToAsset(btn.getAttribute('data-jump')); });
+    });
+  }
+
+  function buildManualAssetBlock(a) {
+    var key = assetKey(a);
+    var notesId = 'notes-' + key;
+    var editId = 'edit-' + key;
+    return '<details class="asset manual-asset" id="' + esc(a.id) + '" data-asset-key="' + esc(key) + '">' +
+      '<summary><div class="sum-left">' +
+      '<p class="sum-title">Post …</p>' +
+      '<p class="sum-asset-id"></p>' +
+      '<p class="sum-meta" data-sum-meta="' + esc(key) + '">' + esc(buildAssetSumMeta(a, 'Needs Review')) + '</p>' +
+      '</div><span class="approval-pill badge badge-review" data-approval-pill="' + esc(key) + '">Needs Review</span><span class="sum-arrow">Expand</span></summary>' +
+      '<div class="asset-body">' +
+      '<label class="field-label" for="' + esc(editId) + '">Post copy (editable)</label>' +
+      '<textarea class="edit-copy" id="' + esc(editId) + '" data-edit="' + esc(key) + '" rows="10">' + esc(a.originalCopy) + '</textarea>' +
+      '<div class="btn-row">' +
+      '<button class="btn btn-save" type="button" data-save="' + esc(key) + '">Save Edit</button>' +
+      '<button class="btn btn-reset" type="button" data-reset="' + esc(key) + '">Reset to Original</button>' +
+      '<button class="btn btn-copy" type="button" data-copy="' + esc(key) + '">Copy Post</button>' +
+      '<button class="btn btn-approve" type="button" data-approve="' + esc(key) + '">Approve Copy</button>' +
+      '<button class="btn btn-hold" type="button" data-hold="' + esc(key) + '">Hold</button>' +
+      '</div>' +
+      '<div class="copy-feedback" data-feedback="' + esc(key) + '"></div>' +
+      '<div class="unsaved-flag" data-unsaved="' + esc(key) + '" hidden>Unsaved edits</div>' +
+      '<div class="visual-panels-host" data-visual-host="' + esc(key) + '"></div>' +
+      '<label class="field-label" for="' + esc(notesId) + '">Leigh review notes</label>' +
+      '<textarea class="review-notes" id="' + esc(notesId) + '" data-notes="' + esc(key) + '" rows="2" placeholder="Optional review notes for this asset"></textarea>' +
+      '<div class="btn-row btn-row-manual-only">' +
+      '<button class="btn btn-delete-manual" type="button" data-delete-manual="' + esc(key) + '">Remove Manual Post</button>' +
+      '</div>' +
+      '<textarea class="original-store" data-original="' + esc(key) + '" hidden>' + esc(a.originalCopy) + '</textarea>' +
+      '</div></details>';
+  }
+
+  function renderManualPosts() {
+    var container = document.getElementById('manualPostsContainer');
+    if (!container) return;
+    if (!state.manualPosts.length) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = state.manualPosts.map(buildManualAssetBlock).join('');
+  }
+
+  function findAsset(key) {
+    var m = state.manualPosts.find(function(p) { return p.id === key; });
+    if (m) return m;
+    var n = parseInt(key, 10);
+    if (!isNaN(n)) return ASSETS.find(function(a) { return a.num === n; });
+    return null;
+  }
+
+  function persist() {
+    saveState();
+    updateUI();
+  }
+
+  function updateUI() {
+    var counts = { approved: 0, export: 0, needsImage: 0, hold: 0, unsaved: 0 };
+    getAllAssets().forEach(function(a) {
+      var key = assetKey(a);
+      var st = assetState(key);
+      var edit = document.querySelector('[data-edit="' + key + '"]');
+      var notes = document.querySelector('[data-notes="' + key + '"]');
+      if (notes) notes.value = st.reviewNotes || '';
+      var approveBtn = document.querySelector('[data-approve="' + key + '"]');
+      var holdBtn = document.querySelector('[data-hold="' + key + '"]');
+      if (approveBtn) approveBtn.classList.toggle('active', !!st.copyApproved);
+      if (holdBtn) holdBtn.classList.toggle('active', !!st.hold);
+      var cell = document.querySelector('[data-approval-cell="' + key + '"]');
+      if (cell) cell.innerHTML = badgeHtml(a);
+      var pill = document.querySelector('[data-approval-pill="' + key + '"]');
+      if (pill) {
+        var status = computeStatus(a);
+        pill.className = 'approval-pill badge ' + status.cls;
+        pill.textContent = status.label;
+      }
+      var sumMeta = document.querySelector('[data-sum-meta="' + key + '"]');
+      if (sumMeta) {
+        sumMeta.textContent = buildAssetSumMeta(a, computeStatus(a).label);
+      }
+      var details = document.getElementById(a.id);
+      if (details) {
+        details.classList.toggle('on-hold', !!st.hold);
+        details.classList.toggle('ready-export', isReadyForHandoffPosting(a));
+        details.classList.toggle('needs-image', getImageToUseState(a) === 'Image still needed');
+      }
+      var unsavedEl = document.querySelector('[data-unsaved="' + key + '"]');
+      var dirty = isDirty(a);
+      if (edit) {
+        if (edit.value !== getSavedCopy(a) && st.savedCopy !== null) { /* user editing */ }
+        if (document.activeElement !== edit && !dirty) edit.value = getSavedCopy(a);
+        edit.classList.toggle('dirty', dirty);
+      }
+      if (unsavedEl) unsavedEl.hidden = !dirty;
+      if (st.copyApproved) counts.approved++;
+      if (isReadyForHandoffPosting(a)) counts.export++;
+      if (st.copyApproved && !st.hold && !isReadyForHandoffPosting(a)) counts.needsImage++;
+      if (st.hold) counts.hold++;
+      if (dirty) counts.unsaved++;
+    });
+    document.getElementById('dashApproved').textContent = counts.approved;
+    document.getElementById('dashExport').textContent = counts.export;
+    document.getElementById('dashNeedsImage').textContent = counts.needsImage;
+    document.getElementById('dashHold').textContent = counts.hold;
+    document.getElementById('dashUnsaved').textContent = counts.unsaved;
+    renderWorkflowCardHeadings();
+    renderGlanceTable();
+  }
+
+  function showFeedback(key, msg) {
+    var fb = document.querySelector('[data-feedback="' + key + '"]');
+    if (fb) { fb.textContent = msg; setTimeout(function() { fb.textContent = ''; }, 2500); }
+  }
+
+  function copyText(text, key) {
+    function ok() { showFeedback(key, 'Copied.'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok();
+      });
+    } else {
+      var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok();
+    }
+  }
+
+  function jumpToAsset(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.open = true;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.classList.add('highlight');
+    setTimeout(function() { el.classList.remove('highlight'); }, 1800);
+  }
+
+  function openOnlyAssetCard(id) {
+    document.querySelectorAll('details.asset').forEach(function(d) {
+      d.open = d.id === id;
+    });
+    jumpToAsset(id);
+  }
+
+  function nextManualId() {
+    state.manualCounter = (state.manualCounter || 0) + 1;
+    return 'manual-' + String(state.manualCounter).padStart(2, '0');
+  }
+
+  function peekNextManualId() {
+    return 'manual-' + String((state.manualCounter || 0) + 1).padStart(2, '0');
+  }
+
+  function platformSlug(platform) {
+    var map = {
+      'X / Twitter': 'x-twitter',
+      'Facebook': 'facebook',
+      'Instagram': 'instagram',
+      'Pinterest': 'pinterest',
+      'Substack': 'substack',
+      'LinkedIn': 'linkedin',
+      'Other': 'other'
+    };
+    return map[platform] || 'other';
+  }
+
+  function generateManualImageFilename() {
+    var platformEl = document.getElementById('manualPlatform');
+    var imageEl = document.getElementById('manualImageToUse');
+    if (!platformEl || !imageEl) return '';
+    if (imageEl.value !== 'Use supplied image from handoff folder') return '';
+    var manualId = peekNextManualId().replace('manual-', 'M');
+    var pSlug = platformSlug(platformEl.value);
+    return 'TOK-' + PACK_META.weekLabel.replace('Week ', 'W') + '-' + manualId + '-' + pSlug + '.png';
+  }
+
+  function toggleManualSuppliedFilenameWrap() {
+    var wrap = document.getElementById('manualSuppliedFilenameWrap');
+    var imageEl = document.getElementById('manualImageToUse');
+    if (!wrap || !imageEl) return;
+    wrap.hidden = imageEl.value !== 'Use supplied image from handoff folder';
+  }
+
+  function applyManualFilenameIfNeeded(force) {
+    var field = document.getElementById('manualSuppliedImage');
+    var imageEl = document.getElementById('manualImageToUse');
+    if (!field || !imageEl) return;
+    toggleManualSuppliedFilenameWrap();
+    if (imageEl.value !== 'Use supplied image from handoff folder') {
+      if (force) field.value = '';
+      return;
+    }
+    if (!force && field.value.trim()) return;
+    var generated = generateManualImageFilename();
+    if (generated) field.value = generated;
+  }
+
+  function bindManualFilenameAutoGen() {
+    var imageEl = document.getElementById('manualImageToUse');
+    if (imageEl && !imageEl._fnBound) {
+      imageEl._fnBound = true;
+      imageEl.addEventListener('change', function() { applyManualFilenameIfNeeded(true); });
+    }
+    ['manualDate', 'manualPlatform', 'manualHeadline'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el || el._fnBound) return;
+      el._fnBound = true;
+      el.addEventListener('change', function() { applyManualFilenameIfNeeded(false); });
+      if (id === 'manualHeadline') {
+        el.addEventListener('input', function() { applyManualFilenameIfNeeded(false); });
+      }
+    });
+    var genBtn = document.getElementById('generateFilenameBtn');
+    if (genBtn && !genBtn._fnBound) {
+      genBtn._fnBound = true;
+      genBtn.addEventListener('click', function() {
+        if (document.getElementById('manualImageToUse').value !== 'Use supplied image from handoff folder') {
+          document.getElementById('manualFormFeedback').textContent = 'Filename is only needed for supplied images from the handoff folder.';
+          return;
+        }
+        applyManualFilenameIfNeeded(true);
+        document.getElementById('manualFormFeedback').textContent = 'Filename suggested.';
+        setTimeout(function() { document.getElementById('manualFormFeedback').textContent = ''; }, 2000);
+      });
+    }
+    toggleManualSuppliedFilenameWrap();
+  }
+
+  function showAssistantFeedback(msg, isError) {
+    var fb = document.getElementById('assistantFeedback');
+    if (!fb) return;
+    fb.textContent = msg;
+    fb.className = 'assistant-feedback' + (isError ? ' error' : '');
+  }
+
+  function lengthGuidance(length, platform) {
+    if (length === 'Short') return 'Keep it concise and platform-native. One clear idea.';
+    if (length === 'Medium') return 'Standard post length for ' + platform + '. Enough room for one idea and one soft close.';
+    if (length === 'Long') return 'Allow fuller reflection while staying readable on ' + platform + '.';
+    if (length === 'Thread') return 'Format as a numbered X thread. Each tweet should stand partly alone but build the idea.';
+    if (length === 'Carousel caption') return 'Format for Instagram carousel caption use. Clear slide-friendly phrasing if relevant.';
+    return 'Match the selected length preference.';
+  }
+
+  function buildDraftingPrompt() {
+    var rough = document.getElementById('assistantRoughThought').value.trim();
+    var platform = document.getElementById('assistantPlatform').value;
+    var purpose = document.getElementById('assistantPurpose').value;
+    var audience = document.getElementById('assistantAudience').value;
+    var cta = document.getElementById('assistantCta').value.trim();
+    var length = document.getElementById('assistantLength').value;
+    var imageToUse = document.getElementById('assistantImageToUse').value;
+    var notes = document.getElementById('assistantDraftNotes').value.trim();
+    var lines = [];
+    lines.push('You are drafting one social media post for Tides of Knowing.');
+    lines.push('');
+    lines.push('System context:');
+    lines.push('Tides of Knowing is a platform for intuitive thinking, symbolic literacy, reflective practice, tarot as trained perception, and human discernment. Leigh Spencer brings decades of journalism, card reading, intuitive practice, adult education and business mentoring to the work.');
+    lines.push('');
+    lines.push('Task:');
+    lines.push('Write one social post from Leigh Spencer\'s rough thought below.');
+    lines.push('');
+    lines.push('Requirements:');
+    lines.push('- Use Tides of Knowing voice: grounded, reflective, precise, editorial, not mystical fluff');
+    lines.push('- Make the post stand alone for the selected audience');
+    lines.push('- Avoid generic tarot marketing');
+    lines.push('- Avoid prediction framing');
+    lines.push('- Avoid fortune telling as brand language');
+    lines.push('- Do not use em dashes');
+    lines.push('- Use conventions appropriate for ' + platform);
+    lines.push('- Preserve Leigh\'s actual idea. Do not drift from the rough thought');
+    lines.push('- Do not invent offers, dates, pricing, claims or promises');
+    if (cta) {
+      lines.push('- Include this CTA or link naturally in the finished post: ' + cta);
+    } else {
+      lines.push('- No separate CTA or link was supplied unless the rough thought already contains one');
+    }
+    if (notes && notes.toLowerCase().indexOf('notes') >= 0 && notes.toLowerCase().indexOf('return') >= 0) {
+      lines.push('- Follow Leigh drafting notes below, including any request for notes with the post');
+    } else {
+      lines.push('- Return only the finished post copy, unless Leigh explicitly requests notes in the drafting notes below');
+    }
+    lines.push('');
+    lines.push('Post parameters:');
+    lines.push('- Platform: ' + platform);
+    lines.push('- Post purpose: ' + purpose);
+    lines.push('- Audience context: ' + audience);
+    lines.push('- Desired length: ' + length);
+    lines.push('- Image to use context: ' + imageToUse);
+    lines.push('- Length guidance: ' + lengthGuidance(length, platform));
+    if (notes) lines.push('- Leigh drafting notes: ' + notes);
+    lines.push('');
+    lines.push('Leigh\'s rough thought:');
+    lines.push('---');
+    lines.push(rough);
+    lines.push('---');
+    return lines.join('\n');
+  }
+
+  function copyAssistantText(text, successMsg) {
+    function done() { showAssistantFeedback(successMsg); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        done();
+      });
+    } else {
+      var ta2 = document.createElement('textarea');
+      ta2.value = text;
+      document.body.appendChild(ta2);
+      ta2.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta2);
+      done();
+    }
+  }
+
+  document.getElementById('prepareDraftPromptBtn').addEventListener('click', function() {
+    var rough = document.getElementById('assistantRoughThought').value.trim();
+    var platform = document.getElementById('assistantPlatform').value;
+    if (!rough || !platform) {
+      showAssistantFeedback('Rough thought and Platform are required.', true);
+      return;
+    }
+    var prompt = buildDraftingPrompt();
+    document.getElementById('assistantPromptOutput').value = prompt;
+    var promptDetails = document.getElementById('assistantPromptDetails');
+    if (promptDetails) promptDetails.open = true;
+    copyAssistantText(prompt, 'Drafting prompt prepared. Paste it into ChatGPT or Cursor, then paste the finished post into Add Manual Post.');
+  });
+
+  document.getElementById('copyDraftPromptBtn').addEventListener('click', function() {
+    var prompt = document.getElementById('assistantPromptOutput').value.trim();
+    if (!prompt) {
+      showAssistantFeedback('Prepare a drafting prompt first.', true);
+      return;
+    }
+    copyAssistantText(prompt, 'Drafting prompt copied.');
+  });
+
+  document.getElementById('clearAssistantBtn').addEventListener('click', function() {
+    document.getElementById('assistantRoughThought').value = '';
+    document.getElementById('assistantPlatform').value = '';
+    document.getElementById('assistantPurpose').value = 'Thought leadership';
+    document.getElementById('assistantAudience').value = 'Cold audience';
+    document.getElementById('assistantCta').value = '';
+    document.getElementById('assistantLength').value = 'Short';
+    document.getElementById('assistantImageToUse').value = 'No separate image needed';
+    document.getElementById('assistantDraftNotes').value = '';
+    document.getElementById('assistantPromptOutput').value = '';
+    document.getElementById('assistantFinishedDraft').value = '';
+    var promptDetails = document.getElementById('assistantPromptDetails');
+    var finishedDetails = document.getElementById('assistantFinishedDetails');
+    if (promptDetails) promptDetails.open = false;
+    if (finishedDetails) finishedDetails.open = false;
+    showAssistantFeedback('Assistant cleared.');
+  });
+
+  document.getElementById('addDraftToManualBtn').addEventListener('click', function() {
+    var draft = document.getElementById('assistantFinishedDraft').value.trim();
+    if (!draft) {
+      showAssistantFeedback('Paste a finished draft first.', true);
+      var finishedDetails = document.getElementById('assistantFinishedDetails');
+      if (finishedDetails) finishedDetails.open = true;
+      return;
+    }
+    var platform = document.getElementById('assistantPlatform').value;
+    var imageToUse = document.getElementById('assistantImageToUse').value;
+    var cta = document.getElementById('assistantCta').value.trim();
+    document.getElementById('manualPostText').value = draft;
+    if (platform) document.getElementById('manualPlatform').value = platform;
+    document.getElementById('manualImageToUse').value = imageToUse;
+    if (cta) document.getElementById('manualSourceUrl').value = cta;
+    applyManualFilenameIfNeeded(false);
+    var assistantWrap = document.getElementById('manualAssistantWrap');
+    if (assistantWrap) assistantWrap.open = false;
+    var manualSection = document.getElementById('manualPostWrap');
+    if (manualSection) {
+      manualSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      manualSection.classList.add('section-highlight');
+      setTimeout(function() { manualSection.classList.remove('section-highlight'); }, 2200);
+    }
+    showAssistantFeedback('Draft added to Manual Post Details. Review the date, time and headline, then click Add Manual Post to Week.');
+  });
+
+  document.getElementById('addManualBtn').addEventListener('click', function() {
+    var fb = document.getElementById('manualFormFeedback');
+    var date = document.getElementById('manualDate').value;
+    var time = document.getElementById('manualTime').value.trim();
+    var platform = document.getElementById('manualPlatform').value;
+    var headline = document.getElementById('manualHeadline').value.trim();
+    var postText = document.getElementById('manualPostText').value.trim();
+    var sourceUrl = document.getElementById('manualSourceUrl').value.trim();
+    var imageToUse = document.getElementById('manualImageToUse').value;
+    var suppliedImage = document.getElementById('manualSuppliedImage').value.trim();
+    var eaNotes = document.getElementById('manualEaNotes').value.trim();
+    if (!date || !time || !platform || !headline || !postText) {
+      fb.textContent = 'Date, time, platform, headline and post text are required.';
+      return;
+    }
+    if (imageToUse === 'Use supplied image from handoff folder') {
+      if (!suppliedImage) {
+        applyManualFilenameIfNeeded(true);
+        suppliedImage = document.getElementById('manualSuppliedImage').value.trim();
+      }
+      if (!suppliedImage) {
+        fb.textContent = 'Enter a supplied image filename or click Suggest Filename.';
+        return;
+      }
+    }
+    var id = nextManualId();
+    var post = {
+      id: id,
+      isManual: true,
+      num: null,
+      scheduled_date: date,
+      scheduled_time: time,
+      platform: platform,
+      headline: headline,
+      source_url: sourceUrl,
+      visualMode: imageToUse,
+      expected_image_filename: suppliedImage,
+      image_folder: suppliedImage ? 'images/' : '',
+      eaNotes: eaNotes,
+      eaNotes: eaNotes,
+      originalCopy: postText,
+      assetType: 'Manual post',
+      isThread: false,
+      status: 'manual'
+    };
+    state.manualPosts.push(post);
+    var st = assetState(id);
+    st.imageToUse = imageToUse;
+    st.suppliedImageFilename = suppliedImage;
+    saveState();
+    renderManualPosts();
+    renderVisualPanels();
+    updateUI();
+    document.getElementById('manualPostText').value = '';
+    document.getElementById('manualHeadline').value = '';
+    document.getElementById('manualSuppliedImage').value = '';
+    fb.textContent = 'Added ' + id + ' to week.';
+    var addWrap = document.getElementById('manualPostWrap');
+    if (addWrap) addWrap.open = false;
+    setTimeout(function() {
+      fb.textContent = '';
+      openOnlyAssetCard(id);
+    }, 400);
+  });
+
+  document.addEventListener('click', function(e) {
+    var t = e.target;
+    if (t.matches('[data-save]')) {
+      var key = t.getAttribute('data-save');
+      var a = findAsset(key);
+      if (!a) return;
+      assetState(key).savedCopy = getEditValue(a);
+      if (a.isManual) {
+        var mp = state.manualPosts.find(function(p) { return p.id === key; });
+        if (mp) mp.originalCopy = assetState(key).savedCopy;
+      }
+      persist();
+      showFeedback(key, 'Edit saved.');
+    }
+    if (t.matches('[data-reset]')) {
+      var key2 = t.getAttribute('data-reset');
+      var a2 = findAsset(key2);
+      if (!a2) return;
+      var orig = getOriginal(a2);
+      var edit = document.querySelector('[data-edit="' + key2 + '"]');
+      if (edit) edit.value = orig;
+      assetState(key2).savedCopy = orig;
+      persist();
+      showFeedback(key2, 'Reset to original.');
+    }
+    if (t.matches('[data-copy]')) {
+      var key3 = t.getAttribute('data-copy');
+      var a3 = findAsset(key3);
+      if (a3) copyText(getSavedCopy(a3), key3);
+    }
+    if (t.matches('[data-approve]')) {
+      var key4 = t.getAttribute('data-approve');
+      var a4 = findAsset(key4);
+      if (!a4) return;
+      if (isDirty(a4)) { showFeedback(key4, 'Save Edit before approving.'); return; }
+      var st = assetState(key4);
+      st.copyApproved = !st.copyApproved;
+      persist();
+      showFeedback(key4, st.copyApproved ? 'Copy approved.' : 'Approval removed.');
+    }
+    if (t.matches('[data-hold]')) {
+      var key5 = t.getAttribute('data-hold');
+      assetState(key5).hold = !assetState(key5).hold;
+      persist();
+      showFeedback(key5, assetState(key5).hold ? 'On hold.' : 'Hold removed.');
+    }
+    if (t.matches('[data-copy-brief]')) {
+      var keyB = t.getAttribute('data-copy-brief');
+      var briefEl = document.querySelector('[data-brief-text="' + keyB + '"]');
+      var aB = findAsset(keyB);
+      var text = briefEl ? briefEl.textContent : (aB && BRIEFS[aB.asset_file]) || '';
+      if (text) copyText(text, keyB);
+    }
+    if (t.matches('[data-copy-filename]')) {
+      var key6 = t.getAttribute('data-copy-filename');
+      var a6 = findAsset(key6);
+      if (a6) copyText(a6.expected_image_filename || '', key6);
+    }
+    if (t.matches('[data-delete-manual]')) {
+      var key7 = t.getAttribute('data-delete-manual');
+      if (!confirm('Remove this manual post from the week?')) return;
+      state.manualPosts = state.manualPosts.filter(function(p) { return p.id !== key7; });
+      delete state.assets[key7];
+      saveState();
+      renderManualPosts();
+      renderVisualPanels();
+      updateUI();
+    }
+  });
+
+  document.addEventListener('change', function(e) {
+    if (e.target.matches('[data-image-to-use]')) {
+      var key = e.target.getAttribute('data-image-to-use');
+      assetState(key).imageToUse = e.target.value;
+      var wrap = document.querySelector('[data-supplied-wrap="' + key + '"]');
+      if (wrap) wrap.hidden = e.target.value !== 'Use supplied image from handoff folder';
+      persist();
+      showFeedback(key, 'Image to use updated.');
+    }
+    if (e.target.matches('[data-notes]')) {
+      assetState(e.target.getAttribute('data-notes')).reviewNotes = e.target.value;
+      persist();
+    }
+  });
+
+  document.addEventListener('input', function(e) {
+    if (e.target.matches('[data-supplied-filename]')) {
+      var key = e.target.getAttribute('data-supplied-filename');
+      assetState(key).suppliedImageFilename = e.target.value.trim();
+      saveState();
+      updateUI();
+    }
+  });
+
+  document.addEventListener('input', function(e) {
+    if (e.target.matches('[data-edit]')) updateUI();
+  });
+
+  ASSETS.forEach(function(a) {
+    var key = String(a.num);
+    var edit = document.querySelector('[data-edit="' + key + '"]');
+    if (edit) edit.value = getSavedCopy(a);
+  });
+
+  function downloadFile(name, content, mime) {
+    var blob = new Blob([content], { type: mime });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  }
+
+  function buildExecutiveAssistantHandoffHtml(items) {
+    refreshExportPostNumbers(items);
+    var readyCount = items.filter(isReadyForHandoffPosting).length;
+    var imageNeededCount = items.length - readyCount;
+    var ts = new Date().toISOString();
+    var css = [
+      ':root{--ink:#0b1b3b;--cream:#f7f3eb;--teal:#4b9a9a;--gold:#c9a052;}',
+      'body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%);color:#161b27;}',
+      '.wrap{max-width:820px;margin:0 auto;padding:24px 20px 48px;}',
+      '.hero{background:linear-gradient(135deg,var(--ink),#152449);color:#fdfaf4;border-radius:16px;padding:24px;margin-bottom:20px;}',
+      '.hero h1{margin:0 0 10px;font-size:22px;letter-spacing:0.03em;}',
+      '.hero p{margin:4px 0;font-size:14px;color:rgba(248,245,236,0.92);}',
+      '.warn{margin:0 0 20px;padding:14px 16px;background:#fff8ee;border:2px solid rgba(201,160,82,0.45);border-radius:12px;font-size:14px;font-weight:650;color:#7a5a20;line-height:1.5;}',
+      '.note{margin:0 0 20px;padding:12px 14px;background:#eef6f6;border:1px solid rgba(75,154,154,0.3);border-radius:10px;font-size:13px;line-height:1.5;}',
+      '.platform-section{margin:28px 0 14px;font-size:17px;font-weight:650;color:var(--ink);border-bottom:2px solid rgba(75,154,154,0.35);padding-bottom:6px;}',
+      '.card{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 10px 24px rgba(0,0,0,0.08);border:1px solid rgba(11,27,59,0.06);}',
+      '.card.ready{border-color:rgba(45,106,79,0.35);}',
+      '.card.pending{border-color:rgba(201,160,82,0.35);}',
+      '.card h2{margin:0 0 4px;font-size:18px;color:var(--ink);}',
+      '.card-subid{font-size:12px;color:#5a6278;margin:0 0 10px;}',
+      '.meta{font-size:12px;color:#5a6278;line-height:1.6;margin-bottom:10px;}',
+      '.status-pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:650;text-transform:uppercase;margin-bottom:10px;}',
+      '.status-ready{background:rgba(45,106,79,0.15);color:#2d6a4f;}',
+      '.status-pending{background:rgba(201,160,82,0.22);color:#8a6520;}',
+      '.copy-box{background:#f7f4ee;border:1px solid rgba(11,27,59,0.08);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;white-space:pre-wrap;}',
+      '.img-line{margin-top:10px;font-size:13px;line-height:1.55;}',
+      '.img-warn{margin-top:8px;padding:10px 12px;background:#fff8ee;border:1px solid rgba(201,160,82,0.35);border-radius:8px;font-size:12px;font-weight:650;color:#8a6520;}',
+      '.ea-notes{margin-top:10px;padding:10px 12px;background:#fff8ee;border-radius:8px;font-size:12px;border:1px solid rgba(201,160,82,0.3);}',
+      '.brief{margin-top:10px;background:#faf8f4;border:1px solid rgba(11,27,59,0.08);border-radius:10px;}',
+      '.brief summary{cursor:pointer;padding:10px 14px;font-size:12px;font-weight:650;}',
+      '.brief-body{padding:0 14px 14px;font-size:12px;white-space:pre-wrap;line-height:1.55;}'
+    ].join('');
+    var parts = ['<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tides of Knowing Executive Assistant Posting Handoff</title><style>' + css + '</style></head><body><div class="wrap">'];
+    parts.push('<div class="hero"><h1>Tides of Knowing Executive Assistant Posting Handoff</h1>');
+    parts.push('<p><strong>Week:</strong> ' + esc(PACK_META.weekStart) + ' to ' + esc(PACK_META.weekEnd) + '</p>');
+    parts.push('<p><strong>Source:</strong> ' + esc(PACK_META.sourceTitle) + ' (' + esc(PACK_META.sourceId) + ')</p>');
+    parts.push('<p><strong>Source URL:</strong> <a href="' + esc(PACK_META.sourceUrl) + '" style="color:#b8e8e4;">' + esc(PACK_META.sourceUrl) + '</a></p>');
+    parts.push('<p><strong>Exported:</strong> ' + esc(ts) + '</p>');
+    parts.push('<p><strong>Total posts included:</strong> ' + items.length + ' | <strong>Ready to post:</strong> ' + readyCount + ' | <strong>Image still needed:</strong> ' + imageNeededCount + '</p></div>');
+    parts.push('<p class="warn">Some posts may still need images. Do not publish any item marked "Copy approved, image still needed" until the image has been supplied.</p>');
+    parts.push('<p class="note">If this handoff includes supplied images, keep this HTML file beside the images folder when sending it to the Executive Assistant. Place supplied image files in <strong>Executive Assistant Handoff/images/</strong>.</p>');
+    var groups = groupByPlatform(sortAssetsWorkflowOrder(items));
+    groups.forEach(function(g) {
+      parts.push('<h2 class="platform-section">' + esc(g.platform) + '</h2>');
+      g.items.forEach(function(a) {
+        var st = assetState(assetKey(a));
+        var pn = getExportPostNumber(a);
+        var status = getHandoffStatus(a);
+        var img = getHandoffImageBlock(a);
+        var copy = getSavedCopy(a);
+        var notes = (st.reviewNotes || '').trim();
+        var eaNotes = (a.eaNotes || '').trim();
+        parts.push('<div class="card ' + (status === 'Ready to post' ? 'ready' : 'pending') + '">');
+        parts.push('<h2>Post ' + pn + ' - ' + esc(a.platform) + '</h2>');
+        parts.push('<p class="card-subid">' + esc(internalAssetRef(a)) + '</p>');
+        parts.push('<div class="meta"><strong>Date:</strong> ' + esc(a.scheduled_date) + ' | <strong>Time:</strong> ' + esc(a.scheduled_time) + '</div>');
+        parts.push('<div class="meta"><strong>Headline:</strong> ' + esc(a.headline) + '</div>');
+        parts.push('<span class="status-pill ' + (status === 'Ready to post' ? 'status-ready' : 'status-pending') + '">' + esc(status) + '</span>');
+        parts.push('<div class="copy-box">' + esc(copy) + '</div>');
+        parts.push('<div class="img-line">' + esc(img.line) + '</div>');
+        if (img.file) parts.push('<div class="img-line"><strong>Image file:</strong> ' + esc(img.file) + '</div>');
+        if (img.source) parts.push('<div class="img-line"><strong>Source URL:</strong> <a href="' + esc(img.source) + '">' + esc(img.source) + '</a></div>');
+        if (img.warn) parts.push('<div class="img-warn">' + esc(img.warn) + '</div>');
+        var src = a.source_url || '';
+        if (src && img.source !== src) {
+          parts.push('<div class="meta"><strong>Source URL:</strong> <a href="' + esc(src) + '">' + esc(src) + '</a></div>');
+        }
+        if (notes) parts.push('<div class="ea-notes"><strong>Leigh notes:</strong> ' + esc(notes) + '</div>');
+        if (eaNotes && eaNotes !== notes) parts.push('<div class="ea-notes"><strong>Leigh notes:</strong> ' + esc(eaNotes) + '</div>');
+        if (getImageToUseState(a) === 'Image still needed') {
+          var brief = getBriefText(a);
+          if (brief) {
+            parts.push('<details class="brief"><summary>Image brief for designer</summary><div class="brief-body">' + esc(brief) + '</div></details>');
+          }
+        }
+        parts.push('</div>');
+      });
+    });
+    parts.push('<p style="font-size:12px;color:#8a8ea0;text-align:center;">Tides of Knowing | Executive Assistant posting handoff</p></div></body></html>');
+    return parts.join('');
+  }
+
+  function csvEsc(s) {
+    return '"' + String(s || '').replace(/"/g, '""') + '"';
+  }
+
+  function appendHandoffCards(parts, items, mode) {
+    refreshExportPostNumbers(items);
+    var groups = groupByPlatform(sortAssetsWorkflowOrder(items));
+    groups.forEach(function(g) {
+      parts.push('<h2 class="platform-section">' + esc(g.platform) + '</h2>');
+      g.items.forEach(function(a) {
+        var copy = getSavedCopy(a);
+        var st = assetState(assetKey(a));
+        var pn = getExportPostNumber(a);
+        var cardCls = mode === 'review' ? ('card ' + (isReadyForExport(a) ? 'ready' : 'pending')) : 'card';
+        parts.push('<div class="' + cardCls + '">');
+        parts.push('<h2>Post ' + pn + ' - ' + esc(a.platform) + '</h2>');
+        parts.push('<p class="card-subid">' + esc(internalAssetRef(a)) + '</p>');
+        parts.push('<div class="card-head"><span class="pill pill-date">' + esc(a.scheduled_date) + ' ' + esc(a.scheduled_time) + '</span>');
+        if (mode === 'review') {
+          var postingStatus = getPostingStatus(a);
+          parts.push('<span class="pill ' + (isReadyForExport(a) ? 'pill-ready' : 'pill-pending') + '">' + esc(postingStatus) + '</span>');
+        }
+        if (a.isManual) parts.push('<span class="pill pill-manual">Manual post</span>');
+        parts.push('</div>');
+        parts.push('<p class="card-headline">' + esc(a.headline) + '</p>');
+        if (mode === 'review') {
+          parts.push('<div class="meta"><strong>Posting status:</strong> ' + esc(getPostingStatus(a)));
+          parts.push(' | <strong>Image status:</strong> ' + esc(getImageStatus(a)));
+          parts.push(' | <strong>Image to use:</strong> ' + esc(getImageToUseState(a)));
+          if (a.expected_image_filename) parts.push(' | <strong>Expected image:</strong> ' + esc(a.expected_image_filename));
+          if (a.source_url) parts.push(' | <strong>Link:</strong> ' + esc(a.source_url));
+          parts.push('</div>');
+        } else {
+          parts.push('<div class="meta"><strong>Image to use:</strong> ' + esc(getImageToUseState(a)));
+          if (a.expected_image_filename) parts.push(' | <strong>Expected image:</strong> ' + esc(a.expected_image_filename));
+          if (a.source_url) parts.push(' | <strong>Link:</strong> ' + esc(a.source_url));
+          parts.push('</div>');
+        }
+        parts.push('<div class="copy-box">' + esc(copy) + '</div>');
+        if (mode === 'review') {
+          if (!isReadyForExport(a)) {
+            parts.push('<div class="instr-warn">Do not post this item until image is supplied. Status: Copy approved, image pending.</div>');
+          } else {
+            parts.push('<div class="instr"><strong>Executive Assistant instructions:</strong> Ready to post on ' + esc(a.platform) + '.</div>');
+          }
+        } else {
+          var instr = a.isThread ? 'Post as thread. Tweet 1 first, then reply in order.' : 'Post as single item on ' + a.platform + '.';
+          if (a.imageRequired) instr += ' Use image according to Image to use: ' + getImageToUseState(a) + '.';
+          else if (a.visualMode.indexOf('source') >= 0) instr += ' Optional: use About page or source image if platform allows.';
+          else instr += ' No separate image required.';
+          parts.push('<div class="instr"><strong>Executive Assistant instructions:</strong> ' + esc(instr) + '</div>');
+        }
+        if (st.reviewNotes) parts.push('<div class="ea-notes"><strong>Leigh review notes:</strong> ' + esc(st.reviewNotes) + '</div>');
+        if (a.eaNotes) parts.push('<div class="ea-notes"><strong>Notes for Executive Assistant:</strong> ' + esc(a.eaNotes) + '</div>');
+        parts.push('</div>');
+      });
+    });
+  }
+
+  function buildApprovedHtml(ready) {
+    var css = [
+      ':root{--ink:#0b1b3b;--cream:#f7f3eb;--teal:#4b9a9a;--gold:#c9a052;}',
+      'body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%);color:#161b27;}',
+      '.wrap{max-width:820px;margin:0 auto;padding:24px 20px 48px;}',
+      '.hero{background:linear-gradient(135deg,var(--ink),#152449);color:#fdfaf4;border-radius:16px;padding:24px;margin-bottom:24px;}',
+      '.hero h1{margin:0 0 8px;font-size:24px;letter-spacing:0.04em;text-transform:uppercase;}',
+      '.hero p{margin:4px 0;font-size:14px;color:rgba(248,245,236,0.9);}',
+      '.platform-section{margin:28px 0 14px;font-size:17px;font-weight:650;color:var(--ink);border-bottom:2px solid rgba(75,154,154,0.35);padding-bottom:6px;}',
+      '.card{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 10px 24px rgba(0,0,0,0.08);border:1px solid rgba(11,27,59,0.06);}',
+      '.card-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;}',
+      '.pill{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;}',
+      '.pill-date{background:rgba(201,160,82,0.18);color:#7a5a20;}',
+      '.pill-manual{background:rgba(11,27,59,0.08);color:var(--ink);}',
+      '.card h2{margin:0 0 4px;font-size:18px;color:var(--ink);}',
+      '.card-subid{font-size:12px;color:#5a6278;margin:0 0 12px;}',
+      '.card-headline{font-size:14px;font-weight:600;margin:0 0 10px;color:var(--ink);}',
+      '.meta{font-size:12px;color:#5a6278;line-height:1.6;margin-bottom:12px;}',
+      '.copy-box{background:#f7f4ee;border:1px solid rgba(11,27,59,0.08);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;white-space:pre-wrap;}',
+      '.instr{margin-top:12px;padding:10px 12px;background:#eef6f6;border-radius:8px;font-size:12px;border:1px solid rgba(75,154,154,0.25);}',
+      '.ea-notes{margin-top:10px;padding:10px 12px;background:#fff8ee;border-radius:8px;font-size:12px;border:1px solid rgba(201,160,82,0.3);}'
+    ].join('');
+    var parts = ['<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Approved Posting Pack - ' + PACK_META.weekLabel + '</title><style>' + css + '</style></head><body><div class="wrap">'];
+    parts.push('<div class="hero"><h1>Approved Posting Pack</h1>');
+    parts.push('<p><strong>Week:</strong> ' + PACK_META.weekStart + ' to ' + PACK_META.weekEnd + '</p>');
+    parts.push('<p><strong>Source:</strong> ' + esc(PACK_META.sourceTitle) + ' (' + PACK_META.sourceId + ')</p>');
+    parts.push('<p><strong>URL:</strong> <a href="' + PACK_META.sourceUrl + '" style="color:#b8e8e4;">' + PACK_META.sourceUrl + '</a></p>');
+    parts.push('<p><strong>Approved posts:</strong> ' + ready.length + ' | Executive Assistant handoff file | Work from Post Number, not asset ID</p></div>');
+    appendHandoffCards(parts, ready, 'strict');
+    parts.push('<p style="font-size:12px;color:#8a8ea0;text-align:center;">Tides of Knowing | Generated from Week ' + PACK_META.weekLabel + ' approval export</p></div></body></html>');
+    return parts.join('');
+  }
+
+  function buildReviewApprovedHtml(items) {
+    var css = [
+      ':root{--ink:#0b1b3b;--cream:#f7f3eb;--teal:#4b9a9a;--gold:#c9a052;}',
+      'body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%);color:#161b27;}',
+      '.wrap{max-width:820px;margin:0 auto;padding:24px 20px 48px;}',
+      '.hero{background:linear-gradient(135deg,var(--ink),#152449);color:#fdfaf4;border-radius:16px;padding:24px;margin-bottom:24px;}',
+      '.hero h1{margin:0 0 8px;font-size:24px;letter-spacing:0.04em;text-transform:uppercase;}',
+      '.hero p{margin:4px 0;font-size:14px;color:rgba(248,245,236,0.9);}',
+      '.warn{margin:0 0 24px;padding:14px 16px;background:#fff8ee;border:2px solid rgba(201,160,82,0.45);border-radius:12px;font-size:14px;font-weight:650;color:#7a5a20;line-height:1.5;}',
+      '.platform-section{margin:28px 0 14px;font-size:17px;font-weight:650;color:var(--ink);border-bottom:2px solid rgba(75,154,154,0.35);padding-bottom:6px;}',
+      '.card{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 10px 24px rgba(0,0,0,0.08);border:1px solid rgba(11,27,59,0.06);}',
+      '.card.pending{border-color:rgba(201,160,82,0.35);}',
+      '.card.ready{border-color:rgba(45,106,79,0.35);}',
+      '.card-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;}',
+      '.pill{display:inline-flex;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;}',
+      '.pill-date{background:rgba(201,160,82,0.18);color:#7a5a20;}',
+      '.pill-ready{background:rgba(45,106,79,0.15);color:#2d6a4f;}',
+      '.pill-pending{background:rgba(201,160,82,0.22);color:#8a6520;}',
+      '.pill-manual{background:rgba(11,27,59,0.08);color:var(--ink);}',
+      '.card h2{margin:0 0 4px;font-size:18px;color:var(--ink);}',
+      '.card-subid{font-size:12px;color:#5a6278;margin:0 0 12px;}',
+      '.card-headline{font-size:14px;font-weight:600;margin:0 0 10px;color:var(--ink);}',
+      '.meta{font-size:12px;color:#5a6278;line-height:1.6;margin-bottom:12px;}',
+      '.copy-box{background:#f7f4ee;border:1px solid rgba(11,27,59,0.08);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;white-space:pre-wrap;}',
+      '.instr{margin-top:12px;padding:10px 12px;background:#eef6f6;border-radius:8px;font-size:12px;border:1px solid rgba(75,154,154,0.25);}',
+      '.instr-warn{margin-top:12px;padding:10px 12px;background:#fff8ee;border-radius:8px;font-size:12px;border:1px solid rgba(201,160,82,0.35);color:#8a6520;font-weight:600;}',
+      '.ea-notes{margin-top:10px;padding:10px 12px;background:#fff8ee;border-radius:8px;font-size:12px;border:1px solid rgba(201,160,82,0.3);}'
+    ].join('');
+    var parts = ['<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Approval Posting Pack - ' + PACK_META.weekLabel + '</title><style>' + css + '</style></head><body><div class="wrap">'];
+    parts.push('<div class="hero"><h1>Approval Posting Pack</h1>');
+    parts.push('<p><strong>Week:</strong> ' + PACK_META.weekStart + ' to ' + PACK_META.weekEnd + '</p>');
+    parts.push('<p><strong>Source:</strong> ' + esc(PACK_META.sourceTitle) + ' (' + PACK_META.sourceId + ')</p>');
+    parts.push('<p><strong>Copy-approved items:</strong> ' + items.length + ' | Review handoff (not strict posting export) | Work from Post Number, not asset ID</p></div>');
+    parts.push('<p class="warn">Do not post image-pending items until image is supplied.</p>');
+    appendHandoffCards(parts, items, 'review');
+    parts.push('<p style="font-size:12px;color:#8a8ea0;text-align:center;">Tides of Knowing | Approval export from Week ' + PACK_META.weekLabel + '</p></div></body></html>');
+    return parts.join('');
+  }
+
+  document.getElementById('approveAllBtn').addEventListener('click', function() {
+    approveAllCopy();
+    var bf = document.getElementById('bulkFeedback');
+    bf.textContent = 'Copy approved for all assets. Holds unchanged.';
+    setTimeout(function() { bf.textContent = ''; }, 3500);
+  });
+
+  document.getElementById('clearAllApprovalsBtn').addEventListener('click', function() {
+    if (!confirm('Clear copy approval from all assets? Holds, saved edits and image supplied flags will be preserved.')) return;
+    clearAllApprovals();
+    var bf = document.getElementById('bulkFeedback');
+    bf.textContent = 'Copy approvals cleared. Holds, edits and image supplied flags preserved.';
+    setTimeout(function() { bf.textContent = ''; }, 3500);
+  });
+
+  document.getElementById('eaHandoffBtn').addEventListener('click', function() {
+    var fb = document.getElementById('exportFeedback');
+    var items = sortAssetsWorkflowOrder(getAllAssets().filter(isHandoffItem));
+    if (!items.length) {
+      fb.className = 'export-feedback error';
+      fb.textContent = 'No approved posts are ready for handoff yet.';
+      return;
+    }
+    downloadFile('EXECUTIVE_ASSISTANT_POSTING_HANDOFF.html', buildExecutiveAssistantHandoffHtml(items), 'text/html');
+    fb.className = 'export-feedback ok';
+    fb.textContent = 'Executive Assistant posting handoff exported.';
+  });
+
+  getAllAssets().forEach(ensureImageState);
+  bindManualFilenameAutoGen();
+  renderManualPosts();
+  renderImageToUsePanels();
+  updateUI();
+})();
+
+  
+  </script>
+</body>
+</html>

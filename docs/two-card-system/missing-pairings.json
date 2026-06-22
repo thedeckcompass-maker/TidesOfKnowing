@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-31T06:10:31.673Z",
+  "generatedAt": "2026-05-31T06:19:55.667Z",
   "sourceFile": "content-intake/two-card-corpus/major-arcana-upright-ordered-pairs-master.md",
   "expectedCount": 462,
   "countingMethod": "chunk_template (split on \\---, plus plain --- before markdown # pairing headings in tail)",

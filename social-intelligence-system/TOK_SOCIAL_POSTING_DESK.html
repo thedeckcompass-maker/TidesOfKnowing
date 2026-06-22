@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tides of Knowing Social Posting Desk</title>
+  <style>
+    :root {
+      --ink: #0b1b3b;
+      --ink-soft: #18264d;
+      --cream: #f7f3eb;
+      --panel: #ffffff;
+      --teal: #4b9a9a;
+      --gold: #c9a052;
+      --muted: #8a8ea0;
+      --danger: #b05353;
+      --border-radius: 10px;
+      --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #e9f1f4 0, #f7f3eb 40%, #f2ece3 100%);
+      color: #131824;
+    }
+
+    a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 32px auto 48px;
+      padding: 0 20px;
+    }
+
+    .header {
+      margin-bottom: 24px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 650;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      margin: 0 0 6px;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .top-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0 28px;
+    }
+
+    .pill-card {
+      background: linear-gradient(135deg, #ffffff, #f0ebe1);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pill-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .pill-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pill-value-strong {
+      color: var(--teal);
+    }
+
+    .pill-value-next {
+      color: var(--gold);
+    }
+
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--border-radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(11, 27, 59, 0.06);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 550;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(75, 154, 154, 0.08);
+      color: var(--teal);
+    }
+
+    .status-pill-warn {
+      background: rgba(201, 160, 82, 0.10);
+      color: var(--gold);
+    }
+
+    .status-pill-blocked {
+      background: rgba(176, 83, 83, 0.10);
+      color: var(--danger);
+    }
+
+    .panel-body {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #273047;
+    }
+
+    .panel-body p {
+      margin: 4px 0 8px;
+    }
+
+    .link-list {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 12px;
+    }
+
+    .link-list li {
+      margin: 2px 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .item-card {
+      background: var(--panel);
+      border-radius: var(--border-radius);
+      padding: 14px 16px 12px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(11, 27, 59, 0.06);
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .item-id {
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 2px 0 6px;
+    }
+
+    .item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .meta-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(11, 27, 59, 0.03);
+    }
+
+    .meta-pill-strong {
+      background: rgba(75, 154, 154, 0.10);
+      color: var(--teal);
+    }
+
+    .meta-pill-date {
+      background: rgba(201, 160, 82, 0.10);
+      color: var(--gold);
+    }
+
+    .item-action {
+      font-size: 12px;
+      margin: 6px 0 8px;
+      color: #273047;
+    }
+
+    .item-links {
+      font-size: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .item-links li {
+      margin: 2px 0;
+    }
+
+    .lanes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .lane-card {
+      background: var(--panel);
+      border-radius: var(--border-radius);
+      padding: 10px 12px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(11, 27, 59, 0.05);
+    }
+
+    .lane-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin: 0 0 6px;
+      color: var(--ink-soft);
+    }
+
+    .lane-list {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    .lane-list li {
+      margin: 2px 0;
+    }
+
+    .shortcuts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .shortcut-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(11, 27, 59, 0.08);
+      background: linear-gradient(135deg, #ffffff, #f3eee3);
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .shortcut-btn:hover {
+      background: #fff;
+      text-decoration: none;
+    }
+
+    .do-not-list {
+      margin: 4px 0 0;
+      padding-left: 18px;
+      font-size: 12px;
+      color: #273047;
+    }
+
+    @media (max-width: 900px) {
+      .top-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .card-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .lanes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-strip {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .lanes {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Tides of Knowing Social Posting Desk</h1>
+      <p class="subtitle">External social intelligence control surface for review, drafting and scheduling decisions.</p>
+    </header>
+
+    <section class="top-strip">
+      <div class="pill-card">
+        <div class="pill-label">System</div>
+        <div class="pill-value pill-value-strong">External canonical folder active</div>
+      </div>
+      <div class="pill-card">
+        <div class="pill-label">Mode</div>
+        <div class="pill-value">Controlled manual workflow</div>
+      </div>
+      <div class="pill-card">
+        <div class="pill-label">Ready item</div>
+        <div class="pill-value">TOK-0034 Ready for Image</div>
+      </div>
+      <div class="pill-card">
+        <div class="pill-label">Next action</div>
+        <div class="pill-value pill-value-next">TOK-0001 X / Twitter draft</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Next controlled action</h2>
+      <div class="panel">
+        <div class="panel-header">
+          <h3 class="panel-title">Leigh review of first TOK-0001 X / Twitter draft</h3>
+          <span class="status-pill status-pill-warn">Needs Review</span>
+        </div>
+        <div class="panel-body">
+          <p>
+            Review the first X / Twitter thought-leadership thread for TOK-0001. Do not create an image brief, calendar row or ledger row, and do not move toward posting or scheduling, until the draft has been reviewed and any revisions are complete.
+          </p>
+          <ul class="link-list">
+            <li><strong>Source Card:</strong> <a href="03%20Source%20Card%20Library/SC-TOK-0001-augmented-intuition-vs-replaced-thinking.md">SC-TOK-0001-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Angle Bank:</strong> <a href="04%20Angle%20Bank%20Library/AB-TOK-0001-augmented-intuition-vs-replaced-thinking.md">AB-TOK-0001-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Draft Social Asset:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md">SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Platform Decision:</strong> <a href="12%20System%20Updates%20and%20Change%20Log/TOK-0001_PLATFORM_DECISION_2026-06-05.md">TOK-0001_PLATFORM_DECISION_2026-06-05.md</a></li>
+            <li><strong>Source URL:</strong> <a href="https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/">https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Ready for review or action</h2>
+      <div class="card-grid">
+        <article class="item-card">
+          <div class="item-header">
+            <span class="item-id">TOK-0034</span>
+            <span class="status-pill">Ready for Image</span>
+          </div>
+          <h3 class="item-title">Repeating Card Meanings</h3>
+          <div class="item-meta">
+            <span class="meta-pill meta-pill-strong">Pinterest</span>
+            <span class="meta-pill meta-pill-date">2026-06-19</span>
+            <span class="meta-pill">Tool Page</span>
+          </div>
+          <p class="item-action">
+            Review the existing image brief or generate an image only if explicitly authorised. No posting or scheduling without approval.
+          </p>
+          <ul class="item-links">
+            <li><strong>Social Asset:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0034-2026-06-05-pinterest.md">SA-TOK-0034-2026-06-05-pinterest.md</a></li>
+            <li><strong>Image Brief:</strong> <a href="06%20Image%20Briefs%20for%20ChatGPT/IB-TOK-0034-2026-06-05-pinterest.md">IB-TOK-0034-2026-06-05-pinterest.md</a></li>
+            <li><strong>Calendar:</strong> <a href="07%20Visual%20Calendar/TOK_VISUAL_SOCIAL_CALENDAR.md">TOK_VISUAL_SOCIAL_CALENDAR.md</a></li>
+            <li><strong>Ledger:</strong> <a href="08%20Social%20Rotation%20Ledger/TOK_SOCIAL_ROTATION_LEDGER.md">TOK_SOCIAL_ROTATION_LEDGER.md</a></li>
+            <li><strong>Source URL:</strong> <a href="https://www.tidesofknowing.com/tools/repeating-card-meanings/">https://www.tidesofknowing.com/tools/repeating-card-meanings/</a></li>
+          </ul>
+        </article>
+
+        <article class="item-card">
+          <div class="item-header">
+            <span class="item-id">TOK-0001</span>
+            <span class="status-pill status-pill-warn">Drafted</span>
+          </div>
+          <h3 class="item-title">The Future Tension: Augmented Intuition vs Replaced Thinking</h3>
+          <div class="item-meta">
+            <span class="meta-pill meta-pill-strong">X / Twitter draft</span>
+            <span class="meta-pill">Article</span>
+          </div>
+          <p class="item-action">
+            Review and refine the short thought-leadership thread for X / Twitter. Do not move to scheduling or posting until review is complete.
+          </p>
+          <ul class="item-links">
+            <li><strong>Source Card:</strong> <a href="03%20Source%20Card%20Library/SC-TOK-0001-augmented-intuition-vs-replaced-thinking.md">SC-TOK-0001-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Angle Bank:</strong> <a href="04%20Angle%20Bank%20Library/AB-TOK-0001-augmented-intuition-vs-replaced-thinking.md">AB-TOK-0001-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Draft Social Asset:</strong> <a href="05%20Social%20Asset%20Production/SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md">SA-TOK-0001-2026-06-06-x-twitter-augmented-intuition-vs-replaced-thinking.md</a></li>
+            <li><strong>Platform Decision:</strong> <a href="12%20System%20Updates%20and%20Change%20Log/TOK-0001_PLATFORM_DECISION_2026-06-05.md">TOK-0001_PLATFORM_DECISION_2026-06-05.md</a></li>
+            <li><strong>Source URL:</strong> <a href="https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/">https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</a></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">What can I grab and post?</h2>
+      <div class="panel">
+        <div class="panel-header">
+          <h3 class="panel-title">Nothing is ready to post yet</h3>
+          <span class="status-pill status-pill-blocked">Hold</span>
+        </div>
+        <div class="panel-body">
+          <p>
+            Nothing is currently ready to post without further work and approval.
+          </p>
+          <ul class="link-list">
+            <li>TOK-0001 now has a draft X / Twitter thread, but it needs Leigh review before any scheduling decisions.</li>
+            <li>TOK-0034 still needs image approval or image generation before it can move toward scheduling.</li>
+            <li>Posting and scheduling remain manual approval points for Leigh.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Production lanes</h2>
+      <div class="lanes">
+        <div class="lane-card">
+          <h3 class="lane-title">Ready for Image</h3>
+          <ul class="lane-list">
+            <li>TOK-0034 Pinterest</li>
+          </ul>
+        </div>
+        <div class="lane-card">
+          <h3 class="lane-title">Ready to Draft</h3>
+          <ul class="lane-list">
+            <li>None</li>
+          </ul>
+        </div>
+        <div class="lane-card">
+          <h3 class="lane-title">Needs Review</h3>
+          <ul class="lane-list">
+            <li>TOK-0001 X / Twitter draft</li>
+            <li>TOK-0034 Pinterest image brief</li>
+          </ul>
+        </div>
+        <div class="lane-card">
+          <h3 class="lane-title">Ready to Schedule</h3>
+          <ul class="lane-list">
+            <li>None yet</li>
+          </ul>
+        </div>
+        <div class="lane-card">
+          <h3 class="lane-title">Blocked</h3>
+          <ul class="lane-list">
+            <li>Two-card pairing pages until Leigh confirms they are live</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Core shortcuts</h2>
+      <div class="panel">
+        <div class="panel-body">
+          <div class="shortcuts">
+            <a class="shortcut-btn" href="TOK_SOCIAL_COMMAND_CENTRE.md">Command Centre</a>
+            <a class="shortcut-btn" href="TOK_CONTENT_INVENTORY_INDEX.md">Content Inventory Index</a>
+            <a class="shortcut-btn" href="TOK_SOCIAL_ASSET_INDEX.md">Social Asset Index</a>
+            <a class="shortcut-btn" href="TOK_IMAGE_BRIEF_INDEX.md">Image Brief Index</a>
+            <a class="shortcut-btn" href="07%20Visual%20Calendar/TOK_VISUAL_SOCIAL_CALENDAR.md">Visual Calendar</a>
+            <a class="shortcut-btn" href="08%20Social%20Rotation%20Ledger/TOK_SOCIAL_ROTATION_LEDGER.md">Social Rotation Ledger</a>
+            <a class="shortcut-btn" href="12%20System%20Updates%20and%20Change%20Log/EXTERNAL_SETUP_VERIFICATION_2026-06-05.md">External Setup Verification</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Do not do yet</h2>
+      <div class="panel">
+        <div class="panel-body">
+          <ul class="do-not-list">
+            <li>Do not bulk-generate content.</li>
+            <li>Do not process two-card pairing pages.</li>
+            <li>Do not generate images unless authorised.</li>
+            <li>Do not schedule or post without approval.</li>
+            <li>Do not involve Codex yet.</li>
+            <li>Do not move to GitHub yet.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+

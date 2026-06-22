@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 03 Posting - TOK-0001 (14 assets)</title>
+  <style>
+    :root { --ink:#0b1b3b; --cream:#f7f3eb; --teal:#4b9a9a; --gold:#c9a052; --muted:#8a8ea0; --shadow:0 10px 24px rgba(0,0,0,0.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:radial-gradient(circle at top left,#eceff4 0,var(--cream) 40%,#f2ece3 100%); color:#161b27; }
+    .page { max-width:1140px; margin:28px auto 48px; padding:0 20px 40px; }
+    .header { background:linear-gradient(135deg,var(--ink),#152449); color:#fdfaf4; border-radius:16px; padding:20px 24px; box-shadow:var(--shadow); margin-bottom:20px; }
+    .title { margin:0 0 6px; font-size:22px; font-weight:650; letter-spacing:0.04em; text-transform:uppercase; }
+    .subtitle { margin:4px 0 0; font-size:13px; color:rgba(248,245,236,0.88); }
+    .instruction-block { margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(75,154,154,0.12); border:1px solid rgba(75,154,154,0.35); font-size:12px; line-height:1.6; color:#e8f4f4; }
+    .instruction-block ol { margin:8px 0 0; padding-left:18px; }
+    .section-title { font-size:14px; font-weight:650; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); margin:0 0 12px; }
+    .glance-wrap { background:#fff; border-radius:12px; box-shadow:var(--shadow); overflow:auto; margin-bottom:24px; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th { text-align:left; padding:10px 12px; background:#f0ece3; color:var(--ink); font-size:11px; text-transform:uppercase; letter-spacing:0.06em; border-bottom:2px solid rgba(11,27,59,0.08); }
+    td { padding:10px 12px; border-bottom:1px solid rgba(11,27,59,0.06); vertical-align:top; }
+    tr:hover td { background:rgba(75,154,154,0.04); }
+    .badge { display:inline-flex; padding:3px 8px; border-radius:999px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+    .badge-ready { background:rgba(75,154,154,0.12); color:var(--teal); }
+    .badge-needs { background:rgba(201,160,82,0.14); color:var(--gold); }
+    details.asset { background:#fff; border-radius:12px; box-shadow:var(--shadow); margin-bottom:12px; border:2px solid rgba(11,27,59,0.06); }
+    details.asset[open] { border-color:rgba(75,154,154,0.35); }
+    details.asset.needs-image { border-color:rgba(201,160,82,0.45); }
+    summary { cursor:pointer; padding:14px 16px; list-style:none; display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
+    summary::-webkit-details-marker { display:none; }
+    .sum-left { flex:1; min-width:200px; }
+    .sum-title { font-size:15px; font-weight:600; color:var(--ink); margin:0 0 4px; }
+    .sum-meta { font-size:11px; color:var(--muted); }
+    .sum-arrow { color:var(--teal); font-size:12px; }
+    .asset-body { padding:0 16px 16px; border-top:1px solid rgba(11,27,59,0.06); }
+    .btn-row { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .btn { padding:7px 14px; border-radius:999px; border:1px solid rgba(11,27,59,0.12); background:linear-gradient(135deg,#fff,#f3eee3); font-size:12px; cursor:pointer; color:var(--ink); }
+    .btn:hover { background:#fff; }
+    .btn-copy { border-color:rgba(75,154,154,0.45); color:var(--teal); font-weight:600; }
+    .btn-brief { border-color:rgba(201,160,82,0.5); color:var(--gold); }
+    .copy-feedback { font-size:11px; color:var(--teal); min-height:16px; }
+    .copy-block { padding:12px 14px; border-radius:8px; background:#f7f4ee; border:1px solid rgba(11,27,59,0.06); font-size:13px; line-height:1.55; white-space:pre-wrap; }
+    .notes-block { margin-top:10px; padding:10px 12px; border-radius:8px; background:#f8f6f0; font-size:12px; line-height:1.5; color:#4a5060; }
+    .thread-box { margin-top:10px; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .thread-box strong { color:var(--ink); }
+    .warn { color:var(--gold); font-weight:600; font-size:12px; margin-top:8px; }
+    .image-slot { margin-top:10px; padding:10px 12px; border-radius:8px; background:#fff8ee; border:1px solid rgba(201,160,82,0.35); font-size:12px; line-height:1.55; }
+    .image-slot strong { color:var(--ink); display:block; margin-bottom:6px; }
+    .image-slot code { font-size:11px; color:var(--gold); word-break:break-all; }
+    .image-slot ul { margin:6px 0 0; padding-left:18px; }
+    .visual-meta { margin:12px 0; padding:10px 12px; border-radius:8px; background:#eef6f6; border:1px solid rgba(75,154,154,0.3); font-size:12px; line-height:1.55; }
+    .visual-meta strong { color:var(--ink); display:block; margin-bottom:6px; }
+    .visual-meta p { margin:4px 0; }
+    .visual-meta span { color:var(--muted); font-weight:600; }
+    .btn-filename { border-color:rgba(11,27,59,0.2); color:var(--ink); }
+    a { color:var(--teal); }
+    textarea.copy-source { position:absolute; left:-9999px; opacity:0; height:0; }
+    @media (max-width:700px) { table { font-size:11px; } th,td { padding:8px; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Start Here for Posting</h1>
+      <p class="subtitle">Week 03: Monday 2026-06-15 to Sunday 2026-06-21</p>
+      <p class="subtitle">TOK-0001: The Future Tension: Augmented Intuition vs Replaced Thinking</p>
+      <p class="subtitle"><a href="https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/" style="color:#d4efe9;">Source article</a> | 14 source-led assets (legacy pack) | Markdown files are backup only</p>
+      <div class="instruction-block">
+        <strong>Pack note:</strong> This pack was built before the 17-asset weekly structure. New Article and Field Note packs include 14 source-led posts plus 3 separate The Deck Compass training invitation posts. This pack has source-led posts only. Scheduled times below follow the current system defaults.
+        <br><br>
+        <strong>How to use this weekly pack:</strong>
+        <ol>
+          <li>Open this page.</li>
+          <li>Check the week-at-a-glance table.</li>
+          <li>Only post items marked Ready.</li>
+          <li>Do not post Needs Image items until the expected files are in the <code>images/</code> folder.</li>
+          <li>Use the exact image filenames shown on this page. Drop files into <code>images/</code>.</li>
+          <li>Use Copy Post to copy the caption or post text.</li>
+          <li>For X / Twitter threads, post Tweet 1 first, then reply to it with Tweet 2, then continue in order.</li>
+          <li>Do not alter wording, links, hashtags or CTAs without Leigh's permission.</li>
+        </ol>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">Week at a glance</h2>
+      <div class="glance-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Date</th><th>Time</th><th>Platform</th><th>Headline</th><th>Status</th><th>Visual Strategy</th><th>Visual Source</th><th>Creation Needed</th><th>Expected Filename</th><th>Req. Before Post</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Mon 15</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Augmented intuition or replaced thinking?</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>2</td><td>Mon 15</td><td>12:30 p.m.</td><td>Facebook</td><td>Where does the tool sit in your sequence?</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>3</td><td>Tue 16</td><td>10:30 a.m.</td><td>X / Twitter</td><td>Specificity versus plausible generality</td><td><span class="badge badge-ready">Ready</span></td><td>Optional visual, article preferred</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>4</td><td>Tue 16</td><td>1:30 p.m.</td><td>Instagram</td><td>The practitioner sequence walkthrough</td><td><span class="badge badge-needs">Needs Image</span></td><td>Needs carousel slides</td><td>Text-based design</td><td>Yes</td><td>6 slides in images/</td><td>Yes</td></tr>
+            <tr><td>5</td><td>Wed 17</td><td>9:00 a.m.</td><td>X / Twitter</td><td>What did you notice before you asked AI?</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>6</td><td>Wed 17</td><td>8:30 p.m.</td><td>Pinterest</td><td>How to use AI in tarot without replacing your thinking</td><td><span class="badge badge-needs">Needs Image</span></td><td>Needs Pinterest pin image</td><td>Created from brief</td><td>Yes</td><td>images/2026-06-17_pinterest_TOK-0001_pin-01.png</td><td>Yes</td></tr>
+            <tr><td>7</td><td>Thu 18</td><td>10:30 a.m.</td><td>X / Twitter</td><td>The practitioner sequence in three moves</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>8</td><td>Thu 18</td><td>12:30 p.m.</td><td>Facebook</td><td>A simple self-reading protocol before AI</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>9</td><td>Fri 19</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Human perception before AI interpretation (thread)</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>10</td><td>Fri 19</td><td>6:30 p.m.</td><td>Instagram</td><td>Perception gives specificity</td><td><span class="badge badge-needs">Needs Image</span></td><td>Needs quote card</td><td>Text-based design</td><td>Yes</td><td>images/2026-06-19_instagram_TOK-0001_quote-post-01.png</td><td>Yes</td></tr>
+            <tr><td>11</td><td>Sat 20</td><td>9:30 a.m.</td><td>Substack</td><td>When interpretation feels easier than perception</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>12</td><td>Sat 20</td><td>8:30 p.m.</td><td>Pinterest</td><td>Is AI upstream of your noticing?</td><td><span class="badge badge-needs">Needs Image</span></td><td>Needs Pinterest pin image</td><td>Created from brief</td><td>Yes</td><td>images/2026-06-20_pinterest_TOK-0001_pin-02.png</td><td>Yes</td></tr>
+            <tr><td>13</td><td>Sun 21</td><td>9:00 a.m.</td><td>X / Twitter</td><td>Replacement happens by degrees</td><td><span class="badge badge-ready">Ready</span></td><td>Optional visual, article preferred</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+            <tr><td>14</td><td>Sun 21</td><td>7:30 p.m.</td><td>Facebook</td><td>Can you describe the spread before the meaning?</td><td><span class="badge badge-ready">Ready</span></td><td>Use article image</td><td>Article feature image</td><td>No</td><td>Source image (no slot)</td><td>No</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">All posts (expand to view full copy)</h2>
+
+      <!-- Asset 1 -->
+      <details class="asset" id="a01">
+        <summary><div class="sum-left"><p class="sum-title">1. Mon 2026-06-15 - X / Twitter thesis</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-01">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-01"></div>
+          <div class="copy-block" id="display-01">Augmented intuition keeps you upstream of the tool. Replaced thinking lets the interpretive layer arrive before you have done the perceptual work. The issue is not whether AI is good or bad. It is sequence.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+          <details class="notes-block"><summary>Posting notes</summary><p>Post as single tweet. Attach article image. Copy exactly.</p></details>
+        </div>
+      </details>
+
+      <!-- Asset 2 -->
+      <details class="asset" id="a02">
+        <summary><div class="sum-left"><p class="sum-title">2. Mon 2026-06-15 - Facebook reflective</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-02">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-02"></div>
+          <div class="copy-block" id="display-02">The more useful question in AI and intuitive practice is not whether the tool will ruin intuition. It is where the tool sits in your sequence.
+
+When interpretation arrives before you have taken soft eyes to the situation, named what you actually noticed, and observed the structure in front of you, the output may feel accurate while bypassing the work that trains discernment.
+
+Perception gives specificity. Interpretation alone gives plausible generality. That difference matters more than most people realise, especially in self-reading.
+
+Tarot is the visible practice in this article, but the principle is broader. Symbolic literacy depends on trained perception, not on faster interpretation.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</div>
+          <details class="notes-block"><summary>Posting notes</summary><p>Second Monday post. Attach article image.</p></details>
+        </div>
+      </details>
+
+      <!-- Asset 3 -->
+      <details class="asset" id="a03">
+        <summary><div class="sum-left"><p class="sum-title">3. Tue 2026-06-16 - X / Twitter insight</p><p class="sum-meta">Ready | Optional visual | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Optional visual, article image preferred</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-03">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-03"></div>
+          <div class="copy-block" id="display-03">Perception gives specificity. Interpretation alone gives plausible generality.
+
+When AI answers before you have named what you actually saw, the output may feel accurate while bypassing the work that trains discernment.
+
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 4 -->
+      <details class="asset needs-image" id="a04">
+        <summary><div class="sum-left"><p class="sum-title">4. Tue 2026-06-16 - Instagram carousel</p><p class="sum-meta">Needs Image | Needs carousel slides | Creation: Yes</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Needs carousel slides</p><p><span>Visual Source:</span> Text-based design</p><p><span>Image Creation Needed:</span> Yes</p><p><span>Image folder:</span> images/</p><p><span>Required Before Posting:</span> Yes</p><p>See IMAGE_CREATION_BRIEFS.md for slide-by-slide brief.</p></div>
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot">
+            <strong>Image needed: 6 carousel slides</strong>
+            <p>Drop these files into the <code>images/</code> folder:</p>
+            <ul>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-01.png</code></li>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-02.png</code></li>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-03.png</code></li>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-04.png</code></li>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-05.png</code></li>
+              <li><code>images/2026-06-16_instagram_TOK-0001_carousel-01_slide-06.png</code></li>
+            </ul>
+          </div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-04">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-04">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-04">Copy Expected Filenames</button></div>
+          <div class="copy-feedback" data-feedback="post-04"></div>
+          <div class="copy-block" id="display-04">The debate about AI and intuition is often framed as pro-tool versus anti-tool. That framing misses the point.
+
+The real distinction is augmented intuition versus replaced thinking. Augmentation keeps you upstream of the tool. Replacement lets interpretation arrive before you have done the perceptual work.
+
+The useful sequence: soft eyes first, structural observation second, AI consulted last if at all, only as comparison, challenge, language support or bias checking. Never as the interpretive authority.
+
+Read the full article at tidesofknowing.com (link in bio).
+
+#AIAndIntuition #TrainedPerception #SymbolicLiteracy #ReflectivePractice #TidesOfKnowing</div>
+          <details class="notes-block"><summary>Carousel slides (6)</summary><p>1: Augmented intuition or replaced thinking? 2: Augmented intuition. 3: Replaced thinking. 4: Practitioner sequence. 5: Specificity vs generality. 6: Trained perception + CTA.</p></details>
+        </div>
+      </details>
+
+      <!-- Asset 5 -->
+      <details class="asset" id="a05">
+        <summary><div class="sum-left"><p class="sum-title">5. Wed 2026-06-17 - X / Twitter question</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-05">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-05"></div>
+          <div class="copy-block" id="display-05">What did you notice before you asked AI?
+
+That single audit often reveals whether you are practising augmented intuition or replaced thinking. Not because the tool is wrong, but because sequence determines whether it supports discernment or quietly moves upstream of it.
+
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 6 -->
+      <details class="asset needs-image" id="a06">
+        <summary><div class="sum-left"><p class="sum-title">6. Wed 2026-06-17 - Pinterest pin 1</p><p class="sum-meta">Needs Image | Pinterest pin | Creation: Yes</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Needs Pinterest pin image</p><p><span>Visual Source:</span> Created from image creation brief</p><p><span>Image Creation Needed:</span> Yes</p><p><span>Image folder:</span> images/</p><p><span>Required Before Posting:</span> Yes</p></div>
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot">
+            <strong>Image needed: Pinterest pin</strong>
+            <p>Drop this file into the <code>images/</code> folder:</p>
+            <p><code>images/2026-06-17_pinterest_TOK-0001_pin-01.png</code></p>
+          </div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-06">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-06">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-06">Copy Expected Filename</button></div>
+          <div class="copy-feedback" data-feedback="post-06"></div>
+          <div class="copy-block" id="display-06">How to use AI in tarot and intuitive practice without replacing your own thinking.
+
+The useful sequence: soft eyes first, structural observation second, AI consulted last if at all, only as comparison or bias checking. Perception before interpretation.
+
+Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking lets the interpretive layer arrive before you have done the perceptual work.
+
+Read the full article on augmented intuition versus replaced thinking:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TarotPractice #TrainedPerception #HumanDiscernment #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 7 -->
+      <details class="asset" id="a07">
+        <summary><div class="sum-left"><p class="sum-title">7. Thu 2026-06-18 - X / Twitter method</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-07">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-07"></div>
+          <div class="copy-block" id="display-07">The useful sequence in intuitive practice:
+
+Soft eyes first.
+Structural observation second.
+AI consulted last, if at all, as comparison or bias checking.
+
+Perception before interpretation. Human noticing before algorithmic plausibility.
+
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 8 -->
+      <details class="asset" id="a08">
+        <summary><div class="sum-left"><p class="sum-title">8. Thu 2026-06-18 - Facebook practical</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-08">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-08"></div>
+          <div class="copy-block" id="display-08">A practical sequence for self-reading when AI is in the room:
+
+1. Name your bias first.
+2. Take soft eyes to the spread or situation.
+3. Record what you actually noticed before meaning arrives.
+4. Observe the structure in front of you.
+5. Only then consult AI, if at all, as comparison or bias checking.
+
+AI can help hold the line against personal bias when you give it your perceptual observations first. It must not become the interpretive authority.
+
+This is not anti-technology. It is pro-sequence, pro-attention and pro-human knowing.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</div>
+        </div>
+      </details>
+
+      <!-- Asset 9 - Thread -->
+      <details class="asset" id="a09">
+        <summary><div class="sum-left"><p class="sum-title">9. Fri 2026-06-19 - X / Twitter thread</p><p class="sum-meta">Ready | Use article image (Tweet 1) | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p><p>Attach article feature image to Tweet 1 only.</p></div>
+          <div class="thread-box">
+            <strong>How to post this thread</strong>
+            <ol>
+              <li>Post Tweet 1 first. Attach article image to Tweet 1.</li>
+              <li>Reply to Tweet 1 with Tweet 2.</li>
+              <li>Reply to Tweet 2 with Tweet 3.</li>
+              <li>Continue replying in order until Tweet 7.</li>
+              <li>Tweet 7 contains the article link and hashtags.</li>
+            </ol>
+            Do not post all tweets as separate top-level posts.
+          </div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-09">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-09"></div>
+          <div class="copy-block" id="display-09">Tweet 1:
+Most arguments about AI and intuition ask the wrong question. The issue is not whether the tool is good or bad. It is whether human perception still comes first.
+
+Tweet 2:
+Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking lets interpretation arrive before you have done the perceptual work.
+
+Tweet 3:
+The useful sequence is simple: soft eyes first, structural observation second, AI consulted last, if at all, as comparison or bias checking. Perception before interpretation.
+
+Tweet 4:
+Perception gives specificity. Interpretation alone gives plausible generality. When AI answers before you have named what you actually saw, the output may feel accurate while bypassing discernment.
+
+Tweet 5:
+Replacement rarely arrives as a dramatic decision. It arrives as a small shortcut. One session at a time, the tool moves upstream of your own noticing.
+
+Tweet 6:
+In an AI-saturated world, the practitioner's edge is still trained perception: the capacity to perceive what tools cannot originate.
+
+Tweet 7:
+Read the full article on augmented intuition versus replaced thinking:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 10 -->
+      <details class="asset needs-image" id="a10">
+        <summary><div class="sum-left"><p class="sum-title">10. Fri 2026-06-19 - Instagram quote</p><p class="sum-meta">Needs Image | Needs quote card | Creation: Yes</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Needs quote card</p><p><span>Visual Source:</span> Text-based design</p><p><span>Image Creation Needed:</span> Yes</p><p><span>Image folder:</span> images/</p><p><span>Required Before Posting:</span> Yes</p></div>
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot">
+            <strong>Image needed: Quote card</strong>
+            <p>Drop this file into the <code>images/</code> folder:</p>
+            <p><code>images/2026-06-19_instagram_TOK-0001_quote-post-01.png</code></p>
+          </div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-10">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-10">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-10">Copy Expected Filename</button></div>
+          <div class="copy-feedback" data-feedback="post-10"></div>
+          <div class="copy-block" id="display-10">Perception gives specificity. Interpretation alone gives plausible generality.
+
+That distinction sounds academic until you notice how often generic AI output feels satisfying precisely because it bypasses the slower work of trained perception.
+
+In intuitive practice, the question is not whether the tool is clever. It is whether your own noticing still comes first.
+
+Read the full article at tidesofknowing.com (link in bio).
+
+#AIAndIntuition #TrainedPerception #SymbolicLiteracy #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 11 -->
+      <details class="asset" id="a11">
+        <summary><div class="sum-left"><p class="sum-title">11. Sat 2026-06-20 - Substack Note</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-11">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-11"></div>
+          <div class="copy-block" id="display-11">Part 6 of the AI and Intuition series asks a harder question than most technology debates allow.
+
+Not whether AI is useful.
+Not whether practitioners should resist change.
+But whether your practice still begins with your own noticing.
+
+Augmented intuition keeps the practitioner upstream of the tool. Replaced thinking is quieter. It arrives when interpretation feels easier than perception, when a plausible summary arrives before you have named what you actually saw in the spread, the situation, or your own inner response.
+
+Perception gives specificity. Interpretation alone gives plausible generality. That distinction sounds academic until you recognise how often generic output feels satisfying precisely because it bypasses the slower work of trained perception.
+
+The useful sequence remains steady: soft eyes first, structural observation second, AI consulted last if at all, only as comparison, challenge, language support or bias checking. AI must not become the interpretive authority. It must not move upstream of the practitioner's noticing.
+
+Tarot is the visible practice in this piece. The deeper issue is symbolic literacy in an age of instant interpretation.
+
+Read the full article here:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/</div>
+        </div>
+      </details>
+
+      <!-- Asset 12 -->
+      <details class="asset needs-image" id="a12">
+        <summary><div class="sum-left"><p class="sum-title">12. Sat 2026-06-20 - Pinterest pin 2</p><p class="sum-meta">Needs Image | Pinterest pin | Creation: Yes</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Needs Pinterest pin image</p><p><span>Visual Source:</span> Created from image creation brief</p><p><span>Image Creation Needed:</span> Yes</p><p><span>Image folder:</span> images/</p><p><span>Required Before Posting:</span> Yes</p></div>
+          <p class="warn">Do Not Post Until Image Supplied</p>
+          <div class="image-slot">
+            <strong>Image needed: Pinterest checklist pin</strong>
+            <p>Drop this file into the <code>images/</code> folder:</p>
+            <p><code>images/2026-06-20_pinterest_TOK-0001_pin-02.png</code></p>
+          </div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-12">Copy Post</button><button class="btn btn-brief" type="button" data-copy="brief-12">Copy Image Creation Brief</button><button class="btn btn-filename" type="button" data-copy="file-12">Copy Expected Filename</button></div>
+          <div class="copy-feedback" data-feedback="post-12"></div>
+          <div class="copy-block" id="display-12">Is AI Upstream of Your Noticing? A Simple Checklist
+
+Five quiet signals that AI may have moved ahead of your own perceptual work in tarot or intuitive practice:
+
+1. You ask for interpretation before describing what you saw.
+2. The AI summary feels accurate but misses your actual noticing.
+3. Interpretation feels easier than perception.
+4. You can no longer describe the spread before the meaning.
+5. Speed has replaced sequence in your practice.
+
+The fix is not abandoning the tool. It is restoring order: soft eyes first, structural observation second, AI consulted last if at all.
+
+Read the full article:
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TarotPractice #TrainedPerception #ReflectivePractice #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 13 -->
+      <details class="asset" id="a13">
+        <summary><div class="sum-left"><p class="sum-title">13. Sun 2026-06-21 - X / Twitter reflective</p><p class="sum-meta">Ready | Optional visual | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Optional visual, article image preferred</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-13">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-13"></div>
+          <div class="copy-block" id="display-13">Replaced thinking rarely arrives as a dramatic decision. It arrives as a small shortcut. One session at a time, the interpretive layer moves upstream of your own noticing.
+
+The practitioner's edge in an AI-saturated world is still trained perception: the capacity to perceive what tools cannot originate.
+
+https://www.tidesofknowing.com/articles/augmented-intuition-vs-replaced-thinking/
+
+#AIAndIntuition #TrainedPerception #TidesOfKnowing</div>
+        </div>
+      </details>
+
+      <!-- Asset 14 -->
+      <details class="asset" id="a14">
+        <summary><div class="sum-left"><p class="sum-title">14. Sun 2026-06-21 - Facebook conversation</p><p class="sum-meta">Ready | Use article image | Creation: No</p></div><span class="sum-arrow">Expand</span></summary>
+        <div class="asset-body">
+          <div class="visual-meta"><strong>Image source decision</strong><p><span>Visual Strategy:</span> Use article image</p><p><span>Visual Source:</span> Article feature image</p><p><span>Image Creation Needed:</span> No</p><p><span>Image folder:</span> Not required for posting</p><p><span>Required Before Posting:</span> No</p></div>
+          <div class="btn-row"><button class="btn btn-copy" type="button" data-copy="post-14">Copy Post</button></div>
+          <div class="copy-feedback" data-feedback="post-14"></div>
+          <div class="copy-block" id="display-14">A question for practitioners using AI in tarot or intuitive work:
+
+Can you describe what you noticed in the spread, the situation, or your own inner response before you asked for interpretation?
+
+That single audit often reveals whether you are practising augmented intuition or replaced thinking. Not because the tool is wrong, but because sequence determines whether it supports discernment or quietly moves upstream of it.
+
+Soft eyes first. Structural observation second. AI consulted last, if at all, as comparison or support.
+
+Where are you in that sequence right now?</div>
+          <details class="notes-block"><summary>Posting notes</summary><p>No article link unless Leigh directs. Respond to comments only if authorised.</p></details>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <script>
+    var briefs = {
+      "brief-04": "IMAGE CREATION BRIEF - Instagram carousel\nPurpose: Educational carousel on practitioner sequence.\nPlatform: Instagram\nAspect ratio: 4:5\nVisual concept: Six text-based slides. Cream background, deep blue typography, teal accents.\nRequired elements: Slide 4 vertical sequence diagram. No cartoonish tarot. No fear-led AI imagery.\nText overlay: Slide 1 Augmented intuition or replaced thinking? Slide 2 Augmented intuition. Slide 3 Replaced thinking. Slide 4 Soft eyes. Structure. AI consulted last. Slide 5 Perception gives specificity. Slide 6 Your edge is trained perception.\nStyle direction: Elegant, grounded, tidal, spacious.\nBrand constraints: Tides of Knowing palette.\nAlt text: Six-slide carousel on augmented intuition vs replaced thinking.\nImage folder: images/\nCreate slides outside the generator. Save using expected filenames.",
+      "brief-06": "IMAGE CREATION BRIEF - Pinterest pin 1\nPurpose: Evergreen search pin for AI and tarot practice sequence.\nPlatform: Pinterest\nAspect ratio: 2:3\nVisual concept: Human perception before screen. Clear text overlay zone. May use article image as base.\nText overlay: Augmented Intuition vs Replaced Thinking / Soft eyes first. Structure second. AI consulted last. / Read the Article\nStyle direction: Grounded, elegant, tidal.\nBrand constraints: No fear-led AI imagery.\nAlt text: Pinterest pin on using AI in tarot without replacing thinking.\nExpected filename: images/2026-06-17_pinterest_TOK-0001_pin-01.png\nImage folder: images/",
+      "brief-10": "IMAGE CREATION BRIEF - Instagram quote card\nPurpose: Quote card on specificity vs generality.\nPlatform: Instagram\nAspect ratio: 4:5 or 1:1\nVisual concept: Cream background, deep blue typography, teal accent line.\nText overlay: Perception gives specificity. Interpretation alone gives plausible generality.\nStyle direction: Minimal, elegant, spacious.\nBrand constraints: Tides of Knowing palette. No mystical clutter.\nAlt text: Quote card on perception and interpretation.\nExpected filename: images/2026-06-19_instagram_TOK-0001_quote-post-01.png\nImage folder: images/",
+      "brief-12": "IMAGE CREATION BRIEF - Pinterest pin 2\nPurpose: Checklist pin on whether AI is upstream of noticing.\nPlatform: Pinterest\nAspect ratio: 2:3\nVisual concept: Clean numbered list. Five quiet signals. Readable at small size.\nText overlay: Is AI Upstream of Your Noticing? / Five quiet signals to check your sequence. / Read the Article\nStyle direction: Search-led evergreen pin. Grounded, not alarmist.\nBrand constraints: Tides of Knowing palette.\nAlt text: Checklist pin on AI and noticing sequence.\nExpected filename: images/2026-06-20_pinterest_TOK-0001_pin-02.png\nImage folder: images/"
+    };
+
+    var filenames = {
+      "file-04": "images/2026-06-16_instagram_TOK-0001_carousel-01_slide-01.png\nimages/2026-06-16_instagram_TOK-0001_carousel-01_slide-02.png\nimages/2026-06-16_instagram_TOK-0001_carousel-01_slide-03.png\nimages/2026-06-16_instagram_TOK-0001_carousel-01_slide-04.png\nimages/2026-06-16_instagram_TOK-0001_carousel-01_slide-05.png\nimages/2026-06-16_instagram_TOK-0001_carousel-01_slide-06.png",
+      "file-06": "images/2026-06-17_pinterest_TOK-0001_pin-01.png",
+      "file-10": "images/2026-06-19_instagram_TOK-0001_quote-post-01.png",
+      "file-12": "images/2026-06-20_pinterest_TOK-0001_pin-02.png"
+    };
+
+    function getPostText(id) {
+      var n = id.replace("post-", "");
+      var el = document.getElementById("display-" + (n.length === 1 ? "0" + n : n));
+      if (!el && n.length === 1) el = document.getElementById("display-0" + n);
+      return el ? el.textContent.trim() : "";
+    }
+
+    function feedbackKey(key) {
+      if (key.indexOf("brief-") === 0) return key.replace("brief-", "post-");
+      if (key.indexOf("file-") === 0) return key.replace("file-", "post-");
+      return key;
+    }
+
+    function copyText(key, label) {
+      var text;
+      if (key.indexOf("brief-") === 0) text = briefs[key];
+      else if (key.indexOf("file-") === 0) text = filenames[key];
+      else text = getPostText(key);
+      var fb = document.querySelector('[data-feedback="' + feedbackKey(key) + '"]');
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          if (fb) fb.textContent = label + " copied to clipboard.";
+        });
+      } else if (fb) fb.textContent = "Clipboard not available. Select and copy manually.";
+    }
+
+    document.querySelectorAll(".btn-copy").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Post"); });
+    });
+    document.querySelectorAll(".btn-brief").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Image creation brief"); });
+    });
+    document.querySelectorAll(".btn-filename").forEach(function(btn) {
+      btn.addEventListener("click", function() { copyText(btn.getAttribute("data-copy"), "Expected filename"); });
+    });
+  </script>
+</body>
+</html>
