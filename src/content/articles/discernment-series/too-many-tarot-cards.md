@@ -10,7 +10,7 @@ seriesOrder: 2
 seriesTotal: 3
 previousArticle: "second-guessing-tarot-readings"
 nextArticle: "when-is-a-tarot-reading-complete"
-heroImage: "/images/articles/discernment-series/too-many-tarot-cards-hero.png"
+heroImage: "/images/articles/discernment-series/too-many-tarot-cards-hero-v2.png"
 heroImageAlt: "A tarot spread with several cards laid out, suggesting the moment when extra cards begin to add weight rather than clarity"
 excerpt: "Pulling more tarot cards does not always create more clarity. Often the answer has already arrived, and extra cards simply add noise."
 tags:
