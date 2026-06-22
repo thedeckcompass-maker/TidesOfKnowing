@@ -52,22 +52,10 @@ const isRepeatingCardPatterns = isRepeatingCardPatternsArticle(article.data.slug
 ---
 
 <ArticlesLayout article={article} readingMinutes={readingMinutes} mailerLite={isAiIntuitionSeriesArticle}>
-  {
-    isDiscernmentSeriesArticle ? (
-      <LeadMagnetCta
-        slot="prepend"
-        {...DISCERNMENT_CHECKLIST_CTA}
-        placement="top"
-        compact
-      />
-    ) : null
-  }
   <Content />
   {
     isDiscernmentSeriesArticle ? (
-      <div class="tok-article-discernment-signup-wrap" slot="append">
-        <LeadMagnetCta {...DISCERNMENT_CHECKLIST_CTA} placement="bottom" compact />
-      </div>
+      <LeadMagnetCta slot="body-end" {...DISCERNMENT_CHECKLIST_CTA} placement="bottom" compact />
     ) : null
   }
   {

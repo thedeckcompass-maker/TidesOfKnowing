@@ -207,6 +207,7 @@ const pathwayLinks: { href: string; label: string; dataCompass?: boolean }[] = [
           <div class="article-prose article__body tok-articles-body">
             <slot name="prepend" />
             <slot />
+            <slot name="body-end" />
           </div>
           <slot name="append" />
           <FurtherReading items={furtherReading} class="tok-articles-further-reading" />
