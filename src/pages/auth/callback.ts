@@ -39,6 +39,13 @@ function callbackParams(url: URL) {
   );
 }
 
+function responseCookieNames(cookies: Parameters<APIRoute>[0]["cookies"]): string[] {
+  return Array.from(cookies.headers())
+    .flatMap((header) => header.split(";"))
+    .map((part) => part.trim().split("=")[0])
+    .filter(Boolean);
+}
+
 export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
   const code = url.searchParams.get("code");
   const tokenHash = url.searchParams.get("token_hash");
@@ -76,12 +83,37 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     return redirect("/auth/register/", 303);
   }
 
+  const exchangeMode = code ? "code" : "token_hash";
+  console.info("Practice Commons auth callback starting session exchange", {
+    reference: callbackReference,
+    exchangeMode,
+    otpType,
+    redirectTo,
+  });
+
   const { error } = code
     ? await locals.supabase.auth.exchangeCodeForSession(code)
     : await locals.supabase.auth.verifyOtp({
         token_hash: tokenHash ?? "",
         type: otpType,
       });
+  const exchangeCookieNames = responseCookieNames(cookies);
+
+  console.info("Practice Commons auth callback session exchange completed", {
+    reference: callbackReference,
+    exchangeMode,
+    otpType,
+    exchangeError: error
+      ? {
+          name: error.name,
+          code: "code" in error ? error.code : null,
+          message: error.message,
+          status: "status" in error ? error.status : null,
+        }
+      : null,
+    setCookieNames: exchangeCookieNames,
+    redirectTo,
+  });
 
   if (error) {
     console.error("Practice Commons auth callback session exchange failed", {
@@ -90,8 +122,9 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
       errorCode: "code" in error ? error.code : null,
       errorMessage: error.message,
       errorStatus: "status" in error ? error.status : null,
-      exchangeMode: code ? "code" : "token_hash",
+      exchangeMode,
       otpType,
+      setCookieNames: exchangeCookieNames,
       redirectTo,
     });
     return redirect("/auth/register/", 303);
@@ -101,15 +134,11 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     data: { session },
     error: sessionError,
   } = await locals.supabase.auth.getSession();
-  const cookieNames = cookies
-    .headers()
-    .flatMap((header) => header.split(";"))
-    .map((part) => part.trim().split("=")[0])
-    .filter(Boolean);
+  const cookieNames = responseCookieNames(cookies);
 
   console.info("Practice Commons auth callback session exchange succeeded", {
     reference: callbackReference,
-    exchangeMode: code ? "code" : "token_hash",
+    exchangeMode,
     otpType,
     sessionPresent: Boolean(session),
     userId: session?.user?.id ?? null,
@@ -119,6 +148,14 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
           message: sessionError.message,
         }
       : null,
+    setCookieNames: cookieNames,
+    redirectTo,
+  });
+
+  console.info("Practice Commons auth callback redirecting after exchange", {
+    reference: callbackReference,
+    exchangeMode,
+    sessionPresent: Boolean(session),
     setCookieNames: cookieNames,
     redirectTo,
   });
