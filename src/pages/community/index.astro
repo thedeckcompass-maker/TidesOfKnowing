@@ -9,6 +9,7 @@ import CommunitySectionCard from "../../components/community/CommunitySectionCar
 import { canContribute } from "../../lib/community/auth";
 import { communityPaginationState } from "../../lib/community/pagination";
 import { getCommunityPosts, getCommunitySections } from "../../lib/community/queries";
+import { COMMUNITY_SECTION_FALLBACKS } from "../../lib/community/types";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
 
@@ -24,7 +25,8 @@ const crumbs: BreadcrumbItem[] = [
   { label: "Practice Commons", url: null },
 ];
 
-const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+const loadedSections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+const sections = loadedSections.length > 0 ? loadedSections : COMMUNITY_SECTION_FALLBACKS;
 const { posts, totalPages } = Astro.locals.supabase
   ? await getCommunityPosts(Astro.locals.supabase, { mode: { kind: "all" }, page: 1 })
   : { posts: [], totalPages: 1 };

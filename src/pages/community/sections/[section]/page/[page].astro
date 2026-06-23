@@ -5,6 +5,7 @@ import CommunityPostList from "../../../../../components/community/CommunityPost
 import { communityPaginationState } from "../../../../../lib/community/pagination";
 import { getCommunityPosts, getSectionByKey } from "../../../../../lib/community/queries";
 import { communitySectionPath } from "../../../../../lib/community/slugs";
+import { COMMUNITY_SECTION_FALLBACKS } from "../../../../../lib/community/types";
 import { isCommunitySectionKey } from "../../../../../lib/community/validation";
 import { siteBase } from "../../../../../lib/site";
 
@@ -16,7 +17,10 @@ if (!isCommunitySectionKey(sectionKey)) return Astro.redirect("/community/", 302
 if (!Number.isInteger(page) || page < 2) return Astro.redirect(communitySectionPath(sectionKey), 301);
 
 const base = siteBase(Astro);
-const section = Astro.locals.supabase ? await getSectionByKey(Astro.locals.supabase, sectionKey) : null;
+const section =
+  (Astro.locals.supabase ? await getSectionByKey(Astro.locals.supabase, sectionKey) : null) ??
+  COMMUNITY_SECTION_FALLBACKS.find((fallback) => fallback.key === sectionKey) ??
+  null;
 if (!section) return Astro.redirect("/community/", 302);
 
 const { posts, totalPages } = Astro.locals.supabase

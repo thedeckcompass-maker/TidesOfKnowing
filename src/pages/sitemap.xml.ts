@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { getCollection } from "astro:content";
 import { communityEnv } from "../lib/community/env";
 import { totalCommunityPages } from "../lib/community/pagination";
+import { COMMUNITY_SECTIONS } from "../lib/community/types";
 import { slugify } from "../utils/slugify";
 import { blogCategoryIndex } from "../lib/blogCategories";
 import { getIndexableArticleTopicsWithContent } from "../lib/articleLibraryNav";
@@ -122,6 +123,13 @@ export const GET: APIRoute = async ({ locals }) => {
   /** Tools directory hub (live + coming-soon tools); not individual tool deep-links. */
   rows.push({ path: "/tools/", changefreq: "monthly", priority: "0.7" });
   rows.push({ path: "/community/", changefreq: "weekly", priority: "0.72" });
+  for (const section of COMMUNITY_SECTIONS) {
+    rows.push({
+      path: `/community/sections/${section.key}/`,
+      changefreq: "weekly",
+      priority: "0.68",
+    });
+  }
   rows.push({
     path: "/resources/discernment-checklist/",
     changefreq: "monthly",

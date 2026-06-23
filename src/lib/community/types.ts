@@ -100,3 +100,14 @@ export const COMMUNITY_SECTIONS: {
       "Grow as a reader through intuition, ethics, confidence, journaling, boundaries, symbolic literacy, reflective practice, and trust in yourself.",
   },
 ];
+
+export const COMMUNITY_SECTION_FALLBACKS: CommunitySection[] = COMMUNITY_SECTIONS.map(
+  (section, index) => ({
+    id: section.key,
+    key: section.key,
+    name: section.name,
+    description: section.description,
+    display_order: index + 1,
+    is_active: true,
+  }),
+);
