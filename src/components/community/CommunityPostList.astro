@@ -1,6 +1,9 @@
 ---
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
-import type { CommunityPostSummary } from "../../lib/community/types";
+import {
+  readingPracticePostTypeLabel,
+  type CommunityPostSummary,
+} from "../../lib/community/types";
 
 interface Props {
   posts: CommunityPostSummary[];
@@ -35,6 +38,11 @@ function formatDate(value: string): string {
               ) : null}
               <span aria-hidden="true"> · </span>
               <time datetime={post.created_at}>{formatDate(post.created_at)}</time>
+              {readingPracticePostTypeLabel(post.post_type) ? (
+                <span class="community-post-card__type">
+                  {readingPracticePostTypeLabel(post.post_type)}
+                </span>
+              ) : null}
               {post.is_pinned ? <span class="community-post-card__pin">Pinned</span> : null}
             </p>
             <h2>
@@ -82,7 +90,8 @@ function formatDate(value: string): string {
     color: var(--tok-text-muted);
   }
 
-  .community-post-card__pin {
+  .community-post-card__pin,
+  .community-post-card__type {
     color: var(--tok-gold-deep);
     font-weight: 700;
   }

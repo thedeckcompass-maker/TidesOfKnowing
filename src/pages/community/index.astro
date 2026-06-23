@@ -52,9 +52,16 @@ const jsonLd = [
       <p class="community-kicker">Practice Commons</p>
       <h1>A quiet place for readers to become better readers.</h1>
       <p>
-        Reading Practice and Reader Development are for thoughtful tarot practice,
-        intuitive development, and symbolic literacy. The emphasis is interpretation,
-        growth, and confidence, not prediction or performance.
+        The Practice Commons is a quieter space for readers who want to deepen their
+        craft away from the noise of social platforms.
+      </p>
+      <p class="community-hero__plain">
+        No competition.<br />
+        No posturing.<br />
+        No algorithmic pressure.
+      </p>
+      <p>
+        Just thoughtful practice, reflection, and reader development.
       </p>
     </header>
 
@@ -67,10 +74,31 @@ const jsonLd = [
     </form>
 
     <section class="community-sections" aria-labelledby="sections-heading">
-      <h2 id="sections-heading">Sections</h2>
+      <h2 id="sections-heading">Two rooms</h2>
       <div class="community-section-grid">
         {sections.map((section) => <CommunitySectionCard section={section} />)}
       </div>
+    </section>
+
+    <section class="community-philosophy" aria-labelledby="philosophy-heading">
+      <h2 id="philosophy-heading">Why this space exists</h2>
+      <p>
+        The wider social platforms can be noisy, harsh, competitive, and performative.
+        They often reward certainty, speed, drama, and visibility.
+      </p>
+      <p>
+        That is not the atmosphere many readers need when they are trying to grow.
+      </p>
+      <p>
+        The Practice Commons is intentionally different. It is small by design,
+        personalised where possible, and focused on thoughtful development rather than
+        public performance.
+      </p>
+      <p>
+        Readers and seekers are welcome here when they are genuinely interested in
+        strengthening practice, asking better questions, and learning to work with
+        symbolism more carefully.
+      </p>
     </section>
 
     <section class="community-create" aria-labelledby="create-heading">
@@ -89,7 +117,7 @@ const jsonLd = [
             ))}
           </div>
         ) : (
-          <CommunityAuthPrompt message="Log in to share a practice note or reply to another reader." />
+          <CommunityAuthPrompt message="Log in or register to share a practice note or reply to another reader." />
         )
       }
     </section>
@@ -130,9 +158,14 @@ const jsonLd = [
   }
 
   .community-hero p,
-  .community-create p {
+  .community-create p,
+  .community-philosophy p {
     color: var(--tok-text-muted);
     line-height: 1.8;
+  }
+
+  .community-hero__plain {
+    color: var(--tok-text-dark);
   }
 
   .community-search {
@@ -175,9 +208,26 @@ const jsonLd = [
   }
 
   .community-sections,
+  .community-philosophy,
   .community-create,
   .community-posts {
     margin-top: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .community-philosophy {
+    max-width: 48rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 62%, transparent);
+  }
+
+  .community-philosophy h2 {
+    margin-top: 0;
+  }
+
+  .community-philosophy p:last-child {
+    margin-bottom: 0;
   }
 
   .community-section-grid,

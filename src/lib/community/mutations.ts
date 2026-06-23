@@ -1,6 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createPostSlug } from "./slugs";
-import type { CommunityProfileStatus, CommunitySectionKey } from "./types";
+import type {
+  CommunityProfileStatus,
+  CommunitySectionKey,
+  ReadingPracticePostType,
+} from "./types";
 
 type MutationResult<T> =
   | { ok: true; value: T }
@@ -59,6 +63,7 @@ export async function createCommunityPost(
     sectionKey: CommunitySectionKey;
     title: string;
     body: string;
+    postType: ReadingPracticePostType | null;
   },
 ): Promise<MutationResult<{ id: string; slug: string }>> {
   const { data: section, error: sectionError } = await service
@@ -80,6 +85,7 @@ export async function createCommunityPost(
       section_id: (section as { id: string }).id,
       title: input.title,
       body: input.body,
+      post_type: input.postType,
       slug,
     })
     .select("id, slug")
@@ -101,6 +107,7 @@ export async function updateCommunityPost(
     isAdmin: boolean;
     title: string;
     body: string;
+    postType: ReadingPracticePostType | null;
   },
 ): Promise<MutationResult<{ slug: string }>> {
   const post = await loadPost(service, input.postId);
@@ -121,6 +128,7 @@ export async function updateCommunityPost(
     .update({
       title: input.title,
       body: input.body,
+      post_type: input.postType,
     })
     .eq("id", input.postId);
 

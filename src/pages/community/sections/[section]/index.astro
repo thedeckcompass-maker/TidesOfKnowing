@@ -2,6 +2,7 @@
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import LibraryPagination from "../../../../components/LibraryPagination.astro";
 import CommunityAuthPrompt from "../../../../components/community/CommunityAuthPrompt.astro";
+import CommunityIcon from "../../../../components/community/CommunityIcon.astro";
 import CommunityPostForm from "../../../../components/community/CommunityPostForm.astro";
 import CommunityPostList from "../../../../components/community/CommunityPostList.astro";
 import { canContribute } from "../../../../lib/community/auth";
@@ -14,6 +15,58 @@ import { siteBase } from "../../../../lib/site";
 
 export const prerender = false;
 
+const SECTION_ROOM_COPY = {
+  "reading-practice": {
+    intro: [
+      "Reading Practice is for readers working with real cards, real spreads, and real interpretive questions.",
+      "This is the place to bring the reading you are sitting with, the combination you cannot quite untangle, the clarifier that complicated things, or the moment where you sense there is more in the cards than you have been able to name.",
+      "This space is for practice, not performance.",
+    ],
+    purpose: [
+      { icon: "cards", label: "Your spreads and interpretations" },
+      { icon: "question", label: "Difficult card combinations" },
+      { icon: "magnifier", label: "Clarifiers, reversals, and repeated cards" },
+      { icon: "reply", label: "Where you feel stuck in a reading" },
+      { icon: "user", label: "How other readers approach the same cards" },
+      { icon: "bookmark", label: "A stronger interpretive process over time" },
+    ],
+    participate: [
+      "Start by sharing the cards, the question, and your own reading of the spread.",
+      "You do not need to be certain. In fact, uncertainty is often the most useful starting point.",
+      "Other members may offer reflections, questions, or alternative angles. Leilia also monitors the space and offers feedback where practical, especially where a post opens a useful teaching point for the wider community.",
+    ],
+    tone: [
+      "This is not a space for showing off.",
+      "It is a space for careful looking, honest practice, and respectful interpretation.",
+    ],
+  },
+  "reader-development": {
+    intro: [
+      "Reader Development is for the deeper work of becoming a stronger, clearer, more ethical and more confident reader.",
+      "This room is less about a single spread and more about the reader behind the reading.",
+      "It is for the questions that arise as your practice matures: how to trust intuition, how to recognise projection, how to hold boundaries, how to work with clients, how to journal usefully, and how to develop symbolic fluency without becoming rigid or formulaic.",
+    ],
+    purpose: [
+      { icon: "heart", label: "Confidence as a reader" },
+      { icon: "magnifier", label: "Intuition beyond memorised meanings" },
+      { icon: "question", label: "Ethics, boundaries, and responsibility" },
+      { icon: "journal", label: "Reading habits and blind spots" },
+      { icon: "leaf", label: "Symbolic literacy and reflective practice" },
+      { icon: "bookmark", label: "Future COMPASS Method™ training" },
+    ],
+    participate: [
+      "Post a question, observation, challenge, or reflection from your own reading practice.",
+      "You might be new to tarot or many years into reading. The point is not status. The point is development.",
+      "Leilia monitors the space and offers feedback where practical, especially where the question relates to practice, method, interpretation, or the deeper craft of reading.",
+    ],
+    tone: [
+      "This is a quiet development space.",
+      "It is not about being more impressive than someone else.",
+      "It is about becoming more honest, more precise, and more trustworthy in the way you read.",
+    ],
+  },
+} as const;
+
 const sectionKey = Astro.params.section;
 if (!isCommunitySectionKey(sectionKey)) return Astro.redirect("/community/", 302);
 
@@ -25,6 +78,7 @@ const section =
   COMMUNITY_SECTION_FALLBACKS.find((fallback) => fallback.key === sectionKey) ??
   null;
 if (!section) return Astro.redirect("/community/", 302);
+const room = SECTION_ROOM_COPY[section.key];
 
 const { posts, totalPages } = Astro.locals.supabase
   ? await getCommunityPosts(Astro.locals.supabase, {
@@ -44,7 +98,67 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
   <main class="community-section page-inner">
     <p class="community-section__kicker">Practice Commons</p>
     <h1>{section.name}</h1>
-    <p class="community-section__lede">{section.description}</p>
+    <div class="community-section__intro">
+      {room.intro.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+
+    <section class="community-section__room-guide" aria-labelledby="room-purpose-heading">
+      <div class="community-section__panel community-section__panel--wide">
+        <h2 id="room-purpose-heading">What this room is for</h2>
+        <div class="community-section__icon-grid">
+          {
+            room.purpose.map((item) => (
+              <article class="community-section__icon-item">
+                <CommunityIcon name={item.icon} />
+                <p>{item.label}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="community-section__panel">
+        <div class="community-section__panel-heading">
+          <CommunityIcon name="pencil" />
+          <h2>How to participate</h2>
+        </div>
+        {room.participate.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <div class="community-section__panel">
+        <div class="community-section__panel-heading">
+          <CommunityIcon name="heart" />
+          <h2>Tone</h2>
+        </div>
+        {room.tone.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
+    <section class="community-section__philosophy" aria-labelledby="philosophy-heading">
+      <div class="community-section__panel-heading">
+        <CommunityIcon name="leaf" />
+        <h2 id="philosophy-heading">Why this space exists</h2>
+      </div>
+      <p>
+        The wider social platforms can be noisy, harsh, competitive, and performative.
+        They often reward certainty, speed, drama, and visibility.
+      </p>
+      <p>
+        That is not the atmosphere many readers need when they are trying to grow.
+      </p>
+      <p>
+        The Practice Commons is intentionally different.
+      </p>
+      <p>
+        It is small by design, personalised where possible, and focused on thoughtful
+        development rather than public performance.
+      </p>
+      <p>
+        Readers and seekers are welcome here when they are genuinely interested in
+        strengthening practice, asking better questions, and learning to work with
+        symbolism more carefully.
+      </p>
+    </section>
 
     <section class="community-section__create" aria-labelledby="create-heading">
       <h2 id="create-heading">Share in {section.name}</h2>
@@ -52,7 +166,7 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
         canContribute(Astro.locals.profile) ? (
           <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
         ) : (
-          <CommunityAuthPrompt message={`Log in to post in ${section.name}.`} />
+          <CommunityAuthPrompt message={`Log in or register to post in ${section.name}.`} />
         )
       }
     </section>
@@ -68,7 +182,7 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
 <style>
   .community-section {
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 54rem;
+    max-width: 62rem;
   }
 
   .community-section__kicker,
@@ -87,13 +201,96 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
     color: var(--tok-water);
   }
 
-  .community-section__lede {
+  .community-section__intro {
+    max-width: 52rem;
+  }
+
+  .community-section__intro p,
+  .community-section__panel p,
+  .community-section__philosophy p {
     color: var(--tok-text-muted);
     line-height: 1.8;
+  }
+
+  .community-section__room-guide {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, 6vw, 3.25rem);
+  }
+
+  .community-section__panel,
+  .community-section__philosophy {
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 62%, transparent);
+  }
+
+  .community-section__panel h2,
+  .community-section__philosophy h2 {
+    margin-top: 0;
+  }
+
+  .community-section__panel-heading {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    margin-bottom: 0.85rem;
+    color: var(--tok-gold-deep);
+  }
+
+  .community-section__panel-heading h2 {
+    margin: 0;
+  }
+
+  .community-section__icon-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .community-section__icon-item {
+    display: grid;
+    gap: 0.45rem;
+    justify-items: start;
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 72%, transparent);
+    border-radius: var(--radius-control);
+    color: var(--tok-gold-deep);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 34%, transparent);
+  }
+
+  .community-section__icon-item p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    line-height: 1.55;
+  }
+
+  .community-section__panel p:last-child,
+  .community-section__philosophy p:last-child {
+    margin-bottom: 0;
+  }
+
+  .community-section__philosophy {
+    max-width: 54rem;
+    margin-top: clamp(2rem, 6vw, 3rem);
   }
 
   .community-section__create,
   .community-section__posts {
     margin-top: clamp(2rem, 6vw, 3rem);
+  }
+
+  @media (min-width: 760px) {
+    .community-section__room-guide {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .community-section__panel--wide {
+      grid-column: 1 / -1;
+    }
+
+    .community-section__icon-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>

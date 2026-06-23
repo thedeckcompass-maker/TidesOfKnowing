@@ -7,6 +7,13 @@ export type CommunityProfileStatus = "active" | "restricted" | "blocked";
 export type CommunityPostStatus = "published" | "hidden" | "deleted" | "locked";
 export type CommunityReplyStatus = "published" | "hidden" | "deleted";
 export type NotificationEventType = "reply_to_post" | "announcement";
+export type ReadingPracticePostType =
+  | "practice_reading"
+  | "spread_feedback"
+  | "card_combination"
+  | "clarifier_question"
+  | "repeating_cards"
+  | "reading_dilemma";
 
 export type CommunityProfile = {
   id: string;
@@ -34,6 +41,7 @@ export type CommunityPost = {
   title: string;
   slug: string;
   body: string;
+  post_type: ReadingPracticePostType | null;
   status: CommunityPostStatus;
   is_pinned: boolean;
   pinned_at: string | null;
@@ -100,6 +108,24 @@ export const COMMUNITY_SECTIONS: {
       "Grow as a reader through intuition, ethics, confidence, journaling, boundaries, symbolic literacy, reflective practice, and trust in yourself.",
   },
 ];
+
+export const READING_PRACTICE_POST_TYPES: {
+  value: ReadingPracticePostType;
+  label: string;
+}[] = [
+  { value: "practice_reading", label: "Practice Reading" },
+  { value: "spread_feedback", label: "Spread Feedback" },
+  { value: "card_combination", label: "Card Combination" },
+  { value: "clarifier_question", label: "Clarifier Question" },
+  { value: "repeating_cards", label: "Repeating Cards" },
+  { value: "reading_dilemma", label: "Reading Dilemma" },
+];
+
+export function readingPracticePostTypeLabel(
+  value: ReadingPracticePostType | null | undefined,
+): string | null {
+  return READING_PRACTICE_POST_TYPES.find((type) => type.value === value)?.label ?? null;
+}
 
 export const COMMUNITY_SECTION_FALLBACKS: CommunitySection[] = COMMUNITY_SECTIONS.map(
   (section, index) => ({

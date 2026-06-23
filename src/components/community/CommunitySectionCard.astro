@@ -1,31 +1,83 @@
 ---
 import { communitySectionPath } from "../../lib/community/slugs";
 import type { CommunitySection } from "../../lib/community/types";
+import CommunityIcon from "./CommunityIcon.astro";
 
 interface Props {
   section: CommunitySection;
 }
 
 const { section } = Astro.props;
+const cardCopy = {
+  "reading-practice": {
+    body: "Bring your cards, your spread, or the interpretation you are working through.",
+    icon: "cards",
+    image: "/images/community/reading-practice-room.webp",
+    imageAlt: "A quiet tarot reading space with cards, candlelight, and reflective atmosphere.",
+  },
+  "reader-development": {
+    body: "Deepen your confidence, intuition, ethics, boundaries, and symbolic literacy as a reader.",
+    icon: "journal",
+    image: "/images/community/reader-development-room.webp",
+    imageAlt: "A quiet reader development space with a journal and pen for reflective tarot practice.",
+  },
+}[section.key];
 ---
 
 <article class="community-section-card">
+  <a class="community-section-card__image-link" href={communitySectionPath(section.key)} aria-hidden="true" tabindex="-1">
+    <img
+      class="community-section-card__image"
+      src={cardCopy.image}
+      alt=""
+      width="720"
+      height="480"
+      loading="lazy"
+      decoding="async"
+    />
+  </a>
+  <div class="community-section-card__icon" aria-hidden="true">
+    <CommunityIcon name={cardCopy.icon} />
+  </div>
   <h2>
     <a href={communitySectionPath(section.key)}>{section.name}</a>
   </h2>
-  <p>{section.description}</p>
+  <p>{cardCopy.body}</p>
+  <a class="community-section-card__cta" href={communitySectionPath(section.key)}>Enter the room</a>
 </article>
 
 <style>
   .community-section-card {
-    padding: 1rem;
+    display: flex;
+    min-height: 13rem;
+    flex-direction: column;
+    overflow: hidden;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading) 70%, transparent);
   }
 
+  .community-section-card__image-link {
+    display: block;
+    color: inherit;
+  }
+
+  .community-section-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .community-section-card__icon {
+    width: fit-content;
+    margin: clamp(1rem, 4vw, 1.4rem) clamp(1rem, 4vw, 1.4rem) 0;
+    color: var(--tok-gold-deep);
+  }
+
   .community-section-card h2 {
-    margin: 0 0 0.45rem;
+    margin: 0.45rem clamp(1rem, 4vw, 1.4rem) 0.45rem;
     font-family: var(--font-accent);
     font-size: clamp(1.45rem, 5vw, 2rem);
     font-weight: 400;
@@ -39,8 +91,23 @@ const { section } = Astro.props;
   }
 
   .community-section-card p {
-    margin: 0;
+    margin: 0 clamp(1rem, 4vw, 1.4rem);
     color: var(--tok-text-muted);
     line-height: 1.7;
+  }
+
+  .community-section-card__cta {
+    display: inline-flex;
+    width: fit-content;
+    margin: auto clamp(1rem, 4vw, 1.4rem) clamp(1rem, 4vw, 1.4rem);
+    padding-top: 1.25rem;
+    color: var(--tok-gold-deep);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .community-section-card__cta::after {
+    content: "→";
+    margin-left: 0.45rem;
   }
 </style>

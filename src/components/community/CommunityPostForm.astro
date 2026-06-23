@@ -1,5 +1,9 @@
 ---
-import type { CommunitySection } from "../../lib/community/types";
+import {
+  READING_PRACTICE_POST_TYPES,
+  type CommunitySection,
+  type ReadingPracticePostType,
+} from "../../lib/community/types";
 
 interface Props {
   sections: CommunitySection[];
@@ -9,6 +13,7 @@ interface Props {
     title: string;
     body: string;
     section_id: string;
+    post_type?: ReadingPracticePostType | null;
   };
 }
 
@@ -18,10 +23,30 @@ const selectedSection =
   sections.find((section) => section.id === post?.section_id) ??
   sections[0];
 const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts";
+const isReadingPractice = selectedSection?.key === "reading-practice";
 ---
 
 <form class="community-form" method="post" action={action}>
   <input type="hidden" name="sectionKey" value={selectedSection?.key} />
+  {
+    isReadingPractice ? (
+      <fieldset class="community-form__fieldset">
+        <legend>Discussion type</legend>
+        <p class="community-form__help">
+          Choose the closest fit. This keeps Reading Practice as one room while helping
+          members understand what kind of feedback you want.
+        </p>
+        <select name="postType" aria-label="Reading Practice discussion type">
+          <option value="">Choose a type...</option>
+          {READING_PRACTICE_POST_TYPES.map((type) => (
+            <option value={type.value} selected={post?.post_type === type.value}>
+              {type.label}
+            </option>
+          ))}
+        </select>
+      </fieldset>
+    ) : null
+  }
   <label>
     Title
     <input
@@ -34,6 +59,24 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
       placeholder="What are you practising or wondering about?"
     />
   </label>
+  {
+    isReadingPractice ? (
+      <aside class="community-form__prompts" aria-label="Optional Reading Practice prompts">
+        <p>
+          The aim is collaborative symbolic interpretation and reader development:
+          <strong> "Here's what I saw. What else might I be missing?"</strong>
+        </p>
+        <ul>
+          <li>Question asked</li>
+          <li>Cards drawn</li>
+          <li>My interpretation</li>
+          <li>What I am uncertain about</li>
+          <li>Additional context, if useful</li>
+          <li>What I would appreciate feedback on</li>
+        </ul>
+      </aside>
+    ) : null
+  }
   <label>
     Your note
     <textarea
@@ -42,7 +85,11 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
       maxlength="12000"
       rows="8"
       required
-      placeholder="Share the cards, interpretation, question, or practice reflection."
+      placeholder={
+        isReadingPractice
+          ? "Question asked:\n\nCards drawn:\n\nMy interpretation:\n\nWhat I am uncertain about:\n\nAdditional context (optional):\n\nWhat I would appreciate feedback on:"
+          : "Share the question, observation, challenge, or practice reflection."
+      }
     >{post?.body ?? ""}</textarea>
   </label>
   <button type="submit">{post ? "Update post" : `Post in ${selectedSection?.name ?? "Practice Commons"}`}</button>
@@ -54,6 +101,33 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
     gap: 0.85rem;
   }
 
+  .community-form__fieldset {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .community-form__fieldset legend {
+    margin: 0 0 0.15rem;
+    padding: 0;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__help,
+  .community-form__prompts {
+    color: var(--tok-text-muted);
+    line-height: 1.65;
+  }
+
+  .community-form__help {
+    margin: 0;
+    font-size: var(--tok-type-meta);
+  }
+
   .community-form label {
     display: grid;
     gap: 0.35rem;
@@ -63,6 +137,7 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
   }
 
   .community-form input,
+  .community-form select,
   .community-form textarea {
     width: 100%;
     padding: 0.75rem 0.85rem;
@@ -71,6 +146,26 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
     background: var(--tok-surface-reading);
     color: var(--tok-text-dark);
     font: inherit;
+  }
+
+  .community-form__prompts {
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 44%, transparent);
+  }
+
+  .community-form__prompts p {
+    margin: 0 0 0.65rem;
+  }
+
+  .community-form__prompts ul {
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
+  .community-form__prompts li + li {
+    margin-top: 0.25rem;
   }
 
   .community-form textarea {

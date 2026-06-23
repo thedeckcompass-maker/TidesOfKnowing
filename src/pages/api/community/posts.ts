@@ -18,6 +18,7 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
     sectionKey: payload.sectionKey,
     title: payload.title,
     body: payload.body,
+    postType: payload.postType,
   });
 
   if (!validation.ok) {

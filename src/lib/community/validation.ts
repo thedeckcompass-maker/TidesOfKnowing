@@ -1,6 +1,11 @@
-import type { CommunitySectionKey } from "./types";
+import {
+  READING_PRACTICE_POST_TYPES,
+  type CommunitySectionKey,
+  type ReadingPracticePostType,
+} from "./types";
 
 const SECTION_KEYS: CommunitySectionKey[] = ["reading-practice", "reader-development"];
+const READING_PRACTICE_POST_TYPE_VALUES = READING_PRACTICE_POST_TYPES.map((type) => type.value);
 
 export type ValidationResult<T> =
   | { ok: true; value: T }
@@ -15,14 +20,23 @@ export function isCommunitySectionKey(value: unknown): value is CommunitySection
   return typeof value === "string" && SECTION_KEYS.includes(value as CommunitySectionKey);
 }
 
+export function isReadingPracticePostType(value: unknown): value is ReadingPracticePostType {
+  return (
+    typeof value === "string" &&
+    READING_PRACTICE_POST_TYPE_VALUES.includes(value as ReadingPracticePostType)
+  );
+}
+
 export function validatePostInput(input: {
   sectionKey: unknown;
   title: unknown;
   body: unknown;
+  postType?: unknown;
 }): ValidationResult<{
   sectionKey: CommunitySectionKey;
   title: string;
   body: string;
+  postType: ReadingPracticePostType | null;
 }> {
   const title = cleanText(input.title).replace(/\s+/g, " ");
   const body = cleanText(input.body);
@@ -39,7 +53,24 @@ export function validatePostInput(input: {
     return { ok: false, error: "Posts should be 20 to 12,000 characters." };
   }
 
-  return { ok: true, value: { sectionKey: input.sectionKey, title, body } };
+  if (input.sectionKey === "reading-practice") {
+    if (input.postType && !isReadingPracticePostType(input.postType)) {
+      return { ok: false, error: "Choose a Reading Practice discussion type." };
+    }
+    const postType = isReadingPracticePostType(input.postType) ? input.postType : null;
+
+    return {
+      ok: true,
+      value: {
+        sectionKey: input.sectionKey,
+        title,
+        body,
+        postType: postType || null,
+      },
+    };
+  }
+
+  return { ok: true, value: { sectionKey: input.sectionKey, title, body, postType: null } };
 }
 
 export function validateReplyInput(input: { body: unknown }): ValidationResult<{ body: string }> {

@@ -58,8 +58,9 @@ if (Astro.request.method === "POST") {
 
       <form method="post" class="auth-form">
         <input type="hidden" name="redirectTo" value={redirectTo} />
-        <label for="displayName">Display name</label>
+        <label for="displayName">Display name <span>(optional)</span></label>
         <input id="displayName" name="displayName" type="text" autocomplete="nickname" maxlength="60" />
+        <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
         <button type="submit">Send registration link</button>
@@ -117,6 +118,18 @@ if (Astro.request.method === "POST") {
   .auth-form label {
     font-size: var(--tok-type-label);
     font-weight: 700;
+  }
+
+  .auth-form label span,
+  .auth-help {
+    color: var(--tok-text-muted);
+    font-weight: 400;
+  }
+
+  .auth-help {
+    margin: -0.35rem 0 0.25rem;
+    font-size: var(--tok-type-meta);
+    line-height: 1.5;
   }
 
   .auth-form input {

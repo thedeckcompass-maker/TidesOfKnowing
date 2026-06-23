@@ -8,6 +8,7 @@ import CommunityReplyList from "../../components/community/CommunityReplyList.as
 import { canContribute, isAdminProfile } from "../../lib/community/auth";
 import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
+import { readingPracticePostTypeLabel } from "../../lib/community/types";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
 
@@ -31,6 +32,7 @@ const canEdit = Boolean(
   Astro.locals.user &&
     (Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile)),
 );
+const postTypeLabel = readingPracticePostTypeLabel(post.post_type);
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -70,6 +72,7 @@ function formatDate(value: string): string {
         <a href={sectionHref}>{post.section?.name ?? "Practice Commons"}</a>
         <span aria-hidden="true"> · </span>
         <time datetime={post.created_at}>{formatDate(post.created_at)}</time>
+        {postTypeLabel ? <span class="community-post__type">{postTypeLabel}</span> : null}
       </p>
       <h1>{post.title}</h1>
       <p class="community-post__byline">By {post.author?.display_name ?? "Reader"}</p>
@@ -98,7 +101,7 @@ function formatDate(value: string): string {
         canContribute(Astro.locals.profile) ? (
           <CommunityReplyForm postId={post.id} />
         ) : (
-          <CommunityAuthPrompt message="Log in to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
+          <CommunityAuthPrompt message="Log in or register to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
         )
       }
     </section>
@@ -126,6 +129,11 @@ function formatDate(value: string): string {
     font-size: var(--tok-type-meta);
     letter-spacing: 0.06em;
     text-transform: uppercase;
+  }
+
+  .community-post__type {
+    color: var(--tok-gold-deep);
+    font-weight: 700;
   }
 
   .community-post h1 {
