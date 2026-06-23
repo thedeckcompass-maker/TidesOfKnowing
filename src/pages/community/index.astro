@@ -33,6 +33,22 @@ const { posts, totalPages } = Astro.locals.supabase
 const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
 const canPost = canContribute(Astro.locals.profile);
 const displayName = Astro.locals.profile?.display_name ?? "Reader";
+const roomCreationCopy = {
+  "reading-practice": {
+    short: "Bring cards and readings.",
+    examples: [
+      "What else do you see in this spread?",
+      "This card combination puzzles me.",
+    ],
+  },
+  "reader-development": {
+    short: "Bring experiences and growth.",
+    examples: [
+      "How do you know when you're forcing an interpretation?",
+      "What helped you trust your intuition?",
+    ],
+  },
+} as const;
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -136,14 +152,42 @@ const jsonLd = [
       </p>
       {
         canPost ? (
-          <div class="community-create-grid">
-            {sections.map((section) => (
-              <article>
-                <h3>{section.name}</h3>
-                <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
-              </article>
-            ))}
-          </div>
+          <>
+            <aside class="community-room-guide" aria-labelledby="room-guide-heading">
+              <h3 id="room-guide-heading">Which room fits best?</h3>
+              <div class="community-room-guide__grid">
+                <article>
+                  <h4>Reading Practice</h4>
+                  <p>Bring cards and readings.</p>
+                  <ul>
+                    <li>What else do you see in this spread?</li>
+                    <li>This card combination puzzles me.</li>
+                  </ul>
+                </article>
+                <article>
+                  <h4>Reader Development</h4>
+                  <p>Bring experiences and growth.</p>
+                  <ul>
+                    <li>How do you know when you're forcing an interpretation?</li>
+                    <li>What helped you trust your intuition?</li>
+                  </ul>
+                </article>
+              </div>
+            </aside>
+
+            <div class="community-create-grid">
+              {sections.map((section) => {
+                const roomCopy = roomCreationCopy[section.key];
+                return (
+                  <article class={`community-create-card community-create-card--${section.key}`}>
+                    <h3>{section.name}</h3>
+                    <p>{roomCopy.short}</p>
+                    <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
+                  </article>
+                );
+              })}
+            </div>
+          </>
         ) : (
           <CommunityAuthPrompt message="Join the Practice Commons to share a practice note or reply to another reader." />
         )
@@ -322,10 +366,62 @@ const jsonLd = [
     gap: 1rem;
   }
 
-  .community-create-grid article {
-    padding: 1rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  .community-room-guide {
+    margin-bottom: 1rem;
+    padding: clamp(1rem, 4vw, 1.4rem);
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 80%, transparent);
     border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 50%, transparent);
+  }
+
+  .community-room-guide h3,
+  .community-room-guide h4 {
+    margin: 0;
+    font-family: var(--font-heading);
+    color: var(--tok-water);
+  }
+
+  .community-room-guide h3 {
+    margin-bottom: 0.85rem;
+    font-size: clamp(1.2rem, 4vw, 1.55rem);
+  }
+
+  .community-room-guide__grid {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .community-room-guide article {
+    padding: 0.85rem;
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .community-room-guide p,
+  .community-room-guide ul {
+    color: var(--tok-text-muted);
+    line-height: 1.65;
+  }
+
+  .community-room-guide ul {
+    margin: 0.55rem 0 0;
+    padding-left: 1.15rem;
+  }
+
+  .community-create-card {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    border-radius: var(--radius-lg);
+  }
+
+  .community-create-card--reading-practice {
+    background: color-mix(in srgb, var(--tok-water) 8%, var(--tok-surface-reading) 92%);
+    border-color: color-mix(in srgb, var(--tok-gold) 38%, transparent);
+  }
+
+  .community-create-card--reader-development {
+    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
+    border-color: color-mix(in srgb, var(--tok-teal) 34%, transparent);
   }
 
   .community-create-grid h3 {
@@ -337,6 +433,10 @@ const jsonLd = [
   @media (min-width: 760px) {
     .community-auth-card {
       grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .community-room-guide__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .community-section-grid,

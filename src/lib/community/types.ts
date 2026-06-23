@@ -42,6 +42,7 @@ export type CommunityPost = {
   slug: string;
   body: string;
   post_type: ReadingPracticePostType | null;
+  image_url: string | null;
   status: CommunityPostStatus;
   is_pinned: boolean;
   pinned_at: string | null;

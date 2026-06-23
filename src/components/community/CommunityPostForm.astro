@@ -26,15 +26,18 @@ const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts"
 const isReadingPractice = selectedSection?.key === "reading-practice";
 ---
 
-<form class="community-form" method="post" action={action}>
+<form class="community-form" method="post" action={action} enctype="multipart/form-data" data-community-post-form>
   <input type="hidden" name="sectionKey" value={selectedSection?.key} />
   {
     isReadingPractice ? (
       <fieldset class="community-form__fieldset">
         <legend>Discussion type</legend>
         <p class="community-form__help">
-          Choose the closest fit. This keeps Reading Practice as one room while helping
-          members understand what kind of feedback you want.
+          Choose the kind of feedback you're looking for.
+        </p>
+        <p class="community-form__help">
+          You're not expected to have the answer. Simply share what you saw and invite
+          others to explore with you.
         </p>
         <select name="postType" aria-label="Reading Practice discussion type">
           <option value="">Choose a type...</option>
@@ -45,10 +48,41 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
           ))}
         </select>
       </fieldset>
+    ) : (
+      <aside class="community-form__prompts community-form__prompts--development">
+        <p>
+          This room is for developing yourself as a reader rather than analysing cards.
+        </p>
+      </aside>
+    )
+  }
+  {
+    isReadingPractice && !post ? (
+      <div class="community-form__upload" data-spread-image-field>
+        <p class="community-form__upload-label">Spread image <span>(optional)</span></p>
+        <p class="community-form__file-help">
+          Different decks and layouts carry different nuances. Uploading a photo of your
+          spread often helps others explore what you may be seeing.
+        </p>
+        <label class="community-form__file-picker">
+          Choose image
+          <input
+            name="spreadImage"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            data-spread-image-input
+          />
+        </label>
+        <div class="community-form__preview" data-spread-image-preview hidden>
+          <img src="" alt="Selected spread image preview" data-spread-image-preview-img />
+          <button type="button" data-spread-image-remove>Remove image</button>
+        </div>
+        <p class="community-form__file-status" data-spread-image-status role="status" aria-live="polite"></p>
+      </div>
     ) : null
   }
   <label>
-    Title
+    Your question or reflection
     <input
       name="title"
       type="text"
@@ -56,7 +90,7 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
       maxlength="140"
       required
       value={post?.title ?? ""}
-      placeholder="What are you practising or wondering about?"
+      placeholder="What are you exploring, practicing, or wondering about?"
     />
   </label>
   {
@@ -78,7 +112,7 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     ) : null
   }
   <label>
-    Your note
+    Share a little more
     <textarea
       name="body"
       minlength="20"
@@ -88,7 +122,7 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
       placeholder={
         isReadingPractice
           ? "Question asked:\n\nCards drawn:\n\nMy interpretation:\n\nWhat I am uncertain about:\n\nAdditional context (optional):\n\nWhat I would appreciate feedback on:"
-          : "Share the question, observation, challenge, or practice reflection."
+          : "Describe the reading, experience, challenge, or reflection you'd like to discuss."
       }
     >{post?.body ?? ""}</textarea>
   </label>
@@ -123,8 +157,88 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     line-height: 1.65;
   }
 
-  .community-form__help {
+  .community-form__help,
+  .community-form__file-help {
     margin: 0;
+    font-size: var(--tok-type-meta);
+    line-height: 1.5;
+  }
+
+  .community-form__upload {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 34%, transparent);
+  }
+
+  .community-form__upload-label {
+    margin: 0;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__upload-label span {
+    color: var(--tok-text-muted);
+    font-weight: 500;
+  }
+
+  .community-form__file-picker {
+    justify-self: start;
+    display: inline-flex;
+    width: auto;
+    padding: 0.62rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface);
+    color: var(--tok-text-dark);
+    cursor: pointer;
+  }
+
+  .community-form__file-picker input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .community-form__preview {
+    display: grid;
+    gap: 0.55rem;
+    max-width: 22rem;
+  }
+
+  .community-form__preview[hidden] {
+    display: none;
+  }
+
+  .community-form__preview img {
+    width: 100%;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--tok-border-light);
+    background: var(--tok-surface-reading);
+  }
+
+  .community-form__preview button {
+    justify-self: start;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__file-status {
+    min-height: 1.3em;
+    margin: 0;
+    color: var(--tok-text-muted);
     font-size: var(--tok-type-meta);
   }
 
@@ -155,6 +269,10 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     background: color-mix(in srgb, var(--tok-surface-reading-soft) 44%, transparent);
   }
 
+  .community-form__prompts--development {
+    border-color: color-mix(in srgb, var(--tok-teal) 30%, transparent);
+  }
+
   .community-form__prompts p {
     margin: 0 0 0.65rem;
   }
@@ -173,7 +291,7 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     line-height: 1.65;
   }
 
-  .community-form button {
+  .community-form > button[type="submit"] {
     justify-self: start;
     padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
     border: 0;
@@ -184,3 +302,164 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     cursor: pointer;
   }
 </style>
+
+<script is:inline>
+  (function () {
+    if (window.__tokCommunityImagePrep) return;
+    window.__tokCommunityImagePrep = true;
+
+    var MAX_DIMENSION = 1600;
+    var QUALITY = 0.82;
+    var MAX_BYTES = 10 * 1024 * 1024;
+
+    function setStatus(input, message) {
+      var field = input.closest("[data-spread-image-field]");
+      var status = field ? field.querySelector("[data-spread-image-status]") : null;
+      if (status) status.textContent = message || "";
+    }
+
+    function clearPreview(input) {
+      var field = input.closest("[data-spread-image-field]");
+      var preview = field ? field.querySelector("[data-spread-image-preview]") : null;
+      var image = field ? field.querySelector("[data-spread-image-preview-img]") : null;
+      if (input.dataset.previewUrl) {
+        URL.revokeObjectURL(input.dataset.previewUrl);
+        delete input.dataset.previewUrl;
+      }
+      if (image instanceof HTMLImageElement) image.src = "";
+      if (preview instanceof HTMLElement) preview.hidden = true;
+    }
+
+    function showPreview(input, file) {
+      clearPreview(input);
+      var field = input.closest("[data-spread-image-field]");
+      var preview = field ? field.querySelector("[data-spread-image-preview]") : null;
+      var image = field ? field.querySelector("[data-spread-image-preview-img]") : null;
+      if (!(preview instanceof HTMLElement) || !(image instanceof HTMLImageElement) || !file) return;
+
+      var url = URL.createObjectURL(file);
+      input.dataset.previewUrl = url;
+      image.src = url;
+      preview.hidden = false;
+    }
+
+    function loadImage(file) {
+      return new Promise(function (resolve, reject) {
+        var url = URL.createObjectURL(file);
+        var image = new Image();
+        image.onload = function () {
+          URL.revokeObjectURL(url);
+          resolve(image);
+        };
+        image.onerror = function () {
+          URL.revokeObjectURL(url);
+          reject(new Error("Unable to load image."));
+        };
+        image.src = url;
+      });
+    }
+
+    function canvasToBlob(canvas, type, quality) {
+      return new Promise(function (resolve) {
+        canvas.toBlob(resolve, type, quality);
+      });
+    }
+
+    async function compressImage(file) {
+      if (!file || !/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+
+      var image = await loadImage(file);
+      var scale = Math.min(1, MAX_DIMENSION / Math.max(image.width, image.height));
+      var width = Math.max(1, Math.round(image.width * scale));
+      var height = Math.max(1, Math.round(image.height * scale));
+
+      if (file.size <= MAX_BYTES && scale === 1) return file;
+
+      var canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      var context = canvas.getContext("2d");
+      if (!context) return file;
+      context.drawImage(image, 0, 0, width, height);
+
+      var outputType = file.type === "image/png" ? "image/png" : "image/webp";
+      var blob = await canvasToBlob(
+        canvas,
+        outputType,
+        outputType === "image/png" ? undefined : QUALITY
+      );
+      if (!blob) return file;
+
+      var ext = outputType === "image/png" ? "png" : "webp";
+      var name = file.name.replace(/\.[^.]+$/, "") + "." + ext;
+      return new File([blob], name, { type: outputType, lastModified: Date.now() });
+    }
+
+    document.addEventListener("change", function (event) {
+      var input = event.target;
+      if (!(input instanceof HTMLInputElement) || !input.matches("[data-spread-image-input]")) return;
+
+      var file = input.files && input.files[0] ? input.files[0] : null;
+      if (!file) {
+        clearPreview(input);
+        setStatus(input, "");
+        return;
+      }
+
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+        clearPreview(input);
+        setStatus(input, "Please choose a JPG, PNG, or WebP image.");
+        return;
+      }
+
+      showPreview(input, file);
+      setStatus(input, file.size > MAX_BYTES ? "Large image selected. It will be compressed before upload." : "");
+    });
+
+    document.addEventListener("click", function (event) {
+      var button = event.target;
+      if (!(button instanceof HTMLElement) || !button.matches("[data-spread-image-remove]")) return;
+
+      var field = button.closest("[data-spread-image-field]");
+      var input = field ? field.querySelector("[data-spread-image-input]") : null;
+      if (!(input instanceof HTMLInputElement)) return;
+
+      input.value = "";
+      clearPreview(input);
+      setStatus(input, "");
+    });
+
+    document.addEventListener(
+      "submit",
+      async function (event) {
+        var form = event.target;
+        if (!(form instanceof HTMLFormElement) || !form.matches("[data-community-post-form]")) return;
+
+        var input = form.querySelector("[data-spread-image-input]");
+        if (!(input instanceof HTMLInputElement) || !input.files || input.files.length === 0) return;
+
+        event.preventDefault();
+        var submitter = event.submitter instanceof HTMLElement ? event.submitter : null;
+        if (submitter) submitter.setAttribute("aria-busy", "true");
+
+        try {
+          var file = input.files[0];
+          setStatus(input, "Preparing image...");
+          var compressed = await compressImage(file);
+          var transfer = new DataTransfer();
+          transfer.items.add(compressed);
+          input.files = transfer.files;
+          showPreview(input, compressed);
+          setStatus(input, "Uploading image...");
+        } catch (error) {
+          console.warn("Spread image compression skipped:", error);
+          setStatus(input, "Uploading image...");
+        } finally {
+          if (submitter) submitter.removeAttribute("aria-busy");
+          form.submit();
+        }
+      },
+      true
+    );
+  })();
+</script>

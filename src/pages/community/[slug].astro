@@ -8,6 +8,7 @@ import CommunityReplyList from "../../components/community/CommunityReplyList.as
 import { canContribute, isAdminProfile } from "../../lib/community/auth";
 import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
+import { getSpreadImagePublicUrl } from "../../lib/community/spreadImages";
 import { readingPracticePostTypeLabel } from "../../lib/community/types";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
@@ -33,6 +34,9 @@ const canEdit = Boolean(
     (Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile)),
 );
 const postTypeLabel = readingPracticePostTypeLabel(post.post_type);
+const spreadImageUrl = Astro.locals.supabase
+  ? getSpreadImagePublicUrl(Astro.locals.supabase, post.image_url)
+  : null;
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -76,6 +80,22 @@ function formatDate(value: string): string {
       </p>
       <h1>{post.title}</h1>
       <p class="community-post__byline">By {post.author?.display_name ?? "Reader"}</p>
+      {
+        spreadImageUrl ? (
+          <figure class="community-post__spread">
+            <figcaption>Spread image</figcaption>
+            <a href={spreadImageUrl} target="_blank" rel="noopener">
+              <img
+                src={spreadImageUrl}
+                alt={`Spread image for ${post.title}`}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <p>Click image to enlarge.</p>
+          </figure>
+        ) : null
+      }
       <div class="community-post__body">
         {post.body.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
       </div>
@@ -154,6 +174,37 @@ function formatDate(value: string): string {
 
   .community-post__body p {
     margin: 0 0 1rem;
+  }
+
+  .community-post__spread {
+    margin: 1.5rem 0 0;
+  }
+
+  .community-post__spread figcaption {
+    margin: 0 0 0.5rem;
+    color: var(--tok-text-dark);
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+  }
+
+  .community-post__spread a {
+    display: block;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 34%, transparent);
+    border-radius: var(--radius-lg);
+    background: var(--tok-surface-reading-soft);
+  }
+
+  .community-post__spread img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .community-post__spread p {
+    margin-top: 0.5rem;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
   }
 
   .community-post__replies,

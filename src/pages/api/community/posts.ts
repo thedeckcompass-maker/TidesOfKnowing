@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { canContribute } from "../../../lib/community/auth";
 import { json, parseJsonOrForm } from "../../../lib/community/api";
 import { createCommunityPost } from "../../../lib/community/mutations";
+import { uploadReadingPracticeSpreadImage } from "../../../lib/community/spreadImages";
 import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
 import { communityPostPath } from "../../../lib/community/slugs";
 import { validatePostInput } from "../../../lib/community/validation";
@@ -26,9 +27,20 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
   }
 
   const service = createCommunityServiceClient(locals);
+  const spreadImage = await uploadReadingPracticeSpreadImage(service, {
+    image: payload.spreadImage,
+    authorId: locals.user.id,
+    sectionKey: validation.value.sectionKey,
+  });
+
+  if (!spreadImage.ok) {
+    return json({ ok: false, error: spreadImage.error }, spreadImage.status);
+  }
+
   const result = await createCommunityPost(service, {
     authorId: locals.user.id,
     ...validation.value,
+    imageUrl: spreadImage.path,
   });
 
   if (!result.ok) {

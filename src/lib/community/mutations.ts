@@ -64,6 +64,7 @@ export async function createCommunityPost(
     title: string;
     body: string;
     postType: ReadingPracticePostType | null;
+    imageUrl?: string | null;
   },
 ): Promise<MutationResult<{ id: string; slug: string }>> {
   const { data: section, error: sectionError } = await service
@@ -86,6 +87,7 @@ export async function createCommunityPost(
       title: input.title,
       body: input.body,
       post_type: input.postType,
+      image_url: input.imageUrl ?? null,
       slug,
     })
     .select("id, slug")
