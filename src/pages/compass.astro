@@ -33,14 +33,6 @@ const compassFaqJsonLd = faqPageJsonLd(
         <a class="compass__cta compass__cta--primary" href={T.apply.ctaHref}>
           {T.apply.ctaLabel}
         </a>
-
-        <a class="compass__sub-link" href="/articles/compass-method/">
-          Read The COMPASS Method™ article
-        </a>
-        <p class="compass__sub-note">
-          The COMPASS Method™ is Tides of Knowing's original interpretive framework. Training installs
-          it; <a href="/practice/">practice on The Deck Compass</a> stabilises it.
-        </p>
       </div>
 
       <figure class="compass__hero-figure compass__panel">
@@ -79,6 +71,10 @@ const compassFaqJsonLd = faqPageJsonLd(
         {T.method.pillars.map((pillar) => <span>{pillar}</span>)}
       </p>
       {T.method.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
+      <p class="compass__sub-note">
+        Read the <a href="/articles/compass-method/">full COMPASS Method™ article</a>, or see how
+        <a href="/practice/">practice on The Deck Compass</a> stabilises the work after training.
+      </p>
     </section>
 
     <section class="compass__section compass__section--soft">
@@ -98,10 +94,6 @@ const compassFaqJsonLd = faqPageJsonLd(
         {T.howItWorks.bullets.map((item) => <li>{item}</li>)}
       </ul>
       {T.howItWorks.closingParagraphs.map((p) => <p class="compass__p">{p}</p>)}
-
-      <a class="compass__cta compass__cta--secondary" href={T.apply.ctaHref}>
-        {T.apply.ctaLabel}
-      </a>
     </section>
 
     <section class="compass__section compass__section--schedule" aria-labelledby="compass-cohort-heading">
@@ -197,6 +189,18 @@ const compassFaqJsonLd = faqPageJsonLd(
               {tier.body.map((para) => (
                 <p class="compass__pricing-tier-p">{para}</p>
               ))}
+              {
+                tier.enrollHref && (
+                  <a
+                    class="compass__cta compass__pricing-cta"
+                    href={tier.enrollHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Enrol Now
+                  </a>
+                )
+              }
             </div>
           ))
         }
@@ -206,10 +210,31 @@ const compassFaqJsonLd = faqPageJsonLd(
       {T.investment.afterParagraphs.map((p) => <p class="compass__p">{p}</p>)}
     </section>
 
+    <section class="compass__section compass__section--warm compass__section--post-investment">
+      <h2 class="compass__h2">Ready for the next cohort?</h2>
+      <p class="compass__p">
+        If one of these options feels right, you are welcome to enrol directly. If you are still exploring, register your interest and I will follow up personally when the next cohort opens.
+      </p>
+      <div class="compass__cta-row">
+        <a class="compass__cta" href="/compass/apply/">Register Interest for the Next Cohort</a>
+        <a class="compass__text-link" href="/articles/compass-method/">
+          Read The COMPASS Method™ article
+        </a>
+      </div>
+    </section>
+
     <section class="compass__section compass__section--warm">
       <p class="compass__eyebrow">{T.about.label}</p>
       <h2 class="compass__h2">{T.about.heading}</h2>
       {T.about.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
+    </section>
+
+    <section class="compass__section compass__section--soft">
+      <p class="compass__eyebrow">{T.notFor.label}</p>
+      <h2 class="compass__h2">{T.notFor.heading}</h2>
+      <ul class="compass__list compass__list--card">
+        {T.notFor.bullets.map((item) => <li>{item}</li>)}
+      </ul>
     </section>
 
     <section class="compass__section compass__section--soft" aria-labelledby="compass-faq-heading">
@@ -523,6 +548,11 @@ const compassFaqJsonLd = faqPageJsonLd(
     color: var(--tok-text-light-soft);
   }
 
+  .compass__pricing-cta {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
   .compass__section--investment .compass__h3 {
     margin-top: 1.5rem;
   }
@@ -649,6 +679,43 @@ const compassFaqJsonLd = faqPageJsonLd(
   .compass__section--warm .compass__h2,
   .compass__section--warm .compass__p {
     color: var(--tok-text-dark);
+  }
+
+  .compass__section--post-investment {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .compass__section--post-investment .compass__h2,
+  .compass__section--post-investment .compass__p {
+    margin-bottom: 0;
+  }
+
+  .compass__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem 1.25rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .compass__cta-row .compass__cta {
+    margin-top: 0;
+  }
+
+  .compass__text-link {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .compass__text-link:hover {
+    color: var(--tok-teal);
   }
 
   .compass__section--final {

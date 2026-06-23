@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteBase } from "../../lib/site";
+
+const title = "Thank You | Tides of Knowing";
+const description =
+  "Thank you for joining The COMPASS Method. Your place has been reserved and Leigh Spencer will follow up personally.";
+const ogUrl = new URL("/compass/thank-you/", siteBase(Astro)).href;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={ogUrl}
+  tdcPlacement="none"
+  metaRobots="noindex, nofollow"
+>
+  <article class="compass-thanks page-inner">
+    <header class="compass-thanks__hero">
+      <p class="compass-thanks__eyebrow">COMPASS Training</p>
+      <h1 class="compass-thanks__title">Thank you. Your place has been reserved.</h1>
+    </header>
+
+    <div class="compass-thanks__body">
+      <p class="compass-thanks__p">Thank you for joining The COMPASS Method™.</p>
+      <p class="compass-thanks__p">
+        I'll personally be in touch within 48 hours with the next steps, cohort information, and platform access details.
+      </p>
+      <p class="compass-thanks__p">There is nothing you need to prepare right now.</p>
+      <p class="compass-thanks__p">
+        If you have timezone constraints, scheduling questions, or anything feels unclear, you are welcome to contact me at:
+      </p>
+      <p class="compass-thanks__contact">
+        <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>
+      </p>
+      <p class="compass-thanks__p">I'm looking forward to working with you.</p>
+      <p class="compass-thanks__signature">— Leigh Spencer (Leilia)</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .compass-thanks {
+    padding: clamp(2rem, 6vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 40rem;
+  }
+
+  .compass-thanks__hero {
+    margin-bottom: 1.35rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .compass-thanks__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-size: var(--tok-type-nav-compact);
+    font-weight: 600;
+    letter-spacing: var(--tok-letter-upper-tdc);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .compass-thanks__title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.65rem, 3.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--tok-water);
+  }
+
+  .compass-thanks__body {
+    padding: clamp(1rem, 3vw, 1.45rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .compass-thanks__p,
+  .compass-thanks__contact,
+  .compass-thanks__signature {
+    margin: 0 0 1rem;
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: var(--tok-line-body);
+    color: var(--tok-text-dark);
+  }
+
+  .compass-thanks__contact a {
+    color: var(--tok-water);
+    font-weight: 600;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  .compass-thanks__contact a:hover {
+    color: var(--tok-teal);
+  }
+
+  .compass-thanks__signature {
+    margin-bottom: 0;
+    color: color-mix(in srgb, var(--tok-text-dark) 84%, transparent);
+  }
+</style>

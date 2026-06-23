@@ -8,12 +8,21 @@ const INTAKE_PREFERENCE_VALUES = [
   "General COMPASS interest (timing to be discussed)",
 ] as const;
 
+const TIER_PREFERENCE_VALUES = [
+  "Course · USD $697",
+  "Course + Mentor Access · USD $997",
+  "Course + Ongoing Mentorship · USD $1,497",
+  "Unsure",
+] as const;
+
 type IntakePreference = (typeof INTAKE_PREFERENCE_VALUES)[number];
+type TierPreference = (typeof TIER_PREFERENCE_VALUES)[number];
 
 type ApplicationPayload = {
   name?: string;
   email?: string;
   intakePreference?: string;
+  tierPreference?: string;
   location?: string;
   experience_level?: string;
   current_situation?: string;
@@ -32,6 +41,10 @@ function isValidEmail(email: string): boolean {
 
 function isValidIntakePreference(value: string): value is IntakePreference {
   return (INTAKE_PREFERENCE_VALUES as readonly string[]).includes(value);
+}
+
+function isValidTierPreference(value: string): value is TierPreference {
+  return (TIER_PREFERENCE_VALUES as readonly string[]).includes(value);
 }
 
 async function parsePayload(request: Request): Promise<ApplicationPayload> {
@@ -59,6 +72,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const name = clean(payload.name);
     const email = clean(payload.email);
     const intakePreferenceRaw = clean(payload.intakePreference);
+    const tierPreferenceRaw = clean(payload.tierPreference);
     const location = clean(payload.location);
     const experienceLevel = clean(payload.experience_level);
     const currentSituation = clean(payload.current_situation);
@@ -69,6 +83,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       !name ||
       !email ||
       !intakePreferenceRaw ||
+      !tierPreferenceRaw ||
       !experienceLevel ||
       !currentSituation ||
       !desiredOutcome ||
@@ -88,6 +103,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const intakePreference = intakePreferenceRaw;
+
+    if (!isValidTierPreference(tierPreferenceRaw)) {
+      return new Response(
+        JSON.stringify({ ok: false, error: "Please select a valid tier option." }),
+        { status: 400, headers: { "content-type": "application/json" } },
+      );
+    }
+
+    const tierPreference = tierPreferenceRaw;
 
     if (!isValidEmail(email)) {
       return new Response(
@@ -115,6 +139,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       `Name: ${name}`,
       `Email: ${email}`,
       `Intake preference: ${intakePreference}`,
+      `Tier preference: ${tierPreference}`,
       `Location: ${location || "Not provided"}`,
       `Experience Level: ${experienceLevel}`,
       "",

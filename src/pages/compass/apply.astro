@@ -20,7 +20,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
 
     <section class="compass-apply__panel">
       <p class="compass-apply__form-note">
-        This is a short interest form, reviewed personally. You can expect a response within 48 hours. The
+        This is a short interest form, reviewed personally. You can expect a response within 48 hours.
         The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
       </p>
 
@@ -62,6 +62,38 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
             </div>
             <p id="compass-intake-hint" class="compass-apply__field-hint compass-apply__field-hint--intake">
               June and July are fully booked; August is unavailable due to relocation. Interest for the next cohort opens in August. Choose the general option if your timing is still open.
+            </p>
+          </fieldset>
+
+          <fieldset
+            class="compass-apply__fieldset compass-apply__fieldset--full"
+            aria-describedby="compass-tier-hint"
+          >
+            <legend class="compass-apply__legend">Which tier are you considering? *</legend>
+            <div class="compass-apply__intake-options">
+              <label class="compass-apply__radio">
+                <input type="radio" name="tierPreference" value="Course · USD $697" required />
+                <span>Course · USD $697</span>
+              </label>
+              <label class="compass-apply__radio">
+                <input type="radio" name="tierPreference" value="Course + Mentor Access · USD $997" />
+                <span>Course + Mentor Access · USD $997</span>
+              </label>
+              <label class="compass-apply__radio">
+                <input
+                  type="radio"
+                  name="tierPreference"
+                  value="Course + Ongoing Mentorship · USD $1,497"
+                />
+                <span>Course + Ongoing Mentorship · USD $1,497</span>
+              </label>
+              <label class="compass-apply__radio">
+                <input type="radio" name="tierPreference" value="Unsure" />
+                <span>Unsure</span>
+              </label>
+            </div>
+            <p id="compass-tier-hint" class="compass-apply__field-hint compass-apply__field-hint--intake">
+              This is not a payment step. It simply helps me understand what kind of support you are considering.
             </p>
           </fieldset>
 

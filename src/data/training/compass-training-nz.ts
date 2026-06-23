@@ -176,6 +176,15 @@ export const compassTrainingNz: CompassTrainingPage = {
       "COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.",
     ],
   },
+  notFor: {
+    label: "Boundaries",
+    heading: "Who this is not for",
+    bullets: [
+      "Complete beginners learning card meanings from scratch.",
+      "People wanting a passive, self-paced course.",
+      "Readers wanting AI-generated interpretations instead of strengthening their own perception.",
+    ],
+  },
   faq: {
     label: "FAQ",
     heading: "Common Questions",

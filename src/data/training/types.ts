@@ -12,6 +12,7 @@ export interface CompassHero {
 export interface CompassInvestmentTier {
   title: string;
   body: string[];
+  enrollHref?: string;
 }
 
 export interface CompassFaqItem {
@@ -74,6 +75,7 @@ export interface CompassTrainingPage {
     afterParagraphs: string[];
   };
   about: { label: string; heading: string; paragraphs: string[] };
+  notFor: { label: string; heading: string; bullets: string[] };
   faq: { label: string; heading: string; items: CompassFaqItem[] };
   apply: {
     label: string;

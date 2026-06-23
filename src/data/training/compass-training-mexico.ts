@@ -13,9 +13,8 @@ export const compassTrainingMexico: CompassTrainingPage = {
     heading: "COMPASS Training: Build Intuition. Work Live.",
     paragraphs: [
       "You already know the cards. The harder work is perceptual: staying with what is actually occurring in a spread, naming it cleanly, and trusting the thread before doubt or over-explanation takes over.",
-      "For readers who know something real is happening in their readings and want a clearer way to work with it.",
-      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation: the seven conditions of attention in The COMPASS Method™, taught so you can work more clearly with what you already sense, including in an AI-evolving world where the reading room still turns on perceptual judgment.",
-      "The programme welcomes experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work (not a performance, and not theory for its own sake).",
+      "COMPASS is structured live training in human discernment, intuitive structure, and grounded interpretation: the seven conditions of attention in The COMPASS Method™, taught so you can work more clearly with what you already sense.",
+      "The programme is for experienced practitioners and naturally intuitive readers who want stronger structure, steadier confidence, and clearer language for client work.",
     ],
   },
   trainingPractice: {
@@ -72,7 +71,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     label: "Process",
     heading: "How It Works",
     intro:
-      "This is a four-week, live, discussion-based programme in a deliberately small cohort so mentorship and direct feedback stay central.",
+      "This is a four-week, live, discussion-based programme in a small cohort so mentorship and direct feedback stay central.",
     bullets: [
       "Weeks one and two: The COMPASS Method™ and the seven conditions of attention, taught in alternate-day sessions",
       "Weeks three and four: live practice and guided integration inside The Deck Compass platform",
@@ -81,7 +80,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
       "Live only, not replay-based",
     ],
     closingParagraphs: [
-      "Intake moves in measured cycles so each group can stay coherent. The next intake window is approaching; registering interest simply starts a conversation when timing and fit are right.",
+      "Intake moves in measured cycles so each group can stay coherent. Registering interest starts the conversation when timing and availability align.",
     ],
   },
   cohortSchedule: {
@@ -89,7 +88,7 @@ export const compassTrainingMexico: CompassTrainingPage = {
     label: "Availability",
     heading: "Current Availability",
     introParagraphs: [
-      "Operational dates are listed plainly so you can plan without noise.",
+      "June, July, and August cohorts are booked. Interest for the next available cohort opens in August.",
     ],
     availabilityItems: [
       { period: "June", status: "Booked" },
@@ -98,10 +97,10 @@ export const compassTrainingMexico: CompassTrainingPage = {
       { period: "Next available cohort", status: "Interest opens in August" },
     ],
     timezoneParagraphs: [
-      "Future cohorts will run on Central Time (Mexico City). Session times will be confirmed before enrolment opens.",
+      "Future cohorts run on Central Time (Mexico City). Session times will be confirmed before enrolment opens.",
     ],
     closingParagraph:
-      "Each cohort stays small on purpose: discussion-based work, minimum two participants to run, maximum six, so attention stays practical and mentorship-led.",
+      "Cohorts are capped at six because live discussion, feedback, and observation require small numbers.",
   },
   investment: {
     label: "Investment",
@@ -111,29 +110,31 @@ export const compassTrainingMexico: CompassTrainingPage = {
       {
         title: "Course · USD $697",
         body: [
-          "Four weeks of live COMPASS training. Full platform onboarding to The Deck Compass. Three months of platform access included.",
+          "Four weeks of live COMPASS training, full platform onboarding to The Deck Compass, and three months of platform access.",
         ],
+        enrollHref: "https://buy.stripe.com/4gM3cu2zw38Sami3UL7N602",
       },
       {
         title: "Course + Mentor Access · USD $997",
         body: [
           "Everything in Course, plus three observer sessions during your free platform period.",
-          "During an observer session, I join your live reading environment and watch you work with a real client. Afterwards I provide direct written or voice feedback. You choose when to invoke these sessions by booking through an open calendar. Sessions do not roll over.",
+          "During an observer session, I join your live reading environment, watch you work with a real client, and provide direct written or voice feedback afterwards. You book sessions through an open calendar. Sessions do not roll over.",
           "This tier is for the reader who wants direct eyes on their practice, not just the method.",
         ],
+        enrollHref: "https://buy.stripe.com/cNi9ASeie24O8ea9f57N603",
       },
       {
         title: "Course + Ongoing Mentorship · USD $1,497",
         body: [
           "Everything in Course + Mentor Access, plus one observer session per month for six months after the programme ends.",
-          "This is for the reader who is actively building a client practice and wants sustained development support over the period when new habits are being formed and tested in real readings.",
+          "This is for the reader actively building a client practice who wants sustained development support while new habits are being formed and tested in real readings.",
         ],
+        enrollHref: "https://buy.stripe.com/bJe7sK2zw24OfGC62T7N604",
       },
     ],
     afterHeading: "After the three months",
     afterParagraphs: [
-      "All tiers include three months of The Deck Compass at no additional cost.",
-      "After that, platform access continues at USD $39 per month.",
+      "All tiers include three months of The Deck Compass at no additional cost. After that, platform access continues at USD $39 per month.",
     ],
   },
   about: {
@@ -143,6 +144,15 @@ export const compassTrainingMexico: CompassTrainingPage = {
       "I have been reading tarot and oracle cards for over 40 years. Before that, I spent 30 years as a journalist, broadcaster, and editor, trained to observe, interpret, and communicate clearly.",
       "COMPASS grew out of systematically refining my own intuitive process in live work and teaching others to work more clearly with what they already sense.",
       "COMPASS is built from real reading experience, and from seeing exactly where readers lose trust in themselves.",
+    ],
+  },
+  notFor: {
+    label: "Boundaries",
+    heading: "Who this is not for",
+    bullets: [
+      "Complete beginners learning card meanings from scratch.",
+      "People wanting a passive, self-paced course.",
+      "Readers wanting AI-generated interpretations instead of strengthening their own perception.",
     ],
   },
   faq: {
@@ -198,7 +208,6 @@ export const compassTrainingMexico: CompassTrainingPage = {
     checklist: [
       "Your experience level with tarot or oracle cards",
       "What is not working in your readings right now",
-      "Which tier you are considering",
       "Your location and any timing constraints (sessions are on Central Time, Mexico City)",
     ],
     note: "Registering interest does not obligate you to enrol. When the next cycle opens, I will follow up personally if the programme looks like a strong match.",
