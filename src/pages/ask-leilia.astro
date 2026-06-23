@@ -52,9 +52,7 @@ const jsonLd = {
           Thoughtful written reflections for readers and seekers.
         </p>
         <div class="ask-leilia-hero__offer" aria-label="Offer summary">
-          <p>One question.</p>
-          <p>Three cards.</p>
-          <p>Delivered within 48 hours.</p>
+          <p>Three cards • One question • Delivered within 48 hours</p>
           <p class="ask-leilia-hero__price">US$25</p>
         </div>
         <p>
@@ -63,23 +61,59 @@ const jsonLd = {
       </div>
     </section>
 
-    <section class="ask-leilia-section ask-leilia-section--intro" aria-labelledby="intro-heading">
-      <h2 id="intro-heading">Sometimes we need another perspective.</h2>
-      <p>
-        Whether you are exploring your own cards, navigating a crossroads, or seeking
-        clarity around a question, Ask Leilia provides a quiet space for reflection.
-      </p>
-      <p>
-        Each response draws upon over forty years of reading experience and thirty years
-        as a journalist and educator. The intention is to help you deepen understanding,
-        recognise patterns, and see possibilities with greater clarity.
-      </p>
-      <p>
-        The aim is not certainty, but understanding.
-      </p>
+    <section class="ask-leilia-about" aria-labelledby="meet-leilia-heading">
+      <figure class="ask-leilia-about__portrait">
+        <img
+          class="ask-leilia-about__photo"
+          src={leiliaPortraitPath}
+          width="640"
+          height="853"
+          alt="Professional portrait of Leigh Spencer, founder of Tides of Knowing, smiling outdoors in a park setting."
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+
+      <div class="ask-leilia-about__copy">
+        <h2 id="meet-leilia-heading">Meet Leilia</h2>
+        <p>
+          I've been reading tarot since I first carried a deck to school at the age
+          of ten. What began as childhood curiosity slowly became a lifelong practice.
+        </p>
+        <p>
+          Over the last four decades, I've read cards through many seasons of life.
+          Alongside that journey, I spent more than thirty years working as a
+          journalist, broadcaster and editor, learning to listen carefully, ask
+          thoughtful questions and look beneath the surface of people's stories.
+        </p>
+        <p>
+          My approach is less about prediction and more about reflection. I am
+          interested in the patterns beneath experience, the tensions we carry, the
+          choices before us, and the meanings that quietly emerge when we give ourselves
+          permission to look honestly.
+        </p>
+        <p>
+          Every Ask Leilia reflection is written personally by me. There are no templates
+          and no automated interpretations. I spend time with your question, the cards
+          and the wider story surrounding what you are experiencing.
+        </p>
+        <p class="ask-leilia-about__trust">
+          Reading cards for more than 40 years • Journalist and editor for more than 30
+          years • Creator of The COMPASS Method™
+        </p>
+      </div>
     </section>
 
-    <section class="ask-leilia-grid" aria-label="Service details">
+    <section class="ask-leilia-grid" aria-label="Process and service details">
+      <article class="ask-leilia-card">
+        <h2>Process</h2>
+        <ol>
+          <li>Submit one question.</li>
+          <li>Complete payment.</li>
+          <li>Receive a thoughtful written reflection within 48 hours.</li>
+        </ol>
+      </article>
+
       <article class="ask-leilia-card">
         <h2>What you receive</h2>
         <ul>
@@ -89,20 +123,14 @@ const jsonLd = {
           <li>Delivery within 48 hours.</li>
         </ul>
       </article>
-
-      <article class="ask-leilia-card">
-        <h2>Who it's for</h2>
-        <ul>
-          <li>Readers wanting help understanding their own cards.</li>
-          <li>Seekers navigating change or uncertainty.</li>
-          <li>Those seeking clarity, perspective, and deeper understanding.</li>
-          <li>People drawn to symbolism and reflective practice.</li>
-        </ul>
-      </article>
     </section>
 
     <section class="ask-leilia-section" aria-labelledby="questions-heading">
-      <h2 id="questions-heading">Questions might explore</h2>
+      <h2 id="questions-heading">Questions people bring</h2>
+      <p>
+        Whether you are exploring your own cards, navigating a crossroads, or seeking
+        clarity around a question, Ask Leilia provides a quiet space for reflection.
+      </p>
       <div class="ask-leilia-question-grid">
         <article>
           <h3>Who</h3>
@@ -146,78 +174,6 @@ const jsonLd = {
       </p>
     </section>
 
-    <section class="ask-leilia-grid" aria-label="Process and price">
-      <article class="ask-leilia-card">
-        <h2>Process</h2>
-        <ol>
-          <li>Submit one question.</li>
-          <li>Complete payment.</li>
-          <li>Receive a thoughtful written reflection within 48 hours.</li>
-        </ol>
-      </article>
-
-      <article class="ask-leilia-card ask-leilia-card--price">
-        <h2>Price</h2>
-        <p class="ask-leilia-price">US$25</p>
-        <p>One question.</p>
-        <p>Three cards.</p>
-        <p>Written reflection.</p>
-      </article>
-    </section>
-
-    <section class="ask-leilia-about" aria-labelledby="meet-leilia-heading">
-      <figure class="ask-leilia-about__portrait">
-        <img
-          class="ask-leilia-about__photo"
-          src={leiliaPortraitPath}
-          width="640"
-          height="853"
-          alt="Professional portrait of Leigh Spencer, founder of Tides of Knowing, smiling outdoors in a park setting."
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-
-      <div class="ask-leilia-about__copy">
-        <h2 id="meet-leilia-heading">Meet Leilia</h2>
-        <p>
-          I've been reading tarot since I first carried a deck to school at the age
-          of ten. What began as childhood curiosity slowly became a lifelong practice.
-        </p>
-        <p>
-          Over the last four decades, I've read cards through many seasons of life.
-          Alongside that journey, I spent more than thirty years working as a
-          journalist, broadcaster and editor, learning to listen carefully, ask
-          thoughtful questions and look beneath the surface of people's stories.
-        </p>
-        <p>Today, I bring those two worlds together.</p>
-        <p>
-          My approach is less about prediction and more about reflection. I am
-          interested in the patterns beneath experience, the tensions we carry, the
-          choices before us, and the meanings that quietly emerge when we give ourselves
-          permission to look honestly.
-        </p>
-        <p>
-          Every Ask Leilia reflection is written personally by me. There are no templates
-          and no automated interpretations. I spend time with your question, the cards
-          and the wider story surrounding what you are experiencing.
-        </p>
-        <p>
-          People often come with questions about relationships, purpose, transitions,
-          uncertainty, creative work or simply a feeling that something important is
-          trying to be understood.
-        </p>
-        <p>
-          You do not need to know exactly what to ask. Sometimes the most valuable
-          questions begin with curiosity.
-        </p>
-        <p class="ask-leilia-about__trust">
-          Reading cards for more than 40 years • Journalist and editor for more than 30
-          years • Creator of The COMPASS Method™
-        </p>
-      </div>
-    </section>
-
     <p class="ask-leilia-bottom-cta">
       <a class="ask-leilia-hero__cta" href={ASK_LEILIA_PAYMENT_LINK}>Begin Your Reflection</a>
     </p>
@@ -226,7 +182,7 @@ const jsonLd = {
 
 <style>
   .ask-leilia {
-    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    padding: clamp(1rem, 3vw, 2rem) 0 clamp(2.5rem, 6vw, 4rem);
   }
 
   .ask-leilia__kicker {
@@ -239,10 +195,8 @@ const jsonLd = {
 
   .ask-leilia-hero {
     display: grid;
-    gap: 1.5rem;
-    align-items: center;
-    min-height: min(38rem, 78vh);
-    padding: clamp(1.25rem, 5vw, 3.5rem);
+    gap: 1rem;
+    padding: clamp(1.1rem, 4vw, 2.15rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
     border-radius: var(--radius-promo);
     background:
@@ -269,7 +223,7 @@ const jsonLd = {
   }
 
   .ask-leilia h1 {
-    font-size: clamp(3rem, 12vw, 6.25rem);
+    font-size: clamp(2.75rem, 9vw, 5rem);
     line-height: 0.95;
   }
 
@@ -282,17 +236,17 @@ const jsonLd = {
 
   .ask-leilia-hero__lede {
     max-width: 34rem;
-    margin: 0 0 1.4rem;
-    font-size: clamp(1.16rem, 3vw, 1.45rem);
+    margin: 0 0 0.85rem;
+    font-size: clamp(1.08rem, 2.4vw, 1.25rem);
     color: var(--tok-text-dark);
   }
 
   .ask-leilia-hero__offer {
     display: grid;
-    gap: 0.35rem;
-    max-width: 22rem;
-    margin: 1.25rem 0;
-    padding: 1rem 0;
+    gap: 0.25rem;
+    max-width: 34rem;
+    margin: 0.9rem 0;
+    padding: 0.75rem 0;
     border-top: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
   }
@@ -303,14 +257,14 @@ const jsonLd = {
   }
 
   .ask-leilia-hero__price,
-  .ask-leilia-price {
+  .ask-leilia-card h2 {
     font-family: var(--font-heading);
     font-weight: 400;
     color: var(--tok-water);
   }
 
   .ask-leilia-hero__price {
-    padding-top: 0.35rem;
+    padding-top: 0.2rem;
     font-size: 1.45rem;
   }
 
@@ -330,15 +284,15 @@ const jsonLd = {
   .ask-leilia-section,
   .ask-leilia-grid,
   .ask-leilia-about {
-    margin-top: clamp(2.5rem, 7vw, 5rem);
+    margin-top: clamp(1.75rem, 5vw, 3.25rem);
+  }
+
+  .ask-leilia-about {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
   }
 
   .ask-leilia-section {
     max-width: 48rem;
-  }
-
-  .ask-leilia-section--intro {
-    max-width: 52rem;
   }
 
   .ask-leilia p,
@@ -353,9 +307,9 @@ const jsonLd = {
 
   .ask-leilia-about {
     display: grid;
-    gap: clamp(1.25rem, 4vw, 2rem);
+    gap: clamp(1rem, 3vw, 1.5rem);
     align-items: start;
-    padding: clamp(1.15rem, 4vw, 2rem);
+    padding: clamp(1rem, 3vw, 1.5rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
     border-radius: var(--radius-promo);
     background:
@@ -369,14 +323,15 @@ const jsonLd = {
 
   .ask-leilia-about__portrait {
     margin: 0;
+    max-width: min(100%, 17.5rem);
   }
 
   .ask-leilia-about__photo {
     display: block;
     width: 100%;
     height: auto;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
-    border-radius: calc(var(--radius-lg) + 0.35rem);
+    border-radius: var(--radius-soft);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
     box-shadow: var(--shadow-md);
     object-fit: cover;
     object-position: center top;
@@ -388,15 +343,15 @@ const jsonLd = {
 
   .ask-leilia-about__copy p {
     margin: 0;
-    font-size: 1.03rem;
+    font-size: 1rem;
   }
 
   .ask-leilia-about__copy p + p {
-    margin-top: 1rem;
+    margin-top: 0.8rem;
   }
 
   .ask-leilia-about__trust {
-    padding-top: 1rem;
+    padding-top: 0.8rem;
     border-top: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     color: var(--tok-text-muted);
     font-size: var(--tok-type-meta);
@@ -405,11 +360,11 @@ const jsonLd = {
 
   .ask-leilia-grid {
     display: grid;
-    gap: 1rem;
+    gap: 0.9rem;
   }
 
   .ask-leilia-card {
-    padding: clamp(1rem, 4vw, 1.65rem);
+    padding: clamp(0.95rem, 3vw, 1.35rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
@@ -435,22 +390,14 @@ const jsonLd = {
     margin-top: 0.45rem;
   }
 
-  .ask-leilia-card--price p {
-    margin: 0.25rem 0;
-  }
-
-  .ask-leilia-price {
-    font-size: clamp(2rem, 7vw, 3rem);
-  }
-
   .ask-leilia-question-grid {
     display: grid;
-    gap: 1rem;
-    margin-top: 1.25rem;
+    gap: 0.9rem;
+    margin-top: 1rem;
   }
 
   .ask-leilia-question-grid article {
-    padding: 1rem;
+    padding: 0.95rem;
     border: 1px solid color-mix(in srgb, var(--tok-border-light) 85%, transparent);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading-soft) 42%, transparent);
@@ -472,7 +419,7 @@ const jsonLd = {
   }
 
   .ask-leilia-bottom-cta {
-    margin-top: clamp(2.5rem, 7vw, 4rem);
+    margin-top: clamp(1.75rem, 5vw, 3rem);
   }
 
   @media (min-width: 760px) {
@@ -482,7 +429,12 @@ const jsonLd = {
     }
 
     .ask-leilia-about {
-      grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
+      grid-template-columns: minmax(11.5rem, 14.75rem) minmax(0, 1fr);
+      column-gap: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .ask-leilia-about__portrait {
+      max-width: 14.75rem;
     }
   }
 </style>
