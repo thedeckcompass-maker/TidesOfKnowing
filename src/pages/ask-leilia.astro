@@ -1,35 +1,177 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteBase } from "../lib/site";
+import { ASK_LEILIA_PAYMENT_LINK } from "../lib/ask-leilia/types";
 
-const title = "Ask Leilia | Tides of Knowing";
+const title = "Ask Leilia | Personal Tarot Reflections and Symbolic Guidance";
 const description =
-  "Ask Leilia is a future paid personal reflection offering from Tides of Knowing.";
+  "Ask Leilia offers thoughtful written tarot reflections for readers and seekers, with one question, three cards, and a written response within 48 hours.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
+
+const offer = {
+  name: "One Question - Three Cards",
+  price: "US$25",
+  delivery: "Delivered within 48 hours",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Ask Leilia",
+  description,
+  url: canonical,
+  provider: {
+    "@type": "Person",
+    name: "Leigh Spencer",
+  },
+  offers: {
+    "@type": "Offer",
+    name: offer.name,
+    price: "25",
+    priceCurrency: "USD",
+    availability: "https://schema.org/PreOrder",
+  },
+};
 ---
 
 <BaseLayout
   title={title}
   description={description}
   ogUrl={canonical}
-  metaRobots="noindex, nofollow"
+  ogTitle={title}
+  ogDescription={description}
+  jsonLd={jsonLd}
 >
   <main class="ask-leilia page-inner">
-    <p class="ask-leilia__kicker">Future Offering</p>
-    <h1>Ask Leilia</h1>
-    <p>
-      Ask Leilia will be a separate paid offering for personal written reflections.
-      It is not part of the Practice Commons.
-    </p>
-    <p class="ask-leilia__note">
-      Planned offer: One Question · Three Cards · Written response within 48 hours.
+    <section class="ask-leilia-hero" aria-labelledby="ask-leilia-heading">
+      <div class="ask-leilia-hero__copy">
+        <p class="ask-leilia__kicker">Personal Tarot Reflections</p>
+        <h1 id="ask-leilia-heading">Ask Leilia</h1>
+        <p class="ask-leilia-hero__lede">
+          Thoughtful written reflections for readers and seekers.
+        </p>
+        <div class="ask-leilia-hero__offer" aria-label="Offer summary">
+          <p>One question.</p>
+          <p>Three cards.</p>
+          <p>Delivered within 48 hours.</p>
+          <p class="ask-leilia-hero__price">US$25</p>
+        </div>
+        <p>
+          <a class="ask-leilia-hero__cta" href={ASK_LEILIA_PAYMENT_LINK}>Begin Your Reflection</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="ask-leilia-section ask-leilia-section--intro" aria-labelledby="intro-heading">
+      <h2 id="intro-heading">Sometimes we need another perspective.</h2>
+      <p>
+        Whether you are exploring your own cards, navigating a crossroads, or seeking
+        clarity around a question, Ask Leilia provides a quiet space for reflection.
+      </p>
+      <p>
+        Each response draws upon over forty years of reading experience and thirty years
+        as a journalist and educator. The intention is to help you deepen understanding,
+        recognise patterns, and see possibilities with greater clarity.
+      </p>
+      <p>
+        The aim is not certainty, but understanding.
+      </p>
+    </section>
+
+    <section class="ask-leilia-grid" aria-label="Service details">
+      <article class="ask-leilia-card">
+        <h2>What you receive</h2>
+        <ul>
+          <li>One question.</li>
+          <li>A three-card reading.</li>
+          <li>A thoughtful written reflection.</li>
+          <li>Delivery within 48 hours.</li>
+        </ul>
+      </article>
+
+      <article class="ask-leilia-card">
+        <h2>Who it's for</h2>
+        <ul>
+          <li>Readers wanting help understanding their own cards.</li>
+          <li>Seekers navigating change or uncertainty.</li>
+          <li>Those seeking clarity, perspective, and deeper understanding.</li>
+          <li>People drawn to symbolism and reflective practice.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="ask-leilia-section" aria-labelledby="questions-heading">
+      <h2 id="questions-heading">Questions might explore</h2>
+      <div class="ask-leilia-question-grid">
+        <article>
+          <h3>Who</h3>
+          <ul>
+            <li>Who am I becoming through this experience?</li>
+            <li>Who or what is asking for my attention?</li>
+            <li>Who am I when familiar roles no longer fit?</li>
+          </ul>
+        </article>
+        <article>
+          <h3>What</h3>
+          <ul>
+            <li>What am I being invited to understand?</li>
+            <li>What assumptions am I carrying into this situation?</li>
+            <li>What might I be overlooking?</li>
+            <li>What is trying to emerge here?</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Where</h3>
+          <ul>
+            <li>Where am I being asked to place my attention?</li>
+            <li>Where have I become disconnected from myself?</li>
+            <li>Where does this path appear to be leading?</li>
+            <li>Where is growth asking something of me?</li>
+          </ul>
+        </article>
+        <article>
+          <h3>How</h3>
+          <ul>
+            <li>How might I work consciously with this transition?</li>
+            <li>How do these cards deepen my understanding?</li>
+            <li>How can I navigate this with greater awareness?</li>
+            <li>How might I respond rather than react?</li>
+          </ul>
+        </article>
+      </div>
+      <p class="ask-leilia-pull">
+        Many people also bring their own cards and simply ask:
+        <span>"I've pulled these cards. What might I not be seeing?"</span>
+      </p>
+    </section>
+
+    <section class="ask-leilia-grid" aria-label="Process and price">
+      <article class="ask-leilia-card">
+        <h2>Process</h2>
+        <ol>
+          <li>Submit one question.</li>
+          <li>Complete payment.</li>
+          <li>Receive a thoughtful written reflection within 48 hours.</li>
+        </ol>
+      </article>
+
+      <article class="ask-leilia-card ask-leilia-card--price">
+        <h2>Price</h2>
+        <p class="ask-leilia-price">US$25</p>
+        <p>One question.</p>
+        <p>Three cards.</p>
+        <p>Written reflection.</p>
+      </article>
+    </section>
+
+    <p class="ask-leilia-bottom-cta">
+      <a class="ask-leilia-hero__cta" href={ASK_LEILIA_PAYMENT_LINK}>Begin Your Reflection</a>
     </p>
   </main>
 </BaseLayout>
 
 <style>
   .ask-leilia {
-    max-width: 42rem;
     padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
@@ -41,21 +183,193 @@ const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
     color: var(--tok-gold-deep);
   }
 
-  .ask-leilia h1 {
+  .ask-leilia-hero {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    min-height: min(38rem, 78vh);
+    padding: clamp(1.25rem, 5vw, 3.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-promo);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--tok-surface-reading) 88%, transparent),
+        color-mix(in srgb, var(--tok-surface-reading-soft) 76%, transparent)
+      );
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ask-leilia-hero__copy {
+    max-width: 42rem;
+  }
+
+  .ask-leilia h1,
+  .ask-leilia-section h2,
+  .ask-leilia-request h2 {
     margin: 0 0 0.85rem;
     font-family: var(--font-accent);
-    font-size: clamp(2.2rem, 8vw, 4rem);
     font-weight: 400;
     color: var(--tok-water);
   }
 
-  .ask-leilia p {
-    color: var(--tok-text-muted);
-    line-height: 1.8;
+  .ask-leilia h1 {
+    font-size: clamp(3rem, 12vw, 6.25rem);
+    line-height: 0.95;
   }
 
-  .ask-leilia__note {
-    padding-top: 1rem;
+  .ask-leilia-section h2,
+  .ask-leilia-request h2 {
+    font-size: clamp(1.9rem, 6vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .ask-leilia-hero__lede {
+    max-width: 34rem;
+    margin: 0 0 1.4rem;
+    font-size: clamp(1.16rem, 3vw, 1.45rem);
+    color: var(--tok-text-dark);
+  }
+
+  .ask-leilia-hero__offer {
+    display: grid;
+    gap: 0.35rem;
+    max-width: 22rem;
+    margin: 1.25rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
+  }
+
+  .ask-leilia-hero__offer p {
+    margin: 0;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-leilia-hero__price,
+  .ask-leilia-price {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .ask-leilia-hero__price {
+    padding-top: 0.35rem;
+    font-size: 1.45rem;
+  }
+
+  .ask-leilia-hero__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.75rem 1.15rem;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .ask-leilia-section,
+  .ask-leilia-grid {
+    margin-top: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .ask-leilia-section {
+    max-width: 48rem;
+  }
+
+  .ask-leilia-section--intro {
+    max-width: 52rem;
+  }
+
+  .ask-leilia p,
+  .ask-leilia li {
+    color: var(--tok-text-dark);
+    line-height: 1.82;
+  }
+
+  .ask-leilia-section p {
+    font-size: 1.03rem;
+  }
+
+  .ask-leilia-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .ask-leilia-card {
+    padding: clamp(1rem, 4vw, 1.65rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .ask-leilia-card h2,
+  .ask-leilia-question-grid h3 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 4vw, 1.6rem);
+    color: var(--tok-water);
+  }
+
+  .ask-leilia-card ul,
+  .ask-leilia-card ol,
+  .ask-leilia-question-grid ul {
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
+  .ask-leilia-card li + li,
+  .ask-leilia-question-grid li + li {
+    margin-top: 0.45rem;
+  }
+
+  .ask-leilia-card--price p {
+    margin: 0.25rem 0;
+  }
+
+  .ask-leilia-price {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .ask-leilia-question-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .ask-leilia-question-grid article {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 85%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 42%, transparent);
+  }
+
+  .ask-leilia-pull {
+    margin-top: 1.5rem;
+    padding: 1rem 0 0;
     border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    color: var(--tok-text-muted);
+  }
+
+  .ask-leilia-pull span {
+    display: block;
+    margin-top: 0.45rem;
+    font-family: var(--font-accent);
+    font-size: clamp(1.35rem, 4vw, 1.85rem);
+    color: var(--tok-water);
+  }
+
+  .ask-leilia-bottom-cta {
+    margin-top: clamp(2.5rem, 7vw, 4rem);
+  }
+
+  @media (min-width: 760px) {
+    .ask-leilia-grid,
+    .ask-leilia-question-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 </style>

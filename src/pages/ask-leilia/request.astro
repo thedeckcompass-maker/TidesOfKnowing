@@ -1,0 +1,232 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
+
+export const prerender = false;
+
+const submitted = Astro.url.searchParams.get("submitted") === "true";
+---
+
+<BaseLayout
+  title="Request Your Reflection"
+  description="Complete your Ask Leilia request after payment."
+  metaRobots="noindex, nofollow"
+>
+  <main class="ask-request page-inner">
+    <section class="ask-request__head" aria-labelledby="request-heading">
+      <p class="ask-request__kicker">Ask Leilia</p>
+      <h1 id="request-heading">Request Your Reflection</h1>
+      <p>Thank you for choosing Ask Leilia.</p>
+      <p>Please complete the form below. Your written reflection will be delivered within 48 hours.</p>
+    </section>
+
+    {
+      submitted ? (
+        <section class="ask-request__confirmation" aria-live="polite">
+          <h2>Thank you.</h2>
+          <p>Your request has been received.</p>
+          <p>You will receive your written reflection within 48 hours.</p>
+        </section>
+      ) : null
+    }
+
+    <form class="ask-request-form" method="post" action="/api/ask-leilia/requests" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Your details</legend>
+
+        <label>
+          Name
+          <input name="name" type="text" autocomplete="name" required />
+        </label>
+
+        <label>
+          Email
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Your question</legend>
+
+        <label>
+          One Question
+          <textarea
+            name="question"
+            rows="6"
+            maxlength="2000"
+            required
+            placeholder="Share the question you would like reflected through the cards."
+          ></textarea>
+        </label>
+
+        <label>
+          Additional context
+          <textarea
+            name="context"
+            rows="6"
+            maxlength="5000"
+            placeholder="Optional: add any context that would help the reflection stay grounded."
+          ></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Card Preference</legend>
+
+        <label class="ask-request-form__radio">
+          <input type="radio" name="cardPreference" value="pull_for_me" required />
+          Please pull the cards for me
+        </label>
+
+        <label class="ask-request-form__radio">
+          <input type="radio" name="cardPreference" value="own_cards_attached" required />
+          I have attached my own cards
+        </label>
+
+        <label>
+          Upload image of cards
+          <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+        </label>
+      </fieldset>
+
+      <div class="ask-request-statuses" aria-label="Future status workflow">
+        {ASK_LEILIA_STATUSES.map((status) => <span>{status}</span>)}
+      </div>
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </main>
+</BaseLayout>
+
+<style>
+  .ask-request {
+    max-width: 52rem;
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .ask-request__head {
+    max-width: 42rem;
+  }
+
+  .ask-request__kicker {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .ask-request h1,
+  .ask-request__confirmation h2 {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .ask-request h1 {
+    font-size: clamp(2.4rem, 9vw, 4.8rem);
+    line-height: 1;
+  }
+
+  .ask-request p {
+    color: var(--tok-text-dark);
+    line-height: 1.8;
+  }
+
+  .ask-request__confirmation,
+  .ask-request-form {
+    margin-top: clamp(1.5rem, 5vw, 2.5rem);
+    padding: clamp(1rem, 4vw, 1.65rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .ask-request-form {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .ask-request-form fieldset {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0 0 1.2rem;
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+  }
+
+  .ask-request-form fieldset:last-of-type {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .ask-request-form legend {
+    margin-bottom: 0.35rem;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-request-form label {
+    display: grid;
+    gap: 0.4rem;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-request-form__radio {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .ask-request-form input,
+  .ask-request-form textarea {
+    width: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  .ask-request-form__radio input {
+    width: auto;
+  }
+
+  .ask-request-form textarea {
+    line-height: 1.65;
+    resize: vertical;
+  }
+
+  .ask-request-statuses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ask-request-statuses span {
+    padding: 0.35rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-pill);
+    font-size: var(--tok-type-meta);
+    color: var(--tok-text-muted);
+  }
+
+  .ask-request-form button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,266 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { isAdminProfile } from "../../lib/community/auth";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
+import { cardPreferenceLabel, ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
+import { getAskLeiliaRequests, getAskLeiliaUploadUrl } from "../../lib/ask-leilia/queries";
+
+export const prerender = false;
+
+if (!Astro.locals.user) {
+  return Astro.redirect("/auth/login/?redirectTo=/ask-leilia/admin/", 303);
+}
+
+if (!isAdminProfile(Astro.locals.profile)) {
+  return Astro.redirect("/ask-leilia/", 302);
+}
+
+const service = createCommunityServiceClient(Astro.locals);
+const requests = await getAskLeiliaRequests(service);
+const rows = await Promise.all(
+  requests.map(async (request) => ({
+    request,
+    imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
+  })),
+);
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title="Ask Leilia Admin | Tides of Knowing"
+  description="Admin view for Ask Leilia reflection requests."
+  metaRobots="noindex, nofollow"
+>
+  <main class="ask-admin page-inner">
+    <header class="ask-admin__head">
+      <p class="ask-admin__kicker">Ask Leilia</p>
+      <h1>Reflection Requests</h1>
+      <p>Review submitted requests and update their status.</p>
+    </header>
+
+    {
+      rows.length > 0 ? (
+        <div class="ask-admin__list">
+          {rows.map(({ request, imageUrl }) => (
+            <article class="ask-admin-card">
+              <div class="ask-admin-card__top">
+                <div>
+                  <h2>{request.name}</h2>
+                  <p>
+                    <a href={`mailto:${request.email}`}>{request.email}</a>
+                  </p>
+                </div>
+                <p class="ask-admin-card__status">{request.status}</p>
+              </div>
+
+              <dl>
+                <div>
+                  <dt>Question</dt>
+                  <dd>{request.question}</dd>
+                </div>
+                <div>
+                  <dt>Context</dt>
+                  <dd>{request.context || "No additional context."}</dd>
+                </div>
+                <div>
+                  <dt>Image upload</dt>
+                  <dd>
+                    {imageUrl ? (
+                      <a href={imageUrl}>View uploaded image</a>
+                    ) : (
+                      "No image uploaded."
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Card preference</dt>
+                  <dd>{cardPreferenceLabel(request.card_preference)}</dd>
+                </div>
+                <div>
+                  <dt>Payment status</dt>
+                  <dd>{request.payment?.payment_status ?? "Payment record not linked."}</dd>
+                </div>
+                <div>
+                  <dt>Request status</dt>
+                  <dd>{request.status}</dd>
+                </div>
+                <div>
+                  <dt>Submitted</dt>
+                  <dd>{formatDate(request.created_at)}</dd>
+                </div>
+                <div>
+                  <dt>Internal notes</dt>
+                  <dd>{request.admin_notes || "No internal notes yet."}</dd>
+                </div>
+              </dl>
+
+              <form class="ask-admin-card__form" method="post" action={`/api/ask-leilia/requests/${request.id}`}>
+                <label>
+                  Status
+                  <select name="status">
+                    {ASK_LEILIA_STATUSES.map((status) => (
+                      <option value={status} selected={status === request.status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label class="ask-admin-card__notes">
+                  Internal notes
+                  <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
+                </label>
+                <button type="submit">Update status</button>
+              </form>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="ask-admin__empty">No Ask Leilia requests yet.</p>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .ask-admin {
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .ask-admin__head {
+    max-width: 44rem;
+  }
+
+  .ask-admin__kicker {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .ask-admin h1 {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.4rem, 9vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--tok-water);
+  }
+
+  .ask-admin p,
+  .ask-admin dd {
+    color: var(--tok-text-dark);
+    line-height: 1.75;
+  }
+
+  .ask-admin__list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .ask-admin-card,
+  .ask-admin__empty {
+    padding: clamp(1rem, 4vw, 1.65rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .ask-admin-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+    padding-bottom: 0.85rem;
+  }
+
+  .ask-admin-card h2 {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-heading);
+    color: var(--tok-water);
+  }
+
+  .ask-admin-card__status {
+    margin: 0;
+    padding: 0.35rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-pill);
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ask-admin-card dl {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1rem 0;
+  }
+
+  .ask-admin-card dt {
+    margin-bottom: 0.15rem;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-admin-card dd {
+    margin: 0;
+  }
+
+  .ask-admin-card__form {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .ask-admin-card__form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+  }
+
+  .ask-admin-card__form select,
+  .ask-admin-card__form textarea {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  .ask-admin-card__form textarea {
+    width: 100%;
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  .ask-admin-card__notes {
+    max-width: 42rem;
+  }
+
+  .ask-admin-card__form button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+</style>

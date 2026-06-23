@@ -102,6 +102,11 @@ const isToolsRoute = pathname.startsWith("/tools");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
+const isCompassTrainingSection = pathname.startsWith("/compass");
+const isCompassMethodRoute = pathname.startsWith("/articles/compass-method");
+const isArticlesSection =
+  (pathname === "/articles" || pathname.startsWith("/articles/")) &&
+  !isCompassMethodRoute;
 const isAboutRoute = pathname.startsWith("/about");
 const isCommunityRoute = pathname.startsWith("/community");
 const isAskLeiliaRoute = pathname.startsWith("/ask-leilia");
@@ -204,10 +209,10 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
           <a
             class="site-nav__link"
-            href="/blog/"
-            aria-current={isFieldNotesSection ? "page" : undefined}
+            href="/articles/compass-method/"
+            aria-current={isCompassMethodRoute ? "page" : undefined}
           >
-            Field Notes
+            Method
           </a>
           <a
             class="site-nav__link"
@@ -215,6 +220,20 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
             aria-current={isToolsSection ? "page" : undefined}
           >
             Tools
+          </a>
+          <a
+            class="site-nav__link"
+            href="/articles/"
+            aria-current={isArticlesSection ? "page" : undefined}
+          >
+            Articles
+          </a>
+          <a
+            class="site-nav__link"
+            href="/blog/"
+            aria-current={isFieldNotesSection ? "page" : undefined}
+          >
+            Field Notes
           </a>
           <a
             class="site-nav__link"
@@ -229,6 +248,14 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
             aria-current={isAskLeiliaRoute ? "page" : undefined}
           >
             Ask Leilia
+          </a>
+          <a
+            class="site-nav__link site-nav__link--training"
+            href="/compass/"
+            data-link="compass"
+            aria-current={isCompassTrainingSection ? "page" : undefined}
+          >
+            Training
           </a>
           <a
             class="site-nav__link"
@@ -253,11 +280,15 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       <div class="page-inner site-footer__inner">
         <nav class="site-footer__discover" aria-label="Sections">
           <a class="site-footer__discover-link" href="/articles/">Articles</a>
-          <a class="site-footer__discover-link" href="/repeating-card-meanings/">Repeating cards</a>
-          <a class="site-footer__discover-link" href="/community/">Community</a>
+          <a class="site-footer__discover-link" href="/repeating-card-meanings/">Repeating Cards</a>
           <a class="site-footer__discover-link" href="/series/">Series</a>
           <a class="site-footer__discover-link" href="/tags/">Topics</a>
           <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
+          <a class="site-footer__discover-link" href="/articles/compass-method/">Method</a>
+          <a class="site-footer__discover-link" href="/practice/">Practice</a>
+          <a class="site-footer__discover-link" href="/community/">Community</a>
+          <a class="site-footer__discover-link" href="/ask-leilia/">Ask Leilia</a>
+          <a class="site-footer__discover-link" href="/compass/">Training</a>
           <a class="site-footer__discover-link" href="/contact/">Contact</a>
           <a class="site-footer__discover-link" href="/media/">Media</a>
           <a class="site-footer__discover-link" href="/privacy/">Privacy Policy</a>

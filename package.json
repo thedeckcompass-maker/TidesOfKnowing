@@ -25,7 +25,8 @@
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
     "astro": "^5.7.0",
-    "resend": "^6.12.2"
+    "resend": "^6.12.2",
+    "stripe": "^22.2.3"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
