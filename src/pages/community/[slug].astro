@@ -101,7 +101,7 @@ function formatDate(value: string): string {
         canContribute(Astro.locals.profile) ? (
           <CommunityReplyForm postId={post.id} />
         ) : (
-          <CommunityAuthPrompt message="Log in or register to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
+          <CommunityAuthPrompt message="Join the Practice Commons to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
         )
       }
     </section>

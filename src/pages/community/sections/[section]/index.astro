@@ -166,7 +166,7 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
         canContribute(Astro.locals.profile) ? (
           <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
         ) : (
-          <CommunityAuthPrompt message={`Log in or register to post in ${section.name}.`} />
+          <CommunityAuthPrompt message={`Join the Practice Commons to post in ${section.name}.`} />
         )
       }
     </section>

@@ -5,16 +5,11 @@ import { validateDisplayName } from "../../lib/community/validation";
 
 export const prerender = false;
 
-const title = "Register | Tides of Knowing";
-const description = "Register for the Practice Commons at Tides of Knowing.";
+const title = "Join the Practice Commons | Tides of Knowing";
+const description = "Join the Practice Commons at Tides of Knowing with a simple email sign-in link.";
 
 let error = "";
-const redirectTo = Astro.url.searchParams.get("redirectTo") || "/community/";
-
-function safeRedirect(value: string): string {
-  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/community/";
-  return value;
-}
+const redirectTo = "/community/";
 
 function emailDomain(email: string): string {
   return email.split("@")[1] ?? "";
@@ -72,10 +67,10 @@ if (Astro.request.method === "POST") {
   const email = String(form.get("email") ?? "").trim().toLowerCase();
   const displayName = cleanDisplayName(form.get("displayName"));
   const displayNameValidation = validateDisplayName(form.get("displayName"));
-  const next = safeRedirect(String(form.get("redirectTo") ?? "/community/"));
+  const next = "/community/";
 
   if (!Astro.locals.supabase) {
-    error = "Community registration is not configured yet.";
+    error = "Practice Commons sign-in is not configured yet.";
   } else if (!displayNameValidation.ok) {
     error = displayNameValidation.error;
   } else if (!email || !email.includes("@")) {
@@ -87,7 +82,7 @@ if (Astro.request.method === "POST") {
       Astro.url,
     ).href;
 
-    console.info("Practice Commons registration request started", {
+    console.info("Practice Commons sign-in link request started", {
       reference: registrationReference,
       emailDomain: emailDomain(email),
       displayNameLength: displayName.length,
@@ -103,6 +98,7 @@ if (Astro.request.method === "POST") {
         email,
         options: {
           emailRedirectTo,
+          shouldCreateUser: true,
           data: { display_name: displayName },
         },
       });
@@ -113,7 +109,7 @@ if (Astro.request.method === "POST") {
 
     if (signInError) {
       const details = authErrorDetails(signInError);
-      console.error("Practice Commons registration magic-link request failed", {
+      console.error("Practice Commons sign-in link request failed", {
         reference: registrationReference,
         error: details,
         adminDiagnostic: adminDiagnosticForAuthError(details.message),
@@ -122,9 +118,9 @@ if (Astro.request.method === "POST") {
         emailRedirectTo,
         requestUrl: Astro.url.href,
       });
-      error = `Unable to send a registration link right now. Please try again. If this keeps happening, contact us and mention reference ${registrationReference}.`;
+      error = `Unable to send a sign-in link right now. Please try again. If this keeps happening, contact us and mention reference ${registrationReference}.`;
     } else {
-      console.info("Practice Commons registration magic-link request accepted", {
+      console.info("Practice Commons sign-in link request accepted", {
         reference: registrationReference,
         emailDomain: emailDomain(email),
         redirectTo: next,
@@ -144,9 +140,9 @@ if (Astro.request.method === "POST") {
   <main class="auth-page page-inner">
     <section class="auth-card" aria-labelledby="auth-heading">
       <p class="auth-kicker">Practice Commons</p>
-      <h1 id="auth-heading">Register</h1>
+      <h1 id="auth-heading">Join the Practice Commons</h1>
       <p class="auth-lede">
-        Create a simple reader profile for posting and replying in the Practice Commons.
+        Enter your name and email. We'll email you a sign-in link.
       </p>
 
       {error ? <p class="auth-notice auth-notice--error">{error}</p> : null}
@@ -158,12 +154,8 @@ if (Astro.request.method === "POST") {
         <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
-        <button type="submit">Send registration link</button>
+        <button type="submit">Continue</button>
       </form>
-
-      <p class="auth-alt">
-        Already registered? <a href={`/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`}>Log in</a>
-      </p>
     </section>
   </main>
 </BaseLayout>

@@ -8,8 +8,7 @@ const description = "Check your email for a secure Practice Commons sign-in link
 
 const email = Astro.url.searchParams.get("email")?.trim().toLowerCase() ?? "";
 const displayName = Astro.url.searchParams.get("displayName")?.trim() ?? "";
-const redirectTo = Astro.url.searchParams.get("redirectTo") || "/community/";
-const loginHref = `/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`;
+const redirectTo = "/community/";
 ---
 
 <BaseLayout title={title} description={description} metaRobots="noindex, nofollow">
@@ -18,16 +17,16 @@ const loginHref = `/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`;
       <p class="auth-kicker">Practice Commons</p>
       <h1 id="auth-heading">Check your email</h1>
       <p class="auth-lede">
-        A secure link has been sent{email ? ` to ${email}` : ""}.
+        We've sent a sign-in link{email ? ` to ${email}` : ""}.
       </p>
+      <ol class="auth-steps">
+        <li>Open your email.</li>
+        <li>Click the link.</li>
+        <li>You'll return to the Practice Commons automatically.</li>
+      </ol>
       <p>
-        Open that email and click the link. You will be signed in automatically and
-        returned to the Practice Commons.
-      </p>
-      <p>
-        If you do not see the email within a few minutes, check your Spam or Junk
-        folder. Some email providers also place magic-link emails under Promotions
-        or Updates.
+        If you do not see the email within a few minutes, check your Spam, Junk,
+        Promotions, or Updates folders.
       </p>
 
       {
@@ -36,18 +35,14 @@ const loginHref = `/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`;
             <input type="hidden" name="displayName" value={displayName} />
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <button type="submit">Resend email</button>
+            <button type="submit">Send another email</button>
           </form>
         ) : (
           <p class="auth-alt">
-            Need a new link? <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Request another registration email</a>.
+            Need a new link? <a href="/auth/register/">Return to the Practice Commons sign-in form</a>.
           </p>
         )
       }
-
-      <p class="auth-alt">
-        Already have an account? <a href={loginHref}>Log in</a>
-      </p>
     </section>
   </main>
 </BaseLayout>
@@ -95,6 +90,13 @@ const loginHref = `/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`;
     display: grid;
     gap: 0.75rem;
     margin-top: 1.25rem;
+  }
+
+  .auth-steps {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    color: var(--tok-text-dark);
+    line-height: 1.8;
   }
 
   .auth-form button {

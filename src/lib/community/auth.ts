@@ -110,7 +110,7 @@ export function requireUser(context: AuthContext): User {
   if (!context.user) {
     throw new Response(null, {
       status: 303,
-      headers: { Location: "/auth/login/" },
+      headers: { Location: "/auth/register/" },
     });
   }
   return context.user;

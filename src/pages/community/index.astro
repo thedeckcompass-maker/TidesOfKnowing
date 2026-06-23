@@ -32,6 +32,7 @@ const { posts, totalPages } = Astro.locals.supabase
   : { posts: [], totalPages: 1 };
 const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
 const canPost = canContribute(Astro.locals.profile);
+const displayName = Astro.locals.profile?.display_name ?? "Reader";
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -64,6 +65,30 @@ const jsonLd = [
         Just thoughtful practice, reflection, and reader development.
       </p>
     </header>
+
+    <section class="community-auth-card" aria-labelledby="community-auth-heading">
+      {
+        canPost ? (
+          <>
+            <div>
+              <p class="community-auth-card__kicker">Welcome back</p>
+              <h2 id="community-auth-heading">Welcome back, {displayName}</h2>
+              <p>Share a question, reading dilemma, or practice note when you are ready.</p>
+            </div>
+            <a class="community-auth-card__button" href="#create-heading">Start a conversation</a>
+          </>
+        ) : (
+          <>
+            <div>
+              <p class="community-auth-card__kicker">Join the Practice Commons</p>
+              <h2 id="community-auth-heading">Join the Practice Commons</h2>
+              <p>Create a simple reader profile to post and reply.</p>
+            </div>
+            <a class="community-auth-card__button" href="/auth/register/">Continue</a>
+          </>
+        )
+      }
+    </section>
 
     <form class="community-search" method="get" action="/community/search/">
       <label for="community-search">Search the Practice Commons</label>
@@ -117,7 +142,7 @@ const jsonLd = [
             ))}
           </div>
         ) : (
-          <CommunityAuthPrompt message="Log in or register to share a practice note or reply to another reader." />
+          <CommunityAuthPrompt message="Join the Practice Commons to share a practice note or reply to another reader." />
         )
       }
     </section>
@@ -168,6 +193,50 @@ const jsonLd = [
     color: var(--tok-text-dark);
   }
 
+  .community-auth-card {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    max-width: 48rem;
+    margin-top: clamp(1.25rem, 4vw, 2rem);
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .community-auth-card__kicker {
+    margin: 0 0 0.35rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .community-auth-card h2 {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
+    color: var(--tok-water);
+  }
+
+  .community-auth-card p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+
+  .community-auth-card__button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    text-decoration: none;
+  }
+
   .community-search {
     display: grid;
     gap: 0.45rem;
@@ -181,6 +250,15 @@ const jsonLd = [
     letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
     color: var(--tok-text-muted);
+  }
+
+  .community-auth-card h2 {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--tok-water);
   }
 
   .community-search div {
@@ -249,6 +327,10 @@ const jsonLd = [
   }
 
   @media (min-width: 760px) {
+    .community-auth-card {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
     .community-section-grid,
     .community-create-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));

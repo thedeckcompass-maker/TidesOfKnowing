@@ -5,7 +5,7 @@ interface Props {
 }
 
 const {
-  message = "Log in to take part in the Practice Commons.",
+  message = "Join the Practice Commons to post or reply.",
   redirectTo = Astro.url.pathname,
 } = Astro.props;
 ---
@@ -13,8 +13,7 @@ const {
 <aside class="community-auth-prompt">
   <p>{message}</p>
   <div>
-    <a href={`/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`}>Log in</a>
-    <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Register</a>
+    <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Join the Practice Commons</a>
   </div>
 </aside>
 

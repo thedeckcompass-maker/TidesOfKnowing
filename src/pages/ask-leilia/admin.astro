@@ -8,7 +8,7 @@ import { getAskLeiliaRequests, getAskLeiliaUploadUrl } from "../../lib/ask-leili
 export const prerender = false;
 
 if (!Astro.locals.user) {
-  return Astro.redirect("/auth/login/?redirectTo=/ask-leilia/admin/", 303);
+  return Astro.redirect("/auth/register/", 303);
 }
 
 if (!isAdminProfile(Astro.locals.profile)) {

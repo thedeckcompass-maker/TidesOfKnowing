@@ -7,7 +7,7 @@ import { communityPostPath } from "../../../lib/community/slugs";
 
 export const prerender = false;
 
-if (!Astro.locals.user) return Astro.redirect("/auth/login/?redirectTo=/community/", 303);
+if (!Astro.locals.user) return Astro.redirect("/auth/register/", 303);
 
 const slug = Astro.params.slug ?? "";
 const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
