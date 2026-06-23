@@ -16,6 +16,57 @@ function safeRedirect(value: string): string {
   return value;
 }
 
+function emailDomain(email: string): string {
+  return email.split("@")[1] ?? "";
+}
+
+function authErrorDetails(error: unknown) {
+  if (!error || typeof error !== "object") {
+    return {
+      name: "UnknownAuthError",
+      message: String(error),
+      status: null,
+      code: null,
+    };
+  }
+
+  const authError = error as {
+    name?: unknown;
+    message?: unknown;
+    status?: unknown;
+    code?: unknown;
+  };
+
+  return {
+    name: typeof authError.name === "string" ? authError.name : "AuthError",
+    message: typeof authError.message === "string" ? authError.message : "No message returned.",
+    status: typeof authError.status === "number" ? authError.status : null,
+    code: typeof authError.code === "string" ? authError.code : null,
+  };
+}
+
+function adminDiagnosticForAuthError(message: string): string {
+  const normalized = message.toLowerCase();
+
+  if (normalized.includes("redirect") || normalized.includes("not allowed")) {
+    return "Check Supabase Auth Site URL and Redirect URLs. The production callback URL must be allowed.";
+  }
+
+  if (normalized.includes("email") && normalized.includes("disabled")) {
+    return "Check Supabase Auth providers. Email authentication may be disabled.";
+  }
+
+  if (normalized.includes("invalid api key") || normalized.includes("jwt")) {
+    return "Check PUBLIC_SUPABASE_ANON_KEY in Cloudflare Pages.";
+  }
+
+  if (normalized.includes("rate")) {
+    return "Check Supabase Auth rate limits and recent repeated magic-link requests.";
+  }
+
+  return "Check Supabase Auth logs for this reference id and confirm email provider, redirect allow-list, and email delivery settings.";
+}
+
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
   const email = String(form.get("email") ?? "").trim().toLowerCase();
@@ -30,22 +81,55 @@ if (Astro.request.method === "POST") {
   } else if (!email || !email.includes("@")) {
     error = "Please enter a valid email address.";
   } else {
+    const registrationReference = crypto.randomUUID();
     const emailRedirectTo = new URL(
       `/auth/callback/?redirectTo=${encodeURIComponent(next)}`,
       Astro.url,
     ).href;
-    const { error: signInError } = await Astro.locals.supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo,
-        data: { display_name: displayName },
-      },
+
+    console.info("Practice Commons registration request started", {
+      reference: registrationReference,
+      emailDomain: emailDomain(email),
+      displayNameLength: displayName.length,
+      redirectTo: next,
+      emailRedirectTo,
+      requestUrl: Astro.url.href,
     });
 
+    let signInError: unknown = null;
+
+    try {
+      const result = await Astro.locals.supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo,
+          data: { display_name: displayName },
+        },
+      });
+      signInError = result.error;
+    } catch (caughtError) {
+      signInError = caughtError;
+    }
+
     if (signInError) {
-      console.error("Magic link registration failed:", signInError);
-      error = "Unable to send a registration link right now. Please try again.";
+      const details = authErrorDetails(signInError);
+      console.error("Practice Commons registration magic-link request failed", {
+        reference: registrationReference,
+        error: details,
+        adminDiagnostic: adminDiagnosticForAuthError(details.message),
+        emailDomain: emailDomain(email),
+        redirectTo: next,
+        emailRedirectTo,
+        requestUrl: Astro.url.href,
+      });
+      error = `Unable to send a registration link right now. Please try again. If this keeps happening, contact us and mention reference ${registrationReference}.`;
     } else {
+      console.info("Practice Commons registration magic-link request accepted", {
+        reference: registrationReference,
+        emailDomain: emailDomain(email),
+        redirectTo: next,
+        emailRedirectTo,
+      });
       const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
       checkEmailUrl.searchParams.set("email", email);
       checkEmailUrl.searchParams.set("displayName", displayName);
