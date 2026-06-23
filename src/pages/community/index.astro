@@ -52,18 +52,6 @@ const jsonLd = [
     <header class="community-hero">
       <p class="community-kicker">Practice Commons</p>
       <h1>A quiet place for readers to become better readers.</h1>
-      <p>
-        The Practice Commons is a quieter space for readers who want to deepen their
-        craft away from the noise of social platforms.
-      </p>
-      <p class="community-hero__plain">
-        No competition.<br />
-        No posturing.<br />
-        No algorithmic pressure.
-      </p>
-      <p>
-        Just thoughtful practice, reflection, and reader development.
-      </p>
     </header>
 
     <section class="community-auth-card" aria-labelledby="community-auth-heading">
@@ -81,13 +69,28 @@ const jsonLd = [
           <>
             <div>
               <p class="community-auth-card__kicker">Join the Practice Commons</p>
-              <h2 id="community-auth-heading">Join the Practice Commons</h2>
-              <p>Create a simple reader profile to post and reply.</p>
+              <h2 id="community-auth-heading">Continue to the Practice Commons</h2>
+              <p>Enter your name and email and we'll send you a sign-in link.</p>
             </div>
             <a class="community-auth-card__button" href="/auth/register/">Continue</a>
           </>
         )
       }
+    </section>
+
+    <section class="community-intro" aria-label="About the Practice Commons">
+      <p>
+        The Practice Commons is a quieter space for readers who want to deepen their
+        craft away from the noise of social platforms.
+      </p>
+      <p class="community-intro__plain">
+        No competition.<br />
+        No posturing.<br />
+        No algorithmic pressure.
+      </p>
+      <p>
+        Just thoughtful practice, reflection, and reader development.
+      </p>
     </section>
 
     <form class="community-search" method="get" action="/community/search/">
@@ -182,14 +185,19 @@ const jsonLd = [
     color: var(--tok-water);
   }
 
-  .community-hero p,
+  .community-intro p,
   .community-create p,
   .community-philosophy p {
     color: var(--tok-text-muted);
     line-height: 1.8;
   }
 
-  .community-hero__plain {
+  .community-intro {
+    max-width: 48rem;
+    margin-top: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .community-intro__plain {
     color: var(--tok-text-dark);
   }
 

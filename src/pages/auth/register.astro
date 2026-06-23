@@ -9,6 +9,8 @@ const title = "Join the Practice Commons | Tides of Knowing";
 const description = "Join the Practice Commons at Tides of Knowing with a simple email sign-in link.";
 
 let error = "";
+let errorReference = "";
+let errorCode = "";
 const redirectTo = "/community/";
 
 function emailDomain(email: string): string {
@@ -30,13 +32,16 @@ function authErrorDetails(error: unknown) {
     message?: unknown;
     status?: unknown;
     code?: unknown;
+    error_code?: unknown;
+    errorCode?: unknown;
   };
+  const code = authError.code ?? authError.error_code ?? authError.errorCode;
 
   return {
     name: typeof authError.name === "string" ? authError.name : "AuthError",
     message: typeof authError.message === "string" ? authError.message : "No message returned.",
     status: typeof authError.status === "number" ? authError.status : null,
-    code: typeof authError.code === "string" ? authError.code : null,
+    code: typeof code === "string" ? code : null,
   };
 }
 
@@ -111,14 +116,19 @@ if (Astro.request.method === "POST") {
       const details = authErrorDetails(signInError);
       console.error("Practice Commons sign-in link request failed", {
         reference: registrationReference,
-        error: details,
+        errorName: details.name,
+        errorCode: details.code,
+        errorMessage: details.message,
+        errorStatus: details.status,
         adminDiagnostic: adminDiagnosticForAuthError(details.message),
         emailDomain: emailDomain(email),
         redirectTo: next,
         emailRedirectTo,
         requestUrl: Astro.url.href,
       });
-      error = `Unable to send a sign-in link right now. Please try again. If this keeps happening, contact us and mention reference ${registrationReference}.`;
+      error = "Unable to send a sign-in link right now. Please try again.";
+      errorReference = registrationReference;
+      errorCode = details.code ?? "not returned";
     } else {
       console.info("Practice Commons sign-in link request accepted", {
         reference: registrationReference,
@@ -145,7 +155,15 @@ if (Astro.request.method === "POST") {
         Enter your name and email. We'll email you a sign-in link.
       </p>
 
-      {error ? <p class="auth-notice auth-notice--error">{error}</p> : null}
+      {
+        error ? (
+          <div class="auth-notice auth-notice--error">
+            <p>{error}</p>
+            {errorReference ? <p>Reference: {errorReference}</p> : null}
+            {errorCode ? <p>Error code: {errorCode}</p> : null}
+          </div>
+        ) : null
+      }
 
       <form method="post" class="auth-form">
         <input type="hidden" name="redirectTo" value={redirectTo} />
@@ -243,6 +261,14 @@ if (Astro.request.method === "POST") {
     padding: 0.75rem 0.85rem;
     border-radius: var(--radius-control);
     line-height: 1.6;
+  }
+
+  .auth-notice p {
+    margin: 0;
+  }
+
+  .auth-notice p + p {
+    margin-top: 0.35rem;
   }
 
   .auth-notice--error {
