@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import LibraryPagination from "../../../../components/LibraryPagination.astro";
+import CommunityAuthPrompt from "../../../../components/community/CommunityAuthPrompt.astro";
+import CommunityPostForm from "../../../../components/community/CommunityPostForm.astro";
+import CommunityPostList from "../../../../components/community/CommunityPostList.astro";
+import { canContribute } from "../../../../lib/community/auth";
+import { communityPaginationState } from "../../../../lib/community/pagination";
+import { getCommunityPosts, getCommunitySections, getSectionByKey } from "../../../../lib/community/queries";
+import { communitySectionPath } from "../../../../lib/community/slugs";
+import { isCommunitySectionKey } from "../../../../lib/community/validation";
+import { siteBase } from "../../../../lib/site";
+
+export const prerender = false;
+
+const sectionKey = Astro.params.section;
+if (!isCommunitySectionKey(sectionKey)) return Astro.redirect("/community/", 302);
+
+const base = siteBase(Astro);
+const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+const section = Astro.locals.supabase ? await getSectionByKey(Astro.locals.supabase, sectionKey) : null;
+if (!section) return Astro.redirect("/community/", 302);
+
+const { posts, totalPages } = Astro.locals.supabase
+  ? await getCommunityPosts(Astro.locals.supabase, {
+      mode: { kind: "section", sectionKey },
+      page: 1,
+    })
+  : { posts: [], totalPages: 1 };
+const pager = communityPaginationState({ kind: "section", sectionKey }, 1, totalPages, base);
+const canonical = new URL(communitySectionPath(sectionKey), base).href;
+---
+
+<BaseLayout
+  title={`${section.name} | Practice Commons | Tides of Knowing`}
+  description={section.description}
+  ogUrl={canonical}
+>
+  <main class="community-section page-inner">
+    <p class="community-section__kicker">Practice Commons</p>
+    <h1>{section.name}</h1>
+    <p class="community-section__lede">{section.description}</p>
+
+    <section class="community-section__create" aria-labelledby="create-heading">
+      <h2 id="create-heading">Share in {section.name}</h2>
+      {
+        canContribute(Astro.locals.profile) ? (
+          <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
+        ) : (
+          <CommunityAuthPrompt message={`Log in to post in ${section.name}.`} />
+        )
+      }
+    </section>
+
+    <section class="community-section__posts" aria-labelledby="posts-heading">
+      <h2 id="posts-heading">Posts</h2>
+      <CommunityPostList posts={posts} />
+      <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .community-section {
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 54rem;
+  }
+
+  .community-section__kicker,
+  .community-section h2 {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-section h1 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .community-section__lede {
+    color: var(--tok-text-muted);
+    line-height: 1.8;
+  }
+
+  .community-section__create,
+  .community-section__posts {
+    margin-top: clamp(2rem, 6vw, 3rem);
+  }
+</style>

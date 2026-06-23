@@ -1,0 +1,59 @@
+---
+import type { NotificationPreferences } from "../../lib/community/types";
+
+interface Props {
+  preferences: NotificationPreferences | null;
+}
+
+const { preferences } = Astro.props;
+---
+
+<form class="community-settings" method="post" action="/api/community/notifications/preferences">
+  <label>
+    <input
+      type="checkbox"
+      name="emailRepliesToPosts"
+      checked={preferences?.email_replies_to_posts ?? true}
+    />
+    Email me when someone replies to my post.
+  </label>
+  <label>
+    <input
+      type="checkbox"
+      name="emailAnnouncements"
+      checked={preferences?.email_announcements ?? false}
+    />
+    Email me occasional Practice Commons announcements.
+  </label>
+  <button type="submit">Save email preferences</button>
+</form>
+
+<style>
+  .community-settings {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .community-settings label {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    color: var(--tok-text-dark);
+    line-height: 1.6;
+  }
+
+  .community-settings input {
+    margin-top: 0.25rem;
+  }
+
+  .community-settings button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+</style>

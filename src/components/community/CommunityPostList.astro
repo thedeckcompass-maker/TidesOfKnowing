@@ -1,0 +1,121 @@
+---
+import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
+import type { CommunityPostSummary } from "../../lib/community/types";
+
+interface Props {
+  posts: CommunityPostSummary[];
+  emptyMessage?: string;
+}
+
+const { posts, emptyMessage = "No discussions yet. Start a conversation." } = Astro.props;
+
+function excerpt(body: string): string {
+  const plain = body.replace(/\s+/g, " ").trim();
+  return plain.length > 220 ? `${plain.slice(0, 217)}...` : plain;
+}
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(value));
+}
+---
+
+{
+  posts.length > 0 ? (
+    <ol class="community-post-list" role="list">
+      {posts.map((post) => (
+        <li>
+          <article class="community-post-card">
+            <p class="community-post-card__meta">
+              {post.section ? (
+                <a href={communitySectionPath(post.section.key)}>{post.section.name}</a>
+              ) : null}
+              <span aria-hidden="true"> · </span>
+              <time datetime={post.created_at}>{formatDate(post.created_at)}</time>
+              {post.is_pinned ? <span class="community-post-card__pin">Pinned</span> : null}
+            </p>
+            <h2>
+              <a href={communityPostPath(post.slug)}>{post.title}</a>
+            </h2>
+            <p class="community-post-card__excerpt">{excerpt(post.body)}</p>
+            <p class="community-post-card__foot">
+              <span>By {post.author?.display_name ?? "Reader"}</span>
+              <span>{post.reply_count === 1 ? "1 reply" : `${post.reply_count} replies`}</span>
+            </p>
+          </article>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <p class="community-empty">{emptyMessage}</p>
+  )
+}
+
+<style>
+  .community-post-list {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .community-post-card {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 82%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 76%, transparent);
+  }
+
+  .community-post-card__meta,
+  .community-post-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.55rem;
+    margin: 0;
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-post-card__pin {
+    color: var(--tok-gold-deep);
+    font-weight: 700;
+  }
+
+  .community-post-card h2 {
+    margin: 0.4rem 0 0.45rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 4vw, 1.55rem);
+    line-height: 1.25;
+  }
+
+  .community-post-card h2 a {
+    color: var(--tok-water);
+    text-decoration-color: color-mix(in srgb, var(--tok-gold) 45%, transparent);
+    text-underline-offset: 0.15em;
+  }
+
+  .community-post-card__excerpt {
+    margin: 0;
+    color: var(--tok-text-dark);
+    line-height: 1.72;
+  }
+
+  .community-post-card__foot {
+    justify-content: space-between;
+    margin-top: 0.85rem;
+  }
+
+  .community-empty {
+    padding: 1rem;
+    border: 1px dashed color-mix(in srgb, var(--tok-gold) 45%, transparent);
+    border-radius: var(--radius-lg);
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+</style>

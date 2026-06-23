@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import CommunityPostForm from "../../../components/community/CommunityPostForm.astro";
+import { isAdminProfile } from "../../../lib/community/auth";
+import { getCommunityPostBySlug, getCommunitySections } from "../../../lib/community/queries";
+import { communityPostPath } from "../../../lib/community/slugs";
+
+export const prerender = false;
+
+if (!Astro.locals.user) return Astro.redirect("/auth/login/?redirectTo=/community/", 303);
+
+const slug = Astro.params.slug ?? "";
+const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
+if (!post) return Astro.redirect("/community/", 302);
+
+const canEdit = Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile);
+if (!canEdit) return Astro.redirect(communityPostPath(post.slug), 302);
+
+const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+---
+
+<BaseLayout
+  title={`Edit ${post.title} | Practice Commons | Tides of Knowing`}
+  description="Edit a Practice Commons post."
+  metaRobots="noindex, nofollow"
+>
+  <main class="community-edit page-inner">
+    <p class="community-edit__kicker">Practice Commons</p>
+    <h1>Edit post</h1>
+    <CommunityPostForm sections={sections} post={post} />
+  </main>
+</BaseLayout>
+
+<style>
+  .community-edit {
+    max-width: 44rem;
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-edit__kicker {
+    margin: 0 0 0.5rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .community-edit h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+</style>

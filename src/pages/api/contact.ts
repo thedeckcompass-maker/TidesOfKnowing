@@ -131,7 +131,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const subject = isMediaForm ? "Media / podcast enquiry" : "Website enquiry";
 
-    console.log("Sending website enquiry email", { name, email, isMediaForm });
     const sendResult = await resend.emails.send({
       from: "Tides of Knowing <hello@tidesofknowing.com>",
       to: "hello@tidesofknowing.com",

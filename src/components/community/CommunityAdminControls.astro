@@ -1,0 +1,61 @@
+---
+interface Props {
+  postId?: string;
+  isPinned?: boolean;
+}
+
+const { postId, isPinned = false } = Astro.props;
+---
+
+{
+  postId ? (
+    <aside class="community-admin" aria-label="Admin moderation controls">
+      <p>Admin controls</p>
+      <div>
+        <form method="post" action={`/api/community/posts/${postId}`}>
+          <input type="hidden" name="intent" value={isPinned ? "unpin" : "pin"} />
+          <button type="submit">{isPinned ? "Unpin" : "Pin"}</button>
+        </form>
+        <form method="post" action={`/api/community/posts/${postId}`}>
+          <input type="hidden" name="intent" value="hide" />
+          <button type="submit">Hide</button>
+        </form>
+        <form method="post" action={`/api/community/posts/${postId}`}>
+          <input type="hidden" name="intent" value="delete" />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </aside>
+  ) : null
+}
+
+<style>
+  .community-admin {
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, #b42318 35%, transparent);
+    border-radius: var(--radius-lg);
+  }
+
+  .community-admin p {
+    margin: 0 0 0.65rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-admin div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .community-admin button {
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-text-dark);
+    cursor: pointer;
+  }
+</style>

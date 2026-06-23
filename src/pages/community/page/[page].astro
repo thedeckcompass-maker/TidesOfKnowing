@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LibraryPagination from "../../../components/LibraryPagination.astro";
+import CommunityPostList from "../../../components/community/CommunityPostList.astro";
+import { communityPaginationState } from "../../../lib/community/pagination";
+import { getCommunityPosts } from "../../../lib/community/queries";
+import { siteBase } from "../../../lib/site";
+
+export const prerender = false;
+
+const page = Number(Astro.params.page ?? "1");
+if (!Number.isInteger(page) || page < 2) return Astro.redirect("/community/", 301);
+
+const base = siteBase(Astro);
+const { posts, totalPages } = Astro.locals.supabase
+  ? await getCommunityPosts(Astro.locals.supabase, { mode: { kind: "all" }, page })
+  : { posts: [], totalPages: 1 };
+
+if (page > totalPages) return Astro.redirect("/community/", 302);
+
+const pager = communityPaginationState({ kind: "all" }, page, totalPages, base);
+const canonical = new URL(`/community/page/${page}/`, base).href;
+---
+
+<BaseLayout
+  title={`Practice Commons Page ${page} | Tides of Knowing`}
+  description="Paginated Practice Commons archive for tarot readers developing interpretation, intuition, and symbolic literacy."
+  ogUrl={canonical}
+  sequentialLinks={{ prev: pager.relPrevAbsolute ?? undefined, next: pager.relNextAbsolute ?? undefined }}
+>
+  <main class="community-archive page-inner">
+    <p class="community-archive__kicker">Practice Commons Archive</p>
+    <h1>Practice notes, page {page}</h1>
+    <CommunityPostList posts={posts} />
+    <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+  </main>
+</BaseLayout>
+
+<style>
+  .community-archive {
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-archive__kicker {
+    margin: 0 0 0.5rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .community-archive h1 {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+</style>

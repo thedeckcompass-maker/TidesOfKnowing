@@ -1,0 +1,88 @@
+---
+import type { CommunityReplyDetail } from "../../lib/community/types";
+
+interface Props {
+  replies: CommunityReplyDetail[];
+}
+
+const { replies } = Astro.props;
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(value));
+}
+---
+
+{
+  replies.length > 0 ? (
+    <ol class="community-replies" role="list">
+      {replies.map((reply) => (
+        <li id={`reply-${reply.id}`}>
+          <article class="community-reply">
+            <p class="community-reply__meta">
+              <span>{reply.author?.display_name ?? "Reader"}</span>
+              {reply.author?.role === "admin" ? <span>Leigh / admin</span> : null}
+              <time datetime={reply.created_at}>{formatDate(reply.created_at)}</time>
+            </p>
+            <div class="community-reply__body">
+              {reply.body.split("\n\n").map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <p class="community-empty">No replies yet. A careful first response is welcome.</p>
+  )
+}
+
+<style>
+  .community-replies {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .community-reply {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 82%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 76%, transparent);
+  }
+
+  .community-reply__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.55rem;
+    margin: 0 0 0.6rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-reply__body {
+    color: var(--tok-text-dark);
+    line-height: 1.75;
+  }
+
+  .community-reply__body p {
+    margin: 0 0 0.85rem;
+  }
+
+  .community-reply__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .community-empty {
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+</style>

@@ -2721,11 +2721,6 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
     h += "</section>";
 
     out.innerHTML = h;
-    if (tokDebugMode) {
-      // TEMP DEBUG: remove after typography audit
-      console.log("TOK DEBUG RESULT HTML", out.innerHTML);
-    }
-
     const params = new URLSearchParams({
       c1: c1.cardId || c1.id,
       o1: o1,
@@ -2913,9 +2908,7 @@ const ogUrl = new URL("/tools/two-card-tarot-reading/", siteBase(Astro)).href;
       if (!(outputContainer instanceof HTMLElement)) return;
       try {
         await navigator.clipboard.writeText(outputContainer.innerHTML);
-      } catch (_error) {
-        console.log("TOK DEBUG RESULT HTML", outputContainer.innerHTML);
-      }
+      } catch (_error) {}
     });
   }
 

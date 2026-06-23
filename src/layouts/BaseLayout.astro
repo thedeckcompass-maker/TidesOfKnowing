@@ -99,16 +99,12 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
  */
 const pathname = Astro.url.pathname;
 const isToolsRoute = pathname.startsWith("/tools");
-const isPracticeRoute = pathname.startsWith("/practice");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
-const isCompassTrainingSection = pathname.startsWith("/compass");
-const isCompassMethodRoute = pathname.startsWith("/articles/compass-method");
-const isArticlesSection =
-  (pathname === "/articles" || pathname.startsWith("/articles/")) &&
-  !isCompassMethodRoute;
 const isAboutRoute = pathname.startsWith("/about");
+const isCommunityRoute = pathname.startsWith("/community");
+const isAskLeiliaRoute = pathname.startsWith("/ask-leilia");
 const isFieldNotesSection =
   pathname === "/blog" || pathname.startsWith("/blog/");
 const baseBodySurface =
@@ -208,10 +204,10 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
           <a
             class="site-nav__link"
-            href="/articles/compass-method/"
-            aria-current={isCompassMethodRoute ? "page" : undefined}
+            href="/blog/"
+            aria-current={isFieldNotesSection ? "page" : undefined}
           >
-            Method
+            Field Notes
           </a>
           <a
             class="site-nav__link"
@@ -222,32 +218,17 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           </a>
           <a
             class="site-nav__link"
-            href="/articles/"
-            aria-current={isArticlesSection ? "page" : undefined}
+            href="/community/"
+            aria-current={isCommunityRoute ? "page" : undefined}
           >
-            Articles
+            Community
           </a>
           <a
             class="site-nav__link"
-            href="/blog/"
-            aria-current={isFieldNotesSection ? "page" : undefined}
+            href="/ask-leilia/"
+            aria-current={isAskLeiliaRoute ? "page" : undefined}
           >
-            Field Notes
-          </a>
-          <a
-            class="site-nav__link"
-            href="/practice/"
-            aria-current={isPracticeRoute ? "page" : undefined}
-          >
-            Practice
-          </a>
-          <a
-            class="site-nav__link site-nav__link--training"
-            href="/compass/"
-            data-link="compass"
-            aria-current={isCompassTrainingSection ? "page" : undefined}
-          >
-            Training
+            Ask Leilia
           </a>
           <a
             class="site-nav__link"
@@ -273,6 +254,7 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         <nav class="site-footer__discover" aria-label="Sections">
           <a class="site-footer__discover-link" href="/articles/">Articles</a>
           <a class="site-footer__discover-link" href="/repeating-card-meanings/">Repeating cards</a>
+          <a class="site-footer__discover-link" href="/community/">Community</a>
           <a class="site-footer__discover-link" href="/series/">Series</a>
           <a class="site-footer__discover-link" href="/tags/">Topics</a>
           <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
@@ -358,18 +340,6 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
         });
       })();
     </script>
-    <script is:inline>
-      (function () {
-        document.addEventListener("click", function (event) {
-          var target = event.target;
-          if (!(target instanceof Element)) return;
-          var link = target.closest('[data-link="compass"]');
-          if (!link) return;
-          console.log("COMPASS link clicked");
-        });
-      })();
-    </script>
-
     {mailerLite ? <MailerLiteUniversal /> : null}
   </body>
 </html>

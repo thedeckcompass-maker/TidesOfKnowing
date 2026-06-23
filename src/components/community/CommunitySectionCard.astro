@@ -1,0 +1,46 @@
+---
+import { communitySectionPath } from "../../lib/community/slugs";
+import type { CommunitySection } from "../../lib/community/types";
+
+interface Props {
+  section: CommunitySection;
+}
+
+const { section } = Astro.props;
+---
+
+<article class="community-section-card">
+  <h2>
+    <a href={communitySectionPath(section.key)}>{section.name}</a>
+  </h2>
+  <p>{section.description}</p>
+</article>
+
+<style>
+  .community-section-card {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 70%, transparent);
+  }
+
+  .community-section-card h2 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-accent);
+    font-size: clamp(1.45rem, 5vw, 2rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .community-section-card a {
+    color: inherit;
+    text-decoration-color: color-mix(in srgb, var(--tok-gold) 65%, transparent);
+    text-underline-offset: 0.16em;
+  }
+
+  .community-section-card p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+</style>

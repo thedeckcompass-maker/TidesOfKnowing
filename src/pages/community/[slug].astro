@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CommunityAdminControls from "../../components/community/CommunityAdminControls.astro";
+import CommunityAuthPrompt from "../../components/community/CommunityAuthPrompt.astro";
+import CommunityReplyForm from "../../components/community/CommunityReplyForm.astro";
+import CommunityReplyList from "../../components/community/CommunityReplyList.astro";
+import { canContribute, isAdminProfile } from "../../lib/community/auth";
+import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
+import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+export const prerender = false;
+
+const slug = Astro.params.slug ?? "";
+const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
+if (!post) return Astro.redirect("/community/", 302);
+
+const replies = Astro.locals.supabase ? await getCommunityReplies(Astro.locals.supabase, post.id) : [];
+const base = siteBase(Astro);
+const canonical = new URL(communityPostPath(post.slug), base).href;
+const sectionHref = post.section ? communitySectionPath(post.section.key) : "/community/";
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Practice Commons", url: "/community/" },
+  { label: post.section?.name ?? "Post", url: sectionHref },
+  { label: post.title, url: null },
+];
+const canEdit = Boolean(
+  Astro.locals.user &&
+    (Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile)),
+);
+const jsonLd = [
+  breadcrumbJsonLd(crumbs, base.href),
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    url: canonical,
+    datePublished: post.created_at,
+    dateModified: post.updated_at,
+    author: {
+      "@type": "Person",
+      name: post.author?.display_name ?? "Reader",
+    },
+  },
+];
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title={`${post.title} | Practice Commons | Tides of Knowing`}
+  description={post.body.replace(/\s+/g, " ").slice(0, 155)}
+  ogUrl={canonical}
+  jsonLd={jsonLd}
+>
+  <main class="community-post page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <article class="community-post__article">
+      <p class="community-post__meta">
+        <a href={sectionHref}>{post.section?.name ?? "Practice Commons"}</a>
+        <span aria-hidden="true"> · </span>
+        <time datetime={post.created_at}>{formatDate(post.created_at)}</time>
+      </p>
+      <h1>{post.title}</h1>
+      <p class="community-post__byline">By {post.author?.display_name ?? "Reader"}</p>
+      <div class="community-post__body">
+        {post.body.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      {
+        canEdit ? (
+          <p class="community-post__edit">
+            <a href={`${communityPostPath(post.slug)}edit/`}>Edit post</a>
+          </p>
+        ) : null
+      }
+    </article>
+
+    {isAdminProfile(Astro.locals.profile) ? <CommunityAdminControls postId={post.id} isPinned={post.is_pinned} /> : null}
+
+    <section id="replies" class="community-post__replies" aria-labelledby="replies-heading">
+      <h2 id="replies-heading">Replies</h2>
+      <CommunityReplyList replies={replies} />
+    </section>
+
+    <section class="community-post__reply-form" aria-labelledby="reply-heading">
+      <h2 id="reply-heading">Add a thoughtful reply</h2>
+      {
+        canContribute(Astro.locals.profile) ? (
+          <CommunityReplyForm postId={post.id} />
+        ) : (
+          <CommunityAuthPrompt message="Log in to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
+        )
+      }
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .community-post {
+    max-width: 48rem;
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-post__article {
+    margin-top: 1rem;
+  }
+
+  .community-post__meta,
+  .community-post__byline,
+  .community-post__edit {
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+
+  .community-post__meta {
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .community-post h1 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--tok-water);
+  }
+
+  .community-post__body {
+    margin-top: 1.5rem;
+    color: var(--tok-text-dark);
+    font-size: 1.03rem;
+    line-height: 1.85;
+  }
+
+  .community-post__body p {
+    margin: 0 0 1rem;
+  }
+
+  .community-post__replies,
+  .community-post__reply-form {
+    margin-top: clamp(2rem, 6vw, 3rem);
+  }
+
+  .community-post h2 {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+</style>

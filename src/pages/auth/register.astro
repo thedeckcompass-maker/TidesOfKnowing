@@ -1,0 +1,155 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { cleanDisplayName } from "../../lib/community/auth";
+
+export const prerender = false;
+
+const title = "Register | Tides of Knowing";
+const description = "Register for the Practice Commons at Tides of Knowing.";
+
+let message = "";
+let error = "";
+const redirectTo = Astro.url.searchParams.get("redirectTo") || "/community/";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const email = String(form.get("email") ?? "").trim().toLowerCase();
+  const displayName = cleanDisplayName(form.get("displayName"));
+  const next = String(form.get("redirectTo") ?? "/community/");
+
+  if (!Astro.locals.supabase) {
+    error = "Community registration is not configured yet.";
+  } else if (!email || !email.includes("@")) {
+    error = "Please enter a valid email address.";
+  } else {
+    const emailRedirectTo = new URL(
+      `/auth/callback/?redirectTo=${encodeURIComponent(next)}`,
+      Astro.url,
+    ).href;
+    const { error: signInError } = await Astro.locals.supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo,
+        data: { display_name: displayName },
+      },
+    });
+
+    if (signInError) {
+      console.error("Magic link registration failed:", signInError);
+      error = "Unable to send a registration link right now. Please try again.";
+    } else {
+      message = "Check your email for a secure registration link.";
+    }
+  }
+}
+---
+
+<BaseLayout title={title} description={description} metaRobots="noindex, nofollow">
+  <main class="auth-page page-inner">
+    <section class="auth-card" aria-labelledby="auth-heading">
+      <p class="auth-kicker">Practice Commons</p>
+      <h1 id="auth-heading">Register</h1>
+      <p class="auth-lede">
+        Create a simple reader profile for posting and replying in the Practice Commons.
+      </p>
+
+      {message ? <p class="auth-notice auth-notice--success">{message}</p> : null}
+      {error ? <p class="auth-notice auth-notice--error">{error}</p> : null}
+
+      <form method="post" class="auth-form">
+        <input type="hidden" name="redirectTo" value={redirectTo} />
+        <label for="displayName">Display name</label>
+        <input id="displayName" name="displayName" type="text" autocomplete="nickname" maxlength="60" />
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+        <button type="submit">Send registration link</button>
+      </form>
+
+      <p class="auth-alt">
+        Already registered? <a href={`/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`}>Log in</a>
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .auth-page {
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .auth-card {
+    max-width: 34rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .auth-kicker {
+    margin: 0 0 0.5rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .auth-card h1 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--tok-water);
+  }
+
+  .auth-lede,
+  .auth-alt {
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+
+  .auth-form {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .auth-form label {
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+  }
+
+  .auth-form input {
+    width: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .auth-form button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+
+  .auth-notice {
+    padding: 0.75rem 0.85rem;
+    border-radius: var(--radius-control);
+    line-height: 1.6;
+  }
+
+  .auth-notice--success {
+    border: 1px solid color-mix(in srgb, var(--tok-earth) 45%, transparent);
+  }
+
+  .auth-notice--error {
+    border: 1px solid color-mix(in srgb, #b42318 45%, transparent);
+  }
+</style>

@@ -1,0 +1,159 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CommunityNotificationSettings from "../../components/community/CommunityNotificationSettings.astro";
+import { isAdminProfile } from "../../lib/community/auth";
+import { getNotificationPreferences } from "../../lib/community/queries";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
+
+export const prerender = false;
+
+if (!Astro.locals.user) {
+  return Astro.redirect("/auth/login/?redirectTo=/community/account/", 303);
+}
+
+const profile = Astro.locals.profile;
+const preferences =
+  Astro.locals.supabase && Astro.locals.user
+    ? await getNotificationPreferences(Astro.locals.supabase, Astro.locals.user.id)
+    : null;
+const isAdmin = isAdminProfile(profile);
+
+let moderationPosts: {
+  id: string;
+  title: string;
+  slug: string;
+  status: string;
+  created_at: string;
+}[] = [];
+let moderatedProfiles: {
+  id: string;
+  display_name: string;
+  status: string;
+  role: string;
+}[] = [];
+
+if (isAdmin) {
+  const service = createCommunityServiceClient(Astro.locals);
+  const { data: posts } = await service
+    .from("community_posts")
+    .select("id, title, slug, status, created_at")
+    .in("status", ["hidden", "locked"])
+    .order("created_at", { ascending: false })
+    .limit(20);
+  moderationPosts = (posts ?? []) as typeof moderationPosts;
+
+  const { data: profiles } = await service
+    .from("profiles")
+    .select("id, display_name, status, role")
+    .neq("status", "active")
+    .order("updated_at", { ascending: false })
+    .limit(20);
+  moderatedProfiles = (profiles ?? []) as typeof moderatedProfiles;
+}
+---
+
+<BaseLayout
+  title="Practice Commons Account | Tides of Knowing"
+  description="Manage your Practice Commons account and email preferences."
+  metaRobots="noindex, nofollow"
+>
+  <main class="community-account page-inner">
+    <p class="community-account__kicker">Practice Commons</p>
+    <h1>Your account</h1>
+
+    <section class="community-account__panel" aria-labelledby="profile-heading">
+      <h2 id="profile-heading">Profile</h2>
+      <p><strong>Display name:</strong> {profile?.display_name ?? "Reader"}</p>
+      <p><strong>Status:</strong> {profile?.status ?? "active"}</p>
+      <form method="post" action="/auth/logout">
+        <button type="submit">Log out</button>
+      </form>
+    </section>
+
+    <section class="community-account__panel" aria-labelledby="email-heading">
+      <h2 id="email-heading">Email preferences</h2>
+      <p>Keep notifications minimal and useful. You can return to the Commons when you have time.</p>
+      <CommunityNotificationSettings preferences={preferences} />
+    </section>
+
+    {
+      isAdmin ? (
+        <section class="community-account__panel" aria-labelledby="admin-heading">
+          <h2 id="admin-heading">Admin moderation</h2>
+          <p>Recent hidden or locked posts and restricted members.</p>
+
+          <h3>Posts</h3>
+          {moderationPosts.length > 0 ? (
+            <ul>
+              {moderationPosts.map((post) => (
+                <li>
+                  <a href={`/community/${post.slug}/`}>{post.title}</a> <span>{post.status}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No posts currently need review.</p>
+          )}
+
+          <h3>Members</h3>
+          {moderatedProfiles.length > 0 ? (
+            <ul>
+              {moderatedProfiles.map((member) => (
+                <li>
+                  {member.display_name} <span>{member.status}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No restricted or blocked members.</p>
+          )}
+        </section>
+      ) : null
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .community-account {
+    max-width: 48rem;
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-account__kicker,
+  .community-account h2 {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-account h1 {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .community-account__panel {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+  }
+
+  .community-account p,
+  .community-account li {
+    color: var(--tok-text-dark);
+    line-height: 1.7;
+  }
+
+  .community-account button {
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    cursor: pointer;
+  }
+</style>

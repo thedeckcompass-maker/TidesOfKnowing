@@ -1,5 +1,8 @@
 import type { APIRoute } from "astro";
+import { createClient } from "@supabase/supabase-js";
 import { getCollection } from "astro:content";
+import { communityEnv } from "../lib/community/env";
+import { totalCommunityPages } from "../lib/community/pagination";
 import { slugify } from "../utils/slugify";
 import { blogCategoryIndex } from "../lib/blogCategories";
 import { getIndexableArticleTopicsWithContent } from "../lib/articleLibraryNav";
@@ -43,7 +46,7 @@ import {
   getRepeatingCardSeoHubPath,
 } from "../lib/repeatingCardUrls";
 
-export const prerender = true;
+export const prerender = false;
 
 const SITE = "https://www.tidesofknowing.com";
 
@@ -100,7 +103,7 @@ function addPages(
   }
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ locals }) => {
   const articles = await getCollection("articles");
   /** Field Notes: Astro collection id `blog`; sitemap paths stay `/blog/...` for compatibility. */
   const blog = await getCollection("blog", ({ data }) => !data.draft);
@@ -118,6 +121,7 @@ export const GET: APIRoute = async () => {
   rows.push({ path: "/blog/", changefreq: "weekly", priority: "0.7" });
   /** Tools directory hub (live + coming-soon tools); not individual tool deep-links. */
   rows.push({ path: "/tools/", changefreq: "monthly", priority: "0.7" });
+  rows.push({ path: "/community/", changefreq: "weekly", priority: "0.72" });
   rows.push({
     path: "/resources/discernment-checklist/",
     changefreq: "monthly",
@@ -299,6 +303,78 @@ export const GET: APIRoute = async () => {
         changefreq: "monthly",
         priority: "0.64",
         lastmod: lastmodFromDates(note.data.modifiedDate, note.data.date),
+      });
+    }
+  }
+
+  const env = communityEnv(locals);
+  if (env.supabaseUrl && env.supabaseAnonKey) {
+    const supabase = createClient(env.supabaseUrl, env.supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+
+    const { count: communityPostCount } = await supabase
+      .from("community_posts")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "published");
+    const communityPages = totalCommunityPages(communityPostCount ?? 0);
+    for (let page = 2; page <= communityPages; page++) {
+      rows.push({
+        path: `/community/page/${page}/`,
+        changefreq: "weekly",
+        priority: "0.58",
+      });
+    }
+
+    const { data: sections } = await supabase
+      .from("community_sections")
+      .select("key")
+      .eq("is_active", true)
+      .order("display_order", { ascending: true });
+    for (const section of (sections ?? []) as { key: string }[]) {
+      rows.push({
+        path: `/community/sections/${section.key}/`,
+        changefreq: "weekly",
+        priority: "0.68",
+      });
+
+      const { count: sectionPostCount } = await supabase
+        .from("community_posts")
+        .select("id, community_sections!inner(key)", { count: "exact", head: true })
+        .eq("status", "published")
+        .eq("community_sections.key", section.key);
+      const sectionPages = totalCommunityPages(sectionPostCount ?? 0);
+      for (let page = 2; page <= sectionPages; page++) {
+        rows.push({
+          path: `/community/sections/${section.key}/page/${page}/`,
+          changefreq: "weekly",
+          priority: "0.55",
+        });
+      }
+    }
+
+    const { data: communityPosts } = await supabase
+      .from("community_posts")
+      .select("slug, updated_at, created_at")
+      .eq("status", "published")
+      .order("updated_at", { ascending: false })
+      .limit(1000);
+    for (const post of (communityPosts ?? []) as {
+      slug: string;
+      updated_at?: string;
+      created_at?: string;
+    }[]) {
+      rows.push({
+        path: `/community/${post.slug}/`,
+        changefreq: "monthly",
+        priority: "0.64",
+        lastmod: lastmodFromDates(
+          parseOptionalIsoDate(post.updated_at),
+          parseOptionalIsoDate(post.created_at),
+        ),
       });
     }
   }

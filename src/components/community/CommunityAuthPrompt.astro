@@ -1,0 +1,45 @@
+---
+interface Props {
+  message?: string;
+  redirectTo?: string;
+}
+
+const {
+  message = "Log in to take part in the Practice Commons.",
+  redirectTo = Astro.url.pathname,
+} = Astro.props;
+---
+
+<aside class="community-auth-prompt">
+  <p>{message}</p>
+  <div>
+    <a href={`/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`}>Log in</a>
+    <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Register</a>
+  </div>
+</aside>
+
+<style>
+  .community-auth-prompt {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 60%, transparent);
+  }
+
+  .community-auth-prompt p {
+    margin: 0 0 0.75rem;
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+
+  .community-auth-prompt div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .community-auth-prompt a {
+    font-weight: 700;
+    color: var(--tok-teal);
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import LibraryPagination from "../../../../../components/LibraryPagination.astro";
+import CommunityPostList from "../../../../../components/community/CommunityPostList.astro";
+import { communityPaginationState } from "../../../../../lib/community/pagination";
+import { getCommunityPosts, getSectionByKey } from "../../../../../lib/community/queries";
+import { communitySectionPath } from "../../../../../lib/community/slugs";
+import { isCommunitySectionKey } from "../../../../../lib/community/validation";
+import { siteBase } from "../../../../../lib/site";
+
+export const prerender = false;
+
+const sectionKey = Astro.params.section;
+const page = Number(Astro.params.page ?? "1");
+if (!isCommunitySectionKey(sectionKey)) return Astro.redirect("/community/", 302);
+if (!Number.isInteger(page) || page < 2) return Astro.redirect(communitySectionPath(sectionKey), 301);
+
+const base = siteBase(Astro);
+const section = Astro.locals.supabase ? await getSectionByKey(Astro.locals.supabase, sectionKey) : null;
+if (!section) return Astro.redirect("/community/", 302);
+
+const { posts, totalPages } = Astro.locals.supabase
+  ? await getCommunityPosts(Astro.locals.supabase, {
+      mode: { kind: "section", sectionKey },
+      page,
+    })
+  : { posts: [], totalPages: 1 };
+
+if (page > totalPages) return Astro.redirect(communitySectionPath(sectionKey), 302);
+
+const pager = communityPaginationState({ kind: "section", sectionKey }, page, totalPages, base);
+const canonical = new URL(`${communitySectionPath(sectionKey)}page/${page}/`, base).href;
+---
+
+<BaseLayout
+  title={`${section.name} Page ${page} | Practice Commons | Tides of Knowing`}
+  description={section.description}
+  ogUrl={canonical}
+  sequentialLinks={{ prev: pager.relPrevAbsolute ?? undefined, next: pager.relNextAbsolute ?? undefined }}
+>
+  <main class="community-section page-inner">
+    <p class="community-section__kicker">Practice Commons Archive</p>
+    <h1>{section.name}, page {page}</h1>
+    <CommunityPostList posts={posts} />
+    <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+  </main>
+</BaseLayout>
+
+<style>
+  .community-section {
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 54rem;
+  }
+
+  .community-section__kicker {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-section h1 {
+    margin: 0 0 1.5rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+</style>

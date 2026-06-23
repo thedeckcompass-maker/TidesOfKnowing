@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LibraryPagination from "../../../components/LibraryPagination.astro";
+import CommunityPostList from "../../../components/community/CommunityPostList.astro";
+import { communityPaginationState } from "../../../lib/community/pagination";
+import { getCommunityPosts } from "../../../lib/community/queries";
+import { siteBase } from "../../../lib/site";
+
+export const prerender = false;
+
+const query = (Astro.url.searchParams.get("q") ?? "").trim();
+const page = Math.max(1, Number(Astro.url.searchParams.get("page") ?? "1"));
+const base = siteBase(Astro);
+const searchMode = { kind: "search" as const, query };
+const { posts, totalPages, totalCount } =
+  Astro.locals.supabase && query
+    ? await getCommunityPosts(Astro.locals.supabase, { mode: searchMode, page })
+    : { posts: [], totalPages: 1, totalCount: 0 };
+const pager = communityPaginationState(searchMode, page, totalPages, base);
+const canonical = new URL(`/community/search/?q=${encodeURIComponent(query)}${page > 1 ? `&page=${page}` : ""}`, base).href;
+---
+
+<BaseLayout
+  title="Search Practice Commons | Tides of Knowing"
+  description="Search the Practice Commons for tarot interpretation, reader development, and symbolic practice."
+  ogUrl={canonical}
+  metaRobots={query ? undefined : "noindex, follow"}
+>
+  <main class="community-search-page page-inner">
+    <p class="community-search-page__kicker">Practice Commons Search</p>
+    <h1>Search practice notes</h1>
+
+    <form class="community-search-page__form" method="get" action="/community/search/">
+      <label for="q">Search terms</label>
+      <div>
+        <input id="q" name="q" type="search" value={query} required />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+
+    {
+      query ? (
+        <section aria-labelledby="search-results-heading">
+          <h2 id="search-results-heading">
+            {totalCount === 1 ? "1 result" : `${totalCount} results`} for “{query}”
+          </h2>
+          <CommunityPostList posts={posts} emptyMessage="No practice notes matched that search." />
+          <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+        </section>
+      ) : (
+        <p class="community-search-page__empty">Enter a term such as clarifiers, confidence, ethics, or intuition.</p>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .community-search-page {
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 54rem;
+  }
+
+  .community-search-page__kicker,
+  .community-search-page h2,
+  .community-search-page label {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-search-page h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .community-search-page__form {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 2rem;
+  }
+
+  .community-search-page__form div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .community-search-page__form input {
+    flex: 1 1 16rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .community-search-page__form button {
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    cursor: pointer;
+  }
+
+  .community-search-page__empty {
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+</style>

@@ -1,0 +1,205 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import LibraryPagination from "../../components/LibraryPagination.astro";
+import CommunityAuthPrompt from "../../components/community/CommunityAuthPrompt.astro";
+import CommunityPostForm from "../../components/community/CommunityPostForm.astro";
+import CommunityPostList from "../../components/community/CommunityPostList.astro";
+import CommunitySectionCard from "../../components/community/CommunitySectionCard.astro";
+import { canContribute } from "../../lib/community/auth";
+import { communityPaginationState } from "../../lib/community/pagination";
+import { getCommunityPosts, getCommunitySections } from "../../lib/community/queries";
+import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
+import { siteBase } from "../../lib/site";
+
+export const prerender = false;
+
+const base = siteBase(Astro);
+const canonical = new URL("/community/", base).href;
+const title = "Practice Commons | Tides of Knowing";
+const description =
+  "A quiet Practice Commons for tarot readers developing interpretation, intuition, confidence, and symbolic literacy.";
+const crumbs: BreadcrumbItem[] = [
+  { label: "Home", url: "/" },
+  { label: "Practice Commons", url: null },
+];
+
+const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+const { posts, totalPages } = Astro.locals.supabase
+  ? await getCommunityPosts(Astro.locals.supabase, { mode: { kind: "all" }, page: 1 })
+  : { posts: [], totalPages: 1 };
+const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
+const canPost = canContribute(Astro.locals.profile);
+const jsonLd = [
+  breadcrumbJsonLd(crumbs, base.href),
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Practice Commons",
+    description,
+    url: canonical,
+  },
+];
+---
+
+<BaseLayout title={title} description={description} ogUrl={canonical} jsonLd={jsonLd}>
+  <main class="community page-inner">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="community-hero">
+      <p class="community-kicker">Practice Commons</p>
+      <h1>A quiet place for readers to become better readers.</h1>
+      <p>
+        Reading Practice and Reader Development are for thoughtful tarot practice,
+        intuitive development, and symbolic literacy. The emphasis is interpretation,
+        growth, and confidence, not prediction or performance.
+      </p>
+    </header>
+
+    <form class="community-search" method="get" action="/community/search/">
+      <label for="community-search">Search the Practice Commons</label>
+      <div>
+        <input id="community-search" name="q" type="search" placeholder="clarifiers, confidence, ethics..." />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+
+    <section class="community-sections" aria-labelledby="sections-heading">
+      <h2 id="sections-heading">Sections</h2>
+      <div class="community-section-grid">
+        {sections.map((section) => <CommunitySectionCard section={section} />)}
+      </div>
+    </section>
+
+    <section class="community-create" aria-labelledby="create-heading">
+      <h2 id="create-heading">Share a practice note</h2>
+      <p>
+        Start with one clear question, observation, or reading dilemma. There is no need to rush.
+      </p>
+      {
+        canPost ? (
+          <div class="community-create-grid">
+            {sections.map((section) => (
+              <article>
+                <h3>{section.name}</h3>
+                <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
+              </article>
+            ))}
+          </div>
+        ) : (
+          <CommunityAuthPrompt message="Log in to share a practice note or reply to another reader." />
+        )
+      }
+    </section>
+
+    <section class="community-posts" aria-labelledby="recent-heading">
+      <h2 id="recent-heading">Recent practice notes</h2>
+      <CommunityPostList posts={posts} />
+      <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .community {
+    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-hero {
+    max-width: 48rem;
+    margin-top: 1rem;
+  }
+
+  .community-kicker {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .community-hero h1 {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.15rem, 8vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--tok-water);
+  }
+
+  .community-hero p,
+  .community-create p {
+    color: var(--tok-text-muted);
+    line-height: 1.8;
+  }
+
+  .community-search {
+    display: grid;
+    gap: 0.45rem;
+    max-width: 42rem;
+    margin: 2rem 0;
+  }
+
+  .community-search label,
+  .community h2 {
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-search div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .community-search input {
+    flex: 1 1 16rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .community-search button {
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    cursor: pointer;
+  }
+
+  .community-sections,
+  .community-create,
+  .community-posts {
+    margin-top: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .community-section-grid,
+  .community-create-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .community-create-grid article {
+    padding: 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+  }
+
+  .community-create-grid h3 {
+    margin: 0 0 0.8rem;
+    font-family: var(--font-heading);
+    color: var(--tok-water);
+  }
+
+  @media (min-width: 760px) {
+    .community-section-grid,
+    .community-create-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

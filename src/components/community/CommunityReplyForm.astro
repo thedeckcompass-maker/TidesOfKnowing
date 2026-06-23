@@ -1,0 +1,59 @@
+---
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props;
+---
+
+<form class="community-reply-form" method="post" action={`/api/community/posts/${postId}/replies`}>
+  <label>
+    Reply
+    <textarea
+      name="body"
+      rows="5"
+      minlength="2"
+      maxlength="8000"
+      required
+      placeholder="Share what you notice, what helped your practice, or a thoughtful question."
+    ></textarea>
+  </label>
+  <button type="submit">Add reply</button>
+</form>
+
+<style>
+  .community-reply-form {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .community-reply-form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+  }
+
+  .community-reply-form textarea {
+    width: 100%;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+    line-height: 1.65;
+    resize: vertical;
+  }
+
+  .community-reply-form button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+</style>

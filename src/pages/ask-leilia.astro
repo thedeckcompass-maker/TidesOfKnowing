@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteBase } from "../lib/site";
+
+const title = "Ask Leilia | Tides of Knowing";
+const description =
+  "Ask Leilia is a future paid personal reflection offering from Tides of Knowing.";
+const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={canonical}
+  metaRobots="noindex, nofollow"
+>
+  <main class="ask-leilia page-inner">
+    <p class="ask-leilia__kicker">Future Offering</p>
+    <h1>Ask Leilia</h1>
+    <p>
+      Ask Leilia will be a separate paid offering for personal written reflections.
+      It is not part of the Practice Commons.
+    </p>
+    <p class="ask-leilia__note">
+      Planned offer: One Question · Three Cards · Written response within 48 hours.
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .ask-leilia {
+    max-width: 42rem;
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .ask-leilia__kicker {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .ask-leilia h1 {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-weight: 400;
+    color: var(--tok-water);
+  }
+
+  .ask-leilia p {
+    color: var(--tok-text-muted);
+    line-height: 1.8;
+  }
+
+  .ask-leilia__note {
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+  }
+</style>
