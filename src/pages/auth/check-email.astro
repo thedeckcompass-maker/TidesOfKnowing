@@ -1,0 +1,114 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = false;
+
+const title = "Check Your Email | Tides of Knowing";
+const description = "Check your email for a secure Practice Commons sign-in link.";
+
+const email = Astro.url.searchParams.get("email")?.trim().toLowerCase() ?? "";
+const displayName = Astro.url.searchParams.get("displayName")?.trim() ?? "";
+const redirectTo = Astro.url.searchParams.get("redirectTo") || "/community/";
+const loginHref = `/auth/login/?redirectTo=${encodeURIComponent(redirectTo)}`;
+---
+
+<BaseLayout title={title} description={description} metaRobots="noindex, nofollow">
+  <main class="auth-page page-inner">
+    <section class="auth-card" aria-labelledby="auth-heading">
+      <p class="auth-kicker">Practice Commons</p>
+      <h1 id="auth-heading">Check your email</h1>
+      <p class="auth-lede">
+        A secure link has been sent{email ? ` to ${email}` : ""}.
+      </p>
+      <p>
+        Open that email and click the link. You will be signed in automatically and
+        returned to the Practice Commons.
+      </p>
+      <p>
+        If you do not see the email within a few minutes, check your Spam or Junk
+        folder. Some email providers also place magic-link emails under Promotions
+        or Updates.
+      </p>
+
+      {
+        email && displayName ? (
+          <form method="post" action="/auth/register/" class="auth-form">
+            <input type="hidden" name="displayName" value={displayName} />
+            <input type="hidden" name="email" value={email} />
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <button type="submit">Resend email</button>
+          </form>
+        ) : (
+          <p class="auth-alt">
+            Need a new link? <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Request another registration email</a>.
+          </p>
+        )
+      }
+
+      <p class="auth-alt">
+        Already have an account? <a href={loginHref}>Log in</a>
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .auth-page {
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .auth-card {
+    max-width: 38rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .auth-kicker {
+    margin: 0 0 0.5rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .auth-card h1 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--tok-water);
+  }
+
+  .auth-card p {
+    color: var(--tok-text-muted);
+    line-height: 1.7;
+  }
+
+  .auth-lede {
+    color: var(--tok-text-dark);
+  }
+
+  .auth-form {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .auth-form button {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+
+  .auth-alt {
+    margin-top: 1.25rem;
+  }
+</style>

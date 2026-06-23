@@ -1,24 +1,32 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { cleanDisplayName } from "../../lib/community/auth";
+import { validateDisplayName } from "../../lib/community/validation";
 
 export const prerender = false;
 
 const title = "Register | Tides of Knowing";
 const description = "Register for the Practice Commons at Tides of Knowing.";
 
-let message = "";
 let error = "";
 const redirectTo = Astro.url.searchParams.get("redirectTo") || "/community/";
+
+function safeRedirect(value: string): string {
+  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/community/";
+  return value;
+}
 
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
   const email = String(form.get("email") ?? "").trim().toLowerCase();
   const displayName = cleanDisplayName(form.get("displayName"));
-  const next = String(form.get("redirectTo") ?? "/community/");
+  const displayNameValidation = validateDisplayName(form.get("displayName"));
+  const next = safeRedirect(String(form.get("redirectTo") ?? "/community/"));
 
   if (!Astro.locals.supabase) {
     error = "Community registration is not configured yet.";
+  } else if (!displayNameValidation.ok) {
+    error = displayNameValidation.error;
   } else if (!email || !email.includes("@")) {
     error = "Please enter a valid email address.";
   } else {
@@ -38,7 +46,11 @@ if (Astro.request.method === "POST") {
       console.error("Magic link registration failed:", signInError);
       error = "Unable to send a registration link right now. Please try again.";
     } else {
-      message = "Check your email for a secure registration link.";
+      const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
+      checkEmailUrl.searchParams.set("email", email);
+      checkEmailUrl.searchParams.set("displayName", displayName);
+      checkEmailUrl.searchParams.set("redirectTo", next);
+      return Astro.redirect(checkEmailUrl.pathname + checkEmailUrl.search, 303);
     }
   }
 }
@@ -53,13 +65,12 @@ if (Astro.request.method === "POST") {
         Create a simple reader profile for posting and replying in the Practice Commons.
       </p>
 
-      {message ? <p class="auth-notice auth-notice--success">{message}</p> : null}
       {error ? <p class="auth-notice auth-notice--error">{error}</p> : null}
 
       <form method="post" class="auth-form">
         <input type="hidden" name="redirectTo" value={redirectTo} />
-        <label for="displayName">Display name <span>(optional)</span></label>
-        <input id="displayName" name="displayName" type="text" autocomplete="nickname" maxlength="60" />
+        <label for="displayName">Display name</label>
+        <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
         <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
@@ -156,10 +167,6 @@ if (Astro.request.method === "POST") {
     padding: 0.75rem 0.85rem;
     border-radius: var(--radius-control);
     line-height: 1.6;
-  }
-
-  .auth-notice--success {
-    border: 1px solid color-mix(in srgb, var(--tok-earth) 45%, transparent);
   }
 
   .auth-notice--error {
