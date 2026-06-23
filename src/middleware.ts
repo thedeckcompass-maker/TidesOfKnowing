@@ -12,7 +12,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   try {
-    const supabase = createCommunityServerClient(context.cookies, context.locals);
+    const supabase = createCommunityServerClient(
+      context.cookies,
+      context.locals,
+      context.request.headers.get("cookie"),
+    );
     context.locals.supabase = supabase;
 
     const { user, profile } = await getAuthContext(supabase, context.locals);

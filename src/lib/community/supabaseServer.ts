@@ -12,6 +12,10 @@ type AstroCookieStoreWithGetAll = AstroCookies & {
   getAll(): CookiePair[];
 };
 
+type AstroCookieStoreWithSet = AstroCookies & {
+  set: AstroCookies["set"];
+};
+
 function toAstroCookieOptions(options: CookieOptionsWithName) {
   return {
     domain: options.domain,
@@ -24,9 +28,29 @@ function toAstroCookieOptions(options: CookieOptionsWithName) {
   };
 }
 
+function parseCookieHeader(cookieHeader: string | null | undefined): CookiePair[] {
+  if (!cookieHeader) return [];
+
+  return cookieHeader
+    .split(";")
+    .map((part) => {
+      const [rawName, ...rawValueParts] = part.trim().split("=");
+      const rawValue = rawValueParts.join("=");
+
+      if (!rawName || !rawValue) return null;
+
+      return {
+        name: decodeURIComponent(rawName),
+        value: decodeURIComponent(rawValue),
+      } satisfies CookiePair;
+    })
+    .filter((cookie): cookie is CookiePair => Boolean(cookie));
+}
+
 export function createCommunityServerClient(
   cookies: AstroCookies,
   locals?: unknown,
+  cookieHeader?: string | null,
 ): SupabaseClient {
   const env = communityEnv(locals);
 
@@ -38,14 +62,21 @@ export function createCommunityServerClient(
     cookies: {
       getAll() {
         const store = cookies as AstroCookieStoreWithGetAll;
-        return store.getAll().map((cookie) => ({
-          name: cookie.name,
-          value: cookie.value,
-        })) satisfies CookiePair[];
+        if (typeof store.getAll === "function") {
+          return store.getAll().map((cookie) => ({
+            name: cookie.name,
+            value: cookie.value,
+          })) satisfies CookiePair[];
+        }
+
+        return parseCookieHeader(cookieHeader);
       },
       setAll(cookiesToSet) {
+        const store = cookies as AstroCookieStoreWithSet;
+        if (typeof store.set !== "function") return;
+
         cookiesToSet.forEach(({ name, value, options }) => {
-          cookies.set(name, value, toAstroCookieOptions(options));
+          store.set(name, value, toAstroCookieOptions(options));
         });
       },
     },
