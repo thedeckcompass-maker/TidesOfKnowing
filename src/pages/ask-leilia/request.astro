@@ -19,6 +19,12 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
       <h1 id="request-heading">Request Your Reflection</h1>
       <p>Begin by sharing the question you would like reflected through the cards.</p>
       <p>After you submit this form, you will be taken to secure payment to complete your booking.</p>
+      <ul class="ask-request__summary" aria-label="Ask Leilia request summary">
+        <li>One question</li>
+        <li>Payment follows</li>
+        <li>Delivered within 48 hours</li>
+        <li>Optional card photo upload</li>
+      </ul>
     </section>
 
     {
@@ -83,20 +89,20 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
         </label>
       </fieldset>
 
-      <fieldset>
+      <fieldset class="ask-request-form__fieldset--compact">
         <legend>Card Preference</legend>
 
         <label class="ask-request-form__radio">
           <input type="radio" name="cardPreference" value="pull_for_me" required />
-          Please pull the cards for me
+          <span>Please pull the cards for me</span>
         </label>
 
         <label class="ask-request-form__radio">
           <input type="radio" name="cardPreference" value="own_cards_attached" required />
-          I have attached my own cards
+          <span>I have attached my own cards</span>
         </label>
 
-        <label>
+        <label class="ask-request-form__upload">
           Upload image of cards
           <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
         </label>
@@ -113,16 +119,40 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
 <style>
   .ask-request {
+    position: relative;
+    isolation: isolate;
     max-width: 52rem;
-    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    padding: clamp(0.5rem, 2.5vw, 1.25rem) 0 clamp(2.25rem, 6vw, 3.75rem);
+  }
+
+  .ask-request::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 50%;
+    z-index: -1;
+    width: min(68rem, 100vw);
+    height: min(22rem, 48vw);
+    border-radius: var(--radius-promo);
+    background:
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--tok-surface-reading) 92%, transparent),
+        color-mix(in srgb, var(--tok-surface-reading) 62%, transparent)
+      ),
+      url("/images/articles/discernment-series/too-many-tarot-cards-hero-v2.png") center right / cover
+        no-repeat;
+    opacity: 0.12;
+    transform: translateX(-50%);
+    pointer-events: none;
   }
 
   .ask-request__head {
+    position: relative;
     max-width: 42rem;
   }
 
   .ask-request__kicker {
-    margin: 0 0 0.55rem;
+    margin: 0 0 0.25rem;
     font-size: var(--tok-type-meta);
     letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
@@ -131,7 +161,7 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
   .ask-request h1,
   .ask-request__confirmation h2 {
-    margin: 0 0 0.85rem;
+    margin: 0 0 0.35rem;
     font-family: var(--font-accent);
     font-weight: 400;
     color: var(--tok-water);
@@ -139,18 +169,41 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
   .ask-request h1 {
     font-size: clamp(2.4rem, 9vw, 4.8rem);
-    line-height: 1;
+    line-height: 1.12;
   }
 
   .ask-request p {
+    margin: 0;
     color: var(--tok-text-dark);
-    line-height: 1.8;
+    line-height: 1.54;
+  }
+
+  .ask-request__head p + p {
+    margin-top: 0.16rem;
+  }
+
+  .ask-request__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ask-request__summary li {
+    padding: 0.22rem 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 46%, transparent);
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
   }
 
   .ask-request__confirmation,
   .ask-request-form {
-    margin-top: clamp(1.5rem, 5vw, 2.5rem);
-    padding: clamp(1rem, 4vw, 1.65rem);
+    margin-top: clamp(0.6rem, 2vw, 0.9rem);
+    padding: clamp(0.65rem, 2.25vw, 0.95rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
@@ -158,20 +211,25 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
   .ask-request-form {
     display: grid;
-    gap: 1.25rem;
+    gap: 0.75rem;
   }
 
   .ask-request-form fieldset {
     display: grid;
-    gap: 0.85rem;
+    gap: 0.55rem;
     margin: 0;
-    padding: 0 0 1.2rem;
+    padding: 0 0 0.7rem;
     border: 0;
     border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
   }
 
   .ask-request-form fieldset:last-of-type {
     border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .ask-request-form .ask-request-form__fieldset--compact {
+    gap: 0.35rem;
     padding-bottom: 0;
   }
 
@@ -192,10 +250,13 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
     color: var(--tok-text-dark);
   }
 
-  .ask-request-form__radio {
-    display: flex;
+  .ask-request-form .ask-request-form__radio {
+    display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.45rem;
+    width: fit-content;
+    font-weight: 600;
+    line-height: 1.35;
   }
 
   .ask-request-form input,
@@ -209,8 +270,19 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
     font: inherit;
   }
 
-  .ask-request-form__radio input {
+  .ask-request-form .ask-request-form__radio input[type="radio"] {
+    flex: 0 0 auto;
+    margin: 0;
     width: auto;
+  }
+
+  .ask-request-form .ask-request-form__upload {
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+  }
+
+  .ask-request-form input[type="file"] {
+    padding: 0.55rem 0.65rem;
   }
 
   .ask-request-form textarea {
