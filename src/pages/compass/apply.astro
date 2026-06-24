@@ -24,7 +24,12 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
         The COMPASS Method™ is an original interpretive framework created by Tides of Knowing.
       </p>
 
-      <form id="compass-application-form" class="compass-apply__form">
+      <form
+        id="compass-application-form"
+        class="compass-apply__form"
+        action="/api/compass-apply"
+        method="post"
+      >
         <div class="compass-apply__grid">
           <label class="compass-apply__field">
             <span>Name *</span>
@@ -132,7 +137,7 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
           <button id="compass-apply-submit" type="submit" class="compass-apply__submit">
             Register interest
           </button>
-          <p id="compass-apply-error" class="compass-apply__error" aria-live="polite"></p>
+          <p id="compass-apply-error" class="compass-apply__error" role="alert" aria-live="polite"></p>
         </div>
       </form>
 
@@ -179,12 +184,12 @@ const ogUrl = new URL("/compass/apply/", siteBase(Astro)).href;
           throw new Error(data.error || "Unable to submit right now. Please try again.");
         }
 
-        form.reset();
-        if (successEl) successEl.hidden = false;
+        window.location.assign("/compass/apply/thank-you/");
       } catch (err) {
         if (errorEl) {
           errorEl.textContent =
             err instanceof Error ? err.message : "Unable to submit right now. Please try again.";
+          errorEl.scrollIntoView({ behavior: "smooth", block: "center" });
         }
       } finally {
         submitBtn.disabled = false;

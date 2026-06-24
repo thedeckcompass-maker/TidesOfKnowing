@@ -30,6 +30,13 @@ type ApplicationPayload = {
   why_now?: string;
 };
 
+function jsonResponse(body: Record<string, unknown>, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json" },
+  });
+}
+
 function clean(value: unknown): string {
   if (typeof value !== "string") return "";
   return value.trim();
@@ -65,7 +72,16 @@ async function parsePayload(request: Request): Promise<ApplicationPayload> {
   return {};
 }
 
+function wantsJsonResponse(request: Request): boolean {
+  const contentType = request.headers.get("content-type") ?? "";
+  const accept = request.headers.get("accept") ?? "";
+
+  return contentType.includes("application/json") || accept.includes("application/json");
+}
+
 export const POST: APIRoute = async ({ request, locals }) => {
+  const wantsJson = wantsJsonResponse(request);
+
   try {
     const payload = await parsePayload(request);
 
@@ -89,35 +105,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
       !desiredOutcome ||
       !whyNow
     ) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Please complete all required fields." }),
-        { status: 400, headers: { "content-type": "application/json" } },
-      );
+      return jsonResponse({ ok: false, error: "Please complete all required fields." }, 400);
     }
 
     if (!isValidIntakePreference(intakePreferenceRaw)) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Please select a valid intake option." }),
-        { status: 400, headers: { "content-type": "application/json" } },
-      );
+      return jsonResponse({ ok: false, error: "Please select a valid intake option." }, 400);
     }
 
     const intakePreference = intakePreferenceRaw;
 
     if (!isValidTierPreference(tierPreferenceRaw)) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Please select a valid tier option." }),
-        { status: 400, headers: { "content-type": "application/json" } },
-      );
+      return jsonResponse({ ok: false, error: "Please select a valid tier option." }, 400);
     }
 
     const tierPreference = tierPreferenceRaw;
 
     if (!isValidEmail(email)) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Please enter a valid email address." }),
-        { status: 400, headers: { "content-type": "application/json" } },
-      );
+      return jsonResponse({ ok: false, error: "Please enter a valid email address." }, 400);
     }
 
     const runtimeEnv = (locals as { runtime?: { env?: Record<string, string> } })?.runtime?.env;
@@ -125,10 +129,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const toEmail = runtimeEnv?.EMAIL_TO ?? import.meta.env.EMAIL_TO ?? "hello@tidesofknowing.com";
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Email service is not configured." }),
-        { status: 500, headers: { "content-type": "application/json" } },
-      );
+      return jsonResponse({ ok: false, error: "Email service is not configured." }, 500);
     }
 
     const resend = new Resend(apiKey);
@@ -153,7 +154,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       whyNow,
     ].join("\n");
 
-    await resend.emails.send({
+    const ownerResult = await resend.emails.send({
       from: "Tides of Knowing <hello@tidesofknowing.com>",
       to: [toEmail],
       subject: "New COMPASS interest registration",
@@ -161,16 +162,44 @@ export const POST: APIRoute = async ({ request, locals }) => {
       replyTo: email,
     });
 
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
-      headers: { "content-type": "application/json" },
+    if (ownerResult.error) {
+      console.error("COMPASS owner notification failed:", ownerResult.error);
+      return jsonResponse({ ok: false, error: "Unable to send your interest form right now. Please try again." }, 502);
+    }
+
+    const applicantBody = [
+      "Your COMPASS interest has been received.",
+      "",
+      "I'll review your note personally and respond within 48 hours.",
+      "",
+      "Registering interest is not a payment step, and there is no obligation to enrol.",
+      "",
+      "If you need to add timing details or clarify anything, you can reply to hello@tidesofknowing.com.",
+      "",
+      "— Leigh Spencer",
+    ].join("\n");
+
+    const applicantResult = await resend.emails.send({
+      from: "Tides of Knowing <hello@tidesofknowing.com>",
+      to: [email],
+      subject: "Your COMPASS interest has been received",
+      text: applicantBody,
+      replyTo: "hello@tidesofknowing.com",
     });
+
+    if (applicantResult.error) {
+      console.error("COMPASS applicant confirmation failed:", applicantResult.error);
+      return jsonResponse({ ok: false, error: "Your interest was received, but the confirmation email could not be sent. Please contact hello@tidesofknowing.com." }, 502);
+    }
+
+    if (!wantsJson) {
+      return Response.redirect(new URL("/compass/apply/thank-you/", request.url), 303);
+    }
+
+    return jsonResponse({ ok: true });
   } catch (error) {
     console.error("COMPASS application error:", error);
-    return new Response(
-      JSON.stringify({ ok: false, error: "Unable to submit right now. Please try again." }),
-      { status: 500, headers: { "content-type": "application/json" } },
-    );
+    return jsonResponse({ ok: false, error: "Unable to submit right now. Please try again." }, 500);
   }
 };
 
