@@ -2,6 +2,7 @@ export const ASK_LEILIA_PAYMENT_LINK =
   "https://buy.stripe.com/5kQ14m7TQ5h01PMezp7N601";
 
 export const ASK_LEILIA_STATUSES = [
+  "Pending Payment",
   "Paid",
   "In Progress",
   "Delivered",

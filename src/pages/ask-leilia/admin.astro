@@ -87,7 +87,14 @@ function formatDate(value: string): string {
                 </div>
                 <div>
                   <dt>Payment status</dt>
-                  <dd>{request.payment?.payment_status ?? "Payment record not linked."}</dd>
+                  <dd>
+                    {
+                      request.payment?.payment_status ??
+                        (request.status === "Pending Payment"
+                          ? "Awaiting payment."
+                          : "Payment record not linked.")
+                    }
+                  </dd>
                 </div>
                 <div>
                   <dt>Request status</dt>

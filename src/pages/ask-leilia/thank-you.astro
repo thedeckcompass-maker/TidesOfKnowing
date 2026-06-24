@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = false;
+---
+
+<BaseLayout
+  title="Thank You | Ask Leilia"
+  description="Your Ask Leilia payment is complete and your reflection request has been received."
+  metaRobots="noindex, nofollow"
+>
+  <main class="ask-thanks page-inner">
+    <section class="ask-thanks__panel" aria-labelledby="ask-thanks-heading">
+      <p class="ask-thanks__kicker">Ask Leilia</p>
+      <h1 id="ask-thanks-heading">Thank you. Your request has been received.</h1>
+      <p>
+        Your payment is complete and your question is with Leigh (Leilia). Your written
+        reflection will be delivered within 48 hours.
+      </p>
+      <p>
+        There is nothing else you need to submit. If you need to add anything, email
+        <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .ask-thanks {
+    max-width: 52rem;
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .ask-thanks__panel {
+    padding: clamp(1rem, 4vw, 1.65rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .ask-thanks__kicker {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .ask-thanks h1 {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-accent);
+    font-size: clamp(2.4rem, 9vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--tok-water);
+  }
+
+  .ask-thanks p {
+    color: var(--tok-text-dark);
+    line-height: 1.8;
+  }
+
+  .ask-thanks p:last-child {
+    margin-bottom: 0;
+  }
+</style>

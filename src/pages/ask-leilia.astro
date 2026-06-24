@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteBase } from "../lib/site";
-import { ASK_LEILIA_PAYMENT_LINK } from "../lib/ask-leilia/types";
 
 const title = "Ask Leilia | Personal Tarot Reflections and Symbolic Guidance";
 const description =
@@ -56,7 +55,7 @@ const jsonLd = {
           <p class="ask-leilia-hero__price">US$25</p>
         </div>
         <p>
-          <a class="ask-leilia-hero__cta" href={ASK_LEILIA_PAYMENT_LINK}>Begin Your Reflection</a>
+          <a class="ask-leilia-hero__cta" href="/ask-leilia/request/">Begin Your Reflection</a>
         </p>
       </div>
     </section>
@@ -110,8 +109,8 @@ const jsonLd = {
       <article class="ask-leilia-card">
         <h2>Process</h2>
         <ol>
-          <li>Submit one question.</li>
-          <li>Complete payment.</li>
+          <li>Share one question.</li>
+          <li>Complete your booking.</li>
           <li>Receive a thoughtful written reflection within 48 hours.</li>
         </ol>
       </article>
@@ -177,7 +176,7 @@ const jsonLd = {
     </section>
 
     <p class="ask-leilia-bottom-cta">
-      <a class="ask-leilia-hero__cta" href={ASK_LEILIA_PAYMENT_LINK}>Begin Your Reflection</a>
+      <a class="ask-leilia-hero__cta" href="/ask-leilia/request/">Begin Your Reflection</a>
     </p>
   </main>
 </BaseLayout>

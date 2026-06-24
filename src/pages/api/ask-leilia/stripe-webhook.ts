@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { json } from "../../../lib/community/api";
 import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
 import { notifyAskLeiliaPaymentCompleted } from "../../../lib/ask-leilia/notifications";
+import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
 
 export const prerender = false;
 
@@ -14,6 +15,12 @@ function stripeWebhookSecret(locals?: unknown): string {
     (import.meta.env.STRIPE_WEBHOOK_SECRET as string | undefined) ??
     ""
   );
+}
+
+function requestIdFromSession(session: Stripe.Checkout.Session): string {
+  const metadataRequestId = session.metadata?.ask_leilia_request_id;
+  if (metadataRequestId) return metadataRequestId;
+  return session.client_reference_id ?? "";
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -61,26 +68,66 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const paymentStatus = session.payment_status ?? "paid";
   const service = createCommunityServiceClient(locals);
 
-  const { error } = await service.from("ask_leilia_payments").upsert(
-    {
-      stripe_payment_intent: paymentIntent,
-      stripe_customer_id: customerId,
-      customer_email: customerEmail.toLowerCase(),
-      amount,
-      currency,
-      payment_status: paymentStatus,
-      stripe_metadata: {
-        checkout_session_id: session.id,
-        payment_link: typeof session.payment_link === "string" ? session.payment_link : null,
-        metadata: session.metadata ?? {},
+  const { data: paymentRecord, error } = await service
+    .from("ask_leilia_payments")
+    .upsert(
+      {
+        stripe_payment_intent: paymentIntent,
+        stripe_customer_id: customerId,
+        customer_email: customerEmail.toLowerCase(),
+        amount,
+        currency,
+        payment_status: paymentStatus,
+        stripe_metadata: {
+          checkout_session_id: session.id,
+          payment_link: typeof session.payment_link === "string" ? session.payment_link : null,
+          metadata: session.metadata ?? {},
+        },
       },
-    },
-    { onConflict: "stripe_payment_intent" },
-  );
+      { onConflict: "stripe_payment_intent" },
+    )
+    .select("id")
+    .single();
 
-  if (error) {
+  if (error || !paymentRecord) {
     console.error("Unable to store Ask Leilia payment:", error);
     return json({ ok: false, error: "Unable to store payment." }, 500);
+  }
+
+  const askLeiliaRequestId = requestIdFromSession(session);
+  let linkedRequest:
+    | {
+        id: string;
+        name: string;
+        email: string;
+        question: string;
+        context: string | null;
+        card_preference: AskLeiliaCardPreference;
+        image_url: string | null;
+      }
+    | null = null;
+
+  if (askLeiliaRequestId) {
+    const { data: requestRecord, error: requestError } = await service
+      .from("ask_leilia_requests")
+      .update({
+        payment_id: (paymentRecord as { id: string }).id,
+        status: "Paid",
+      })
+      .eq("id", askLeiliaRequestId)
+      .select("id, name, email, question, context, card_preference, image_url")
+      .maybeSingle();
+
+    if (requestError || !requestRecord) {
+      console.error("Unable to link paid Ask Leilia request:", {
+        error: requestError,
+        askLeiliaRequestId,
+        paymentIntent,
+      });
+      return json({ ok: false, error: "Unable to link paid request." }, 500);
+    }
+
+    linkedRequest = requestRecord as typeof linkedRequest;
   }
 
   await notifyAskLeiliaPaymentCompleted(
@@ -89,6 +136,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
       amount,
       currency,
       paymentIntent,
+      request: linkedRequest
+        ? {
+            id: linkedRequest.id,
+            name: linkedRequest.name,
+            email: linkedRequest.email,
+            question: linkedRequest.question,
+            context: linkedRequest.context,
+            cardPreference: linkedRequest.card_preference,
+            imageUrl: linkedRequest.image_url,
+          }
+        : null,
     },
     locals,
   );

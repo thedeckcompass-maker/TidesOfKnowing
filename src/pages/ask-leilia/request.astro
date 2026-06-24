@@ -5,20 +5,33 @@ import { ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
 export const prerender = false;
 
 const submitted = Astro.url.searchParams.get("submitted") === "true";
+const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 ---
 
 <BaseLayout
   title="Request Your Reflection"
-  description="Complete your Ask Leilia request after payment."
+  description="Share your Ask Leilia question before completing your booking."
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <section class="ask-request__head" aria-labelledby="request-heading">
       <p class="ask-request__kicker">Ask Leilia</p>
       <h1 id="request-heading">Request Your Reflection</h1>
-      <p>Thank you for choosing Ask Leilia.</p>
-      <p>Please complete the form below. Your written reflection will be delivered within 48 hours.</p>
+      <p>Begin by sharing the question you would like reflected through the cards.</p>
+      <p>After you submit this form, you will be taken to secure payment to complete your booking.</p>
     </section>
+
+    {
+      paymentCancelled ? (
+        <section class="ask-request__confirmation" aria-live="polite">
+          <h2>Payment not completed.</h2>
+          <p>
+            Your payment was not completed. Your question has not been booked yet. You can
+            review your details and try again when ready.
+          </p>
+        </section>
+      ) : null
+    }
 
     {
       submitted ? (
@@ -30,7 +43,7 @@ const submitted = Astro.url.searchParams.get("submitted") === "true";
       ) : null
     }
 
-    <form class="ask-request-form" method="post" action="/api/ask-leilia/requests" enctype="multipart/form-data">
+    <form class="ask-request-form" method="post" action="/api/ask-leilia/checkout" enctype="multipart/form-data">
       <fieldset>
         <legend>Your details</legend>
 
@@ -93,7 +106,7 @@ const submitted = Astro.url.searchParams.get("submitted") === "true";
         {ASK_LEILIA_STATUSES.map((status) => <span>{status}</span>)}
       </div>
 
-      <button type="submit">Submit Request</button>
+      <button type="submit">Continue to Payment</button>
     </form>
   </main>
 </BaseLayout>

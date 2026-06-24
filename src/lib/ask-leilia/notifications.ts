@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { communityEnv } from "../community/env";
-import type { AskLeiliaStatus } from "./types";
+import { cardPreferenceLabel, type AskLeiliaCardPreference, type AskLeiliaStatus } from "./types";
 
 function notifyEmail(locals?: unknown): string {
   const runtimeEnv = (locals as { runtime?: { env?: Record<string, string | undefined> } } | undefined)
@@ -42,19 +42,48 @@ export async function notifyAskLeiliaPaymentCompleted(
     amount: number;
     currency: string;
     paymentIntent: string;
+    request?: {
+      id: string;
+      name: string;
+      email: string;
+      question: string;
+      context: string | null;
+      cardPreference: AskLeiliaCardPreference;
+      imageUrl: string | null;
+    } | null;
   },
   locals?: unknown,
 ): Promise<void> {
+  const requestLines = input.request
+    ? [
+        "",
+        "Linked request:",
+        `Request id: ${input.request.id}`,
+        `Name: ${input.request.name}`,
+        `Email: ${input.request.email}`,
+        `Card preference: ${cardPreferenceLabel(input.request.cardPreference)}`,
+        `Image uploaded: ${input.request.imageUrl ? "Yes" : "No"}`,
+        "",
+        "Question:",
+        input.request.question,
+        "",
+        "Context:",
+        input.request.context || "No additional context.",
+      ]
+    : [
+        "",
+        "The customer should now complete the request form at /ask-leilia/request/.",
+      ];
+
   await sendAskLeiliaNotification(
-    "Ask Leilia payment completed",
+    input.request ? "Ask Leilia request paid" : "Ask Leilia payment completed",
     [
       "An Ask Leilia payment has completed.",
       "",
       `Customer email: ${input.customerEmail}`,
       `Amount: ${input.amount} ${input.currency.toUpperCase()}`,
       `Stripe payment intent: ${input.paymentIntent}`,
-      "",
-      "The customer should now complete the request form at /ask-leilia/request/.",
+      ...requestLines,
     ],
     locals,
   );
