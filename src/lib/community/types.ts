@@ -13,7 +13,9 @@ export type ReadingPracticePostType =
   | "card_combination"
   | "clarifier_question"
   | "repeating_cards"
-  | "reading_dilemma";
+  | "reading_dilemma"
+  | "symbolism_imagery"
+  | "question_framing";
 
 export type CommunityProfile = {
   id: string;
@@ -114,13 +116,52 @@ export const COMMUNITY_SECTIONS: {
 export const READING_PRACTICE_POST_TYPES: {
   value: ReadingPracticePostType;
   label: string;
+  description: string;
 }[] = [
-  { value: "practice_reading", label: "Practice Reading" },
-  { value: "spread_feedback", label: "Spread Feedback" },
-  { value: "card_combination", label: "Card Combination" },
-  { value: "clarifier_question", label: "Clarifier Question" },
-  { value: "repeating_cards", label: "Repeating Cards" },
-  { value: "reading_dilemma", label: "Reading Dilemma" },
+  {
+    value: "practice_reading",
+    label: "Reading Practice",
+    description: "Share a complete reading and invite discussion around your interpretation.",
+  },
+  {
+    value: "spread_feedback",
+    label: "Spread Feedback",
+    description:
+      "You've already interpreted the spread and would like constructive feedback on your approach.",
+  },
+  {
+    value: "card_combination",
+    label: "Card Combination",
+    description: "Explore how two or more cards influence, modify or transform one another.",
+  },
+  {
+    value: "clarifier_question",
+    label: "Clarifier Question",
+    description: "A clarifier has changed, deepened or complicated your interpretation.",
+  },
+  {
+    value: "repeating_cards",
+    label: "Repeating Cards",
+    description: "The same card or pattern keeps appearing across multiple readings.",
+  },
+  {
+    value: "reading_dilemma",
+    label: "Reading Dilemma",
+    description:
+      "Something about the reading doesn't fit, feels contradictory, or you're unsure how to reconcile the cards.",
+  },
+  {
+    value: "symbolism_imagery",
+    label: "Symbolism & Imagery",
+    description:
+      "Explore the symbolic language, visual details or archetypes that seem significant within the reading.",
+  },
+  {
+    value: "question_framing",
+    label: "Question Framing",
+    description:
+      "Discuss whether the original question invited the strongest possible reading, and how it might be refined.",
+  },
 ];
 
 export function readingPracticePostTypeLabel(

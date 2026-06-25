@@ -26,6 +26,7 @@ const selectedSection =
 const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts";
 const isReadingPractice = selectedSection?.key === "reading-practice";
 const existingBody = post?.body ?? "";
+const discussionHelpDialogId = "reading-practice-discussion-type-help";
 ---
 
 <form class="community-form" method="post" action={action} enctype="multipart/form-data" data-community-post-form data-reading-practice={isReadingPractice ? "true" : undefined}>
@@ -33,7 +34,19 @@ const existingBody = post?.body ?? "";
   {
     isReadingPractice ? (
       <fieldset class="community-form__fieldset">
-        <legend>Discussion type</legend>
+        <legend class="community-form__legend-with-help">
+          <span>What would you like help with?</span>
+          <button
+            type="button"
+            class="community-form__info-button"
+            aria-label="Learn how to choose a discussion type"
+            aria-haspopup="dialog"
+            aria-controls={discussionHelpDialogId}
+            data-discussion-help-open
+          >
+            i
+          </button>
+        </legend>
         <p class="community-form__help">
           Choose the kind of feedback you're looking for.
         </p>
@@ -196,6 +209,33 @@ const existingBody = post?.body ?? "";
   <button type="submit">{post ? "Update post" : `Post in ${selectedSection?.name ?? "Practice Commons"}`}</button>
 </form>
 
+{
+  isReadingPractice ? (
+    <dialog class="community-form__dialog" id={discussionHelpDialogId} data-discussion-help-dialog>
+      <div class="community-form__dialog-card">
+        <div class="community-form__dialog-header">
+          <h2>Choosing the best discussion type</h2>
+          <button type="button" aria-label="Close discussion type help" data-discussion-help-close>
+            Close
+          </button>
+        </div>
+        <p>
+          Every reading reaches a point where another perspective can help. Choose the option that best
+          describes where you'd like others to join the conversation.
+        </p>
+        <dl>
+          {READING_PRACTICE_POST_TYPES.map((type) => (
+            <>
+              <dt>{type.label}</dt>
+              <dd>{type.description}</dd>
+            </>
+          ))}
+        </dl>
+      </div>
+    </dialog>
+  ) : null
+}
+
 <style>
   .community-form {
     display: grid;
@@ -216,6 +256,35 @@ const existingBody = post?.body ?? "";
     font-size: var(--tok-type-label);
     font-weight: 700;
     color: var(--tok-text-dark);
+  }
+
+  .community-form__legend-with-help {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .community-form__info-button {
+    display: inline-grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 48%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 72%, white);
+    color: var(--tok-teal);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .community-form__info-button:hover,
+  .community-form__info-button:focus-visible {
+    border-color: var(--tok-teal);
+    background: color-mix(in srgb, var(--tok-teal) 12%, var(--tok-surface));
   }
 
   .community-form__help,
@@ -422,6 +491,81 @@ const existingBody = post?.body ?? "";
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
   }
+
+  .community-form__dialog {
+    width: min(42rem, calc(100vw - 2rem));
+    max-height: min(80vh, 48rem);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: transparent;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__dialog::backdrop {
+    background: color-mix(in srgb, var(--tok-water) 34%, transparent);
+    backdrop-filter: blur(3px);
+  }
+
+  .community-form__dialog-card {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+    background: var(--tok-surface);
+    box-shadow: 0 24px 70px color-mix(in srgb, var(--tok-water) 22%, transparent);
+  }
+
+  .community-form__dialog-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .community-form__dialog h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 5vw, 1.9rem);
+    line-height: 1.15;
+    color: var(--tok-water);
+  }
+
+  .community-form__dialog p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    line-height: 1.65;
+  }
+
+  .community-form__dialog button {
+    flex: 0 0 auto;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-text-dark);
+    font: inherit;
+    font-size: var(--tok-type-meta);
+    cursor: pointer;
+  }
+
+  .community-form__dialog dl {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+  }
+
+  .community-form__dialog dt {
+    font-weight: 800;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__dialog dd {
+    margin: -0.45rem 0 0;
+    color: var(--tok-text-muted);
+    line-height: 1.55;
+  }
 </style>
 
 <script is:inline>
@@ -558,6 +702,24 @@ const existingBody = post?.body ?? "";
 
     document.addEventListener("click", function (event) {
       var button = event.target;
+      if (button instanceof HTMLElement && button.matches("[data-discussion-help-open]")) {
+        var dialogId = button.getAttribute("aria-controls");
+        var dialog = dialogId ? document.getElementById(dialogId) : null;
+        if (!(dialog instanceof HTMLDialogElement)) return;
+        if (typeof dialog.showModal === "function") {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute("open", "");
+        }
+        return;
+      }
+
+      if (button instanceof HTMLElement && button.matches("[data-discussion-help-close]")) {
+        var helpDialog = button.closest("[data-discussion-help-dialog]");
+        if (helpDialog instanceof HTMLDialogElement) helpDialog.close();
+        return;
+      }
+
       if (!(button instanceof HTMLElement) || !button.matches("[data-spread-image-remove]")) return;
 
       var field = button.closest("[data-spread-image-field]");
@@ -567,6 +729,13 @@ const existingBody = post?.body ?? "";
       input.value = "";
       clearPreview(input);
       setStatus(input, "");
+    });
+
+    document.addEventListener("click", function (event) {
+      var dialog = event.target;
+      if (dialog instanceof HTMLDialogElement && dialog.matches("[data-discussion-help-dialog]")) {
+        dialog.close();
+      }
     });
 
     document.addEventListener(

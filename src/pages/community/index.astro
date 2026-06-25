@@ -33,6 +33,7 @@ const { posts, totalPages } = Astro.locals.supabase
 const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
 const canPost = canContribute(Astro.locals.profile);
 const isAuthenticated = Boolean(Astro.locals.user);
+const displayName = Astro.locals.profile?.display_name ?? "Reader";
 const signedOut = Astro.url.searchParams.get("signed_out") === "true";
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
@@ -51,12 +52,24 @@ const jsonLd = [
     <Breadcrumbs items={crumbs} />
 
     <header class="community-hero">
-      <p class="community-kicker">Practice Commons</p>
-      <h1>{isAuthenticated ? "Practice Commons" : "A quiet place for readers to become better readers."}</h1>
+      <div class="community-hero__topline">
+        <p class="community-kicker">Practice Commons</p>
+        {
+          isAuthenticated ? (
+            <div class="community-member-actions" aria-label="Practice Commons member actions">
+              <a href="/community/account/">Account</a>
+              <form method="post" action="/auth/logout/">
+                <button type="submit">Log out</button>
+              </form>
+            </div>
+          ) : null
+        }
+      </div>
+      <h1>{isAuthenticated ? `Welcome back, ${displayName}.` : "A quiet place for readers to become better readers."}</h1>
       {
         isAuthenticated ? (
           <p class="community-hero__summary">
-            Choose a room, join a discussion, or begin a practice note.
+            Continue your practice, join a discussion, or explore another room.
           </p>
         ) : null
       }
@@ -76,7 +89,6 @@ const jsonLd = [
           <section class="community-dashboard-rooms" aria-labelledby="sections-heading">
             <div class="community-dashboard-rooms__heading">
               <h2 id="sections-heading">Choose a room</h2>
-              <a href="/community/account/">Account</a>
             </div>
             <div class="community-section-grid community-section-grid--dashboard">
               {sections.map((section) => <CommunitySectionCard section={section} compact />)}
@@ -359,12 +371,67 @@ const jsonLd = [
     margin-top: 0.35rem;
   }
 
+  .community-hero__topline,
+  .community-member-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .community-hero__topline {
+    justify-content: space-between;
+    margin-bottom: 0.45rem;
+  }
+
   .community-kicker {
     margin: 0 0 0.55rem;
     font-size: var(--tok-type-meta);
     letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
     color: var(--tok-gold-deep);
+  }
+
+  .community-hero__topline .community-kicker {
+    margin-bottom: 0;
+  }
+
+  .community-member-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    font-size: var(--tok-type-meta);
+  }
+
+  .community-member-actions a,
+  .community-member-actions button {
+    color: var(--tok-gold-deep);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .community-member-actions form {
+    margin: 0;
+  }
+
+  .community-member-actions button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .community-member-actions a:hover,
+  .community-member-actions button:hover,
+  .community-member-actions a:focus-visible,
+  .community-member-actions button:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .community-member-actions form::before {
+    color: var(--tok-text-muted);
+    content: "·";
+    margin-right: 0.55rem;
   }
 
   .community-hero h1 {
@@ -743,6 +810,16 @@ const jsonLd = [
   }
 
   @media (max-width: 640px) {
+    .community-hero__topline {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .community-member-actions {
+      justify-content: flex-start;
+    }
+
     .community-dashboard-rooms__heading,
     .community-section-heading {
       align-items: flex-start;

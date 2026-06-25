@@ -74,6 +74,21 @@ if (Astro.request.method === "POST") {
   const displayName = cleanDisplayName(form.get("displayName"));
   const displayNameValidation = validateDisplayName(form.get("displayName"));
   const next = "/community/";
+  const registrationReference = crypto.randomUUID();
+
+  console.warn("TEMP Practice Commons register POST received", {
+    reference: registrationReference,
+    method: Astro.request.method,
+    requestUrl: Astro.url.href,
+    emailDomain: emailDomain(email),
+    displayNameLength: displayName.length,
+    userAgent: Astro.request.headers.get("user-agent"),
+    referer: Astro.request.headers.get("referer"),
+    origin: Astro.request.headers.get("origin"),
+    fetchSite: Astro.request.headers.get("sec-fetch-site"),
+    fetchMode: Astro.request.headers.get("sec-fetch-mode"),
+    fetchDest: Astro.request.headers.get("sec-fetch-dest"),
+  });
 
   if (!Astro.locals.supabase) {
     error = "Practice Commons sign-in is not configured yet.";
@@ -82,7 +97,6 @@ if (Astro.request.method === "POST") {
   } else if (!email || !email.includes("@")) {
     error = "Please enter a valid email address.";
   } else {
-    const registrationReference = crypto.randomUUID();
     const emailRedirectTo = new URL(
       `/auth/callback/?redirectTo=${encodeURIComponent(next)}`,
       Astro.url,
@@ -91,6 +105,12 @@ if (Astro.request.method === "POST") {
     let signInError: unknown = null;
 
     try {
+      console.warn("TEMP Practice Commons signInWithOtp call starting", {
+        reference: registrationReference,
+        emailDomain: emailDomain(email),
+        redirectTo: next,
+        emailRedirectTo,
+      });
       const result = await Astro.locals.supabase.auth.signInWithOtp({
         email,
         options: {
@@ -100,8 +120,27 @@ if (Astro.request.method === "POST") {
         },
       });
       signInError = result.error;
+      console.warn("TEMP Practice Commons signInWithOtp call completed", {
+        reference: registrationReference,
+        emailDomain: emailDomain(email),
+        hasError: Boolean(result.error),
+        errorCode: result.error && "code" in result.error ? result.error.code : null,
+        errorMessage: result.error?.message ?? null,
+      });
     } catch (caughtError) {
       signInError = caughtError;
+      console.error("TEMP Practice Commons signInWithOtp call threw", {
+        reference: registrationReference,
+        emailDomain: emailDomain(email),
+        errorName:
+          caughtError && typeof caughtError === "object" && "name" in caughtError
+            ? caughtError.name
+            : null,
+        errorMessage:
+          caughtError && typeof caughtError === "object" && "message" in caughtError
+            ? caughtError.message
+            : String(caughtError),
+      });
     }
 
     if (signInError) {

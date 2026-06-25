@@ -35,6 +35,22 @@ const SECTION_ROOM_COPY = {
       "You do not need to be certain. In fact, uncertainty is often the most useful starting point.",
       "Other members may offer reflections, questions, or alternative angles. Leilia also monitors the space and offers feedback where practical, especially where a post opens a useful teaching point for the wider community.",
     ],
+    postingGuide: {
+      title: "Writing a useful post",
+      items: [
+        "Start with the question, cards, and spread position if relevant.",
+        "Share your own interpretation before asking for feedback.",
+        "Name the part that feels unclear, contradictory, or worth exploring.",
+        "Add an image when the deck, layout, or visual detail matters.",
+      ],
+      examples: [
+        { label: "Vague", text: "What does this spread mean?" },
+        {
+          label: "Useful",
+          text: "I drew The Moon, Seven of Cups, and Temperance. I read this as confusion softening into balance, but I'm unsure whether Temperance is advice or outcome.",
+        },
+      ],
+    },
     tone: [
       "This is not a space for showing off.",
       "It is a space for careful looking, honest practice, and respectful interpretation.",
@@ -59,6 +75,22 @@ const SECTION_ROOM_COPY = {
       "You might be new to tarot or many years into reading. The point is not status. The point is development.",
       "Leilia monitors the space and offers feedback where practical, especially where the question relates to practice, method, interpretation, or the deeper craft of reading.",
     ],
+    postingGuide: {
+      title: "Developing your practice",
+      items: [
+        "Describe the reading skill or challenge you're currently working on.",
+        "Share what you've already tried, studied or observed.",
+        "Explain where your understanding feels incomplete.",
+        "Tell us what kind of perspective would help you move forward.",
+      ],
+      examples: [
+        { label: "Less helpful", text: "How do I become more intuitive?" },
+        {
+          label: "More helpful",
+          text: "I tend to rely heavily on guidebook meanings, but I notice experienced readers often see connections I miss. How did you begin trusting your own observations while still staying grounded in the cards?",
+        },
+      ],
+    },
     tone: [
       "This is a quiet development space.",
       "It is not about being more impressive than someone else.",
@@ -80,20 +112,6 @@ const section =
 if (!section) return Astro.redirect("/community/", 302);
 const room = SECTION_ROOM_COPY[section.key];
 const displayName = Astro.locals.profile?.display_name ?? "Reader";
-const postGuidance =
-  section.key === "reading-practice"
-    ? [
-        "Start with the question, cards, and spread position if relevant.",
-        "Share your own interpretation before asking for feedback.",
-        "Name the part that feels unclear, contradictory, or worth exploring.",
-        "Add an image when the deck, layout, or visual detail matters.",
-      ]
-    : [
-        "Start with the practice question or reader-development challenge.",
-        "Share what you have already tried or noticed.",
-        "Name the kind of reflection or feedback that would be useful.",
-        "Keep the focus on practice, discernment, and reader development.",
-      ];
 
 const { posts, totalPages } = Astro.locals.supabase
   ? await getCommunityPosts(Astro.locals.supabase, {
@@ -137,14 +155,15 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
       <aside class="community-section__posting-guide" aria-labelledby="posting-guide-heading">
         <div class="community-section__panel-heading">
           <CommunityIcon name="pencil" />
-          <h2 id="posting-guide-heading">Writing a useful post</h2>
+          <h2 id="posting-guide-heading">{room.postingGuide.title}</h2>
         </div>
         <ul>
-          {postGuidance.map((item) => <li>{item}</li>)}
+          {room.postingGuide.items.map((item) => <li>{item}</li>)}
         </ul>
         <div class="community-section__posting-examples" aria-label="Post examples">
-          <p><strong>Vague:</strong> "What does this spread mean?"</p>
-          <p><strong>Useful:</strong> "I drew The Moon, Seven of Cups, and Temperance. I read this as confusion softening into balance, but I'm unsure whether Temperance is advice or outcome."</p>
+          {room.postingGuide.examples.map((example) => (
+            <p><strong>{example.label}:</strong> "{example.text}"</p>
+          ))}
         </div>
       </aside>
     </section>
