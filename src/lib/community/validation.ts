@@ -32,11 +32,13 @@ export function validatePostInput(input: {
   title: unknown;
   body: unknown;
   postType?: unknown;
+  fieldNoteConsideration?: unknown;
 }): ValidationResult<{
   sectionKey: CommunitySectionKey;
   title: string;
   body: string;
   postType: ReadingPracticePostType | null;
+  fieldNoteConsideration: boolean;
 }> {
   const title = cleanText(input.title).replace(/\s+/g, " ");
   const body = cleanText(input.body);
@@ -58,6 +60,10 @@ export function validatePostInput(input: {
       return { ok: false, error: "Choose a Reading Practice discussion type." };
     }
     const postType = isReadingPracticePostType(input.postType) ? input.postType : null;
+    const fieldNoteConsideration =
+      input.fieldNoteConsideration === true ||
+      input.fieldNoteConsideration === "true" ||
+      input.fieldNoteConsideration === "on";
 
     return {
       ok: true,
@@ -66,11 +72,21 @@ export function validatePostInput(input: {
         title,
         body,
         postType: postType || null,
+        fieldNoteConsideration,
       },
     };
   }
 
-  return { ok: true, value: { sectionKey: input.sectionKey, title, body, postType: null } };
+  return {
+    ok: true,
+    value: {
+      sectionKey: input.sectionKey,
+      title,
+      body,
+      postType: null,
+      fieldNoteConsideration: false,
+    },
+  };
 }
 
 export function validateReplyInput(input: { body: unknown }): ValidationResult<{ body: string }> {

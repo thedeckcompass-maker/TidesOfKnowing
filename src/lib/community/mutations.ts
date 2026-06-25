@@ -65,6 +65,7 @@ export async function createCommunityPost(
     body: string;
     postType: ReadingPracticePostType | null;
     imageUrl?: string | null;
+    fieldNoteConsideration: boolean;
   },
 ): Promise<MutationResult<{ id: string; slug: string }>> {
   const { data: section, error: sectionError } = await service
@@ -88,6 +89,7 @@ export async function createCommunityPost(
       body: input.body,
       post_type: input.postType,
       image_url: input.imageUrl ?? null,
+      field_note_consideration: input.fieldNoteConsideration,
       slug,
     })
     .select("id, slug")
@@ -110,6 +112,7 @@ export async function updateCommunityPost(
     title: string;
     body: string;
     postType: ReadingPracticePostType | null;
+    fieldNoteConsideration: boolean;
   },
 ): Promise<MutationResult<{ slug: string }>> {
   const post = await loadPost(service, input.postId);
@@ -131,6 +134,7 @@ export async function updateCommunityPost(
       title: input.title,
       body: input.body,
       post_type: input.postType,
+      field_note_consideration: input.fieldNoteConsideration,
     })
     .eq("id", input.postId);
 

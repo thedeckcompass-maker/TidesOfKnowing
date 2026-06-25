@@ -54,6 +54,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     title: payload.title,
     body: payload.body,
     postType: payload.postType,
+    fieldNoteConsideration: payload.fieldNoteConsideration,
   });
 
   if (!validation.ok) {
@@ -67,6 +68,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     title: validation.value.title,
     body: validation.value.body,
     postType: validation.value.postType,
+    fieldNoteConsideration: validation.value.fieldNoteConsideration,
   });
 
   if (!result.ok) {
