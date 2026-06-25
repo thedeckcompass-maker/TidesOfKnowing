@@ -12,6 +12,11 @@ import { validatePostInput } from "../../../../lib/community/validation";
 
 export const prerender = false;
 
+function safeRedirectTo(value: unknown): string | null {
+  if (typeof value !== "string" || !value.startsWith("/")) return null;
+  return value;
+}
+
 export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
   if (!locals.user || !canContribute(locals.profile)) {
     return json({ ok: false, error: "Please log in first." }, 401);
@@ -33,19 +38,24 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       pinned: intent === "pin",
       reason: typeof payload.reason === "string" ? payload.reason : undefined,
     });
+    const redirectTo = safeRedirectTo(payload.redirectTo);
+    if (result.ok && redirectTo) return redirect(redirectTo, 303);
     return json({ ok: result.ok, error: result.ok ? undefined : result.error }, result.ok ? 200 : (result.status ?? 500));
   }
 
-  if (intent === "hide" || intent === "delete" || intent === "restore" || intent === "lock") {
+  if (intent === "hide" || intent === "delete" || intent === "restore" || intent === "lock" || intent === "unlock") {
     if (!isAdmin || !locals.profile) return json({ ok: false, error: "Not found." }, 404);
     const status =
-      intent === "delete" ? "deleted" : intent === "restore" ? "published" : intent === "lock" ? "locked" : "hidden";
+      intent === "delete" ? "deleted" : intent === "restore" || intent === "unlock" ? "published" : intent === "lock" ? "locked" : "hidden";
     const result = await setPostStatus(service, {
       adminId: locals.profile.id,
       postId,
       status,
       reason: typeof payload.reason === "string" ? payload.reason : undefined,
+      action: intent === "unlock" ? "unlock_post" : undefined,
     });
+    const redirectTo = safeRedirectTo(payload.redirectTo);
+    if (result.ok && redirectTo) return redirect(redirectTo, 303);
     return json({ ok: result.ok, error: result.ok ? undefined : result.error }, result.ok ? 200 : (result.status ?? 500));
   }
 

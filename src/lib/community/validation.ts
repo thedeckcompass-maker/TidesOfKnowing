@@ -1,11 +1,14 @@
 import {
+  COMMUNITY_REPORT_REASONS,
   READING_PRACTICE_POST_TYPES,
   type CommunitySectionKey,
+  type CommunityReportReason,
   type ReadingPracticePostType,
 } from "./types";
 
 const SECTION_KEYS: CommunitySectionKey[] = ["reading-practice", "reader-development"];
 const READING_PRACTICE_POST_TYPE_VALUES = READING_PRACTICE_POST_TYPES.map((type) => type.value);
+const COMMUNITY_REPORT_REASON_VALUES = COMMUNITY_REPORT_REASONS.map((reason) => reason.value);
 
 export type ValidationResult<T> =
   | { ok: true; value: T }
@@ -24,6 +27,13 @@ export function isReadingPracticePostType(value: unknown): value is ReadingPract
   return (
     typeof value === "string" &&
     READING_PRACTICE_POST_TYPE_VALUES.includes(value as ReadingPracticePostType)
+  );
+}
+
+export function isCommunityReportReason(value: unknown): value is CommunityReportReason {
+  return (
+    typeof value === "string" &&
+    COMMUNITY_REPORT_REASON_VALUES.includes(value as CommunityReportReason)
   );
 }
 
@@ -107,4 +117,42 @@ export function validateDisplayName(value: unknown): ValidationResult<{ displayN
   }
 
   return { ok: true, value: { displayName } };
+}
+
+export function validateReportInput(input: {
+  contentType: unknown;
+  contentId: unknown;
+  reason: unknown;
+  notes?: unknown;
+}): ValidationResult<{
+  contentType: "post" | "reply";
+  contentId: string;
+  reason: CommunityReportReason;
+  notes: string | null;
+}> {
+  const contentType = input.contentType === "reply" ? "reply" : input.contentType === "post" ? "post" : null;
+  const contentId = cleanText(input.contentId);
+  const notes = cleanText(input.notes).slice(0, 2000);
+
+  if (!contentType) {
+    return { ok: false, error: "Choose what you are reporting." };
+  }
+
+  if (!contentId) {
+    return { ok: false, error: "Missing reported content." };
+  }
+
+  if (!isCommunityReportReason(input.reason)) {
+    return { ok: false, error: "Choose a report reason." };
+  }
+
+  return {
+    ok: true,
+    value: {
+      contentType,
+      contentId,
+      reason: input.reason,
+      notes: notes || null,
+    },
+  };
 }

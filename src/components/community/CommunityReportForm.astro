@@ -1,0 +1,87 @@
+---
+import { COMMUNITY_REPORT_REASONS } from "../../lib/community/types";
+
+interface Props {
+  contentType: "post" | "reply";
+  contentId: string;
+  label: string;
+  redirectTo: string;
+}
+
+const { contentType, contentId, label, redirectTo } = Astro.props;
+---
+
+<details class="community-report">
+  <summary>{label}</summary>
+  <form method="post" action="/api/community/reports">
+    <input type="hidden" name="contentType" value={contentType} />
+    <input type="hidden" name="contentId" value={contentId} />
+    <input type="hidden" name="redirectTo" value={redirectTo} />
+    <label>
+      Reason
+      <select name="reason" required>
+        <option value="">Choose a reason</option>
+        {COMMUNITY_REPORT_REASONS.map((reason) => <option value={reason.value}>{reason.label}</option>)}
+      </select>
+    </label>
+    <label>
+      Optional notes
+      <textarea
+        name="notes"
+        rows="3"
+        maxlength="2000"
+        placeholder="Share only what Leilia needs to understand the concern."
+      ></textarea>
+    </label>
+    <button type="submit">Send report</button>
+  </form>
+</details>
+
+<style>
+  .community-report {
+    margin-top: 0.85rem;
+    color: var(--tok-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .community-report summary {
+    cursor: pointer;
+  }
+
+  .community-report form {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 0.65rem;
+    padding: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 82%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 82%, transparent);
+  }
+
+  .community-report label {
+    display: grid;
+    gap: 0.3rem;
+    color: var(--tok-text-dark);
+  }
+
+  .community-report select,
+  .community-report textarea {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    font: inherit;
+    color: var(--tok-text-dark);
+    background: var(--tok-surface);
+  }
+
+  .community-report button {
+    justify-self: start;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-text-dark);
+    cursor: pointer;
+  }
+</style>

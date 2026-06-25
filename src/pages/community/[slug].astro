@@ -5,6 +5,7 @@ import CommunityAdminControls from "../../components/community/CommunityAdminCon
 import CommunityAuthPrompt from "../../components/community/CommunityAuthPrompt.astro";
 import CommunityReplyForm from "../../components/community/CommunityReplyForm.astro";
 import CommunityReplyList from "../../components/community/CommunityReplyList.astro";
+import CommunityReportForm from "../../components/community/CommunityReportForm.astro";
 import { canContribute, isAdminProfile } from "../../lib/community/auth";
 import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
@@ -19,9 +20,14 @@ const slug = Astro.params.slug ?? "";
 const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
 if (!post) return Astro.redirect("/community/", 302);
 
-const replies = Astro.locals.supabase ? await getCommunityReplies(Astro.locals.supabase, post.id) : [];
+const isAdmin = isAdminProfile(Astro.locals.profile);
+const replies = Astro.locals.supabase
+  ? await getCommunityReplies(Astro.locals.supabase, post.id, { includeModerated: isAdmin })
+  : [];
 const base = siteBase(Astro);
 const canonical = new URL(communityPostPath(post.slug), base).href;
+const returnTo = `${communityPostPath(post.slug)}?moderation=updated#replies`;
+const reportRedirectTo = `${communityPostPath(post.slug)}?report=sent#replies`;
 const sectionHref = post.section ? communitySectionPath(post.section.key) : "/community/";
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
@@ -31,9 +37,12 @@ const crumbs: BreadcrumbItem[] = [
 ];
 const canEdit = Boolean(
   Astro.locals.user &&
-    (Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile)),
+    (Astro.locals.user.id === post.author_id || isAdmin),
 );
+const canReport = canContribute(Astro.locals.profile);
 const postTypeLabel = readingPracticePostTypeLabel(post.post_type);
+const reportSent = Astro.url.searchParams.get("report") === "sent";
+const isLocked = post.status === "locked";
 const spreadImageUrl = Astro.locals.supabase
   ? getSpreadImagePublicUrl(Astro.locals.supabase, post.image_url)
   : null;
@@ -72,6 +81,18 @@ function formatDate(value: string): string {
     <Breadcrumbs items={crumbs} />
 
     <article class="community-post__article">
+      {
+        reportSent ? (
+          <p class="community-post__notice" role="status">Thank you. This has been sent to Leilia for review.</p>
+        ) : null
+      }
+      {
+        isLocked ? (
+          <p class="community-post__notice">
+            This discussion has been closed to new replies, but remains available for reading.
+          </p>
+        ) : null
+      }
       <p class="community-post__meta">
         <a href={sectionHref}>{post.section?.name ?? "Practice Commons"}</a>
         <span aria-hidden="true"> · </span>
@@ -106,19 +127,39 @@ function formatDate(value: string): string {
           </p>
         ) : null
       }
+      {
+        canReport ? (
+          <CommunityReportForm
+            contentType="post"
+            contentId={post.id}
+            label="Report this discussion"
+            redirectTo={reportRedirectTo}
+          />
+        ) : null
+      }
     </article>
 
-    {isAdminProfile(Astro.locals.profile) ? <CommunityAdminControls postId={post.id} isPinned={post.is_pinned} /> : null}
+    {isAdmin ? <CommunityAdminControls postId={post.id} isPinned={post.is_pinned} status={post.status} returnTo={communityPostPath(post.slug)} /> : null}
 
     <section id="replies" class="community-post__replies" aria-labelledby="replies-heading">
       <h2 id="replies-heading">Replies</h2>
-      <CommunityReplyList replies={replies} />
+      <CommunityReplyList
+        replies={replies}
+        canReport={canReport}
+        isAdmin={isAdmin}
+        returnTo={returnTo}
+        reportRedirectTo={reportRedirectTo}
+      />
     </section>
 
     <section class="community-post__reply-form" aria-labelledby="reply-heading">
       <h2 id="reply-heading">Add a thoughtful reply</h2>
       {
-        canContribute(Astro.locals.profile) ? (
+        isLocked ? (
+          <p class="community-post__locked">
+            This discussion has been closed to new replies, but remains available for reading.
+          </p>
+        ) : canContribute(Astro.locals.profile) ? (
           <CommunityReplyForm postId={post.id} />
         ) : (
           <CommunityAuthPrompt message="Join the Practice Commons to reply to this practice note." redirectTo={communityPostPath(post.slug)} />
@@ -175,6 +216,16 @@ function formatDate(value: string): string {
 
   .community-post__article {
     margin-top: 1rem;
+  }
+
+  .community-post__notice,
+  .community-post__locked {
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-border-light) 82%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-gold-100) 38%, transparent);
+    color: var(--tok-text-dark);
+    line-height: 1.6;
   }
 
   .community-post__meta,

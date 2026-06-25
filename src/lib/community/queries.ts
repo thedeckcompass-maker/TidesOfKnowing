@@ -6,6 +6,7 @@ import {
 } from "./pagination";
 import type {
   CommunityPostDetail,
+  CommunityReportQueueItem,
   CommunityPostSummary,
   CommunityReplyDetail,
   CommunitySection,
@@ -112,7 +113,7 @@ export async function getCommunityPosts(
       `,
       { count: "exact" },
     )
-    .eq("status", "published");
+    .in("status", ["published", "locked"]);
 
   if (options.mode.kind === "section") {
     query = query.eq("community_sections.key", options.mode.sectionKey);
@@ -171,7 +172,7 @@ export async function getCommunityPostBySlug(
       `,
     )
     .eq("slug", slug)
-    .eq("status", "published")
+    .in("status", ["published", "locked"])
     .maybeSingle();
 
   if (error) {
@@ -192,8 +193,9 @@ export async function getCommunityPostBySlug(
 export async function getCommunityReplies(
   supabase: SupabaseClient,
   postId: string,
+  options: { includeModerated?: boolean } = {},
 ): Promise<CommunityReplyDetail[]> {
-  const { data, error } = await supabase
+  let query = supabase
     .from("community_replies")
     .select(
       `
@@ -208,9 +210,13 @@ export async function getCommunityReplies(
         author:profiles(id, display_name, role)
       `,
     )
-    .eq("post_id", postId)
-    .eq("status", "published")
-    .order("created_at", { ascending: true });
+    .eq("post_id", postId);
+
+  if (!options.includeModerated) {
+    query = query.eq("status", "published");
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: true });
 
   if (error) {
     console.error("Unable to load community replies:", error);
@@ -220,6 +226,52 @@ export async function getCommunityReplies(
   return ((data ?? []) as Record<string, unknown>[]).map((row) => ({
     ...(row as unknown as CommunityReplyDetail),
     author: one(row.author as CommunityReplyDetail["author"] | CommunityReplyDetail["author"][]),
+  }));
+}
+
+export async function getOpenCommunityReports(
+  supabase: SupabaseClient,
+): Promise<CommunityReportQueueItem[]> {
+  const { data, error } = await supabase
+    .from("community_reports")
+    .select(
+      `
+        id,
+        reporter_user_id,
+        post_id,
+        reply_id,
+        reason,
+        notes,
+        status,
+        reviewed_by,
+        reviewed_at,
+        created_at,
+        updated_at,
+        reporter:profiles!community_reports_reporter_user_id_fkey(display_name),
+        post:community_posts(id, title, slug, status, author_id),
+        reply:community_replies(
+          id,
+          body,
+          status,
+          post_id,
+          author_id,
+          post:community_posts(id, title, slug, status)
+        )
+      `,
+    )
+    .eq("status", "open")
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("Unable to load community reports:", error);
+    return [];
+  }
+
+  return ((data ?? []) as Record<string, unknown>[]).map((row) => ({
+    ...(row as unknown as CommunityReportQueueItem),
+    reporter: one(row.reporter as CommunityReportQueueItem["reporter"] | CommunityReportQueueItem["reporter"][]),
+    post: one(row.post as CommunityReportQueueItem["post"] | CommunityReportQueueItem["post"][]),
+    reply: one(row.reply as CommunityReportQueueItem["reply"] | CommunityReportQueueItem["reply"][]),
   }));
 }
 

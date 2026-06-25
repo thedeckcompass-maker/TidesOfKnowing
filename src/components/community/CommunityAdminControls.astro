@@ -2,9 +2,11 @@
 interface Props {
   postId?: string;
   isPinned?: boolean;
+  status?: string;
+  returnTo?: string;
 }
 
-const { postId, isPinned = false } = Astro.props;
+const { postId, isPinned = false, status = "published", returnTo = "/community/account/" } = Astro.props;
 ---
 
 {
@@ -14,14 +16,22 @@ const { postId, isPinned = false } = Astro.props;
       <div>
         <form method="post" action={`/api/community/posts/${postId}`}>
           <input type="hidden" name="intent" value={isPinned ? "unpin" : "pin"} />
+          <input type="hidden" name="redirectTo" value={returnTo} />
           <button type="submit">{isPinned ? "Unpin" : "Pin"}</button>
         </form>
         <form method="post" action={`/api/community/posts/${postId}`}>
           <input type="hidden" name="intent" value="hide" />
+          <input type="hidden" name="redirectTo" value={returnTo} />
           <button type="submit">Hide</button>
         </form>
         <form method="post" action={`/api/community/posts/${postId}`}>
+          <input type="hidden" name="intent" value={status === "locked" ? "unlock" : "lock"} />
+          <input type="hidden" name="redirectTo" value={returnTo} />
+          <button type="submit">{status === "locked" ? "Unlock" : "Lock"}</button>
+        </form>
+        <form method="post" action={`/api/community/posts/${postId}`}>
           <input type="hidden" name="intent" value="delete" />
+          <input type="hidden" name="redirectTo" value={returnTo} />
           <button type="submit">Delete</button>
         </form>
       </div>

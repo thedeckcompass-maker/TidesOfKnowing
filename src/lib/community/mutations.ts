@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createPostSlug } from "./slugs";
 import type {
   CommunityProfileStatus,
+  CommunityReportReason,
   CommunitySectionKey,
   ReadingPracticePostType,
 } from "./types";
@@ -54,6 +55,49 @@ async function loadReply(service: SupabaseClient, replyId: string) {
         status: string;
       }
     | null;
+}
+
+async function loadReport(service: SupabaseClient, reportId: string) {
+  const { data, error } = await service
+    .from("community_reports")
+    .select(
+      `
+        id,
+        reporter_user_id,
+        post_id,
+        reply_id,
+        status,
+        post:community_posts(id, author_id),
+        reply:community_replies(id, author_id, post_id)
+      `,
+    )
+    .eq("id", reportId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Unable to load report for mutation:", error);
+    return null;
+  }
+
+  return data as
+    | {
+        id: string;
+        reporter_user_id: string;
+        post_id: string | null;
+        reply_id: string | null;
+        status: string;
+        post: { id: string; author_id: string } | { id: string; author_id: string }[] | null;
+        reply:
+          | { id: string; author_id: string; post_id: string }
+          | { id: string; author_id: string; post_id: string }[]
+          | null;
+      }
+    | null;
+}
+
+function one<T>(value: T | T[] | null | undefined): T | null {
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value ?? null;
 }
 
 export async function createCommunityPost(
@@ -184,6 +228,59 @@ export async function createCommunityReply(
   };
 }
 
+export async function createCommunityReport(
+  service: SupabaseClient,
+  input: {
+    reporterUserId: string;
+    contentType: "post" | "reply";
+    contentId: string;
+    reason: CommunityReportReason;
+    notes: string | null;
+  },
+): Promise<MutationResult<null>> {
+  if (input.contentType === "post") {
+    const { data: post, error: postError } = await service
+      .from("community_posts")
+      .select("id, status")
+      .eq("id", input.contentId)
+      .in("status", ["published", "locked"])
+      .maybeSingle();
+
+    if (postError || !post) {
+      return { ok: false, error: "That discussion is not available to report.", status: 404 };
+    }
+  }
+
+  if (input.contentType === "reply") {
+    const { data: reply, error: replyError } = await service
+      .from("community_replies")
+      .select("id, status, post:community_posts!inner(status)")
+      .eq("id", input.contentId)
+      .eq("status", "published")
+      .in("community_posts.status", ["published", "locked"])
+      .maybeSingle();
+
+    if (replyError || !reply) {
+      return { ok: false, error: "That reply is not available to report.", status: 404 };
+    }
+  }
+
+  const { error } = await service.from("community_reports").insert({
+    reporter_user_id: input.reporterUserId,
+    post_id: input.contentType === "post" ? input.contentId : null,
+    reply_id: input.contentType === "reply" ? input.contentId : null,
+    reason: input.reason,
+    notes: input.notes,
+  });
+
+  if (error) {
+    console.error("Unable to create community report:", error);
+    return { ok: false, error: "Unable to send this report right now.", status: 500 };
+  }
+
+  return { ok: true, value: null };
+}
+
 export async function updateCommunityReply(
   service: SupabaseClient,
   input: {
@@ -217,7 +314,7 @@ export async function updateCommunityReply(
 
 export async function setPostPinned(
   service: SupabaseClient,
-  input: { adminId: string; postId: string; pinned: boolean; reason?: string },
+  input: { adminId: string; postId: string; pinned: boolean; reason?: string; reportId?: string },
 ): Promise<MutationResult<null>> {
   const { error } = await service
     .from("community_posts")
@@ -235,6 +332,7 @@ export async function setPostPinned(
   await service.from("moderation_actions").insert({
     admin_user_id: input.adminId,
     post_id: input.postId,
+    report_id: input.reportId ?? null,
     action: input.pinned ? "pin_post" : "unpin_post",
     reason: input.reason ?? null,
   });
@@ -249,6 +347,8 @@ export async function setPostStatus(
     postId: string;
     status: "published" | "hidden" | "deleted" | "locked";
     reason?: string;
+    reportId?: string;
+    action?: "restore_post" | "hide_post" | "delete_post" | "lock_post" | "unlock_post";
   },
 ): Promise<MutationResult<null>> {
   const { error } = await service
@@ -267,7 +367,14 @@ export async function setPostStatus(
   await service.from("moderation_actions").insert({
     admin_user_id: input.adminId,
     post_id: input.postId,
-    action: input.status === "published" ? "restore_post" : input.status === "deleted" ? "delete_post" : "hide_post",
+    report_id: input.reportId ?? null,
+    action: input.action ?? (input.status === "published"
+        ? "restore_post"
+        : input.status === "deleted"
+          ? "delete_post"
+          : input.status === "locked"
+            ? "lock_post"
+            : "hide_post"),
     reason: input.reason ?? null,
   });
 
@@ -281,6 +388,7 @@ export async function setReplyStatus(
     replyId: string;
     status: "published" | "hidden" | "deleted";
     reason?: string;
+    reportId?: string;
   },
 ): Promise<MutationResult<null>> {
   const { error } = await service
@@ -299,6 +407,7 @@ export async function setReplyStatus(
   await service.from("moderation_actions").insert({
     admin_user_id: input.adminId,
     reply_id: input.replyId,
+    report_id: input.reportId ?? null,
     action: input.status === "published" ? "restore_reply" : input.status === "deleted" ? "delete_reply" : "hide_reply",
     reason: input.reason ?? null,
   });
@@ -313,6 +422,7 @@ export async function setProfileStatus(
     targetUserId: string;
     status: CommunityProfileStatus;
     reason?: string;
+    reportId?: string;
   },
 ): Promise<MutationResult<null>> {
   const { error } = await service
@@ -335,9 +445,122 @@ export async function setProfileStatus(
   await service.from("moderation_actions").insert({
     admin_user_id: input.adminId,
     target_user_id: input.targetUserId,
+    report_id: input.reportId ?? null,
     action,
     reason: input.reason ?? null,
   });
 
   return { ok: true, value: null };
+}
+
+export async function markReportReviewed(
+  service: SupabaseClient,
+  input: {
+    adminId: string;
+    reportId: string;
+    status: "dismissed" | "actioned";
+    reason?: string;
+    logDismissal?: boolean;
+  },
+): Promise<MutationResult<null>> {
+  const { error } = await service
+    .from("community_reports")
+    .update({
+      status: input.status,
+      reviewed_by: input.adminId,
+      reviewed_at: new Date().toISOString(),
+    })
+    .eq("id", input.reportId);
+
+  if (error) {
+    console.error("Unable to update community report:", error);
+    return { ok: false, error: "Unable to update the report.", status: 500 };
+  }
+
+  if (input.logDismissal) {
+    await service.from("moderation_actions").insert({
+      admin_user_id: input.adminId,
+      report_id: input.reportId,
+      action: "dismiss_report",
+      reason: input.reason ?? null,
+    });
+  }
+
+  return { ok: true, value: null };
+}
+
+export async function moderateFromReport(
+  service: SupabaseClient,
+  input: {
+    adminId: string;
+    reportId: string;
+    intent:
+      | "dismiss"
+      | "hide_post"
+      | "delete_post"
+      | "lock_post"
+      | "hide_reply"
+      | "delete_reply"
+      | "restrict_member"
+      | "block_member";
+    reason?: string;
+  },
+): Promise<MutationResult<null>> {
+  const report = await loadReport(service, input.reportId);
+  if (!report || report.status !== "open") {
+    return { ok: false, error: "Report not found.", status: 404 };
+  }
+
+  if (input.intent === "dismiss") {
+    return markReportReviewed(service, {
+      adminId: input.adminId,
+      reportId: input.reportId,
+      status: "dismissed",
+      reason: input.reason,
+      logDismissal: true,
+    });
+  }
+
+  const post = one(report.post);
+  const reply = one(report.reply);
+  let result: MutationResult<null>;
+
+  if (input.intent === "hide_post" || input.intent === "delete_post" || input.intent === "lock_post") {
+    if (!report.post_id) return { ok: false, error: "This report is not for a discussion.", status: 400 };
+    result = await setPostStatus(service, {
+      adminId: input.adminId,
+      postId: report.post_id,
+      status: input.intent === "delete_post" ? "deleted" : input.intent === "lock_post" ? "locked" : "hidden",
+      reason: input.reason,
+      reportId: input.reportId,
+    });
+  } else if (input.intent === "hide_reply" || input.intent === "delete_reply") {
+    if (!report.reply_id) return { ok: false, error: "This report is not for a reply.", status: 400 };
+    result = await setReplyStatus(service, {
+      adminId: input.adminId,
+      replyId: report.reply_id,
+      status: input.intent === "delete_reply" ? "deleted" : "hidden",
+      reason: input.reason,
+      reportId: input.reportId,
+    });
+  } else {
+    const targetUserId = post?.author_id ?? reply?.author_id ?? null;
+    if (!targetUserId) return { ok: false, error: "Unable to identify the reported member.", status: 400 };
+    result = await setProfileStatus(service, {
+      adminId: input.adminId,
+      targetUserId,
+      status: input.intent === "block_member" ? "blocked" : "restricted",
+      reason: input.reason,
+      reportId: input.reportId,
+    });
+  }
+
+  if (!result.ok) return result;
+
+  return markReportReviewed(service, {
+    adminId: input.adminId,
+    reportId: input.reportId,
+    status: "actioned",
+    reason: input.reason,
+  });
 }

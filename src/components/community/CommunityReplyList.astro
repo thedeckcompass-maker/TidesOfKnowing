@@ -1,11 +1,16 @@
 ---
+import CommunityReportForm from "./CommunityReportForm.astro";
 import type { CommunityReplyDetail } from "../../lib/community/types";
 
 interface Props {
   replies: CommunityReplyDetail[];
+  canReport?: boolean;
+  isAdmin?: boolean;
+  returnTo: string;
+  reportRedirectTo?: string;
 }
 
-const { replies } = Astro.props;
+const { replies, canReport = false, isAdmin = false, returnTo, reportRedirectTo = returnTo } = Astro.props;
 
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat("en", {
@@ -21,17 +26,50 @@ function formatDate(value: string): string {
     <ol class="community-replies" role="list">
       {replies.map((reply) => (
         <li id={`reply-${reply.id}`}>
-          <article class="community-reply">
+          <article class:list={["community-reply", reply.status !== "published" && "community-reply--moderated"]}>
             <p class="community-reply__meta">
               <span>{reply.author?.display_name ?? "Reader"}</span>
               {reply.author?.role === "admin" ? <span>Leigh / admin</span> : null}
               <time datetime={reply.created_at}>{formatDate(reply.created_at)}</time>
+              {reply.status !== "published" ? <span>{reply.status}</span> : null}
             </p>
             <div class="community-reply__body">
               {reply.body.split("\n\n").map((paragraph) => (
                 <p>{paragraph}</p>
               ))}
             </div>
+            {canReport && reply.status === "published" ? (
+              <CommunityReportForm
+                contentType="reply"
+                contentId={reply.id}
+                label="Report this reply"
+                redirectTo={reportRedirectTo}
+              />
+            ) : null}
+            {isAdmin ? (
+              <div class="community-reply__admin" aria-label="Reply moderation controls">
+                {reply.status === "published" ? (
+                  <form method="post" action={`/api/community/replies/${reply.id}`}>
+                    <input type="hidden" name="intent" value="hide" />
+                    <input type="hidden" name="redirectTo" value={returnTo} />
+                    <button type="submit">Hide</button>
+                  </form>
+                ) : (
+                  <form method="post" action={`/api/community/replies/${reply.id}`}>
+                    <input type="hidden" name="intent" value="restore" />
+                    <input type="hidden" name="redirectTo" value={returnTo} />
+                    <button type="submit">Restore</button>
+                  </form>
+                )}
+                {reply.status !== "deleted" ? (
+                  <form method="post" action={`/api/community/replies/${reply.id}`}>
+                    <input type="hidden" name="intent" value="delete" />
+                    <input type="hidden" name="redirectTo" value={returnTo} />
+                    <button type="submit">Delete</button>
+                  </form>
+                ) : null}
+              </div>
+            ) : null}
           </article>
         </li>
       ))}
@@ -57,6 +95,11 @@ function formatDate(value: string): string {
     background: color-mix(in srgb, var(--tok-surface-reading) 76%, transparent);
   }
 
+  .community-reply--moderated {
+    border-style: dashed;
+    opacity: 0.82;
+  }
+
   .community-reply__meta {
     display: flex;
     flex-wrap: wrap;
@@ -79,6 +122,24 @@ function formatDate(value: string): string {
 
   .community-reply__body p:last-child {
     margin-bottom: 0;
+  }
+
+  .community-reply__admin {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-border-light) 72%, transparent);
+  }
+
+  .community-reply__admin button {
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-text-dark);
+    cursor: pointer;
   }
 
   .community-empty {

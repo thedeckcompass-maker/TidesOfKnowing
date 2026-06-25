@@ -7,6 +7,14 @@ export type CommunityProfileStatus = "active" | "restricted" | "blocked";
 export type CommunityPostStatus = "published" | "hidden" | "deleted" | "locked";
 export type CommunityReplyStatus = "published" | "hidden" | "deleted";
 export type NotificationEventType = "reply_to_post" | "announcement";
+export type CommunityReportReason =
+  | "spam"
+  | "disrespectful_or_harmful"
+  | "privacy_concern"
+  | "off_topic"
+  | "duplicate"
+  | "other";
+export type CommunityReportStatus = "open" | "dismissed" | "actioned";
 export type ReadingPracticePostType =
   | "practice_reading"
   | "spread_feedback"
@@ -73,6 +81,20 @@ export type NotificationPreferences = {
   updated_at: string;
 };
 
+export type CommunityReport = {
+  id: string;
+  reporter_user_id: string;
+  post_id: string | null;
+  reply_id: string | null;
+  reason: CommunityReportReason;
+  notes: string | null;
+  status: CommunityReportStatus;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type CommunityPostSummary = CommunityPost & {
   section: Pick<CommunitySection, "key" | "name"> | null;
   author: Pick<CommunityProfile, "display_name"> | null;
@@ -86,6 +108,16 @@ export type CommunityPostDetail = CommunityPost & {
 
 export type CommunityReplyDetail = CommunityReply & {
   author: Pick<CommunityProfile, "id" | "display_name" | "role"> | null;
+};
+
+export type CommunityReportQueueItem = CommunityReport & {
+  reporter: Pick<CommunityProfile, "display_name"> | null;
+  post: Pick<CommunityPost, "id" | "title" | "slug" | "status" | "author_id"> | null;
+  reply:
+    | (Pick<CommunityReply, "id" | "body" | "status" | "post_id" | "author_id"> & {
+        post: Pick<CommunityPost, "id" | "title" | "slug" | "status"> | null;
+      })
+    | null;
 };
 
 export type CommunityLocals = {
@@ -163,6 +195,22 @@ export const READING_PRACTICE_POST_TYPES: {
       "Discuss whether the original question invited the strongest possible reading, and how it might be refined.",
   },
 ];
+
+export const COMMUNITY_REPORT_REASONS: {
+  value: CommunityReportReason;
+  label: string;
+}[] = [
+  { value: "spam", label: "Spam" },
+  { value: "disrespectful_or_harmful", label: "Disrespectful or harmful" },
+  { value: "privacy_concern", label: "Privacy concern" },
+  { value: "off_topic", label: "Off-topic" },
+  { value: "duplicate", label: "Duplicate" },
+  { value: "other", label: "Other" },
+];
+
+export function communityReportReasonLabel(value: CommunityReportReason): string {
+  return COMMUNITY_REPORT_REASONS.find((reason) => reason.value === value)?.label ?? "Other";
+}
 
 export function readingPracticePostTypeLabel(
   value: ReadingPracticePostType | null | undefined,

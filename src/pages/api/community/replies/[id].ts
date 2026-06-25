@@ -7,7 +7,12 @@ import { validateReplyInput } from "../../../../lib/community/validation";
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ params, request, locals }) => {
+function safeRedirectTo(value: unknown): string | null {
+  if (typeof value !== "string" || !value.startsWith("/")) return null;
+  return value;
+}
+
+export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
   if (!locals.user || !canContribute(locals.profile)) {
     return json({ ok: false, error: "Please log in first." }, 401);
   }
@@ -28,6 +33,8 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
       status: intent === "delete" ? "deleted" : intent === "restore" ? "published" : "hidden",
       reason: typeof payload.reason === "string" ? payload.reason : undefined,
     });
+    const redirectTo = safeRedirectTo(payload.redirectTo);
+    if (result.ok && redirectTo) return redirect(redirectTo, 303);
     return json({ ok: result.ok, error: result.ok ? undefined : result.error }, result.ok ? 200 : (result.status ?? 500));
   }
 
