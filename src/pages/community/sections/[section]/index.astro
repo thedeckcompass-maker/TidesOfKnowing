@@ -79,6 +79,7 @@ const section =
   null;
 if (!section) return Astro.redirect("/community/", 302);
 const room = SECTION_ROOM_COPY[section.key];
+const displayName = Astro.locals.profile?.display_name ?? "Reader";
 const postGuidance =
   section.key === "reading-practice"
     ? [
@@ -112,8 +113,14 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
   <main class="community-section page-inner">
     <header class="community-section__hero">
       <p class="community-section__kicker">Practice Commons</p>
-      <h1>{section.name}</h1>
-      <p>{room.intro[0]}</p>
+      <h1>{Astro.locals.user ? `Welcome back, ${displayName}.` : section.name}</h1>
+      <p>
+        {
+          Astro.locals.user
+            ? "Continue your practice, share a reading, or join an existing discussion."
+            : room.intro[0]
+        }
+      </p>
     </header>
 
     <section class="community-section__create" aria-labelledby="create-heading">
@@ -135,12 +142,16 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
         <ul>
           {postGuidance.map((item) => <li>{item}</li>)}
         </ul>
+        <div class="community-section__posting-examples" aria-label="Post examples">
+          <p><strong>Vague:</strong> "What does this spread mean?"</p>
+          <p><strong>Useful:</strong> "I drew The Moon, Seven of Cups, and Temperance. I read this as confusion softening into balance, but I'm unsure whether Temperance is advice or outcome."</p>
+        </div>
       </aside>
     </section>
 
     <section class="community-section__posts" aria-labelledby="posts-heading">
       <h2 id="posts-heading">Current conversations</h2>
-      <CommunityPostList posts={posts} />
+      <CommunityPostList posts={posts} emptyMessage="No discussions yet. Be the first to share a reading and begin the conversation." />
       <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
     </section>
 
@@ -384,6 +395,33 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
     padding-left: 1.1rem;
   }
 
+  .community-section__posting-examples {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+
+  .community-section__posting-examples p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    line-height: 1.55;
+  }
+
+  .community-section__posting-examples strong {
+    color: var(--tok-water);
+  }
+
+  .community-section__posts {
+    padding: clamp(0.95rem, 3vw, 1.35rem);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 28%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 82%, transparent);
+    box-shadow: var(--shadow-sm);
+  }
+
   .community-section__supporting {
     display: grid;
     gap: clamp(1rem, 3vw, 1.4rem);
@@ -396,6 +434,11 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
   @media (min-width: 760px) {
     .community-section__create {
       grid-template-columns: minmax(0, 1.85fr) minmax(16rem, 1fr);
+    }
+
+    .community-section__posting-guide {
+      position: sticky;
+      top: calc(var(--tok-header-height) + 1rem);
     }
 
     .community-section__room-guide {

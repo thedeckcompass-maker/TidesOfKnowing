@@ -291,38 +291,39 @@ const jsonLd = [
 
 <style>
   .community {
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100dvh - var(--tok-header-height));
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
-  .community:not(.community--dashboard) {
-    position: relative;
-    isolation: isolate;
-    display: grid;
-    gap: clamp(1rem, 3vw, 1.6rem);
-    min-height: calc(100dvh - var(--tok-header-height));
-    padding-top: clamp(0.9rem, 3vw, 2rem);
-  }
-
-  .community:not(.community--dashboard)::before {
+  .community::before {
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
     z-index: -2;
+    width: 100vw;
     content: "";
     background:
       linear-gradient(
         120deg,
-        color-mix(in srgb, var(--tok-deep-ocean) 8%, transparent),
+        color-mix(in srgb, var(--tok-deep-ocean) 10%, transparent),
         transparent 55%
       ),
-      url("/images/community/compass-feather-hourglass.png") right top / min(48vw, 36rem) auto no-repeat;
-    opacity: 0.12;
+      url("/images/community/compass-feather-hourglass.png") right top / min(50vw, 40rem) auto no-repeat;
+    opacity: 0.18;
     pointer-events: none;
+    transform: translateX(-50%);
   }
 
-  .community:not(.community--dashboard)::after {
+  .community::after {
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 50%;
     z-index: -1;
+    width: 100vw;
     content: "";
     background: linear-gradient(
       90deg,
@@ -330,6 +331,13 @@ const jsonLd = [
       color-mix(in srgb, var(--tok-surface-reading) 58%, transparent)
     );
     pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .community:not(.community--dashboard) {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.6rem);
+    padding-top: clamp(0.9rem, 3vw, 2rem);
   }
 
   .community--dashboard {

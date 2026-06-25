@@ -24,9 +24,10 @@ const selectedSection =
   sections[0];
 const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts";
 const isReadingPractice = selectedSection?.key === "reading-practice";
+const existingBody = post?.body ?? "";
 ---
 
-<form class="community-form" method="post" action={action} enctype="multipart/form-data" data-community-post-form>
+<form class="community-form" method="post" action={action} enctype="multipart/form-data" data-community-post-form data-reading-practice={isReadingPractice ? "true" : undefined}>
   <input type="hidden" name="sectionKey" value={selectedSection?.key} />
   {
     isReadingPractice ? (
@@ -95,37 +96,82 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
   </label>
   {
     isReadingPractice ? (
-      <aside class="community-form__prompts" aria-label="Optional Reading Practice prompts">
-        <p>
-          The aim is collaborative symbolic interpretation and reader development:
-          <strong> "Here's what I saw. What else might I be missing?"</strong>
-        </p>
-        <ul>
-          <li>Question asked</li>
-          <li>Cards drawn</li>
-          <li>My interpretation</li>
-          <li>What I am uncertain about</li>
-          <li>Additional context, if useful</li>
-          <li>What I would appreciate feedback on</li>
-        </ul>
-      </aside>
+      <div class="community-form__reading-fields" aria-label="Reading Practice post details">
+        <label>
+          Question asked
+          <input
+            type="text"
+            data-reading-field="Question asked"
+            placeholder="What question was the reading exploring?"
+          />
+        </label>
+        <label>
+          Cards drawn
+          <textarea
+            rows="3"
+            data-reading-field="Cards drawn"
+            placeholder="List the cards, positions, clarifiers, or repeated cards."
+          ></textarea>
+        </label>
+        <label>
+          My interpretation
+          <textarea
+            rows="4"
+            data-reading-field="My interpretation"
+            placeholder="What did you see in the cards?"
+          ></textarea>
+        </label>
+        <label>
+          What I'm uncertain about
+          <textarea
+            rows="3"
+            data-reading-field="What I'm uncertain about"
+            placeholder="Where does the reading feel unclear, contradictory, or unfinished?"
+          ></textarea>
+        </label>
+        <label>
+          Additional context <span>(optional)</span>
+          <textarea
+            rows="3"
+            data-reading-field="Additional context"
+            placeholder="Add deck, spread, timing, or situation details if they help."
+          ></textarea>
+        </label>
+        <label>
+          What feedback would I appreciate?
+          <textarea
+            rows="3"
+            data-reading-field="What feedback would I appreciate?"
+            placeholder="Name the kind of response that would be most useful."
+          ></textarea>
+        </label>
+        <label class="community-form__wide-field">
+          Anything else you'd like to add? <span>(optional)</span>
+          <textarea
+            rows="5"
+            data-reading-field="Anything else"
+            placeholder="Use this for anything that does not fit above."
+          >{existingBody}</textarea>
+        </label>
+        <textarea name="body" data-reading-composed-body hidden>{existingBody}</textarea>
+      </div>
     ) : null
   }
-  <label>
-    Share a little more
-    <textarea
-      name="body"
-      minlength="20"
-      maxlength="12000"
-      rows="8"
-      required
-      placeholder={
-        isReadingPractice
-          ? "Question asked:\n\nCards drawn:\n\nMy interpretation:\n\nWhat I am uncertain about:\n\nAdditional context (optional):\n\nWhat I would appreciate feedback on:"
-          : "Describe the reading, experience, challenge, or reflection you'd like to discuss."
-      }
-    >{post?.body ?? ""}</textarea>
-  </label>
+  {
+    isReadingPractice ? null : (
+      <label>
+        Share a little more
+        <textarea
+          name="body"
+          minlength="20"
+          maxlength="12000"
+          rows="8"
+          required
+          placeholder="Describe the reading, experience, challenge, or reflection you'd like to discuss."
+        >{existingBody}</textarea>
+      </label>
+    )
+  }
   <button type="submit">{post ? "Update post" : `Post in ${selectedSection?.name ?? "Practice Commons"}`}</button>
 </form>
 
@@ -250,6 +296,11 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     color: var(--tok-text-dark);
   }
 
+  .community-form label span {
+    color: var(--tok-text-muted);
+    font-weight: 500;
+  }
+
   .community-form input,
   .community-form select,
   .community-form textarea {
@@ -286,6 +337,20 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
     margin-top: 0.25rem;
   }
 
+  .community-form__reading-fields {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .community-form__reading-fields textarea {
+    min-height: 7rem;
+  }
+
+  .community-form__reading-fields input::placeholder,
+  .community-form__reading-fields textarea::placeholder {
+    color: color-mix(in srgb, var(--tok-text-muted) 72%, transparent);
+  }
+
   .community-form textarea {
     resize: vertical;
     line-height: 1.65;
@@ -316,6 +381,25 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
       var field = input.closest("[data-spread-image-field]");
       var status = field ? field.querySelector("[data-spread-image-status]") : null;
       if (status) status.textContent = message || "";
+    }
+
+    function composeReadingPracticeBody(form) {
+      if (!(form instanceof HTMLFormElement) || form.dataset.readingPractice !== "true") return;
+
+      var composedBody = form.querySelector("[data-reading-composed-body]");
+      if (!(composedBody instanceof HTMLTextAreaElement)) return;
+
+      var sections = Array.prototype.slice.call(form.querySelectorAll("[data-reading-field]"))
+        .map(function (field) {
+          if (!(field instanceof HTMLInputElement) && !(field instanceof HTMLTextAreaElement)) return null;
+          var label = field.getAttribute("data-reading-field") || "";
+          var value = field.value.trim();
+          if (!label || !value) return null;
+          return label + ":\n" + value;
+        })
+        .filter(Boolean);
+
+      composedBody.value = sections.join("\n\n");
     }
 
     function clearPreview(input) {
@@ -434,6 +518,8 @@ const isReadingPractice = selectedSection?.key === "reading-practice";
       async function (event) {
         var form = event.target;
         if (!(form instanceof HTMLFormElement) || !form.matches("[data-community-post-form]")) return;
+
+        composeReadingPracticeBody(form);
 
         var input = form.querySelector("[data-spread-image-input]");
         if (!(input instanceof HTMLInputElement) || !input.files || input.files.length === 0) return;

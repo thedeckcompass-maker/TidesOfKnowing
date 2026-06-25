@@ -130,8 +130,47 @@ function formatDate(value: string): string {
 
 <style>
   .community-post {
+    position: relative;
+    isolation: isolate;
     max-width: 48rem;
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .community-post::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: -2;
+    width: 100vw;
+    content: "";
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(in srgb, var(--tok-deep-ocean) 10%, transparent),
+        transparent 56%
+      ),
+      url("/images/community/compass-feather-hourglass.png") right top / min(50vw, 40rem) auto no-repeat;
+    opacity: 0.18;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .community-post::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: -1;
+    width: 100vw;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--tok-surface-reading) 82%, transparent),
+      color-mix(in srgb, var(--tok-surface-reading) 62%, transparent)
+    );
+    pointer-events: none;
+    transform: translateX(-50%);
   }
 
   .community-post__article {
