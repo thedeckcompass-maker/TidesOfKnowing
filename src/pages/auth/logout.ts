@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { authRedirect } from "../../lib/community/supabaseServer";
 
 export const prerender = false;
 
@@ -8,12 +9,12 @@ async function signOut(locals: App.Locals) {
   }
 }
 
-export const GET: APIRoute = async ({ locals, redirect }) => {
+export const GET: APIRoute = async ({ locals, cookies }) => {
   await signOut(locals);
-  return redirect("/community/?signed_out=true", 303);
+  return authRedirect("/community/?signed_out=true", cookies);
 };
 
-export const POST: APIRoute = async ({ locals, redirect }) => {
+export const POST: APIRoute = async ({ locals, cookies }) => {
   await signOut(locals);
-  return redirect("/community/?signed_out=true", 303);
+  return authRedirect("/community/?signed_out=true", cookies);
 };

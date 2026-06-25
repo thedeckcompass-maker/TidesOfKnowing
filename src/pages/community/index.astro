@@ -127,29 +127,31 @@ const jsonLd = [
       ) : (
         <>
           <section class="community-auth-card community-auth-card--join" aria-labelledby="community-auth-heading">
-            <div>
-              <p class="community-auth-card__kicker">Join the Practice Commons</p>
-              <h2 id="community-auth-heading">Join the Practice Commons</h2>
-              <p>Enter your name and email address and we'll email you a secure sign-in link.</p>
+            <div data-auth-entry>
+              <div>
+                <p class="community-auth-card__kicker">Join the Practice Commons</p>
+                <h2 id="community-auth-heading">Join the Practice Commons</h2>
+                <p>Enter your name and email address and we'll email you a secure sign-in link.</p>
+              </div>
+              <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
+                <label for="community-display-name">Your name</label>
+                <input
+                  id="community-display-name"
+                  name="displayName"
+                  type="text"
+                  autocomplete="nickname"
+                  minlength="2"
+                  maxlength="60"
+                  required
+                />
+                <label for="community-email">Email address</label>
+                <input id="community-email" name="email" type="email" autocomplete="email" required />
+                <button type="submit" data-auth-register-submit>Continue</button>
+                <p class="community-join-form__help" data-auth-register-status hidden>
+                  Please wait... we're sending your secure sign-in link.
+                </p>
+              </form>
             </div>
-            <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
-              <label for="community-display-name">Your name</label>
-              <input
-                id="community-display-name"
-                name="displayName"
-                type="text"
-                autocomplete="nickname"
-                minlength="2"
-                maxlength="60"
-                required
-              />
-              <label for="community-email">Email address</label>
-              <input id="community-email" name="email" type="email" autocomplete="email" required />
-              <button type="submit" data-auth-register-submit>Continue</button>
-              <p class="community-join-form__help" data-auth-register-status hidden>
-                Please wait... we're sending your secure sign-in link.
-              </p>
-            </form>
             <div class="community-auth-confirmation" data-auth-confirmation hidden>
               <h3>✓ Check your email</h3>
               <p>
@@ -162,7 +164,7 @@ const jsonLd = [
             </div>
           </section>
 
-          <section class="community-intro" aria-label="About the Practice Commons">
+          <section class="community-intro" aria-label="About the Practice Commons" data-auth-secondary>
             <p>
               Every tarot reader reaches a point where knowing what the cards mean is no
               longer enough. Practice Commons is a reflective learning community for tarot
@@ -195,14 +197,21 @@ const jsonLd = [
     const originalAction = form.getAttribute("action") || window.location.pathname;
     const submitButton = form.querySelector("[data-auth-register-submit]");
     const statusMessage = form.querySelector("[data-auth-register-status]");
-    const confirmation = form.parentElement?.querySelector("[data-auth-confirmation]");
+    const entry = form.closest("[data-auth-entry]");
+    const card = form.closest(".community-auth-card");
+    const confirmation = card?.querySelector("[data-auth-confirmation]");
+    const secondaryContent = document.querySelectorAll("[data-auth-secondary]");
     const confirmationEmail = confirmation?.querySelector("[data-auth-confirmation-email]");
     const resetButton = confirmation?.querySelector("[data-auth-reset]");
 
     function restoreForm() {
       submitted = false;
-      form.hidden = false;
+      card?.classList.remove("community-auth-card--confirmed");
+      if (entry instanceof HTMLElement) entry.hidden = false;
       if (confirmation instanceof HTMLElement) confirmation.hidden = true;
+      secondaryContent.forEach((content) => {
+        if (content instanceof HTMLElement) content.hidden = false;
+      });
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = false;
         submitButton.textContent = "Continue";
@@ -244,13 +253,18 @@ const jsonLd = [
           method: "POST",
           body: formData,
           headers: { Accept: "text/html" },
+          credentials: "same-origin",
         });
         const responseUrl = new URL(response.url);
 
         if (response.redirected && responseUrl.pathname === "/auth/check-email/") {
           if (confirmationEmail instanceof HTMLElement) confirmationEmail.textContent = email;
-          form.hidden = true;
+          card?.classList.add("community-auth-card--confirmed");
+          if (entry instanceof HTMLElement) entry.hidden = true;
           if (confirmation instanceof HTMLElement) confirmation.hidden = false;
+          secondaryContent.forEach((content) => {
+            if (content instanceof HTMLElement) content.hidden = true;
+          });
           return;
         }
 
@@ -446,6 +460,14 @@ const jsonLd = [
     margin: 0;
     color: var(--tok-text-muted);
     line-height: 1.55;
+  }
+
+  [data-auth-entry][hidden] {
+    display: none;
+  }
+
+  .community-auth-card--confirmed [data-auth-entry] {
+    display: none !important;
   }
 
   .community-auth-card__button {

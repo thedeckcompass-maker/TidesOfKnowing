@@ -1,16 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { createServerClient, type CookieOptionsWithName } from "@supabase/ssr";
+import { createServerClient, parseCookieHeader, type CookieOptionsWithName } from "@supabase/ssr";
 import type { AstroCookies } from "astro";
 import { communityEnv } from "./env";
-
-type CookiePair = {
-  name: string;
-  value: string;
-};
-
-type AstroCookieStoreWithGetAll = AstroCookies & {
-  getAll(): CookiePair[];
-};
 
 type AstroCookieStoreWithSet = AstroCookies & {
   set: AstroCookies["set"];
@@ -28,29 +19,39 @@ function toAstroCookieOptions(options: CookieOptionsWithName) {
   };
 }
 
-function parseCookieHeader(cookieHeader: string | null | undefined): CookiePair[] {
-  if (!cookieHeader) return [];
+export function appendAuthResponseCookies(response: Response, cookies: AstroCookies): Response {
+  for (const cookieHeader of cookies.headers()) {
+    response.headers.append("set-cookie", cookieHeader);
+  }
 
-  return cookieHeader
-    .split(";")
-    .map((part) => {
-      const [rawName, ...rawValueParts] = part.trim().split("=");
-      const rawValue = rawValueParts.join("=");
+  response.headers.set("cache-control", "private, no-cache, no-store, must-revalidate, max-age=0");
+  response.headers.set("expires", "0");
+  response.headers.set("pragma", "no-cache");
 
-      if (!rawName || !rawValue) return null;
+  return response;
+}
 
-      return {
-        name: decodeURIComponent(rawName),
-        value: decodeURIComponent(rawValue),
-      } satisfies CookiePair;
-    })
-    .filter((cookie): cookie is CookiePair => Boolean(cookie));
+export function authRedirect(
+  location: string,
+  cookies: AstroCookies,
+  status: 303 | 307 | 308 = 303,
+): Response {
+  return appendAuthResponseCookies(
+    new Response(null, {
+      status,
+      headers: {
+        Location: location,
+      },
+    }),
+    cookies,
+  );
 }
 
 export function createCommunityServerClient(
+  request: Request,
   cookies: AstroCookies,
   locals?: unknown,
-  cookieHeader?: string | null,
+  responseHeaders?: Headers,
 ): SupabaseClient {
   const env = communityEnv(locals);
 
@@ -61,23 +62,21 @@ export function createCommunityServerClient(
   return createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
     cookies: {
       getAll() {
-        const store = cookies as AstroCookieStoreWithGetAll;
-        if (typeof store.getAll === "function") {
-          return store.getAll().map((cookie) => ({
-            name: cookie.name,
-            value: cookie.value,
-          })) satisfies CookiePair[];
-        }
-
-        return parseCookieHeader(cookieHeader);
+        return parseCookieHeader(request.headers.get("Cookie") ?? "");
       },
-      setAll(cookiesToSet) {
+      setAll(cookiesToSet, headers) {
         const store = cookies as AstroCookieStoreWithSet;
         if (typeof store.set !== "function") return;
 
         cookiesToSet.forEach(({ name, value, options }) => {
           store.set(name, value, toAstroCookieOptions(options));
         });
+
+        if (responseHeaders) {
+          Object.entries(headers).forEach(([key, value]) => {
+            responseHeaders.set(key, value);
+          });
+        }
       },
     },
   }) as SupabaseClient;
