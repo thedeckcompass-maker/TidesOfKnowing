@@ -68,11 +68,29 @@ function adminDiagnosticForAuthError(message: string): string {
   return "Check Supabase Auth logs for this reference id and confirm email provider, redirect allow-list, and email delivery settings.";
 }
 
+function isExpectedReturningMemberPrivacyError(error: unknown): boolean {
+  const details = authErrorDetails(error);
+  const normalized = details.message.toLowerCase();
+  const code = details.code?.toLowerCase() ?? "";
+
+  return (
+    code.includes("user_not_found") ||
+    code.includes("signup") ||
+    normalized.includes("user not found") ||
+    normalized.includes("signup") ||
+    normalized.includes("signups not allowed")
+  );
+}
+
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
   const email = String(form.get("email") ?? "").trim().toLowerCase();
+  const authMode = String(form.get("authMode") ?? "join");
+  const isReturningMemberSignIn = authMode === "sign-in";
   const displayName = cleanDisplayName(form.get("displayName"));
-  const displayNameValidation = validateDisplayName(form.get("displayName"));
+  const displayNameValidation = isReturningMemberSignIn
+    ? ({ ok: true, value: { displayName: "" } } as const)
+    : validateDisplayName(form.get("displayName"));
   const next = "/community/";
   const registrationReference = crypto.randomUUID();
 
@@ -82,6 +100,7 @@ if (Astro.request.method === "POST") {
     requestUrl: Astro.url.href,
     emailDomain: emailDomain(email),
     displayNameLength: displayName.length,
+    authMode: isReturningMemberSignIn ? "sign-in" : "join",
     userAgent: Astro.request.headers.get("user-agent"),
     referer: Astro.request.headers.get("referer"),
     origin: Astro.request.headers.get("origin"),
@@ -110,13 +129,14 @@ if (Astro.request.method === "POST") {
         emailDomain: emailDomain(email),
         redirectTo: next,
         emailRedirectTo,
+        authMode: isReturningMemberSignIn ? "sign-in" : "join",
       });
       const result = await Astro.locals.supabase.auth.signInWithOtp({
         email,
         options: {
           emailRedirectTo,
-          shouldCreateUser: true,
-          data: { display_name: displayName },
+          shouldCreateUser: !isReturningMemberSignIn,
+          ...(isReturningMemberSignIn ? {} : { data: { display_name: displayName } }),
         },
       });
       signInError = result.error;
@@ -126,6 +146,7 @@ if (Astro.request.method === "POST") {
         hasError: Boolean(result.error),
         errorCode: result.error && "code" in result.error ? result.error.code : null,
         errorMessage: result.error?.message ?? null,
+        authMode: isReturningMemberSignIn ? "sign-in" : "join",
       });
     } catch (caughtError) {
       signInError = caughtError;
@@ -144,6 +165,12 @@ if (Astro.request.method === "POST") {
     }
 
     if (signInError) {
+      if (isReturningMemberSignIn && isExpectedReturningMemberPrivacyError(signInError)) {
+        signInError = null;
+      }
+    }
+
+    if (signInError) {
       const details = authErrorDetails(signInError);
       console.error("Practice Commons sign-in link request failed", {
         reference: registrationReference,
@@ -156,6 +183,7 @@ if (Astro.request.method === "POST") {
         redirectTo: next,
         emailRedirectTo,
         requestUrl: Astro.url.href,
+        authMode: isReturningMemberSignIn ? "sign-in" : "join",
       });
       error = "Unable to send a sign-in link right now. Please try again.";
       errorReference = registrationReference;
@@ -163,7 +191,9 @@ if (Astro.request.method === "POST") {
     } else {
       const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
       checkEmailUrl.searchParams.set("email", email);
-      checkEmailUrl.searchParams.set("displayName", displayName);
+      if (!isReturningMemberSignIn) {
+        checkEmailUrl.searchParams.set("displayName", displayName);
+      }
       checkEmailUrl.searchParams.set("redirectTo", next);
       return authRedirect(checkEmailUrl.pathname + checkEmailUrl.search, Astro.cookies);
     }
@@ -192,6 +222,7 @@ if (Astro.request.method === "POST") {
         }
 
         <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
+          <input type="hidden" name="authMode" value="join" />
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <label for="displayName">Your name</label>
           <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />

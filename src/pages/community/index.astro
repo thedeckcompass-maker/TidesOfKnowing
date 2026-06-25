@@ -146,6 +146,7 @@ const jsonLd = [
                 <p>Enter your name and email address and we'll email you a secure sign-in link.</p>
               </div>
               <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
+                <input type="hidden" name="authMode" value="join" />
                 <label for="community-display-name">Your name</label>
                 <input
                   id="community-display-name"
@@ -158,11 +159,41 @@ const jsonLd = [
                 />
                 <label for="community-email">Email address</label>
                 <input id="community-email" name="email" type="email" autocomplete="email" required />
-                <button type="submit" data-auth-register-submit>Continue</button>
+                <button
+                  type="submit"
+                  data-auth-register-submit
+                  data-default-text="Continue"
+                  data-sending-text="Sending sign-in link..."
+                >
+                  Continue
+                </button>
                 <p class="community-join-form__help" data-auth-register-status hidden>
                   Please wait... we're sending your secure sign-in link.
                 </p>
               </form>
+              <section class="community-returning-member" aria-labelledby="community-returning-heading">
+                <div>
+                  <p class="community-returning-member__kicker">Already a member?</p>
+                  <h3 id="community-returning-heading">Send yourself a sign-in link</h3>
+                  <p>Enter the email address you used to join. We'll send a secure link if the account is active.</p>
+                </div>
+                <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
+                  <input type="hidden" name="authMode" value="sign-in" />
+                  <label for="community-returning-email">Email address</label>
+                  <input id="community-returning-email" name="email" type="email" autocomplete="email" required />
+                  <button
+                    type="submit"
+                    data-auth-register-submit
+                    data-default-text="Send Sign-in Link"
+                    data-sending-text="Sending sign-in link..."
+                  >
+                    Send Sign-in Link
+                  </button>
+                  <p class="community-join-form__help" data-auth-register-status hidden>
+                    Please wait... we're sending your secure sign-in link.
+                  </p>
+                </form>
+              </section>
             </div>
             <div class="community-auth-confirmation" data-auth-confirmation hidden>
               <h3>✓ Check your email</h3>
@@ -226,7 +257,7 @@ const jsonLd = [
       });
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = false;
-        submitButton.textContent = "Continue";
+        submitButton.textContent = submitButton.dataset.defaultText || "Continue";
       }
       if (statusMessage instanceof HTMLElement) {
         statusMessage.hidden = true;
@@ -249,7 +280,7 @@ const jsonLd = [
 
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = true;
-        submitButton.textContent = "Sending sign-in link...";
+        submitButton.textContent = submitButton.dataset.sendingText || "Sending sign-in link...";
       }
 
       if (statusMessage instanceof HTMLElement) {
@@ -290,7 +321,7 @@ const jsonLd = [
         submitted = false;
         if (submitButton instanceof HTMLButtonElement) {
           submitButton.disabled = false;
-          submitButton.textContent = "Continue";
+          submitButton.textContent = submitButton.dataset.defaultText || "Continue";
         }
         if (statusMessage instanceof HTMLElement) {
           statusMessage.hidden = false;
@@ -620,6 +651,29 @@ const jsonLd = [
     color: var(--tok-water);
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .community-returning-member {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .community-returning-member__kicker {
+    margin: 0 0 0.25rem;
+    font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-returning-member h3 {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 4vw, 1.25rem);
+    color: var(--tok-water);
   }
 
   .community-join-form input {
