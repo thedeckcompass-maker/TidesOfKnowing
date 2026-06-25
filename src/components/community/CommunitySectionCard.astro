@@ -5,9 +5,10 @@ import CommunityIcon from "./CommunityIcon.astro";
 
 interface Props {
   section: CommunitySection;
+  compact?: boolean;
 }
 
-const { section } = Astro.props;
+const { section, compact = false } = Astro.props;
 const cardCopy = {
   "reading-practice": {
     body: "Bring your cards, your spread, or the interpretation you are working through.",
@@ -22,9 +23,10 @@ const cardCopy = {
     imageAlt: "A quiet reader development space with a journal and pen for reflective tarot practice.",
   },
 }[section.key];
+const ctaLabel = compact ? `Enter ${section.name}` : "Enter the room";
 ---
 
-<article class="community-section-card">
+<article class={`community-section-card${compact ? " community-section-card--compact" : ""}`}>
   <a class="community-section-card__image-link" href={communitySectionPath(section.key)} aria-hidden="true" tabindex="-1">
     <img
       class="community-section-card__image"
@@ -43,11 +45,12 @@ const cardCopy = {
     <a href={communitySectionPath(section.key)}>{section.name}</a>
   </h2>
   <p>{cardCopy.body}</p>
-  <a class="community-section-card__cta" href={communitySectionPath(section.key)}>Enter the room</a>
+  <a class="community-section-card__cta" href={communitySectionPath(section.key)}>{ctaLabel}</a>
 </article>
 
 <style>
   .community-section-card {
+    position: relative;
     display: flex;
     min-height: 13rem;
     flex-direction: column;
@@ -109,5 +112,51 @@ const cardCopy = {
   .community-section-card__cta::after {
     content: "→";
     margin-left: 0.45rem;
+  }
+
+  .community-section-card--compact {
+    min-height: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .community-section-card--compact:hover {
+    border-color: color-mix(in srgb, var(--tok-gold) 54%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 86%, transparent);
+  }
+
+  .community-section-card--compact .community-section-card__image {
+    aspect-ratio: 16 / 4;
+  }
+
+  .community-section-card--compact .community-section-card__icon {
+    display: none;
+  }
+
+  .community-section-card--compact h2 {
+    margin: 0.65rem 0.9rem 0.2rem;
+    font-size: clamp(1.25rem, 4vw, 1.65rem);
+  }
+
+  .community-section-card--compact p {
+    margin: 0 0.9rem;
+    line-height: 1.45;
+  }
+
+  .community-section-card--compact .community-section-card__cta {
+    margin: 0.75rem 0.9rem 0.9rem;
+    padding: 0.62rem 0.85rem;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-size: var(--tok-type-meta);
+    font-weight: var(--tok-ui-btn-font-weight);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .community-section-card--compact .community-section-card__cta::before {
+    position: absolute;
+    inset: 0;
+    content: "";
   }
 </style>

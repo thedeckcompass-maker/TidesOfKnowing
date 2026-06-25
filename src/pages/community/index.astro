@@ -3,12 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import LibraryPagination from "../../components/LibraryPagination.astro";
 import CommunityAuthPrompt from "../../components/community/CommunityAuthPrompt.astro";
-import CommunityPostForm from "../../components/community/CommunityPostForm.astro";
 import CommunityPostList from "../../components/community/CommunityPostList.astro";
 import CommunitySectionCard from "../../components/community/CommunitySectionCard.astro";
 import { canContribute } from "../../lib/community/auth";
 import { communityPaginationState } from "../../lib/community/pagination";
 import { getCommunityPosts, getCommunitySections } from "../../lib/community/queries";
+import { communitySectionPath } from "../../lib/community/slugs";
 import { COMMUNITY_SECTION_FALLBACKS } from "../../lib/community/types";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
@@ -32,24 +32,8 @@ const { posts, totalPages } = Astro.locals.supabase
   : { posts: [], totalPages: 1 };
 const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
 const canPost = canContribute(Astro.locals.profile);
-const displayName = Astro.locals.profile?.display_name ?? "Reader";
+const isAuthenticated = Boolean(Astro.locals.user);
 const signedOut = Astro.url.searchParams.get("signed_out") === "true";
-const roomCreationCopy = {
-  "reading-practice": {
-    short: "Bring cards and readings.",
-    examples: [
-      "What else do you see in this spread?",
-      "This card combination puzzles me.",
-    ],
-  },
-  "reader-development": {
-    short: "Bring experiences and growth.",
-    examples: [
-      "How do you know when you're forcing an interpretation?",
-      "What helped you trust your intuition?",
-    ],
-  },
-} as const;
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -63,12 +47,19 @@ const jsonLd = [
 ---
 
 <BaseLayout title={title} description={description} ogUrl={canonical} jsonLd={jsonLd}>
-  <main class="community page-inner">
+  <main class={`community page-inner${isAuthenticated ? " community--dashboard" : ""}`}>
     <Breadcrumbs items={crumbs} />
 
     <header class="community-hero">
       <p class="community-kicker">Practice Commons</p>
-      <h1>A quiet place for readers to become better readers.</h1>
+      <h1>{isAuthenticated ? "Practice Commons" : "A quiet place for readers to become better readers."}</h1>
+      {
+        isAuthenticated ? (
+          <p class="community-hero__summary">
+            Choose a room, join a discussion, or begin a practice note.
+          </p>
+        ) : null
+      }
     </header>
 
     {
@@ -79,135 +70,130 @@ const jsonLd = [
       ) : null
     }
 
-    <section class="community-auth-card" aria-labelledby="community-auth-heading">
-      {
-        canPost ? (
-          <>
-            <div>
-              <p class="community-auth-card__kicker">Welcome back</p>
-              <h2 id="community-auth-heading">Welcome back, {displayName}</h2>
-              <p>Share a question, reading dilemma, or practice note when you are ready.</p>
+    {
+      isAuthenticated ? (
+        <>
+          <section class="community-dashboard-rooms" aria-labelledby="sections-heading">
+            <div class="community-dashboard-rooms__heading">
+              <h2 id="sections-heading">Choose a room</h2>
+              <a href="/community/account/">Account</a>
             </div>
-            <a class="community-auth-card__button" href="#create-heading">Start a conversation</a>
-          </>
-        ) : (
-          <>
+            <div class="community-section-grid community-section-grid--dashboard">
+              {sections.map((section) => <CommunitySectionCard section={section} compact />)}
+            </div>
+          </section>
+
+          <section class="community-posts community-posts--dashboard" aria-labelledby="recent-heading">
+            <div class="community-section-heading">
+              <h2 id="recent-heading">Latest activity</h2>
+              {totalPages > 1 ? <a href="/community/page/2/">More discussions</a> : null}
+            </div>
+            <CommunityPostList posts={posts} compact />
+            <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+          </section>
+
+          <section class="community-actions" aria-labelledby="actions-heading">
+            <h2 id="actions-heading">Actions</h2>
+            {
+              canPost ? (
+                <div class="community-actions__row">
+                  {sections.map((section) => (
+                    <a class="community-actions__button" href={communitySectionPath(section.key)}>
+                      Start in {section.name}
+                    </a>
+                  ))}
+                  <a class="community-actions__button community-actions__button--secondary" href="/community/search/">
+                    Search discussions
+                  </a>
+                </div>
+              ) : (
+                <CommunityAuthPrompt message="Your account is signed in, but posting is not available for this profile right now." />
+              )
+            }
+          </section>
+
+          <section class="community-philosophy community-philosophy--dashboard" aria-labelledby="philosophy-heading">
+            <h2 id="philosophy-heading">How this space works</h2>
+            <p>
+              The Practice Commons is a space for thoughtful practice, careful observation,
+              and learning together.
+            </p>
+            <p>
+              Bring real questions from your reading life, respond generously to other
+              readers, and let the room stay focused on practice rather than performance.
+            </p>
+          </section>
+        </>
+      ) : (
+        <>
+          <section class="community-auth-card" aria-labelledby="community-auth-heading">
             <div>
               <p class="community-auth-card__kicker">Join the Practice Commons</p>
               <h2 id="community-auth-heading">Continue to the Practice Commons</h2>
               <p>Enter your name and email and we'll send you a sign-in link.</p>
             </div>
             <a class="community-auth-card__button" href="/auth/register/">Continue</a>
-          </>
-        )
-      }
-    </section>
+          </section>
 
-    <section class="community-intro" aria-label="About the Practice Commons">
-      <p>
-        The Practice Commons is a quieter space for readers who want to deepen their
-        craft away from the noise of social platforms.
-      </p>
-      <p class="community-intro__plain">
-        No competition.<br />
-        No posturing.<br />
-        No algorithmic pressure.
-      </p>
-      <p>
-        Just thoughtful practice, reflection, and reader development.
-      </p>
-    </section>
+          <section class="community-intro" aria-label="About the Practice Commons">
+            <p>
+              The Practice Commons is a quieter space for readers who want to deepen their
+              craft away from the noise of social platforms.
+            </p>
+            <p class="community-intro__plain">
+              Thoughtful practice, reflective conversation, and reader development belong here.
+            </p>
+          </section>
 
-    <form class="community-search" method="get" action="/community/search/">
-      <label for="community-search">Search the Practice Commons</label>
-      <div>
-        <input id="community-search" name="q" type="search" placeholder="clarifiers, confidence, ethics..." />
-        <button type="submit">Search</button>
-      </div>
-    </form>
-
-    <section class="community-sections" aria-labelledby="sections-heading">
-      <h2 id="sections-heading">Two rooms</h2>
-      <div class="community-section-grid">
-        {sections.map((section) => <CommunitySectionCard section={section} />)}
-      </div>
-    </section>
-
-    <section class="community-philosophy" aria-labelledby="philosophy-heading">
-      <h2 id="philosophy-heading">Why this space exists</h2>
-      <p>
-        The wider social platforms can be noisy, harsh, competitive, and performative.
-        They often reward certainty, speed, drama, and visibility.
-      </p>
-      <p>
-        That is not the atmosphere many readers need when they are trying to grow.
-      </p>
-      <p>
-        The Practice Commons is intentionally different. It is small by design,
-        personalised where possible, and focused on thoughtful development rather than
-        public performance.
-      </p>
-      <p>
-        Readers and seekers are welcome here when they are genuinely interested in
-        strengthening practice, asking better questions, and learning to work with
-        symbolism more carefully.
-      </p>
-    </section>
-
-    <section class="community-create" aria-labelledby="create-heading">
-      <h2 id="create-heading">Share a practice note</h2>
-      <p>
-        Start with one clear question, observation, or reading dilemma. There is no need to rush.
-      </p>
-      {
-        canPost ? (
-          <>
-            <aside class="community-room-guide" aria-labelledby="room-guide-heading">
-              <h3 id="room-guide-heading">Which room fits best?</h3>
-              <div class="community-room-guide__grid">
-                <article>
-                  <h4>Reading Practice</h4>
-                  <p>Bring cards and readings.</p>
-                  <ul>
-                    <li>What else do you see in this spread?</li>
-                    <li>This card combination puzzles me.</li>
-                  </ul>
-                </article>
-                <article>
-                  <h4>Reader Development</h4>
-                  <p>Bring experiences and growth.</p>
-                  <ul>
-                    <li>How do you know when you're forcing an interpretation?</li>
-                    <li>What helped you trust your intuition?</li>
-                  </ul>
-                </article>
-              </div>
-            </aside>
-
-            <div class="community-create-grid">
-              {sections.map((section) => {
-                const roomCopy = roomCreationCopy[section.key];
-                return (
-                  <article class={`community-create-card community-create-card--${section.key}`}>
-                    <h3>{section.name}</h3>
-                    <p>{roomCopy.short}</p>
-                    <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
-                  </article>
-                );
-              })}
+          <form class="community-search" method="get" action="/community/search/">
+            <label for="community-search">Search the Practice Commons</label>
+            <div>
+              <input id="community-search" name="q" type="search" placeholder="clarifiers, confidence, ethics..." />
+              <button type="submit">Search</button>
             </div>
-          </>
-        ) : (
-          <CommunityAuthPrompt message="Join the Practice Commons to share a practice note or reply to another reader." />
-        )
-      }
-    </section>
+          </form>
 
-    <section class="community-posts" aria-labelledby="recent-heading">
-      <h2 id="recent-heading">Recent practice notes</h2>
-      <CommunityPostList posts={posts} />
-      <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
-    </section>
+          <section class="community-sections" aria-labelledby="sections-heading">
+            <h2 id="sections-heading">Two rooms</h2>
+            <div class="community-section-grid">
+              {sections.map((section) => <CommunitySectionCard section={section} />)}
+            </div>
+          </section>
+
+          <section class="community-philosophy" aria-labelledby="philosophy-heading">
+            <h2 id="philosophy-heading">Why this space exists</h2>
+            <p>
+              Readers often need a quieter place to practise, ask better questions,
+              and notice what unfolds when interpretation is given time.
+            </p>
+            <p>
+              The Practice Commons is intentionally different. It is small by design,
+              personalised where possible, and focused on thoughtful development rather than
+              public performance.
+            </p>
+            <p>
+              Readers and seekers are welcome here when they are genuinely interested in
+              strengthening practice, asking better questions, and learning to work with
+              symbolism more carefully.
+            </p>
+          </section>
+
+          <section class="community-create" aria-labelledby="create-heading">
+            <h2 id="create-heading">Share a practice note</h2>
+            <p>
+              Start with one clear question, observation, or reading dilemma. There is no need to rush.
+            </p>
+            <CommunityAuthPrompt message="Join the Practice Commons to share a practice note or reply to another reader." />
+          </section>
+
+          <section class="community-posts" aria-labelledby="recent-heading">
+            <h2 id="recent-heading">Recent practice notes</h2>
+            <CommunityPostList posts={posts} />
+            <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+          </section>
+        </>
+      )
+    }
   </main>
 </BaseLayout>
 
@@ -216,9 +202,18 @@ const jsonLd = [
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
+  .community--dashboard {
+    padding-top: clamp(0.75rem, 2.5vw, 1.75rem);
+  }
+
   .community-hero {
     max-width: 48rem;
     margin-top: 1rem;
+  }
+
+  .community--dashboard .community-hero {
+    max-width: 62rem;
+    margin-top: 0.35rem;
   }
 
   .community-kicker {
@@ -236,6 +231,20 @@ const jsonLd = [
     font-weight: 400;
     line-height: 1;
     color: var(--tok-water);
+  }
+
+  .community--dashboard .community-hero h1 {
+    margin-bottom: 0.35rem;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    line-height: 1.05;
+  }
+
+  .community-hero__summary {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--tok-text-muted);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.55;
   }
 
   .community-status-message {
@@ -360,8 +369,83 @@ const jsonLd = [
   .community-sections,
   .community-philosophy,
   .community-create,
-  .community-posts {
+  .community-posts,
+  .community-actions {
     margin-top: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .community-dashboard-rooms,
+  .community-posts--dashboard,
+  .community-actions,
+  .community-philosophy--dashboard {
+    margin-top: clamp(0.95rem, 2.4vw, 1.55rem);
+  }
+
+  .community-dashboard-rooms__heading,
+  .community-section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .community-dashboard-rooms__heading h2,
+  .community-section-heading h2 {
+    margin: 0;
+  }
+
+  .community-dashboard-rooms__heading a,
+  .community-section-heading a {
+    color: var(--tok-gold-deep);
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .community-dashboard-rooms__heading a:hover,
+  .community-section-heading a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .community-section-grid--dashboard {
+    gap: 0.85rem;
+  }
+
+  .community-actions {
+    max-width: 62rem;
+  }
+
+  .community-actions h2 {
+    margin: 0 0 0.55rem;
+  }
+
+  .community-actions__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .community-actions__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.62rem 0.85rem;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-size: var(--tok-type-meta);
+    font-weight: var(--tok-ui-btn-font-weight);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .community-actions__button--secondary {
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    background: transparent;
+    color: var(--tok-water);
   }
 
   .community-philosophy {
@@ -372,6 +456,11 @@ const jsonLd = [
     background: color-mix(in srgb, var(--tok-surface-reading) 62%, transparent);
   }
 
+  .community-philosophy--dashboard {
+    max-width: 62rem;
+    padding: clamp(0.9rem, 3vw, 1.2rem);
+  }
+
   .community-philosophy h2 {
     margin-top: 0;
   }
@@ -380,74 +469,9 @@ const jsonLd = [
     margin-bottom: 0;
   }
 
-  .community-section-grid,
-  .community-create-grid {
+  .community-section-grid {
     display: grid;
     gap: 1rem;
-  }
-
-  .community-room-guide {
-    margin-bottom: 1rem;
-    padding: clamp(1rem, 4vw, 1.4rem);
-    border: 1px solid color-mix(in srgb, var(--tok-border-light) 80%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading-soft) 50%, transparent);
-  }
-
-  .community-room-guide h3,
-  .community-room-guide h4 {
-    margin: 0;
-    font-family: var(--font-heading);
-    color: var(--tok-water);
-  }
-
-  .community-room-guide h3 {
-    margin-bottom: 0.85rem;
-    font-size: clamp(1.2rem, 4vw, 1.55rem);
-  }
-
-  .community-room-guide__grid {
-    display: grid;
-    gap: 0.85rem;
-  }
-
-  .community-room-guide article {
-    padding: 0.85rem;
-    border-radius: var(--radius-control);
-    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
-  }
-
-  .community-room-guide p,
-  .community-room-guide ul {
-    color: var(--tok-text-muted);
-    line-height: 1.65;
-  }
-
-  .community-room-guide ul {
-    margin: 0.55rem 0 0;
-    padding-left: 1.15rem;
-  }
-
-  .community-create-card {
-    padding: 1rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
-    border-radius: var(--radius-lg);
-  }
-
-  .community-create-card--reading-practice {
-    background: color-mix(in srgb, var(--tok-water) 8%, var(--tok-surface-reading) 92%);
-    border-color: color-mix(in srgb, var(--tok-gold) 38%, transparent);
-  }
-
-  .community-create-card--reader-development {
-    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
-    border-color: color-mix(in srgb, var(--tok-teal) 34%, transparent);
-  }
-
-  .community-create-grid h3 {
-    margin: 0 0 0.8rem;
-    font-family: var(--font-heading);
-    color: var(--tok-water);
   }
 
   @media (min-width: 760px) {
@@ -455,13 +479,17 @@ const jsonLd = [
       grid-template-columns: minmax(0, 1fr) auto;
     }
 
-    .community-room-guide__grid {
+    .community-section-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
-    .community-section-grid,
-    .community-create-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (max-width: 640px) {
+    .community-dashboard-rooms__heading,
+    .community-section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.35rem;
     }
   }
 </style>

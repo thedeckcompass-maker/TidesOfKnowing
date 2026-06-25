@@ -8,13 +8,15 @@ import {
 interface Props {
   posts: CommunityPostSummary[];
   emptyMessage?: string;
+  compact?: boolean;
 }
 
-const { posts, emptyMessage = "No discussions yet. Start a conversation." } = Astro.props;
+const { posts, emptyMessage = "No discussions yet. Start a conversation.", compact = false } = Astro.props;
 
 function excerpt(body: string): string {
   const plain = body.replace(/\s+/g, " ").trim();
-  return plain.length > 220 ? `${plain.slice(0, 217)}...` : plain;
+  const maxLength = compact ? 120 : 220;
+  return plain.length > maxLength ? `${plain.slice(0, maxLength - 3)}...` : plain;
 }
 
 function formatDate(value: string): string {
@@ -28,7 +30,7 @@ function formatDate(value: string): string {
 
 {
   posts.length > 0 ? (
-    <ol class="community-post-list" role="list">
+    <ol class={`community-post-list${compact ? " community-post-list--compact" : ""}`} role="list">
       {posts.map((post) => (
         <li>
           <article class="community-post-card">
@@ -126,5 +128,35 @@ function formatDate(value: string): string {
     border-radius: var(--radius-lg);
     color: var(--tok-text-muted);
     line-height: 1.7;
+  }
+
+  .community-post-list--compact {
+    gap: 0.55rem;
+  }
+
+  .community-post-list--compact .community-post-card {
+    padding: 0.78rem 0.9rem;
+    border-radius: var(--radius-control);
+  }
+
+  .community-post-list--compact .community-post-card h2 {
+    margin: 0.28rem 0 0.25rem;
+    font-size: clamp(1.05rem, 3vw, 1.28rem);
+  }
+
+  .community-post-list--compact .community-post-card__excerpt {
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    line-height: 1.5;
+  }
+
+  .community-post-list--compact .community-post-card__foot {
+    margin-top: 0.45rem;
+  }
+
+  @media (max-width: 640px) {
+    .community-post-list--compact .community-post-card__excerpt {
+      display: none;
+    }
   }
 </style>
