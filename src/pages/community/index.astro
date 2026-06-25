@@ -126,70 +126,46 @@ const jsonLd = [
         </>
       ) : (
         <>
-          <section class="community-auth-card" aria-labelledby="community-auth-heading">
+          <section class="community-auth-card community-auth-card--join" aria-labelledby="community-auth-heading">
             <div>
               <p class="community-auth-card__kicker">Join the Practice Commons</p>
-              <h2 id="community-auth-heading">Continue to the Practice Commons</h2>
-              <p>Enter your name and email and we'll send you a sign-in link.</p>
+              <h2 id="community-auth-heading">Join the Practice Commons</h2>
+              <p>Enter your name and email and we'll send you a secure sign-in link.</p>
             </div>
-            <a class="community-auth-card__button" href="/auth/register/">Continue</a>
+            <form class="community-join-form" method="post" action="/auth/register/">
+              <label for="community-display-name">Display name</label>
+              <input
+                id="community-display-name"
+                name="displayName"
+                type="text"
+                autocomplete="nickname"
+                minlength="2"
+                maxlength="60"
+                required
+              />
+              <label for="community-email">Email address</label>
+              <input id="community-email" name="email" type="email" autocomplete="email" required />
+              <p class="community-join-form__help">
+                We'll send your secure sign-in link to this email address, so please check it carefully before continuing.
+              </p>
+              <button type="submit">Continue</button>
+            </form>
           </section>
 
           <section class="community-intro" aria-label="About the Practice Commons">
             <p>
-              The Practice Commons is a quieter space for readers who want to deepen their
-              craft away from the noise of social platforms.
-            </p>
-            <p class="community-intro__plain">
-              Thoughtful practice, reflective conversation, and reader development belong here.
-            </p>
-          </section>
-
-          <form class="community-search" method="get" action="/community/search/">
-            <label for="community-search">Search the Practice Commons</label>
-            <div>
-              <input id="community-search" name="q" type="search" placeholder="clarifiers, confidence, ethics..." />
-              <button type="submit">Search</button>
-            </div>
-          </form>
-
-          <section class="community-sections" aria-labelledby="sections-heading">
-            <h2 id="sections-heading">Two rooms</h2>
-            <div class="community-section-grid">
-              {sections.map((section) => <CommunitySectionCard section={section} />)}
-            </div>
-          </section>
-
-          <section class="community-philosophy" aria-labelledby="philosophy-heading">
-            <h2 id="philosophy-heading">Why this space exists</h2>
-            <p>
-              Readers often need a quieter place to practise, ask better questions,
-              and notice what unfolds when interpretation is given time.
+              Every tarot reader reaches a point where guidebooks stop being enough.
+              Practice Commons is a reflective learning community for tarot readers and
+              intuitive practitioners who want to strengthen their confidence through
+              thoughtful discussion, shared interpretation, and practical experience.
             </p>
             <p>
-              The Practice Commons is intentionally different. It is small by design,
-              personalised where possible, and focused on thoughtful development rather than
-              public performance.
+              Members bring real readings, symbols, questions, and uncertainties into
+              conversation. Leilia participates throughout the Community, sharing the practical
+              wisdom and pattern recognition developed over more than 40 years of reading tarot
+              and oracle cards. The goal is not to tell you what to think, but to help you become
+              a more confident, discerning, and capable reader in your own right.
             </p>
-            <p>
-              Readers and seekers are welcome here when they are genuinely interested in
-              strengthening practice, asking better questions, and learning to work with
-              symbolism more carefully.
-            </p>
-          </section>
-
-          <section class="community-create" aria-labelledby="create-heading">
-            <h2 id="create-heading">Share a practice note</h2>
-            <p>
-              Start with one clear question, observation, or reading dilemma. There is no need to rush.
-            </p>
-            <CommunityAuthPrompt message="Join the Practice Commons to share a practice note or reply to another reader." />
-          </section>
-
-          <section class="community-posts" aria-labelledby="recent-heading">
-            <h2 id="recent-heading">Recent practice notes</h2>
-            <CommunityPostList posts={posts} />
-            <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
           </section>
         </>
       )
@@ -202,6 +178,44 @@ const jsonLd = [
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
+  .community:not(.community--dashboard) {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.6rem);
+    min-height: calc(100dvh - var(--tok-header-height));
+    padding-top: clamp(0.9rem, 3vw, 2rem);
+  }
+
+  .community:not(.community--dashboard)::before {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    content: "";
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(in srgb, var(--tok-deep-ocean) 8%, transparent),
+        transparent 55%
+      ),
+      url("/images/community/compass-feather-hourglass.png") right top / min(48vw, 36rem) auto no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .community:not(.community--dashboard)::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--tok-surface-reading) 82%, transparent),
+      color-mix(in srgb, var(--tok-surface-reading) 58%, transparent)
+    );
+    pointer-events: none;
+  }
+
   .community--dashboard {
     padding-top: clamp(0.75rem, 2.5vw, 1.75rem);
   }
@@ -209,6 +223,11 @@ const jsonLd = [
   .community-hero {
     max-width: 48rem;
     margin-top: 1rem;
+  }
+
+  .community:not(.community--dashboard) .community-hero {
+    max-width: 44rem;
+    margin-top: 0.25rem;
   }
 
   .community--dashboard .community-hero {
@@ -231,6 +250,12 @@ const jsonLd = [
     font-weight: 400;
     line-height: 1;
     color: var(--tok-water);
+  }
+
+  .community:not(.community--dashboard) .community-hero h1 {
+    margin-bottom: 0;
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    line-height: 1.02;
   }
 
   .community--dashboard .community-hero h1 {
@@ -266,12 +291,17 @@ const jsonLd = [
   }
 
   .community-intro {
-    max-width: 48rem;
-    margin-top: clamp(1.25rem, 4vw, 2rem);
+    max-width: 54rem;
+    margin-top: 0;
   }
 
-  .community-intro__plain {
-    color: var(--tok-text-dark);
+  .community-intro p {
+    max-width: 50rem;
+    margin: 0;
+  }
+
+  .community-intro p + p {
+    margin-top: 0.75rem;
   }
 
   .community-auth-card {
@@ -285,6 +315,14 @@ const jsonLd = [
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
     box-shadow: var(--shadow-sm);
+  }
+
+  .community-auth-card--join {
+    grid-row: 2;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 38rem;
+    margin-top: 0;
+    padding: clamp(1rem, 3vw, 1.35rem);
   }
 
   .community-auth-card__kicker {
@@ -316,6 +354,46 @@ const jsonLd = [
     color: var(--tok-btn-filled-fg);
     font-weight: var(--tok-ui-btn-font-weight);
     text-decoration: none;
+  }
+
+  .community-join-form {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .community-join-form label {
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .community-join-form__help {
+    margin: -0.35rem 0 0.15rem;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    line-height: 1.45;
+  }
+
+  .community-join-form input {
+    width: 100%;
+    padding: 0.72rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+  }
+
+  .community-join-form button {
+    justify-self: start;
+    margin-top: 0.2rem;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
   }
 
   .community-search {

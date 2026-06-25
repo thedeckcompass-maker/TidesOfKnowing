@@ -152,7 +152,7 @@ if (Astro.request.method === "POST") {
       <p class="auth-kicker">Practice Commons</p>
       <h1 id="auth-heading">Join the Practice Commons</h1>
       <p class="auth-lede">
-        Enter your name and email. We'll email you a sign-in link.
+        Enter your name and email and we'll send you a secure sign-in link.
       </p>
 
       {
@@ -172,6 +172,9 @@ if (Astro.request.method === "POST") {
         <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
+        <p class="auth-help">
+          We'll send your secure sign-in link to this email address, so please check it carefully before continuing.
+        </p>
         <button type="submit" data-auth-register-submit>Continue</button>
         <p class="auth-submit-status" data-auth-register-status hidden>
           Please wait... we're sending your secure sign-in link.
@@ -212,15 +215,48 @@ if (Astro.request.method === "POST") {
 
 <style>
   .auth-page {
-    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100dvh - var(--tok-header-height));
+    padding: clamp(0.9rem, 3vw, 2rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+
+  .auth-page::before {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    content: "";
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(in srgb, var(--tok-deep-ocean) 8%, transparent),
+        transparent 55%
+      ),
+      url("/images/community/compass-feather-hourglass.png") right top / min(48vw, 36rem) auto no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .auth-page::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--tok-surface-reading) 82%, transparent),
+      color-mix(in srgb, var(--tok-surface-reading) 58%, transparent)
+    );
+    pointer-events: none;
   }
 
   .auth-card {
     max-width: 34rem;
-    padding: clamp(1.25rem, 4vw, 2rem);
+    padding: clamp(1rem, 3vw, 1.5rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
     border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 82%, transparent);
+    box-shadow: var(--shadow-sm);
   }
 
   .auth-kicker {
@@ -232,24 +268,24 @@ if (Astro.request.method === "POST") {
   }
 
   .auth-card h1 {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.45rem;
     font-family: var(--font-accent);
-    font-size: clamp(2rem, 7vw, 3rem);
+    font-size: clamp(2rem, 6vw, 2.8rem);
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.05;
     color: var(--tok-water);
   }
 
   .auth-lede,
   .auth-alt {
     color: var(--tok-text-muted);
-    line-height: 1.7;
+    line-height: 1.55;
   }
 
   .auth-form {
     display: grid;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
+    gap: 0.65rem;
+    margin-top: 1rem;
   }
 
   .auth-form label {
