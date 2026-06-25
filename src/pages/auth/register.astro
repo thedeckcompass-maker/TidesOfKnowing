@@ -128,7 +128,7 @@ if (Astro.request.method === "POST") {
       });
       error = "Unable to send a sign-in link right now. Please try again.";
       errorReference = registrationReference;
-      errorCode = details.code ?? "not returned";
+      errorCode = details.code ?? "";
     } else {
       console.info("Practice Commons sign-in link request accepted", {
         reference: registrationReference,
@@ -165,18 +165,50 @@ if (Astro.request.method === "POST") {
         ) : null
       }
 
-      <form method="post" class="auth-form">
+      <form method="post" class="auth-form" data-auth-register-form>
         <input type="hidden" name="redirectTo" value={redirectTo} />
         <label for="displayName">Display name</label>
         <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
         <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
-        <button type="submit">Continue</button>
+        <button type="submit" data-auth-register-submit>Continue</button>
+        <p class="auth-submit-status" data-auth-register-status hidden>
+          Please wait... we're sending your secure sign-in link.
+        </p>
       </form>
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  const form = document.querySelector("[data-auth-register-form]");
+
+  if (form instanceof HTMLFormElement && form.dataset.submitBound !== "true") {
+    form.dataset.submitBound = "true";
+    let submitted = false;
+
+    form.addEventListener("submit", (event) => {
+      if (submitted) {
+        event.preventDefault();
+        return;
+      }
+
+      submitted = true;
+
+      const submitButton = form.querySelector("[data-auth-register-submit]");
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+      }
+
+      const statusMessage = form.querySelector("[data-auth-register-status]");
+      if (statusMessage instanceof HTMLElement) {
+        statusMessage.hidden = false;
+      }
+    });
+  }
+</script>
 
 <style>
   .auth-page {
@@ -255,6 +287,13 @@ if (Astro.request.method === "POST") {
     color: var(--tok-btn-filled-fg);
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .auth-submit-status {
+    margin: -0.35rem 0 0;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    line-height: 1.5;
   }
 
   .auth-notice {
