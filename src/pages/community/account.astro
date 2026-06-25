@@ -65,7 +65,7 @@ if (isAdmin) {
       <h2 id="profile-heading">Profile</h2>
       <p><strong>Display name:</strong> {profile?.display_name ?? "Reader"}</p>
       <p><strong>Status:</strong> {profile?.status ?? "active"}</p>
-      <form method="post" action="/auth/logout">
+      <form method="post" action="/auth/logout/">
         <button type="submit">Log out</button>
       </form>
     </section>

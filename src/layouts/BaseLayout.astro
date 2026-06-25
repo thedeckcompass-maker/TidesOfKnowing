@@ -110,6 +110,7 @@ const isArticlesSection =
 const isAboutRoute = pathname.startsWith("/about");
 const isCommunityRoute = pathname.startsWith("/community");
 const isAskLeiliaRoute = pathname.startsWith("/ask-leilia");
+const isAuthenticated = Boolean(Astro.locals.user);
 const isFieldNotesSection =
   pathname === "/blog" || pathname.startsWith("/blog/");
 const baseBodySurface =
@@ -264,6 +265,24 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
           >
             About
           </a>
+          {
+            isAuthenticated ? (
+              <>
+                <a
+                  class="site-nav__link"
+                  href="/community/account/"
+                  aria-current={pathname.startsWith("/community/account") ? "page" : undefined}
+                >
+                  Account
+                </a>
+                <form class="site-nav__logout-form" method="post" action="/auth/logout/">
+                  <button class="site-nav__link site-nav__logout-button" type="submit">
+                    Log out
+                  </button>
+                </form>
+              </>
+            ) : null
+          }
         </nav>
       </div>
     </header>
@@ -501,6 +520,17 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
     padding-bottom: 0.15rem;
   }
 
+  .site-nav__logout-form {
+    margin: 0;
+  }
+
+  .site-nav__logout-button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
   .site-nav__link:hover {
     color: var(--masthead-text);
   }
@@ -692,6 +722,11 @@ const bodyClass = [baseBodySurface, bodyClassProp].filter(Boolean).join(" ");
       border-top: 1px solid color-mix(in srgb, var(--tok-border-system) 75%, transparent);
       color: color-mix(in srgb, var(--tok-text-light-soft) 65%, transparent);
       border-bottom: 2px solid transparent;
+    }
+
+    .site-nav__logout-button {
+      width: 100%;
+      text-align: left;
     }
 
     .site-nav__link:first-child {

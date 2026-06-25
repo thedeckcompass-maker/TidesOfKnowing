@@ -10,10 +10,10 @@ async function signOut(locals: App.Locals) {
 
 export const GET: APIRoute = async ({ locals, redirect }) => {
   await signOut(locals);
-  return redirect("/community/", 303);
+  return redirect("/community/?signed_out=true", 303);
 };
 
 export const POST: APIRoute = async ({ locals, redirect }) => {
   await signOut(locals);
-  return redirect("/community/", 303);
+  return redirect("/community/?signed_out=true", 303);
 };

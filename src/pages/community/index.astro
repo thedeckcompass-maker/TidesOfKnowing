@@ -33,6 +33,7 @@ const { posts, totalPages } = Astro.locals.supabase
 const pager = communityPaginationState({ kind: "all" }, 1, totalPages, base);
 const canPost = canContribute(Astro.locals.profile);
 const displayName = Astro.locals.profile?.display_name ?? "Reader";
+const signedOut = Astro.url.searchParams.get("signed_out") === "true";
 const roomCreationCopy = {
   "reading-practice": {
     short: "Bring cards and readings.",
@@ -69,6 +70,14 @@ const jsonLd = [
       <p class="community-kicker">Practice Commons</p>
       <h1>A quiet place for readers to become better readers.</h1>
     </header>
+
+    {
+      signedOut ? (
+        <p class="community-status-message" role="status">
+          You've been signed out successfully.
+        </p>
+      ) : null
+    }
 
     <section class="community-auth-card" aria-labelledby="community-auth-heading">
       {
@@ -227,6 +236,17 @@ const jsonLd = [
     font-weight: 400;
     line-height: 1;
     color: var(--tok-water);
+  }
+
+  .community-status-message {
+    max-width: 48rem;
+    margin: 1rem 0 0;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
+    color: var(--tok-text-dark);
+    line-height: 1.6;
   }
 
   .community-intro p,
