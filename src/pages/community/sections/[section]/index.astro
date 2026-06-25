@@ -79,6 +79,20 @@ const section =
   null;
 if (!section) return Astro.redirect("/community/", 302);
 const room = SECTION_ROOM_COPY[section.key];
+const postGuidance =
+  section.key === "reading-practice"
+    ? [
+        "Start with the question, cards, and spread position if relevant.",
+        "Share your own interpretation before asking for feedback.",
+        "Name the part that feels unclear, contradictory, or worth exploring.",
+        "Add an image when the deck, layout, or visual detail matters.",
+      ]
+    : [
+        "Start with the practice question or reader-development challenge.",
+        "Share what you have already tried or noticed.",
+        "Name the kind of reflection or feedback that would be useful.",
+        "Keep the focus on practice, discernment, and reader development.",
+      ];
 
 const { posts, totalPages } = Astro.locals.supabase
   ? await getCommunityPosts(Astro.locals.supabase, {
@@ -96,93 +110,145 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
   ogUrl={canonical}
 >
   <main class="community-section page-inner">
-    <p class="community-section__kicker">Practice Commons</p>
-    <h1>{section.name}</h1>
-    <div class="community-section__intro">
-      {room.intro.map((paragraph) => <p>{paragraph}</p>)}
-    </div>
-
-    <section class="community-section__room-guide" aria-labelledby="room-purpose-heading">
-      <div class="community-section__panel community-section__panel--wide">
-        <h2 id="room-purpose-heading">What this room is for</h2>
-        <div class="community-section__icon-grid">
-          {
-            room.purpose.map((item) => (
-              <article class="community-section__icon-item">
-                <CommunityIcon name={item.icon} />
-                <p>{item.label}</p>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="community-section__panel">
-        <div class="community-section__panel-heading">
-          <CommunityIcon name="pencil" />
-          <h2>How to participate</h2>
-        </div>
-        {room.participate.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
-
-      <div class="community-section__panel">
-        <div class="community-section__panel-heading">
-          <CommunityIcon name="heart" />
-          <h2>Tone</h2>
-        </div>
-        {room.tone.map((paragraph) => <p>{paragraph}</p>)}
-      </div>
-    </section>
-
-    <section class="community-section__philosophy" aria-labelledby="philosophy-heading">
-      <div class="community-section__panel-heading">
-        <CommunityIcon name="leaf" />
-        <h2 id="philosophy-heading">Why this space exists</h2>
-      </div>
-      <p>
-        The wider social platforms can be noisy, harsh, competitive, and performative.
-        They often reward certainty, speed, drama, and visibility.
-      </p>
-      <p>
-        That is not the atmosphere many readers need when they are trying to grow.
-      </p>
-      <p>
-        The Practice Commons is intentionally different.
-      </p>
-      <p>
-        It is small by design, personalised where possible, and focused on thoughtful
-        development rather than public performance.
-      </p>
-      <p>
-        Readers and seekers are welcome here when they are genuinely interested in
-        strengthening practice, asking better questions, and learning to work with
-        symbolism more carefully.
-      </p>
-    </section>
+    <header class="community-section__hero">
+      <p class="community-section__kicker">Practice Commons</p>
+      <h1>{section.name}</h1>
+      <p>{room.intro[0]}</p>
+    </header>
 
     <section class="community-section__create" aria-labelledby="create-heading">
-      <h2 id="create-heading">Share in {section.name}</h2>
-      {
-        canContribute(Astro.locals.profile) ? (
-          <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
-        ) : (
-          <CommunityAuthPrompt message={`Join the Practice Commons to post in ${section.name}.`} />
-        )
-      }
+      <div class="community-section__form-column">
+        <h2 id="create-heading">Share in {section.name}</h2>
+        {
+          canContribute(Astro.locals.profile) ? (
+            <CommunityPostForm sections={sections} selectedSectionKey={section.key} />
+          ) : (
+            <CommunityAuthPrompt message={`Join the Practice Commons to post in ${section.name}.`} />
+          )
+        }
+      </div>
+      <aside class="community-section__posting-guide" aria-labelledby="posting-guide-heading">
+        <div class="community-section__panel-heading">
+          <CommunityIcon name="pencil" />
+          <h2 id="posting-guide-heading">Writing a useful post</h2>
+        </div>
+        <ul>
+          {postGuidance.map((item) => <li>{item}</li>)}
+        </ul>
+      </aside>
     </section>
 
     <section class="community-section__posts" aria-labelledby="posts-heading">
-      <h2 id="posts-heading">Posts</h2>
+      <h2 id="posts-heading">Current conversations</h2>
       <CommunityPostList posts={posts} />
       <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
+    </section>
+
+    <section class="community-section__supporting" aria-label={`${section.name} guidance`}>
+      <section class="community-section__room-guide" aria-labelledby="room-purpose-heading">
+        <div class="community-section__panel community-section__panel--wide">
+          <h2 id="room-purpose-heading">What this room is for</h2>
+          <div class="community-section__icon-grid">
+            {
+              room.purpose.map((item) => (
+                <article class="community-section__icon-item">
+                  <CommunityIcon name={item.icon} />
+                  <p>{item.label}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="community-section__panel">
+          <div class="community-section__panel-heading">
+            <CommunityIcon name="pencil" />
+            <h2>How to participate</h2>
+          </div>
+          {room.participate.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+
+        <div class="community-section__panel">
+          <div class="community-section__panel-heading">
+            <CommunityIcon name="heart" />
+            <h2>Tone</h2>
+          </div>
+          {room.tone.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </section>
+
+      <section class="community-section__philosophy" aria-labelledby="philosophy-heading">
+        <div class="community-section__panel-heading">
+          <CommunityIcon name="leaf" />
+          <h2 id="philosophy-heading">Why this space exists</h2>
+        </div>
+        <p>
+          The wider social platforms can be noisy, harsh, competitive, and performative.
+          They often reward certainty, speed, drama, and visibility.
+        </p>
+        <p>
+          That is not the atmosphere many readers need when they are trying to grow.
+        </p>
+        <p>
+          The Practice Commons is intentionally different.
+        </p>
+        <p>
+          It is small by design, personalised where possible, and focused on thoughtful
+          development rather than public performance.
+        </p>
+        <p>
+          Readers and seekers are welcome here when they are genuinely interested in
+          strengthening practice, asking better questions, and learning to work with
+          symbolism more carefully.
+        </p>
+      </section>
     </section>
   </main>
 </BaseLayout>
 
 <style>
   .community-section {
-    padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 62rem;
+    position: relative;
+    isolation: isolate;
+    max-width: 72rem;
+    padding: clamp(0.8rem, 2.5vw, 1.5rem) 0 clamp(2.25rem, 6vw, 4rem);
+  }
+
+  .community-section::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: -2;
+    width: 100vw;
+    content: "";
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(in srgb, var(--tok-deep-ocean) 10%, transparent),
+        transparent 56%
+      ),
+      url("/images/community/compass-feather-hourglass.png") right top / min(48vw, 38rem) auto no-repeat;
+    opacity: 0.18;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .community-section::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: -1;
+    width: 100vw;
+    content: "";
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--tok-surface-reading) 82%, transparent),
+      color-mix(in srgb, var(--tok-surface-reading) 62%, transparent)
+    );
+    pointer-events: none;
+    transform: translateX(-50%);
   }
 
   .community-section__kicker,
@@ -193,41 +259,56 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
     color: var(--tok-text-muted);
   }
 
+  .community-section__hero {
+    max-width: 50rem;
+    margin-bottom: clamp(1rem, 3vw, 1.55rem);
+  }
+
+  .community-section__kicker {
+    margin: 0 0 0.45rem;
+  }
+
   .community-section h1 {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.45rem;
     font-family: var(--font-accent);
-    font-size: clamp(2.2rem, 8vw, 4rem);
+    font-size: clamp(2rem, 6vw, 3.25rem);
     font-weight: 400;
+    line-height: 1.02;
     color: var(--tok-water);
   }
 
-  .community-section__intro {
-    max-width: 52rem;
+  .community-section__hero p,
+  .community-section__panel p,
+  .community-section__philosophy p,
+  .community-section__posting-guide li {
+    color: var(--tok-text-muted);
+    line-height: 1.58;
   }
 
-  .community-section__intro p,
-  .community-section__panel p,
-  .community-section__philosophy p {
-    color: var(--tok-text-muted);
-    line-height: 1.8;
+  .community-section__hero p {
+    max-width: 44rem;
+    margin: 0;
   }
 
   .community-section__room-guide {
     display: grid;
     gap: 1rem;
-    margin-top: clamp(2rem, 6vw, 3.25rem);
   }
 
   .community-section__panel,
-  .community-section__philosophy {
-    padding: clamp(1rem, 4vw, 1.5rem);
+  .community-section__philosophy,
+  .community-section__form-column,
+  .community-section__posting-guide {
+    padding: clamp(0.9rem, 3vw, 1.25rem);
     border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
     border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 62%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
   }
 
   .community-section__panel h2,
-  .community-section__philosophy h2 {
+  .community-section__philosophy h2,
+  .community-section__form-column h2,
+  .community-section__posting-guide h2 {
     margin-top: 0;
   }
 
@@ -235,7 +316,7 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
     display: flex;
     gap: 0.65rem;
     align-items: center;
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.7rem;
     color: var(--tok-gold-deep);
   }
 
@@ -245,14 +326,14 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
 
   .community-section__icon-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.6rem;
   }
 
   .community-section__icon-item {
     display: grid;
-    gap: 0.45rem;
+    gap: 0.35rem;
     justify-items: start;
-    padding: 0.85rem;
+    padding: 0.72rem;
     border: 1px solid color-mix(in srgb, var(--tok-border-light) 72%, transparent);
     border-radius: var(--radius-control);
     color: var(--tok-gold-deep);
@@ -266,21 +347,57 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
   }
 
   .community-section__panel p:last-child,
-  .community-section__philosophy p:last-child {
+  .community-section__philosophy p:last-child,
+  .community-section__posting-guide li:last-child {
     margin-bottom: 0;
   }
 
   .community-section__philosophy {
     max-width: 54rem;
-    margin-top: clamp(2rem, 6vw, 3rem);
   }
 
   .community-section__create,
-  .community-section__posts {
-    margin-top: clamp(2rem, 6vw, 3rem);
+  .community-section__posts,
+  .community-section__supporting {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .community-section__create {
+    display: grid;
+    gap: 0.9rem;
+    align-items: start;
+  }
+
+  .community-section__form-column h2,
+  .community-section__posts > h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .community-section__posting-guide {
+    align-self: start;
+  }
+
+  .community-section__posting-guide ul {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .community-section__supporting {
+    display: grid;
+    gap: clamp(1rem, 3vw, 1.4rem);
+  }
+
+  .community-section__posts > h2 {
+    margin-top: 0;
   }
 
   @media (min-width: 760px) {
+    .community-section__create {
+      grid-template-columns: minmax(0, 1.85fr) minmax(16rem, 1fr);
+    }
+
     .community-section__room-guide {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
