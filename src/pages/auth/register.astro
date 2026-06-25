@@ -152,7 +152,7 @@ if (Astro.request.method === "POST") {
       <p class="auth-kicker">Practice Commons</p>
       <h1 id="auth-heading">Join the Practice Commons</h1>
       <p class="auth-lede">
-        Enter your name and email and we'll send you a secure sign-in link.
+        Enter your name and email address and we'll email you a secure sign-in link.
       </p>
 
       {
@@ -165,52 +165,120 @@ if (Astro.request.method === "POST") {
         ) : null
       }
 
-      <form method="post" class="auth-form" data-auth-register-form>
+      <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
         <input type="hidden" name="redirectTo" value={redirectTo} />
-        <label for="displayName">Display name</label>
+        <label for="displayName">Your name</label>
         <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
-        <p class="auth-help">This is the name shown beside your posts and replies.</p>
         <label for="email">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required />
-        <p class="auth-help">
-          We'll send your secure sign-in link to this email address, so please check it carefully before continuing.
-        </p>
         <button type="submit" data-auth-register-submit>Continue</button>
         <p class="auth-submit-status" data-auth-register-status hidden>
           Please wait... we're sending your secure sign-in link.
         </p>
       </form>
+      <div class="auth-confirmation" data-auth-confirmation hidden>
+        <h2>✓ Check your email</h2>
+        <p>
+          We've sent a secure sign-in link to:
+          <strong data-auth-confirmation-email></strong>
+        </p>
+        <p>Click the link in that email to enter the Practice Commons.</p>
+        <p>If it doesn't arrive within a minute or two, check your Spam or Promotions folder.</p>
+        <button type="button" data-auth-reset>Send another link</button>
+      </div>
     </section>
   </main>
 </BaseLayout>
 
 <script>
-  const form = document.querySelector("[data-auth-register-form]");
+  const forms = document.querySelectorAll("[data-auth-register-form]");
 
-  if (form instanceof HTMLFormElement && form.dataset.submitBound !== "true") {
+  forms.forEach((form) => {
+    if (!(form instanceof HTMLFormElement) || form.dataset.submitBound === "true") return;
+
     form.dataset.submitBound = "true";
     let submitted = false;
+    const originalAction = form.getAttribute("action") || window.location.pathname;
+    const submitButton = form.querySelector("[data-auth-register-submit]");
+    const statusMessage = form.querySelector("[data-auth-register-status]");
+    const confirmation = form.parentElement?.querySelector("[data-auth-confirmation]");
+    const confirmationEmail = confirmation?.querySelector("[data-auth-confirmation-email]");
+    const resetButton = confirmation?.querySelector("[data-auth-reset]");
 
-    form.addEventListener("submit", (event) => {
+    function restoreForm() {
+      submitted = false;
+      form.hidden = false;
+      if (confirmation instanceof HTMLElement) confirmation.hidden = true;
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Continue";
+      }
+      if (statusMessage instanceof HTMLElement) {
+        statusMessage.hidden = true;
+        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
+      }
+    }
+
+    resetButton?.addEventListener("click", restoreForm);
+
+    form.addEventListener("submit", async (event) => {
       if (submitted) {
         event.preventDefault();
         return;
       }
 
+      if (!form.checkValidity()) return;
+
+      event.preventDefault();
       submitted = true;
 
-      const submitButton = form.querySelector("[data-auth-register-submit]");
       if (submitButton instanceof HTMLButtonElement) {
         submitButton.disabled = true;
-        submitButton.textContent = "Sending...";
+        submitButton.textContent = "Sending sign-in link...";
       }
 
-      const statusMessage = form.querySelector("[data-auth-register-status]");
       if (statusMessage instanceof HTMLElement) {
         statusMessage.hidden = false;
+        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
+      }
+
+      const formData = new FormData(form);
+      const email = String(formData.get("email") || "").trim();
+
+      try {
+        const response = await fetch(originalAction, {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "text/html" },
+        });
+        const responseUrl = new URL(response.url);
+
+        if (response.redirected && responseUrl.pathname === "/auth/check-email/") {
+          if (confirmationEmail instanceof HTMLElement) confirmationEmail.textContent = email;
+          form.hidden = true;
+          if (confirmation instanceof HTMLElement) confirmation.hidden = false;
+          return;
+        }
+
+        if (response.redirected) {
+          window.location.assign(response.url);
+          return;
+        }
+
+        throw new Error("Sign-in link request did not reach the confirmation page.");
+      } catch (_error) {
+        submitted = false;
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Continue";
+        }
+        if (statusMessage instanceof HTMLElement) {
+          statusMessage.hidden = false;
+          statusMessage.textContent = "Unable to send a sign-in link right now. Please try again.";
+        }
       }
     });
-  }
+  });
 </script>
 
 <style>
@@ -277,7 +345,8 @@ if (Astro.request.method === "POST") {
   }
 
   .auth-lede,
-  .auth-alt {
+  .auth-alt,
+  .auth-confirmation p {
     color: var(--tok-text-muted);
     line-height: 1.55;
   }
@@ -286,6 +355,10 @@ if (Astro.request.method === "POST") {
     display: grid;
     gap: 0.65rem;
     margin-top: 1rem;
+  }
+
+  .auth-form[hidden] {
+    display: none;
   }
 
   .auth-form label {
@@ -330,6 +403,51 @@ if (Astro.request.method === "POST") {
     color: var(--tok-text-muted);
     font-size: var(--tok-type-meta);
     line-height: 1.5;
+  }
+
+  .auth-confirmation {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-teal) 7%, var(--tok-surface-reading) 93%);
+  }
+
+  .auth-confirmation[hidden] {
+    display: none;
+  }
+
+  .auth-confirmation h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--tok-water);
+  }
+
+  .auth-confirmation p {
+    margin: 0;
+  }
+
+  .auth-confirmation strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--tok-text-dark);
+    font-weight: 800;
+  }
+
+  .auth-confirmation button {
+    justify-self: start;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-water);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
   }
 
   .auth-notice {

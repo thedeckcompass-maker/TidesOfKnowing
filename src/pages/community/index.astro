@@ -130,10 +130,10 @@ const jsonLd = [
             <div>
               <p class="community-auth-card__kicker">Join the Practice Commons</p>
               <h2 id="community-auth-heading">Join the Practice Commons</h2>
-              <p>Enter your name and email and we'll send you a secure sign-in link.</p>
+              <p>Enter your name and email address and we'll email you a secure sign-in link.</p>
             </div>
-            <form class="community-join-form" method="post" action="/auth/register/">
-              <label for="community-display-name">Display name</label>
+            <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
+              <label for="community-display-name">Your name</label>
               <input
                 id="community-display-name"
                 name="displayName"
@@ -145,26 +145,37 @@ const jsonLd = [
               />
               <label for="community-email">Email address</label>
               <input id="community-email" name="email" type="email" autocomplete="email" required />
-              <p class="community-join-form__help">
-                We'll send your secure sign-in link to this email address, so please check it carefully before continuing.
+              <button type="submit" data-auth-register-submit>Continue</button>
+              <p class="community-join-form__help" data-auth-register-status hidden>
+                Please wait... we're sending your secure sign-in link.
               </p>
-              <button type="submit">Continue</button>
             </form>
+            <div class="community-auth-confirmation" data-auth-confirmation hidden>
+              <h3>✓ Check your email</h3>
+              <p>
+                We've sent a secure sign-in link to:
+                <strong data-auth-confirmation-email></strong>
+              </p>
+              <p>Click the link in that email to enter the Practice Commons.</p>
+              <p>If it doesn't arrive within a minute or two, check your Spam or Promotions folder.</p>
+              <button type="button" data-auth-reset>Send another link</button>
+            </div>
           </section>
 
           <section class="community-intro" aria-label="About the Practice Commons">
             <p>
-              Every tarot reader reaches a point where guidebooks stop being enough.
-              Practice Commons is a reflective learning community for tarot readers and
-              intuitive practitioners who want to strengthen their confidence through
-              thoughtful discussion, shared interpretation, and practical experience.
+              Every tarot reader reaches a point where knowing what the cards mean is no
+              longer enough. Practice Commons is a reflective learning community for tarot
+              readers and intuitive practitioners who want to develop deeper discernment
+              through thoughtful discussion, shared interpretation and practical experience.
             </p>
             <p>
-              Members bring real readings, symbols, questions, and uncertainties into
-              conversation. Leilia participates throughout the Community, sharing the practical
-              wisdom and pattern recognition developed over more than 40 years of reading tarot
-              and oracle cards. The goal is not to tell you what to think, but to help you become
-              a more confident, discerning, and capable reader in your own right.
+              Members bring real readings, symbols, questions and uncertainties into
+              conversation. Leilia participates throughout the Community, sharing the
+              practical wisdom and pattern recognition developed over more than 40 years
+              of reading tarot and oracle cards. Her role is not to provide definitive
+              answers, but to help members become more confident, more discerning and
+              ultimately more capable readers in their own right.
             </p>
           </section>
         </>
@@ -172,6 +183,97 @@ const jsonLd = [
     }
   </main>
 </BaseLayout>
+
+<script>
+  const forms = document.querySelectorAll("[data-auth-register-form]");
+
+  forms.forEach((form) => {
+    if (!(form instanceof HTMLFormElement) || form.dataset.submitBound === "true") return;
+
+    form.dataset.submitBound = "true";
+    let submitted = false;
+    const originalAction = form.getAttribute("action") || window.location.pathname;
+    const submitButton = form.querySelector("[data-auth-register-submit]");
+    const statusMessage = form.querySelector("[data-auth-register-status]");
+    const confirmation = form.parentElement?.querySelector("[data-auth-confirmation]");
+    const confirmationEmail = confirmation?.querySelector("[data-auth-confirmation-email]");
+    const resetButton = confirmation?.querySelector("[data-auth-reset]");
+
+    function restoreForm() {
+      submitted = false;
+      form.hidden = false;
+      if (confirmation instanceof HTMLElement) confirmation.hidden = true;
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Continue";
+      }
+      if (statusMessage instanceof HTMLElement) {
+        statusMessage.hidden = true;
+        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
+      }
+    }
+
+    resetButton?.addEventListener("click", restoreForm);
+
+    form.addEventListener("submit", async (event) => {
+      if (submitted) {
+        event.preventDefault();
+        return;
+      }
+
+      if (!form.checkValidity()) return;
+
+      event.preventDefault();
+      submitted = true;
+
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending sign-in link...";
+      }
+
+      if (statusMessage instanceof HTMLElement) {
+        statusMessage.hidden = false;
+        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
+      }
+
+      const formData = new FormData(form);
+      const email = String(formData.get("email") || "").trim();
+
+      try {
+        const response = await fetch(originalAction, {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "text/html" },
+        });
+        const responseUrl = new URL(response.url);
+
+        if (response.redirected && responseUrl.pathname === "/auth/check-email/") {
+          if (confirmationEmail instanceof HTMLElement) confirmationEmail.textContent = email;
+          form.hidden = true;
+          if (confirmation instanceof HTMLElement) confirmation.hidden = false;
+          return;
+        }
+
+        if (response.redirected) {
+          window.location.assign(response.url);
+          return;
+        }
+
+        throw new Error("Sign-in link request did not reach the confirmation page.");
+      } catch (_error) {
+        submitted = false;
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = false;
+          submitButton.textContent = "Continue";
+        }
+        if (statusMessage instanceof HTMLElement) {
+          statusMessage.hidden = false;
+          statusMessage.textContent = "Unable to send a sign-in link right now. Please try again.";
+        }
+      }
+    });
+  });
+</script>
 
 <style>
   .community {
@@ -343,7 +445,7 @@ const jsonLd = [
   .community-auth-card p {
     margin: 0;
     color: var(--tok-text-muted);
-    line-height: 1.7;
+    line-height: 1.55;
   }
 
   .community-auth-card__button {
@@ -362,6 +464,10 @@ const jsonLd = [
     margin-top: 1rem;
   }
 
+  .community-join-form[hidden] {
+    display: none;
+  }
+
   .community-join-form label {
     font-size: var(--tok-type-label);
     font-weight: 700;
@@ -373,6 +479,50 @@ const jsonLd = [
     color: var(--tok-text-muted);
     font-size: var(--tok-type-meta);
     line-height: 1.45;
+  }
+
+  .community-auth-confirmation {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-teal) 7%, var(--tok-surface-reading) 93%);
+  }
+
+  .community-auth-confirmation[hidden] {
+    display: none;
+  }
+
+  .community-auth-confirmation h3 {
+    margin: 0;
+    font-family: var(--font-heading);
+    color: var(--tok-water);
+  }
+
+  .community-auth-confirmation p {
+    margin: 0;
+    color: var(--tok-text-muted);
+    line-height: 1.5;
+  }
+
+  .community-auth-confirmation strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--tok-text-dark);
+    font-weight: 800;
+  }
+
+  .community-auth-confirmation button {
+    justify-self: start;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-water);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
   }
 
   .community-join-form input {
