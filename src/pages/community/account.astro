@@ -65,8 +65,8 @@ if (isAdmin) {
       <h2 id="profile-heading">Profile</h2>
       <p><strong>Display name:</strong> {profile?.display_name ?? "Reader"}</p>
       <p><strong>Status:</strong> {profile?.status ?? "active"}</p>
-      <form method="post" action="/auth/logout/">
-        <button type="submit">Log out</button>
+      <form class="community-account__logout" method="post" action="/auth/logout/">
+        <button class="community-account__logout-button" type="submit">Log out</button>
       </form>
     </section>
 
@@ -148,12 +148,21 @@ if (isAdmin) {
     line-height: 1.7;
   }
 
-  .community-account button {
+  .community-account__logout {
+    margin: 1rem 0 0;
+  }
+
+  .community-account__logout-button {
     padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
-    border: 0;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
     border-radius: var(--radius-control);
-    background: var(--tok-btn-filled-bg);
-    color: var(--tok-btn-filled-fg);
+    background: transparent;
+    color: var(--tok-water);
+    font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .community-account__logout-button:hover {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
   }
 </style>
