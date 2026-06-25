@@ -34,7 +34,9 @@ function callbackParams(url: URL) {
   return Object.fromEntries(
     [...url.searchParams.entries()].map(([key, value]) => [
       key,
-      key === "code" || key === "token_hash" ? `${value.slice(0, 8)}...` : value,
+      key === "code" || key === "token_hash" || key === "token"
+        ? `${value.slice(0, 8)}...`
+        : value,
     ]),
   );
 }
@@ -49,6 +51,7 @@ function responseCookieNames(cookies: Parameters<APIRoute>[0]["cookies"]): strin
 export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
   const code = url.searchParams.get("code");
   const tokenHash = url.searchParams.get("token_hash");
+  const token = url.searchParams.get("token");
   const otpType = safeOtpType(url.searchParams.get("type"));
   const redirectTo = safeRedirect(url.searchParams.get("redirectTo"));
   const callbackReference = crypto.randomUUID();
@@ -61,6 +64,8 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     code: code ? `${code.slice(0, 8)}...` : null,
     hasTokenHash: Boolean(tokenHash),
     tokenHash: tokenHash ? `${tokenHash.slice(0, 8)}...` : null,
+    hasToken: Boolean(token),
+    token: token ? `${token.slice(0, 8)}...` : null,
     otpType,
     redirectTo,
   });
@@ -73,8 +78,8 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     return redirect("/auth/register/", 303);
   }
 
-  if (!code && !tokenHash) {
-    console.error("Practice Commons auth callback missing code and token_hash", {
+  if (!code && !tokenHash && !token) {
+    console.error("Practice Commons auth callback missing code, token_hash, and token", {
       reference: callbackReference,
       requestUrl: url.href,
       searchParams: callbackParams(url),
@@ -83,7 +88,7 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     return redirect("/auth/register/", 303);
   }
 
-  const exchangeMode = code ? "code" : "token_hash";
+  const exchangeMode = code ? "code" : tokenHash ? "token_hash" : "token";
   console.info("Practice Commons auth callback starting session exchange", {
     reference: callbackReference,
     exchangeMode,
@@ -91,12 +96,13 @@ export const GET: APIRoute = async ({ url, locals, redirect, cookies }) => {
     redirectTo,
   });
 
-  const { error } = code
-    ? await locals.supabase.auth.exchangeCodeForSession(code)
-    : await locals.supabase.auth.verifyOtp({
-        token_hash: tokenHash ?? "",
-        type: otpType,
-      });
+  const { error } =
+    code || token
+      ? await locals.supabase.auth.exchangeCodeForSession(code ?? token ?? "")
+      : await locals.supabase.auth.verifyOtp({
+          token_hash: tokenHash ?? "",
+          type: otpType,
+        });
   const exchangeCookieNames = responseCookieNames(cookies);
 
   console.info("Practice Commons auth callback session exchange completed", {
