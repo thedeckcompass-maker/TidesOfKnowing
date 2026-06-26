@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import RepeatingCardPatternsEditorialLinks from "../../components/RepeatingCardPatternsEditorialLinks.astro";
 import {
@@ -14,12 +14,8 @@ import {
 } from "../../lib/repeatingCardMeanings";
 import { tarotCardImagePath } from "../../lib/tarotCardImage";
 import {
-  buildScopedSectionNav,
-  normalizeRepeatingCardArticleHtml,
-  prefixHeadingIdsInHtml,
-} from "../../lib/rcmHeadingIds";
-import {
   getRepeatingCardCanonicalPath,
+  getRepeatingCardHubPath,
   getRepeatingCardSeoHubPath,
   getRepeatingCardToolSelectorPath,
 } from "../../lib/repeatingCardUrls";
@@ -33,7 +29,7 @@ const ogUrl = new URL("/tools/repeating-card-meanings/", siteBase(Astro)).href;
 const collection = await getCollection("repeatingCardMeanings");
 const byId = new Map(collection.map((entry) => [entry.id, entry]));
 
-type CardPanel = {
+type CardOption = {
   id: string;
   panelDomId: string;
   label: string;
@@ -41,8 +37,8 @@ type CardPanel = {
   displayTitle: string;
   imageSrc: string;
   panelSummary: string | null;
-  articleHtml: string | null;
-  sectionNav: { slug: string; text: string }[];
+  canonicalPath: string;
+  selectorPath: string;
 };
 
 const toolOptions = getAllRepeatingCardToolOptions(collection);
@@ -50,55 +46,53 @@ const validCardIds = new Set(toolOptions.map((o) => o.id));
 const rawCardParam = Astro.url.searchParams.get("card")?.trim() ?? "";
 const initialCardId = validCardIds.has(rawCardParam) ? rawCardParam : "";
 
-const cards: CardPanel[] = await Promise.all(
-  toolOptions.map(async ({ id, label }) => {
-    const entry = getRepeatingCardEntry(byId, id);
-    const ready = isRepeatingMeaningReady(entry);
-    const displayTitle = repeatingCardDisplayTitle(entry, label);
-    const imageSrc = tarotCardImagePath(repeatingCardSlugFromId(id));
+const cards: CardOption[] = toolOptions.map(({ id, label }) => {
+  const entry = getRepeatingCardEntry(byId, id);
+  const ready = isRepeatingMeaningReady(entry);
+  const displayTitle = repeatingCardDisplayTitle(entry, label);
+  const imageSrc = tarotCardImagePath(repeatingCardSlugFromId(id));
+  const canonicalPath = getRepeatingCardCanonicalPath(entry ?? id);
+  const selectorPath = getRepeatingCardToolSelectorPath(id);
 
-    if (!ready || !entry) {
-      return {
-        id,
-        panelDomId: repeatingCardPanelDomId(id),
-        label,
-        ready: false,
-        displayTitle,
-        imageSrc,
-        panelSummary: null,
-        articleHtml: null,
-        sectionNav: [],
-      };
-    }
-
-    const panelDomId = repeatingCardPanelDomId(id);
-    const { headings } = await render(entry);
-    const rawHtml = entry.rendered?.html ?? "";
-    const articleHtml = rawHtml
-      ? normalizeRepeatingCardArticleHtml(
-          prefixHeadingIdsInHtml(rawHtml, panelDomId),
-          displayTitle,
-          entry.data.title,
-        )
-      : null;
-    const sectionNav = buildScopedSectionNav(headings, panelDomId);
-
+  if (!ready || !entry) {
     return {
       id,
-      panelDomId,
+      panelDomId: repeatingCardPanelDomId(id),
       label,
-      ready: Boolean(articleHtml),
+      ready: false,
       displayTitle,
       imageSrc,
-      panelSummary: repeatingCardPanelSummary(entry),
-      articleHtml,
-      sectionNav,
+      panelSummary: null,
+      canonicalPath,
+      selectorPath,
     };
-  }),
-);
+  }
+
+  const panelDomId = repeatingCardPanelDomId(id);
+
+  return {
+    id,
+    panelDomId,
+    label,
+    ready,
+    displayTitle,
+    imageSrc,
+    panelSummary: repeatingCardPanelSummary(entry),
+    canonicalPath,
+    selectorPath,
+  };
+});
+
+const selectedCard = cards.find((card) => card.id === initialCardId) ?? null;
+const placeholderImageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
 ---
 
-<BaseLayout title={title} description={description} ogUrl={ogUrl}>
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={ogUrl}
+  metaRobots={rawCardParam ? "noindex, follow" : undefined}
+>
   <article class="rcm-tool page-inner" id="rcm-tool">
     <p class="rcm-tool__eyebrow">Tarot interpretation tool</p>
 
@@ -112,7 +106,7 @@ const cards: CardPanel[] = await Promise.all(
 
         <section class="rcm-tool__selector" aria-labelledby="rcm-selector-heading">
           <h2 class="visually-hidden" id="rcm-selector-heading">Choose a card</h2>
-          <div class="rcm-tool__selector-panel">
+          <form class="rcm-tool__selector-panel" method="get" action="/tools/repeating-card-meanings/">
             <label class="rcm-tool__label" for="rcm-card-select">
               Choose the card that keeps appearing
             </label>
@@ -121,21 +115,33 @@ const cards: CardPanel[] = await Promise.all(
                 <option value="" selected={!initialCardId}>Select a card</option>
                 {
                   cards.map((card) => (
-                    <option value={card.id} selected={card.id === initialCardId}>
+                    <option
+                      value={card.id}
+                      selected={card.id === initialCardId}
+                      data-ready={String(card.ready)}
+                      data-title={card.displayTitle}
+                      data-image-src={card.imageSrc}
+                      data-summary={card.panelSummary ?? ""}
+                      data-canonical-path={card.canonicalPath}
+                      data-selector-path={card.selectorPath}
+                    >
                       {card.label}
                     </option>
                   ))
                 }
               </select>
             </div>
+            <button class="rcm-tool__selector-button" type="submit">
+              Show this card
+            </button>
             <p
               class="rcm-tool__selector-hint"
               id="rcm-empty-hint"
               hidden={initialCardId ? true : undefined}
             >
-              Select a card above to read its repeating meaning.
+              Select a card above to open the complete interpretation.
             </p>
-          </div>
+          </form>
         </section>
 
         <p class="rcm-tool__library-note">
@@ -149,130 +155,72 @@ const cards: CardPanel[] = await Promise.all(
           Full reference library
         </h2>
         <p class="rcm-tool__canonical-text">
-          This page is the interactive selector for quick lookup. Each card’s authoritative, indexable
-          meaning lives in the{" "}
+          This page is the interactive selector for quick lookup. Each card’s complete guide lives in
+          the{" "}
           <a href={getRepeatingCardSeoHubPath()}>repeating card pattern library</a>
           {" "}at <span class="rcm-tool__canonical-path">{getRepeatingCardSeoHubPath()}</span>. Use
-          those pages for search, sharing, and the complete symbolic interpretation.
+          those pages for search, sharing, and deeper symbolic interpretation.
         </p>
       </aside>
     </section>
 
     <div id="rcm-results" class="rcm-tool__results" aria-live="polite">
-      {
-        cards.map((card) =>
-          card.ready && card.articleHtml ? (
-            <section
-              class="rcm-tool__result"
-              id={`rcm-panel-${card.panelDomId}`}
-              data-rcm-panel={card.id}
-              hidden={initialCardId ? card.id !== initialCardId : true}
-              aria-labelledby={`rcm-heading-${card.panelDomId}`}
+      <section
+        class="rcm-tool__result"
+        id="rcm-selected-card"
+        data-rcm-selected-card
+        hidden={!selectedCard}
+        aria-labelledby="rcm-selected-card-heading"
+      >
+        <header class="rcm-tool__card-head">
+          <div class="rcm-tool__card-visual">
+            <div class="rcm-tool__card-slot">
+              <img
+                class="rcm-tool__card-img"
+                data-rcm-card-image
+                src={selectedCard?.imageSrc ?? placeholderImageSrc}
+                alt={selectedCard ? `${selectedCard.displayTitle} tarot card` : ""}
+                width="280"
+                height="480"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <div class="rcm-tool__card-intro">
+            <h2 class="rcm-tool__card-title" id="rcm-selected-card-heading" data-rcm-card-title>
+              {selectedCard?.displayTitle ?? "Selected card"}
+            </h2>
+            <p
+              class="rcm-tool__card-summary"
+              data-rcm-card-summary
+              hidden={!selectedCard?.panelSummary}
             >
-              <header class="rcm-tool__card-head">
-                <div class="rcm-tool__card-visual">
-                  <div class="rcm-tool__card-slot">
-                    <img
-                      class="rcm-tool__card-img"
-                      src={card.imageSrc}
-                      alt={`${card.displayTitle} tarot card`}
-                      width="280"
-                      height="480"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-                <div class="rcm-tool__card-intro">
-                  <h2 class="rcm-tool__card-title" id={`rcm-heading-${card.panelDomId}`}>
-                    {card.displayTitle}
-                  </h2>
-                  {
-                    card.panelSummary ? (
-                      <p class="rcm-tool__card-summary">{card.panelSummary}</p>
-                    ) : null
-                  }
-                  <p class="rcm-tool__card-page-link">
-                    <a href={getRepeatingCardCanonicalPath(card.id)}>
-                      Read the full meaning page
-                    </a>
-                    <span class="rcm-tool__card-page-sep" aria-hidden="true"> · </span>
-                    <a href={getRepeatingCardToolSelectorPath(card.id)}>
-                      View in interactive selector
-                    </a>
-                  </p>
-                </div>
-              </header>
-
-              <div class="rcm-tool__reading-body">
-              {
-                card.sectionNav.length > 0 ? (
-                  <nav
-                    class="rcm-tool__section-nav"
-                    aria-label={`${card.displayTitle} sections`}
-                  >
-                    <p class="rcm-tool__section-nav-title">On this reading</p>
-                    <ol class="rcm-tool__section-nav-list">
-                      {
-                        card.sectionNav.map((item) => (
-                          <li>
-                            <a
-                              class="rcm-tool__section-nav-link"
-                              href={`#${item.slug}`}
-                            >
-                              {item.text}
-                            </a>
-                          </li>
-                        ))
-                      }
-                    </ol>
-                  </nav>
-                ) : null
-              }
-
-              <div class="rcm-tool__reading">
-                <div
-                  class="article-prose rcm-tool__prose rcm-tool__article-content"
-                  set:html={card.articleHtml}
-                />
-              </div>
-              </div>
-            </section>
-          ) : (
-            <section
-              class="rcm-tool__result rcm-tool__result--preparing"
-              id={`rcm-panel-${card.panelDomId}`}
-              data-rcm-panel={card.id}
-              hidden={initialCardId ? card.id !== initialCardId : true}
-              aria-labelledby={`rcm-heading-${card.panelDomId}`}
+              {selectedCard?.panelSummary}
+            </p>
+            <p
+              class="rcm-tool__preparing"
+              data-rcm-card-preparing
+              hidden={selectedCard ? selectedCard.ready : true}
             >
-              <header class="rcm-tool__card-head rcm-tool__card-head--preparing">
-                <div class="rcm-tool__card-visual">
-                  <div class="rcm-tool__card-slot">
-                    <img
-                      class="rcm-tool__card-img"
-                      src={card.imageSrc}
-                      alt={`${card.displayTitle} tarot card`}
-                      width="280"
-                      height="480"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-                <div class="rcm-tool__card-intro">
-                  <h2 class="rcm-tool__card-title" id={`rcm-heading-${card.panelDomId}`}>
-                    {card.displayTitle}
-                  </h2>
-                  <p class="rcm-tool__preparing">
-                    {REPEATING_MEANING_PREPARING_COPY}
-                  </p>
-                </div>
-              </header>
-            </section>
-          ),
-        )
-      }
+              {REPEATING_MEANING_PREPARING_COPY}
+            </p>
+            <p class="rcm-tool__card-page-link">
+              <a
+                class="rcm-tool__card-page-primary"
+                data-rcm-card-canonical
+                href={selectedCard?.canonicalPath ?? getRepeatingCardSeoHubPath()}
+              >
+                Explore the complete interpretation
+              </a>
+              <span class="rcm-tool__card-page-sep" aria-hidden="true"> · </span>
+              <a data-rcm-card-selector href={selectedCard?.selectorPath ?? getRepeatingCardHubPath()}>
+                Share this selection
+              </a>
+            </p>
+          </div>
+        </header>
+      </section>
     </div>
 
     <section class="rcm-tool__context" aria-labelledby="rcm-tool-context-heading">
@@ -319,21 +267,54 @@ const cards: CardPanel[] = await Promise.all(
 <script>
   const select = document.getElementById("rcm-card-select");
   const emptyHint = document.getElementById("rcm-empty-hint");
-  const panels = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-rcm-panel]"),
-  );
+  const selectedCard = document.querySelector<HTMLElement>("[data-rcm-selected-card]");
+  const title = document.querySelector<HTMLElement>("[data-rcm-card-title]");
+  const summary = document.querySelector<HTMLElement>("[data-rcm-card-summary]");
+  const preparing = document.querySelector<HTMLElement>("[data-rcm-card-preparing]");
+  const image = document.querySelector<HTMLImageElement>("[data-rcm-card-image]");
+  const canonical = document.querySelector<HTMLAnchorElement>("[data-rcm-card-canonical]");
+  const selectorLink = document.querySelector<HTMLAnchorElement>("[data-rcm-card-selector]");
 
-  function showCard(cardId: string) {
+  function selectedOption(cardId: string): HTMLOptionElement | null {
+    if (!(select instanceof HTMLSelectElement) || !cardId) return null;
+    return [...select.options].find((opt) => opt.value === cardId) ?? null;
+  }
+
+  function showCard(cardId: string, scroll = false) {
+    const option = selectedOption(cardId);
     const hasSelection = Boolean(cardId);
+
     if (emptyHint) emptyHint.hidden = hasSelection;
-    panels.forEach((panel) => {
-      panel.hidden = panel.dataset.rcmPanel !== cardId;
-    });
-    if (hasSelection) {
-      const panel = document.querySelector<HTMLElement>(
-        `[data-rcm-panel="${CSS.escape(cardId)}"]`,
-      );
-      panel?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!selectedCard) return;
+
+    if (!option) {
+      selectedCard.hidden = true;
+      return;
+    }
+
+    const ready = option.dataset.ready === "true";
+    const displayTitle = option.dataset.title ?? option.textContent?.trim() ?? "Selected card";
+    const summaryText = option.dataset.summary ?? "";
+    const imageSrc = option.dataset.imageSrc ?? "";
+    const canonicalPath = option.dataset.canonicalPath ?? "/repeating-card-meanings/";
+    const selectorPath = option.dataset.selectorPath ?? "/tools/repeating-card-meanings/";
+
+    selectedCard.hidden = false;
+    if (title) title.textContent = displayTitle;
+    if (summary) {
+      summary.textContent = summaryText;
+      summary.hidden = summaryText.trim() === "";
+    }
+    if (preparing) preparing.hidden = ready;
+    if (image) {
+      image.src = imageSrc;
+      image.alt = `${displayTitle} tarot card`;
+    }
+    if (canonical) canonical.href = canonicalPath;
+    if (selectorLink) selectorLink.href = selectorPath;
+
+    if (scroll) {
+      selectedCard.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
@@ -369,7 +350,7 @@ const cards: CardPanel[] = await Promise.all(
   select?.addEventListener("change", () => {
     if (!(select instanceof HTMLSelectElement)) return;
     const cardId = select.value;
-    showCard(cardId);
+    showCard(cardId, true);
     syncLocation(cardId);
   });
 
@@ -652,6 +633,40 @@ const cards: CardPanel[] = await Promise.all(
 
   .rcm-tool__select::-ms-expand {
     display: none;
+  }
+
+  .rcm-tool__selector-button {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.1rem 0 0;
+    padding: 0.62rem 0.95rem;
+    border: 1px solid var(--tok-gold);
+    border-radius: var(--radius-soft);
+    background: color-mix(in srgb, var(--tok-gold) 12%, var(--tok-surface-reading));
+    color: var(--tok-water);
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .rcm-tool__selector-button:hover {
+    border-color: var(--tok-water);
+    background: color-mix(in srgb, var(--tok-gold) 20%, var(--tok-surface-reading));
+  }
+
+  .rcm-tool__selector-button:focus-visible {
+    outline: 2px solid var(--tok-water);
+    outline-offset: 3px;
   }
 
   .rcm-tool__selector-hint {
