@@ -1,0 +1,71 @@
+---
+description: Editorial Reinsertion Contract for Repeating Card Meanings — body copy + owner-declared frontmatter only
+globs: "src/content/repeating-card-meanings/**/*.md, editorial/repeating-card-library/**, docs/repeating-card-editorial-progress.md"
+alwaysApply: true
+---
+
+# Repeating Card Meanings — Editorial Reinsertion Contract
+
+Mandatory for all 78 cards. See `editorial/repeating-card-library/03_EDITORIAL_REINSERTION_CONTRACT.md`.
+
+## Only editable areas
+
+1. **Body copy** beneath existing headings (paragraphs, blockquote text, list item text)
+2. **Frontmatter values** only for fields explicitly listed in `contracts/{suit}/{slug}.yaml` under `allowed_frontmatter_edits`
+
+## Everything else is immutable
+
+Slugs, URLs, headings, section names/order, anchors, IDs, frontmatter keys/order, unapproved frontmatter values, schema, JSON-LD, breadcrumbs, components, rendering, CSS, data model, internal links, navigation, images, structural markdown.
+
+## Dual URL surfaces (intentional, not a defect)
+
+One markdown source powers two public routes:
+
+- Entity: `/repeating-card-meanings/{card-slug}/`
+- Tool: `/tools/repeating-card-meanings/{collection-id}/`
+
+Both read the same `repeatingCardMeanings` collection entry. This is by design.
+
+## Diagnostic discipline
+
+- **Read-only by default** for investigations: no experimental edits to production card files, no cache clears, no builds unless explicitly authorised for reinsertion QA.
+- **Never modify card files to reproduce warnings** (e.g. append newlines, touch mtimes).
+- Astro `[glob-loader] Duplicate id` on content digest change is a **misleading sync warning**, not a real ID collision. Do not treat it as a blocking defect unless `npm run audit:rcm-integrity` reports duplicate collection IDs, slugs, or canonicals.
+
+## Blocking integrity failures
+
+`npm run audit:rcm-integrity` must pass before and after every reinsertion. These are **blocking**:
+
+- Wrong card count or suit counts (must be 78: majors 22, each minor suit 14)
+- Duplicate Astro collection IDs (`majors/the-fool`, etc.)
+- Duplicate frontmatter `slug` values
+- Duplicate `canonicalUrl` values
+- More than one source file per card
+
+## Before every reinsertion
+
+```bash
+npm run audit:rcm-integrity
+node scripts/validate-rcm-editorial-reinsertion.mjs \
+  --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml \
+  editorial/repeating-card-library/claude/{suit}/{slug}.md
+```
+
+Or use the orchestrated workflow (pre/post audit, archive, production write, `.astro` cache clear, sync, build):
+
+```bash
+node scripts/reinsert-rcm-editorial.mjs \
+  --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
+```
+
+Dry run (audit + contract only):
+
+```bash
+node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
+```
+
+If validation or integrity audit fails: **stop and report differences**. Do not write to production. Do not auto-fix.
+
+## Production path (only)
+
+`src/content/repeating-card-meanings/{suit}/{slug}.md`

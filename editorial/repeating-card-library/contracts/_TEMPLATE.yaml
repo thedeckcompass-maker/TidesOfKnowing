@@ -1,0 +1,22 @@
+# Per-card Editorial Reinsertion Contract
+# Copy to contracts/{suit}/{slug}.yaml before each reinsertion.
+# See 03_EDITORIAL_REINSERTION_CONTRACT.md
+
+collection_id: "{suit}/{slug}"  # e.g. majors/the-fool
+
+extracted_baseline: editorial/repeating-card-library/extracted/{suit}/{slug}.md
+production_target: src/content/repeating-card-meanings/{suit}/{slug}.md
+
+# Frontmatter VALUE fields the owner has explicitly approved for editing.
+# Field names and key order remain immutable.
+# Empty list = frontmatter must be byte-identical to extracted original.
+allowed_frontmatter_edits: []
+# Example when owner approves specific fields:
+# allowed_frontmatter_edits:
+#   - summary
+#   - featuredSnippetAnswer
+
+reinsertion_date: null  # YYYY-MM-DD when reinsertion is approved
+approved_by: null       # Owner sign-off
+
+notes: ""

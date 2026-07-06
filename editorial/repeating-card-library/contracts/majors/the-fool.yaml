@@ -1,0 +1,15 @@
+# Per-card Editorial Reinsertion Contract — The Fool (pilot)
+# See 03_EDITORIAL_REINSERTION_CONTRACT.md
+
+collection_id: majors/the-fool
+
+extracted_baseline: editorial/repeating-card-library/extracted/majors/the-fool.md
+production_target: src/content/repeating-card-meanings/majors/the-fool.md
+
+# Owner-declared editable frontmatter fields. Empty = byte-identical frontmatter required.
+allowed_frontmatter_edits: []
+
+reinsertion_date: null
+approved_by: null
+
+notes: "Pilot card. No reinsertion until rewritten body copy is ready and contract is signed off."

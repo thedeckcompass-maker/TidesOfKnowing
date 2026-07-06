@@ -17,6 +17,8 @@
     "validate:related-cards": "node scripts/validate-repeating-card-related-map.mjs",
     "validate:repeating-card-metadata": "node scripts/validate-repeating-card-metadata.mjs",
     "validate:repeating-card-tool-links": "node scripts/validate-repeating-card-tool-links.mjs",
+    "audit:rcm-integrity": "node scripts/audit-rcm-integrity.mjs",
+    "verify:reading-library-head": "node scripts/verify-reading-library-head.mjs",
     "seo:rcm-tracker": "node scripts/generate-repeating-card-index-tracker.mjs",
     "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs"
   },
