@@ -1,10 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CommunityAccountDisplayName from "../../components/community/CommunityAccountDisplayName.astro";
 import CommunityNotificationSettings from "../../components/community/CommunityNotificationSettings.astro";
 import { isAdminProfile } from "../../lib/community/auth";
-import { getNotificationPreferences, getOpenCommunityReports } from "../../lib/community/queries";
-import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
-import { communityReportReasonLabel, type CommunityReportQueueItem } from "../../lib/community/types";
+import { getNotificationPreferences } from "../../lib/community/queries";
 
 export const prerender = false;
 
@@ -13,67 +12,31 @@ if (!Astro.locals.user) {
 }
 
 const profile = Astro.locals.profile;
+const email = Astro.locals.user.email ?? "";
 const preferences =
   Astro.locals.supabase && Astro.locals.user
     ? await getNotificationPreferences(Astro.locals.supabase, Astro.locals.user.id)
     : null;
 const isAdmin = isAdminProfile(profile);
+const displayName = profile?.display_name ?? "Reader";
+const roleLabel = isAdmin ? "Administrator" : "Member";
+const statusLabel =
+  profile?.status === "active"
+    ? "Active"
+    : profile?.status
+      ? profile.status.charAt(0).toUpperCase() + profile.status.slice(1)
+      : "Active";
 
-let moderationPosts: {
-  id: string;
-  title: string;
-  slug: string;
-  status: string;
-  created_at: string;
-}[] = [];
-let moderatedProfiles: {
-  id: string;
-  display_name: string;
-  status: string;
-  role: string;
-}[] = [];
-let openReports: CommunityReportQueueItem[] = [];
-
-if (isAdmin) {
-  const service = createCommunityServiceClient(Astro.locals);
-  openReports = await getOpenCommunityReports(service);
-  const { data: posts } = await service
-    .from("community_posts")
-    .select("id, title, slug, status, created_at")
-    .in("status", ["hidden", "locked"])
-    .order("created_at", { ascending: false })
-    .limit(20);
-  moderationPosts = (posts ?? []) as typeof moderationPosts;
-
-  const { data: profiles } = await service
-    .from("profiles")
-    .select("id, display_name, status, role")
-    .neq("status", "active")
-    .order("updated_at", { ascending: false })
-    .limit(20);
-  moderatedProfiles = (profiles ?? []) as typeof moderatedProfiles;
-}
-
-function formatDateTime(value: string): string {
-  return new Intl.DateTimeFormat("en", {
-    dateStyle: "medium",
-    timeStyle: "short",
+function formatMemberSince(value: string | undefined): string {
+  if (!value) return "—";
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   }).format(new Date(value));
 }
 
-function reportTitle(report: CommunityReportQueueItem): string {
-  return report.post?.title ?? report.reply?.post?.title ?? "Reported content";
-}
-
-function reportHref(report: CommunityReportQueueItem): string {
-  const slug = report.post?.slug ?? report.reply?.post?.slug;
-  if (!slug) return "/community/account/";
-  return report.reply_id ? `/community/${slug}/#reply-${report.reply_id}` : `/community/${slug}/`;
-}
-
-function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
-  return report.post?.author_id ?? report.reply?.author_id ?? null;
-}
+const memberSince = formatMemberSince(profile?.created_at);
 ---
 
 <BaseLayout
@@ -83,15 +46,44 @@ function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
 >
   <main class="community-account page-inner">
     <p class="community-account__kicker">Practice Commons</p>
+
+    <nav class="community-account__nav" aria-label="Account navigation">
+      <a class="community-account__nav-link" href="/community/">← Back to Practice Commons</a>
+      {isAdmin ? (
+        <a class="community-account__nav-link" href="/ask-leilia/admin/">Administration</a>
+      ) : null}
+    </nav>
+
     <h1>Your account</h1>
 
-    <section class="community-account__panel" aria-labelledby="profile-heading">
-      <h2 id="profile-heading">Profile</h2>
-      <p><strong>Display name:</strong> {profile?.display_name ?? "Reader"}</p>
-      <p><strong>Status:</strong> {profile?.status ?? "active"}</p>
-      <form class="community-account__logout" method="post" action="/auth/logout/">
-        <button class="community-account__logout-button" type="submit">Log out</button>
-      </form>
+    <section class="community-account__panel" aria-labelledby="account-summary-heading">
+      <h2 id="account-summary-heading">Account summary</h2>
+      <dl class="community-account__summary">
+        <div class="community-account__summary-row">
+          <dt>Display name</dt>
+          <dd>
+            <CommunityAccountDisplayName displayName={displayName} />
+          </dd>
+        </div>
+        <div class="community-account__summary-row">
+          <dt>Email</dt>
+          <dd>{email || "—"}</dd>
+        </div>
+        <div class="community-account__summary-row">
+          <dt>Role</dt>
+          <dd>{roleLabel}</dd>
+        </div>
+        <div class="community-account__summary-row">
+          <dt>Member since</dt>
+          <dd>
+            <time datetime={profile?.created_at}>{memberSince}</time>
+          </dd>
+        </div>
+        <div class="community-account__summary-row">
+          <dt>Status</dt>
+          <dd>{statusLabel}</dd>
+        </div>
+      </dl>
     </section>
 
     <section class="community-account__panel" aria-labelledby="email-heading">
@@ -100,130 +92,29 @@ function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
       <CommunityNotificationSettings preferences={preferences} />
     </section>
 
-    {
-      isAdmin ? (
-        <section class="community-account__panel" aria-labelledby="admin-heading">
-          <h2 id="admin-heading">Admin moderation</h2>
-          <p>Open reports, recent hidden or locked posts, and restricted members.</p>
+    <section class="community-account__panel community-account__placeholder" aria-labelledby="community-heading">
+      <h2 id="community-heading">Community</h2>
+      <p class="community-account__placeholder-text">
+        Your discussions, replies and community activity will appear here.
+      </p>
+    </section>
 
-          <h3>Open reports</h3>
-          {openReports.length > 0 ? (
-            <ol class="community-account__reports" role="list">
-              {openReports.map((report) => {
-                const targetMemberId = reportTargetMemberId(report);
-                return (
-                  <li>
-                    <article class="community-account__report">
-                      <p class="community-account__report-meta">
-                        <span>{report.post_id ? "Discussion" : "Reply"}</span>
-                        <span>{communityReportReasonLabel(report.reason)}</span>
-                        <time datetime={report.created_at}>{formatDateTime(report.created_at)}</time>
-                      </p>
-                      <h4>
-                        <a href={reportHref(report)}>{reportTitle(report)}</a>
-                      </h4>
-                      <p>
-                        <strong>Reporter:</strong> {report.reporter?.display_name ?? "Member"}
-                      </p>
-                      {report.reply ? (
-                        <blockquote>{report.reply.body.replace(/\s+/g, " ").slice(0, 220)}</blockquote>
-                      ) : null}
-                      {report.notes ? (
-                        <p>
-                          <strong>Notes:</strong> {report.notes}
-                        </p>
-                      ) : null}
-                      <div class="community-account__report-actions">
-                        <form method="post" action={`/api/community/reports/${report.id}`}>
-                          <input type="hidden" name="intent" value="dismiss" />
-                          <input type="hidden" name="redirectTo" value="/community/account/" />
-                          <button type="submit">Dismiss report</button>
-                        </form>
-                        {report.post_id ? (
-                          <>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="hide_post" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Hide discussion</button>
-                            </form>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="delete_post" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Delete discussion</button>
-                            </form>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="lock_post" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Lock discussion</button>
-                            </form>
-                          </>
-                        ) : null}
-                        {report.reply_id ? (
-                          <>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="hide_reply" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Hide reply</button>
-                            </form>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="delete_reply" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Delete reply</button>
-                            </form>
-                          </>
-                        ) : null}
-                        {targetMemberId ? (
-                          <>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="restrict_member" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Restrict member</button>
-                            </form>
-                            <form method="post" action={`/api/community/reports/${report.id}`}>
-                              <input type="hidden" name="intent" value="block_member" />
-                              <input type="hidden" name="redirectTo" value="/community/account/" />
-                              <button type="submit">Block member</button>
-                            </form>
-                          </>
-                        ) : null}
-                      </div>
-                    </article>
-                  </li>
-                );
-              })}
-            </ol>
-          ) : (
-            <p>No open reports.</p>
-          )}
+    <section class="community-account__panel community-account__placeholder" aria-labelledby="ask-leilia-heading">
+      <h2 id="ask-leilia-heading">Ask Leilia</h2>
+      <p class="community-account__placeholder-text">
+        Your reading requests and completed readings will appear here.
+      </p>
+    </section>
 
-          <h3>Posts</h3>
-          {moderationPosts.length > 0 ? (
-            <ul>
-              {moderationPosts.map((post) => (
-                <li>
-                  <a href={`/community/${post.slug}/`}>{post.title}</a> <span>{post.status}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No posts currently need review.</p>
-          )}
-
-          <h3>Members</h3>
-          {moderatedProfiles.length > 0 ? (
-            <ul>
-              {moderatedProfiles.map((member) => (
-                <li>
-                  {member.display_name} <span>{member.status}</span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No restricted or blocked members.</p>
-          )}
-        </section>
-      ) : null
-    }
+    <section class="community-account__panel" aria-labelledby="security-heading">
+      <h2 id="security-heading">Security</h2>
+      <form class="community-account__logout" method="post" action="/auth/logout/">
+        <button class="community-account__logout-button" type="submit">Log out</button>
+      </form>
+      <p class="community-account__placeholder-text">
+        Additional account security options will be added here.
+      </p>
+    </section>
   </main>
 </BaseLayout>
 
@@ -249,6 +140,29 @@ function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
     color: var(--tok-water);
   }
 
+  .community-account__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin: 0 0 1rem;
+    font-size: var(--tok-type-meta);
+  }
+
+  .community-account__nav-link {
+    color: var(--tok-gold-deep);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .community-account__nav-link:hover,
+  .community-account__nav-link:focus-visible {
+    color: var(--tok-water);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
   .community-account__panel {
     margin-top: 1rem;
     padding: 1rem;
@@ -257,13 +171,43 @@ function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
   }
 
   .community-account p,
-  .community-account li {
+  .community-account li,
+  .community-account dd {
     color: var(--tok-text-dark);
     line-height: 1.7;
   }
 
+  .community-account__summary {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0.75rem 0 0;
+  }
+
+  .community-account__summary-row {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .community-account__summary dt {
+    margin: 0;
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-account__summary dd {
+    margin: 0;
+  }
+
+  .community-account__placeholder-text {
+    margin: 0.75rem 0 0;
+    color: var(--tok-text-muted);
+    font-style: italic;
+  }
+
   .community-account__logout {
-    margin: 1rem 0 0;
+    margin: 0.75rem 0 0;
   }
 
   .community-account__logout-button {
@@ -280,68 +224,10 @@ function reportTargetMemberId(report: CommunityReportQueueItem): string | null {
     background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
   }
 
-  .community-account__reports {
-    display: grid;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .community-account__report {
-    padding: 1rem;
-    border: 1px solid color-mix(in srgb, var(--tok-border-light) 82%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
-  }
-
-  .community-account__report h4 {
-    margin: 0.35rem 0 0.65rem;
-    font-size: 1.05rem;
-  }
-
-  .community-account__report-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.55rem;
-    margin: 0;
-    font-size: var(--tok-type-meta);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--tok-text-muted);
-  }
-
-  .community-account__report blockquote {
-    margin: 0.75rem 0;
-    padding-left: 0.85rem;
-    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
-    color: var(--tok-text-dark);
-  }
-
-  .community-account__report-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.85rem;
-  }
-
-  .community-account__report-actions button {
-    padding: 0.45rem 0.65rem;
-    border: 1px solid var(--tok-border-light);
-    border-radius: var(--radius-control);
-    background: transparent;
-    color: var(--tok-text-dark);
-    cursor: pointer;
-  }
-
   @media (max-width: 640px) {
-    .community-account__report-actions {
-      display: grid;
-    }
-
-    .community-account__report-actions button {
-      width: 100%;
-      text-align: left;
+    .community-account__nav {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>

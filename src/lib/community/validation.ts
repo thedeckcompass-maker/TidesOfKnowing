@@ -1,4 +1,9 @@
 import {
+  DISPLAY_NAME_MAX_LENGTH,
+  isReservedDisplayName,
+  normalizeDisplayName,
+} from "./displayNames";
+import {
   COMMUNITY_REPORT_REASONS,
   READING_PRACTICE_POST_TYPES,
   type CommunitySectionKey,
@@ -110,10 +115,29 @@ export function validateReplyInput(input: { body: unknown }): ValidationResult<{
 }
 
 export function validateDisplayName(value: unknown): ValidationResult<{ displayName: string }> {
-  const displayName = cleanText(value).replace(/\s+/g, " ").slice(0, 60);
+  const raw = typeof value === "string" ? value : "";
+  const displayName = normalizeDisplayName(raw);
+
+  if (!displayName) {
+    return { ok: false, error: "Display name cannot be empty." };
+  }
 
   if (displayName.length < 2) {
     return { ok: false, error: "Display name should be at least 2 characters." };
+  }
+
+  if (displayName.length > DISPLAY_NAME_MAX_LENGTH) {
+    return {
+      ok: false,
+      error: `Display name must be ${DISPLAY_NAME_MAX_LENGTH} characters or fewer.`,
+    };
+  }
+
+  if (isReservedDisplayName(displayName)) {
+    return {
+      ok: false,
+      error: "That display name is not available. Please choose another.",
+    };
   }
 
   return { ok: true, value: { displayName } };

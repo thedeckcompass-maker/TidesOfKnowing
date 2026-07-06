@@ -1,0 +1,349 @@
+---
+import {
+  DISPLAY_NAME_MAX_LENGTH,
+  RESERVED_DISPLAY_NAMES,
+} from "../../lib/community/displayNames";
+
+interface Props {
+  displayName: string;
+}
+
+const { displayName } = Astro.props;
+---
+
+<div class="community-display-name" data-display-name-editor>
+  <div class="community-display-name__view" data-display-name-view>
+    <span class="community-display-name__value" data-display-name-value>{displayName}</span>
+    <button type="button" class="community-display-name__edit" data-display-name-edit>
+      Edit
+    </button>
+  </div>
+
+  <form
+    class="community-display-name__form"
+    data-display-name-form
+    action="/api/community/profile/display-name"
+    method="post"
+    hidden
+  >
+    <input
+      type="text"
+      name="displayName"
+      value={displayName}
+      autocomplete="nickname"
+      minlength="2"
+      maxlength={DISPLAY_NAME_MAX_LENGTH}
+      required
+      data-display-name-input
+    />
+    <div class="community-display-name__actions">
+      <button type="submit" data-display-name-submit data-default-text="Save display name">
+        Save display name
+      </button>
+      <button type="button" class="community-display-name__cancel" data-display-name-cancel>
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <p
+    class="community-display-name__status"
+    data-display-name-status
+    role="status"
+    aria-live="polite"
+    hidden
+  />
+</div>
+
+<script
+  define:vars={{
+    maxLength: DISPLAY_NAME_MAX_LENGTH,
+    reservedNames: RESERVED_DISPLAY_NAMES,
+  }}
+>
+  function normalizeDisplayName(value) {
+    return value.trim().replace(/\s+/g, " ");
+  }
+
+  function validateDisplayNameClient(value) {
+    const displayName = normalizeDisplayName(value);
+
+    if (!displayName) {
+      return "Display name cannot be empty.";
+    }
+
+    if (displayName.length < 2) {
+      return "Display name should be at least 2 characters.";
+    }
+
+    if (displayName.length > maxLength) {
+      return `Display name must be ${maxLength} characters or fewer.`;
+    }
+
+    if (reservedNames.includes(displayName.toLowerCase())) {
+      return "That display name is not available. Please choose another.";
+    }
+
+    return null;
+  }
+
+  function initDisplayNameEditor() {
+    const root = document.querySelector("[data-display-name-editor]");
+    if (!(root instanceof HTMLElement) || root.dataset.bound === "true") return;
+
+    root.dataset.bound = "true";
+
+    const view = root.querySelector("[data-display-name-view]");
+    const valueEl = root.querySelector("[data-display-name-value]");
+    const editButton = root.querySelector("[data-display-name-edit]");
+    const form = root.querySelector("[data-display-name-form]");
+    const input = root.querySelector("[data-display-name-input]");
+    const submitButton = root.querySelector("[data-display-name-submit]");
+    const cancelButton = root.querySelector("[data-display-name-cancel]");
+    const status = root.querySelector("[data-display-name-status]");
+
+    if (
+      !(view instanceof HTMLElement) ||
+      !(valueEl instanceof HTMLElement) ||
+      !(editButton instanceof HTMLButtonElement) ||
+      !(form instanceof HTMLFormElement) ||
+      !(input instanceof HTMLInputElement) ||
+      !(submitButton instanceof HTMLButtonElement) ||
+      !(cancelButton instanceof HTMLButtonElement)
+    ) {
+      return;
+    }
+
+    const defaultText = submitButton.dataset.defaultText ?? "Save display name";
+    let savedName = valueEl.textContent ?? input.value;
+    let fadeTimer;
+
+    function clearStatus() {
+      if (fadeTimer) {
+        window.clearTimeout(fadeTimer);
+        fadeTimer = undefined;
+      }
+      if (status instanceof HTMLElement) {
+        status.hidden = true;
+        status.textContent = "";
+        status.classList.remove(
+          "community-display-name__status--success",
+          "community-display-name__status--error",
+          "community-display-name__status--fading",
+        );
+      }
+    }
+
+    function showStatus(message, type) {
+      if (!(status instanceof HTMLElement)) return;
+
+      clearStatus();
+      status.textContent = message;
+      status.hidden = false;
+      status.classList.add(
+        type === "success"
+          ? "community-display-name__status--success"
+          : "community-display-name__status--error",
+      );
+
+      if (type === "success") {
+        fadeTimer = window.setTimeout(() => {
+          status.classList.add("community-display-name__status--fading");
+          fadeTimer = window.setTimeout(() => {
+            clearStatus();
+          }, 320);
+        }, 4000);
+      }
+    }
+
+    function setSaving(isSaving) {
+      submitButton.disabled = isSaving;
+      submitButton.textContent = isSaving ? "Saving..." : defaultText;
+      cancelButton.disabled = isSaving;
+      input.readOnly = isSaving;
+    }
+
+    function showView(clearStatusOnView = true) {
+      form.hidden = true;
+      view.hidden = false;
+      if (clearStatusOnView) clearStatus();
+    }
+
+    function showForm() {
+      input.value = savedName;
+      view.hidden = true;
+      form.hidden = false;
+      clearStatus();
+      input.focus();
+      input.select();
+    }
+
+    editButton.addEventListener("click", showForm);
+
+    cancelButton.addEventListener("click", () => {
+      input.value = savedName;
+      showView();
+    });
+
+    input.addEventListener("input", clearStatus);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus();
+
+      const clientError = validateDisplayNameClient(input.value);
+      if (clientError) {
+        showStatus(clientError, "error");
+        return;
+      }
+
+      setSaving(true);
+
+      try {
+        const body = new FormData(form);
+        const response = await fetch(form.action, {
+          method: "POST",
+          body,
+          credentials: "same-origin",
+          headers: { accept: "application/json" },
+        });
+
+        let payload = { ok: false, error: "", displayName: "" };
+        try {
+          payload = await response.json();
+        } catch {
+          // Keep default error handling below.
+        }
+
+        if (response.ok && payload.ok) {
+          savedName = payload.displayName || normalizeDisplayName(input.value);
+          valueEl.textContent = savedName;
+          input.value = savedName;
+          showView(false);
+          showStatus("Your changes have been saved.", "success");
+          return;
+        }
+
+        const errorMessage =
+          payload.error ||
+          (response.status === 409
+            ? "That display name is already in use. Please choose another."
+            : "Unable to save your display name. Please try again.");
+
+        showStatus(errorMessage, "error");
+      } catch {
+        showStatus("Unable to save your display name. Please try again.", "error");
+      } finally {
+        setSaving(false);
+      }
+    });
+  }
+
+  initDisplayNameEditor();
+  document.addEventListener("astro:page-load", initDisplayNameEditor);
+</script>
+
+<style>
+  .community-display-name__view {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .community-display-name__value {
+    color: var(--tok-text-dark);
+  }
+
+  .community-display-name__edit,
+  .community-display-name__cancel {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--tok-gold-deep);
+    font: inherit;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .community-display-name__edit:hover,
+  .community-display-name__edit:focus-visible,
+  .community-display-name__cancel:hover,
+  .community-display-name__cancel:focus-visible {
+    color: var(--tok-water);
+  }
+
+  .community-display-name__form {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .community-display-name__form[hidden],
+  .community-display-name__view[hidden] {
+    display: none;
+  }
+
+  .community-display-name__form input {
+    width: 100%;
+    max-width: 24rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  .community-display-name__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.75rem;
+    align-items: center;
+  }
+
+  .community-display-name__actions button[type="submit"] {
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+
+  .community-display-name__actions button[type="submit"]:disabled {
+    cursor: wait;
+    opacity: 0.82;
+  }
+
+  .community-display-name__status {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-control);
+    line-height: 1.6;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .community-display-name__status[hidden] {
+    display: none;
+  }
+
+  .community-display-name__status--success {
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-display-name__status--error {
+    border: 1px solid color-mix(in srgb, #b42318 45%, transparent);
+    background: color-mix(in srgb, #b42318 6%, var(--tok-surface-reading) 94%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-display-name__status--fading {
+    opacity: 0;
+  }
+</style>

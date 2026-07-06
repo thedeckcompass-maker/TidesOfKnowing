@@ -125,7 +125,7 @@ const { preferences } = Astro.props;
         });
 
         if (response.status === 303 || (response.ok && response.status < 300)) {
-          showStatus("Your email preferences have been saved.", "success");
+          showStatus("Your changes have been saved.", "success");
           return;
         }
 
