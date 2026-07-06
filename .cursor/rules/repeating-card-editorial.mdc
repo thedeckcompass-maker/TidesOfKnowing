@@ -64,7 +64,22 @@ Dry run (audit + contract only):
 node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
 ```
 
-If validation or integrity audit fails: **stop and report differences**. Do not write to production. Do not auto-fix.
+## Dry-run failure — STOP immediately (mandatory)
+
+If dry-run or contract validation **fails**, **stop immediately**. Do not proceed to archive, production write, build, or commit.
+
+**Never automatically** (without explicit owner approval):
+
+- split or merge paragraphs
+- add or remove blank lines
+- alter list items
+- restore Markdown markers (`---`, headings, list numbering)
+- edit the Claude working copy
+- repair any prose or structure in production or `claude/`
+
+Report the validator's structural mismatch output (see `02_REINSERTION_VALIDATION.md`) and wait for owner direction. No correction may be made without explicit approval.
+
+This rule applies to **every remaining card**.
 
 ## Production path (only)
 

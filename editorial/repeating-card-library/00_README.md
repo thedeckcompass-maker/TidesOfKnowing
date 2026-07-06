@@ -90,7 +90,7 @@ node scripts/archive-rcm-production-version.mjs \
 
 7. **Build**, spot-check, update progress tracker, **git commit**, deploy
 
-If validation or archive fails: stop and report. Do not write to production.
+If validation or archive fails: **stop immediately** and report. Do not write to production. Do not auto-repair the Claude working copy or production file. No correction without explicit owner approval. See [`02_REINSERTION_VALIDATION.md`](02_REINSERTION_VALIDATION.md).
 
 ---
 

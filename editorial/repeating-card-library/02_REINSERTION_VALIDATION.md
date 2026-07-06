@@ -79,9 +79,39 @@ node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
 
 ---
 
-## On failure
+## On failure — STOP immediately
 
-Report all differences. Do not write to production. Do not auto-fix.
+If dry-run or contract validation **fails**, **stop immediately**. Do not archive, write production, run a build, or commit.
+
+### Prohibited without explicit owner approval
+
+Agents and editors must **never automatically**:
+
+- split or merge paragraphs
+- add or remove blank lines
+- alter list items (numbering, count, or structure)
+- restore Markdown markers (`---`, headings, action headers)
+- edit the Claude working copy to “fix” validation
+- repair any prose or structure in production or `claude/`
+
+No correction may be made without explicit approval. This rule applies to **every remaining card**.
+
+### Required failure report
+
+When validation fails, report the validator output including, for each mismatch:
+
+| Field | Description |
+|-------|-------------|
+| **Original position** | Body line number (and line kind: prose, `---`, heading, list item, blank) |
+| **Rewritten position** | Corresponding body line number in the Claude working copy |
+| **Nature** | `missing`, `added`, `merged`, `reordered`, or `structural_marker_changed` |
+| **Original content** | The original line or block at that position (truncated if long) |
+| **Rewritten content** | The rewritten line or block at that position |
+| **Word content** | Whether substantive words appear absent (not merely reflowed on the same line) |
+
+The validation script prints a **Structural mismatch report** section on failure. Copy that report in full. Do not attempt silent repair.
+
+Do not write to production.
 
 ---
 

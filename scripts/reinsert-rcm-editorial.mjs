@@ -31,6 +31,10 @@
  * Dry run (audit + validate only, no production write or build):
 
  *   node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
+ *
+ * If contract validation fails (dry run or full run): STOP immediately.
+ * Do not archive, write production, build, or auto-repair the Claude working copy.
+ * Report structural mismatches and wait for explicit owner approval before any fix.
 
  */
 
@@ -263,6 +267,8 @@ if (dryRun) {
 }
 
 
+
+// Validation failure exits non-zero before this point — no archive, production write, or build.
 
 // Step 2: Archive current production before any write
 

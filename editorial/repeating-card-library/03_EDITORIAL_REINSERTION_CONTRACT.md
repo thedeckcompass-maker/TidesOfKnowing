@@ -140,7 +140,18 @@ Both routes read the same collection entry. This is by design.
 | Result | Action |
 |--------|--------|
 | **PASS** | Proceed to owner review, then reinsert to production path |
-| **FAIL** | Do not write to production. Report all differences. Fix or get explicit exception. |
+| **FAIL** | **STOP immediately.** Do not write to production. Report structural mismatches in full. Wait for explicit owner approval before any correction. |
+
+### Dry-run failure — mandatory stop
+
+If `node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run` fails, or standalone contract validation exits non-zero:
+
+1. **Stop** — do not archive, reinsert, build, or commit
+2. **Report** the structural mismatch output (original vs rewritten positions, nature of change, whether words appear missing)
+3. **Do not** automatically split/merge paragraphs, add/remove blank lines, alter list items, restore Markdown markers, or edit the Claude working copy
+4. **Wait** for explicit owner approval before any repair
+
+This applies to every remaining card.
 
 ---
 
@@ -186,10 +197,11 @@ node scripts/archive-rcm-production-version.mjs \
 
 - Treat this contract as binding for all 78 cards
 - Never skip validation before reinsertion
-- Never auto-fix structural differences
+- If dry-run or contract validation fails: **stop immediately** and report; do not proceed
+- Never auto-fix structural differences (paragraphs, blank lines, list items, Markdown markers, Claude working copy)
 - Never add, remove, or rename frontmatter keys
-- Never alter headings, section order, or structural markdown
-- Report violations and wait for owner direction
+- Never alter headings, section order, or structural markdown without explicit owner approval
+- Report violations with original/rewritten positions and wait for owner direction
 
 ---
 

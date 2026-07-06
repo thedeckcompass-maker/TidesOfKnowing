@@ -260,17 +260,17 @@ function compareFiles(originalRaw, rewrittenRaw, allowedFields) {
 
     if (oLine === undefined) {
       violations.push({
-        type: "missing_line",
+        type: "extra_line",
         line: i + 1,
-        message: "Rewritten file is missing a line present in the original.",
+        message: "Rewritten file has an extra line not present in the original.",
       });
       continue;
     }
     if (rLine === undefined) {
       violations.push({
-        type: "extra_line",
+        type: "missing_line",
         line: i + 1,
-        message: "Rewritten file has an extra line not present in the original.",
+        message: "Rewritten file is missing a line present in the original.",
       });
       continue;
     }
@@ -300,7 +300,124 @@ function compareFiles(originalRaw, rewrittenRaw, allowedFields) {
     }
   }
 
-  return violations;
+  return { violations, origBodyLines, rewBodyLines };
+}
+
+function truncateLine(text, max = 140) {
+  if (text === undefined) return "(absent)";
+  if (!text.trim()) return "(blank line)";
+  if (text.length <= max) return text;
+  return `${text.slice(0, max)}…`;
+}
+
+function countWords(text) {
+  return (text ?? "").trim().split(/\s+/).filter(Boolean).length;
+}
+
+function inferMismatchNature(v, oLine, rLine) {
+  if (v.type === "missing_line") return "missing";
+  if (v.type === "extra_line") return "added";
+  if (v.type === "line_count") return "line_count_delta";
+
+  const oKind = oLine !== undefined ? classifyLine(oLine) : null;
+  const rKind = rLine !== undefined ? classifyLine(rLine) : null;
+
+  if (v.type === "line_kind") {
+    if (oKind === "prose" && rKind === "hr") return "merged_or_omitted_block";
+    if (oKind === "prose" && rKind === "heading") return "reordered_or_omitted_block";
+    if (oKind === "heading" && rKind === "prose") return "reordered_or_added_block";
+    if (oKind === "hr" && rKind === "heading") return "reordered";
+    if (oKind === "blank" && rKind !== "blank") return "missing_blank_line";
+    if (oKind !== "blank" && rKind === "blank") return "extra_blank_line";
+    if (oKind === "list_item" && rKind === "hr") return "reordered_or_omitted_list";
+    return "structural_kind_change";
+  }
+
+  if (["heading", "hr", "blank", "action_header"].includes(v.type)) {
+    return "structural_marker_changed";
+  }
+
+  return v.type;
+}
+
+function assessWordContent(oLine, rLine, nature) {
+  if (nature === "line_count_delta") {
+    return "Structural alignment required before prose-only edits can validate.";
+  }
+  if (nature === "missing_blank_line" || nature === "extra_blank_line") {
+    return "No word content — blank line structure only.";
+  }
+  if (nature === "structural_marker_changed") {
+    return "No prose change permitted — marker must be byte-identical.";
+  }
+  if (nature === "missing" || nature === "merged_or_omitted_block") {
+    return countWords(oLine) > 3
+      ? "Possible missing words — original has substantive prose at this position."
+      : "Original line may be structural only.";
+  }
+  if (nature === "added" || nature === "reordered_or_added_block") {
+    return countWords(rLine) > 3
+      ? "Added substantive line in rewrite."
+      : "Added line may be structural only.";
+  }
+  if (oLine !== undefined && rLine !== undefined && oLine !== rLine) {
+    const kind = classifyLine(oLine);
+    if (kind === classifyLine(rLine) && ["prose", "blockquote", "list_item"].includes(kind)) {
+      return "Same line kind — editorial word changes are permitted when structure aligns.";
+    }
+  }
+  return "Review required — structure does not align at this position.";
+}
+
+function printStructuralMismatchReport(origBodyLines, rewBodyLines, violations) {
+  if (violations.length === 0) return;
+
+  console.error("STRUCTURAL MISMATCH REPORT");
+  console.error("=".repeat(40));
+  console.error(
+    "STOP. Do not auto-repair paragraphs, blank lines, list items, or Markdown markers.",
+  );
+  console.error("Report to owner and wait for explicit approval before any correction.\n");
+
+  let itemIndex = 0;
+
+  for (const v of violations) {
+    if (v.type === "line_count") {
+      const delta = Math.abs(v.original - v.rewritten);
+      const direction = v.rewritten < v.original ? "short" : "long";
+      console.error("[summary] line_count_delta");
+      console.error(`  Original position:  body lines 1–${v.original} (${v.original} lines)`);
+      console.error(`  Rewritten position: body lines 1–${v.rewritten} (${v.rewritten} lines)`);
+      console.error(
+        `  Nature:               ${delta} line${delta === 1 ? "" : "s"} ${direction} in rewrite vs baseline.`,
+      );
+      console.error(
+        `  Word content:         ${assessWordContent(undefined, undefined, "line_count_delta")}\n`,
+      );
+      continue;
+    }
+
+    const line = v.line;
+    const oLine = origBodyLines[line - 1];
+    const rLine = rewBodyLines[line - 1];
+    const nature = inferMismatchNature(v, oLine, rLine);
+
+    itemIndex += 1;
+    console.error(`[${itemIndex}] ${nature.replace(/_/g, " ")}`);
+    console.error(
+      `  Original position:  body line ${line}${
+        oLine !== undefined ? ` (${classifyLine(oLine)})` : " (absent)"
+      }`,
+    );
+    console.error(
+      `  Rewritten position: body line ${line}${
+        rLine !== undefined ? ` (${classifyLine(rLine)})` : " (absent)"
+      }`,
+    );
+    console.error(`  Original content:   ${truncateLine(oLine)}`);
+    console.error(`  Rewritten content:  ${truncateLine(rLine)}`);
+    console.error(`  Word content:       ${assessWordContent(oLine, rLine, nature)}\n`);
+  }
 }
 
 const args = parseArgs(process.argv.slice(2));
@@ -325,7 +442,11 @@ if (!existsSync(rewrittenPath)) {
 const extractedRaw = readFileSync(extractedPath, "utf8");
 const rewrittenRaw = readFileSync(rewrittenPath, "utf8");
 const baseline = extractProductionSource(extractedRaw);
-const violations = compareFiles(baseline, rewrittenRaw, allowFrontmatter);
+const { violations, origBodyLines, rewBodyLines } = compareFiles(
+  baseline,
+  rewrittenRaw,
+  allowFrontmatter,
+);
 
 if (violations.length === 0) {
   console.log("PASS: Editorial Reinsertion Contract validation succeeded.");
@@ -343,7 +464,9 @@ if (violations.length === 0) {
   process.exit(0);
 }
 
-console.error("BLOCKED: Editorial Reinsertion Contract validation failed. Do not reinsert.\n");
+console.error(
+  "BLOCKED: Editorial Reinsertion Contract validation failed. STOP — do not reinsert or auto-repair.\n",
+);
 if (contractPath) {
   console.error(`Contract: ${contractPath}`);
 }
@@ -355,4 +478,5 @@ for (const v of violations) {
   if (v.rewritten !== undefined) console.error(`  Rewritten: ${v.rewritten}`);
   console.error("");
 }
+printStructuralMismatchReport(origBodyLines, rewBodyLines, violations);
 process.exit(1);
