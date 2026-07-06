@@ -1,5 +1,9 @@
 import type { AskLeiliaReadingType } from "./readingTypes";
 
+/** Canonical production Stripe webhook URL (must use www — apex redirects with HTTP 301). */
+export const ASK_LEILIA_STRIPE_WEBHOOK_URL =
+  "https://www.tidesofknowing.com/api/ask-leilia/stripe-webhook";
+
 export const ONE_QUESTION_PAYMENT_LINK =
   "https://buy.stripe.com/5kQ14m7TQ5h01PMezp7N601";
 
