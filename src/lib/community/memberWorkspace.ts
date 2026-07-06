@@ -1,7 +1,10 @@
-export type MemberWorkspaceSection = "commons" | "account" | "admin";
+export type MemberWorkspaceSection = "commons" | "account" | "ask-leilia" | "admin";
 
-/** Add new authenticated member route prefixes here to inherit the Member Workspace header. */
-const MEMBER_WORKSPACE_PREFIXES = ["/community", "/ask-leilia/admin"] as const;
+/**
+ * Authenticated route prefixes that inherit the Member Workspace header.
+ * Ask Leilia member hub routes live under `/ask-leilia` (checkout, requests, etc.).
+ */
+const MEMBER_WORKSPACE_PREFIXES = ["/community", "/ask-leilia"] as const;
 
 export function isMemberWorkspaceRoute(pathname: string, isAuthenticated: boolean): boolean {
   if (!isAuthenticated) return false;
@@ -13,5 +16,6 @@ export function isMemberWorkspaceRoute(pathname: string, isAuthenticated: boolea
 export function getMemberWorkspaceSection(pathname: string): MemberWorkspaceSection {
   if (pathname.startsWith("/community/account")) return "account";
   if (pathname.startsWith("/ask-leilia/admin")) return "admin";
+  if (pathname === "/ask-leilia" || pathname.startsWith("/ask-leilia/")) return "ask-leilia";
   return "commons";
 }

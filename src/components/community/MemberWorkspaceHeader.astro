@@ -51,8 +51,9 @@ const { section, isAdmin } = Astro.props;
       <a href="/community/account/" aria-current={section === "account" ? "page" : undefined}>
         Account
       </a>
-      <span class="member-workspace-header__placeholder" title="Coming soon">My Readings</span>
-      <span class="member-workspace-header__placeholder" title="Coming soon">Help</span>
+      <a href="/ask-leilia/" aria-current={section === "ask-leilia" ? "page" : undefined}>
+        Ask Leilia
+      </a>
       {
         isAdmin ? (
           <a href="/ask-leilia/admin/" aria-current={section === "admin" ? "page" : undefined}>
