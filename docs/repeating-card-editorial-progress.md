@@ -101,7 +101,7 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | ☐ Two | `swords/two-of-swords` | NOT STARTED | | |
 | ☐ Three | `swords/three-of-swords` | NOT STARTED | | |
 | ☐ Four | `swords/four-of-swords` | NOT STARTED | | |
-| ☐ Five | `swords/five-of-swords` | NOT STARTED | | |
+| ☐ Five | `swords/five-of-swords` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ Six | `swords/six-of-swords` | NOT STARTED | | |
 | ☐ Seven | `swords/seven-of-swords` | NOT STARTED | | |
 | ☐ Eight | `swords/eight-of-swords` | NOT STARTED | | |
@@ -163,3 +163,4 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | 2026-07-06 | The Fool | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | The Magician | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | The High Priestess | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
+| 2026-07-07 | Five of Swords | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |

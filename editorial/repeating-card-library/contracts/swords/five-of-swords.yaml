@@ -1,0 +1,15 @@
+# Per-card Editorial Reinsertion Contract — Five of Swords
+# See 03_EDITORIAL_REINSERTION_CONTRACT.md
+
+collection_id: swords/five-of-swords
+
+extracted_baseline: editorial/repeating-card-library/archive/swords/five-of-swords/v1-original.md
+production_target: src/content/repeating-card-meanings/swords/five-of-swords.md
+
+# Owner-declared editable frontmatter fields. Empty = byte-identical frontmatter required.
+allowed_frontmatter_edits: []
+
+reinsertion_date: 2026-07-07
+approved_by: owner
+
+notes: "Approved editorial rewrite reinsertion."
