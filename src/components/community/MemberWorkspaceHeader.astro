@@ -1,0 +1,110 @@
+---
+import type { MemberWorkspaceSection } from "../../lib/community/memberWorkspace";
+
+interface Props {
+  section: MemberWorkspaceSection;
+  isAdmin: boolean;
+}
+
+const { section, isAdmin } = Astro.props;
+---
+
+<header class="member-workspace-header">
+  <div class="page-inner member-workspace-header__inner">
+    <a href="/community/" class="member-workspace-header__brand" aria-label="Practice Commons home">
+      <img
+        src="/images/brand/tides-of-knowing-mark.svg"
+        alt=""
+        class="member-workspace-header__mark"
+        width="22"
+        height="22"
+        aria-hidden="true"
+      />
+      <span class="member-workspace-header__brand-primary">Tides of Knowing</span>
+      <span class="member-workspace-header__brand-sep" aria-hidden="true">|</span>
+      <span class="member-workspace-header__brand-secondary">Practice Commons</span>
+    </a>
+
+    <button
+      class="member-workspace-header__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="member-workspace-nav"
+      aria-label="Open member navigation"
+    >
+      <span class="member-workspace-header__toggle-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span>Menu</span>
+    </button>
+
+    <nav
+      class="member-workspace-header__nav"
+      id="member-workspace-nav"
+      aria-label="Member workspace"
+    >
+      <a href="/community/" aria-current={section === "commons" ? "page" : undefined}>
+        Community
+      </a>
+      <a href="/community/account/" aria-current={section === "account" ? "page" : undefined}>
+        Account
+      </a>
+      <span class="member-workspace-header__placeholder" title="Coming soon">My Readings</span>
+      <span class="member-workspace-header__placeholder" title="Coming soon">Help</span>
+      {
+        isAdmin ? (
+          <a href="/ask-leilia/admin/" aria-current={section === "admin" ? "page" : undefined}>
+            Administration
+          </a>
+        ) : null
+      }
+      <form class="member-workspace-header__logout" method="post" action="/auth/logout/">
+        <button type="submit">Logout</button>
+      </form>
+      <a class="member-workspace-header__return-mobile" href="/">← Return to Website</a>
+    </nav>
+
+    <a class="member-workspace-header__return" href="/">← Return to Website</a>
+  </div>
+</header>
+
+<script>
+  function initMemberWorkspaceHeader() {
+    const toggle = document.querySelector(".member-workspace-header__toggle");
+    const nav = document.getElementById("member-workspace-nav");
+    if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) return;
+    if (toggle.dataset.bound === "true") return;
+    toggle.dataset.bound = "true";
+
+    function setOpen(isOpen) {
+      nav.classList.toggle("member-workspace-header__nav--open", isOpen);
+      document.body.classList.toggle("member-workspace-nav-open", isOpen);
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      toggle.setAttribute("aria-label", isOpen ? "Close member navigation" : "Open member navigation");
+    }
+
+    toggle.addEventListener("click", () => {
+      setOpen(!nav.classList.contains("member-workspace-header__nav--open"));
+    });
+
+    nav.addEventListener("click", (event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest("a, button")) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setOpen(false);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 901px)").matches) setOpen(false);
+    });
+  }
+
+  initMemberWorkspaceHeader();
+  document.addEventListener("astro:page-load", initMemberWorkspaceHeader);
+</script>

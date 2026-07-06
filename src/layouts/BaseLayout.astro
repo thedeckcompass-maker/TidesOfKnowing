@@ -4,7 +4,7 @@ import "../styles/share.css";
 import "../styles/member-workspace.css";
 import MailerLiteUniversal from "../components/MailerLiteUniversal.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
-import MemberWorkspaceBar from "../components/community/MemberWorkspaceBar.astro";
+import MemberWorkspaceHeader from "../components/community/MemberWorkspaceHeader.astro";
 import { isAdminProfile } from "../lib/community/auth";
 import {
   getMemberWorkspaceSection,
@@ -129,14 +129,11 @@ const isMemberWorkspace =
   memberWorkspace === true ||
   (memberWorkspace !== false && isMemberWorkspaceRoute(pathname, isAuthenticated));
 const memberWorkspaceSection = getMemberWorkspaceSection(pathname);
-const memberDisplayName = Astro.locals.profile?.display_name ?? "Member";
 const isWorkspaceAdmin = isAdminProfile(Astro.locals.profile);
 const effectiveTdcPlacement = isMemberWorkspace && tdcPlacement === "before-footer" ? "none" : tdcPlacement;
 const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-workspace" : null, bodyClassProp]
   .filter(Boolean)
   .join(" ");
-const workspaceLogoHref = isMemberWorkspace ? "/community/" : "/";
-const workspaceLogoLabel = isMemberWorkspace ? "Practice Commons home" : "Tides of Knowing home";
 ---
 
 <!doctype html>
@@ -201,140 +198,110 @@ const workspaceLogoLabel = isMemberWorkspace ? "Practice Commons home" : "Tides 
   <body class={bodyClass}>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <header class:list={["site-header", isMemberWorkspace && "site-header--workspace"]}>
-      <div class="page-inner site-header__inner">
-        <a href={workspaceLogoHref} class="site-logo site-brand" aria-label={workspaceLogoLabel}>
-          <img
-            src="/images/brand/tides-of-knowing-mark.svg"
-            alt=""
-            class="site-brand__icon"
-            width="32"
-            height="32"
-            aria-hidden="true"
-          />
-          <span class="site-brand__text">Tides of Knowing</span>
-        </a>
-        <button
-          class="site-nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="site-primary-nav"
-          aria-label="Open primary navigation"
-        >
-          <span class="site-nav-toggle__icon" aria-hidden="true">
-            <span class="site-nav-toggle__bar"></span>
-            <span class="site-nav-toggle__bar"></span>
-            <span class="site-nav-toggle__bar"></span>
-          </span>
-          <span class="site-nav-toggle__label">Menu</span>
-        </button>
-        <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
-          {
-            isMemberWorkspace ? (
-              <>
-                <details class="site-nav__dropdown site-nav__dropdown--workspace">
-                  <summary class="site-nav__dropdown-summary">Browse site</summary>
-                  <ul class="site-nav__dropdown-list" role="list">
-                    <li><a class="site-nav__dropdown-link" href="/">Home</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/articles/compass-method/">Method</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/tools/">Tools</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/articles/">Articles</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/blog/">Field Notes</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/ask-leilia/">Ask Leilia</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/compass/">Training</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/about/">About</a></li>
-                    <li><a class="site-nav__dropdown-link" href="/contact/">Contact</a></li>
-                  </ul>
-                </details>
-                <a class="site-nav__link site-nav__link--workspace-public" href="/">
-                  Public site
-                </a>
-              </>
-            ) : (
-              <>
-                <a
-                  class="site-nav__link"
-                  href="/articles/compass-method/"
-                  aria-current={isCompassMethodRoute ? "page" : undefined}
-                >
-                  Method
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/tools/"
-                  aria-current={isToolsSection ? "page" : undefined}
-                >
-                  Tools
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/articles/"
-                  aria-current={isArticlesSection ? "page" : undefined}
-                >
-                  Articles
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/blog/"
-                  aria-current={isFieldNotesSection ? "page" : undefined}
-                >
-                  Field Notes
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/community/"
-                  aria-current={isCommunityRoute ? "page" : undefined}
-                >
-                  Community
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/ask-leilia/"
-                  aria-current={isAskLeiliaRoute ? "page" : undefined}
-                >
-                  Ask Leilia
-                </a>
-                <a
-                  class="site-nav__link site-nav__link--training"
-                  href="/compass/"
-                  data-link="compass"
-                  aria-current={isCompassTrainingSection ? "page" : undefined}
-                >
-                  Training
-                </a>
-                <a
-                  class="site-nav__link"
-                  href="/about/"
-                  aria-current={isAboutRoute ? "page" : undefined}
-                >
-                  About
-                </a>
-                {
-                  isAuthenticated ? (
-                    <a
-                      class="site-nav__link"
-                      href="/community/account/"
-                      aria-current={pathname.startsWith("/community/account") ? "page" : undefined}
-                    >
-                      Account
-                    </a>
-                  ) : null
-                }
-              </>
-            )
-          }
-        </nav>
-      </div>
-    </header>
-
     {
       isMemberWorkspace ? (
-        <MemberWorkspaceBar
-          section={memberWorkspaceSection}
-          displayName={memberDisplayName}
-          isAdmin={isWorkspaceAdmin}
-        />
-      ) : null
+        <MemberWorkspaceHeader section={memberWorkspaceSection} isAdmin={isWorkspaceAdmin} />
+      ) : (
+        <header class="site-header">
+          <div class="page-inner site-header__inner">
+            <a href="/" class="site-logo site-brand" aria-label="Tides of Knowing home">
+              <img
+                src="/images/brand/tides-of-knowing-mark.svg"
+                alt=""
+                class="site-brand__icon"
+                width="32"
+                height="32"
+                aria-hidden="true"
+              />
+              <span class="site-brand__text">Tides of Knowing</span>
+            </a>
+            <button
+              class="site-nav-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="site-primary-nav"
+              aria-label="Open primary navigation"
+            >
+              <span class="site-nav-toggle__icon" aria-hidden="true">
+                <span class="site-nav-toggle__bar"></span>
+                <span class="site-nav-toggle__bar"></span>
+                <span class="site-nav-toggle__bar"></span>
+              </span>
+              <span class="site-nav-toggle__label">Menu</span>
+            </button>
+            <nav class="site-nav" id="site-primary-nav" aria-label="Primary">
+              <a
+                class="site-nav__link"
+                href="/articles/compass-method/"
+                aria-current={isCompassMethodRoute ? "page" : undefined}
+              >
+                Method
+              </a>
+              <a
+                class="site-nav__link"
+                href="/tools/"
+                aria-current={isToolsSection ? "page" : undefined}
+              >
+                Tools
+              </a>
+              <a
+                class="site-nav__link"
+                href="/articles/"
+                aria-current={isArticlesSection ? "page" : undefined}
+              >
+                Articles
+              </a>
+              <a
+                class="site-nav__link"
+                href="/blog/"
+                aria-current={isFieldNotesSection ? "page" : undefined}
+              >
+                Field Notes
+              </a>
+              <a
+                class="site-nav__link"
+                href="/community/"
+                aria-current={isCommunityRoute ? "page" : undefined}
+              >
+                Community
+              </a>
+              <a
+                class="site-nav__link"
+                href="/ask-leilia/"
+                aria-current={isAskLeiliaRoute ? "page" : undefined}
+              >
+                Ask Leilia
+              </a>
+              <a
+                class="site-nav__link site-nav__link--training"
+                href="/compass/"
+                data-link="compass"
+                aria-current={isCompassTrainingSection ? "page" : undefined}
+              >
+                Training
+              </a>
+              <a
+                class="site-nav__link"
+                href="/about/"
+                aria-current={isAboutRoute ? "page" : undefined}
+              >
+                About
+              </a>
+              {
+                isAuthenticated ? (
+                  <a
+                    class="site-nav__link"
+                    href="/community/account/"
+                    aria-current={pathname.startsWith("/community/account") ? "page" : undefined}
+                  >
+                    Account
+                  </a>
+                ) : null
+              }
+            </nav>
+          </div>
+        </header>
+      )
     }
 
     <main id="main-content">
