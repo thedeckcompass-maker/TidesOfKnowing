@@ -33,6 +33,10 @@ const PERSONAL_GUIDANCE_LIFE_AREAS = [
   "Other",
 ] as const;
 
+const PERSONAL_GUIDANCE_LIFE_AREAS_STANDARD = PERSONAL_GUIDANCE_LIFE_AREAS.filter(
+  (area) => area !== "Other",
+);
+
 const tierGuidance: Record<AskLeiliaReadingType, string> = {
   "one-question":
     "If you find yourself trying to ask several questions at once, the In-Depth Reading will usually provide a more satisfying result.",
@@ -227,13 +231,40 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
             Select the areas of life you would like this reading to consider.
           </p>
 
-          <div class="ask-request-form__checkbox-grid">
-            {PERSONAL_GUIDANCE_LIFE_AREAS.map((area) => (
+          <div class="ask-request-form__life-areas">
+            <div class="ask-request-form__checkbox-grid" role="group" aria-label="Life areas">
+              {
+                PERSONAL_GUIDANCE_LIFE_AREAS_STANDARD.map((area) => (
+                  <label class="ask-request-form__checkbox">
+                    <input type="checkbox" name="lifeAreas" value={area} />
+                    <span class="ask-request-form__checkbox-label">{area}</span>
+                  </label>
+                ))
+              }
+            </div>
+
+            <div class="ask-request-form__checkbox-other">
               <label class="ask-request-form__checkbox">
-                <input type="checkbox" name="lifeAreas" value={area} />
-                <span>{area}</span>
+                <input
+                  type="checkbox"
+                  name="lifeAreas"
+                  value="Other"
+                  data-life-area-other-toggle
+                />
+                <span class="ask-request-form__checkbox-label">Other</span>
               </label>
-            ))}
+              <div class="ask-request-form__other-field" data-life-area-other-field hidden>
+                <input
+                  type="text"
+                  name="lifeAreaOther"
+                  maxlength="100"
+                  placeholder="Please specify..."
+                  autocomplete="off"
+                  disabled
+                  data-life-area-other-input
+                />
+              </div>
+            </div>
           </div>
         </fieldset>
 
@@ -325,3 +356,50 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
   <button type="submit">{submitLabel}</button>
 </form>
+
+<script>
+  function initPersonalGuidanceLifeAreas() {
+    const toggle = document.querySelector("[data-life-area-other-toggle]");
+    const field = document.querySelector("[data-life-area-other-field]");
+    const input = document.querySelector("[data-life-area-other-input]");
+
+    if (
+      !(toggle instanceof HTMLInputElement) ||
+      !(field instanceof HTMLElement) ||
+      !(input instanceof HTMLInputElement)
+    ) {
+      return;
+    }
+
+    const syncOtherField = () => {
+      const isOtherSelected = toggle.checked;
+
+      if (isOtherSelected) {
+        field.hidden = false;
+        field.classList.add("is-visible");
+        input.disabled = false;
+        input.required = true;
+      } else {
+        field.classList.remove("is-visible");
+        input.required = false;
+        input.disabled = true;
+        input.value = "";
+        window.setTimeout(() => {
+          if (!toggle.checked) {
+            field.hidden = true;
+          }
+        }, 200);
+      }
+    };
+
+    if (toggle.dataset.bound !== "true") {
+      toggle.dataset.bound = "true";
+      toggle.addEventListener("change", syncOtherField);
+    }
+
+    syncOtherField();
+  }
+
+  initPersonalGuidanceLifeAreas();
+  document.addEventListener("astro:page-load", initPersonalGuidanceLifeAreas);
+</script>

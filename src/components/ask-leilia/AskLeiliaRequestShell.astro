@@ -243,25 +243,78 @@ const { title, intro, summaryItems, paymentCancelled = false, submitted = false 
     color: var(--tok-text-muted);
   }
 
+  .ask-request-form-wrap :global(.ask-request-form__life-areas) {
+    display: grid;
+    gap: 0.75rem;
+  }
+
   .ask-request-form-wrap :global(.ask-request-form__checkbox-grid) {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
-    gap: 0.45rem 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 1rem;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__checkbox-other) {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.15rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 18%, transparent);
   }
 
   .ask-request-form-wrap :global(.ask-request-form__checkbox) {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 1.125rem minmax(0, 1fr);
     align-items: center;
-    gap: 0.45rem;
-    width: fit-content;
+    gap: 0.55rem;
+    width: 100%;
+    margin: 0;
     font-weight: 600;
     line-height: 1.35;
+    cursor: pointer;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__checkbox-label) {
+    min-width: 0;
   }
 
   .ask-request-form-wrap :global(.ask-request-form__checkbox input[type="checkbox"]) {
-    flex: 0 0 auto;
+    width: 1.125rem;
+    height: 1.125rem;
     margin: 0;
-    width: auto;
+    padding: 0;
+    accent-color: var(--tok-gold-deep);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__other-field) {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    padding-left: calc(1.125rem + 0.55rem);
+    transition:
+      max-height var(--dur-base) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__other-field.is-visible) {
+    max-height: 3.5rem;
+    opacity: 1;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__other-field input[type="text"]) {
+    width: 100%;
+    max-width: 24rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  @media (min-width: 640px) {
+    .ask-request-form-wrap :global(.ask-request-form__checkbox-grid) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .ask-request-form-wrap :global(.ask-request-form__guidance) {

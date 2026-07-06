@@ -203,6 +203,15 @@ export function validateInDepthRequest(input: {
   };
 }
 
+export function formatPersonalGuidanceLifeAreas(
+  lifeAreas: string[],
+  lifeAreaOther: string,
+): string[] {
+  return lifeAreas.map((area) =>
+    area === "Other" ? `Other: ${lifeAreaOther}` : area,
+  );
+}
+
 export function validatePersonalGuidanceRequest(input: {
   name: unknown;
   email: unknown;
@@ -211,6 +220,7 @@ export function validatePersonalGuidanceRequest(input: {
   lookingAhead: unknown;
   important?: unknown;
   lifeAreas?: unknown;
+  lifeAreaOther?: unknown;
 }): ValidationResult<{
   name: string;
   email: string;
@@ -224,15 +234,33 @@ export function validatePersonalGuidanceRequest(input: {
   const circumstances = cleanText(input.circumstances);
   const lookingAhead = cleanText(input.lookingAhead);
   const important = cleanText(input.important);
+  const lifeAreaOther = cleanText(input.lifeAreaOther).replace(/\s+/g, " ").trim();
   const lifeAreas = Array.isArray(input.lifeAreas)
     ? input.lifeAreas.map((area) => cleanText(area)).filter(Boolean)
     : input.lifeAreas
       ? [cleanText(input.lifeAreas)].filter(Boolean)
       : [];
+  const hasOther = lifeAreas.includes("Other");
 
   if (lifeAreas.length === 0) {
     return { ok: false, error: "Please select at least one life area." };
   }
+
+  if (hasOther) {
+    if (lifeAreaOther.length < 1) {
+      return { ok: false, error: "Please specify your other life area." };
+    }
+
+    if (lifeAreaOther.length > 100) {
+      return { ok: false, error: "Please keep your other life area under 100 characters." };
+    }
+  } else if (lifeAreaOther.length > 0) {
+    return { ok: false, error: "Please select Other before specifying an additional life area." };
+  }
+
+  const formattedLifeAreas = hasOther
+    ? formatPersonalGuidanceLifeAreas(lifeAreas, lifeAreaOther)
+    : lifeAreas;
 
   if (questions.length < 10 || questions.length > 2000) {
     return {
@@ -262,7 +290,7 @@ export function validatePersonalGuidanceRequest(input: {
   }
 
   const contextParts = [
-    `Life areas:\n${lifeAreas.join(", ")}`,
+    `Life areas:\n${formattedLifeAreas.join(", ")}`,
     `Current circumstances:\n${circumstances}`,
     `Looking ahead:\n${lookingAhead}`,
     important ? `Anything else to address:\n${important}` : "",

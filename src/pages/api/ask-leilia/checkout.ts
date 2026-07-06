@@ -104,6 +104,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       lookingAhead: form.get("lookingAhead"),
       important: form.get("important"),
       lifeAreas: form.getAll("lifeAreas"),
+      lifeAreaOther: form.get("lifeAreaOther"),
     });
 
     if (!validation.ok) {
