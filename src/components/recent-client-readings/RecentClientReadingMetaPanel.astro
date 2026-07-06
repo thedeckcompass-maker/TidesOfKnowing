@@ -1,0 +1,120 @@
+---
+import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import { formatIsoDate } from "../../lib/recentClientReadings";
+
+interface Props {
+  entry: RecentClientReadingEntry;
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+---
+
+<section class="rcr-meta" aria-label="Reading details">
+  <dl class="rcr-meta__grid">
+    <div>
+      <dt>Spread used</dt>
+      <dd>{data.spreadUsed}</dd>
+    </div>
+    <div>
+      <dt>Dominant suit</dt>
+      <dd>{data.dominantSuit}</dd>
+    </div>
+    {
+      data.lifeAreas.length > 0 ? (
+        <div>
+          <dt>Life areas</dt>
+          <dd>{data.lifeAreas.join(", ")}</dd>
+        </div>
+      ) : null
+    }
+    {
+      data.archetypalThemes.length > 0 ? (
+        <div>
+          <dt>Archetypal themes</dt>
+          <dd>{data.archetypalThemes.join(", ")}</dd>
+        </div>
+      ) : null
+    }
+    {
+      data.cardsFeatured.length > 0 ? (
+        <div>
+          <dt>Featured cards</dt>
+          <dd>{data.cardsFeatured.join(", ")}</dd>
+        </div>
+      ) : null
+    }
+    {
+      data.primaryCards.length > 0 ? (
+        <div>
+          <dt>Primary cards</dt>
+          <dd>{data.primaryCards.join(", ")}</dd>
+        </div>
+      ) : null
+    }
+    {
+      data.secondaryCards.length > 0 ? (
+        <div>
+          <dt>Secondary cards</dt>
+          <dd>{data.secondaryCards.join(", ")}</dd>
+        </div>
+      ) : null
+    }
+    <div>
+      <dt>Published</dt>
+      <dd>
+        <time datetime={formatIsoDate(data.datePublished)}>
+          {
+            data.datePublished.toLocaleDateString("en", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </time>
+      </dd>
+    </div>
+  </dl>
+</section>
+
+<style>
+  .rcr-meta {
+    margin-top: clamp(1.25rem, 3vw, 2rem);
+    padding: clamp(1rem, 3vw, 1.35rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 45%, transparent);
+  }
+
+  .rcr-meta__grid {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .rcr-meta__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .rcr-meta__grid div {
+    margin: 0;
+  }
+
+  .rcr-meta__grid dt {
+    margin: 0 0 0.2rem;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .rcr-meta__grid dd {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+  }
+</style>

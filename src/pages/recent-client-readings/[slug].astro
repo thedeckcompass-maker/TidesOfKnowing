@@ -1,0 +1,209 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import AskLeiliaPricingGrid from "../../components/ask-leilia/AskLeiliaPricingGrid.astro";
+import RecentClientReadingMetaPanel from "../../components/recent-client-readings/RecentClientReadingMetaPanel.astro";
+import RecentClientReadingContinueExploring from "../../components/recent-client-readings/RecentClientReadingContinueExploring.astro";
+import { ASK_LEILIA_READINGS, ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
+import {
+  buildKnowledgeGraphCatalog,
+  resolveReadingKnowledgeGraph,
+} from "../../lib/knowledgeGraph";
+import {
+  formatIsoDate,
+  getReadingBreadcrumbs,
+  getReadingCanonicalUrl,
+  getReadingJsonLd,
+  getReadingMetaTitle,
+  isPublishedReading,
+  RECENT_CLIENT_READINGS_HUB_PATH,
+} from "../../lib/recentClientReadings";
+import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
+import {
+  parseRecentClientReadingSections,
+  RCR_SECTION_EDITOR_NOTES,
+  RCR_SECTION_READING,
+  RCR_SECTION_RELATED_SUGGESTIONS,
+} from "../../lib/recentClientReadingContent";
+import RecentClientReadingFeaturedSpread from "../../components/recent-client-readings/RecentClientReadingFeaturedSpread.astro";
+import RecentClientReadingSpreadGallery from "../../components/recent-client-readings/RecentClientReadingSpreadGallery.astro";
+import MarkdownIt from "markdown-it";
+import { siteBase } from "../../lib/site";
+import "../../styles/ask-leilia.css";
+import "../../styles/recent-client-readings.css";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const entries = await getCollection("recentClientReadings");
+  return entries
+    .filter(isPublishedReading)
+    .map((entry) => ({
+      params: { slug: entry.data.slug },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const [allReadings, repeatingCards, blogEntries] = await Promise.all([
+  getCollection("recentClientReadings"),
+  getCollection("repeatingCardMeanings"),
+  getCollection("blog"),
+]);
+const data = entry.data;
+const base = siteBase(Astro);
+const canonical = getReadingCanonicalUrl(entry, base.href);
+const title = getReadingMetaTitle(entry);
+const crumbs = getReadingBreadcrumbs(entry);
+const catalog = buildKnowledgeGraphCatalog({
+  repeatingCardMeanings: repeatingCards,
+  blog: blogEntries,
+  recentClientReadings: allReadings,
+});
+const explore = resolveReadingKnowledgeGraph(entry, catalog, blogEntries);
+const clientReadingEntries = Object.fromEntries(
+  explore.sections
+    .filter((section) => section.kind === "client-reading")
+    .flatMap((section) => section.links)
+    .map((link) => {
+      const related = catalog.clientReadings.bySlug.get(link.ref);
+      return related ? ([link.ref, related] as const) : null;
+    })
+    .filter((pair): pair is [string, (typeof catalog.clientReadings.published)[number]] =>
+      Boolean(pair),
+    ),
+);
+const jsonLd = getReadingJsonLd(entry, base.href, explore);
+const pdfHref = data.pdfDownload?.trim() ? new URL(data.pdfDownload, base).href : null;
+const featuredSpreadSrc = getFeaturedSpreadImage(entry);
+const ogImage = featuredSpreadSrc ? new URL(featuredSpreadSrc, base).href : undefined;
+const md = new MarkdownIt({ html: false, linkify: true });
+const bodySections = parseRecentClientReadingSections(entry.body ?? "");
+const readingHtml = md.render(`# ${RCR_SECTION_READING}\n\n${bodySections.reading}`);
+const editorNotesHtml = bodySections.editorNotes.trim()
+  ? md.render(`# ${RCR_SECTION_EDITOR_NOTES}\n\n${bodySections.editorNotes}`)
+  : "";
+const relatedSuggestionsHtml = bodySections.relatedSuggestions.trim()
+  ? md.render(`# ${RCR_SECTION_RELATED_SUGGESTIONS}\n\n${bodySections.relatedSuggestions}`)
+  : "";
+---
+
+<BaseLayout
+  title={title}
+  description={data.seoDescription}
+  ogUrl={canonical}
+  ogTitle={title}
+  ogDescription={data.seoDescription}
+  ogType="article"
+  ogImage={ogImage}
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
+  jsonLd={jsonLd}
+>
+  <main class="ask-leilia page-inner rcr-reading">
+    <Breadcrumbs items={crumbs} />
+
+    <header class="rcr-reading__hero">
+      <p class="ask-leilia__kicker">{data.readingType}</p>
+      <h1>{data.title}</h1>
+      <p class="rcr-reading__question">
+        <span class="rcr-reading__question-label">Client question</span>
+        {data.question}
+      </p>
+      <p class="rcr-reading__privacy">
+        Identifying details have been removed or anonymised where necessary to protect client
+        privacy.
+      </p>
+      <p class="rcr-reading__published">
+        Published{" "}
+        <time datetime={formatIsoDate(data.datePublished)}>
+          {
+            data.datePublished.toLocaleDateString("en", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </time>
+      </p>
+    </header>
+
+    <RecentClientReadingFeaturedSpread entry={entry} baseUrl={base} />
+
+    <section class="rcr-reading__summary" aria-labelledby="reading-summary-heading">
+      <h2 id="reading-summary-heading">Summary</h2>
+      <p>{data.summary}</p>
+    </section>
+
+    <article class="rcr-reading__body article-prose">
+      <div class="rcr-reading__section rcr-reading__section--reading">
+        <Fragment set:html={readingHtml} />
+      </div>
+      <RecentClientReadingSpreadGallery entry={entry} baseUrl={base} />
+      {
+        editorNotesHtml ? (
+          <div class="rcr-reading__section rcr-reading__section--editor-notes">
+            <Fragment set:html={editorNotesHtml} />
+          </div>
+        ) : null
+      }
+      {
+        relatedSuggestionsHtml ? (
+          <div class="rcr-reading__section rcr-reading__section--related">
+            <Fragment set:html={relatedSuggestionsHtml} />
+          </div>
+        ) : null
+      }
+    </article>
+
+    <RecentClientReadingMetaPanel entry={entry} />
+
+    {
+      pdfHref ? (
+        <section class="rcr-reading__download" aria-labelledby="download-heading">
+          <h2 id="download-heading" class="visually-hidden">Download</h2>
+          <a class="ask-leilia-portfolio__cta" href={pdfHref} download>
+            Download Complete PDF
+          </a>
+        </section>
+      ) : null
+    }
+
+    <RecentClientReadingContinueExploring
+      explore={explore}
+      clientReadingEntries={clientReadingEntries}
+    />
+
+    <section class="rcr-reading__cta-copy" aria-labelledby="reading-cta-heading">
+      <h2 id="reading-cta-heading">Ready to explore your own question?</h2>
+      <p>
+        Whether you're seeking clarity on a single decision or guidance through a more complex
+        situation, I'd be honoured to prepare a written reading for you.
+      </p>
+    </section>
+
+    <AskLeiliaPricingGrid
+      readings={ASK_LEILIA_READINGS}
+      buttonLabel="View This Reading"
+      buttonHref="/ask-leilia/"
+    />
+
+    <p class="rcr-reading__back">
+      <a href={RECENT_CLIENT_READINGS_HUB_PATH}>Back to Reading Library</a>
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

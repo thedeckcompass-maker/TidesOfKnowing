@@ -1,18 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import AskLeiliaTrustList from "../components/ask-leilia/AskLeiliaTrustList.astro";
+import AskLeiliaPricingGrid from "../components/ask-leilia/AskLeiliaPricingGrid.astro";
+import {
+  ASK_LEILIA_PUBLIC_TRUST_POINTS,
+  ASK_LEILIA_READINGS,
+  ASK_LEILIA_PUBLIC_BRAND,
+  LEILIA_PORTRAIT_ALT,
+  LEILIA_PORTRAIT_PATH,
+  askLeiliaAuthorPersonNode,
+} from "../data/askLeilia";
 import { siteBase } from "../lib/site";
+import "../styles/ask-leilia.css";
 
-const title = "Ask Leilia | Personal Tarot Reflections and Symbolic Guidance";
+const title = "Ask Leilia | Professional Written Tarot Readings";
 const description =
-  "Ask Leilia offers thoughtful written tarot reflections for readers and seekers, with one question, three cards, and a written response within 48 hours.";
+  "Professional written tarot readings personally interpreted by Leilia. Choose a one-question reading, in-depth reading, or personal guidance reading — delivered as a PDF within 48 hours.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
-
-const offer = {
-  name: "One Question - Three Cards",
-  price: "US$25",
-  delivery: "Delivered within 48 hours",
-};
-const leiliaPortraitPath = "/images/about/leigh-spencer-profile.png";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -20,17 +24,14 @@ const jsonLd = {
   name: "Ask Leilia",
   description,
   url: canonical,
-  provider: {
-    "@type": "Person",
-    name: "Leigh Spencer",
-  },
-  offers: {
+  provider: askLeiliaAuthorPersonNode(),
+  offers: ASK_LEILIA_READINGS.map((reading) => ({
     "@type": "Offer",
-    name: offer.name,
-    price: "25",
+    name: reading.name,
+    price: reading.price.replace(/[^\d.]/g, ""),
     priceCurrency: "USD",
     availability: "https://schema.org/PreOrder",
-  },
+  })),
 };
 ---
 
@@ -40,46 +41,54 @@ const jsonLd = {
   ogUrl={canonical}
   ogTitle={title}
   ogDescription={description}
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   jsonLd={jsonLd}
 >
   <main class="ask-leilia page-inner">
     <section class="ask-leilia-hero" aria-labelledby="ask-leilia-heading">
       <div class="ask-leilia-hero__copy">
-        <p class="ask-leilia__kicker">Personal Tarot Reflections</p>
+        <p class="ask-leilia__kicker">Professional Tarot Readings</p>
         <h1 id="ask-leilia-heading">Ask Leilia</h1>
+        <p class="ask-leilia-hero__subheading">
+          Professional written tarot readings, personally interpreted by Leilia.
+        </p>
         <p class="ask-leilia-hero__lede">
-          Thoughtful written reflections for readers and seekers.
+          Whether you're facing a difficult decision, seeking clarity about a relationship,
+          wondering what comes next, or simply looking for another perspective, each reading is
+          personally completed using traditional tarot methods and delivered as a professionally
+          written PDF.
         </p>
-        <div class="ask-leilia-hero__offer" aria-label="Offer summary">
-          <p>Three cards • One question • Delivered within 48 hours</p>
-          <p class="ask-leilia-hero__price">US$25</p>
-        </div>
-        <p>
-          <a class="ask-leilia-hero__cta" href="/ask-leilia/request/">Begin Your Reflection</a>
-        </p>
+        <AskLeiliaTrustList points={ASK_LEILIA_PUBLIC_TRUST_POINTS} />
       </div>
     </section>
+
+    <AskLeiliaPricingGrid
+      heading="Choose Your Reading"
+      headingId="readings-heading"
+      readings={ASK_LEILIA_READINGS}
+      buttonLabel="Request Reading"
+      buttonHref="#"
+    />
 
     <section class="ask-leilia-about" aria-labelledby="meet-leilia-heading">
       <figure class="ask-leilia-about__portrait">
         <img
           class="ask-leilia-about__photo"
-          src={leiliaPortraitPath}
+          src={LEILIA_PORTRAIT_PATH}
           width="640"
           height="853"
-          alt="Professional portrait of Leigh Spencer, founder of Tides of Knowing, smiling outdoors in a park setting."
+          alt={LEILIA_PORTRAIT_ALT}
           loading="eager"
           decoding="async"
         />
       </figure>
 
       <div class="ask-leilia-about__copy">
-        <h2 id="meet-leilia-heading">Meet Leigh (Leilia)</h2>
+        <h2 id="meet-leilia-heading">Meet Leilia</h2>
         <p>
-          Readers know me as Leilia, the name I use when working with the cards.
-          Outside the reading room, I'm Leigh Spencer. I've been reading tarot since
-          I first carried a deck to school at the age of ten. What began as childhood
-          curiosity slowly became a lifelong practice.
+          Leilia – Tides of Knowing is the name I use for my professional tarot practice. I've been
+          reading tarot since I first carried a deck to school at the age of ten. What began as
+          childhood curiosity slowly became a lifelong practice.
         </p>
         <p>
           Over the last four decades, I've read cards through many seasons of life.
@@ -88,13 +97,13 @@ const jsonLd = {
           thoughtful questions and look beneath the surface of people's stories.
         </p>
         <p>
-          My approach is less about prediction and more about reflection. I am
+          My approach is less about prediction and more about understanding. I am
           interested in the patterns beneath experience, the tensions we carry, the
-          choices before us, and the meanings that quietly emerge when we give ourselves
-          permission to look honestly.
+          choices before us, and the guidance that emerges when we look honestly at
+          what the cards reveal.
         </p>
         <p>
-          Every Ask Leilia reflection is written personally by me. There are no templates
+          Every Ask Leilia reading is written personally by me. There are no templates
           and no automated interpretations. I spend time with your question, the cards
           and the wider story surrounding what you are experiencing.
         </p>
@@ -107,30 +116,31 @@ const jsonLd = {
 
     <section class="ask-leilia-grid" aria-label="Process and service details">
       <article class="ask-leilia-card">
-        <h2>Process</h2>
+        <h2>How It Works</h2>
         <ol>
-          <li>Share one question.</li>
+          <li>Choose your reading and share your question.</li>
           <li>Complete your booking.</li>
-          <li>Receive a thoughtful written reflection within 48 hours.</li>
+          <li>Receive your written tarot reading as a PDF within 48 hours.</li>
         </ol>
       </article>
 
       <article class="ask-leilia-card">
-        <h2>What you receive</h2>
+        <h2>What You Receive</h2>
         <ul>
-          <li>One question.</li>
-          <li>A three-card reading.</li>
-          <li>A thoughtful written reflection.</li>
+          <li>A personally interpreted tarot reading.</li>
+          <li>A professionally written PDF delivered to your inbox.</li>
+          <li>Clear, thoughtful guidance tailored to your question.</li>
           <li>Delivery within 48 hours.</li>
         </ul>
       </article>
     </section>
 
     <section class="ask-leilia-section" aria-labelledby="questions-heading">
-      <h2 id="questions-heading">Questions people bring</h2>
+      <h2 id="questions-heading">Questions People Bring</h2>
       <p>
-        Whether you are exploring your own cards, navigating a crossroads, or seeking
-        clarity around a question, Ask Leilia provides a quiet space for reflection.
+        Whether you are navigating a crossroads, seeking clarity around a relationship,
+        or wondering what comes next, Ask Leilia offers professional written guidance
+        grounded in traditional tarot interpretation.
       </p>
       <div class="ask-leilia-question-grid">
         <article>
@@ -174,268 +184,5 @@ const jsonLd = {
         <span>"I've pulled these cards. What might I not be seeing?"</span>
       </p>
     </section>
-
-    <p class="ask-leilia-bottom-cta">
-      <a class="ask-leilia-hero__cta" href="/ask-leilia/request/">Begin Your Reflection</a>
-    </p>
   </main>
 </BaseLayout>
-
-<style>
-  .ask-leilia {
-    padding: clamp(1rem, 3vw, 2rem) 0 clamp(2.5rem, 6vw, 4rem);
-  }
-
-  .ask-leilia__kicker {
-    margin: 0 0 0.55rem;
-    font-size: var(--tok-type-meta);
-    letter-spacing: var(--tok-letter-upper);
-    text-transform: uppercase;
-    color: var(--tok-gold-deep);
-  }
-
-  .ask-leilia-hero {
-    display: grid;
-    gap: 1rem;
-    padding: clamp(1.1rem, 4vw, 2.15rem);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
-    border-radius: var(--radius-promo);
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--tok-surface-reading) 88%, transparent),
-        color-mix(in srgb, var(--tok-surface-reading-soft) 76%, transparent)
-      );
-    box-shadow: var(--shadow-sm);
-  }
-
-  .ask-leilia-hero__copy {
-    max-width: 42rem;
-  }
-
-  .ask-leilia h1,
-  .ask-leilia-section h2,
-  .ask-leilia-about h2,
-  .ask-leilia-request h2 {
-    margin: 0 0 0.85rem;
-    font-family: var(--font-accent);
-    font-weight: 400;
-    color: var(--tok-water);
-  }
-
-  .ask-leilia h1 {
-    font-size: clamp(2.75rem, 9vw, 5rem);
-    line-height: 0.95;
-  }
-
-  .ask-leilia-section h2,
-  .ask-leilia-about h2,
-  .ask-leilia-request h2 {
-    font-size: clamp(1.9rem, 6vw, 3rem);
-    line-height: 1.08;
-  }
-
-  .ask-leilia-hero__lede {
-    max-width: 34rem;
-    margin: 0 0 0.85rem;
-    font-size: clamp(1.08rem, 2.4vw, 1.25rem);
-    color: var(--tok-text-dark);
-  }
-
-  .ask-leilia-hero__offer {
-    display: grid;
-    gap: 0.25rem;
-    max-width: 34rem;
-    margin: 0.9rem 0;
-    padding: 0.75rem 0;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
-  }
-
-  .ask-leilia-hero__offer p {
-    margin: 0;
-    color: var(--tok-text-dark);
-  }
-
-  .ask-leilia-hero__price,
-  .ask-leilia-card h2 {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    color: var(--tok-water);
-  }
-
-  .ask-leilia-hero__price {
-    padding-top: 0.2rem;
-    font-size: 1.45rem;
-  }
-
-  .ask-leilia-hero__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 2.75rem;
-    padding: 0.75rem 1.15rem;
-    border-radius: var(--radius-control);
-    background: var(--tok-btn-filled-bg);
-    color: var(--tok-btn-filled-fg);
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  .ask-leilia-section,
-  .ask-leilia-grid,
-  .ask-leilia-about {
-    margin-top: clamp(1.75rem, 5vw, 3.25rem);
-  }
-
-  .ask-leilia-about {
-    margin-top: clamp(1rem, 3vw, 1.5rem);
-  }
-
-  .ask-leilia-section {
-    max-width: 48rem;
-  }
-
-  .ask-leilia p,
-  .ask-leilia li {
-    color: var(--tok-text-dark);
-    line-height: 1.82;
-  }
-
-  .ask-leilia-section p {
-    font-size: 1.03rem;
-  }
-
-  .ask-leilia-about {
-    display: grid;
-    gap: clamp(1rem, 3vw, 1.5rem);
-    align-items: start;
-    padding: clamp(1rem, 3vw, 1.5rem);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
-    border-radius: var(--radius-promo);
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--tok-surface-reading) 78%, transparent),
-        color-mix(in srgb, var(--tok-surface-reading-soft) 58%, transparent)
-      );
-    box-shadow: var(--shadow-sm);
-  }
-
-  .ask-leilia-about__portrait {
-    margin: 0;
-    max-width: min(100%, 17.5rem);
-  }
-
-  .ask-leilia-about__photo {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-soft);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
-    box-shadow: var(--shadow-md);
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .ask-leilia-about__copy {
-    max-width: 48rem;
-  }
-
-  .ask-leilia-about__copy p {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .ask-leilia-about__copy p + p {
-    margin-top: 0.8rem;
-  }
-
-  .ask-leilia-about__trust {
-    padding-top: 0.8rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
-    color: var(--tok-text-muted);
-    font-size: var(--tok-type-meta);
-    letter-spacing: 0.02em;
-  }
-
-  .ask-leilia-grid {
-    display: grid;
-    gap: 0.9rem;
-  }
-
-  .ask-leilia-card {
-    padding: clamp(0.95rem, 3vw, 1.35rem);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
-  }
-
-  .ask-leilia-card h2,
-  .ask-leilia-question-grid h3 {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-heading);
-    font-size: clamp(1.25rem, 4vw, 1.6rem);
-    color: var(--tok-water);
-  }
-
-  .ask-leilia-card ul,
-  .ask-leilia-card ol,
-  .ask-leilia-question-grid ul {
-    margin: 0;
-    padding-left: 1.15rem;
-  }
-
-  .ask-leilia-card li + li,
-  .ask-leilia-question-grid li + li {
-    margin-top: 0.45rem;
-  }
-
-  .ask-leilia-question-grid {
-    display: grid;
-    gap: 0.9rem;
-    margin-top: 1rem;
-  }
-
-  .ask-leilia-question-grid article {
-    padding: 0.95rem;
-    border: 1px solid color-mix(in srgb, var(--tok-border-light) 85%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading-soft) 42%, transparent);
-  }
-
-  .ask-leilia-pull {
-    margin-top: 1.5rem;
-    padding: 1rem 0 0;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
-    color: var(--tok-text-muted);
-  }
-
-  .ask-leilia-pull span {
-    display: block;
-    margin-top: 0.45rem;
-    font-family: var(--font-accent);
-    font-size: clamp(1.35rem, 4vw, 1.85rem);
-    color: var(--tok-water);
-  }
-
-  .ask-leilia-bottom-cta {
-    margin-top: clamp(1.75rem, 5vw, 3rem);
-  }
-
-  @media (min-width: 760px) {
-    .ask-leilia-grid,
-    .ask-leilia-question-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .ask-leilia-about {
-      grid-template-columns: minmax(11.5rem, 14.75rem) minmax(0, 1fr);
-      column-gap: clamp(1.25rem, 4vw, 2rem);
-    }
-
-    .ask-leilia-about__portrait {
-      max-width: 14.75rem;
-    }
-  }
-</style>

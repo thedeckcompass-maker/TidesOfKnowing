@@ -3,6 +3,7 @@ import { glob } from "astro/loaders";
 import {
   articlesSchema,
   blogSchema,
+  recentClientReadingsSchema,
   repeatingCardMeaningsSchema,
 } from "./content/config";
 
@@ -11,6 +12,10 @@ const blogBase = new URL("./content/blog/", import.meta.url);
 const articlesBase = new URL("./content/articles/", import.meta.url);
 const repeatingCardMeaningsBase = new URL(
   "./content/repeating-card-meanings/",
+  import.meta.url,
+);
+const recentClientReadingsBase = new URL(
+  "./content/recent-client-readings/",
   import.meta.url,
 );
 
@@ -55,4 +60,13 @@ const repeatingCardMeanings = defineCollection({
   schema: repeatingCardMeaningsSchema,
 });
 
-export const collections = { blog, articles, repeatingCardMeanings };
+const recentClientReadings = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: recentClientReadingsBase,
+    generateId: ({ entry }) => entry.replace(/\.md$/i, "").replace(/\\/g, "/"),
+  }),
+  schema: recentClientReadingsSchema,
+});
+
+export const collections = { blog, articles, repeatingCardMeanings, recentClientReadings };

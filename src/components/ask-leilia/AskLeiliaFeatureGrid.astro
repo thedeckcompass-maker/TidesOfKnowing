@@ -1,0 +1,28 @@
+---
+interface Feature {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  heading: string;
+  headingId: string;
+  features: Feature[];
+}
+
+const { heading, headingId, features } = Astro.props;
+---
+
+<section class="ask-leilia-features" aria-labelledby={headingId}>
+  <h2 id={headingId} class="ask-leilia-features__heading">{heading}</h2>
+  <div class="ask-leilia-features__grid">
+    {
+      features.map((feature) => (
+        <article class="ask-leilia-features__card">
+          <h3 class="ask-leilia-features__title">{feature.title}</h3>
+          <p class="ask-leilia-features__description">{feature.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

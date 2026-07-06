@@ -1,0 +1,34 @@
+---
+import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import { getGallerySpreadImages } from "../../lib/clientReadingSpreadImages";
+
+interface Props {
+  entry: RecentClientReadingEntry;
+  baseUrl: URL;
+}
+
+const { entry, baseUrl } = Astro.props;
+const images = getGallerySpreadImages(entry);
+if (images.length === 0) return null;
+---
+
+<section class="rcr-reading__spread-gallery" aria-labelledby="spread-gallery-heading">
+  <h2 id="spread-gallery-heading" class="rcr-reading__spread-gallery-heading">
+    Additional spread photographs
+  </h2>
+  <ul class="rcr-reading__spread-gallery-grid">
+    {
+      images.map((src, index) => {
+        const href = new URL(src, baseUrl).href;
+        const alt = `Additional spread photograph ${index + 2} for ${entry.data.title}`;
+        return (
+          <li>
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              <img src={src} alt={alt} loading="lazy" decoding="async" />
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>

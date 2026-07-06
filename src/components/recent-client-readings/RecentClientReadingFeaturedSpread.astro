@@ -1,0 +1,29 @@
+---
+import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
+
+interface Props {
+  entry: RecentClientReadingEntry;
+  baseUrl: URL;
+}
+
+const { entry, baseUrl } = Astro.props;
+const src = getFeaturedSpreadImage(entry);
+if (!src) return null;
+const href = new URL(src, baseUrl).href;
+const alt = `Original tarot spread photograph for ${entry.data.title}`;
+---
+
+<figure class="rcr-reading__featured-spread">
+  <a href={href} target="_blank" rel="noopener noreferrer">
+    <img
+      src={src}
+      alt={alt}
+      width="1200"
+      height="800"
+      loading="eager"
+      decoding="async"
+    />
+  </a>
+  <figcaption>Original spread photograph</figcaption>
+</figure>

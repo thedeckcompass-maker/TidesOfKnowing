@@ -1,0 +1,43 @@
+---
+import type { AskLeiliaReading } from "../../data/askLeilia";
+
+interface Props {
+  heading?: string;
+  headingId?: string;
+  readings: AskLeiliaReading[];
+  buttonLabel: string;
+  buttonHref: string;
+  intro?: string;
+}
+
+const {
+  heading,
+  headingId = "ask-leilia-offers-heading",
+  readings,
+  buttonLabel,
+  buttonHref,
+  intro,
+} = Astro.props;
+---
+
+<section
+  class="ask-leilia-pricing"
+  {...heading ? { "aria-labelledby": headingId } : { "aria-label": "Ask Leilia readings" }}
+>
+  {heading ? <h2 id={headingId} class="ask-leilia-pricing__heading">{heading}</h2> : null}
+  {intro ? <p class="ask-leilia-pricing__intro">{intro}</p> : null}
+  <div class="ask-leilia-pricing__grid">
+    {
+      readings.map((reading) => (
+        <article class="ask-leilia-pricing__card">
+          <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
+          <p class="ask-leilia-pricing__description">{reading.description}</p>
+          <p class="ask-leilia-pricing__price">{reading.price}</p>
+          <a class="ask-leilia-pricing__cta" href={buttonHref}>
+            {buttonLabel}
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>

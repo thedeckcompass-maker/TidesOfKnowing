@@ -1,0 +1,28 @@
+---
+import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import RecentClientReadingCard from "./RecentClientReadingCard.astro";
+
+interface Props {
+  heading: string;
+  headingId: string;
+  entries: RecentClientReadingEntry[];
+  ctaLabel?: string;
+}
+
+const { heading, headingId, entries, ctaLabel } = Astro.props;
+---
+
+{
+  entries.length > 0 ? (
+    <section class="ask-leilia-portfolio" aria-labelledby={headingId}>
+      <h2 id={headingId} class="ask-leilia-portfolio__heading">
+        {heading}
+      </h2>
+      <div class="ask-leilia-portfolio__grid">
+        {entries.map((entry) => (
+          <RecentClientReadingCard entry={entry} ctaLabel={ctaLabel} />
+        ))}
+      </div>
+    </section>
+  ) : null
+}

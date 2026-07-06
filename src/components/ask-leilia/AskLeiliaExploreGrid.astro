@@ -1,0 +1,46 @@
+---
+interface ExploreLink {
+  title: string;
+  href: string;
+  description: string;
+  linkLabel?: string;
+}
+
+interface Props {
+  heading: string;
+  headingId: string;
+  intro: string;
+  links: ExploreLink[];
+}
+
+const { heading, headingId, intro, links } = Astro.props;
+---
+
+<section class="ask-leilia-explore" aria-labelledby={headingId}>
+  <h2 id={headingId} class="ask-leilia-explore__heading">{heading}</h2>
+  <p class="ask-leilia-explore__intro">{intro}</p>
+  <div class="ask-leilia-explore__grid">
+    {
+      links.map((link) => (
+        <article class="ask-leilia-explore__card">
+          <h3 class="ask-leilia-explore__title">{link.title}</h3>
+          <p class="ask-leilia-explore__description">{link.description}</p>
+          <a class="ask-leilia-explore__link" href={link.href}>
+            {link.linkLabel ?? `Visit ${link.title}`}
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .ask-leilia-explore__intro {
+    max-width: 40rem;
+    margin: 0 auto clamp(1.25rem, 3vw, 2rem);
+    text-align: center;
+    font-size: 1.03rem;
+    line-height: 1.72;
+    color: var(--tok-text-dark);
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import AskLeiliaTrustList from "../../components/ask-leilia/AskLeiliaTrustList.astro";
+import AskLeiliaFeatureGrid from "../../components/ask-leilia/AskLeiliaFeatureGrid.astro";
+import AskLeiliaRequestForm from "../../components/ask-leilia/AskLeiliaRequestForm.astro";
+import AskLeiliaPricingGrid from "../../components/ask-leilia/AskLeiliaPricingGrid.astro";
+import AskLeiliaExploreGrid from "../../components/ask-leilia/AskLeiliaExploreGrid.astro";
+import {
+  ASK_LEILIA_READINGS,
+  ASK_LEILIA_PUBLIC_BRAND,
+  LEILIA_GIFT_EXPLORE_LINKS,
+  LEILIA_GIFT_FEATURES,
+  LEILIA_GIFT_TRUST_POINTS,
+  LEILIA_PORTRAIT_ALT,
+  LEILIA_PORTRAIT_PATH,
+} from "../../data/askLeilia";
+import "../../styles/ask-leilia.css";
+
+export const prerender = false;
+
+const submitted = Astro.url.searchParams.get("submitted") === "true";
+
+const title = "A Personal Invitation from Leilia | Tides of Knowing";
+const description =
+  "You have been personally invited to receive a complimentary written tarot reading from Leilia, delivered as a professionally written PDF.";
+---
+
+<BaseLayout title={title} description={description} metaAuthor={ASK_LEILIA_PUBLIC_BRAND} metaRobots="noindex, nofollow">
+  <main class="ask-leilia page-inner">
+    <section class="ask-leilia-hero" aria-labelledby="gift-heading">
+      <div class="ask-leilia-hero__copy">
+        <p class="ask-leilia__kicker">A Personal Invitation</p>
+        <h1 id="gift-heading">Welcome</h1>
+        <p class="ask-leilia-hero__subheading">I'm delighted you've accepted my invitation.</p>
+        <p class="ask-leilia-hero__lede">
+          From time to time I personally invite someone from the online communities I'm part of to
+          receive a complimentary written tarot reading.
+        </p>
+        <p class="ask-leilia-hero__lede">
+          If you've arrived here, you've been selected to receive one.
+        </p>
+        <p class="ask-leilia-hero__lede">
+          Every complimentary reading is completed exactly the same way as my paid readings. The only
+          difference is that there is no charge.
+        </p>
+        <AskLeiliaTrustList points={LEILIA_GIFT_TRUST_POINTS} label="Reading guarantees" />
+      </div>
+    </section>
+
+    <section class="ask-leilia-about" aria-labelledby="who-is-leilia-heading">
+      <figure class="ask-leilia-about__portrait">
+        <img
+          class="ask-leilia-about__photo"
+          src={LEILIA_PORTRAIT_PATH}
+          width="640"
+          height="853"
+          alt={LEILIA_PORTRAIT_ALT}
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+
+      <div class="ask-leilia-about__copy">
+        <h2 id="who-is-leilia-heading">Who is Leilia?</h2>
+        <p>
+          Leilia – Tides of Knowing is the name I use when working with the cards. I've been reading
+          tarot for more than forty years, since I first carried a deck to school at the age of ten.
+        </p>
+        <p>
+          Alongside that practice, I spent more than thirty years working as a journalist,
+          broadcaster and editor — learning to listen carefully, ask thoughtful questions, and look
+          beneath the surface of people's stories.
+        </p>
+        <p>
+          Every reading I complete is professionally written and personally interpreted. My approach
+          offers practical, grounded guidance rather than dramatic prediction. Human intuition cannot
+          be replaced by AI, and every reading you receive from me is written by my own hand.
+        </p>
+      </div>
+    </section>
+
+    <AskLeiliaFeatureGrid
+      heading="Your complimentary reading includes"
+      headingId="gift-features-heading"
+      features={LEILIA_GIFT_FEATURES}
+    />
+
+    {
+      submitted ? (
+        <>
+          <section class="ask-leilia-confirmation" aria-live="polite">
+            <div class="ask-leilia-confirmation__panel">
+              <h2>Thank you.</h2>
+              <p>Your request has been received.</p>
+              <p>
+                Your reading will normally be delivered within 48 hours as a professionally written
+                PDF.
+              </p>
+              <p>
+                Please remember that every reading is personally completed by Leilia, so delivery
+                times may occasionally vary depending on demand.
+              </p>
+            </div>
+          </section>
+
+          <AskLeiliaExploreGrid
+            heading="While you're waiting..."
+            headingId="gift-explore-heading"
+            intro="If this is your first visit, you're warmly invited to explore the wider Tides of Knowing website."
+            links={LEILIA_GIFT_EXPLORE_LINKS}
+          />
+
+          <AskLeiliaPricingGrid
+            heading="If you'd ever like to explore your questions more deeply..."
+            headingId="gift-pricing-heading"
+            intro="Many people begin with a single question. Later, when life presents bigger decisions or more complex situations, they return for a more comprehensive written reading."
+            readings={ASK_LEILIA_READINGS}
+            buttonLabel="View This Reading"
+            buttonHref="/ask-leilia/"
+          />
+
+          <section class="ask-leilia-section ask-leilia-favour" aria-labelledby="gift-favour-heading">
+            <h2 id="gift-favour-heading">If your reading was helpful...</h2>
+            <p>
+              Most of my work grows through personal recommendation. If your reading resonates with
+              you, I'd be grateful if you shared my website with someone else who may benefit from a
+              thoughtful, professionally written tarot reading.
+            </p>
+          </section>
+        </>
+      ) : (
+        <section class="ask-leilia-request" aria-labelledby="gift-request-heading">
+          <h2 id="gift-request-heading">Request your complimentary reading</h2>
+          <div class="ask-leilia-request__panel">
+            <AskLeiliaRequestForm
+              action="/api/invitation/leilia-gift"
+              submitLabel="Submit My Complimentary Reading"
+              questionPlaceholder="Share the one question you would like explored in your complimentary reading."
+              contextPlaceholder="Optional: add any context that would help Leilia understand your situation."
+            />
+          </div>
+        </section>
+      )
+    }
+  </main>
+</BaseLayout>

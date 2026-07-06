@@ -1,0 +1,19 @@
+---
+interface Props {
+  points: string[];
+  label?: string;
+}
+
+const { points, label = "Service guarantees" } = Astro.props;
+---
+
+<ul class="ask-leilia-hero__trust" aria-label={label}>
+  {
+    points.map((point) => (
+      <li>
+        <span class="ask-leilia-hero__trust-mark" aria-hidden="true">✓</span>
+        {point}
+      </li>
+    ))
+  }
+</ul>

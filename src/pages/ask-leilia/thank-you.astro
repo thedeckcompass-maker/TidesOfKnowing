@@ -1,4 +1,5 @@
 ---
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export const prerender = false;
@@ -6,7 +7,8 @@ export const prerender = false;
 
 <BaseLayout
   title="Thank You | Ask Leilia"
-  description="Your Ask Leilia payment is complete and your reflection request has been received."
+  description="Your Ask Leilia payment is complete and your reading request has been received."
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-thanks page-inner">
@@ -14,8 +16,8 @@ export const prerender = false;
       <p class="ask-thanks__kicker">Ask Leilia</p>
       <h1 id="ask-thanks-heading">Thank you. Your request has been received.</h1>
       <p>
-        Your payment is complete and your question is with Leigh (Leilia). Your written
-        reflection will be delivered within 48 hours.
+        Your payment is complete and your question is with Leilia – Tides of Knowing. Your written
+        reading will be delivered within 48 hours.
       </p>
       <p>
         There is nothing else you need to submit. If you need to add anything, email

@@ -112,6 +112,37 @@ export async function notifyAskLeiliaRequestSubmitted(
   );
 }
 
+export async function notifyAskLeiliaComplimentaryRequest(
+  input: {
+    name: string;
+    email: string;
+    question: string;
+    context: string;
+    cardPreference: AskLeiliaCardPreference;
+    imageUrl: string | null;
+  },
+  locals?: unknown,
+): Promise<void> {
+  await sendAskLeiliaNotification(
+    "Complimentary Ask Leilia invitation request",
+    [
+      "A complimentary reading request has been submitted through the Leilia Gift invitation page.",
+      "",
+      `Name: ${input.name}`,
+      `Email: ${input.email}`,
+      `Card preference: ${cardPreferenceLabel(input.cardPreference)}`,
+      `Image uploaded: ${input.imageUrl ? "Yes" : "No"}`,
+      "",
+      "Question:",
+      input.question,
+      "",
+      "Context:",
+      input.context || "No additional context.",
+    ],
+    locals,
+  );
+}
+
 export async function notifyAskLeiliaStatusChanged(
   input: {
     name: string;

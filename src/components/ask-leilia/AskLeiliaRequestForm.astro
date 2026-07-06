@@ -1,0 +1,75 @@
+---
+interface Props {
+  action: string;
+  submitLabel: string;
+  questionPlaceholder?: string;
+  contextPlaceholder?: string;
+}
+
+const {
+  action,
+  submitLabel,
+  questionPlaceholder = "Share the question you would like explored through the cards.",
+  contextPlaceholder = "Optional: add any context that would help the reading stay grounded.",
+} = Astro.props;
+---
+
+<form class="ask-request-form" method="post" action={action} enctype="multipart/form-data">
+  <fieldset>
+    <legend>Your details</legend>
+
+    <label>
+      Name
+      <input name="name" type="text" autocomplete="name" required />
+    </label>
+
+    <label>
+      Email
+      <input name="email" type="email" autocomplete="email" required />
+    </label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Your question</legend>
+
+    <label>
+      One Question
+      <textarea
+        name="question"
+        rows="6"
+        maxlength="2000"
+        required
+        placeholder={questionPlaceholder}></textarea>
+    </label>
+
+    <label>
+      Additional Context
+      <textarea
+        name="context"
+        rows="6"
+        maxlength="5000"
+        placeholder={contextPlaceholder}></textarea>
+    </label>
+  </fieldset>
+
+  <fieldset class="ask-request-form__fieldset--compact">
+    <legend>Card Preference</legend>
+
+    <label class="ask-request-form__radio">
+      <input type="radio" name="cardPreference" value="pull_for_me" required />
+      <span>Please pull the cards for me</span>
+    </label>
+
+    <label class="ask-request-form__radio">
+      <input type="radio" name="cardPreference" value="own_cards_attached" required />
+      <span>I have attached my own cards</span>
+    </label>
+
+    <label class="ask-request-form__upload">
+      Upload image of cards
+      <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+    </label>
+  </fieldset>
+
+  <button type="submit">{submitLabel}</button>
+</form>

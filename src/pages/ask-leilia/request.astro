@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
 import { ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
 
 export const prerender = false;
@@ -9,15 +10,16 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 ---
 
 <BaseLayout
-  title="Request Your Reflection"
+  title="Request Your Reading | Ask Leilia"
   description="Share your Ask Leilia question before completing your booking."
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <section class="ask-request__head" aria-labelledby="request-heading">
       <p class="ask-request__kicker">Ask Leilia</p>
-      <h1 id="request-heading">Request Your Reflection</h1>
-      <p>Begin by sharing the question you would like reflected through the cards.</p>
+      <h1 id="request-heading">Request Your Reading</h1>
+      <p>Begin by sharing the question you would like explored through the cards.</p>
       <p>After you submit this form, you will be taken to secure payment to complete your booking.</p>
       <ul class="ask-request__summary" aria-label="Ask Leilia request summary">
         <li>One question</li>
@@ -44,7 +46,7 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
         <section class="ask-request__confirmation" aria-live="polite">
           <h2>Thank you.</h2>
           <p>Your request has been received.</p>
-          <p>You will receive your written reflection within 48 hours.</p>
+          <p>You will receive your written reading within 48 hours.</p>
         </section>
       ) : null
     }
@@ -74,7 +76,7 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
             rows="6"
             maxlength="2000"
             required
-            placeholder="Share the question you would like reflected through the cards."
+            placeholder="Share the question you would like explored through the cards."
           ></textarea>
         </label>
 

@@ -1,0 +1,69 @@
+---
+import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import { getRecentClientReadingPath } from "../../lib/recentClientReadings";
+import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
+
+interface Props {
+  entry: RecentClientReadingEntry;
+  headingLevel?: "h2" | "h3";
+  ctaLabel?: string;
+}
+
+const { entry, headingLevel = "h3", ctaLabel = "Read Reading" } = Astro.props;
+const TitleTag = headingLevel;
+const data = entry.data;
+const href = getRecentClientReadingPath(data.slug);
+const thumbnail = getFeaturedSpreadImage(entry);
+const lifeAreaLabel = data.lifeAreas.slice(0, 2).join(" · ");
+const cardsLabel = data.cardsFeatured.slice(0, 4).join(" · ");
+---
+
+<article class="rcr-card">
+  {
+    thumbnail ? (
+      <a class="rcr-card__media" href={href}>
+        <img
+          src={thumbnail}
+          alt={`Spread photograph for ${data.title}`}
+          class="rcr-card__thumb"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+    ) : null
+  }
+
+  <div class="rcr-card__content">
+    <p class="rcr-card__type">{data.readingType}</p>
+    <TitleTag class="rcr-card__title">
+      <a href={href}>{data.title}</a>
+    </TitleTag>
+
+    <dl class="rcr-card__meta">
+      <div>
+        <dt>Original question</dt>
+        <dd>{data.question}</dd>
+      </div>
+      {
+        lifeAreaLabel ? (
+          <div>
+            <dt>Primary life area{data.lifeAreas.length > 1 ? "s" : ""}</dt>
+            <dd>{lifeAreaLabel}</dd>
+          </div>
+        ) : null
+      }
+      {
+        cardsLabel ? (
+          <div>
+            <dt>Primary cards featured</dt>
+            <dd>{cardsLabel}</dd>
+          </div>
+        ) : null
+      }
+    </dl>
+
+    <a class="rcr-card__cta" href={href}>
+      {ctaLabel}
+    </a>
+  </div>
+</article>

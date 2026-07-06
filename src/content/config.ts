@@ -1,5 +1,14 @@
 import { z } from "astro:content";
 import { furtherReadingSchema } from "../lib/furtherReading";
+import {
+  CLIENT_CONSENT_STATUSES,
+  PUBLICATION_STATUSES,
+  RECENT_CLIENT_ARCHETYPAL_THEMES,
+  RECENT_CLIENT_DOMINANT_SUITS,
+  RECENT_CLIENT_LIFE_AREAS,
+  RECENT_CLIENT_READING_TYPES,
+  RECENT_CLIENT_SPREADS,
+} from "../lib/recentClientReadingsTaxonomy";
 
 const blogSeoFields = z.object({
   /** Overrides `<title>` when set. */
@@ -182,4 +191,49 @@ export const repeatingCardMeaningsSchema = z.object({
   compass_pillars: z.array(z.string()).default([]),
   related_cards: z.array(z.string()).default([]),
   related_articles: z.array(z.string()).default([]),
+});
+
+/**
+ * Anonymised client reading portfolio entries for `/recent-client-readings/`.
+ */
+export const recentClientReadingsSchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  datePublished: z.coerce.date(),
+  dateModified: z.coerce.date().optional(),
+  readingType: z.enum(RECENT_CLIENT_READING_TYPES),
+  question: z.string(),
+  clientConsentStatus: z.enum(CLIENT_CONSENT_STATUSES).default("pending"),
+  publicationStatus: z.enum(PUBLICATION_STATUSES).default("draft"),
+  summary: z.string(),
+  seoDescription: z.string(),
+  /** Absolute or site-root URL to the complete PDF when available. */
+  pdfDownload: z.string().optional(),
+  /** Optimised spread photograph paths under public/ (`/images/client-readings/...`). */
+  spreadImages: z.array(z.string()).default([]),
+  featured: z.boolean().default(false),
+  cardsFeatured: z.array(z.string()).default([]),
+  primaryCards: z.array(z.string()).default([]),
+  secondaryCards: z.array(z.string()).default([]),
+  spreadUsed: z.enum(RECENT_CLIENT_SPREADS),
+  lifeAreas: z.array(z.enum(RECENT_CLIENT_LIFE_AREAS)).default([]),
+  dominantSuit: z.enum(RECENT_CLIENT_DOMINANT_SUITS),
+  archetypalThemes: z.array(z.enum(RECENT_CLIENT_ARCHETYPAL_THEMES)).default([]),
+  /** Optional oracle deck name when oracle cards appear in the reading. */
+  oracleDeck: z.string().optional(),
+  /** Oracle or non-tarot cards drawn (separate from the 78-card taxonomy). */
+  oracleCards: z.array(z.string()).default([]),
+  /** Oracle-specific interpretive themes (separate from archetypalThemes). */
+  oracleThemes: z.array(z.string()).default([]),
+  /** Knowledge graph: tarot card slugs, collection ids, or display titles. */
+  relatedCards: z.array(z.string()).default([]),
+  /** Knowledge graph: suit labels or folder names (`Cups`, `cups`, etc.). */
+  relatedSuits: z.array(z.string()).default([]),
+  /** Knowledge graph: tarot numerology keys (`2`, `12`, `Two`, etc.). */
+  relatedNumbers: z.array(z.string()).default([]),
+  /** Knowledge graph: spread labels matching controlled taxonomy. */
+  relatedSpreads: z.array(z.string()).default([]),
+  relatedFieldNotes: z.array(z.string()).default([]),
+  relatedReadings: z.array(z.string()).default([]),
+  tags: z.array(z.string()).default([]),
 });
