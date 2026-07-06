@@ -49,7 +49,7 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 |------|---------------|--------|------|-------|
 | ☐ Fool | `majors/the-fool` | REINSERTED | 2026-07-06 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ Magician | `majors/the-magician` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
-| ☐ High Priestess | `majors/the-high-priestess` | NOT STARTED | | |
+| ☐ High Priestess | `majors/the-high-priestess` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ Empress | `majors/the-empress` | NOT STARTED | | |
 | ☐ Emperor | `majors/the-emperor` | NOT STARTED | | |
 | ☐ Hierophant | `majors/the-hierophant` | NOT STARTED | | |
@@ -162,3 +162,4 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 |------|------|-------|-------|
 | 2026-07-06 | The Fool | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | The Magician | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
+| 2026-07-07 | The High Priestess | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
