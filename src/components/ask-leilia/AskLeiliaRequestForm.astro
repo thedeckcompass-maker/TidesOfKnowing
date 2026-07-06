@@ -1,6 +1,5 @@
 ---
 import type { AskLeiliaReadingType } from "../../lib/ask-leilia/readingTypes";
-import { ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
 
 interface Props {
   readingType: AskLeiliaReadingType;
@@ -8,7 +7,6 @@ interface Props {
   submitLabel?: string;
   questionPlaceholder?: string;
   contextPlaceholder?: string;
-  showStatuses?: boolean;
   showTierIntro?: boolean;
   showTierGuidance?: boolean;
 }
@@ -19,7 +17,6 @@ const {
   submitLabel = "Continue to Payment",
   questionPlaceholder = "Share the single question you would like explored through the cards.",
   contextPlaceholder,
-  showStatuses = true,
   showTierIntro = true,
   showTierGuidance = true,
 } = Astro.props;
@@ -323,14 +320,6 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
       <aside class="ask-request-form__guidance" aria-label="Reading tier guidance">
         <p>{tierGuidance[readingType]}</p>
       </aside>
-    ) : null
-  }
-
-  {
-    showStatuses ? (
-      <div class="ask-request-statuses" aria-label="Future status workflow">
-        {ASK_LEILIA_STATUSES.map((status) => <span>{status}</span>)}
-      </div>
     ) : null
   }
 

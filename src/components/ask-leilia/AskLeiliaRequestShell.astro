@@ -194,20 +194,6 @@ const { title, intro, summaryItems, paymentCancelled = false, submitted = false 
     resize: vertical;
   }
 
-  .ask-request-form-wrap :global(.ask-request-form .ask-request-statuses) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .ask-request-form-wrap :global(.ask-request-form .ask-request-statuses span) {
-    padding: 0.35rem 0.55rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
-    border-radius: var(--radius-pill);
-    font-size: var(--tok-type-meta);
-    color: var(--tok-text-muted);
-  }
-
   .ask-request-form-wrap :global(.ask-request-form button) {
     justify-self: start;
     padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
