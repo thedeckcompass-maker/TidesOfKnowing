@@ -1,29 +1,76 @@
 ---
+import AskLeiliaExploreGrid from "../../components/ask-leilia/AskLeiliaExploreGrid.astro";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/ask-leilia.css";
 
 export const prerender = false;
+
+const exploreLinks = [
+  {
+    title: "See How I Read",
+    href: "/recent-client-readings/",
+    description:
+      "Explore genuine client readings to see how I interpret the cards and the depth of guidance you can expect.",
+    linkLabel: "Browse the Reading Library",
+  },
+  {
+    title: "Meet Leilia",
+    href: "/about/",
+    description:
+      "Learn more about my background, four decades of tarot practice, journalism, and the philosophy behind Tides of Knowing.",
+    linkLabel: "About Leilia",
+  },
+  {
+    title: "Learn the COMPASS Method™",
+    href: "/training/",
+    description:
+      "If you're developing your own tarot practice, explore the training and structured reading framework that underpins my work.",
+    linkLabel: "Explore Training",
+  },
+];
 ---
 
 <BaseLayout
-  title="Thank You | Ask Leilia"
-  description="Your Ask Leilia payment is complete and your reading request has been received."
+  title="Your Reading Is Underway | Ask Leilia"
+  description="Your Ask Leilia reading request has been received and is now being prepared personally by Leilia."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
-  <main class="ask-thanks page-inner">
+  <main class="ask-thanks ask-leilia page-inner">
     <section class="ask-thanks__panel" aria-labelledby="ask-thanks-heading">
       <p class="ask-thanks__kicker">Ask Leilia</p>
-      <h1 id="ask-thanks-heading">Thank you. Your request has been received.</h1>
+      <h1 id="ask-thanks-heading">Your reading is now underway.</h1>
+      <p>Thank you for placing your trust in me.</p>
       <p>
-        Your payment is complete and your question is with Leilia – Tides of Knowing. Your written
-        reading will be delivered within 48 hours.
+        Your question has been received and I'll now begin preparing your reading personally. Every
+        Ask Leilia reading is completed entirely by me, without AI, and takes the time needed to
+        understand both the cards and the story they're telling.
       </p>
       <p>
-        There is nothing else you need to submit. If you need to add anything, email
-        <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>.
+        Your completed reading will be delivered as a professionally written PDF within 48 hours. If
+        your reading includes a private audio reflection or consultation, it will arrive alongside
+        your written reading.
+      </p>
+      <p>
+        If you remember something important after submitting your request, simply email
+        <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> and include your name
+        so I can add it to your reading before I begin.
       </p>
     </section>
+
+    <AskLeiliaExploreGrid
+      heading="While you're waiting"
+      headingId="ask-thanks-explore-heading"
+      intro="While you're waiting, you might enjoy exploring a little more of Tides of Knowing."
+      links={exploreLinks}
+    />
+
+    <p class="ask-thanks__closing">
+      Every reading in the Reading Library and every article across Tides of Knowing has been
+      written to help people develop greater confidence in their own judgement. I hope you'll enjoy
+      exploring while your reading is being prepared.
+    </p>
   </main>
 </BaseLayout>
 
@@ -58,11 +105,41 @@ export const prerender = false;
   }
 
   .ask-thanks p {
+    margin: 0 0 1rem;
     color: var(--tok-text-dark);
     line-height: 1.8;
   }
 
-  .ask-thanks p:last-child {
+  .ask-thanks__panel p:last-child {
     margin-bottom: 0;
+  }
+
+  .ask-thanks :global(.ask-leilia-explore) {
+    margin-top: clamp(1.75rem, 5vw, 3.25rem);
+  }
+
+  .ask-thanks :global(.ask-leilia-explore__heading) {
+    text-align: left;
+  }
+
+  .ask-thanks :global(.ask-leilia-explore__intro) {
+    margin-inline: 0;
+    max-width: none;
+    text-align: left;
+  }
+
+  .ask-thanks__closing {
+    max-width: 44rem;
+    margin: clamp(1.75rem, 5vw, 3rem) 0 0;
+    font-size: 0.98rem;
+    line-height: 1.72;
+    color: var(--tok-text-muted);
+  }
+
+  @media (min-width: 760px) {
+    .ask-thanks :global(.ask-leilia-explore__grid) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
   }
 </style>
