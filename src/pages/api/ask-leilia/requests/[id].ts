@@ -93,33 +93,71 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
   }
 
   const now = new Date().toISOString();
-  const isDelivering = statusRaw === "Delivered" && current.status !== "Delivered";
+  const shouldSendDeliveryEmail =
+    statusRaw === "Delivered" && !current.delivery_sent_at && Boolean(deliveryPdfPath);
   let deliverySentAt = current.delivery_sent_at;
 
-  if (isDelivering) {
-    if (!deliveryPdfPath) {
-      return json({ ok: false, error: "Upload the completed PDF before delivering." }, 400);
+  if (shouldSendDeliveryEmail) {
+    const claimTimestamp = now;
+    const { data: claimed, error: claimError } = await service
+      .from("ask_leilia_requests")
+      .update({ delivery_sent_at: claimTimestamp })
+      .eq("id", requestId)
+      .is("delivery_sent_at", null)
+      .select("id")
+      .maybeSingle();
+
+    if (claimError) {
+      console.error("Unable to claim Ask Leilia delivery send:", claimError);
+      return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    const pdf = await downloadAskLeiliaDeliveryPdf(service, deliveryPdfPath);
-    if ("error" in pdf) {
-      return json({ ok: false, error: pdf.error }, 500);
+    if (!claimed) {
+      const { data: refreshed, error: refreshError } = await service
+        .from("ask_leilia_requests")
+        .select("delivery_sent_at, status")
+        .eq("id", requestId)
+        .maybeSingle();
+
+      if (refreshError || !refreshed?.delivery_sent_at) {
+        return json(
+          { ok: false, error: "Delivery is already being processed. Please wait and refresh." },
+          409,
+        );
+      }
+
+      deliverySentAt = refreshed.delivery_sent_at;
+    } else {
+      const pdf = await downloadAskLeiliaDeliveryPdf(service, deliveryPdfPath);
+      if ("error" in pdf) {
+        await service
+          .from("ask_leilia_requests")
+          .update({ delivery_sent_at: null })
+          .eq("id", requestId)
+          .eq("delivery_sent_at", claimTimestamp);
+        return json({ ok: false, error: pdf.error }, 500);
+      }
+
+      const delivery = await sendAskLeiliaCustomerDelivery(
+        {
+          name: current.name,
+          email: current.email,
+          pdfContentBase64: pdf.contentBase64,
+        },
+        locals,
+      );
+
+      if (!delivery.ok) {
+        await service
+          .from("ask_leilia_requests")
+          .update({ delivery_sent_at: null })
+          .eq("id", requestId)
+          .eq("delivery_sent_at", claimTimestamp);
+        return json({ ok: false, error: delivery.error }, 500);
+      }
+
+      deliverySentAt = claimTimestamp;
     }
-
-    const delivery = await sendAskLeiliaCustomerDelivery(
-      {
-        name: current.name,
-        email: current.email,
-        pdfContentBase64: pdf.contentBase64,
-      },
-      locals,
-    );
-
-    if (!delivery.ok) {
-      return json({ ok: false, error: delivery.error }, 500);
-    }
-
-    deliverySentAt = now;
   }
 
   const { data, error } = await service
