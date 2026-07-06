@@ -48,7 +48,7 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | Card | Collection ID | Status | Date | Notes |
 |------|---------------|--------|------|-------|
 | ☐ Fool | `majors/the-fool` | REINSERTED | 2026-07-06 | Editorial rewrite complete. v2-editorial archived. Build passed. |
-| ☐ Magician | `majors/the-magician` | NOT STARTED | | |
+| ☐ Magician | `majors/the-magician` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ High Priestess | `majors/the-high-priestess` | NOT STARTED | | |
 | ☐ Empress | `majors/the-empress` | NOT STARTED | | |
 | ☐ Emperor | `majors/the-emperor` | NOT STARTED | | |
@@ -161,3 +161,4 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | Date | Card | Event | Notes |
 |------|------|-------|-------|
 | 2026-07-06 | The Fool | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
+| 2026-07-07 | The Magician | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
