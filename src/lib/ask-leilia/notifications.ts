@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { communityEnv } from "../community/env";
 import { formatUsdCents } from "./paymentAmounts";
+import { logAskLeiliaPipeline } from "./pipelineLog";
 import { readingTypeLabel, type AskLeiliaDbReadingType } from "./readingTypes";
 import { cardPreferenceLabel, type AskLeiliaCardPreference, type AskLeiliaStatus } from "./types";
 
@@ -18,11 +19,12 @@ async function sendAskLeiliaNotification(
   subject: string,
   lines: string[],
   locals?: unknown,
-): Promise<void> {
+): Promise<{ ok: true } | { ok: false; error: string }> {
   const env = communityEnv(locals);
   if (!env.emailApiKey) {
+    const error = "EMAIL_API_KEY is not configured.";
     console.error("Ask Leilia notification skipped: EMAIL_API_KEY is not configured.");
-    return;
+    return { ok: false, error };
   }
 
   const resend = new Resend(env.emailApiKey);
@@ -35,7 +37,10 @@ async function sendAskLeiliaNotification(
 
   if (result.error) {
     console.error("Ask Leilia notification failed:", result.error);
+    return { ok: false, error: result.error.message ?? "Resend send failed." };
   }
+
+  return { ok: true };
 }
 
 export async function notifyAskLeiliaPaymentCompleted(
@@ -79,7 +84,17 @@ export async function notifyAskLeiliaPaymentCompleted(
         "No linked request was found. The customer may need to complete a request form at /ask-leilia/ before payment.",
       ];
 
-  await sendAskLeiliaNotification(
+  const pipelineFields = {
+    requestId: input.request?.id,
+    paymentIntent: input.paymentIntent,
+    customerEmail: input.customerEmail,
+    readingType: input.request?.readingType,
+    requestStatus: input.request ? "Paid" : undefined,
+    paymentAmount: input.amount,
+    currency: input.currency,
+  };
+
+  const result = await sendAskLeiliaNotification(
     input.request ? "Ask Leilia request paid" : "Ask Leilia payment completed",
     [
       "An Ask Leilia payment has completed.",
@@ -91,6 +106,15 @@ export async function notifyAskLeiliaPaymentCompleted(
     ],
     locals,
   );
+
+  if (result.ok) {
+    logAskLeiliaPipeline("INTERNAL_EMAIL_SENT", pipelineFields);
+  } else {
+    logAskLeiliaPipeline("INTERNAL_EMAIL_FAILED", {
+      ...pipelineFields,
+      error: result.error,
+    });
+  }
 }
 
 const SUPPORT_EMAIL = "hello@tidesofknowing.com";
@@ -112,13 +136,22 @@ export async function sendAskLeiliaCustomerPaymentConfirmation(
   },
   locals?: unknown,
 ): Promise<void> {
+  const pipelineFields = {
+    requestId: input.requestId,
+    customerEmail: input.email,
+    readingType: input.readingType,
+    requestStatus: "Paid",
+  };
+
   const env = communityEnv(locals);
   if (!env.emailApiKey) {
+    const error = "EMAIL_API_KEY is not configured.";
     console.error("Ask Leilia customer payment confirmation skipped: EMAIL_API_KEY is not configured.", {
       requestId: input.requestId,
       email: input.email,
       readingType: input.readingType,
     });
+    logAskLeiliaPipeline("CUSTOMER_EMAIL_FAILED", { ...pipelineFields, error });
     return;
   }
 
@@ -163,7 +196,14 @@ export async function sendAskLeiliaCustomerPaymentConfirmation(
       readingType: input.readingType,
       error: result.error,
     });
+    logAskLeiliaPipeline("CUSTOMER_EMAIL_FAILED", {
+      ...pipelineFields,
+      error: result.error.message ?? "Resend send failed.",
+    });
+    return;
   }
+
+  logAskLeiliaPipeline("CUSTOMER_EMAIL_SENT", pipelineFields);
 }
 
 export async function notifyAskLeiliaPaymentException(

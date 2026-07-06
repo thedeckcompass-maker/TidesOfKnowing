@@ -5,6 +5,7 @@ import {
   buildPaymentLinkRedirectUrl,
   paymentLinkForReadingType,
 } from "../../../lib/ask-leilia/paymentLinks";
+import { logAskLeiliaPipeline } from "../../../lib/ask-leilia/pipelineLog";
 import { isAskLeiliaReadingType } from "../../../lib/ask-leilia/readingTypes";
 import { insertAskLeiliaPendingRequest, uploadAskLeiliaCardImage } from "../../../lib/ask-leilia/submitRequest";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
@@ -36,6 +37,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const form = await request.formData();
   const readingTypeRaw = form.get("readingType");
   const readingType = isAskLeiliaReadingType(readingTypeRaw) ? readingTypeRaw : "one-question";
+
+  logAskLeiliaPipeline("CHECKOUT_START", { readingType });
 
   const service = createCommunityServiceClient(locals);
   const image = form.get("cardImage");
@@ -129,14 +132,33 @@ export const POST: APIRoute = async ({ request, locals }) => {
   });
 
   if ("error" in inserted) {
+    logAskLeiliaPipeline("REQUEST_INSERT_FAILURE", {
+      customerEmail: email,
+      readingType,
+      error: inserted.error,
+    });
     return json({ ok: false, error: inserted.error }, 500);
   }
+
+  logAskLeiliaPipeline("REQUEST_INSERT_SUCCESS", {
+    requestId: inserted.id,
+    customerEmail: email,
+    readingType,
+    requestStatus: "Pending Payment",
+  });
 
   const paymentUrl = buildPaymentLinkRedirectUrl(
     paymentLinkForReadingType(readingType),
     inserted.id,
     email,
   );
+
+  logAskLeiliaPipeline("REDIRECT_TO_STRIPE", {
+    requestId: inserted.id,
+    customerEmail: email,
+    readingType,
+    requestStatus: "Pending Payment",
+  });
 
   return Response.redirect(paymentUrl, 303);
 };

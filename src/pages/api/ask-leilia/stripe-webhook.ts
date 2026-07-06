@@ -8,7 +8,8 @@ import {
   sendAskLeiliaCustomerPaymentConfirmation,
 } from "../../../lib/ask-leilia/notifications";
 import { expectedPaymentCents, paymentAmountMatches } from "../../../lib/ask-leilia/paymentAmounts";
-import { isAskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
+import { logAskLeiliaPipeline } from "../../../lib/ask-leilia/pipelineLog";
+import { isAskLeiliaDbReadingType, type AskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
 
 export const prerender = false;
@@ -42,6 +43,8 @@ type LinkedRequestRow = {
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {
+  logAskLeiliaPipeline("WEBHOOK_RECEIVED");
+
   const secret = stripeWebhookSecret(locals);
   if (!secret) {
     return json({ ok: false, error: "Stripe webhook secret is not configured." }, 500);
@@ -63,7 +66,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ ok: false, error: "Invalid Stripe signature." }, 400);
   }
 
+  logAskLeiliaPipeline("WEBHOOK_SIGNATURE_VERIFIED", {
+    stripeEventId: event.id,
+    stripeEventType: event.type,
+  });
+
   if (event.type !== "checkout.session.completed") {
+    logAskLeiliaPipeline("WEBHOOK_COMPLETE", {
+      stripeEventId: event.id,
+      stripeEventType: event.type,
+    });
     return json({ ok: true, ignored: true });
   }
 
@@ -73,6 +85,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const customerId = typeof session.customer === "string" ? session.customer : null;
   const customerEmail =
     session.customer_details?.email ?? session.customer_email ?? "";
+
+  const baseFields = {
+    stripeSessionId: session.id,
+    paymentIntent,
+    customerEmail: customerEmail || undefined,
+    stripeEventId: event.id,
+    stripeEventType: event.type,
+  };
 
   if (!customerEmail) {
     console.error("Stripe checkout session completed without customer email", {
@@ -108,9 +128,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
     .single();
 
   if (error || !paymentRecord) {
+    logAskLeiliaPipeline("PAYMENT_UPSERT_FAILURE", {
+      ...baseFields,
+      paymentAmount: amount,
+      currency,
+      error: error?.message ?? "Unable to store payment.",
+    });
     console.error("Unable to store Ask Leilia payment:", error);
     return json({ ok: false, error: "Unable to store payment." }, 500);
   }
+
+  logAskLeiliaPipeline("PAYMENT_UPSERT_SUCCESS", {
+    ...baseFields,
+    paymentId: (paymentRecord as { id: string }).id,
+    paymentAmount: amount,
+    currency,
+  });
 
   const askLeiliaRequestId = requestIdFromSession(session);
   let linkedRequest: LinkedRequestRow | null = null;
@@ -125,6 +158,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .maybeSingle();
 
     if (pendingError || !pendingRequest) {
+      logAskLeiliaPipeline("REQUEST_LINK_FAILURE", {
+        ...baseFields,
+        requestId: askLeiliaRequestId,
+        paymentAmount: amount,
+        currency,
+        error: pendingError?.message ?? "Request not found.",
+      });
       console.error("Unable to load Ask Leilia request for payment linking:", {
         error: pendingError,
         askLeiliaRequestId,
@@ -135,6 +175,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const requestRow = pendingRequest as LinkedRequestRow;
     if (!isAskLeiliaDbReadingType(requestRow.reading_type)) {
+      logAskLeiliaPipeline("REQUEST_LINK_FAILURE", {
+        ...baseFields,
+        requestId: askLeiliaRequestId,
+        readingType: requestRow.reading_type,
+        requestStatus: requestRow.status,
+        paymentAmount: amount,
+        currency,
+        error: "Invalid reading_type.",
+      });
       console.error("Ask Leilia request has invalid reading_type:", {
         askLeiliaRequestId,
         readingType: requestRow.reading_type,
@@ -142,10 +191,30 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ ok: false, error: "Unable to validate reading type." }, 500);
     }
 
-    const expectedAmount = expectedPaymentCents(requestRow.reading_type);
-    const amountMatches = paymentAmountMatches(requestRow.reading_type, amount, currency);
+    const readingType = requestRow.reading_type as AskLeiliaDbReadingType;
+
+    logAskLeiliaPipeline("REQUEST_LINK_SUCCESS", {
+      ...baseFields,
+      requestId: askLeiliaRequestId,
+      readingType,
+      requestStatus: requestRow.status,
+      paymentAmount: amount,
+      currency,
+    });
+
+    const expectedAmount = expectedPaymentCents(readingType);
+    const amountMatches = paymentAmountMatches(readingType, amount, currency);
 
     if (amountMatches) {
+      logAskLeiliaPipeline("PAYMENT_VALIDATED", {
+        ...baseFields,
+        requestId: askLeiliaRequestId,
+        readingType,
+        requestStatus: requestRow.status,
+        paymentAmount: amount,
+        currency,
+      });
+
       const { data: requestRecord, error: requestError } = await service
         .from("ask_leilia_requests")
         .update({
@@ -162,6 +231,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
         .maybeSingle();
 
       if (requestError || !requestRecord) {
+        logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
+          ...baseFields,
+          requestId: askLeiliaRequestId,
+          readingType,
+          paymentAmount: amount,
+          currency,
+          error: requestError?.message ?? "Unable to link paid request.",
+        });
         console.error("Unable to link paid Ask Leilia request:", {
           error: requestError,
           askLeiliaRequestId,
@@ -171,6 +248,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
 
       linkedRequest = requestRecord as LinkedRequestRow;
+
+      logAskLeiliaPipeline("STATUS_UPDATED_TO_PAID", {
+        ...baseFields,
+        requestId: linkedRequest.id,
+        readingType,
+        requestStatus: linkedRequest.status,
+        paymentAmount: amount,
+        currency,
+        paymentId: (paymentRecord as { id: string }).id,
+      });
 
       await notifyAskLeiliaPaymentCompleted(
         {
@@ -186,7 +273,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
             context: linkedRequest.context,
             cardPreference: linkedRequest.card_preference,
             imageUrl: linkedRequest.image_url,
-            readingType: requestRow.reading_type,
+            readingType,
           },
         },
         locals,
@@ -197,11 +284,21 @@ export const POST: APIRoute = async ({ request, locals }) => {
           requestId: linkedRequest.id,
           name: linkedRequest.name,
           email: linkedRequest.email,
-          readingType: requestRow.reading_type,
+          readingType,
         },
         locals,
       );
     } else {
+      logAskLeiliaPipeline("PAYMENT_EXCEPTION", {
+        ...baseFields,
+        requestId: askLeiliaRequestId,
+        readingType,
+        requestStatus: requestRow.status,
+        paymentAmount: amount,
+        currency,
+        error: `Expected ${expectedAmount} ${currency}, received ${amount}.`,
+      });
+
       const { data: requestRecord, error: requestError } = await service
         .from("ask_leilia_requests")
         .update({
@@ -218,6 +315,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
         .maybeSingle();
 
       if (requestError || !requestRecord) {
+        logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
+          ...baseFields,
+          requestId: askLeiliaRequestId,
+          readingType,
+          paymentAmount: amount,
+          currency,
+          error: requestError?.message ?? "Unable to record payment exception.",
+        });
         console.error("Unable to record Ask Leilia payment exception:", {
           error: requestError,
           askLeiliaRequestId,
@@ -233,7 +338,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
           requestId: linkedRequest.id,
           customerName: linkedRequest.name,
           customerEmail: linkedRequest.email,
-          readingType: requestRow.reading_type,
+          readingType,
           expectedAmountCents: expectedAmount,
           actualAmountCents: amount,
           currency,
@@ -243,6 +348,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
   } else {
+    logAskLeiliaPipeline("REQUEST_LINK_FAILURE", {
+      ...baseFields,
+      paymentAmount: amount,
+      currency,
+      error: "No client_reference_id or metadata request id on checkout session.",
+    });
+
     await notifyAskLeiliaPaymentCompleted(
       {
         customerEmail,
@@ -254,6 +366,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
       locals,
     );
   }
+
+  logAskLeiliaPipeline("WEBHOOK_COMPLETE", {
+    ...baseFields,
+    requestId: linkedRequest?.id ?? (askLeiliaRequestId || undefined),
+    readingType: linkedRequest?.reading_type,
+    requestStatus: linkedRequest?.status,
+    paymentAmount: amount,
+    currency,
+    paymentId: (paymentRecord as { id: string }).id,
+  });
 
   return json({ ok: true });
 };
