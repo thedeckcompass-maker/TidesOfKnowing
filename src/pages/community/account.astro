@@ -45,15 +45,6 @@ const memberSince = formatMemberSince(profile?.created_at);
   metaRobots="noindex, nofollow"
 >
   <main class="community-account page-inner">
-    <p class="community-account__kicker">Practice Commons</p>
-
-    <nav class="community-account__nav" aria-label="Account navigation">
-      <a class="community-account__nav-link" href="/community/">← Back to Practice Commons</a>
-      {isAdmin ? (
-        <a class="community-account__nav-link" href="/ask-leilia/admin/">Administration</a>
-      ) : null}
-    </nav>
-
     <h1>Your account</h1>
 
     <section class="community-account__panel" aria-labelledby="account-summary-heading">
@@ -124,7 +115,6 @@ const memberSince = formatMemberSince(profile?.created_at);
     padding: clamp(1.25rem, 4vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
-  .community-account__kicker,
   .community-account h2 {
     font-size: var(--tok-type-meta);
     letter-spacing: var(--tok-letter-upper);
@@ -138,29 +128,6 @@ const memberSince = formatMemberSince(profile?.created_at);
     font-size: clamp(2rem, 7vw, 3.5rem);
     font-weight: 400;
     color: var(--tok-water);
-  }
-
-  .community-account__nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem 1rem;
-    margin: 0 0 1rem;
-    font-size: var(--tok-type-meta);
-  }
-
-  .community-account__nav-link {
-    color: var(--tok-gold-deep);
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  .community-account__nav-link:hover,
-  .community-account__nav-link:focus-visible {
-    color: var(--tok-water);
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
   }
 
   .community-account__panel {
@@ -222,12 +189,5 @@ const memberSince = formatMemberSince(profile?.created_at);
 
   .community-account__logout-button:hover {
     background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
-  }
-
-  @media (max-width: 640px) {
-    .community-account__nav {
-      flex-direction: column;
-      align-items: flex-start;
-    }
   }
 </style>

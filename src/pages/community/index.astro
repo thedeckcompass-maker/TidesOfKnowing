@@ -52,19 +52,7 @@ const jsonLd = [
     <Breadcrumbs items={crumbs} />
 
     <header class="community-hero">
-      <div class="community-hero__topline">
-        <p class="community-kicker">Practice Commons</p>
-        {
-          isAuthenticated ? (
-            <div class="community-member-actions" aria-label="Practice Commons member actions">
-              <a href="/community/account/">Account</a>
-              <form method="post" action="/auth/logout/">
-                <button type="submit">Log out</button>
-              </form>
-            </div>
-          ) : null
-        }
-      </div>
+      <p class="community-kicker">Practice Commons</p>
       <h1>{isAuthenticated ? `Welcome back, ${displayName}.` : "A quiet place for readers to become better readers."}</h1>
       {
         isAuthenticated ? (

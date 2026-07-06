@@ -1,0 +1,71 @@
+---
+import type { MemberWorkspaceSection } from "../../lib/community/memberWorkspace";
+
+interface Props {
+  section: MemberWorkspaceSection;
+  displayName: string;
+  isAdmin: boolean;
+}
+
+const { section, displayName, isAdmin } = Astro.props;
+---
+
+<div class="member-workspace-bar">
+  <div class="page-inner member-workspace-bar__inner">
+    <div class="member-workspace-bar__brand">
+      <p class="member-workspace-bar__kicker">Practice Commons</p>
+      <span class="member-workspace-bar__label">Member workspace</span>
+    </div>
+
+    <nav class="member-workspace-bar__nav" aria-label="Workspace sections">
+      <a href="/community/" aria-current={section === "commons" ? "page" : undefined}>
+        Commons home
+      </a>
+      <a href="/community/search/">Search</a>
+      <a href="/community/account/" aria-current={section === "account" ? "page" : undefined}>
+        Account
+      </a>
+      {
+        isAdmin ? (
+          <a href="/ask-leilia/admin/" aria-current={section === "admin" ? "page" : undefined}>
+            Administration
+          </a>
+        ) : null
+      }
+    </nav>
+
+    <div class="member-workspace-bar__tools">
+      <details class="member-workspace-bar__account-menu" data-member-account-menu>
+        <summary class="member-workspace-bar__account-summary">{displayName}</summary>
+        <div class="member-workspace-bar__account-panel">
+          <a href="/community/account/">Your account</a>
+          <form method="post" action="/auth/logout/">
+            <button type="submit">Log out</button>
+          </form>
+        </div>
+      </details>
+      <a class="member-workspace-bar__public" href="/">Public site</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMemberAccountMenus() {
+    document.querySelectorAll("[data-member-account-menu]").forEach((menu) => {
+      if (!(menu instanceof HTMLDetailsElement) || menu.dataset.bound === "true") return;
+      menu.dataset.bound = "true";
+
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Node) || menu.contains(event.target)) return;
+        menu.open = false;
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") menu.open = false;
+      });
+    });
+  }
+
+  initMemberAccountMenus();
+  document.addEventListener("astro:page-load", initMemberAccountMenus);
+</script>
