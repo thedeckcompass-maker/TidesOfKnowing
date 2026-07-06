@@ -1,30 +1,32 @@
 ---
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
-import { getGallerySpreadImages } from "../../lib/clientReadingSpreadImages";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
+import { getGallerySpreadImages } from "../../lib/readingLibrary";
 
 interface Props {
-  entry: RecentClientReadingEntry;
+  publication: ReadingLibraryPublication;
   baseUrl: URL;
 }
 
-const { entry, baseUrl } = Astro.props;
-const images = getGallerySpreadImages(entry);
+const { publication, baseUrl } = Astro.props;
+const images = getGallerySpreadImages(publication);
 if (images.length === 0) return null;
 ---
 
 <section class="rcr-reading__spread-gallery" aria-labelledby="spread-gallery-heading">
-  <h2 id="spread-gallery-heading" class="rcr-reading__spread-gallery-heading">
-    Additional spread photographs
-  </h2>
-  <ul class="rcr-reading__spread-gallery-grid">
+  <h2 id="spread-gallery-heading" class="rcr-reading__spread-gallery-heading">Additional spread photographs</h2>
+  <ul class="rcr-reading__spread-gallery-grid" role="list">
     {
       images.map((src, index) => {
         const href = new URL(src, baseUrl).href;
-        const alt = `Additional spread photograph ${index + 2} for ${entry.data.title}`;
         return (
           <li>
             <a href={href} target="_blank" rel="noopener noreferrer">
-              <img src={src} alt={alt} loading="lazy" decoding="async" />
+              <img
+                src={src}
+                alt={`Spread photograph ${index + 2} for ${publication.title}`}
+                loading="lazy"
+                decoding="async"
+              />
             </a>
           </li>
         );

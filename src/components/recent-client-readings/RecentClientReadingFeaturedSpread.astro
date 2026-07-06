@@ -1,17 +1,17 @@
 ---
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
-import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
+import { getFeaturedSpreadImage } from "../../lib/readingLibrary";
 
 interface Props {
-  entry: RecentClientReadingEntry;
+  publication: ReadingLibraryPublication;
   baseUrl: URL;
 }
 
-const { entry, baseUrl } = Astro.props;
-const src = getFeaturedSpreadImage(entry);
+const { publication, baseUrl } = Astro.props;
+const src = getFeaturedSpreadImage(publication);
 if (!src) return null;
 const href = new URL(src, baseUrl).href;
-const alt = `Original tarot spread photograph for ${entry.data.title}`;
+const alt = `Original tarot spread photograph for ${publication.title}`;
 ---
 
 <figure class="rcr-reading__featured-spread">

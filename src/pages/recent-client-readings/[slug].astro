@@ -1,100 +1,70 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import AskLeiliaPricingGrid from "../../components/ask-leilia/AskLeiliaPricingGrid.astro";
 import RecentClientReadingMetaPanel from "../../components/recent-client-readings/RecentClientReadingMetaPanel.astro";
 import RecentClientReadingContinueExploring from "../../components/recent-client-readings/RecentClientReadingContinueExploring.astro";
+import RecentClientReadingFeaturedSpread from "../../components/recent-client-readings/RecentClientReadingFeaturedSpread.astro";
+import RecentClientReadingSpreadGallery from "../../components/recent-client-readings/RecentClientReadingSpreadGallery.astro";
 import { ASK_LEILIA_READINGS, ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
 import {
-  buildKnowledgeGraphCatalog,
-  resolveReadingKnowledgeGraph,
-} from "../../lib/knowledgeGraph";
-import {
-  formatIsoDate,
+  formatLibraryDate,
+  formatLibraryIsoDate,
+  getFeaturedSpreadImage,
+  getPublishedLibraryPublicationBySlug,
+  getPublishedLibraryPublications,
   getReadingBreadcrumbs,
   getReadingCanonicalUrl,
   getReadingJsonLd,
   getReadingMetaTitle,
-  isPublishedReading,
-  RECENT_CLIENT_READINGS_HUB_PATH,
-} from "../../lib/recentClientReadings";
-import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
-import {
-  parseRecentClientReadingSections,
-  RCR_SECTION_EDITOR_NOTES,
-  RCR_SECTION_READING,
-  RCR_SECTION_RELATED_SUGGESTIONS,
-} from "../../lib/recentClientReadingContent";
-import RecentClientReadingFeaturedSpread from "../../components/recent-client-readings/RecentClientReadingFeaturedSpread.astro";
-import RecentClientReadingSpreadGallery from "../../components/recent-client-readings/RecentClientReadingSpreadGallery.astro";
+  READING_LIBRARY_HUB_PATH,
+} from "../../lib/readingLibrary";
 import MarkdownIt from "markdown-it";
 import { siteBase } from "../../lib/site";
 import "../../styles/ask-leilia.css";
 import "../../styles/recent-client-readings.css";
 
-export const prerender = true;
+export const prerender = false;
 
-export async function getStaticPaths() {
-  const entries = await getCollection("recentClientReadings");
-  return entries
-    .filter(isPublishedReading)
-    .map((entry) => ({
-      params: { slug: entry.data.slug },
-      props: { entry },
-    }));
+const slug = Astro.params.slug?.trim();
+if (!slug) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
-const { entry } = Astro.props;
-const [allReadings, repeatingCards, blogEntries] = await Promise.all([
-  getCollection("recentClientReadings"),
-  getCollection("repeatingCardMeanings"),
-  getCollection("blog"),
-]);
-const data = entry.data;
+const service = createCommunityServiceClient(Astro.locals);
+const publication = await getPublishedLibraryPublicationBySlug(service, slug);
+
+if (!publication) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+const allPublished = await getPublishedLibraryPublications(service);
+const relatedPublications = allPublished
+  .filter((item) => item.slug !== publication.slug)
+  .slice(0, 4);
+
 const base = siteBase(Astro);
-const canonical = getReadingCanonicalUrl(entry, base.href);
-const title = getReadingMetaTitle(entry);
-const crumbs = getReadingBreadcrumbs(entry);
-const catalog = buildKnowledgeGraphCatalog({
-  repeatingCardMeanings: repeatingCards,
-  blog: blogEntries,
-  recentClientReadings: allReadings,
-});
-const explore = resolveReadingKnowledgeGraph(entry, catalog, blogEntries);
-const clientReadingEntries = Object.fromEntries(
-  explore.sections
-    .filter((section) => section.kind === "client-reading")
-    .flatMap((section) => section.links)
-    .map((link) => {
-      const related = catalog.clientReadings.bySlug.get(link.ref);
-      return related ? ([link.ref, related] as const) : null;
-    })
-    .filter((pair): pair is [string, (typeof catalog.clientReadings.published)[number]] =>
-      Boolean(pair),
-    ),
-);
-const jsonLd = getReadingJsonLd(entry, base.href, explore);
-const pdfHref = data.pdfDownload?.trim() ? new URL(data.pdfDownload, base).href : null;
-const featuredSpreadSrc = getFeaturedSpreadImage(entry);
+const canonical = getReadingCanonicalUrl(publication, base.href);
+const title = getReadingMetaTitle(publication);
+const crumbs = getReadingBreadcrumbs(publication);
+const jsonLd = getReadingJsonLd(publication, base.href);
+const pdfHref = publication.pdfStoragePath
+  ? new URL(`/api/reading-library/${publication.slug}/pdf`, base).href
+  : null;
+const featuredSpreadSrc = getFeaturedSpreadImage(publication);
 const ogImage = featuredSpreadSrc ? new URL(featuredSpreadSrc, base).href : undefined;
 const md = new MarkdownIt({ html: false, linkify: true });
-const bodySections = parseRecentClientReadingSections(entry.body ?? "");
-const readingHtml = md.render(`# ${RCR_SECTION_READING}\n\n${bodySections.reading}`);
-const editorNotesHtml = bodySections.editorNotes.trim()
-  ? md.render(`# ${RCR_SECTION_EDITOR_NOTES}\n\n${bodySections.editorNotes}`)
-  : "";
-const relatedSuggestionsHtml = bodySections.relatedSuggestions.trim()
-  ? md.render(`# ${RCR_SECTION_RELATED_SUGGESTIONS}\n\n${bodySections.relatedSuggestions}`)
-  : "";
+const readingHtml = md.render(publication.body);
+const publishedAt = publication.publishedAt;
 ---
 
 <BaseLayout
   title={title}
-  description={data.seoDescription}
+  description={publication.seoDescription}
   ogUrl={canonical}
   ogTitle={title}
-  ogDescription={data.seoDescription}
+  ogDescription={publication.seoDescription}
   ogType="article"
   ogImage={ogImage}
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
@@ -104,75 +74,54 @@ const relatedSuggestionsHtml = bodySections.relatedSuggestions.trim()
     <Breadcrumbs items={crumbs} />
 
     <header class="rcr-reading__hero">
-      <p class="ask-leilia__kicker">{data.readingType}</p>
-      <h1>{data.title}</h1>
+      <p class="ask-leilia__kicker">{publication.readingType}</p>
+      <h1>{publication.title}</h1>
       <p class="rcr-reading__question">
-        <span class="rcr-reading__question-label">Client question</span>
-        {data.question}
+        <span class="rcr-reading__question-label">Original question</span>
+        {publication.question}
       </p>
       <p class="rcr-reading__privacy">
         Identifying details have been removed or anonymised where necessary to protect client
         privacy.
       </p>
-      <p class="rcr-reading__published">
-        Published{" "}
-        <time datetime={formatIsoDate(data.datePublished)}>
-          {
-            data.datePublished.toLocaleDateString("en", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          }
-        </time>
-      </p>
+      {
+        publishedAt ? (
+          <p class="rcr-reading__published">
+            Published{" "}
+            <time datetime={formatLibraryIsoDate(publishedAt)}>{formatLibraryDate(publishedAt)}</time>
+          </p>
+        ) : null
+      }
     </header>
 
-    <RecentClientReadingFeaturedSpread entry={entry} baseUrl={base} />
+    <RecentClientReadingFeaturedSpread publication={publication} baseUrl={base} />
 
     <section class="rcr-reading__summary" aria-labelledby="reading-summary-heading">
       <h2 id="reading-summary-heading">Summary</h2>
-      <p>{data.summary}</p>
+      <p>{publication.summary}</p>
     </section>
 
     <article class="rcr-reading__body article-prose">
       <div class="rcr-reading__section rcr-reading__section--reading">
         <Fragment set:html={readingHtml} />
       </div>
-      <RecentClientReadingSpreadGallery entry={entry} baseUrl={base} />
-      {
-        editorNotesHtml ? (
-          <div class="rcr-reading__section rcr-reading__section--editor-notes">
-            <Fragment set:html={editorNotesHtml} />
-          </div>
-        ) : null
-      }
-      {
-        relatedSuggestionsHtml ? (
-          <div class="rcr-reading__section rcr-reading__section--related">
-            <Fragment set:html={relatedSuggestionsHtml} />
-          </div>
-        ) : null
-      }
+      <RecentClientReadingSpreadGallery publication={publication} baseUrl={base} />
     </article>
 
-    <RecentClientReadingMetaPanel entry={entry} />
+    <RecentClientReadingMetaPanel publication={publication} />
 
     {
       pdfHref ? (
         <section class="rcr-reading__download" aria-labelledby="download-heading">
           <h2 id="download-heading" class="visually-hidden">Download</h2>
-          <a class="ask-leilia-portfolio__cta" href={pdfHref} download>
+          <a class="ask-leilia-portfolio__cta" href={pdfHref}>
             Download Complete PDF
           </a>
         </section>
       ) : null
     }
 
-    <RecentClientReadingContinueExploring
-      explore={explore}
-      clientReadingEntries={clientReadingEntries}
-    />
+    <RecentClientReadingContinueExploring publications={relatedPublications} />
 
     <section class="rcr-reading__cta-copy" aria-labelledby="reading-cta-heading">
       <h2 id="reading-cta-heading">Ready to explore your own question?</h2>
@@ -182,13 +131,10 @@ const relatedSuggestionsHtml = bodySections.relatedSuggestions.trim()
       </p>
     </section>
 
-    <AskLeiliaPricingGrid
-      readings={ASK_LEILIA_READINGS}
-      buttonLabel="Request Reading"
-    />
+    <AskLeiliaPricingGrid readings={ASK_LEILIA_READINGS} buttonLabel="Request Reading" />
 
     <p class="rcr-reading__back">
-      <a href={RECENT_CLIENT_READINGS_HUB_PATH}>Back to Reading Library</a>
+      <a href={READING_LIBRARY_HUB_PATH}>Back to Reading Library</a>
     </p>
   </main>
 </BaseLayout>

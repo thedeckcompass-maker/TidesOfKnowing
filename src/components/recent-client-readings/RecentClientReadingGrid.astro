@@ -1,26 +1,26 @@
 ---
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
 import RecentClientReadingCard from "./RecentClientReadingCard.astro";
 
 interface Props {
   heading: string;
   headingId: string;
-  entries: RecentClientReadingEntry[];
+  publications: ReadingLibraryPublication[];
   ctaLabel?: string;
 }
 
-const { heading, headingId, entries, ctaLabel } = Astro.props;
+const { heading, headingId, publications, ctaLabel } = Astro.props;
 ---
 
 {
-  entries.length > 0 ? (
+  publications.length > 0 ? (
     <section class="ask-leilia-portfolio" aria-labelledby={headingId}>
       <h2 id={headingId} class="ask-leilia-portfolio__heading">
         {heading}
       </h2>
       <div class="ask-leilia-portfolio__grid">
-        {entries.map((entry) => (
-          <RecentClientReadingCard entry={entry} ctaLabel={ctaLabel} />
+        {publications.map((publication) => (
+          <RecentClientReadingCard publication={publication} ctaLabel={ctaLabel} />
         ))}
       </div>
     </section>

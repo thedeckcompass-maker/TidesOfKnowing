@@ -1,21 +1,25 @@
 ---
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
-import { getRecentClientReadingPath } from "../../lib/recentClientReadings";
-import { getFeaturedSpreadImage } from "../../lib/clientReadingSpreadImages";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
+import {
+  formatLibraryDate,
+  formatLibraryIsoDate,
+  getFeaturedSpreadImage,
+  getReadingLibraryPath,
+} from "../../lib/readingLibrary";
 
 interface Props {
-  entry: RecentClientReadingEntry;
-  headingLevel?: "h2" | "h3";
+  publication: ReadingLibraryPublication;
+  headingLevel?: "h2" | "h3" | "h4";
   ctaLabel?: string;
 }
 
-const { entry, headingLevel = "h3", ctaLabel = "Read Reading" } = Astro.props;
+const { publication, headingLevel = "h3", ctaLabel = "Read Reading" } = Astro.props;
 const TitleTag = headingLevel;
-const data = entry.data;
-const href = getRecentClientReadingPath(data.slug);
-const thumbnail = getFeaturedSpreadImage(entry);
-const lifeAreaLabel = data.lifeAreas.slice(0, 2).join(" · ");
-const cardsLabel = data.cardsFeatured.slice(0, 4).join(" · ");
+const href = getReadingLibraryPath(publication.slug);
+const thumbnail = getFeaturedSpreadImage(publication);
+const lifeAreaLabel = publication.lifeAreas.slice(0, 2).join(" · ");
+const cardsLabel = publication.primaryCards.slice(0, 4).join(" · ");
+const publishedAt = publication.publishedAt;
 ---
 
 <article class="rcr-card">
@@ -24,7 +28,7 @@ const cardsLabel = data.cardsFeatured.slice(0, 4).join(" · ");
       <a class="rcr-card__media" href={href}>
         <img
           src={thumbnail}
-          alt={`Spread photograph for ${data.title}`}
+          alt={`Spread photograph for ${publication.title}`}
           class="rcr-card__thumb"
           loading="lazy"
           decoding="async"
@@ -34,20 +38,30 @@ const cardsLabel = data.cardsFeatured.slice(0, 4).join(" · ");
   }
 
   <div class="rcr-card__content">
-    <p class="rcr-card__type">{data.readingType}</p>
+    <p class="rcr-card__type">{publication.readingType}</p>
     <TitleTag class="rcr-card__title">
-      <a href={href}>{data.title}</a>
+      <a href={href}>{publication.title}</a>
     </TitleTag>
+
+    {
+      publishedAt ? (
+        <p class="rcr-card__published">
+          <time datetime={formatLibraryIsoDate(publishedAt)}>{formatLibraryDate(publishedAt)}</time>
+        </p>
+      ) : null
+    }
+
+    <p class="rcr-card__excerpt">{publication.summary}</p>
 
     <dl class="rcr-card__meta">
       <div>
         <dt>Original question</dt>
-        <dd>{data.question}</dd>
+        <dd>{publication.question}</dd>
       </div>
       {
         lifeAreaLabel ? (
           <div>
-            <dt>Primary life area{data.lifeAreas.length > 1 ? "s" : ""}</dt>
+            <dt>Primary life area{publication.lifeAreas.length > 1 ? "s" : ""}</dt>
             <dd>{lifeAreaLabel}</dd>
           </div>
         ) : null

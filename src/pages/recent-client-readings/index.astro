@@ -1,45 +1,32 @@
 ---
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
-import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import RecentClientReadingGrid from "../../components/recent-client-readings/RecentClientReadingGrid.astro";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
 import {
-  getFeaturedReadings,
-  getLibraryBreadcrumbs,
   getLibraryJsonLd,
-  getPublishedReadings,
-  RECENT_CLIENT_READINGS_HUB_PATH,
-} from "../../lib/recentClientReadings";
-import { RECENT_CLIENT_SPREADS } from "../../lib/recentClientReadingsTaxonomy";
+  getLibraryBreadcrumbs,
+  getPublishedLibraryPublications,
+  READING_LIBRARY_HUB_PATH,
+} from "../../lib/readingLibrary";
 import { siteBase } from "../../lib/site";
-import { slugify } from "../../utils/slugify";
 import "../../styles/ask-leilia.css";
 import "../../styles/recent-client-readings.css";
 
+export const prerender = false;
+
 const title = "Reading Library | Ask Leilia | Tides of Knowing";
 const description =
-  "Browse anonymised client tarot readings by Leilia – Tides of Knowing: professionally written, personally interpreted examples that show question, spread and depth before you book.";
+  "Explore genuine client tarot readings shared with permission and carefully anonymised — professionally written and personally interpreted by Leilia.";
 
-const allEntries = await getCollection("recentClientReadings");
-const published = getPublishedReadings(allEntries);
-const spreadParam = Astro.url.searchParams.get("spread")?.trim() ?? "";
-const activeSpread = spreadParam
-  ? RECENT_CLIENT_SPREADS.find((spread) => slugify(spread) === spreadParam)
-  : undefined;
-const filteredPublished = activeSpread
-  ? published.filter((entry) => entry.data.spreadUsed === activeSpread)
-  : published;
-const featured = getFeaturedReadings(allEntries);
-const gridEntries =
-  featured.length > 0
-    ? filteredPublished.filter((entry) => !entry.data.featured)
-    : filteredPublished;
+const service = createCommunityServiceClient(Astro.locals);
+const publications = await getPublishedLibraryPublications(service);
 
 const base = siteBase(Astro);
-const canonical = new URL(RECENT_CLIENT_READINGS_HUB_PATH, base).href;
+const canonical = new URL(READING_LIBRARY_HUB_PATH, base).href;
 const crumbs = getLibraryBreadcrumbs();
-const jsonLd = getLibraryJsonLd(published, base.href);
+const jsonLd = getLibraryJsonLd(publications, base.href);
 ---
 
 <BaseLayout
@@ -59,55 +46,36 @@ const jsonLd = getLibraryJsonLd(published, base.href);
         <p class="ask-leilia__kicker">Ask Leilia</p>
         <h1 id="reading-library-heading">Reading Library</h1>
         <p class="ask-leilia-hero__subheading">
-          Browse a growing collection of anonymised client readings, professionally written and
-          personally interpreted by Leilia.
+          Explore a growing collection of genuine client readings, shared with permission and
+          carefully anonymised to protect privacy.
         </p>
         <p class="ask-leilia-hero__lede">
           Each reading demonstrates a different question, spread and interpretive approach while
-          protecting client privacy.
+          preserving the integrity of the original consultation.
         </p>
         <p class="ask-leilia-hero__lede rcr-library__human-led">
-          Every reading is human-led. No AI is used in the interpretation or writing.
+          These are real readings, professionally written and personally interpreted by Leilia. No AI
+          is used in either the reading or the writing.
         </p>
       </div>
     </section>
 
-    <section class="rcr-library__intro" aria-labelledby="library-intro-heading">
-      <h2 id="library-intro-heading" class="visually-hidden">About this library</h2>
-      <p>
-        Every reading in this library is unique — shaped by the question asked, the cards drawn and
-        the life context surrounding the consultation.
-      </p>
-      <p>
-        Identifying details are removed or anonymised where appropriate. Some readings were
-        prepared as complimentary examples; others were commissioned as paid consultations. The
-        quality, care and professional standard are identical regardless.
-      </p>
-      <p>
-        This library exists to help prospective clients understand the style and depth of a written
-        reading before booking their own.
-      </p>
-    </section>
-
-    <RecentClientReadingGrid
-      heading="Featured Readings"
-      headingId="featured-readings-heading"
-      entries={featured}
-    />
-
-    <RecentClientReadingGrid
-      heading={activeSpread ? `${activeSpread} readings` : "All readings"}
-      headingId="all-readings-heading"
-      entries={gridEntries}
-    />
-
     {
-      activeSpread && gridEntries.length === 0 ? (
-        <p class="rcr-library__filter-empty">
-          No published readings use the {activeSpread} spread yet.{" "}
-          <a href={RECENT_CLIENT_READINGS_HUB_PATH}>View all readings</a>
-        </p>
-      ) : null
+      publications.length > 0 ? (
+        <RecentClientReadingGrid
+          heading="Published readings"
+          headingId="published-readings-heading"
+          publications={publications}
+        />
+      ) : (
+        <section class="rcr-library__empty" aria-labelledby="library-empty-heading">
+          <h2 id="library-empty-heading" class="visually-hidden">No published readings yet</h2>
+          <p>
+            Published client readings will begin appearing here as they are completed and released with
+            permission.
+          </p>
+        </section>
+      )
     }
   </main>
 </BaseLayout>

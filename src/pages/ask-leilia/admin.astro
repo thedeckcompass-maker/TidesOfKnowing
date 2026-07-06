@@ -16,6 +16,10 @@ import {
 } from "../../lib/ask-leilia/queries";
 import { adminSelectableStatuses } from "../../lib/ask-leilia/validation";
 import type { AskLeiliaDbReadingType } from "../../lib/ask-leilia/readingTypes";
+import {
+  getLibraryPublicationsByRequestIds,
+  normalizeLibrarySlug,
+} from "../../lib/readingLibrary";
 
 export const prerender = false;
 
@@ -33,11 +37,17 @@ const readingTypeFilter =
   ASK_LEILIA_DB_READING_TYPES.includes(readingTypeFilterRaw as AskLeiliaDbReadingType)
     ? readingTypeFilterRaw
     : "all";
+const librarySaved = Astro.url.searchParams.get("library_saved") === "1";
+const libraryError = Astro.url.searchParams.get("library_error")?.trim() ?? "";
 
 const service = createCommunityServiceClient(Astro.locals);
 const requests = await getAskLeiliaRequests(service, {
   readingType: readingTypeFilter === "all" ? "all" : (readingTypeFilter as AskLeiliaDbReadingType),
 });
+const libraryByRequestId = await getLibraryPublicationsByRequestIds(
+  service,
+  requests.map((request) => request.id),
+);
 const rows = await Promise.all(
   requests.map(async (request) => ({
     request,
@@ -76,6 +86,16 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
       <p class="ask-admin__kicker">Ask Leilia</p>
       <h1>Reading Requests</h1>
       <p>Review submitted requests and update their status.</p>
+      {
+        librarySaved ? (
+          <p class="ask-admin__notice" role="status">Reading Library entry saved.</p>
+        ) : null
+      }
+      {
+        libraryError ? (
+          <p class="ask-admin__notice ask-admin__notice--error" role="alert">{libraryError}</p>
+        ) : null
+      }
     </header>
 
     <form class="ask-admin__filters" method="get" action="/ask-leilia/admin/">
@@ -101,6 +121,11 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
           {rows.map(({ request, imageUrl, deliveryPdfUrl }) => {
             const selectableStatuses = adminSelectableStatuses(request.status);
             const isPaymentException = request.status === "Payment Exception";
+            const libraryPublication = libraryByRequestId.get(request.id);
+            const suggestedSlug = normalizeLibrarySlug(
+              libraryPublication?.slug ??
+                `${readingTypeLabel(request.reading_type)}-${request.id.slice(0, 8)}`,
+            );
             const expectedAmount = request.payment_expected_amount;
             const actualAmount = request.payment_actual_amount;
             const paymentDifference =
@@ -235,6 +260,114 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
                   </label>
                   <button type="submit">Update request</button>
                 </form>
+
+                {
+                  request.status === "Delivered" ? (
+                    <details class="ask-admin-card__library">
+                      <summary>Reading Library publication</summary>
+                      {
+                        libraryPublication?.isPublished ? (
+                          <p class="ask-admin-card__library-status">
+                            Published:{" "}
+                            <a href={`/recent-client-readings/${libraryPublication.slug}/`}>
+                              View in library
+                            </a>
+                          </p>
+                        ) : libraryPublication ? (
+                          <p class="ask-admin-card__library-status">Saved as draft (not published).</p>
+                        ) : (
+                          <p class="ask-admin-card__library-status">
+                            Not yet added to the Reading Library.
+                          </p>
+                        )
+                      }
+                      <form
+                        class="ask-admin-card__form ask-admin-card__library-form"
+                        method="post"
+                        action={`/api/ask-leilia/reading-library/${request.id}`}
+                      >
+                        <label>
+                          Library title
+                          <input
+                            type="text"
+                            name="libraryTitle"
+                            required
+                            minlength="4"
+                            maxlength="200"
+                            value={libraryPublication?.title ?? ""}
+                          />
+                        </label>
+                        <label>
+                          URL slug
+                          <input
+                            type="text"
+                            name="librarySlug"
+                            required
+                            pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                            value={libraryPublication?.slug ?? suggestedSlug}
+                          />
+                        </label>
+                        <label>
+                          Short excerpt (card summary)
+                          <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">
+                            {libraryPublication?.summary ?? ""}
+                          </textarea>
+                        </label>
+                        <label>
+                          SEO description
+                          <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">
+                            {libraryPublication?.seoDescription ?? ""}
+                          </textarea>
+                        </label>
+                        <label>
+                          Reading body (Markdown)
+                          <textarea name="libraryBody" rows="12" required minlength="100">
+                            {libraryPublication?.body ?? ""}
+                          </textarea>
+                        </label>
+                        <label>
+                          Primary life areas (comma-separated)
+                          <input
+                            type="text"
+                            name="libraryLifeAreas"
+                            value={libraryPublication?.lifeAreas.join(", ") ?? ""}
+                          />
+                        </label>
+                        <label>
+                          Primary cards featured (comma-separated)
+                          <input
+                            type="text"
+                            name="libraryPrimaryCards"
+                            value={libraryPublication?.primaryCards.join(", ") ?? ""}
+                          />
+                        </label>
+                        <label>
+                          Spread used
+                          <input
+                            type="text"
+                            name="librarySpreadUsed"
+                            value={libraryPublication?.spreadUsed ?? readingTypeLabel(request.reading_type)}
+                          />
+                        </label>
+                        <label>
+                          Spread image paths (one per line, under public/)
+                          <textarea name="librarySpreadImages" rows="3">
+                            {libraryPublication?.spreadImagePaths.join("\n") ?? ""}
+                          </textarea>
+                        </label>
+                        <label class="ask-admin-card__publish">
+                          <input
+                            type="checkbox"
+                            name="libraryPublish"
+                            checked={libraryPublication?.isPublished ?? false}
+                          />
+                          Publish to Reading Library
+                        </label>
+                        <button type="submit">Save library entry</button>
+                      </form>
+                    </details>
+                  ) : null
+                }
               </article>
             );
           })}
@@ -253,6 +386,20 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
 
   .ask-admin__head {
     max-width: 44rem;
+  }
+
+  .ask-admin__notice {
+    margin: 1rem 0 0;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 70%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    font-size: 0.96rem;
+  }
+
+  .ask-admin__notice--error {
+    border-color: color-mix(in srgb, #b42318 35%, transparent);
+    color: #7a271a;
   }
 
   .ask-admin__kicker {
@@ -429,5 +576,48 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     color: var(--tok-btn-filled-fg);
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .ask-admin-card__library {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+  }
+
+  .ask-admin-card__library summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--tok-water);
+  }
+
+  .ask-admin-card__library-status {
+    margin: 0.85rem 0;
+    font-size: 0.96rem;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-admin-card__library-status a {
+    color: var(--tok-teal);
+    font-weight: 600;
+  }
+
+  .ask-admin-card__library-form {
+    margin-top: 0.75rem;
+  }
+
+  .ask-admin-card__library-form input[type="text"] {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  .ask-admin-card__publish {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
   }
 </style>

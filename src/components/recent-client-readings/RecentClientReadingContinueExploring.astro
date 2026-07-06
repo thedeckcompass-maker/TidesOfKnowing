@@ -1,60 +1,25 @@
 ---
-import type { KnowledgeGraphExplore } from "../../lib/knowledgeGraph";
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
 import RecentClientReadingCard from "./RecentClientReadingCard.astro";
 
 interface Props {
-  explore: KnowledgeGraphExplore;
-  clientReadingEntries?: Record<string, RecentClientReadingEntry>;
+  publications: ReadingLibraryPublication[];
 }
 
-const { explore, clientReadingEntries = {} } = Astro.props;
+const { publications } = Astro.props;
 ---
 
 {
-  explore.hasContent ? (
+  publications.length > 0 ? (
     <section class="rcr-continue" aria-labelledby="continue-exploring-heading">
       <h2 id="continue-exploring-heading" class="rcr-continue__title">
-        Continue Exploring
+        More readings
       </h2>
-
-      {explore.sections.map((section) => (
-        <div class="rcr-continue__group">
-          <h3 class="rcr-continue__group-title">{section.heading}</h3>
-          {section.kind === "client-reading" ? (
-            <div class="ask-leilia-portfolio__grid rcr-continue__reading-grid">
-              {section.links.map((link) => {
-                const entry = clientReadingEntries[link.ref];
-                return entry ? (
-                  <RecentClientReadingCard entry={entry} headingLevel="h4" ctaLabel="Read More" />
-                ) : (
-                  <article class="rcr-continue__link-card">
-                    <h4 class="rcr-continue__link-title">
-                      <a href={link.href}>{link.title}</a>
-                    </h4>
-                    {link.description ? (
-                      <p class="rcr-continue__link-desc">{link.description}</p>
-                    ) : null}
-                  </article>
-                );
-              })}
-            </div>
-          ) : (
-            <ul class="rcr-continue__list" role="list">
-              {section.links.map((link) => (
-                <li class="rcr-continue__item">
-                  <a class="rcr-continue__link" href={link.href}>
-                    <span class="rcr-continue__link-title">{link.title}</span>
-                    {link.description ? (
-                      <span class="rcr-continue__link-desc">{link.description}</span>
-                    ) : null}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+      <div class="ask-leilia-portfolio__grid rcr-continue__reading-grid">
+        {publications.map((publication) => (
+          <RecentClientReadingCard publication={publication} headingLevel="h3" ctaLabel="Read Reading" />
+        ))}
+      </div>
     </section>
   ) : null
 }

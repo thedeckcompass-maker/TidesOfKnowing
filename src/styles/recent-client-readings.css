@@ -1,9 +1,30 @@
+.rcr-library.page-inner,
+.rcr-reading.page-inner {
+  width: min(72rem, 100% - 2rem);
+}
+
 .rcr-library__intro {
   margin-top: clamp(1.75rem, 4vw, 2.5rem);
-  max-width: 44rem;
+  max-width: 52rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.rcr-library__empty {
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  max-width: 52rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  border-radius: var(--radius-promo);
+  background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, transparent);
+}
+
+.rcr-library__empty p {
+  margin: 0;
+  font-size: 1.03rem;
+  line-height: 1.75;
+  color: var(--tok-text-dark);
 }
 
 .rcr-library__intro p {
@@ -80,6 +101,19 @@
   color: var(--tok-teal);
   text-decoration: underline;
   text-underline-offset: 0.12em;
+}
+
+.rcr-card__published {
+  margin: 0;
+  font-size: var(--tok-type-meta);
+  color: var(--tok-text-muted);
+}
+
+.rcr-card__excerpt {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--tok-text-dark);
 }
 
 .rcr-card__meta {
@@ -161,7 +195,7 @@
 
 .rcr-reading__question {
   margin: 0 0 0.85rem;
-  max-width: 42rem;
+  max-width: 52rem;
   font-family: var(--font-heading);
   font-size: clamp(1.1rem, 2.5vw, 1.35rem);
   line-height: 1.5;
@@ -182,7 +216,7 @@
 .rcr-reading__privacy,
 .rcr-reading__published {
   margin: 0;
-  max-width: 42rem;
+  max-width: 52rem;
   font-size: 0.95rem;
   line-height: 1.65;
   color: var(--tok-text-dark);
@@ -205,7 +239,7 @@
 
 .rcr-reading__featured-spread {
   margin-top: clamp(1.25rem, 3vw, 1.75rem);
-  max-width: 44rem;
+  max-width: 52rem;
 }
 
 .rcr-reading__featured-spread img,
@@ -241,7 +275,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
   gap: 0.85rem;
-  max-width: 44rem;
+  max-width: 52rem;
 }
 
 .rcr-reading__spread-gallery-grid li {
@@ -263,7 +297,7 @@
 .rcr-reading__summary p,
 .rcr-reading__cta-copy p {
   margin: 0;
-  max-width: 44rem;
+  max-width: 52rem;
   font-size: 1.03rem;
   line-height: 1.75;
   color: var(--tok-text-dark);
@@ -271,7 +305,11 @@
 
 .rcr-reading__body {
   margin-top: clamp(1.5rem, 4vw, 2rem);
-  max-width: 44rem;
+  max-width: 52rem;
+}
+
+.rcr-reading__body.article-prose {
+  max-width: 52rem;
 }
 
 .rcr-reading__section + .rcr-reading__section,
@@ -322,14 +360,14 @@
 
 .rcr-reading__notes-intro {
   margin: 0 0 1rem;
-  max-width: 42rem;
+  max-width: 52rem;
   font-size: 0.96rem;
   line-height: 1.65;
   color: var(--tok-text-muted);
 }
 
 .rcr-reading__notes-body {
-  max-width: 44rem;
+  max-width: 52rem;
 }
 
 .rcr-reading__back {

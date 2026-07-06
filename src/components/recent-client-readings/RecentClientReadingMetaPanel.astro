@@ -1,79 +1,51 @@
 ---
-import type { RecentClientReadingEntry } from "../../lib/recentClientReadings";
-import { formatIsoDate } from "../../lib/recentClientReadings";
+import type { ReadingLibraryPublication } from "../../lib/readingLibrary";
+import { formatLibraryDate, formatLibraryIsoDate } from "../../lib/readingLibrary";
 
 interface Props {
-  entry: RecentClientReadingEntry;
+  publication: ReadingLibraryPublication;
 }
 
-const { entry } = Astro.props;
-const data = entry.data;
+const { publication } = Astro.props;
+const publishedAt = publication.publishedAt;
 ---
 
 <section class="rcr-meta" aria-label="Reading details">
   <dl class="rcr-meta__grid">
-    <div>
-      <dt>Spread used</dt>
-      <dd>{data.spreadUsed}</dd>
-    </div>
-    <div>
-      <dt>Dominant suit</dt>
-      <dd>{data.dominantSuit}</dd>
-    </div>
     {
-      data.lifeAreas.length > 0 ? (
+      publication.spreadUsed ? (
+        <div>
+          <dt>Spread used</dt>
+          <dd>{publication.spreadUsed}</dd>
+        </div>
+      ) : null
+    }
+    {
+      publication.lifeAreas.length > 0 ? (
         <div>
           <dt>Life areas</dt>
-          <dd>{data.lifeAreas.join(", ")}</dd>
+          <dd>{publication.lifeAreas.join(", ")}</dd>
         </div>
       ) : null
     }
     {
-      data.archetypalThemes.length > 0 ? (
-        <div>
-          <dt>Archetypal themes</dt>
-          <dd>{data.archetypalThemes.join(", ")}</dd>
-        </div>
-      ) : null
-    }
-    {
-      data.cardsFeatured.length > 0 ? (
-        <div>
-          <dt>Featured cards</dt>
-          <dd>{data.cardsFeatured.join(", ")}</dd>
-        </div>
-      ) : null
-    }
-    {
-      data.primaryCards.length > 0 ? (
+      publication.primaryCards.length > 0 ? (
         <div>
           <dt>Primary cards</dt>
-          <dd>{data.primaryCards.join(", ")}</dd>
+          <dd>{publication.primaryCards.join(", ")}</dd>
         </div>
       ) : null
     }
     {
-      data.secondaryCards.length > 0 ? (
+      publishedAt ? (
         <div>
-          <dt>Secondary cards</dt>
-          <dd>{data.secondaryCards.join(", ")}</dd>
+          <dt>Published</dt>
+          <dd>
+            <time datetime={formatLibraryIsoDate(publishedAt)}>{formatLibraryDate(publishedAt)}</time>
+          </dd>
         </div>
       ) : null
     }
-    <div>
-      <dt>Published</dt>
-      <dd>
-        <time datetime={formatIsoDate(data.datePublished)}>
-          {
-            data.datePublished.toLocaleDateString("en", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          }
-        </time>
-      </dd>
-    </div>
   </dl>
 </section>
 
