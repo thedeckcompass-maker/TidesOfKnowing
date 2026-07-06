@@ -404,6 +404,11 @@
   font-size: 1.03rem;
 }
 
+.ask-leilia-reading-library__cta {
+  align-self: start;
+  margin-top: 0.35rem;
+}
+
 .ask-leilia-about {
   display: grid;
   gap: clamp(1rem, 3vw, 1.5rem);

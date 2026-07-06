@@ -1,0 +1,27 @@
+---
+interface Props {
+  headingId?: string;
+}
+
+const { headingId = "reading-library-heading" } = Astro.props;
+---
+
+<section class="ask-leilia-section ask-leilia-reading-library" aria-labelledby={headingId}>
+  <h2 id={headingId}>See How I Read</h2>
+  <p>
+    Before choosing a reading, you're welcome to explore a selection of recent client readings.
+  </p>
+  <p>
+    Every reading is personally interpreted by Leilia and published only with permission or
+    appropriate anonymisation. They are not marketing examples or AI-generated samples. They are
+    genuine readings that demonstrate how I work, how I interpret the cards, and the depth of
+    insight you can expect.
+  </p>
+  <p>
+    Reading a few examples is often the best way to decide whether my approach is the right fit for
+    you.
+  </p>
+  <a class="ask-leilia-pricing__cta ask-leilia-reading-library__cta" href="/recent-client-readings/">
+    Browse the Reading Library
+  </a>
+</section>

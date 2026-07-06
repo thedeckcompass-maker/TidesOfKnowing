@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AskLeiliaTrustList from "../components/ask-leilia/AskLeiliaTrustList.astro";
 import AskLeiliaPricingGrid from "../components/ask-leilia/AskLeiliaPricingGrid.astro";
+import AskLeiliaReadingLibrary from "../components/ask-leilia/AskLeiliaReadingLibrary.astro";
 import {
   ASK_LEILIA_PUBLIC_TRUST_POINTS,
   ASK_LEILIA_READINGS,
@@ -74,6 +75,8 @@ const jsonLd = {
     <div class="ask-leilia-hero__copy">
       <AskLeiliaTrustList points={ASK_LEILIA_PUBLIC_TRUST_POINTS} />
     </div>
+
+    <AskLeiliaReadingLibrary />
 
     <section class="ask-leilia-hero__copy" aria-label="About Ask Leilia readings">
       <p class="ask-leilia-hero__subheading">
