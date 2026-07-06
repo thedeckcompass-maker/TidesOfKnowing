@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AskLeiliaCardPreference } from "./types";
+import { formatReadingTypeAdminNote } from "./readingTypes";
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 
@@ -61,7 +62,7 @@ export async function insertAskLeiliaPendingRequest(
       card_preference: input.cardPreference,
       image_url: input.imageUrl,
       status: "Pending Payment",
-      admin_notes: input.readingTypeLabel ? `Reading type: ${input.readingTypeLabel}` : null,
+      admin_notes: input.readingTypeLabel ? formatReadingTypeAdminNote(input.readingTypeLabel) : null,
     })
     .select("id")
     .single();

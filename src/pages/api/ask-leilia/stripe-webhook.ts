@@ -104,6 +104,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         context: string | null;
         card_preference: AskLeiliaCardPreference;
         image_url: string | null;
+        admin_notes: string | null;
       }
     | null = null;
 
@@ -115,7 +116,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         status: "Paid",
       })
       .eq("id", askLeiliaRequestId)
-      .select("id, name, email, question, context, card_preference, image_url")
+      .select("id, name, email, question, context, card_preference, image_url, admin_notes")
       .maybeSingle();
 
     if (requestError || !requestRecord) {
@@ -145,6 +146,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
             context: linkedRequest.context,
             cardPreference: linkedRequest.card_preference,
             imageUrl: linkedRequest.image_url,
+            adminNotes: linkedRequest.admin_notes,
           }
         : null,
     },

@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { communityEnv } from "../community/env";
+import { parseReadingTypeLabel } from "./readingTypes";
 import { cardPreferenceLabel, type AskLeiliaCardPreference, type AskLeiliaStatus } from "./types";
 
 function notifyEmail(locals?: unknown): string {
@@ -50,29 +51,34 @@ export async function notifyAskLeiliaPaymentCompleted(
       context: string | null;
       cardPreference: AskLeiliaCardPreference;
       imageUrl: string | null;
+      adminNotes?: string | null;
     } | null;
   },
   locals?: unknown,
 ): Promise<void> {
   const requestLines = input.request
-    ? [
-        "",
-        "Linked request:",
-        `Request id: ${input.request.id}`,
-        `Name: ${input.request.name}`,
-        `Email: ${input.request.email}`,
-        `Card preference: ${cardPreferenceLabel(input.request.cardPreference)}`,
-        `Image uploaded: ${input.request.imageUrl ? "Yes" : "No"}`,
-        "",
-        "Question:",
-        input.request.question,
-        "",
-        "Context:",
-        input.request.context || "No additional context.",
-      ]
+    ? (() => {
+        const readingTypeLabel = parseReadingTypeLabel(input.request.adminNotes ?? null);
+        return [
+          "",
+          "Linked request:",
+          `Request id: ${input.request.id}`,
+          `Name: ${input.request.name}`,
+          `Email: ${input.request.email}`,
+          ...(readingTypeLabel ? [`Reading type: ${readingTypeLabel}`] : []),
+          `Card preference: ${cardPreferenceLabel(input.request.cardPreference)}`,
+          `Image uploaded: ${input.request.imageUrl ? "Yes" : "No"}`,
+          "",
+          "Question:",
+          input.request.question,
+          "",
+          "Context:",
+          input.request.context || "No additional context.",
+        ];
+      })()
     : [
         "",
-        "The customer should now complete the request form at /ask-leilia/request/.",
+        "No linked request was found. The customer may need to complete a request form at /ask-leilia/ before payment.",
       ];
 
   await sendAskLeiliaNotification(
@@ -148,9 +154,12 @@ export async function notifyAskLeiliaStatusChanged(
     name: string;
     email: string;
     status: AskLeiliaStatus;
+    adminNotes?: string | null;
   },
   locals?: unknown,
 ): Promise<void> {
+  const readingTypeLabel = parseReadingTypeLabel(input.adminNotes ?? null);
+
   await sendAskLeiliaNotification(
     "Ask Leilia request status updated",
     [
@@ -158,6 +167,7 @@ export async function notifyAskLeiliaStatusChanged(
       "",
       `Name: ${input.name}`,
       `Email: ${input.email}`,
+      ...(readingTypeLabel ? [`Reading type: ${readingTypeLabel}`] : []),
       `Status: ${input.status}`,
     ],
     locals,

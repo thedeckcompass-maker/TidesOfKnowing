@@ -23,16 +23,31 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
   }
 
   const service = createCommunityServiceClient(locals);
-  const notes = typeof payload.notes === "string" ? payload.notes.trim() : "";
+  const submittedNotes = typeof payload.notes === "string" ? payload.notes.trim() : "";
+
+  const { data: existing, error: fetchError } = await service
+    .from("ask_leilia_requests")
+    .select("admin_notes")
+    .eq("id", requestId)
+    .maybeSingle();
+
+  if (fetchError) {
+    console.error("Unable to load Ask Leilia request for update:", fetchError);
+    return json({ ok: false, error: "Unable to update the request." }, 500);
+  }
+
+  const adminNotes =
+    submittedNotes || (existing as { admin_notes: string | null } | null)?.admin_notes || null;
+
   const { data, error } = await service
     .from("ask_leilia_requests")
     .update({
       status: payload.status,
-      admin_notes: notes || null,
+      admin_notes: adminNotes,
       delivered_at: payload.status === "Delivered" ? new Date().toISOString() : null,
     })
     .eq("id", requestId)
-    .select("name, email, status")
+    .select("name, email, status, admin_notes")
     .single();
 
   if (error) {
@@ -46,6 +61,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
         name: (data as { name: string }).name,
         email: (data as { email: string }).email,
         status: (data as { status: typeof payload.status }).status,
+        adminNotes: (data as { admin_notes: string | null }).admin_notes,
       },
       locals,
     );
