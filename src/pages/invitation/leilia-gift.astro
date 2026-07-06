@@ -115,8 +115,7 @@ const description =
             headingId="gift-pricing-heading"
             intro="Many people begin with a single question. Later, when life presents bigger decisions or more complex situations, they return for a more comprehensive written reading."
             readings={ASK_LEILIA_READINGS}
-            buttonLabel="View This Reading"
-            buttonHref="/ask-leilia/"
+            buttonLabel="Request Reading"
           />
 
           <section class="ask-leilia-section ask-leilia-favour" aria-labelledby="gift-favour-heading">
@@ -133,8 +132,10 @@ const description =
           <h2 id="gift-request-heading">Request your complimentary reading</h2>
           <div class="ask-leilia-request__panel">
             <AskLeiliaRequestForm
+              readingType="one-question"
               action="/api/invitation/leilia-gift"
               submitLabel="Submit My Complimentary Reading"
+              showStatuses={false}
               questionPlaceholder="Share the one question you would like explored in your complimentary reading."
               contextPlaceholder="Optional: add any context that would help Leilia understand your situation."
             />

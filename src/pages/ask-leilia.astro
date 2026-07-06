@@ -49,16 +49,10 @@ const jsonLd = {
       <div class="ask-leilia-hero__copy">
         <p class="ask-leilia__kicker">Professional Tarot Readings</p>
         <h1 id="ask-leilia-heading">Ask Leilia</h1>
-        <p class="ask-leilia-hero__subheading">
-          Professional written tarot readings, personally interpreted by Leilia.
-        </p>
         <p class="ask-leilia-hero__lede">
-          Whether you're facing a difficult decision, seeking clarity about a relationship,
-          wondering what comes next, or simply looking for another perspective, each reading is
-          personally completed using traditional tarot methods and delivered as a professionally
-          written PDF.
+          Choose the written reading that best suits your question. Every reading is personally
+          interpreted by Leilia and delivered as a professionally written PDF within 48 hours.
         </p>
-        <AskLeiliaTrustList points={ASK_LEILIA_PUBLIC_TRUST_POINTS} />
       </div>
     </section>
 
@@ -66,9 +60,24 @@ const jsonLd = {
       heading="Choose Your Reading"
       headingId="readings-heading"
       readings={ASK_LEILIA_READINGS}
-      buttonLabel="Request Reading"
-      buttonHref="#"
+      buttonLabel="Request This Reading"
     />
+
+    <div class="ask-leilia-hero__copy">
+      <AskLeiliaTrustList points={ASK_LEILIA_PUBLIC_TRUST_POINTS} />
+    </div>
+
+    <section class="ask-leilia-hero__copy" aria-label="About Ask Leilia readings">
+      <p class="ask-leilia-hero__subheading">
+        Professional written tarot readings, personally interpreted by Leilia.
+      </p>
+      <p class="ask-leilia-hero__lede">
+        Whether you're facing a difficult decision, seeking clarity about a relationship,
+        wondering what comes next, or simply looking for another perspective, each reading is
+        personally completed using traditional tarot methods and delivered as a professionally
+        written PDF.
+      </p>
+    </section>
 
     <section class="ask-leilia-about" aria-labelledby="meet-leilia-heading">
       <figure class="ask-leilia-about__portrait">

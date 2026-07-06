@@ -1,8 +1,8 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import AskLeiliaRequestForm from "../../components/ask-leilia/AskLeiliaRequestForm.astro";
-import AskLeiliaRequestShell from "../../components/ask-leilia/AskLeiliaRequestShell.astro";
-import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import AskLeiliaRequestForm from "../../../components/ask-leilia/AskLeiliaRequestForm.astro";
+import AskLeiliaRequestShell from "../../../components/ask-leilia/AskLeiliaRequestShell.astro";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
 
 export const prerender = false;
 
@@ -11,20 +11,20 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 ---
 
 <BaseLayout
-  title="Request Your Reading | Ask Leilia"
-  description="Share your Ask Leilia question before completing your booking."
+  title="Request Personal Guidance Reading | Ask Leilia"
+  description="Share your personal guidance Ask Leilia reading request before completing your booking."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <AskLeiliaRequestShell
-      title="Request Your Reading"
+      title="Request Your Personal Guidance Reading"
       intro={[
-        "Begin by sharing the question you would like explored through the cards.",
+        "Begin by sharing the questions or life areas you would like explored through the cards.",
         "After you submit this form, you will be taken to secure payment to complete your booking.",
       ]}
       summaryItems={[
-        "One question",
+        "Personal guidance reading",
         "Payment follows",
         "Delivered within 48 hours",
         "Optional card photo upload",
@@ -32,7 +32,7 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
       paymentCancelled={paymentCancelled}
       submitted={submitted}
     >
-      <AskLeiliaRequestForm readingType="one-question" />
+      <AskLeiliaRequestForm readingType="personal-guidance" />
     </AskLeiliaRequestShell>
   </main>
 </BaseLayout>

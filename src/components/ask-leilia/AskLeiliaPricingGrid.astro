@@ -6,7 +6,6 @@ interface Props {
   headingId?: string;
   readings: AskLeiliaReading[];
   buttonLabel: string;
-  buttonHref: string;
   intro?: string;
 }
 
@@ -15,7 +14,6 @@ const {
   headingId = "ask-leilia-offers-heading",
   readings,
   buttonLabel,
-  buttonHref,
   intro,
 } = Astro.props;
 ---
@@ -31,10 +29,20 @@ const {
       readings.map((reading) => (
         <article class="ask-leilia-pricing__card">
           <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
-          <p class="ask-leilia-pricing__description">{reading.description}</p>
+          <p class="ask-leilia-pricing__description">{reading.intro}</p>
+          <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>
+            {reading.features.map((feature) => (
+              <li>
+                <span class="ask-leilia-pricing__feature-mark" aria-hidden="true">
+                  •
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
           <p class="ask-leilia-pricing__price">{reading.price}</p>
-          <a class="ask-leilia-pricing__cta" href={buttonHref}>
-            {buttonLabel}
+          <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
+            {reading.ctaLabel ?? buttonLabel}
           </a>
         </article>
       ))

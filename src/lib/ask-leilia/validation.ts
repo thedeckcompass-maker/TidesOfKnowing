@@ -58,3 +58,129 @@ export function validateAskLeiliaRequest(input: {
 
   return { ok: true, value: { name, email, question, context, cardPreference: input.cardPreference } };
 }
+
+function validateNameAndEmail(input: { name: unknown; email: unknown }):
+  | { ok: true; name: string; email: string }
+  | { ok: false; error: string } {
+  const name = cleanText(input.name).replace(/\s+/g, " ");
+  const email = cleanText(input.email).toLowerCase();
+
+  if (name.length < 2 || name.length > 120) {
+    return { ok: false, error: "Please enter your name." };
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 320) {
+    return { ok: false, error: "Please enter a valid email address." };
+  }
+
+  return { ok: true, name, email };
+}
+
+export function validateInDepthRequest(input: {
+  name: unknown;
+  email: unknown;
+  primaryQuestion: unknown;
+  background: unknown;
+  outcome: unknown;
+}): ValidationResult<{
+  name: string;
+  email: string;
+  question: string;
+  context: string;
+}> {
+  const identity = validateNameAndEmail(input);
+  if (!identity.ok) return identity;
+
+  const primaryQuestion = cleanText(input.primaryQuestion);
+  const background = cleanText(input.background);
+  const outcome = cleanText(input.outcome);
+
+  if (primaryQuestion.length < 10 || primaryQuestion.length > 2000) {
+    return {
+      ok: false,
+      error: "Please enter your primary question, between 10 and 2,000 characters.",
+    };
+  }
+
+  if (outcome.length < 10 || outcome.length > 2000) {
+    return {
+      ok: false,
+      error:
+        "Please describe the outcome or clarity you are seeking, between 10 and 2,000 characters.",
+    };
+  }
+
+  if (background.length > 5000) {
+    return { ok: false, error: "Please keep background details under 5,000 characters." };
+  }
+
+  const contextParts = [
+    background ? `Background:\n${background}` : "",
+    `What outcome or clarity are you seeking?:\n${outcome}`,
+  ].filter(Boolean);
+
+  return {
+    ok: true,
+    value: {
+      name: identity.name,
+      email: identity.email,
+      question: primaryQuestion,
+      context: contextParts.join("\n\n"),
+    },
+  };
+}
+
+export function validatePersonalGuidanceRequest(input: {
+  name: unknown;
+  email: unknown;
+  questions: unknown;
+  circumstances: unknown;
+  important: unknown;
+}): ValidationResult<{
+  name: string;
+  email: string;
+  question: string;
+  context: string;
+}> {
+  const identity = validateNameAndEmail(input);
+  if (!identity.ok) return identity;
+
+  const questions = cleanText(input.questions);
+  const circumstances = cleanText(input.circumstances);
+  const important = cleanText(input.important);
+
+  if (questions.length < 10 || questions.length > 2000) {
+    return {
+      ok: false,
+      error:
+        "Please share your questions or life areas, between 10 and 2,000 characters.",
+    };
+  }
+
+  if (important.length < 10 || important.length > 5000) {
+    return {
+      ok: false,
+      error:
+        "Please share anything important I should understand before reading, between 10 and 5,000 characters.",
+    };
+  }
+
+  if (circumstances.length > 5000) {
+    return { ok: false, error: "Please keep current circumstances under 5,000 characters." };
+  }
+
+  const contextParts = [
+    circumstances ? `Current circumstances:\n${circumstances}` : "",
+    `Anything important I should understand before reading:\n${important}`,
+  ].filter(Boolean);
+
+  return {
+    ok: true,
+    value: {
+      name: identity.name,
+      email: identity.email,
+      question: questions,
+      context: contextParts.join("\n\n"),
+    },
+  };
+}

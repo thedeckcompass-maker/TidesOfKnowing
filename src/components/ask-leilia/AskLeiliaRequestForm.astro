@@ -1,20 +1,29 @@
 ---
+import type { AskLeiliaReadingType } from "../../lib/ask-leilia/readingTypes";
+import { ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
+
 interface Props {
-  action: string;
-  submitLabel: string;
+  readingType: AskLeiliaReadingType;
+  action?: string;
+  submitLabel?: string;
   questionPlaceholder?: string;
   contextPlaceholder?: string;
+  showStatuses?: boolean;
 }
 
 const {
-  action,
-  submitLabel,
+  readingType,
+  action = "/api/ask-leilia/checkout",
+  submitLabel = "Continue to Payment",
   questionPlaceholder = "Share the question you would like explored through the cards.",
   contextPlaceholder = "Optional: add any context that would help the reading stay grounded.",
+  showStatuses = true,
 } = Astro.props;
 ---
 
 <form class="ask-request-form" method="post" action={action} enctype="multipart/form-data">
+  <input type="hidden" name="readingType" value={readingType} />
+
   <fieldset>
     <legend>Your details</legend>
 
@@ -29,47 +38,165 @@ const {
     </label>
   </fieldset>
 
-  <fieldset>
-    <legend>Your question</legend>
+  {
+    readingType === "one-question" ? (
+      <>
+        <fieldset>
+          <legend>Your question</legend>
 
-    <label>
-      One Question
-      <textarea
-        name="question"
-        rows="6"
-        maxlength="2000"
-        required
-        placeholder={questionPlaceholder}></textarea>
-    </label>
+          <label>
+            One Question
+            <textarea
+              name="question"
+              rows="6"
+              maxlength="2000"
+              required
+              placeholder={questionPlaceholder}
+            />
+          </label>
 
-    <label>
-      Additional Context
-      <textarea
-        name="context"
-        rows="6"
-        maxlength="5000"
-        placeholder={contextPlaceholder}></textarea>
-    </label>
-  </fieldset>
+          <label>
+            Additional Context
+            <textarea
+              name="context"
+              rows="6"
+              maxlength="5000"
+              placeholder={contextPlaceholder}
+            />
+          </label>
+        </fieldset>
 
-  <fieldset class="ask-request-form__fieldset--compact">
-    <legend>Card Preference</legend>
+        <fieldset class="ask-request-form__fieldset--compact">
+          <legend>Card Preference</legend>
 
-    <label class="ask-request-form__radio">
-      <input type="radio" name="cardPreference" value="pull_for_me" required />
-      <span>Please pull the cards for me</span>
-    </label>
+          <label class="ask-request-form__radio">
+            <input type="radio" name="cardPreference" value="pull_for_me" required />
+            <span>Please pull the cards for me</span>
+          </label>
 
-    <label class="ask-request-form__radio">
-      <input type="radio" name="cardPreference" value="own_cards_attached" required />
-      <span>I have attached my own cards</span>
-    </label>
+          <label class="ask-request-form__radio">
+            <input type="radio" name="cardPreference" value="own_cards_attached" required />
+            <span>I have attached my own cards</span>
+          </label>
 
-    <label class="ask-request-form__upload">
-      Upload image of cards
-      <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
-    </label>
-  </fieldset>
+          <label class="ask-request-form__upload">
+            Upload image of cards
+            <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+          </label>
+        </fieldset>
+      </>
+    ) : null
+  }
+
+  {
+    readingType === "in-depth" ? (
+      <>
+        <fieldset>
+          <legend>Your reading request</legend>
+
+          <label>
+            Primary Question
+            <textarea
+              name="primaryQuestion"
+              rows="6"
+              maxlength="2000"
+              required
+              placeholder="Share the primary question you would like explored through the cards."
+            />
+          </label>
+
+          <label>
+            Background
+            <textarea
+              name="background"
+              rows="6"
+              maxlength="5000"
+              placeholder="Optional: share any background that would help the reading stay grounded."
+            />
+          </label>
+
+          <label>
+            What outcome or clarity are you seeking?
+            <textarea
+              name="outcome"
+              rows="6"
+              maxlength="2000"
+              required
+              placeholder="Describe the outcome or clarity you are hoping for from this reading."
+            />
+          </label>
+        </fieldset>
+
+        <fieldset class="ask-request-form__fieldset--compact">
+          <legend>Optional card upload</legend>
+
+          <label class="ask-request-form__upload">
+            Upload image of cards
+            <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+          </label>
+        </fieldset>
+      </>
+    ) : null
+  }
+
+  {
+    readingType === "personal-guidance" ? (
+      <>
+        <fieldset>
+          <legend>Your reading request</legend>
+
+          <label>
+            Multiple questions or life areas
+            <textarea
+              name="questions"
+              rows="6"
+              maxlength="2000"
+              required
+              placeholder="Share the questions or life areas you would like covered in this reading."
+            />
+          </label>
+
+          <label>
+            Current circumstances
+            <textarea
+              name="circumstances"
+              rows="6"
+              maxlength="5000"
+              placeholder="Optional: share the current circumstances surrounding these questions."
+            />
+          </label>
+
+          <label>
+            Anything important I should understand before reading
+            <textarea
+              name="important"
+              rows="6"
+              maxlength="5000"
+              required
+              placeholder="Share anything important that would help Leilia understand your situation before reading."
+            />
+          </label>
+        </fieldset>
+
+        <fieldset class="ask-request-form__fieldset--compact">
+          <legend>Optional card upload</legend>
+
+          <label class="ask-request-form__upload">
+            Upload image of cards
+            <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+          </label>
+        </fieldset>
+      </>
+    ) : null
+  }
+
+  {
+    showStatuses ? (
+      <div class="ask-request-statuses" aria-label="Future status workflow">
+        {ASK_LEILIA_STATUSES.map((status) => <span>{status}</span>)}
+      </div>
+    ) : null
+  }
 
   <button type="submit">{submitLabel}</button>
 </form>

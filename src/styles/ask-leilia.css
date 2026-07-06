@@ -166,11 +166,34 @@
 .ask-leilia-pricing__description,
 .ask-leilia-features__description,
 .ask-leilia-explore__description {
-  flex: 1;
   margin: 0;
   font-size: 0.98rem;
   line-height: 1.65;
   color: var(--tok-text-dark);
+}
+
+.ask-leilia-pricing__features {
+  flex: 1;
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask-leilia-pricing__features li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-pricing__feature-mark {
+  flex-shrink: 0;
+  color: var(--tok-gold-deep);
+  font-weight: 700;
 }
 
 .ask-leilia-pricing__price {
@@ -181,7 +204,23 @@
   color: var(--tok-water);
 }
 
-.ask-leilia-pricing__cta,
+.ask-leilia-pricing__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  min-height: 2.75rem;
+  margin-top: auto;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-control);
+  background: var(--tok-btn-filled-bg);
+  color: var(--tok-btn-filled-fg);
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
 .ask-leilia-explore__link {
   display: inline-flex;
   align-items: center;

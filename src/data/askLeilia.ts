@@ -23,27 +23,57 @@ export const LEILIA_PORTRAIT_ALT =
 
 export type AskLeiliaReading = {
   name: string;
-  description: string;
+  intro: string;
+  features: string[];
   price: string;
+  requestHref: string;
+  ctaLabel?: string;
 };
 
 export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
   {
     name: "One Question Reading",
-    description: "Perfect for one clear question or situation.",
+    intro: "Ideal when you have one clear question or decision.",
+    features: [
+      "One clearly defined question",
+      "Three-card professionally interpreted reading",
+      "Personally written by Leilia",
+      "Professionally formatted PDF",
+      "Delivered within 48 hours",
+    ],
     price: "US$25",
+    requestHref: "/ask-leilia/request/",
+    ctaLabel: "Request This Reading",
   },
   {
     name: "In-Depth Reading",
-    description:
-      "Ideal for exploring one important area of life in depth using the spread best suited to your question.",
+    intro: "Explore one important area of your life in greater depth.",
+    features: [
+      "One important question or life area",
+      "Spread selected to suit your question",
+      "Detailed written interpretation",
+      "Personally written by Leilia",
+      "Professionally formatted PDF",
+      "Delivered within 48 hours",
+    ],
     price: "US$75",
+    requestHref: "/ask-leilia/request/in-depth/",
+    ctaLabel: "Request This Reading",
   },
   {
     name: "Personal Guidance Reading",
-    description:
-      "A comprehensive written reading covering multiple questions or life areas with detailed interpretation and practical guidance.",
+    intro: "A comprehensive reading for multiple questions or life areas.",
+    features: [
+      "Multiple questions or themes",
+      "Comprehensive written consultation",
+      "Practical guidance and interpretation",
+      "Personally written by Leilia",
+      "Professionally formatted PDF",
+      "Delivered within 48 hours",
+    ],
     price: "US$150",
+    requestHref: "/ask-leilia/request/personal-guidance/",
+    ctaLabel: "Request This Reading",
   },
 ];
 
