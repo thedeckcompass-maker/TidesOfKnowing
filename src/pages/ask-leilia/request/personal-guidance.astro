@@ -2,7 +2,7 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import AskLeiliaRequestForm from "../../../components/ask-leilia/AskLeiliaRequestForm.astro";
 import AskLeiliaRequestShell from "../../../components/ask-leilia/AskLeiliaRequestShell.astro";
-import { ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
+import { ASK_LEILIA_DELIVERABLES, ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
 
 export const prerender = false;
 
@@ -24,8 +24,8 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
       ]}
       summaryItems={[
         "Comprehensive consultation",
+        ASK_LEILIA_DELIVERABLES["personal-guidance"],
         "Payment follows",
-        "Delivered within 48 hours",
         "Optional card photo upload",
       ]}
       paymentCancelled={paymentCancelled}

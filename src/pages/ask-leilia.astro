@@ -6,6 +6,7 @@ import AskLeiliaReadingLibrary from "../components/ask-leilia/AskLeiliaReadingLi
 import {
   ASK_LEILIA_PUBLIC_TRUST_POINTS,
   ASK_LEILIA_READINGS,
+  ASK_LEILIA_DELIVERABLES,
   ASK_LEILIA_PUBLIC_BRAND,
   LEILIA_PORTRAIT_ALT,
   LEILIA_PORTRAIT_PATH,
@@ -16,7 +17,7 @@ import "../styles/ask-leilia.css";
 
 const title = "Ask Leilia | Professional Written Tarot Readings";
 const description =
-  "Professional written tarot readings personally interpreted by Leilia. Choose a one-question reading, in-depth reading, or personal guidance reading — delivered as a PDF within 48 hours.";
+  "Professional written tarot readings personally interpreted by Leilia. Choose a one-question reading, in-depth reading, or personal guidance reading — each delivered within 48 hours as a PDF, with private audio on the in-depth and personal guidance tiers.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
 
 const jsonLd = {
@@ -60,7 +61,7 @@ const jsonLd = {
         <p class="ask-leilia-hero__lede">
           Every Ask Leilia reading is written personally for your question, not a template, not a
           general spread. It's interpreted entirely by me, with no AI involved at any stage, and
-          delivered as a professionally written PDF within 48 hours.
+          delivered within 48 hours.
         </p>
       </div>
     </section>
@@ -140,7 +141,7 @@ const jsonLd = {
         <ol>
           <li>Choose your reading and share your question.</li>
           <li>Complete your booking.</li>
-          <li>Receive your written tarot reading as a PDF within 48 hours.</li>
+          <li>Receive your reading within 48 hours.</li>
         </ol>
       </article>
 
@@ -148,9 +149,15 @@ const jsonLd = {
         <h2>What You Receive</h2>
         <ul>
           <li>A personally interpreted tarot reading.</li>
-          <li>A professionally written PDF delivered to your inbox.</li>
-          <li>Clear, thoughtful guidance tailored to your question.</li>
-          <li>Delivery within 48 hours.</li>
+          <li>
+            <strong>One Question:</strong> {ASK_LEILIA_DELIVERABLES["one-question"]}.
+          </li>
+          <li>
+            <strong>In-Depth:</strong> {ASK_LEILIA_DELIVERABLES["in-depth"]}.
+          </li>
+          <li>
+            <strong>Personal Guidance:</strong> {ASK_LEILIA_DELIVERABLES["personal-guidance"]}.
+          </li>
         </ul>
       </article>
     </section>
