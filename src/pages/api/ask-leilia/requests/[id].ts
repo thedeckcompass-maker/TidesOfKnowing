@@ -1,9 +1,19 @@
 import type { APIRoute } from "astro";
 import { isAdminProfile } from "../../../../lib/community/auth";
-import { json, parseJsonOrForm } from "../../../../lib/community/api";
+import { json } from "../../../../lib/community/api";
 import { createCommunityServiceClient } from "../../../../lib/community/supabaseServer";
-import { notifyAskLeiliaStatusChanged } from "../../../../lib/ask-leilia/notifications";
-import { isAskLeiliaStatus } from "../../../../lib/ask-leilia/validation";
+import { downloadAskLeiliaDeliveryPdf, uploadAskLeiliaDeliveryPdf } from "../../../../lib/ask-leilia/delivery";
+import {
+  notifyAskLeiliaStatusChanged,
+  sendAskLeiliaCustomerDelivery,
+} from "../../../../lib/ask-leilia/notifications";
+import { isAskLeiliaDbReadingType } from "../../../../lib/ask-leilia/readingTypes";
+import type { AskLeiliaStatus } from "../../../../lib/ask-leilia/types";
+import {
+  adminSelectableStatuses,
+  isAskLeiliaStatus,
+  validateStatusTransition,
+} from "../../../../lib/ask-leilia/validation";
 
 export const prerender = false;
 
@@ -17,37 +27,116 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     return json({ ok: false, error: "Missing request id." }, 400);
   }
 
-  const payload = await parseJsonOrForm(request);
-  if (!isAskLeiliaStatus(payload.status)) {
+  const service = createCommunityServiceClient(locals);
+  const form = await request.formData();
+  const statusRaw = form.get("status");
+  const submittedNotes = typeof form.get("notes") === "string" ? String(form.get("notes")).trim() : "";
+  const deliveryPdf = form.get("deliveryPdf");
+
+  if (!isAskLeiliaStatus(statusRaw)) {
     return json({ ok: false, error: "Invalid status." }, 400);
   }
 
-  const service = createCommunityServiceClient(locals);
-  const submittedNotes = typeof payload.notes === "string" ? payload.notes.trim() : "";
-
   const { data: existing, error: fetchError } = await service
     .from("ask_leilia_requests")
-    .select("admin_notes")
+    .select(
+      "status, admin_notes, delivery_pdf_path, reading_type, name, email, delivery_sent_at, payment_expected_amount, payment_actual_amount, payment_exception_reference",
+    )
     .eq("id", requestId)
     .maybeSingle();
 
-  if (fetchError) {
+  if (fetchError || !existing) {
     console.error("Unable to load Ask Leilia request for update:", fetchError);
     return json({ ok: false, error: "Unable to update the request." }, 500);
   }
 
-  const adminNotes =
-    submittedNotes || (existing as { admin_notes: string | null } | null)?.admin_notes || null;
+  const current = existing as {
+    status: AskLeiliaStatus;
+    admin_notes: string | null;
+    delivery_pdf_path: string | null;
+    reading_type: string;
+    name: string;
+    email: string;
+    delivery_sent_at: string | null;
+    payment_expected_amount: number | null;
+    payment_actual_amount: number | null;
+    payment_exception_reference: string | null;
+  };
+
+  if (!isAskLeiliaDbReadingType(current.reading_type)) {
+    return json({ ok: false, error: "Request has an invalid reading type." }, 500);
+  }
+
+  let deliveryPdfPath = current.delivery_pdf_path;
+
+  if (deliveryPdf instanceof File && deliveryPdf.size > 0) {
+    const upload = await uploadAskLeiliaDeliveryPdf(service, requestId, deliveryPdf);
+    if ("error" in upload) {
+      return json({ ok: false, error: upload.error }, 400);
+    }
+    deliveryPdfPath = upload.deliveryPdfPath;
+  }
+
+  const transition = validateStatusTransition({
+    currentStatus: current.status,
+    nextStatus: statusRaw,
+    hasDeliveryPdf: Boolean(deliveryPdfPath),
+  });
+
+  if (!transition.ok) {
+    return json({ ok: false, error: transition.error }, 400);
+  }
+
+  const allowedStatuses = adminSelectableStatuses(current.status);
+  if (!allowedStatuses.includes(statusRaw)) {
+    return json({ ok: false, error: "That status change is not allowed." }, 400);
+  }
+
+  const now = new Date().toISOString();
+  const isDelivering = statusRaw === "Delivered" && current.status !== "Delivered";
+  let deliverySentAt = current.delivery_sent_at;
+
+  if (isDelivering) {
+    if (!deliveryPdfPath) {
+      return json({ ok: false, error: "Upload the completed PDF before delivering." }, 400);
+    }
+
+    const pdf = await downloadAskLeiliaDeliveryPdf(service, deliveryPdfPath);
+    if ("error" in pdf) {
+      return json({ ok: false, error: pdf.error }, 500);
+    }
+
+    const delivery = await sendAskLeiliaCustomerDelivery(
+      {
+        name: current.name,
+        email: current.email,
+        pdfContentBase64: pdf.contentBase64,
+      },
+      locals,
+    );
+
+    if (!delivery.ok) {
+      return json({ ok: false, error: delivery.error }, 500);
+    }
+
+    deliverySentAt = now;
+  }
 
   const { data, error } = await service
     .from("ask_leilia_requests")
     .update({
-      status: payload.status,
-      admin_notes: adminNotes,
-      delivered_at: payload.status === "Delivered" ? new Date().toISOString() : null,
+      status: statusRaw,
+      admin_notes: submittedNotes || current.admin_notes || null,
+      delivery_pdf_path: deliveryPdfPath,
+      delivered_at: statusRaw === "Delivered" ? now : null,
+      delivery_sent_at: deliverySentAt,
+      payment_expected_amount: statusRaw === "Paid" ? null : current.payment_expected_amount,
+      payment_actual_amount: statusRaw === "Paid" ? null : current.payment_actual_amount,
+      payment_exception_reference:
+        statusRaw === "Paid" ? null : current.payment_exception_reference,
     })
     .eq("id", requestId)
-    .select("name, email, status, admin_notes")
+    .select("name, email, status, reading_type")
     .single();
 
   if (error) {
@@ -55,16 +144,19 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     return json({ ok: false, error: "Unable to update the request." }, 500);
   }
 
-  if (data) {
-    await notifyAskLeiliaStatusChanged(
-      {
-        name: (data as { name: string }).name,
-        email: (data as { email: string }).email,
-        status: (data as { status: typeof payload.status }).status,
-        adminNotes: (data as { admin_notes: string | null }).admin_notes,
-      },
-      locals,
-    );
+  if (data && statusRaw !== current.status) {
+    const row = data as { name: string; email: string; status: AskLeiliaStatus; reading_type: string };
+    if (isAskLeiliaDbReadingType(row.reading_type)) {
+      await notifyAskLeiliaStatusChanged(
+        {
+          name: row.name,
+          email: row.email,
+          status: row.status,
+          readingType: row.reading_type,
+        },
+        locals,
+      );
+    }
   }
 
   return redirect("/ask-leilia/admin/", 303);

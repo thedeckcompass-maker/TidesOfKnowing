@@ -2,7 +2,12 @@ import type { APIRoute } from "astro";
 import Stripe from "stripe";
 import { json } from "../../../lib/community/api";
 import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
-import { notifyAskLeiliaPaymentCompleted } from "../../../lib/ask-leilia/notifications";
+import {
+  notifyAskLeiliaPaymentCompleted,
+  notifyAskLeiliaPaymentException,
+} from "../../../lib/ask-leilia/notifications";
+import { expectedPaymentCents, paymentAmountMatches } from "../../../lib/ask-leilia/paymentAmounts";
+import { isAskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
 
 export const prerender = false;
@@ -22,6 +27,18 @@ function requestIdFromSession(session: Stripe.Checkout.Session): string {
   if (metadataRequestId) return metadataRequestId;
   return session.client_reference_id ?? "";
 }
+
+type LinkedRequestRow = {
+  id: string;
+  name: string;
+  email: string;
+  question: string;
+  context: string | null;
+  card_preference: AskLeiliaCardPreference;
+  image_url: string | null;
+  reading_type: string;
+  status: string;
+};
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const secret = stripeWebhookSecret(locals);
@@ -95,50 +112,72 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const askLeiliaRequestId = requestIdFromSession(session);
-  let linkedRequest:
-    | {
-        id: string;
-        name: string;
-        email: string;
-        question: string;
-        context: string | null;
-        card_preference: AskLeiliaCardPreference;
-        image_url: string | null;
-        admin_notes: string | null;
-      }
-    | null = null;
+  let linkedRequest: LinkedRequestRow | null = null;
 
   if (askLeiliaRequestId) {
-    const { data: requestRecord, error: requestError } = await service
+    const { data: pendingRequest, error: pendingError } = await service
       .from("ask_leilia_requests")
-      .update({
-        payment_id: (paymentRecord as { id: string }).id,
-        status: "Paid",
-      })
+      .select(
+        "id, name, email, question, context, card_preference, image_url, reading_type, status",
+      )
       .eq("id", askLeiliaRequestId)
-      .select("id, name, email, question, context, card_preference, image_url, admin_notes")
       .maybeSingle();
 
-    if (requestError || !requestRecord) {
-      console.error("Unable to link paid Ask Leilia request:", {
-        error: requestError,
+    if (pendingError || !pendingRequest) {
+      console.error("Unable to load Ask Leilia request for payment linking:", {
+        error: pendingError,
         askLeiliaRequestId,
         paymentIntent,
       });
       return json({ ok: false, error: "Unable to link paid request." }, 500);
     }
 
-    linkedRequest = requestRecord as typeof linkedRequest;
-  }
+    const requestRow = pendingRequest as LinkedRequestRow;
+    if (!isAskLeiliaDbReadingType(requestRow.reading_type)) {
+      console.error("Ask Leilia request has invalid reading_type:", {
+        askLeiliaRequestId,
+        readingType: requestRow.reading_type,
+      });
+      return json({ ok: false, error: "Unable to validate reading type." }, 500);
+    }
 
-  await notifyAskLeiliaPaymentCompleted(
-    {
-      customerEmail,
-      amount,
-      currency,
-      paymentIntent,
-      request: linkedRequest
-        ? {
+    const expectedAmount = expectedPaymentCents(requestRow.reading_type);
+    const amountMatches = paymentAmountMatches(requestRow.reading_type, amount, currency);
+
+    if (amountMatches) {
+      const { data: requestRecord, error: requestError } = await service
+        .from("ask_leilia_requests")
+        .update({
+          payment_id: (paymentRecord as { id: string }).id,
+          status: "Paid",
+          payment_expected_amount: null,
+          payment_actual_amount: null,
+          payment_exception_reference: null,
+        })
+        .eq("id", askLeiliaRequestId)
+        .select(
+          "id, name, email, question, context, card_preference, image_url, reading_type, status",
+        )
+        .maybeSingle();
+
+      if (requestError || !requestRecord) {
+        console.error("Unable to link paid Ask Leilia request:", {
+          error: requestError,
+          askLeiliaRequestId,
+          paymentIntent,
+        });
+        return json({ ok: false, error: "Unable to link paid request." }, 500);
+      }
+
+      linkedRequest = requestRecord as LinkedRequestRow;
+
+      await notifyAskLeiliaPaymentCompleted(
+        {
+          customerEmail,
+          amount,
+          currency,
+          paymentIntent,
+          request: {
             id: linkedRequest.id,
             name: linkedRequest.name,
             email: linkedRequest.email,
@@ -146,12 +185,64 @@ export const POST: APIRoute = async ({ request, locals }) => {
             context: linkedRequest.context,
             cardPreference: linkedRequest.card_preference,
             imageUrl: linkedRequest.image_url,
-            adminNotes: linkedRequest.admin_notes,
-          }
-        : null,
-    },
-    locals,
-  );
+            readingType: requestRow.reading_type,
+          },
+        },
+        locals,
+      );
+    } else {
+      const { data: requestRecord, error: requestError } = await service
+        .from("ask_leilia_requests")
+        .update({
+          payment_id: (paymentRecord as { id: string }).id,
+          status: "Payment Exception",
+          payment_expected_amount: expectedAmount,
+          payment_actual_amount: amount,
+          payment_exception_reference: paymentIntent,
+        })
+        .eq("id", askLeiliaRequestId)
+        .select(
+          "id, name, email, question, context, card_preference, image_url, reading_type, status",
+        )
+        .maybeSingle();
+
+      if (requestError || !requestRecord) {
+        console.error("Unable to record Ask Leilia payment exception:", {
+          error: requestError,
+          askLeiliaRequestId,
+          paymentIntent,
+        });
+        return json({ ok: false, error: "Unable to record payment exception." }, 500);
+      }
+
+      linkedRequest = requestRecord as LinkedRequestRow;
+
+      await notifyAskLeiliaPaymentException(
+        {
+          requestId: linkedRequest.id,
+          customerName: linkedRequest.name,
+          customerEmail: linkedRequest.email,
+          readingType: requestRow.reading_type,
+          expectedAmountCents: expectedAmount,
+          actualAmountCents: amount,
+          currency,
+          paymentReference: paymentIntent,
+        },
+        locals,
+      );
+    }
+  } else {
+    await notifyAskLeiliaPaymentCompleted(
+      {
+        customerEmail,
+        amount,
+        currency,
+        paymentIntent,
+        request: null,
+      },
+      locals,
+    );
+  }
 
   return json({ ok: true });
 };

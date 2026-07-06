@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AskLeiliaCardPreference } from "./types";
-import { formatReadingTypeAdminNote } from "./readingTypes";
+import type { AskLeiliaDbReadingType } from "./readingTypes";
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 
@@ -48,7 +48,7 @@ export async function insertAskLeiliaPendingRequest(
     context: string | null;
     cardPreference: AskLeiliaCardPreference;
     imageUrl: string | null;
-    readingTypeLabel?: string | null;
+    readingType: AskLeiliaDbReadingType;
   },
 ): Promise<{ id: string } | { error: string }> {
   const { data: insertedRequest, error: insertError } = await service
@@ -61,8 +61,9 @@ export async function insertAskLeiliaPendingRequest(
       context: input.context,
       card_preference: input.cardPreference,
       image_url: input.imageUrl,
+      reading_type: input.readingType,
       status: "Pending Payment",
-      admin_notes: input.readingTypeLabel ? formatReadingTypeAdminNote(input.readingTypeLabel) : null,
+      admin_notes: null,
     })
     .select("id")
     .single();
@@ -73,4 +74,36 @@ export async function insertAskLeiliaPendingRequest(
   }
 
   return { id: (insertedRequest as { id: string }).id };
+}
+
+export async function insertAskLeiliaComplimentaryRequest(
+  service: SupabaseClient,
+  input: {
+    name: string;
+    email: string;
+    question: string;
+    context: string | null;
+    cardPreference: AskLeiliaCardPreference;
+    imageUrl: string | null;
+  },
+): Promise<{ error: string } | { ok: true }> {
+  const { error } = await service.from("ask_leilia_requests").insert({
+    payment_id: null,
+    name: input.name,
+    email: input.email,
+    question: input.question,
+    context: input.context,
+    card_preference: input.cardPreference,
+    image_url: input.imageUrl,
+    reading_type: "complimentary",
+    status: "Paid",
+    admin_notes: null,
+  });
+
+  if (error) {
+    console.error("Ask Leilia complimentary request insert failed:", error);
+    return { error: "Unable to save your request right now." };
+  }
+
+  return { ok: true };
 }

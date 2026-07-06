@@ -1,11 +1,21 @@
+import type { AskLeiliaDbReadingType } from "./readingTypes";
+
 export const ASK_LEILIA_STATUSES = [
   "Pending Payment",
   "Paid",
   "In Progress",
   "Delivered",
+  "Payment Exception",
 ] as const;
 
 export type AskLeiliaStatus = (typeof ASK_LEILIA_STATUSES)[number];
+
+export const ASK_LEILIA_WORKFLOW_STATUSES = [
+  "Pending Payment",
+  "Paid",
+  "In Progress",
+  "Delivered",
+] as const;
 
 export type AskLeiliaCardPreference = "pull_for_me" | "own_cards_attached";
 
@@ -31,11 +41,17 @@ export type AskLeiliaRequest = {
   context: string | null;
   card_preference: AskLeiliaCardPreference;
   image_url: string | null;
+  reading_type: AskLeiliaDbReadingType;
   status: AskLeiliaStatus;
   admin_notes: string | null;
   updated_at: string;
   delivered_at: string | null;
-  payment?: Pick<AskLeiliaPayment, "payment_status" | "amount" | "currency"> | null;
+  delivery_pdf_path: string | null;
+  delivery_sent_at: string | null;
+  payment_expected_amount: number | null;
+  payment_actual_amount: number | null;
+  payment_exception_reference: string | null;
+  payment?: Pick<AskLeiliaPayment, "payment_status" | "amount" | "currency" | "stripe_payment_intent"> | null;
 };
 
 export function cardPreferenceLabel(value: AskLeiliaCardPreference): string {

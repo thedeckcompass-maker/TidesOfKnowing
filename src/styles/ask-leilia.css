@@ -81,9 +81,17 @@
   display: grid;
   gap: 0.5rem;
   margin: 0;
-  padding: 1rem 0 0;
-  border-top: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
+  padding: 0;
   list-style: none;
+}
+
+.ask-leilia-hero .ask-leilia-hero__trust {
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
+}
+
+.ask-leilia-pricing + .ask-leilia-hero__copy {
+  margin-top: clamp(1.25rem, 3vw, 2rem);
 }
 
 .ask-leilia-hero__trust li {
@@ -242,6 +250,54 @@
 .ask-leilia-explore__link:hover,
 .ask-leilia-portfolio__cta:hover {
   opacity: 0.9;
+}
+
+.ask-leilia-pricing__card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.ask-leilia-pricing__card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ask-leilia-pricing__card::before {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  background-image: url("/images/community/compass-feather-hourglass.png");
+  background-repeat: no-repeat;
+  opacity: 0.065;
+  pointer-events: none;
+}
+
+.ask-leilia-pricing__card--feather::before {
+  top: -4%;
+  right: -6%;
+  width: min(58%, 13rem);
+  aspect-ratio: 1;
+  background-position: left top;
+  background-size: 195% auto;
+}
+
+.ask-leilia-pricing__card--compass::before {
+  right: -4%;
+  bottom: -6%;
+  width: min(54%, 12rem);
+  aspect-ratio: 1;
+  background-position: left bottom;
+  background-size: 185% auto;
+}
+
+.ask-leilia-pricing__card--hourglass::before {
+  top: -2%;
+  right: -2%;
+  width: min(50%, 11rem);
+  aspect-ratio: 1;
+  background-position: right top;
+  background-size: 200% auto;
 }
 
 .ask-leilia-portfolio__name {

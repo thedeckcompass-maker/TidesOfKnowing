@@ -16,6 +16,12 @@ const {
   buttonLabel,
   intro,
 } = Astro.props;
+
+const PRICING_CARD_SYMBOLS = [
+  "ask-leilia-pricing__card--feather",
+  "ask-leilia-pricing__card--compass",
+  "ask-leilia-pricing__card--hourglass",
+] as const;
 ---
 
 <section
@@ -26,8 +32,13 @@ const {
   {intro ? <p class="ask-leilia-pricing__intro">{intro}</p> : null}
   <div class="ask-leilia-pricing__grid">
     {
-      readings.map((reading) => (
-        <article class="ask-leilia-pricing__card">
+      readings.map((reading, index) => (
+        <article
+          class:list={[
+            "ask-leilia-pricing__card",
+            PRICING_CARD_SYMBOLS[index] ?? PRICING_CARD_SYMBOLS[0],
+          ]}
+        >
           <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
           <p class="ask-leilia-pricing__description">{reading.intro}</p>
           <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>

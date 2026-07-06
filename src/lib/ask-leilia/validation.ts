@@ -1,5 +1,6 @@
 import type { AskLeiliaCardPreference, AskLeiliaStatus } from "./types";
-import { ASK_LEILIA_STATUSES } from "./types";
+import { ASK_LEILIA_STATUSES, ASK_LEILIA_WORKFLOW_STATUSES } from "./types";
+import { isAskLeiliaDbReadingType } from "./readingTypes";
 
 export type ValidationResult<T> =
   | { ok: true; value: T }
@@ -16,6 +17,68 @@ export function isAskLeiliaStatus(value: unknown): value is AskLeiliaStatus {
 
 export function isCardPreference(value: unknown): value is AskLeiliaCardPreference {
   return value === "pull_for_me" || value === "own_cards_attached";
+}
+
+export function isAskLeiliaReadingTypeFilter(value: unknown): boolean {
+  return value === "all" || isAskLeiliaDbReadingType(value);
+}
+
+export function validateStatusTransition(input: {
+  currentStatus: AskLeiliaStatus;
+  nextStatus: AskLeiliaStatus;
+  hasDeliveryPdf: boolean;
+}): ValidationResult<AskLeiliaStatus> {
+  const { currentStatus, nextStatus, hasDeliveryPdf } = input;
+
+  if (currentStatus === nextStatus) {
+    return { ok: true, value: nextStatus };
+  }
+
+  if (nextStatus === "Delivered" && !hasDeliveryPdf) {
+    return {
+      ok: false,
+      error: "Upload the completed PDF before marking this request as Delivered.",
+    };
+  }
+
+  if (currentStatus === "Payment Exception") {
+    if (nextStatus === "Paid") {
+      return { ok: true, value: nextStatus };
+    }
+
+    return {
+      ok: false,
+      error: "Resolve the payment exception by setting the status to Paid before continuing.",
+    };
+  }
+
+  if (nextStatus === "Payment Exception") {
+    return {
+      ok: false,
+      error: "Payment Exception can only be set automatically when Stripe payment validation fails.",
+    };
+  }
+
+  if (currentStatus === "Pending Payment" && nextStatus !== currentStatus) {
+    return {
+      ok: false,
+      error: "Pending Payment requests are updated automatically after Stripe payment.",
+    };
+  }
+
+  return { ok: true, value: nextStatus };
+}
+
+export function adminSelectableStatuses(currentStatus: AskLeiliaStatus): AskLeiliaStatus[] {
+  if (currentStatus === "Payment Exception") {
+    return ["Payment Exception", "Paid"];
+  }
+
+  if (currentStatus === "Pending Payment") {
+    return ["Pending Payment"];
+  }
+
+  return [...ASK_LEILIA_WORKFLOW_STATUSES];
 }
 
 export function validateAskLeiliaRequest(input: {

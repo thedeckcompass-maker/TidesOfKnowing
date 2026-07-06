@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { AskLeiliaDbReadingType } from "./readingTypes";
 import type { AskLeiliaRequest } from "./types";
 
 function first<T>(value: T | T[] | null | undefined): T | null {
@@ -6,16 +7,24 @@ function first<T>(value: T | T[] | null | undefined): T | null {
   return value ?? null;
 }
 
+const REQUEST_SELECT =
+  "id, payment_id, created_at, name, email, question, context, card_preference, image_url, reading_type, status, admin_notes, updated_at, delivered_at, delivery_pdf_path, delivery_sent_at, payment_expected_amount, payment_actual_amount, payment_exception_reference, payment:ask_leilia_payments(payment_status, amount, currency, stripe_payment_intent)";
+
 export async function getAskLeiliaRequests(
   service: SupabaseClient,
+  options?: { readingType?: AskLeiliaDbReadingType | "all" },
 ): Promise<AskLeiliaRequest[]> {
-  const { data, error } = await service
+  let query = service
     .from("ask_leilia_requests")
-    .select(
-      "id, payment_id, created_at, name, email, question, context, card_preference, image_url, status, admin_notes, updated_at, delivered_at, payment:ask_leilia_payments(payment_status, amount, currency)",
-    )
+    .select(REQUEST_SELECT)
     .order("created_at", { ascending: false })
     .limit(100);
+
+  if (options?.readingType && options.readingType !== "all") {
+    query = query.eq("reading_type", options.readingType);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Unable to load Ask Leilia requests:", error);
@@ -42,6 +51,24 @@ export async function getAskLeiliaUploadUrl(
 
   if (error) {
     console.error("Unable to create Ask Leilia upload URL:", error);
+    return null;
+  }
+
+  return data.signedUrl;
+}
+
+export async function getAskLeiliaDeliveryPdfUrl(
+  service: SupabaseClient,
+  deliveryPdfPath: string | null,
+): Promise<string | null> {
+  if (!deliveryPdfPath) return null;
+
+  const { data, error } = await service.storage
+    .from("ask-leilia-uploads")
+    .createSignedUrl(deliveryPdfPath, 60 * 10);
+
+  if (error) {
+    console.error("Unable to create Ask Leilia delivery PDF URL:", error);
     return null;
   }
 

@@ -2,9 +2,20 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { isAdminProfile } from "../../lib/community/auth";
 import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
-import { cardPreferenceLabel, ASK_LEILIA_STATUSES } from "../../lib/ask-leilia/types";
+import { formatUsdCents } from "../../lib/ask-leilia/paymentAmounts";
+import {
+  ASK_LEILIA_DB_READING_TYPES,
+  readingTypeLabel,
+} from "../../lib/ask-leilia/readingTypes";
+import { cardPreferenceLabel } from "../../lib/ask-leilia/types";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
-import { getAskLeiliaRequests, getAskLeiliaUploadUrl } from "../../lib/ask-leilia/queries";
+import {
+  getAskLeiliaDeliveryPdfUrl,
+  getAskLeiliaRequests,
+  getAskLeiliaUploadUrl,
+} from "../../lib/ask-leilia/queries";
+import { adminSelectableStatuses } from "../../lib/ask-leilia/validation";
+import type { AskLeiliaDbReadingType } from "../../lib/ask-leilia/readingTypes";
 
 export const prerender = false;
 
@@ -16,12 +27,22 @@ if (!isAdminProfile(Astro.locals.profile)) {
   return Astro.redirect("/ask-leilia/", 302);
 }
 
+const readingTypeFilterRaw = Astro.url.searchParams.get("reading_type") ?? "all";
+const readingTypeFilter =
+  readingTypeFilterRaw === "all" ||
+  ASK_LEILIA_DB_READING_TYPES.includes(readingTypeFilterRaw as AskLeiliaDbReadingType)
+    ? readingTypeFilterRaw
+    : "all";
+
 const service = createCommunityServiceClient(Astro.locals);
-const requests = await getAskLeiliaRequests(service);
+const requests = await getAskLeiliaRequests(service, {
+  readingType: readingTypeFilter === "all" ? "all" : (readingTypeFilter as AskLeiliaDbReadingType),
+});
 const rows = await Promise.all(
   requests.map(async (request) => ({
     request,
     imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
+    deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
   })),
 );
 
@@ -33,6 +54,14 @@ function formatDate(value: string): string {
     hour: "numeric",
     minute: "2-digit",
   }).format(new Date(value));
+}
+
+function paymentReference(request: (typeof rows)[number]["request"]): string {
+  return (
+    request.payment_exception_reference ??
+    request.payment?.stripe_payment_intent ??
+    "Not available"
+  );
 }
 ---
 
@@ -49,91 +78,169 @@ function formatDate(value: string): string {
       <p>Review submitted requests and update their status.</p>
     </header>
 
+    <form class="ask-admin__filters" method="get" action="/ask-leilia/admin/">
+      <label>
+        Filter by reading type
+        <select name="reading_type">
+          <option value="all" selected={readingTypeFilter === "all"}>All readings</option>
+          {
+            ASK_LEILIA_DB_READING_TYPES.map((readingType) => (
+              <option value={readingType} selected={readingTypeFilter === readingType}>
+                {readingTypeLabel(readingType)}
+              </option>
+            ))
+          }
+        </select>
+      </label>
+      <button type="submit">Apply filter</button>
+    </form>
+
     {
       rows.length > 0 ? (
         <div class="ask-admin__list">
-          {rows.map(({ request, imageUrl }) => (
-            <article class="ask-admin-card">
-              <div class="ask-admin-card__top">
-                <div>
-                  <h2>{request.name}</h2>
-                  <p>
-                    <a href={`mailto:${request.email}`}>{request.email}</a>
-                  </p>
-                </div>
-                <p class="ask-admin-card__status">{request.status}</p>
-              </div>
+          {rows.map(({ request, imageUrl, deliveryPdfUrl }) => {
+            const selectableStatuses = adminSelectableStatuses(request.status);
+            const isPaymentException = request.status === "Payment Exception";
+            const expectedAmount = request.payment_expected_amount;
+            const actualAmount = request.payment_actual_amount;
+            const paymentDifference =
+              expectedAmount !== null && actualAmount !== null
+                ? actualAmount - expectedAmount
+                : null;
 
-              <dl>
-                <div>
-                  <dt>Question</dt>
-                  <dd>{request.question}</dd>
+            return (
+              <article class:list={["ask-admin-card", isPaymentException && "ask-admin-card--exception"]}>
+                <div class="ask-admin-card__top">
+                  <div>
+                    <h2>{request.name}</h2>
+                    <p>
+                      <a href={`mailto:${request.email}`}>{request.email}</a>
+                    </p>
+                  </div>
+                  <p class="ask-admin-card__status">{request.status}</p>
                 </div>
-                <div>
-                  <dt>Context</dt>
-                  <dd>{request.context || "No additional context."}</dd>
-                </div>
-                <div>
-                  <dt>Image upload</dt>
-                  <dd>
-                    {imageUrl ? (
-                      <a href={imageUrl}>View uploaded image</a>
-                    ) : (
-                      "No image uploaded."
-                    )}
-                  </dd>
-                </div>
-                <div>
-                  <dt>Card preference</dt>
-                  <dd>{cardPreferenceLabel(request.card_preference)}</dd>
-                </div>
-                <div>
-                  <dt>Payment status</dt>
-                  <dd>
-                    {
-                      request.payment?.payment_status ??
-                        (request.status === "Pending Payment"
-                          ? "Awaiting payment."
-                          : "Payment record not linked.")
-                    }
-                  </dd>
-                </div>
-                <div>
-                  <dt>Request status</dt>
-                  <dd>{request.status}</dd>
-                </div>
-                <div>
-                  <dt>Submitted</dt>
-                  <dd>{formatDate(request.created_at)}</dd>
-                </div>
-                <div>
-                  <dt>Internal notes</dt>
-                  <dd>{request.admin_notes || "No internal notes yet."}</dd>
-                </div>
-              </dl>
 
-              <form class="ask-admin-card__form" method="post" action={`/api/ask-leilia/requests/${request.id}`}>
-                <label>
-                  Status
-                  <select name="status">
-                    {ASK_LEILIA_STATUSES.map((status) => (
-                      <option value={status} selected={status === request.status}>
-                        {status}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label class="ask-admin-card__notes">
-                  Internal notes
-                  <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
-                </label>
-                <button type="submit">Update status</button>
-              </form>
-            </article>
-          ))}
+                {
+                  isPaymentException ? (
+                    <div class="ask-admin-card__warning" role="alert">
+                      <p><strong>Payment Exception</strong></p>
+                      <p>Manual resolution is required before this request can proceed.</p>
+                      <ul>
+                        <li>Expected payment: {expectedAmount !== null ? formatUsdCents(expectedAmount) : "Unknown"}</li>
+                        <li>Actual payment: {actualAmount !== null ? formatUsdCents(actualAmount) : "Unknown"}</li>
+                        <li>
+                          Payment difference:{" "}
+                          {paymentDifference !== null ? formatUsdCents(paymentDifference) : "Unknown"}
+                        </li>
+                        <li>Stripe payment reference: {paymentReference(request)}</li>
+                      </ul>
+                    </div>
+                  ) : null
+                }
+
+                <dl>
+                  <div>
+                    <dt>Reading type</dt>
+                    <dd>{readingTypeLabel(request.reading_type)}</dd>
+                  </div>
+                  <div>
+                    <dt>Question</dt>
+                    <dd>{request.question}</dd>
+                  </div>
+                  <div>
+                    <dt>Context</dt>
+                    <dd>{request.context || "No additional context."}</dd>
+                  </div>
+                  <div>
+                    <dt>Image upload</dt>
+                    <dd>
+                      {imageUrl ? (
+                        <a href={imageUrl}>View uploaded image</a>
+                      ) : (
+                        "No image uploaded."
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Card preference</dt>
+                    <dd>{cardPreferenceLabel(request.card_preference)}</dd>
+                  </div>
+                  <div>
+                    <dt>Payment status</dt>
+                    <dd>
+                      {
+                        request.payment?.payment_status ??
+                          (request.status === "Pending Payment"
+                            ? "Awaiting payment."
+                            : "Payment record not linked.")
+                      }
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Request status</dt>
+                    <dd>{request.status}</dd>
+                  </div>
+                  <div>
+                    <dt>Submitted</dt>
+                    <dd>{formatDate(request.created_at)}</dd>
+                  </div>
+                  <div>
+                    <dt>Delivery PDF</dt>
+                    <dd>
+                      {
+                        deliveryPdfUrl ? (
+                          <a href={deliveryPdfUrl}>View uploaded PDF</a>
+                        ) : (
+                          "No delivery PDF uploaded yet."
+                        )
+                      }
+                      {request.delivery_sent_at ? (
+                        <p>Delivered to customer: {formatDate(request.delivery_sent_at)}</p>
+                      ) : null}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Internal notes</dt>
+                    <dd>{request.admin_notes || "No internal notes yet."}</dd>
+                  </div>
+                </dl>
+
+                <form
+                  class="ask-admin-card__form"
+                  method="post"
+                  action={`/api/ask-leilia/requests/${request.id}`}
+                  enctype="multipart/form-data"
+                >
+                  <label>
+                    Completed reading PDF
+                    <input type="file" name="deliveryPdf" accept="application/pdf" />
+                  </label>
+                  <label>
+                    Status
+                    <select name="status">
+                      {selectableStatuses.map((status) => (
+                        <option
+                          value={status}
+                          selected={status === request.status}
+                          disabled={status === "Delivered" && !request.delivery_pdf_path}
+                        >
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label class="ask-admin-card__notes">
+                    Internal notes
+                    <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
+                  </label>
+                  <button type="submit">Update request</button>
+                </form>
+              </article>
+            );
+          })}
         </div>
       ) : (
-        <p class="ask-admin__empty">No Ask Leilia requests yet.</p>
+        <p class="ask-admin__empty">No Ask Leilia requests match this filter.</p>
       )
     }
   </main>
@@ -169,6 +276,39 @@ function formatDate(value: string): string {
   .ask-admin dd {
     color: var(--tok-text-dark);
     line-height: 1.75;
+  }
+
+  .ask-admin__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: end;
+    margin-top: 1.5rem;
+  }
+
+  .ask-admin__filters label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+  }
+
+  .ask-admin__filters select,
+  .ask-admin__filters button {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font: inherit;
+  }
+
+  .ask-admin__filters button {
+    border: 0;
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
   }
 
   .ask-admin__list {
@@ -211,6 +351,23 @@ function formatDate(value: string): string {
     text-transform: uppercase;
   }
 
+  .ask-admin-card__warning {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, transparent);
+  }
+
+  .ask-admin-card__warning p {
+    margin: 0 0 0.5rem;
+  }
+
+  .ask-admin-card__warning ul {
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
   .ask-admin-card dl {
     display: grid;
     gap: 0.85rem;
@@ -243,7 +400,8 @@ function formatDate(value: string): string {
   }
 
   .ask-admin-card__form select,
-  .ask-admin-card__form textarea {
+  .ask-admin-card__form textarea,
+  .ask-admin-card__form input[type="file"] {
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--tok-border-light);
     border-radius: var(--radius-control);

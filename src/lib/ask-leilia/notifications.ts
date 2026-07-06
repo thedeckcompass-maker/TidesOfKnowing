@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { communityEnv } from "../community/env";
-import { parseReadingTypeLabel } from "./readingTypes";
+import { formatUsdCents } from "./paymentAmounts";
+import { readingTypeLabel, type AskLeiliaDbReadingType } from "./readingTypes";
 import { cardPreferenceLabel, type AskLeiliaCardPreference, type AskLeiliaStatus } from "./types";
 
 function notifyEmail(locals?: unknown): string {
@@ -51,31 +52,28 @@ export async function notifyAskLeiliaPaymentCompleted(
       context: string | null;
       cardPreference: AskLeiliaCardPreference;
       imageUrl: string | null;
-      adminNotes?: string | null;
+      readingType: AskLeiliaDbReadingType;
     } | null;
   },
   locals?: unknown,
 ): Promise<void> {
   const requestLines = input.request
-    ? (() => {
-        const readingTypeLabel = parseReadingTypeLabel(input.request.adminNotes ?? null);
-        return [
-          "",
-          "Linked request:",
-          `Request id: ${input.request.id}`,
-          `Name: ${input.request.name}`,
-          `Email: ${input.request.email}`,
-          ...(readingTypeLabel ? [`Reading type: ${readingTypeLabel}`] : []),
-          `Card preference: ${cardPreferenceLabel(input.request.cardPreference)}`,
-          `Image uploaded: ${input.request.imageUrl ? "Yes" : "No"}`,
-          "",
-          "Question:",
-          input.request.question,
-          "",
-          "Context:",
-          input.request.context || "No additional context.",
-        ];
-      })()
+    ? [
+        "",
+        "Linked request:",
+        `Request id: ${input.request.id}`,
+        `Name: ${input.request.name}`,
+        `Email: ${input.request.email}`,
+        `Reading type: ${readingTypeLabel(input.request.readingType)}`,
+        `Card preference: ${cardPreferenceLabel(input.request.cardPreference)}`,
+        `Image uploaded: ${input.request.imageUrl ? "Yes" : "No"}`,
+        "",
+        "Question:",
+        input.request.question,
+        "",
+        "Context:",
+        input.request.context || "No additional context.",
+      ]
     : [
         "",
         "No linked request was found. The customer may need to complete a request form at /ask-leilia/ before payment.",
@@ -90,6 +88,45 @@ export async function notifyAskLeiliaPaymentCompleted(
       `Amount: ${input.amount} ${input.currency.toUpperCase()}`,
       `Stripe payment intent: ${input.paymentIntent}`,
       ...requestLines,
+    ],
+    locals,
+  );
+}
+
+export async function notifyAskLeiliaPaymentException(
+  input: {
+    requestId: string;
+    customerName: string;
+    customerEmail: string;
+    readingType: AskLeiliaDbReadingType;
+    expectedAmountCents: number;
+    actualAmountCents: number;
+    currency: string;
+    paymentReference: string;
+  },
+  locals?: unknown,
+): Promise<void> {
+  const difference = input.actualAmountCents - input.expectedAmountCents;
+
+  await sendAskLeiliaNotification(
+    "URGENT: Ask Leilia payment exception",
+    [
+      "A Stripe payment completed but the amount did not match the reading type.",
+      "",
+      "Manual resolution is required before this request can proceed.",
+      "",
+      `Request id: ${input.requestId}`,
+      `Name: ${input.customerName}`,
+      `Email: ${input.customerEmail}`,
+      `Reading type: ${readingTypeLabel(input.readingType)}`,
+      `Expected amount: ${formatUsdCents(input.expectedAmountCents)}`,
+      `Actual amount paid: ${formatUsdCents(input.actualAmountCents)}`,
+      `Difference: ${formatUsdCents(difference)}`,
+      `Currency: ${input.currency.toUpperCase()}`,
+      `Stripe payment reference: ${input.paymentReference}`,
+      "",
+      "The payment has been recorded and linked. The request status is Payment Exception.",
+      "Review in /ask-leilia/admin/ and resolve manually.",
     ],
     locals,
   );
@@ -136,6 +173,7 @@ export async function notifyAskLeiliaComplimentaryRequest(
       "",
       `Name: ${input.name}`,
       `Email: ${input.email}`,
+      `Reading type: ${readingTypeLabel("complimentary")}`,
       `Card preference: ${cardPreferenceLabel(input.cardPreference)}`,
       `Image uploaded: ${input.imageUrl ? "Yes" : "No"}`,
       "",
@@ -154,12 +192,10 @@ export async function notifyAskLeiliaStatusChanged(
     name: string;
     email: string;
     status: AskLeiliaStatus;
-    adminNotes?: string | null;
+    readingType: AskLeiliaDbReadingType;
   },
   locals?: unknown,
 ): Promise<void> {
-  const readingTypeLabel = parseReadingTypeLabel(input.adminNotes ?? null);
-
   await sendAskLeiliaNotification(
     "Ask Leilia request status updated",
     [
@@ -167,9 +203,58 @@ export async function notifyAskLeiliaStatusChanged(
       "",
       `Name: ${input.name}`,
       `Email: ${input.email}`,
-      ...(readingTypeLabel ? [`Reading type: ${readingTypeLabel}`] : []),
+      `Reading type: ${readingTypeLabel(input.readingType)}`,
       `Status: ${input.status}`,
     ],
     locals,
   );
+}
+
+export async function sendAskLeiliaCustomerDelivery(
+  input: {
+    name: string;
+    email: string;
+    pdfContentBase64: string;
+  },
+  locals?: unknown,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const env = communityEnv(locals);
+  if (!env.emailApiKey) {
+    console.error("Ask Leilia customer delivery skipped: EMAIL_API_KEY is not configured.");
+    return { ok: false, error: "Email is not configured." };
+  }
+
+  const resend = new Resend(env.emailApiKey);
+  const result = await resend.emails.send({
+    from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
+    to: input.email,
+    subject: "Your Ask Leilia reading is ready",
+    text: [
+      `Hello ${input.name},`,
+      "",
+      "Your personalised Ask Leilia reading has now been completed.",
+      "",
+      "Your reading is attached.",
+      "",
+      "Thank you for placing your trust in Ask Leilia.",
+      "",
+      "Warm regards,",
+      "",
+      "Leilia",
+      "Tides of Knowing",
+    ].join("\n"),
+    attachments: [
+      {
+        filename: "Ask-Leilia-Reading.pdf",
+        content: input.pdfContentBase64,
+      },
+    ],
+  });
+
+  if (result.error) {
+    console.error("Ask Leilia customer delivery failed:", result.error);
+    return { ok: false, error: "Unable to send the delivery email." };
+  }
+
+  return { ok: true };
 }

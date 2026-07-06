@@ -5,10 +5,7 @@ import {
   buildPaymentLinkRedirectUrl,
   paymentLinkForReadingType,
 } from "../../../lib/ask-leilia/paymentLinks";
-import {
-  ASK_LEILIA_READING_TYPE_LABELS,
-  isAskLeiliaReadingType,
-} from "../../../lib/ask-leilia/readingTypes";
+import { isAskLeiliaReadingType } from "../../../lib/ask-leilia/readingTypes";
 import { insertAskLeiliaPendingRequest, uploadAskLeiliaCardImage } from "../../../lib/ask-leilia/submitRequest";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
 import {
@@ -57,7 +54,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   let question = "";
   let context: string | null = null;
   let cardPreference: AskLeiliaCardPreference | null = null;
-  const readingTypeLabel = ASK_LEILIA_READING_TYPE_LABELS[readingType];
 
   if (readingType === "one-question") {
     const validation = validateAskLeiliaRequest({
@@ -126,7 +122,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     context,
     cardPreference,
     imageUrl,
-    readingTypeLabel,
+    readingType,
   });
 
   if ("error" in inserted) {
