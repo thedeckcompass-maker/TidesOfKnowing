@@ -150,13 +150,22 @@ const jsonLd = {
         <ul>
           <li>A personally interpreted tarot reading.</li>
           <li>
-            <strong>One Question:</strong> {ASK_LEILIA_DELIVERABLES["one-question"]}.
+            <strong>One Question:</strong>
+            <ul>
+              {ASK_LEILIA_DELIVERABLES["one-question"].map((item) => <li>{item}</li>)}
+            </ul>
           </li>
           <li>
-            <strong>In-Depth:</strong> {ASK_LEILIA_DELIVERABLES["in-depth"]}.
+            <strong>In-Depth:</strong>
+            <ul>
+              {ASK_LEILIA_DELIVERABLES["in-depth"].map((item) => <li>{item}</li>)}
+            </ul>
           </li>
           <li>
-            <strong>Personal Guidance:</strong> {ASK_LEILIA_DELIVERABLES["personal-guidance"]}.
+            <strong>Personal Guidance:</strong>
+            <ul>
+              {ASK_LEILIA_DELIVERABLES["personal-guidance"].map((item) => <li>{item}</li>)}
+            </ul>
           </li>
         </ul>
       </article>

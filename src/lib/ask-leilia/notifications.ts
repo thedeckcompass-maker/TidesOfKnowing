@@ -215,6 +215,7 @@ export async function sendAskLeiliaCustomerDelivery(
     name: string;
     email: string;
     pdfContentBase64: string;
+    audioContentBase64?: string;
   },
   locals?: unknown,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
@@ -224,31 +225,52 @@ export async function sendAskLeiliaCustomerDelivery(
     return { ok: false, error: "Email is not configured." };
   }
 
+  const bodyLines = [
+    `Hello ${input.name},`,
+    "",
+    "Your personalised Ask Leilia reading has now been completed.",
+    "",
+    "Your reading is attached.",
+  ];
+
+  if (input.audioContentBase64) {
+    bodyLines.push(
+      "",
+      "As I worked through your reading there were a number of additional thoughts and impressions that didn't naturally belong in the written interpretation. I've recorded them for you as a private audio reflection and attached it alongside your reading.",
+    );
+  }
+
+  bodyLines.push(
+    "",
+    "Thank you for placing your trust in Ask Leilia.",
+    "",
+    "Warm regards,",
+    "",
+    "Leilia",
+    "Tides of Knowing",
+  );
+
+  const attachments: { filename: string; content: string }[] = [
+    {
+      filename: "Ask-Leilia-Reading.pdf",
+      content: input.pdfContentBase64,
+    },
+  ];
+
+  if (input.audioContentBase64) {
+    attachments.push({
+      filename: "Ask-Leilia-Audio-Reflection.mp3",
+      content: input.audioContentBase64,
+    });
+  }
+
   const resend = new Resend(env.emailApiKey);
   const result = await resend.emails.send({
     from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
     to: input.email,
     subject: "Your Ask Leilia reading is ready",
-    text: [
-      `Hello ${input.name},`,
-      "",
-      "Your personalised Ask Leilia reading has now been completed.",
-      "",
-      "Your reading is attached.",
-      "",
-      "Thank you for placing your trust in Ask Leilia.",
-      "",
-      "Warm regards,",
-      "",
-      "Leilia",
-      "Tides of Knowing",
-    ].join("\n"),
-    attachments: [
-      {
-        filename: "Ask-Leilia-Reading.pdf",
-        content: input.pdfContentBase64,
-      },
-    ],
+    text: bodyLines.join("\n"),
+    attachments,
   });
 
   if (result.error) {

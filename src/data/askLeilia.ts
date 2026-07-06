@@ -26,17 +26,23 @@ export type AskLeiliaReading = {
   intro: string;
   body: string;
   features: string[];
-  deliverable: string;
   price: string;
   requestHref: string;
   ctaLabel?: string;
 };
 
 export const ASK_LEILIA_DELIVERABLES = {
-  "one-question": "Professional PDF within 48 hours",
-  "in-depth": "Professional PDF + private 5-minute audio reflection within 48 hours",
-  "personal-guidance":
-    "Professional PDF + private 10–15 minute audio consultation within 48 hours",
+  "one-question": ["Professional PDF within 48 hours"],
+  "in-depth": [
+    "Professionally written PDF",
+    "A private audio reflection expanding on the themes, patterns and insights that emerged during your reading",
+    "Delivered within 48 hours",
+  ],
+  "personal-guidance": [
+    "Professionally written PDF",
+    "A private audio consultation exploring the broader themes, relationships and guidance that emerged throughout your reading",
+    "Delivered within 48 hours",
+  ],
 } as const;
 
 export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
@@ -49,9 +55,8 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
       "Minimum four-card reading, extended as far as needed for a clear answer",
       "Personally interpreted, no fluff",
       "Direct answer to exactly what you asked",
-      ASK_LEILIA_DELIVERABLES["one-question"],
+      ...ASK_LEILIA_DELIVERABLES["one-question"],
     ],
-    deliverable: ASK_LEILIA_DELIVERABLES["one-question"],
     price: "US$25",
     requestHref: "/ask-leilia/request/",
     ctaLabel: "Request This Reading",
@@ -64,9 +69,8 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
       "One important question or life area",
       "Spread chosen specifically to suit what you're asking",
       "Detailed written interpretation, not a summary",
-      ASK_LEILIA_DELIVERABLES["in-depth"],
+      ...ASK_LEILIA_DELIVERABLES["in-depth"],
     ],
-    deliverable: ASK_LEILIA_DELIVERABLES["in-depth"],
     price: "US$75",
     requestHref: "/ask-leilia/request/in-depth/",
     ctaLabel: "Request This Reading",
@@ -79,9 +83,8 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
       "Multiple questions or themes, read together",
       "Comprehensive written consultation",
       "Practical guidance across everything you've brought to it",
-      ASK_LEILIA_DELIVERABLES["personal-guidance"],
+      ...ASK_LEILIA_DELIVERABLES["personal-guidance"],
     ],
-    deliverable: ASK_LEILIA_DELIVERABLES["personal-guidance"],
     price: "US$150",
     requestHref: "/ask-leilia/request/personal-guidance/",
     ctaLabel: "Request This Reading",

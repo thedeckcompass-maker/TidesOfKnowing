@@ -24,7 +24,7 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
       ]}
       summaryItems={[
         "In-depth consultation",
-        ASK_LEILIA_DELIVERABLES["in-depth"],
+        ...ASK_LEILIA_DELIVERABLES["in-depth"],
         "Payment follows",
         "Optional card photo upload",
       ]}
