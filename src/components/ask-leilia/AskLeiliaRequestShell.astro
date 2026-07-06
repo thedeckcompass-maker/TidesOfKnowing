@@ -218,4 +218,78 @@ const { title, intro, summaryItems, paymentCancelled = false, submitted = false 
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
   }
+
+  .ask-request-form-wrap :global(.ask-request-form__intro) {
+    display: grid;
+    gap: 0.45rem;
+    margin-bottom: 0.15rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__intro h3) {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--tok-water);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__intro p) {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.62;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__helper) {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__section-note) {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__checkbox-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+    gap: 0.45rem 0.75rem;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__checkbox) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: fit-content;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__checkbox input[type="checkbox"]) {
+    flex: 0 0 auto;
+    margin: 0;
+    width: auto;
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__guidance) {
+    margin: 0;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 42%, transparent);
+  }
+
+  .ask-request-form-wrap :global(.ask-request-form__guidance p) {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.58;
+    color: var(--tok-text-muted);
+  }
 </style>

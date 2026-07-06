@@ -145,6 +145,7 @@ export function validateInDepthRequest(input: {
   primaryQuestion: unknown;
   background: unknown;
   outcome: unknown;
+  beforeBegin?: unknown;
 }): ValidationResult<{
   name: string;
   email: string;
@@ -157,6 +158,7 @@ export function validateInDepthRequest(input: {
   const primaryQuestion = cleanText(input.primaryQuestion);
   const background = cleanText(input.background);
   const outcome = cleanText(input.outcome);
+  const beforeBegin = cleanText(input.beforeBegin);
 
   if (primaryQuestion.length < 10 || primaryQuestion.length > 2000) {
     return {
@@ -177,9 +179,17 @@ export function validateInDepthRequest(input: {
     return { ok: false, error: "Please keep background details under 5,000 characters." };
   }
 
+  if (beforeBegin.length > 5000) {
+    return {
+      ok: false,
+      error: "Please keep additional preparation notes under 5,000 characters.",
+    };
+  }
+
   const contextParts = [
-    background ? `Background:\n${background}` : "",
-    `What outcome or clarity are you seeking?:\n${outcome}`,
+    background ? `What has brought you to this point:\n${background}` : "",
+    `Outcome or understanding you are hoping for:\n${outcome}`,
+    beforeBegin ? `Anything to know before beginning:\n${beforeBegin}` : "",
   ].filter(Boolean);
 
   return {
@@ -198,7 +208,9 @@ export function validatePersonalGuidanceRequest(input: {
   email: unknown;
   questions: unknown;
   circumstances: unknown;
-  important: unknown;
+  lookingAhead: unknown;
+  important?: unknown;
+  lifeAreas?: unknown;
 }): ValidationResult<{
   name: string;
   email: string;
@@ -210,7 +222,17 @@ export function validatePersonalGuidanceRequest(input: {
 
   const questions = cleanText(input.questions);
   const circumstances = cleanText(input.circumstances);
+  const lookingAhead = cleanText(input.lookingAhead);
   const important = cleanText(input.important);
+  const lifeAreas = Array.isArray(input.lifeAreas)
+    ? input.lifeAreas.map((area) => cleanText(area)).filter(Boolean)
+    : input.lifeAreas
+      ? [cleanText(input.lifeAreas)].filter(Boolean)
+      : [];
+
+  if (lifeAreas.length === 0) {
+    return { ok: false, error: "Please select at least one life area." };
+  }
 
   if (questions.length < 10 || questions.length > 2000) {
     return {
@@ -220,21 +242,30 @@ export function validatePersonalGuidanceRequest(input: {
     };
   }
 
-  if (important.length < 10 || important.length > 5000) {
+  if (circumstances.length < 10 || circumstances.length > 5000) {
     return {
       ok: false,
-      error:
-        "Please share anything important I should understand before reading, between 10 and 5,000 characters.",
+      error: "Please describe your current circumstances, between 10 and 5,000 characters.",
     };
   }
 
-  if (circumstances.length > 5000) {
-    return { ok: false, error: "Please keep current circumstances under 5,000 characters." };
+  if (lookingAhead.length < 10 || lookingAhead.length > 2000) {
+    return {
+      ok: false,
+      error:
+        "Please describe what you are looking ahead to, between 10 and 2,000 characters.",
+    };
+  }
+
+  if (important.length > 5000) {
+    return { ok: false, error: "Please keep additional notes under 5,000 characters." };
   }
 
   const contextParts = [
-    circumstances ? `Current circumstances:\n${circumstances}` : "",
-    `Anything important I should understand before reading:\n${important}`,
+    `Life areas:\n${lifeAreas.join(", ")}`,
+    `Current circumstances:\n${circumstances}`,
+    `Looking ahead:\n${lookingAhead}`,
+    important ? `Anything else to address:\n${important}` : "",
   ].filter(Boolean);
 
   return {

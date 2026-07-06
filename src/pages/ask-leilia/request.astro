@@ -18,13 +18,12 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 >
   <main class="ask-request page-inner">
     <AskLeiliaRequestShell
-      title="Request Your Reading"
+      title="Request Your One Question Reading"
       intro={[
-        "Begin by sharing the question you would like explored through the cards.",
-        "After you submit this form, you will be taken to secure payment to complete your booking.",
+        "Share your question below. After you submit, you will be taken to secure payment to complete your booking.",
       ]}
       summaryItems={[
-        "One question",
+        "One question reading",
         "Payment follows",
         "Delivered within 48 hours",
         "Optional card photo upload",

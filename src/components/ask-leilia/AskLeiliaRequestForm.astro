@@ -9,20 +9,84 @@ interface Props {
   questionPlaceholder?: string;
   contextPlaceholder?: string;
   showStatuses?: boolean;
+  showTierIntro?: boolean;
+  showTierGuidance?: boolean;
 }
 
 const {
   readingType,
   action = "/api/ask-leilia/checkout",
   submitLabel = "Continue to Payment",
-  questionPlaceholder = "Share the question you would like explored through the cards.",
-  contextPlaceholder = "Optional: add any context that would help the reading stay grounded.",
+  questionPlaceholder = "Share the single question you would like explored through the cards.",
+  contextPlaceholder,
   showStatuses = true,
+  showTierIntro = true,
+  showTierGuidance = true,
 } = Astro.props;
+
+const PERSONAL_GUIDANCE_LIFE_AREAS = [
+  "Relationships",
+  "Family",
+  "Career",
+  "Business",
+  "Finances",
+  "Health",
+  "Personal Growth",
+  "Spiritual Direction",
+  "Other",
+] as const;
+
+const tierGuidance: Record<AskLeiliaReadingType, string> = {
+  "one-question":
+    "If you find yourself trying to ask several questions at once, the In-Depth Reading will usually provide a more satisfying result.",
+  "in-depth":
+    "If your situation spans several areas of life or you're seeking guidance across the bigger picture, the Personal Guidance Reading may be the better choice.",
+  "personal-guidance":
+    "This is my most comprehensive written consultation and is designed to explore the whole landscape of your situation rather than one isolated issue.",
+};
 ---
 
 <form class="ask-request-form" method="post" action={action} enctype="multipart/form-data">
   <input type="hidden" name="readingType" value={readingType} />
+
+  {
+    showTierIntro && readingType === "one-question" ? (
+      <div class="ask-request-form__intro">
+        <h3>One clear question often leads to the clearest answer.</h3>
+        <p>
+          This reading is designed for a single, well-defined question or situation. If, as you begin
+          writing, you realise you're trying to untangle several connected issues, you'll usually
+          receive greater value from an In-Depth or Personal Guidance Reading.
+        </p>
+      </div>
+    ) : null
+  }
+
+  {
+    showTierIntro && readingType === "in-depth" ? (
+      <div class="ask-request-form__intro">
+        <h3>Some questions deserve more space than a quick answer.</h3>
+        <p>
+          This reading is designed for situations that have developed over time, where context matters
+          as much as the question itself. The more clearly you describe what has brought you here, the
+          more deeply I can explore the patterns within the reading.
+        </p>
+      </div>
+    ) : null
+  }
+
+  {
+    showTierIntro && readingType === "personal-guidance" ? (
+      <div class="ask-request-form__intro">
+        <h3>Sometimes it's not one question. It's an entire season of life.</h3>
+        <p>
+          This consultation is for those moments when several areas of life overlap and influence one
+          another. Rather than exploring one issue in isolation, this reading looks at the wider
+          picture and how the different threads connect.
+        </p>
+      </div>
+    ) : null
+  }
 
   <fieldset>
     <legend>Your details</legend>
@@ -45,7 +109,7 @@ const {
           <legend>Your question</legend>
 
           <label>
-            One Question
+            Your Question
             <textarea
               name="question"
               rows="6"
@@ -56,18 +120,17 @@ const {
           </label>
 
           <label>
-            Additional Context
-            <textarea
-              name="context"
-              rows="6"
-              maxlength="5000"
-              placeholder={contextPlaceholder}
-            />
+            Background (Optional)
+            <textarea name="context" rows="5" maxlength="5000" placeholder={contextPlaceholder} />
+            <span class="ask-request-form__helper">
+              Include only the background that helps me understand your question. A few sentences are
+              usually enough.
+            </span>
           </label>
         </fieldset>
 
         <fieldset class="ask-request-form__fieldset--compact">
-          <legend>Card Preference</legend>
+          <legend>Card preference</legend>
 
           <label class="ask-request-form__radio">
             <input type="radio" name="cardPreference" value="pull_for_me" required />
@@ -82,6 +145,10 @@ const {
           <label class="ask-request-form__upload">
             Upload image of cards
             <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+            <span class="ask-request-form__helper">
+              If you're asking me to interpret cards you've already drawn, upload a clear photograph
+              here. Otherwise, simply leave this blank and I'll draw the cards for you.
+            </span>
           </label>
         </fieldset>
       </>
@@ -106,23 +173,33 @@ const {
           </label>
 
           <label>
-            Background
+            Tell me what has brought you to this point.
             <textarea
               name="background"
               rows="6"
               maxlength="5000"
-              placeholder="Optional: share any background that would help the reading stay grounded."
+              placeholder="Describe the background, history, or circumstances surrounding your question."
             />
           </label>
 
           <label>
-            What outcome or clarity are you seeking?
+            What outcome or understanding are you hoping this reading will help you reach?
             <textarea
               name="outcome"
-              rows="6"
+              rows="5"
               maxlength="2000"
               required
-              placeholder="Describe the outcome or clarity you are hoping for from this reading."
+              placeholder="Describe what you hope this reading will clarify or help you move toward."
+            />
+          </label>
+
+          <label>
+            Is there anything you feel I should know before I begin? (Optional)
+            <textarea
+              name="beforeBegin"
+              rows="4"
+              maxlength="5000"
+              placeholder="Share anything that would help me prepare before I begin your reading."
             />
           </label>
         </fieldset>
@@ -133,6 +210,10 @@ const {
           <label class="ask-request-form__upload">
             Upload image of cards
             <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+            <span class="ask-request-form__helper">
+              If you're asking me to interpret cards you've already drawn, upload a clear photograph
+              here. Otherwise, simply leave this blank and I'll draw the cards for you.
+            </span>
           </label>
         </fieldset>
       </>
@@ -143,37 +224,80 @@ const {
     readingType === "personal-guidance" ? (
       <>
         <fieldset>
-          <legend>Your reading request</legend>
+          <legend class="ask-request-form__section-legend">Life areas</legend>
+
+          <p class="ask-request-form__section-note">
+            Select the areas of life you would like this reading to consider.
+          </p>
+
+          <div class="ask-request-form__checkbox-grid">
+            {PERSONAL_GUIDANCE_LIFE_AREAS.map((area) => (
+              <label class="ask-request-form__checkbox">
+                <input type="checkbox" name="lifeAreas" value={area} />
+                <span>{area}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="ask-request-form__section-legend">Questions</legend>
 
           <label>
-            Multiple questions or life areas
+            What are the questions or themes you'd like me to explore?
             <textarea
               name="questions"
               rows="6"
               maxlength="2000"
               required
-              placeholder="Share the questions or life areas you would like covered in this reading."
+              placeholder="Share the questions, themes, or tensions you would like this reading to address."
             />
           </label>
+        </fieldset>
+
+        <fieldset>
+          <legend class="ask-request-form__section-legend">Current circumstances</legend>
 
           <label>
-            Current circumstances
+            What is happening in your life at the moment that provides important context for this
+            reading?
             <textarea
               name="circumstances"
               rows="6"
               maxlength="5000"
-              placeholder="Optional: share the current circumstances surrounding these questions."
+              required
+              placeholder="Describe what is unfolding in your life right now and why it matters to this reading."
             />
           </label>
+        </fieldset>
+
+        <fieldset>
+          <legend class="ask-request-form__section-legend">Looking ahead</legend>
 
           <label>
-            Anything important I should understand before reading
+            Is there a particular decision, opportunity or change approaching that you'd like this
+            reading to help illuminate?
+            <textarea
+              name="lookingAhead"
+              rows="5"
+              maxlength="2000"
+              required
+              placeholder="Describe any decision, transition, or opportunity you would like guidance on."
+            />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend class="ask-request-form__section-legend">Anything else</legend>
+
+          <label>
+            Is there anything you definitely want me to address, or anything you feel would help me
+            prepare before I begin? (Optional)
             <textarea
               name="important"
-              rows="6"
+              rows="4"
               maxlength="5000"
-              required
-              placeholder="Share anything important that would help Leilia understand your situation before reading."
+              placeholder="Share anything else that would help me understand your situation before I begin."
             />
           </label>
         </fieldset>
@@ -184,9 +308,21 @@ const {
           <label class="ask-request-form__upload">
             Upload image of cards
             <input name="cardImage" type="file" accept="image/png,image/jpeg,image/webp" />
+            <span class="ask-request-form__helper">
+              If you're asking me to interpret cards you've already drawn, upload a clear photograph
+              here. Otherwise, simply leave this blank and I'll draw the cards for you.
+            </span>
           </label>
         </fieldset>
       </>
+    ) : null
+  }
+
+  {
+    showTierGuidance ? (
+      <aside class="ask-request-form__guidance" aria-label="Reading tier guidance">
+        <p>{tierGuidance[readingType]}</p>
+      </aside>
     ) : null
   }
 

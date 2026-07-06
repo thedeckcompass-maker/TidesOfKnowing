@@ -80,6 +80,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       primaryQuestion: form.get("primaryQuestion"),
       background: form.get("background"),
       outcome: form.get("outcome"),
+      beforeBegin: form.get("beforeBegin"),
     });
 
     if (!validation.ok) {
@@ -97,7 +98,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
       email: form.get("email"),
       questions: form.get("questions"),
       circumstances: form.get("circumstances"),
+      lookingAhead: form.get("lookingAhead"),
       important: form.get("important"),
+      lifeAreas: form.getAll("lifeAreas"),
     });
 
     if (!validation.ok) {
