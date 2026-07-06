@@ -647,6 +647,19 @@
 }
 
 @media (min-width: 760px) {
+  .ask-leilia-hero {
+    padding-block: 1.75rem;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  .ask-leilia-hero .ask-leilia-hero__copy {
+    max-width: 58rem;
+  }
+
+  .ask-leilia-hero .ask-leilia-hero__lede {
+    max-width: 52rem;
+  }
+
   .ask-leilia-pricing__grid,
   .ask-leilia-features__grid,
   .ask-leilia-portfolio__grid {
