@@ -7,7 +7,10 @@ import {
   notifyAskLeiliaPaymentException,
   sendAskLeiliaCustomerPaymentConfirmation,
 } from "../../../lib/ask-leilia/notifications";
-import { expectedPaymentCents, paymentAmountMatches } from "../../../lib/ask-leilia/paymentAmounts";
+import {
+  validateCheckoutSessionPayment,
+  type CheckoutPaymentAudit,
+} from "../../../lib/ask-leilia/checkoutPaymentValidation";
 import { logAskLeiliaPipeline } from "../../../lib/ask-leilia/pipelineLog";
 import { isAskLeiliaDbReadingType, type AskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
@@ -40,7 +43,56 @@ type LinkedRequestRow = {
   image_url: string | null;
   reading_type: string;
   status: string;
+  payment_id: string | null;
 };
+
+function paymentAuditMetadata(
+  session: Stripe.Checkout.Session,
+  validationPath: "normal" | "fully_discounted" | "payment_exception",
+  audit: CheckoutPaymentAudit,
+): Record<string, unknown> {
+  return {
+    checkout_session_id: session.id,
+    payment_link: typeof session.payment_link === "string" ? session.payment_link : null,
+    metadata: session.metadata ?? {},
+    payment_validation: {
+      path: validationPath,
+      catalogue_amount_cents: audit.catalogueAmountCents,
+      paid_amount_cents: audit.paidAmountCents,
+      discount_amount_cents: audit.discountAmountCents,
+      amount_subtotal_cents: audit.amountSubtotalCents,
+      promotion_code_id: audit.promotionCodeId,
+      coupon_id: audit.couponId,
+      amount_discount: session.total_details?.amount_discount ?? null,
+      payment_status: session.payment_status ?? null,
+      discounts: session.discounts ?? [],
+    },
+  };
+}
+
+function paidRequestUpdateFields(
+  paymentId: string,
+  validationPath: "normal" | "fully_discounted",
+  audit: CheckoutPaymentAudit,
+): Record<string, unknown> {
+  if (validationPath === "fully_discounted") {
+    return {
+      payment_id: paymentId,
+      status: "Paid",
+      payment_expected_amount: audit.catalogueAmountCents,
+      payment_actual_amount: audit.paidAmountCents,
+      payment_exception_reference: null,
+    };
+  }
+
+  return {
+    payment_id: paymentId,
+    status: "Paid",
+    payment_expected_amount: null,
+    payment_actual_amount: null,
+    payment_exception_reference: null,
+  };
+}
 
 export const POST: APIRoute = async ({ request, locals }) => {
   logAskLeiliaPipeline("WEBHOOK_RECEIVED");
@@ -152,7 +204,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const { data: pendingRequest, error: pendingError } = await service
       .from("ask_leilia_requests")
       .select(
-        "id, name, email, question, context, card_preference, image_url, reading_type, status",
+        "id, name, email, question, context, card_preference, image_url, reading_type, status, payment_id",
       )
       .eq("id", askLeiliaRequestId)
       .maybeSingle();
@@ -202,10 +254,20 @@ export const POST: APIRoute = async ({ request, locals }) => {
       currency,
     });
 
-    const expectedAmount = expectedPaymentCents(readingType);
-    const amountMatches = paymentAmountMatches(readingType, amount, currency);
+    const validation = validateCheckoutSessionPayment(readingType, session);
+    const expectedAmount = validation.audit.catalogueAmountCents;
+    const paymentId = (paymentRecord as { id: string }).id;
+    const wasAlreadyPaid = requestRow.status === "Paid";
+    const wasPaymentException = requestRow.status === "Payment Exception";
 
-    if (amountMatches) {
+    await service
+      .from("ask_leilia_payments")
+      .update({
+        stripe_metadata: paymentAuditMetadata(session, validation.path, validation.audit),
+      })
+      .eq("id", paymentId);
+
+    if (validation.accepted) {
       logAskLeiliaPipeline("PAYMENT_VALIDATED", {
         ...baseFields,
         requestId: askLeiliaRequestId,
@@ -213,81 +275,114 @@ export const POST: APIRoute = async ({ request, locals }) => {
         requestStatus: requestRow.status,
         paymentAmount: amount,
         currency,
+        validationPath: validation.path,
+        catalogueAmountCents: validation.audit.catalogueAmountCents,
+        discountAmountCents: validation.audit.discountAmountCents,
+        promotionCodeId: validation.audit.promotionCodeId ?? undefined,
+        couponId: validation.audit.couponId ?? undefined,
       });
 
-      const { data: requestRecord, error: requestError } = await service
-        .from("ask_leilia_requests")
-        .update({
-          payment_id: (paymentRecord as { id: string }).id,
-          status: "Paid",
-          payment_expected_amount: null,
-          payment_actual_amount: null,
-          payment_exception_reference: null,
-        })
-        .eq("id", askLeiliaRequestId)
-        .select(
-          "id, name, email, question, context, card_preference, image_url, reading_type, status",
-        )
-        .maybeSingle();
-
-      if (requestError || !requestRecord) {
-        logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
+      if (wasAlreadyPaid) {
+        logAskLeiliaPipeline("STATUS_UPDATED_TO_PAID", {
           ...baseFields,
           requestId: askLeiliaRequestId,
           readingType,
+          requestStatus: requestRow.status,
           paymentAmount: amount,
           currency,
-          error: requestError?.message ?? "Unable to link paid request.",
+          paymentId,
+          validationPath: validation.path,
+          idempotentSkip: true,
         });
-        console.error("Unable to link paid Ask Leilia request:", {
-          error: requestError,
-          askLeiliaRequestId,
-          paymentIntent,
-        });
-        return json({ ok: false, error: "Unable to link paid request." }, 500);
-      }
+        linkedRequest = requestRow;
+      } else {
+        const { data: requestRecord, error: requestError } = await service
+          .from("ask_leilia_requests")
+          .update(paidRequestUpdateFields(paymentId, validation.path, validation.audit))
+          .eq("id", askLeiliaRequestId)
+          .select(
+            "id, name, email, question, context, card_preference, image_url, reading_type, status, payment_id",
+          )
+          .maybeSingle();
 
-      linkedRequest = requestRecord as LinkedRequestRow;
+        if (requestError || !requestRecord) {
+          logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
+            ...baseFields,
+            requestId: askLeiliaRequestId,
+            readingType,
+            paymentAmount: amount,
+            currency,
+            validationPath: validation.path,
+            error: requestError?.message ?? "Unable to link paid request.",
+          });
+          console.error("Unable to link paid Ask Leilia request:", {
+            error: requestError,
+            askLeiliaRequestId,
+            paymentIntent,
+          });
+          return json({ ok: false, error: "Unable to link paid request." }, 500);
+        }
 
-      logAskLeiliaPipeline("STATUS_UPDATED_TO_PAID", {
-        ...baseFields,
-        requestId: linkedRequest.id,
-        readingType,
-        requestStatus: linkedRequest.status,
-        paymentAmount: amount,
-        currency,
-        paymentId: (paymentRecord as { id: string }).id,
-      });
+        linkedRequest = requestRecord as LinkedRequestRow;
 
-      await notifyAskLeiliaPaymentCompleted(
-        {
-          customerEmail,
-          amount,
+        logAskLeiliaPipeline("STATUS_UPDATED_TO_PAID", {
+          ...baseFields,
+          requestId: linkedRequest.id,
+          readingType,
+          requestStatus: linkedRequest.status,
+          paymentAmount: amount,
           currency,
-          paymentIntent,
-          request: {
-            id: linkedRequest.id,
+          paymentId,
+          validationPath: validation.path,
+          catalogueAmountCents: validation.audit.catalogueAmountCents,
+          discountAmountCents: validation.audit.discountAmountCents,
+          promotionCodeId: validation.audit.promotionCodeId ?? undefined,
+          couponId: validation.audit.couponId ?? undefined,
+        });
+
+        const paymentAudit =
+          validation.path === "fully_discounted"
+            ? {
+                catalogueAmountCents: validation.audit.catalogueAmountCents,
+                paidAmountCents: validation.audit.paidAmountCents,
+                discountAmountCents: validation.audit.discountAmountCents,
+                promotionCodeId: validation.audit.promotionCodeId,
+                couponId: validation.audit.couponId,
+                fullyDiscounted: true as const,
+              }
+            : undefined;
+
+        await notifyAskLeiliaPaymentCompleted(
+          {
+            customerEmail,
+            amount,
+            currency,
+            paymentIntent,
+            request: {
+              id: linkedRequest.id,
+              name: linkedRequest.name,
+              email: linkedRequest.email,
+              question: linkedRequest.question,
+              context: linkedRequest.context,
+              cardPreference: linkedRequest.card_preference,
+              imageUrl: linkedRequest.image_url,
+              readingType,
+            },
+            paymentAudit,
+          },
+          locals,
+        );
+
+        await sendAskLeiliaCustomerPaymentConfirmation(
+          {
+            requestId: linkedRequest.id,
             name: linkedRequest.name,
             email: linkedRequest.email,
-            question: linkedRequest.question,
-            context: linkedRequest.context,
-            cardPreference: linkedRequest.card_preference,
-            imageUrl: linkedRequest.image_url,
             readingType,
           },
-        },
-        locals,
-      );
-
-      await sendAskLeiliaCustomerPaymentConfirmation(
-        {
-          requestId: linkedRequest.id,
-          name: linkedRequest.name,
-          email: linkedRequest.email,
-          readingType,
-        },
-        locals,
-      );
+          locals,
+        );
+      }
     } else {
       logAskLeiliaPipeline("PAYMENT_EXCEPTION", {
         ...baseFields,
@@ -296,56 +391,68 @@ export const POST: APIRoute = async ({ request, locals }) => {
         requestStatus: requestRow.status,
         paymentAmount: amount,
         currency,
-        error: `Expected ${expectedAmount} ${currency}, received ${amount}.`,
+        validationPath: "payment_exception",
+        catalogueAmountCents: validation.audit.catalogueAmountCents,
+        discountAmountCents: validation.audit.discountAmountCents,
+        promotionCodeId: validation.audit.promotionCodeId ?? undefined,
+        couponId: validation.audit.couponId ?? undefined,
+        error: validation.reason,
       });
 
-      const { data: requestRecord, error: requestError } = await service
-        .from("ask_leilia_requests")
-        .update({
-          payment_id: (paymentRecord as { id: string }).id,
-          status: "Payment Exception",
-          payment_expected_amount: expectedAmount,
-          payment_actual_amount: amount,
-          payment_exception_reference: paymentIntent,
-        })
-        .eq("id", askLeiliaRequestId)
-        .select(
-          "id, name, email, question, context, card_preference, image_url, reading_type, status",
-        )
-        .maybeSingle();
+      if (wasAlreadyPaid) {
+        linkedRequest = requestRow;
+      } else {
+        const { data: requestRecord, error: requestError } = await service
+          .from("ask_leilia_requests")
+          .update({
+            payment_id: paymentId,
+            status: "Payment Exception",
+            payment_expected_amount: expectedAmount,
+            payment_actual_amount: amount,
+            payment_exception_reference: paymentIntent,
+          })
+          .eq("id", askLeiliaRequestId)
+          .select(
+            "id, name, email, question, context, card_preference, image_url, reading_type, status, payment_id",
+          )
+          .maybeSingle();
 
-      if (requestError || !requestRecord) {
-        logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
-          ...baseFields,
-          requestId: askLeiliaRequestId,
-          readingType,
-          paymentAmount: amount,
-          currency,
-          error: requestError?.message ?? "Unable to record payment exception.",
-        });
-        console.error("Unable to record Ask Leilia payment exception:", {
-          error: requestError,
-          askLeiliaRequestId,
-          paymentIntent,
-        });
-        return json({ ok: false, error: "Unable to record payment exception." }, 500);
+        if (requestError || !requestRecord) {
+          logAskLeiliaPipeline("STATUS_UPDATE_FAILED", {
+            ...baseFields,
+            requestId: askLeiliaRequestId,
+            readingType,
+            paymentAmount: amount,
+            currency,
+            validationPath: "payment_exception",
+            error: requestError?.message ?? "Unable to record payment exception.",
+          });
+          console.error("Unable to record Ask Leilia payment exception:", {
+            error: requestError,
+            askLeiliaRequestId,
+            paymentIntent,
+          });
+          return json({ ok: false, error: "Unable to record payment exception." }, 500);
+        }
+
+        linkedRequest = requestRecord as LinkedRequestRow;
+
+        if (!wasPaymentException) {
+          await notifyAskLeiliaPaymentException(
+            {
+              requestId: linkedRequest.id,
+              customerName: linkedRequest.name,
+              customerEmail: linkedRequest.email,
+              readingType,
+              expectedAmountCents: expectedAmount,
+              actualAmountCents: amount,
+              currency,
+              paymentReference: paymentIntent,
+            },
+            locals,
+          );
+        }
       }
-
-      linkedRequest = requestRecord as LinkedRequestRow;
-
-      await notifyAskLeiliaPaymentException(
-        {
-          requestId: linkedRequest.id,
-          customerName: linkedRequest.name,
-          customerEmail: linkedRequest.email,
-          readingType,
-          expectedAmountCents: expectedAmount,
-          actualAmountCents: amount,
-          currency,
-          paymentReference: paymentIntent,
-        },
-        locals,
-      );
     }
   } else {
     logAskLeiliaPipeline("REQUEST_LINK_FAILURE", {

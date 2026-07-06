@@ -59,6 +59,14 @@ export async function notifyAskLeiliaPaymentCompleted(
       imageUrl: string | null;
       readingType: AskLeiliaDbReadingType;
     } | null;
+    paymentAudit?: {
+      catalogueAmountCents: number;
+      paidAmountCents: number;
+      discountAmountCents: number;
+      promotionCodeId: string | null;
+      couponId: string | null;
+      fullyDiscounted: boolean;
+    };
   },
   locals?: unknown,
 ): Promise<void> {
@@ -92,16 +100,46 @@ export async function notifyAskLeiliaPaymentCompleted(
     requestStatus: input.request ? "Paid" : undefined,
     paymentAmount: input.amount,
     currency: input.currency,
+    validationPath: input.paymentAudit?.fullyDiscounted
+      ? ("fully_discounted" as const)
+      : ("normal" as const),
+    catalogueAmountCents: input.paymentAudit?.catalogueAmountCents,
+    discountAmountCents: input.paymentAudit?.discountAmountCents,
+    promotionCodeId: input.paymentAudit?.promotionCodeId ?? undefined,
+    couponId: input.paymentAudit?.couponId ?? undefined,
   };
 
+  const paymentLines = input.paymentAudit?.fullyDiscounted
+    ? [
+        "Payment fulfilled with a 100% Stripe promotion/discount.",
+        "",
+        `Catalogue price: ${formatUsdCents(input.paymentAudit.catalogueAmountCents)}`,
+        `Amount paid: ${formatUsdCents(input.paymentAudit.paidAmountCents)}`,
+        `Discount applied: ${formatUsdCents(input.paymentAudit.discountAmountCents)}`,
+        input.paymentAudit.promotionCodeId
+          ? `Stripe promotion code: ${input.paymentAudit.promotionCodeId}`
+          : null,
+        input.paymentAudit.couponId ? `Stripe coupon: ${input.paymentAudit.couponId}` : null,
+        `Stripe payment intent: ${input.paymentIntent}`,
+      ].filter((line): line is string => Boolean(line))
+    : [
+        `Amount: ${input.amount} ${input.currency.toUpperCase()}`,
+        `Stripe payment intent: ${input.paymentIntent}`,
+      ];
+
   const result = await sendAskLeiliaNotification(
-    input.request ? "Ask Leilia request paid" : "Ask Leilia payment completed",
+    input.request
+      ? input.paymentAudit?.fullyDiscounted
+        ? "Ask Leilia request paid (100% promotion)"
+        : "Ask Leilia request paid"
+      : "Ask Leilia payment completed",
     [
-      "An Ask Leilia payment has completed.",
+      input.paymentAudit?.fullyDiscounted
+        ? "An Ask Leilia checkout completed using a 100% Stripe promotion/discount."
+        : "An Ask Leilia payment has completed.",
       "",
       `Customer email: ${input.customerEmail}`,
-      `Amount: ${input.amount} ${input.currency.toUpperCase()}`,
-      `Stripe payment intent: ${input.paymentIntent}`,
+      ...paymentLines,
       ...requestLines,
     ],
     locals,

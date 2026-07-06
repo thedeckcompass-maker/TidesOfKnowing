@@ -35,6 +35,12 @@ export type AskLeiliaPipelineLogFields = {
   stripeEventId?: string;
   stripeEventType?: string;
   paymentId?: string;
+  validationPath?: "normal" | "fully_discounted" | "payment_exception";
+  catalogueAmountCents?: number;
+  discountAmountCents?: number;
+  promotionCodeId?: string;
+  couponId?: string;
+  idempotentSkip?: boolean;
 };
 
 export function logAskLeiliaPipeline(
@@ -58,6 +64,16 @@ export function logAskLeiliaPipeline(
   if (fields.stripeEventId) payload.stripeEventId = fields.stripeEventId;
   if (fields.stripeEventType) payload.stripeEventType = fields.stripeEventType;
   if (fields.paymentId) payload.paymentId = fields.paymentId;
+  if (fields.validationPath) payload.validationPath = fields.validationPath;
+  if (fields.catalogueAmountCents !== undefined) {
+    payload.catalogueAmountCents = fields.catalogueAmountCents;
+  }
+  if (fields.discountAmountCents !== undefined) {
+    payload.discountAmountCents = fields.discountAmountCents;
+  }
+  if (fields.promotionCodeId) payload.promotionCodeId = fields.promotionCodeId;
+  if (fields.couponId) payload.couponId = fields.couponId;
+  if (fields.idempotentSkip) payload.idempotentSkip = true;
 
   console.log(JSON.stringify(payload));
 }
