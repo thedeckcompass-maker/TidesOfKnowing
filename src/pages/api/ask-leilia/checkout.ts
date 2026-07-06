@@ -17,22 +17,6 @@ import {
 
 export const prerender = false;
 
-function cardPreferenceFromForm(
-  form: FormData,
-  imageUrl: string | null,
-): AskLeiliaCardPreference | null {
-  const value = form.get("cardPreference");
-  if (value === "pull_for_me" || value === "own_cards_attached") {
-    return value;
-  }
-
-  if (imageUrl) {
-    return "own_cards_attached";
-  }
-
-  return "pull_for_me";
-}
-
 export const POST: APIRoute = async ({ request, locals }) => {
   const form = await request.formData();
   const readingTypeRaw = form.get("readingType");
@@ -41,15 +25,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
   logAskLeiliaPipeline("CHECKOUT_START", { readingType });
 
   const service = createCommunityServiceClient(locals);
-  const image = form.get("cardImage");
   let imageUrl: string | null = null;
 
-  if (image instanceof File && image.size > 0) {
-    const upload = await uploadAskLeiliaCardImage(service, image);
-    if ("error" in upload) {
-      return json({ ok: false, error: upload.error }, 400);
+  if (readingType === "one-question") {
+    const image = form.get("cardImage");
+    if (image instanceof File && image.size > 0) {
+      const upload = await uploadAskLeiliaCardImage(service, image);
+      if ("error" in upload) {
+        return json({ ok: false, error: upload.error }, 400);
+      }
+      imageUrl = upload.imageUrl;
     }
-    imageUrl = upload.imageUrl;
   }
 
   let name = "";
@@ -94,7 +80,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     email = validation.value.email;
     question = validation.value.question;
     context = validation.value.context;
-    cardPreference = cardPreferenceFromForm(form, imageUrl);
+    cardPreference = "pull_for_me";
   } else {
     const validation = validatePersonalGuidanceRequest({
       name: form.get("name"),
@@ -115,7 +101,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     email = validation.value.email;
     question = validation.value.question;
     context = validation.value.context;
-    cardPreference = cardPreferenceFromForm(form, imageUrl);
+    cardPreference = "pull_for_me";
   }
 
   if (!cardPreference) {
