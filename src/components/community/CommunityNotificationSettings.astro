@@ -8,7 +8,12 @@ interface Props {
 const { preferences } = Astro.props;
 ---
 
-<form class="community-settings" method="post" action="/api/community/notifications/preferences">
+<form
+  class="community-settings"
+  method="post"
+  action="/api/community/notifications/preferences"
+  data-notification-preferences-form
+>
   <label>
     <input
       type="checkbox"
@@ -25,8 +30,125 @@ const { preferences } = Astro.props;
     />
     Email me occasional Practice Commons announcements.
   </label>
-  <button type="submit">Save email preferences</button>
+  <div class="community-settings__actions">
+    <button
+      type="submit"
+      data-notification-preferences-submit
+      data-default-text="Save email preferences"
+    >
+      Save email preferences
+    </button>
+    <p
+      class="community-settings__status"
+      data-notification-preferences-status
+      role="status"
+      aria-live="polite"
+      hidden
+    />
+  </div>
 </form>
+
+<script>
+  function initNotificationPreferencesForm() {
+    const form = document.querySelector("[data-notification-preferences-form]");
+    if (!(form instanceof HTMLFormElement) || form.dataset.bound === "true") return;
+
+    form.dataset.bound = "true";
+
+    const submitButton = form.querySelector("[data-notification-preferences-submit]");
+    const status = form.querySelector("[data-notification-preferences-status]");
+    const defaultText =
+      submitButton instanceof HTMLButtonElement
+        ? submitButton.dataset.defaultText ?? "Save email preferences"
+        : "Save email preferences";
+    let fadeTimer: number | undefined;
+
+    function clearStatus() {
+      if (fadeTimer) {
+        window.clearTimeout(fadeTimer);
+        fadeTimer = undefined;
+      }
+      if (status instanceof HTMLElement) {
+        status.hidden = true;
+        status.textContent = "";
+        status.classList.remove(
+          "community-settings__status--success",
+          "community-settings__status--error",
+          "community-settings__status--fading",
+        );
+      }
+    }
+
+    function showStatus(message: string, type: "success" | "error") {
+      if (!(status instanceof HTMLElement)) return;
+
+      clearStatus();
+      status.textContent = message;
+      status.hidden = false;
+      status.classList.add(
+        type === "success"
+          ? "community-settings__status--success"
+          : "community-settings__status--error",
+      );
+
+      if (type === "success") {
+        fadeTimer = window.setTimeout(() => {
+          status.classList.add("community-settings__status--fading");
+          fadeTimer = window.setTimeout(() => {
+            clearStatus();
+          }, 320);
+        }, 4000);
+      }
+    }
+
+    function setSaving(isSaving: boolean) {
+      if (!(submitButton instanceof HTMLButtonElement)) return;
+      submitButton.disabled = isSaving;
+      submitButton.textContent = isSaving ? "Saving..." : defaultText;
+    }
+
+    form.querySelectorAll('input[type="checkbox"]').forEach((input) => {
+      input.addEventListener("change", clearStatus);
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearStatus();
+      setSaving(true);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          credentials: "same-origin",
+          redirect: "manual",
+        });
+
+        if (response.status === 303 || (response.ok && response.status < 300)) {
+          showStatus("Your email preferences have been saved.", "success");
+          return;
+        }
+
+        let errorMessage = "Unable to save your email preferences. Please try again.";
+        try {
+          const payload = (await response.json()) as { error?: string };
+          if (payload.error) errorMessage = payload.error;
+        } catch {
+          // Keep default error message when the response is not JSON.
+        }
+
+        showStatus(errorMessage, "error");
+      } catch {
+        showStatus("Unable to save your email preferences. Please try again.", "error");
+      } finally {
+        setSaving(false);
+      }
+    });
+  }
+
+  initNotificationPreferencesForm();
+  document.addEventListener("astro:page-load", initNotificationPreferencesForm);
+</script>
 
 <style>
   .community-settings {
@@ -46,6 +168,11 @@ const { preferences } = Astro.props;
     margin-top: 0.25rem;
   }
 
+  .community-settings__actions {
+    display: grid;
+    gap: 0.65rem;
+  }
+
   .community-settings button {
     justify-self: start;
     padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
@@ -55,5 +182,38 @@ const { preferences } = Astro.props;
     color: var(--tok-btn-filled-fg);
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .community-settings button:disabled {
+    cursor: wait;
+    opacity: 0.82;
+  }
+
+  .community-settings__status {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-control);
+    line-height: 1.6;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .community-settings__status[hidden] {
+    display: none;
+  }
+
+  .community-settings__status--success {
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-settings__status--error {
+    border: 1px solid color-mix(in srgb, #b42318 45%, transparent);
+    background: color-mix(in srgb, #b42318 6%, var(--tok-surface-reading) 94%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-settings__status--fading {
+    opacity: 0;
   }
 </style>
