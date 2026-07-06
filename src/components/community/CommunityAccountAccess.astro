@@ -1,0 +1,265 @@
+---
+interface Props {
+  lastSignedInAt: string | undefined;
+}
+
+const { lastSignedInAt } = Astro.props;
+
+function formatLastSignedIn(value: string | undefined): { label: string; datetime: string | null } {
+  if (!value) {
+    return { label: "Not available", datetime: null };
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return { label: "Not available", datetime: null };
+  }
+
+  return {
+    label: new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    }).format(date),
+    datetime: date.toISOString(),
+  };
+}
+
+const lastSignedIn = formatLastSignedIn(lastSignedInAt);
+---
+
+<div class="community-account-access">
+  <p class="community-account-access__intro">
+    Your account is secured using password-free email sign-in. Whenever you need to access your account
+    on a new device, simply request a new secure sign-in link.
+  </p>
+
+  <dl class="community-account-access__meta">
+    <div class="community-account-access__meta-row">
+      <dt>Last signed in</dt>
+      <dd>
+        {
+          lastSignedIn.datetime ? (
+            <time datetime={lastSignedIn.datetime}>{lastSignedIn.label}</time>
+          ) : (
+            lastSignedIn.label
+          )
+        }
+      </dd>
+    </div>
+  </dl>
+
+  <div class="community-account-access__actions">
+    <button
+      type="button"
+      class="community-account-access__primary"
+      data-account-sign-in-link
+      data-default-text="Send me a new sign-in link"
+    >
+      Send me a new sign-in link
+    </button>
+    <p
+      class="community-account-access__status"
+      data-account-sign-in-link-status
+      role="status"
+      aria-live="polite"
+      hidden
+    />
+    <form class="community-account-access__logout" method="post" action="/auth/logout/">
+      <button class="community-account-access__logout-button" type="submit">Log out</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function initAccountSignInLink() {
+    const button = document.querySelector("[data-account-sign-in-link]");
+    const status = document.querySelector("[data-account-sign-in-link-status]");
+    if (!(button instanceof HTMLButtonElement) || button.dataset.bound === "true") return;
+
+    button.dataset.bound = "true";
+    const defaultText = button.dataset.defaultText ?? "Send me a new sign-in link";
+    let fadeTimer: number | undefined;
+
+    function clearStatus() {
+      if (fadeTimer) {
+        window.clearTimeout(fadeTimer);
+        fadeTimer = undefined;
+      }
+      if (status instanceof HTMLElement) {
+        status.hidden = true;
+        status.textContent = "";
+        status.classList.remove(
+          "community-account-access__status--success",
+          "community-account-access__status--error",
+          "community-account-access__status--fading",
+        );
+      }
+    }
+
+    function showStatus(message: string, type: "success" | "error") {
+      if (!(status instanceof HTMLElement)) return;
+
+      clearStatus();
+      status.textContent = message;
+      status.hidden = false;
+      status.classList.add(
+        type === "success"
+          ? "community-account-access__status--success"
+          : "community-account-access__status--error",
+      );
+
+      if (type === "success") {
+        fadeTimer = window.setTimeout(() => {
+          status.classList.add("community-account-access__status--fading");
+          fadeTimer = window.setTimeout(() => {
+            clearStatus();
+          }, 320);
+        }, 4000);
+      }
+    }
+
+    function setSending(isSending: boolean) {
+      button.disabled = isSending;
+      button.textContent = isSending ? "Sending..." : defaultText;
+    }
+
+    button.addEventListener("click", async () => {
+      clearStatus();
+      setSending(true);
+
+      try {
+        const response = await fetch("/api/community/account/sign-in-link", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { accept: "application/json" },
+        });
+
+        let payload = { ok: false, error: "" };
+        try {
+          payload = await response.json();
+        } catch {
+          // Use default error below.
+        }
+
+        if (response.ok && payload.ok) {
+          showStatus("A new sign-in link has been sent to your email.", "success");
+          return;
+        }
+
+        showStatus(
+          payload.error || "Unable to send a sign-in link right now. Please try again.",
+          "error",
+        );
+      } catch {
+        showStatus("Unable to send a sign-in link right now. Please try again.", "error");
+      } finally {
+        setSending(false);
+      }
+    });
+  }
+
+  initAccountSignInLink();
+  document.addEventListener("astro:page-load", initAccountSignInLink);
+</script>
+
+<style>
+  .community-account-access__intro {
+    margin: 0.75rem 0 0;
+  }
+
+  .community-account-access__meta {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1rem 0 0;
+  }
+
+  .community-account-access__meta-row {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .community-account-access__meta dt {
+    margin: 0;
+    font-size: var(--tok-type-meta);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+  }
+
+  .community-account-access__meta dd {
+    margin: 0;
+    color: var(--tok-text-dark);
+    line-height: 1.7;
+  }
+
+  .community-account-access__actions {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .community-account-access__primary {
+    justify-self: start;
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+
+  .community-account-access__primary:disabled {
+    cursor: wait;
+    opacity: 0.82;
+  }
+
+  .community-account-access__logout {
+    margin: 0.25rem 0 0;
+  }
+
+  .community-account-access__logout-button {
+    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    border-radius: var(--radius-control);
+    background: transparent;
+    color: var(--tok-water);
+    font-weight: var(--tok-ui-btn-font-weight);
+    cursor: pointer;
+  }
+
+  .community-account-access__logout-button:hover {
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  .community-account-access__status {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-control);
+    line-height: 1.6;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .community-account-access__status[hidden] {
+    display: none;
+  }
+
+  .community-account-access__status--success {
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 34%, transparent);
+    background: color-mix(in srgb, var(--tok-teal) 8%, var(--tok-surface-reading) 92%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-account-access__status--error {
+    border: 1px solid color-mix(in srgb, #b42318 45%, transparent);
+    background: color-mix(in srgb, #b42318 6%, var(--tok-surface-reading) 94%);
+    color: var(--tok-text-dark);
+  }
+
+  .community-account-access__status--fading {
+    opacity: 0;
+  }
+</style>

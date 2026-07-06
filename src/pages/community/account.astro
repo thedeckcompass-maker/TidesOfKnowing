@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import CommunityAccountAccess from "../../components/community/CommunityAccountAccess.astro";
 import CommunityAccountDisplayName from "../../components/community/CommunityAccountDisplayName.astro";
 import CommunityNotificationSettings from "../../components/community/CommunityNotificationSettings.astro";
 import { isAdminProfile } from "../../lib/community/auth";
@@ -37,6 +38,7 @@ function formatMemberSince(value: string | undefined): string {
 }
 
 const memberSince = formatMemberSince(profile?.created_at);
+const lastSignedInAt = Astro.locals.user.last_sign_in_at ?? undefined;
 ---
 
 <BaseLayout
@@ -97,14 +99,9 @@ const memberSince = formatMemberSince(profile?.created_at);
       </p>
     </section>
 
-    <section class="community-account__panel" aria-labelledby="security-heading">
-      <h2 id="security-heading">Security</h2>
-      <form class="community-account__logout" method="post" action="/auth/logout/">
-        <button class="community-account__logout-button" type="submit">Log out</button>
-      </form>
-      <p class="community-account__placeholder-text">
-        Additional account security options will be added here.
-      </p>
+    <section class="community-account__panel" aria-labelledby="account-access-heading">
+      <h2 id="account-access-heading">Account Access</h2>
+      <CommunityAccountAccess lastSignedInAt={lastSignedInAt} />
     </section>
   </main>
 </BaseLayout>
@@ -171,23 +168,5 @@ const memberSince = formatMemberSince(profile?.created_at);
     margin: 0.75rem 0 0;
     color: var(--tok-text-muted);
     font-style: italic;
-  }
-
-  .community-account__logout {
-    margin: 0.75rem 0 0;
-  }
-
-  .community-account__logout-button {
-    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
-    border-radius: var(--radius-control);
-    background: transparent;
-    color: var(--tok-water);
-    font-weight: var(--tok-ui-btn-font-weight);
-    cursor: pointer;
-  }
-
-  .community-account__logout-button:hover {
-    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
   }
 </style>
