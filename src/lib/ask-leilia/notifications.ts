@@ -93,6 +93,79 @@ export async function notifyAskLeiliaPaymentCompleted(
   );
 }
 
+const SUPPORT_EMAIL = "hello@tidesofknowing.com";
+
+function paymentConfirmationDeliveryLine(readingType: AskLeiliaDbReadingType): string {
+  if (readingType === "one-question") {
+    return "Your completed reading will be delivered as a professionally written PDF within 48 hours.";
+  }
+
+  return "Your completed reading will be delivered as a professionally written PDF within 48 hours. If your reading includes a private audio reflection or consultation, it will arrive alongside your written reading.";
+}
+
+export async function sendAskLeiliaCustomerPaymentConfirmation(
+  input: {
+    requestId: string;
+    name: string;
+    email: string;
+    readingType: AskLeiliaDbReadingType;
+  },
+  locals?: unknown,
+): Promise<void> {
+  const env = communityEnv(locals);
+  if (!env.emailApiKey) {
+    console.error("Ask Leilia customer payment confirmation skipped: EMAIL_API_KEY is not configured.", {
+      requestId: input.requestId,
+      email: input.email,
+      readingType: input.readingType,
+    });
+    return;
+  }
+
+  const readingLabel = readingTypeLabel(input.readingType);
+  const bodyLines = [
+    `Hello ${input.name},`,
+    "",
+    "Thank you for your payment. Your Ask Leilia reading request has been received and confirmed.",
+    "",
+    `Reading purchased: ${readingLabel}`,
+    "",
+    "What happens next:",
+    "",
+    "I will now begin preparing your reading personally. Every Ask Leilia reading is completed entirely by me, without AI, and takes the time needed to understand both the cards and the story they are telling.",
+    "",
+    paymentConfirmationDeliveryLine(input.readingType),
+    "",
+    "If I need any clarification before I begin, I will be in touch by email.",
+    "",
+    `If you remember something important after submitting your request, simply reply to this email or write to ${SUPPORT_EMAIL} and include your name so I can add it to your reading before I begin.`,
+    "",
+    "Thank you for placing your trust in Ask Leilia.",
+    "",
+    "Warm regards,",
+    "",
+    "Leilia",
+    "Tides of Knowing",
+  ];
+
+  const resend = new Resend(env.emailApiKey);
+  const result = await resend.emails.send({
+    from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
+    to: input.email,
+    subject: "Your Ask Leilia reading request is confirmed",
+    text: bodyLines.join("\n"),
+  });
+
+  if (result.error) {
+    console.error("Ask Leilia customer payment confirmation failed:", {
+      requestId: input.requestId,
+      email: input.email,
+      readingType: input.readingType,
+      error: result.error,
+    });
+  }
+}
+
 export async function notifyAskLeiliaPaymentException(
   input: {
     requestId: string;

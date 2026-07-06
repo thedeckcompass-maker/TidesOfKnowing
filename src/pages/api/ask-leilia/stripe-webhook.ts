@@ -5,6 +5,7 @@ import { createCommunityServiceClient } from "../../../lib/community/supabaseSer
 import {
   notifyAskLeiliaPaymentCompleted,
   notifyAskLeiliaPaymentException,
+  sendAskLeiliaCustomerPaymentConfirmation,
 } from "../../../lib/ask-leilia/notifications";
 import { expectedPaymentCents, paymentAmountMatches } from "../../../lib/ask-leilia/paymentAmounts";
 import { isAskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
@@ -187,6 +188,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
             imageUrl: linkedRequest.image_url,
             readingType: requestRow.reading_type,
           },
+        },
+        locals,
+      );
+
+      await sendAskLeiliaCustomerPaymentConfirmation(
+        {
+          requestId: linkedRequest.id,
+          name: linkedRequest.name,
+          email: linkedRequest.email,
+          readingType: requestRow.reading_type,
         },
         locals,
       );
