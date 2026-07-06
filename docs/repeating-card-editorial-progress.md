@@ -143,7 +143,7 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | ☐ Two | `pentacles/two-of-pentacles` | NOT STARTED | | |
 | ☐ Three | `pentacles/three-of-pentacles` | NOT STARTED | | |
 | ☐ Four | `pentacles/four-of-pentacles` | NOT STARTED | | |
-| ☐ Five | `pentacles/five-of-pentacles` | NOT STARTED | | |
+| ☐ Five | `pentacles/five-of-pentacles` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ Six | `pentacles/six-of-pentacles` | NOT STARTED | | |
 | ☐ Seven | `pentacles/seven-of-pentacles` | NOT STARTED | | |
 | ☐ Eight | `pentacles/eight-of-pentacles` | NOT STARTED | | |
@@ -164,3 +164,4 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | 2026-07-07 | The Magician | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | The High Priestess | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | Five of Swords | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
+| 2026-07-07 | Five of Pentacles | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
