@@ -29,7 +29,18 @@ npm run audit:rcm-integrity
 
 Verifies 78 cards, suit counts, unique collection IDs, frontmatter slugs, canonical URLs, and one file per card.
 
-**Step 2 — Contract validation:**
+**Step 2 — EOF newline normalisation (automatic, baseline-driven):**
+
+```bash
+node scripts/normalise-rcm-eof.mjs \
+  --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
+```
+
+Runs automatically in the orchestrated reinsert workflow before contract validation.
+
+This is the **only authorised automatic structural correction**. It adjusts trailing `\n` characters at the absolute end of the Claude working copy so they match the card's `extracted_baseline` EOF pattern exactly. It does not alter prose, internal blank lines, headings, lists, markers, or frontmatter.
+
+**Step 3 — Contract validation:**
 
 ```bash
 node scripts/validate-rcm-editorial-reinsertion.mjs \
@@ -40,7 +51,7 @@ node scripts/validate-rcm-editorial-reinsertion.mjs \
 Exit code `0` = contract satisfied.  
 Exit code `1` = violation — do not reinsert.
 
-**Orchestrated workflow** (pre/post audit, archive, production, `.astro` cache clear, sync, build):
+**Orchestrated workflow** (pre/post audit, EOF normalisation, archive, production, `.astro` cache clear, sync, build):
 
 ```bash
 node scripts/reinsert-rcm-editorial.mjs \
@@ -81,17 +92,21 @@ node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
 
 ## On failure — STOP immediately
 
-If dry-run or contract validation **fails**, **stop immediately**. Do not archive, write production, run a build, or commit.
+If contract validation **fails** (after EOF normalisation), **stop immediately**. Do not archive, write production, run a build, or commit.
+
+### Authorised automatic correction (EOF only)
+
+Before contract validation, the orchestrated workflow runs `scripts/normalise-rcm-eof.mjs`. This may adjust **only** the trailing newline sequence at the absolute end of the Claude working copy to match that card's `extracted_baseline`. It is baseline-driven (not a hardcoded newline count).
 
 ### Prohibited without explicit owner approval
 
-Agents and editors must **never automatically**:
+Agents and editors must **never automatically** fix any other structural mismatch:
 
 - split or merge paragraphs
-- add or remove blank lines
+- add or remove **internal** blank lines
 - alter list items (numbering, count, or structure)
 - restore Markdown markers (`---`, headings, action headers)
-- edit the Claude working copy to “fix” validation
+- edit the Claude working copy for any reason other than baseline EOF normalisation
 - repair any prose or structure in production or `claude/`
 
 No correction may be made without explicit approval. This rule applies to **every remaining card**.

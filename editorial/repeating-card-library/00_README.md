@@ -49,14 +49,14 @@ Deploy
 3. **Paste** into Claude for editorial reconstruction
 4. **Paste** Claude's rewritten markdown back into the same Claude working copy
 5. **Review** editorial changes
-6. **Run** the orchestrated reinsertion (pre/post integrity audit, validates, archives, updates production, clears `.astro`, syncs, builds):
+6. **Run** the orchestrated reinsertion (pre/post integrity audit, EOF normalisation, validates, archives, updates production, clears `.astro`, syncs, builds):
 
 ```bash
 node scripts/reinsert-rcm-editorial.mjs \
   --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
 ```
 
-Dry run (pre-audit + contract validation only; no archive, no production write, no build):
+Dry run (pre-audit + EOF normalisation + contract validation only; no archive, no production write, no build):
 
 ```bash
 node scripts/reinsert-rcm-editorial.mjs \
@@ -76,7 +76,11 @@ Or run steps individually:
 # 0. Integrity audit (blocking)
 npm run audit:rcm-integrity
 
-# 1. Contract validation
+# 1. EOF newline normalisation (automatic in orchestrator)
+node scripts/normalise-rcm-eof.mjs \
+  --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
+
+# 2. Contract validation
 node scripts/validate-rcm-editorial-reinsertion.mjs \
   --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml \
   editorial/repeating-card-library/claude/{suit}/{slug}.md
@@ -90,7 +94,7 @@ node scripts/archive-rcm-production-version.mjs \
 
 7. **Build**, spot-check, update progress tracker, **git commit**, deploy
 
-If validation or archive fails: **stop immediately** and report. Do not write to production. Do not auto-repair the Claude working copy or production file. No correction without explicit owner approval. See [`02_REINSERTION_VALIDATION.md`](02_REINSERTION_VALIDATION.md).
+If validation or archive fails after EOF normalisation: **stop immediately** and report. Do not write to production. Do not auto-repair non-EOF structure. See [`02_REINSERTION_VALIDATION.md`](02_REINSERTION_VALIDATION.md).
 
 ---
 

@@ -8,7 +8,9 @@
 
  * 1. Global integrity audit (pre)
 
- * 2. Editorial Reinsertion Contract validation
+ * 2. EOF newline normalisation (Claude working copy vs baseline)
+
+ * 3. Editorial Reinsertion Contract validation
 
  * 3. Archive current production (never overwrites prior versions)
 
@@ -33,8 +35,9 @@
  *   node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
  *
  * If contract validation fails (dry run or full run): STOP immediately.
- * Do not archive, write production, build, or auto-repair the Claude working copy.
- * Report structural mismatches and wait for explicit owner approval before any fix.
+ * Do not archive, write production, or build.
+ * EOF newline normalisation (step 2) is the only authorised automatic structural fix.
+ * Report other structural mismatches and wait for explicit owner approval.
 
  */
 
@@ -240,7 +243,21 @@ runNode("scripts/audit-rcm-integrity.mjs", [], "Pre-reinsertion integrity audit"
 
 
 
-// Step 1: Contract validation
+// Step 1: EOF newline normalisation (baseline-driven; Claude working copy only)
+
+runNode(
+
+  "scripts/normalise-rcm-eof.mjs",
+
+  ["--contract", contractPath],
+
+  "EOF newline normalisation",
+
+);
+
+
+
+// Step 2: Contract validation
 
 runNode(
 
@@ -258,7 +275,7 @@ if (dryRun) {
 
   console.log(
 
-    "DRY RUN: Pre-audit and contract validation passed. Production not modified.",
+    "DRY RUN: Pre-audit, EOF normalisation, and contract validation passed. Production not modified.",
 
   );
 

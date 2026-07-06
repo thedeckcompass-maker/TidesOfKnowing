@@ -88,7 +88,8 @@ Copy from `contracts/_TEMPLATE.yaml`. Fill in:
 Before writing to production:
 
 1. **Global integrity audit** — `npm run audit:rcm-integrity` (blocking)
-2. **Contract validation** — `scripts/validate-rcm-editorial-reinsertion.mjs`
+2. **EOF newline normalisation** — `scripts/normalise-rcm-eof.mjs` (automatic; Claude working copy only; baseline-driven)
+3. **Contract validation** — `scripts/validate-rcm-editorial-reinsertion.mjs`
 
 After writing to production:
 
@@ -144,14 +145,14 @@ Both routes read the same collection entry. This is by design.
 
 ### Dry-run failure — mandatory stop
 
-If `node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run` fails, or standalone contract validation exits non-zero:
+If contract validation exits non-zero after EOF normalisation:
 
 1. **Stop** — do not archive, reinsert, build, or commit
 2. **Report** the structural mismatch output (original vs rewritten positions, nature of change, whether words appear missing)
-3. **Do not** automatically split/merge paragraphs, add/remove blank lines, alter list items, restore Markdown markers, or edit the Claude working copy
-4. **Wait** for explicit owner approval before any repair
+3. **Do not** automatically fix non-EOF structural issues
+4. **Wait** for explicit owner approval before any other repair
 
-This applies to every remaining card.
+EOF newline normalisation is the only step that may run without owner approval. All other structural mismatches remain blocking failures.
 
 ---
 
@@ -197,8 +198,9 @@ node scripts/archive-rcm-production-version.mjs \
 
 - Treat this contract as binding for all 78 cards
 - Never skip validation before reinsertion
-- If dry-run or contract validation fails: **stop immediately** and report; do not proceed
-- Never auto-fix structural differences (paragraphs, blank lines, list items, Markdown markers, Claude working copy)
+- If contract validation fails after EOF normalisation: **stop immediately** and report; do not proceed
+- EOF newline normalisation is the only authorised automatic structural fix (baseline-driven; absolute EOF only)
+- Never auto-fix any other structural differences
 - Never add, remove, or rename frontmatter keys
 - Never alter headings, section order, or structural markdown without explicit owner approval
 - Report violations with original/rewritten positions and wait for owner direction

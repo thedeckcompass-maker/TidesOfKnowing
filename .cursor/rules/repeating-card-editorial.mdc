@@ -46,35 +46,41 @@ Both read the same `repeatingCardMeanings` collection entry. This is by design.
 
 ```bash
 npm run audit:rcm-integrity
+node scripts/normalise-rcm-eof.mjs \
+  --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
 node scripts/validate-rcm-editorial-reinsertion.mjs \
   --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml \
   editorial/repeating-card-library/claude/{suit}/{slug}.md
 ```
 
-Or use the orchestrated workflow (pre/post audit, archive, production write, `.astro` cache clear, sync, build):
+Or use the orchestrated workflow (pre/post audit, EOF normalisation, archive, production write, `.astro` cache clear, sync, build):
 
 ```bash
 node scripts/reinsert-rcm-editorial.mjs \
   --contract editorial/repeating-card-library/contracts/{suit}/{slug}.yaml
 ```
 
-Dry run (audit + contract only):
+Dry run (audit + EOF normalisation + contract only):
 
 ```bash
 node scripts/reinsert-rcm-editorial.mjs --contract ... --dry-run
 ```
 
-## Dry-run failure — STOP immediately (mandatory)
+## EOF newline normalisation (only authorised automatic fix)
 
-If dry-run or contract validation **fails**, **stop immediately**. Do not proceed to archive, production write, build, or commit.
+Before contract validation, the orchestrated workflow runs `scripts/normalise-rcm-eof.mjs`. This adjusts **only** trailing `\n` characters at the absolute end of the Claude working copy to match the card's `extracted_baseline` EOF pattern. It is baseline-driven, not a hardcoded newline count. It does not alter prose, internal blank lines, headings, lists, markers, frontmatter, production, or archives.
 
-**Never automatically** (without explicit owner approval):
+## Dry-run / validation failure — STOP immediately (mandatory)
+
+If contract validation **fails** after EOF normalisation, **stop immediately**. Do not proceed to archive, production write, build, or commit.
+
+**Never automatically** (without explicit owner approval) fix any mismatch other than baseline EOF newlines:
 
 - split or merge paragraphs
-- add or remove blank lines
+- add or remove internal blank lines
 - alter list items
 - restore Markdown markers (`---`, headings, list numbering)
-- edit the Claude working copy
+- edit the Claude working copy except via `normalise-rcm-eof.mjs`
 - repair any prose or structure in production or `claude/`
 
 Report the validator's structural mismatch output (see `02_REINSERTION_VALIDATION.md`) and wait for owner direction. No correction may be made without explicit approval.
