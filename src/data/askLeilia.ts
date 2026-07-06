@@ -24,6 +24,7 @@ export const LEILIA_PORTRAIT_ALT =
 export type AskLeiliaReading = {
   name: string;
   intro: string;
+  body: string;
   features: string[];
   price: string;
   requestHref: string;
@@ -33,13 +34,14 @@ export type AskLeiliaReading = {
 export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
   {
     name: "One Question Reading",
-    intro: "Ideal when you have one clear question or decision.",
+    intro: "For the question you need a straight answer to.",
+    body: "You know what you're asking. You don't need it unpacked, you need it answered clearly enough to act on.",
     features: [
       "One clearly defined question",
-      "Three-card professionally interpreted reading",
-      "Personally written by Leilia",
-      "Professionally formatted PDF",
-      "Delivered within 48 hours",
+      "Minimum four-card reading, extended as far as needed for a clear answer",
+      "Personally interpreted, no fluff",
+      "Direct answer to exactly what you asked",
+      "Professionally formatted PDF, delivered within 48 hours",
     ],
     price: "US$25",
     requestHref: "/ask-leilia/request/",
@@ -47,14 +49,13 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
   },
   {
     name: "In-Depth Reading",
-    intro: "Explore one important area of your life in greater depth.",
+    intro: "For the situation that needs more than a quick read.",
+    body: "Something's been sitting with you longer than a single question can hold, a relationship, a decision, a pattern you keep circling back to. This reading gives it the room it needs.",
     features: [
       "One important question or life area",
-      "Spread selected to suit your question",
-      "Detailed written interpretation",
-      "Personally written by Leilia",
-      "Professionally formatted PDF",
-      "Delivered within 48 hours",
+      "Spread chosen specifically to suit what you're asking",
+      "Detailed written interpretation, not a summary",
+      "Professionally formatted PDF, delivered within 48 hours",
     ],
     price: "US$75",
     requestHref: "/ask-leilia/request/in-depth/",
@@ -62,14 +63,13 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
   },
   {
     name: "Personal Guidance Reading",
-    intro: "A comprehensive reading for multiple questions or life areas.",
+    intro: "For when several things are tangled together.",
+    body: "You're not asking one question, you're trying to understand a whole season of your life, and how the different threads connect. This reading looks at the full picture rather than one part of it.",
     features: [
-      "Multiple questions or themes",
+      "Multiple questions or themes, read together",
       "Comprehensive written consultation",
-      "Practical guidance and interpretation",
-      "Personally written by Leilia",
-      "Professionally formatted PDF",
-      "Delivered within 48 hours",
+      "Practical guidance across everything you've brought to it",
+      "Professionally formatted PDF, delivered within 48 hours",
     ],
     price: "US$150",
     requestHref: "/ask-leilia/request/personal-guidance/",

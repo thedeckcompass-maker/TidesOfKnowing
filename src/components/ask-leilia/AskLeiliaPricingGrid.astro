@@ -41,6 +41,7 @@ const PRICING_CARD_SYMBOLS = [
         >
           <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
           <p class="ask-leilia-pricing__description">{reading.intro}</p>
+          <p class="ask-leilia-pricing__description">{reading.body}</p>
           <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>
             {reading.features.map((feature) => (
               <li>
