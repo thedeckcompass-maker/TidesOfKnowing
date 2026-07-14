@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { isAdminProfile } from "../../lib/community/auth";
 import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
-import { formatUsdCents } from "../../lib/ask-leilia/paymentAmounts";
 import {
   ASK_LEILIA_DB_READING_TYPES,
   readingTypeLabel,
@@ -11,18 +10,38 @@ import { cardPreferenceLabel } from "../../lib/ask-leilia/types";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
 import {
   adminQueueReturnPath,
+  formatCompactDateTimeUtc,
+  formatFileSize,
   formatSubmissionDisplayUtc,
   isAskLeiliaRequestArchived,
   parseAskLeiliaAdminSort,
-  parseAskLeiliaArchiveFilter,
-  paymentStatusLabel,
+  parseAskLeiliaAdminView,
 } from "../../lib/ask-leilia/adminQueue";
 import {
+  ASK_LEILIA_DELIVERY_METHOD_LABELS,
+  ASK_LEILIA_MANUAL_DELIVERY_METHODS,
+  ASK_LEILIA_MANUAL_PAYMENT_METHOD_LABELS,
+  ASK_LEILIA_MANUAL_PAYMENT_METHODS,
+  PRIMARY_ACTION_LABELS,
+  deriveAskLeiliaEffectivePaymentState,
+  deriveAskLeiliaFulfilmentStatus,
+  derivePdfDeliverySummary,
+  describeAskLeiliaPaymentSource,
+  effectivePaymentLabel,
+  fulfilmentStatusLabel,
+  isAskLeiliaEffectivelyPaid,
+  isAskLeiliaManualPaymentActive,
+  primaryActionForRequest,
+  rawStripeStatusLabel,
+  resolveReviewWorkflowStatus,
+  reviewWorkflowStatusLabel,
+} from "../../lib/ask-leilia/fulfilment";
+import {
   getAskLeiliaDeliveryPdfUrl,
+  getAskLeiliaQueueCounts,
   getAskLeiliaRequests,
   getAskLeiliaUploadUrl,
 } from "../../lib/ask-leilia/queries";
-import { adminSelectableStatuses } from "../../lib/ask-leilia/validation";
 import type { AskLeiliaDbReadingType } from "../../lib/ask-leilia/readingTypes";
 import {
   getLibraryPublicationsByRequestIds,
@@ -46,63 +65,93 @@ const readingTypeFilter =
     ? readingTypeFilterRaw
     : "all";
 const sortFilter = parseAskLeiliaAdminSort(Astro.url.searchParams.get("sort"));
-const archiveFilter = parseAskLeiliaArchiveFilter(Astro.url.searchParams.get("archive"));
+const viewFilter = parseAskLeiliaAdminView(Astro.url.searchParams.get("view"));
+const searchFilter = (Astro.url.searchParams.get("q") ?? "").trim();
 const returnTo = adminQueueReturnPath({
   readingType: readingTypeFilter,
   sort: sortFilter,
-  archive: archiveFilter,
+  view: viewFilter,
+  search: searchFilter,
 });
 const librarySaved = Astro.url.searchParams.get("library_saved") === "1";
 const libraryError = Astro.url.searchParams.get("library_error")?.trim() ?? "";
-const archiveSaved = Astro.url.searchParams.get("archived") === "1";
-const restoredSaved = Astro.url.searchParams.get("restored") === "1";
+const notice = Astro.url.searchParams.get("notice")?.trim() ?? "";
+const errorNotice = Astro.url.searchParams.get("error")?.trim() ?? "";
 
 const service = createCommunityServiceClient(Astro.locals);
-const requests = await getAskLeiliaRequests(service, {
-  readingType: readingTypeFilter === "all" ? "all" : (readingTypeFilter as AskLeiliaDbReadingType),
-  sort: sortFilter,
-  archive: archiveFilter,
-});
+const [requests, counts] = await Promise.all([
+  getAskLeiliaRequests(service, {
+    readingType: readingTypeFilter === "all" ? "all" : (readingTypeFilter as AskLeiliaDbReadingType),
+    sort: sortFilter,
+    view: viewFilter,
+    search: searchFilter,
+  }),
+  getAskLeiliaQueueCounts(service),
+]);
 const libraryByRequestId = await getLibraryPublicationsByRequestIds(
   service,
   requests.map((request) => request.id),
 );
 const rows = await Promise.all(
-  requests.map(async (request) => ({
-    request,
-    imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
-    deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
-    submission: formatSubmissionDisplayUtc(request.created_at),
-    paymentLabel: paymentStatusLabel(request),
-    isArchived: isAskLeiliaRequestArchived(request),
-  })),
+  requests.map(async (request) => {
+    const fulfilment = deriveAskLeiliaFulfilmentStatus(request);
+    const review = resolveReviewWorkflowStatus(request);
+    const pdfDelivery = derivePdfDeliverySummary(request);
+    const paymentState = deriveAskLeiliaEffectivePaymentState(request);
+    const effectivelyPaid = isAskLeiliaEffectivelyPaid(request);
+    const primaryAction = primaryActionForRequest(request);
+    return {
+      request,
+      fulfilment,
+      review,
+      pdfDelivery,
+      paymentState,
+      effectivelyPaid,
+      paymentSource: describeAskLeiliaPaymentSource(request),
+      rawStripeLabel: rawStripeStatusLabel(request),
+      manualPaymentActive: isAskLeiliaManualPaymentActive(request),
+      primaryAction,
+      imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
+      deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
+      submission: formatSubmissionDisplayUtc(request.created_at),
+      isArchived: isAskLeiliaRequestArchived(request),
+    };
+  }),
 );
-
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date(value));
-}
-
-function paymentReference(request: (typeof rows)[number]["request"]): string {
-  return (
-    request.payment_exception_reference ??
-    request.payment?.stripe_payment_intent ??
-    "Not available"
-  );
-}
 
 const matchLabel =
   rows.length === 1 ? "1 matching reading" : `${rows.length} matching readings`;
+
+const viewTabs: { id: typeof viewFilter; label: string }[] = [
+  { id: "active", label: "Active" },
+  { id: "unpaid", label: "Unpaid" },
+  { id: "paid", label: "Paid" },
+  { id: "new", label: "New" },
+  { id: "in_progress", label: "In progress" },
+  { id: "ready_to_send", label: "Ready to send" },
+  { id: "delivered", label: "Delivered" },
+  { id: "review_outstanding", label: "Review outstanding" },
+  { id: "review_provided", label: "Review provided" },
+  { id: "archived", label: "Archived" },
+];
+
+const nowLocalValue = new Date().toISOString().slice(0, 16);
+
+function compactPdfLabel(
+  pdfDelivery: (typeof rows)[number]["pdfDelivery"],
+): string {
+  if (pdfDelivery.label === "Sent" || pdfDelivery.label === "Resent" || pdfDelivery.label === "Manually delivered") {
+    if (pdfDelivery.at) {
+      return `${pdfDelivery.label} · ${formatCompactDateTimeUtc(pdfDelivery.at)}`;
+    }
+  }
+  return pdfDelivery.label;
+}
 ---
 
 <BaseLayout
   title="Ask Leilia Admin | Tides of Knowing"
-  description="Admin view for Ask Leilia reading requests."
+  description="Ask Leilia reading fulfilment dashboard."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
@@ -110,10 +159,34 @@ const matchLabel =
     <header class="ask-admin__head">
       <p class="ask-admin__kicker">Ask Leilia</p>
       <h1>Reading Requests</h1>
-      <p>Review submitted requests and update their status.</p>
+      <p class="ask-admin__lede">
+        Compact fulfilment queue for every submitted Ask Leilia questionnaire, including unpaid
+        Stripe attempts.
+      </p>
+      <p class="ask-admin__summary" aria-live="polite">
+        <span>{counts.unpaid} unpaid</span>
+        <span aria-hidden="true"> · </span>
+        <span>{counts.new} new</span>
+        <span aria-hidden="true"> · </span>
+        <span>{counts.in_progress} in progress</span>
+        <span aria-hidden="true"> · </span>
+        <span>{counts.ready_to_send} ready to send</span>
+        <span aria-hidden="true"> · </span>
+        <span>{counts.reviews_outstanding} reviews outstanding</span>
+      </p>
       <p>
         <a href="/ask-leilia/admin/reviews/">Moderate Ask Leilia reviews</a>
       </p>
+      {
+        notice ? (
+          <p class="ask-admin__notice" role="status">{notice}</p>
+        ) : null
+      }
+      {
+        errorNotice ? (
+          <p class="ask-admin__notice ask-admin__notice--error" role="alert">{errorNotice}</p>
+        ) : null
+      }
       {
         librarySaved ? (
           <p class="ask-admin__notice" role="status">Reading Library entry saved.</p>
@@ -124,21 +197,44 @@ const matchLabel =
           <p class="ask-admin__notice ask-admin__notice--error" role="alert">{libraryError}</p>
         ) : null
       }
-      {
-        archiveSaved ? (
-          <p class="ask-admin__notice" role="status">Reading archived. It remains fully recoverable.</p>
-        ) : null
-      }
-      {
-        restoredSaved ? (
-          <p class="ask-admin__notice" role="status">Reading restored to the active queue.</p>
-        ) : null
-      }
     </header>
 
+    <nav class="ask-admin__views" aria-label="Fulfilment views">
+      {
+        viewTabs.map((tab) => {
+          const href = adminQueueReturnPath({
+            readingType: readingTypeFilter,
+            sort: sortFilter,
+            view: tab.id,
+            search: searchFilter,
+          });
+          return (
+            <a
+              href={href}
+              class:list={["ask-admin__view", viewFilter === tab.id && "ask-admin__view--active"]}
+              aria-current={viewFilter === tab.id ? "page" : undefined}
+            >
+              {tab.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
     <form class="ask-admin__filters" method="get" action="/ask-leilia/admin/">
+      <input type="hidden" name="view" value={viewFilter} />
       <label>
-        Filter by reading type
+        Search client
+        <input
+          type="search"
+          name="q"
+          value={searchFilter}
+          placeholder="Name or email"
+          autocomplete="off"
+        />
+      </label>
+      <label>
+        Reading type
         <select name="reading_type">
           <option value="all" selected={readingTypeFilter === "all"}>All reading types</option>
           {
@@ -151,351 +247,871 @@ const matchLabel =
         </select>
       </label>
       <label>
-        Archive view
-        <select name="archive">
-          <option value="active" selected={archiveFilter === "active"}>Active readings</option>
-          <option value="archived" selected={archiveFilter === "archived"}>Archived readings</option>
-          <option value="all" selected={archiveFilter === "all"}>All readings</option>
-        </select>
-      </label>
-      <label>
         Sort by submission
         <select name="sort">
           <option value="newest" selected={sortFilter === "newest"}>Newest first</option>
           <option value="oldest" selected={sortFilter === "oldest"}>Oldest first</option>
         </select>
       </label>
-      <button type="submit">Apply filters</button>
+      <button type="submit">Apply</button>
     </form>
 
     <p class="ask-admin__count" aria-live="polite">{matchLabel}</p>
 
     {
       rows.length > 0 ? (
-        <div class="ask-admin__list">
-          {rows.map(({ request, imageUrl, deliveryPdfUrl, submission, paymentLabel, isArchived }) => {
-            const selectableStatuses = adminSelectableStatuses(request.status);
-            const isPaymentException = request.status === "Payment Exception";
-            const libraryPublication = libraryByRequestId.get(request.id);
-            const suggestedSlug = normalizeLibrarySlug(
-              libraryPublication?.slug ??
-                `${readingTypeLabel(request.reading_type)}-${request.id.slice(0, 8)}`,
-            );
-            const expectedAmount = request.payment_expected_amount;
-            const actualAmount = request.payment_actual_amount;
-            const paymentDifference =
-              expectedAmount !== null && actualAmount !== null
-                ? actualAmount - expectedAmount
-                : null;
-            const detailsId = `ask-admin-details-${request.id}`;
-            const panelId = `ask-admin-panel-${request.id}`;
+        <div class="ask-admin__table-wrap">
+          <table class="ask-admin-table">
+            <thead>
+              <tr>
+                <th scope="col">Received</th>
+                <th scope="col">Client</th>
+                <th scope="col">Reading type</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Fulfilment</th>
+                <th scope="col">PDF / delivery</th>
+                <th scope="col">Review</th>
+                <th scope="col">Action</th>
+                <th scope="col"><span class="visually-hidden">Expand</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(({
+                request,
+                fulfilment,
+                review,
+                pdfDelivery,
+                paymentState,
+                effectivelyPaid,
+                paymentSource,
+                rawStripeLabel,
+                manualPaymentActive,
+                primaryAction,
+                imageUrl,
+                deliveryPdfUrl,
+                submission,
+                isArchived,
+              }) => {
+                const panelId = `ask-admin-panel-${request.id}`;
+                const libraryPublication = libraryByRequestId.get(request.id);
+                const suggestedSlug = normalizeLibrarySlug(
+                  libraryPublication?.slug ??
+                    `${readingTypeLabel(request.reading_type)}-${request.id.slice(0, 8)}`,
+                );
+                const actionHref = `#${panelId}`;
 
-            return (
-              <details
-                id={detailsId}
-                class:list={[
-                  "ask-admin-card",
-                  isPaymentException && "ask-admin-card--exception",
-                  isArchived && "ask-admin-card--archived",
-                ]}
-              >
-                <summary class="ask-admin-card__summary" aria-controls={panelId}>
-                  <span
-                    class="ask-admin-card__when"
-                    data-ask-admin-local-time={submission.unavailable ? "" : request.created_at}
-                    title={submission.title}
-                  >
-                    <span data-ask-admin-date>{submission.dateText}</span>
-                    {submission.timeText ? (
-                      <>
-                        <span aria-hidden="true"> · </span>
-                        <span data-ask-admin-time>{submission.timeText}</span>
-                      </>
-                    ) : null}
-                  </span>
-                  <span class="ask-admin-card__seeker">
-                    <span class="ask-admin-card__name">{request.name}</span>
-                    <span class="ask-admin-card__email">{request.email}</span>
-                  </span>
-                  <span class="ask-admin-card__type">{readingTypeLabel(request.reading_type)}</span>
-                  <span class="ask-admin-card__badges">
-                    <span class="ask-admin-card__badge ask-admin-card__badge--payment">
-                      Payment: {paymentLabel}
-                    </span>
-                    <span class="ask-admin-card__badge ask-admin-card__badge--status">
-                      Request: {request.status}
-                    </span>
-                    {isArchived ? (
-                      <span class="ask-admin-card__badge ask-admin-card__badge--archived">
-                        Archived
-                      </span>
-                    ) : null}
-                  </span>
-                  <span class="ask-admin-card__chevron" aria-hidden="true"></span>
-                </summary>
-
-                <div id={panelId} class="ask-admin-card__panel">
-                  {
-                    isPaymentException ? (
-                      <div class="ask-admin-card__warning" role="alert">
-                        <p><strong>Payment Exception</strong></p>
-                        <p>Manual resolution is required before this request can proceed.</p>
-                        <ul>
-                          <li>Expected payment: {expectedAmount !== null ? formatUsdCents(expectedAmount) : "Unknown"}</li>
-                          <li>Actual payment: {actualAmount !== null ? formatUsdCents(actualAmount) : "Unknown"}</li>
-                          <li>
-                            Payment difference:{" "}
-                            {paymentDifference !== null ? formatUsdCents(paymentDifference) : "Unknown"}
-                          </li>
-                          <li>Stripe payment reference: {paymentReference(request)}</li>
-                        </ul>
-                      </div>
-                    ) : null
-                  }
-
-                  <dl>
-                    <div>
-                      <dt>Reading type</dt>
-                      <dd>{readingTypeLabel(request.reading_type)}</dd>
-                    </div>
-                    <div>
-                      <dt>Question</dt>
-                      <dd>{request.question}</dd>
-                    </div>
-                    <div>
-                      <dt>Context</dt>
-                      <dd>{request.context || "No additional context."}</dd>
-                    </div>
-                    <div>
-                      <dt>Image upload</dt>
-                      <dd>
-                        {imageUrl ? (
-                          <a href={imageUrl}>View uploaded image</a>
-                        ) : (
-                          "No image uploaded."
-                        )}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Card preference</dt>
-                      <dd>{cardPreferenceLabel(request.card_preference)}</dd>
-                    </div>
-                    <div>
-                      <dt>Payment status</dt>
-                      <dd>
-                        {
-                          request.payment?.payment_status ??
-                            (request.status === "Pending Payment"
-                              ? "Awaiting payment."
-                              : "Payment record not linked.")
-                        }
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Request status</dt>
-                      <dd>{request.status}</dd>
-                    </div>
-                    <div>
-                      <dt>Submitted</dt>
-                      <dd>
+                return (
+                  <Fragment>
+                    <tr
+                      class:list={[
+                        "ask-admin-table__row",
+                        isArchived && "ask-admin-table__row--archived",
+                      ]}
+                      data-ask-admin-row={request.id}
+                    >
+                      <td>
                         <span
+                          class="ask-admin-table__when"
                           data-ask-admin-local-time={submission.unavailable ? "" : request.created_at}
                           title={submission.title}
                         >
                           <span data-ask-admin-date>{submission.dateText}</span>
                           {submission.timeText ? (
                             <>
-                              <span aria-hidden="true"> · </span>
-                              <span data-ask-admin-time>{submission.timeText}</span>
+                              <br />
+                              <span data-ask-admin-time class="ask-admin-table__muted">
+                                {submission.timeText}
+                              </span>
                             </>
                           ) : null}
                         </span>
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Delivery PDF</dt>
-                      <dd>
-                        {
-                          deliveryPdfUrl ? (
-                            <a href={deliveryPdfUrl}>View uploaded PDF</a>
-                          ) : (
-                            "No delivery PDF uploaded yet."
-                          )
-                        }
-                        {request.delivery_sent_at ? (
-                          <p>Delivered to customer: {formatDate(request.delivery_sent_at)}</p>
-                        ) : null}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Internal notes</dt>
-                      <dd>{request.admin_notes || "No internal notes yet."}</dd>
-                    </div>
-                  </dl>
-
-                  <form
-                    class="ask-admin-card__form"
-                    method="post"
-                    action={`/api/ask-leilia/requests/${request.id}`}
-                    enctype="multipart/form-data"
-                  >
-                    <input type="hidden" name="return_to" value={returnTo} />
-                    <label>
-                      Completed reading PDF
-                      <input type="file" name="deliveryPdf" accept="application/pdf" />
-                    </label>
-                    <label>
-                      Status
-                      <select name="status">
-                        {selectableStatuses.map((status) => (
-                          <option
-                            value={status}
-                            selected={status === request.status}
-                            disabled={status === "Delivered" && !request.delivery_pdf_path}
-                          >
-                            {status}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label class="ask-admin-card__notes">
-                      Internal notes
-                      <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
-                    </label>
-                    <button type="submit">Update request</button>
-                  </form>
-
-                  <form
-                    class="ask-admin-card__archive-form"
-                    method="post"
-                    action={`/api/ask-leilia/requests/${request.id}`}
-                    onsubmit={
-                      isArchived
-                        ? "return confirm('Restore this reading to the active queue?');"
-                        : "return confirm('Archive this reading? It will leave the active queue but will not be deleted.');"
-                    }
-                  >
-                    <input type="hidden" name="return_to" value={returnTo} />
-                    <input type="hidden" name="action" value={isArchived ? "restore" : "archive"} />
-                    <button type="submit" class="ask-admin-card__archive-btn">
-                      {isArchived ? "Restore to active readings" : "Archive reading"}
-                    </button>
-                  </form>
-
-                  {
-                    request.status === "Delivered" ? (
-                      <details class="ask-admin-card__library">
-                        <summary>Reading Library publication</summary>
-                        {
-                          libraryPublication?.isPublished ? (
-                            <p class="ask-admin-card__library-status">
-                              Published:{" "}
-                              <a href={`/recent-client-readings/${libraryPublication.slug}/`}>
-                                View in library
-                              </a>
-                            </p>
-                          ) : libraryPublication ? (
-                            <p class="ask-admin-card__library-status">Saved as draft (not published).</p>
-                          ) : (
-                            <p class="ask-admin-card__library-status">
-                              Not yet added to the Reading Library.
-                            </p>
-                          )
-                        }
-                        <form
-                          class="ask-admin-card__form ask-admin-card__library-form"
-                          method="post"
-                          action={`/api/ask-leilia/reading-library/${request.id}`}
+                      </td>
+                      <td>
+                        <span class="ask-admin-table__name">{request.name}</span>
+                        <span class="ask-admin-table__email">{request.email}</span>
+                      </td>
+                      <td>{readingTypeLabel(request.reading_type)}</td>
+                      <td>
+                        <span
+                          class:list={[
+                            "ask-admin-payment",
+                            paymentState === "paid"
+                              ? "ask-admin-payment--paid"
+                              : "ask-admin-payment--unpaid",
+                          ]}
                         >
-                          <label>
-                            Library title
-                            <input
-                              type="text"
-                              name="libraryTitle"
-                              required
-                              minlength="4"
-                              maxlength="200"
-                              value={libraryPublication?.title ?? ""}
-                            />
-                          </label>
-                          <label>
-                            URL slug
-                            <input
-                              type="text"
-                              name="librarySlug"
-                              required
-                              pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                              value={libraryPublication?.slug ?? suggestedSlug}
-                            />
-                          </label>
-                          <label>
-                            Short excerpt (card summary)
-                            <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">
-                              {libraryPublication?.summary ?? ""}
-                            </textarea>
-                          </label>
-                          <label>
-                            SEO description
-                            <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">
-                              {libraryPublication?.seoDescription ?? ""}
-                            </textarea>
-                          </label>
-                          <label>
-                            Reading body (Markdown)
-                            <textarea name="libraryBody" rows="12" required minlength="100">
-                              {libraryPublication?.body ?? ""}
-                            </textarea>
-                          </label>
-                          <label>
-                            Primary life areas (comma-separated)
-                            <input
-                              type="text"
-                              name="libraryLifeAreas"
-                              value={libraryPublication?.lifeAreas.join(", ") ?? ""}
-                            />
-                          </label>
-                          <label>
-                            Primary cards featured (comma-separated)
-                            <input
-                              type="text"
-                              name="libraryPrimaryCards"
-                              value={libraryPublication?.primaryCards.join(", ") ?? ""}
-                            />
-                          </label>
-                          <label>
-                            Spread used
-                            <input
-                              type="text"
-                              name="librarySpreadUsed"
-                              value={libraryPublication?.spreadUsed ?? readingTypeLabel(request.reading_type)}
-                            />
-                          </label>
-                          <label>
-                            Spread image paths (one per line, under public/)
-                            <textarea name="librarySpreadImages" rows="3">
-                              {libraryPublication?.spreadImagePaths.join("\n") ?? ""}
-                            </textarea>
-                          </label>
-                          <label class="ask-admin-card__publish">
-                            <input
-                              type="checkbox"
-                              name="libraryPublish"
-                              checked={libraryPublication?.isPublished ?? false}
-                            />
-                            Publish to Reading Library
-                          </label>
-                          <button type="submit">Save library entry</button>
-                        </form>
-                      </details>
-                    ) : null
-                  }
-                </div>
-              </details>
-            );
-          })}
+                          <span class="ask-admin-payment__mark" aria-hidden="true">
+                            {paymentState === "paid" ? "✓" : "✗"}
+                          </span>
+                          <span>{effectivePaymentLabel(paymentState)}</span>
+                        </span>
+                      </td>
+                      <td>
+                        <span class={`ask-admin-status ask-admin-status--${fulfilment}`}>
+                          {fulfilmentStatusLabel(fulfilment)}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="ask-admin-table__pdf">{compactPdfLabel(pdfDelivery)}</span>
+                      </td>
+                      <td>
+                        <span class={`ask-admin-review ask-admin-review--${review}`}>
+                          {reviewWorkflowStatusLabel(review)}
+                        </span>
+                      </td>
+                      <td>
+                        {primaryAction === "mark_paid" ? (
+                          <a class="ask-admin-btn ask-admin-btn--primary" href={actionHref} data-ask-admin-expand={request.id}>
+                            {PRIMARY_ACTION_LABELS.mark_paid}
+                          </a>
+                        ) : primaryAction === "start" ? (
+                          <form
+                            method="post"
+                            action={`/api/ask-leilia/requests/${request.id}`}
+                            class="ask-admin-inline-form"
+                          >
+                            <input type="hidden" name="return_to" value={returnTo} />
+                            <input type="hidden" name="action" value="start_reading" />
+                            <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                              {PRIMARY_ACTION_LABELS.start}
+                            </button>
+                          </form>
+                        ) : primaryAction === "send" ? (
+                          <form
+                            method="post"
+                            action={`/api/ask-leilia/requests/${request.id}`}
+                            class="ask-admin-inline-form"
+                            onsubmit="return confirm('Email the completed PDF and mark this reading delivered?');"
+                          >
+                            <input type="hidden" name="return_to" value={returnTo} />
+                            <input type="hidden" name="action" value="send_delivery" />
+                            <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                              {PRIMARY_ACTION_LABELS.send}
+                            </button>
+                          </form>
+                        ) : primaryAction === "restore" ? (
+                          <form
+                            method="post"
+                            action={`/api/ask-leilia/requests/${request.id}`}
+                            class="ask-admin-inline-form"
+                          >
+                            <input type="hidden" name="return_to" value={returnTo} />
+                            <input type="hidden" name="action" value="restore" />
+                            <button type="submit" class="ask-admin-btn">
+                              {PRIMARY_ACTION_LABELS.restore}
+                            </button>
+                          </form>
+                        ) : primaryAction === "view_review" && request.linked_review_id ? (
+                          <a
+                            class="ask-admin-btn"
+                            href={`/ask-leilia/admin/reviews/?focus=${encodeURIComponent(request.linked_review_id)}`}
+                          >
+                            {PRIMARY_ACTION_LABELS.view_review}
+                          </a>
+                        ) : (
+                          <a class="ask-admin-btn" href={actionHref} data-ask-admin-expand={request.id}>
+                            {PRIMARY_ACTION_LABELS[primaryAction]}
+                          </a>
+                        )}
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          class="ask-admin-expand"
+                          aria-expanded="false"
+                          aria-controls={panelId}
+                          data-ask-admin-toggle={request.id}
+                        >
+                          <span class="visually-hidden">Expand reading details</span>
+                          <span class="ask-admin-expand__chevron" aria-hidden="true"></span>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="ask-admin-table__detail" hidden data-ask-admin-detail={request.id}>
+                      <td colspan="9">
+                        <div id={panelId} class="ask-admin-panel">
+                          <div class="ask-admin-panel__grid">
+                            <section class="ask-admin-panel__section" aria-labelledby={`brief-${request.id}`}>
+                              <h2 id={`brief-${request.id}`}>Reading brief</h2>
+                              <dl class="ask-admin-dl">
+                                <div>
+                                  <dt>Client</dt>
+                                  <dd>
+                                    {request.name}
+                                    <br />
+                                    <a href={`mailto:${request.email}`}>{request.email}</a>
+                                  </dd>
+                                </div>
+                                <div>
+                                  <dt>Reading type</dt>
+                                  <dd>{readingTypeLabel(request.reading_type)}</dd>
+                                </div>
+                                <div>
+                                  <dt>Submitted</dt>
+                                  <dd>
+                                    <span
+                                      data-ask-admin-local-time={
+                                        submission.unavailable ? "" : request.created_at
+                                      }
+                                      title={submission.title}
+                                    >
+                                      <span data-ask-admin-date>{submission.dateText}</span>
+                                      {submission.timeText ? (
+                                        <>
+                                          <span aria-hidden="true"> · </span>
+                                          <span data-ask-admin-time>{submission.timeText}</span>
+                                        </>
+                                      ) : null}
+                                    </span>
+                                  </dd>
+                                </div>
+                                <div class="ask-admin-dl__question">
+                                  <dt>Question</dt>
+                                  <dd>{request.question}</dd>
+                                </div>
+                                <div>
+                                  <dt>Context</dt>
+                                  <dd>{request.context || "No additional context."}</dd>
+                                </div>
+                                <div>
+                                  <dt>Card preference</dt>
+                                  <dd>{cardPreferenceLabel(request.card_preference)}</dd>
+                                </div>
+                                <div>
+                                  <dt>Client image</dt>
+                                  <dd>
+                                    {imageUrl ? (
+                                      <a href={imageUrl} target="_blank" rel="noopener noreferrer">
+                                        View uploaded image
+                                      </a>
+                                    ) : (
+                                      "No image uploaded."
+                                    )}
+                                  </dd>
+                                </div>
+                              </dl>
+                            </section>
+
+                            <section class="ask-admin-panel__section" aria-labelledby={`pay-${request.id}`}>
+                              <h2 id={`pay-${request.id}`}>Payment</h2>
+                              <p>
+                                <span
+                                  class:list={[
+                                    "ask-admin-payment",
+                                    paymentState === "paid"
+                                      ? "ask-admin-payment--paid"
+                                      : "ask-admin-payment--unpaid",
+                                  ]}
+                                >
+                                  <span class="ask-admin-payment__mark" aria-hidden="true">
+                                    {paymentState === "paid" ? "✓" : "✗"}
+                                  </span>
+                                  <span>{effectivePaymentLabel(paymentState)}</span>
+                                </span>
+                              </p>
+                              <p class="ask-admin-meta">{paymentSource}</p>
+                              <dl class="ask-admin-dl ask-admin-dl--compact">
+                                <div>
+                                  <dt>Raw Stripe status</dt>
+                                  <dd>{rawStripeLabel}</dd>
+                                </div>
+                                {request.payment?.stripe_payment_intent ? (
+                                  <div>
+                                    <dt>Stripe payment intent</dt>
+                                    <dd>
+                                      <code>{request.payment.stripe_payment_intent}</code>
+                                    </dd>
+                                  </div>
+                                ) : null}
+                                {request.payment_exception_reference ? (
+                                  <div>
+                                    <dt>Exception reference</dt>
+                                    <dd>{request.payment_exception_reference}</dd>
+                                  </div>
+                                ) : null}
+                                {manualPaymentActive ? (
+                                  <>
+                                    <div>
+                                      <dt>Manual payment method</dt>
+                                      <dd>
+                                        {request.manual_payment_method
+                                          ? ASK_LEILIA_MANUAL_PAYMENT_METHOD_LABELS[
+                                              request.manual_payment_method
+                                            ]
+                                          : "Recorded"}
+                                      </dd>
+                                    </div>
+                                    {request.manual_payment_recorded_at ? (
+                                      <div>
+                                        <dt>Manual payment recorded</dt>
+                                        <dd>{formatCompactDateTimeUtc(request.manual_payment_recorded_at)}</dd>
+                                      </div>
+                                    ) : null}
+                                    {request.manual_payment_reference ? (
+                                      <div>
+                                        <dt>Payment reference</dt>
+                                        <dd>{request.manual_payment_reference}</dd>
+                                      </div>
+                                    ) : null}
+                                    {request.manual_payment_note ? (
+                                      <div>
+                                        <dt>Internal note</dt>
+                                        <dd>{request.manual_payment_note}</dd>
+                                      </div>
+                                    ) : null}
+                                  </>
+                                ) : null}
+                                {request.manual_payment_reversed_at ? (
+                                  <div>
+                                    <dt>Manual payment reversed</dt>
+                                    <dd>{formatCompactDateTimeUtc(request.manual_payment_reversed_at)}</dd>
+                                  </div>
+                                ) : null}
+                              </dl>
+
+                              {!effectivelyPaid ? (
+                                <form
+                                  method="post"
+                                  action={`/api/ask-leilia/requests/${request.id}`}
+                                  class="ask-admin-form"
+                                >
+                                  <input type="hidden" name="return_to" value={returnTo} />
+                                  <input type="hidden" name="action" value="mark_as_paid" />
+                                  <h3>Mark as paid</h3>
+                                  <p class="ask-admin-meta">
+                                    Record a manual payment without changing the raw Stripe result.
+                                  </p>
+                                  <label>
+                                    Payment method
+                                    <select name="manual_payment_method" required>
+                                      {ASK_LEILIA_MANUAL_PAYMENT_METHODS.map((method) => (
+                                        <option value={method}>
+                                          {ASK_LEILIA_MANUAL_PAYMENT_METHOD_LABELS[method]}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </label>
+                                  <label>
+                                    Payment date and time
+                                    <input
+                                      type="datetime-local"
+                                      name="manual_payment_recorded_at"
+                                      value={nowLocalValue}
+                                      required
+                                    />
+                                  </label>
+                                  <label>
+                                    Optional payment reference
+                                    <input type="text" name="manual_payment_reference" maxlength="200" />
+                                  </label>
+                                  <label>
+                                    Optional internal note
+                                    <textarea name="manual_payment_note" rows="2" maxlength="2000"></textarea>
+                                  </label>
+                                  <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                                    Confirm mark as paid
+                                  </button>
+                                </form>
+                              ) : null}
+
+                              {manualPaymentActive ? (
+                                <details class="ask-admin-secondary">
+                                  <summary>Reverse manual payment</summary>
+                                  <form
+                                    method="post"
+                                    action={`/api/ask-leilia/requests/${request.id}`}
+                                    class="ask-admin-form"
+                                    onsubmit="return confirm('Reverse the manual payment confirmation? Stripe data will not change.');"
+                                  >
+                                    <input type="hidden" name="return_to" value={returnTo} />
+                                    <input type="hidden" name="action" value="reverse_manual_payment" />
+                                    <p class="ask-admin-meta">
+                                      Deactivates only the administrative override. A verified Stripe
+                                      payment remains Paid.
+                                    </p>
+                                    <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                      Reverse manual payment
+                                    </button>
+                                  </form>
+                                </details>
+                              ) : null}
+                            </section>
+
+                            <section class="ask-admin-panel__section" aria-labelledby={`fulfil-${request.id}`}>
+                              <h2 id={`fulfil-${request.id}`}>Fulfilment</h2>
+                              <p>
+                                <span class={`ask-admin-status ask-admin-status--${fulfilment}`}>
+                                  {fulfilmentStatusLabel(fulfilment)}
+                                </span>
+                              </p>
+                              {!effectivelyPaid ? (
+                                <p class="ask-admin-meta" role="status">
+                                  Fulfilment actions unlock after effective payment (Stripe success or Mark as
+                                  paid).
+                                </p>
+                              ) : null}
+                              {request.started_at ? (
+                                <p class="ask-admin-meta">
+                                  Started:{" "}
+                                  <span data-ask-admin-local-time={request.started_at}>
+                                    <span data-ask-admin-date>
+                                      {formatCompactDateTimeUtc(request.started_at)}
+                                    </span>
+                                  </span>
+                                </p>
+                              ) : null}
+
+                              {effectivelyPaid && fulfilment === "new" ? (
+                                <form
+                                  method="post"
+                                  action={`/api/ask-leilia/requests/${request.id}`}
+                                  class="ask-admin-form"
+                                >
+                                  <input type="hidden" name="return_to" value={returnTo} />
+                                  <input type="hidden" name="action" value="start_reading" />
+                                  <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                                    Start reading
+                                  </button>
+                                </form>
+                              ) : null}
+
+                              {effectivelyPaid ? (
+                              <>
+                              <div class="ask-admin-pdf">
+                                <h3>Completed reading PDF</h3>
+                                {request.delivery_pdf_path ? (
+                                  <div class="ask-admin-pdf__row">
+                                    <div>
+                                      <p class="ask-admin-pdf__name">
+                                        {request.delivery_pdf_filename || "Ask-Leilia-Reading.pdf"}
+                                      </p>
+                                      <p class="ask-admin-meta">
+                                        {request.delivery_pdf_uploaded_at
+                                          ? `Uploaded ${formatCompactDateTimeUtc(request.delivery_pdf_uploaded_at)}`
+                                          : "Uploaded"}
+                                        {request.delivery_pdf_size_bytes
+                                          ? ` · ${formatFileSize(request.delivery_pdf_size_bytes)}`
+                                          : ""}
+                                      </p>
+                                    </div>
+                                    <div class="ask-admin-pdf__actions">
+                                      {deliveryPdfUrl ? (
+                                        <>
+                                          <a
+                                            class="ask-admin-btn ask-admin-btn--ghost"
+                                            href={deliveryPdfUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                          >
+                                            View
+                                          </a>
+                                          <a
+                                            class="ask-admin-btn ask-admin-btn--ghost"
+                                            href={deliveryPdfUrl}
+                                            download={request.delivery_pdf_filename || "Ask-Leilia-Reading.pdf"}
+                                          >
+                                            Download
+                                          </a>
+                                        </>
+                                      ) : null}
+                                    </div>
+                                    {fulfilment !== "delivered" && fulfilment !== "archived" ? (
+                                      <>
+                                        <form
+                                          method="post"
+                                          action={`/api/ask-leilia/requests/${request.id}`}
+                                          enctype="multipart/form-data"
+                                          class="ask-admin-form ask-admin-form--inline"
+                                        >
+                                          <input type="hidden" name="return_to" value={returnTo} />
+                                          <input type="hidden" name="action" value="replace_pdf" />
+                                          <label>
+                                            Replace PDF
+                                            <input type="file" name="deliveryPdf" accept="application/pdf,.pdf" required />
+                                          </label>
+                                          <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                            Replace
+                                          </button>
+                                        </form>
+                                        <form
+                                          method="post"
+                                          action={`/api/ask-leilia/requests/${request.id}`}
+                                          class="ask-admin-form ask-admin-form--inline"
+                                          onsubmit="return confirm('Remove the completed PDF? This returns the reading to In progress.');"
+                                        >
+                                          <input type="hidden" name="return_to" value={returnTo} />
+                                          <input type="hidden" name="action" value="remove_pdf" />
+                                          <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                            Remove
+                                          </button>
+                                        </form>
+                                      </>
+                                    ) : fulfilment === "delivered" ? (
+                                      <form
+                                        method="post"
+                                        action={`/api/ask-leilia/requests/${request.id}`}
+                                        enctype="multipart/form-data"
+                                        class="ask-admin-form ask-admin-form--inline"
+                                      >
+                                        <input type="hidden" name="return_to" value={returnTo} />
+                                        <input type="hidden" name="action" value="replace_pdf" />
+                                        <label>
+                                          Replace PDF (keeps delivery record)
+                                          <input type="file" name="deliveryPdf" accept="application/pdf,.pdf" required />
+                                        </label>
+                                        <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                          Replace
+                                        </button>
+                                      </form>
+                                    ) : null}
+                                  </div>
+                                ) : (
+                                  <div class="ask-admin-pdf__empty">
+                                    <p>No completed reading uploaded.</p>
+                                    {fulfilment !== "archived" ? (
+                                      <form
+                                        method="post"
+                                        action={`/api/ask-leilia/requests/${request.id}`}
+                                        enctype="multipart/form-data"
+                                        class="ask-admin-form"
+                                      >
+                                        <input type="hidden" name="return_to" value={returnTo} />
+                                        <input type="hidden" name="action" value="upload_pdf" />
+                                        <label>
+                                          Upload completed reading PDF
+                                          <input type="file" name="deliveryPdf" accept="application/pdf,.pdf" required />
+                                        </label>
+                                        <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                                          Upload completed reading PDF
+                                        </button>
+                                      </form>
+                                    ) : null}
+                                  </div>
+                                )}
+                              </div>
+
+                              {fulfilment === "ready_to_send" ? (
+                                <form
+                                  method="post"
+                                  action={`/api/ask-leilia/requests/${request.id}`}
+                                  class="ask-admin-form"
+                                  onsubmit="return confirm('Email the completed PDF and mark this reading delivered?');"
+                                >
+                                  <input type="hidden" name="return_to" value={returnTo} />
+                                  <input type="hidden" name="action" value="send_delivery" />
+                                  <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                                    Send PDF and mark delivered
+                                  </button>
+                                </form>
+                              ) : null}
+
+                              {fulfilment === "delivered" || fulfilment === "archived" ? (
+                                <div class="ask-admin-delivery">
+                                  <h3>Delivery</h3>
+                                  {request.manually_delivered ? (
+                                    <p role="status">Manually marked as delivered</p>
+                                  ) : request.delivery_method === "system_email" ? (
+                                    <p>Sent by system email</p>
+                                  ) : null}
+                                  {request.delivered_at ? (
+                                    <p class="ask-admin-meta">
+                                      Delivered: {formatCompactDateTimeUtc(request.delivered_at)}
+                                    </p>
+                                  ) : null}
+                                  {request.delivered_to ? (
+                                    <p class="ask-admin-meta">Delivered to: {request.delivered_to}</p>
+                                  ) : null}
+                                  {request.delivery_method ? (
+                                    <p class="ask-admin-meta">
+                                      Method: {ASK_LEILIA_DELIVERY_METHOD_LABELS[request.delivery_method]}
+                                    </p>
+                                  ) : null}
+                                  {request.delivery_note ? (
+                                    <p class="ask-admin-meta">Note: {request.delivery_note}</p>
+                                  ) : null}
+                                  {request.last_resent_at ? (
+                                    <p class="ask-admin-meta">
+                                      Last resent: {formatCompactDateTimeUtc(request.last_resent_at)}
+                                    </p>
+                                  ) : null}
+                                  {request.delivery_attempt_count > 0 ? (
+                                    <p class="ask-admin-meta">
+                                      Send attempts: {request.delivery_attempt_count}
+                                    </p>
+                                  ) : null}
+                                  {fulfilment === "delivered" && request.delivery_pdf_path ? (
+                                    <form
+                                      method="post"
+                                      action={`/api/ask-leilia/requests/${request.id}`}
+                                      class="ask-admin-form"
+                                      onsubmit="return confirm('Resend the completed reading PDF to the client?');"
+                                    >
+                                      <input type="hidden" name="return_to" value={returnTo} />
+                                      <input type="hidden" name="action" value="resend_delivery" />
+                                      <button type="submit" class="ask-admin-btn">
+                                        Resend reading
+                                      </button>
+                                    </form>
+                                  ) : null}
+                                </div>
+                              ) : null}
+
+                              {fulfilment !== "delivered" && fulfilment !== "archived" ? (
+                                <details class="ask-admin-secondary">
+                                  <summary>Secondary actions</summary>
+                                  <form
+                                    method="post"
+                                    action={`/api/ask-leilia/requests/${request.id}`}
+                                    class="ask-admin-form"
+                                  >
+                                    <input type="hidden" name="return_to" value={returnTo} />
+                                    <input type="hidden" name="action" value="mark_delivered_manual" />
+                                    <p class="ask-admin-meta">
+                                      Mark as delivered manually when the reading was sent outside the system.
+                                    </p>
+                                    <label>
+                                      Delivery date and time
+                                      <input type="datetime-local" name="delivered_at" value={nowLocalValue} required />
+                                    </label>
+                                    <label>
+                                      Delivery method
+                                      <select name="delivery_method" required>
+                                        {ASK_LEILIA_MANUAL_DELIVERY_METHODS.map((method) => (
+                                          <option value={method}>
+                                            {ASK_LEILIA_DELIVERY_METHOD_LABELS[method]}
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </label>
+                                    <label>
+                                      Optional internal note
+                                      <textarea name="delivery_note" rows="2" maxlength="2000"></textarea>
+                                    </label>
+                                    <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                      Mark as delivered manually
+                                    </button>
+                                  </form>
+                                </details>
+                              ) : null}
+                              </>
+                              ) : null}
+                            </section>
+
+                            <section class="ask-admin-panel__section" aria-labelledby={`review-${request.id}`}>
+                              <h2 id={`review-${request.id}`}>Review</h2>
+                              {fulfilment === "delivered" || fulfilment === "archived" ? (
+                                <>
+                                  <p>
+                                    <span class={`ask-admin-review ask-admin-review--${review}`}>
+                                      {reviewWorkflowStatusLabel(review)}
+                                    </span>
+                                  </p>
+                                  {request.review_requested_at ? (
+                                    <p class="ask-admin-meta">
+                                      Requested: {formatCompactDateTimeUtc(request.review_requested_at)}
+                                      {request.review_request_recipient
+                                        ? ` · ${request.review_request_recipient}`
+                                        : ""}
+                                    </p>
+                                  ) : null}
+                                  {review === "not_requested" ? (
+                                    <form
+                                      method="post"
+                                      action={`/api/ask-leilia/requests/${request.id}`}
+                                      class="ask-admin-form"
+                                    >
+                                      <input type="hidden" name="return_to" value={returnTo} />
+                                      <input type="hidden" name="action" value="request_review" />
+                                      <button type="submit" class="ask-admin-btn ask-admin-btn--primary">
+                                        Request review
+                                      </button>
+                                    </form>
+                                  ) : null}
+                                  {review === "requested" ? (
+                                    <form
+                                      method="post"
+                                      action={`/api/ask-leilia/requests/${request.id}`}
+                                      class="ask-admin-form"
+                                      onsubmit="return confirm('Resend the review request email?');"
+                                    >
+                                      <input type="hidden" name="return_to" value={returnTo} />
+                                      <input type="hidden" name="action" value="resend_review_request" />
+                                      <button type="submit" class="ask-admin-btn">
+                                        Resend review request
+                                      </button>
+                                    </form>
+                                  ) : null}
+                                  {review === "provided" && request.linked_review_id ? (
+                                    <p>
+                                      <a
+                                        class="ask-admin-btn"
+                                        href={`/ask-leilia/admin/reviews/?focus=${encodeURIComponent(request.linked_review_id)}`}
+                                      >
+                                        View review
+                                      </a>
+                                    </p>
+                                  ) : null}
+                                  <p>
+                                    <a href="/ask-leilia/admin/reviews/">Open review moderation</a>
+                                  </p>
+                                </>
+                              ) : (
+                                <p class="ask-admin-meta">Review actions unlock after delivery.</p>
+                              )}
+                            </section>
+
+                            <section class="ask-admin-panel__section" aria-labelledby={`admin-${request.id}`}>
+                              <h2 id={`admin-${request.id}`}>Internal administration</h2>
+                              <form
+                                method="post"
+                                action={`/api/ask-leilia/requests/${request.id}`}
+                                class="ask-admin-form"
+                              >
+                                <input type="hidden" name="return_to" value={returnTo} />
+                                <input type="hidden" name="action" value="save_notes" />
+                                <label>
+                                  Internal notes
+                                  <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
+                                </label>
+                                <button type="submit" class="ask-admin-btn">Save notes</button>
+                              </form>
+                              <form
+                                method="post"
+                                action={`/api/ask-leilia/requests/${request.id}`}
+                                class="ask-admin-form"
+                                onsubmit={
+                                  isArchived
+                                    ? "return confirm('Restore this reading to the active queue?');"
+                                    : "return confirm('Archive this reading? It will leave the active queue but will not be deleted.');"
+                                }
+                              >
+                                <input type="hidden" name="return_to" value={returnTo} />
+                                <input type="hidden" name="action" value={isArchived ? "restore" : "archive"} />
+                                <button type="submit" class="ask-admin-btn ask-admin-btn--ghost">
+                                  {isArchived ? "Restore from archive" : "Archive"}
+                                </button>
+                              </form>
+
+                              {fulfilment === "delivered" ? (
+                                <details class="ask-admin-secondary">
+                                  <summary>Reading Library publication</summary>
+                                  {libraryPublication?.isPublished ? (
+                                    <p class="ask-admin-meta">
+                                      Published:{" "}
+                                      <a href={`/recent-client-readings/${libraryPublication.slug}/`}>
+                                        View in library
+                                      </a>
+                                    </p>
+                                  ) : libraryPublication ? (
+                                    <p class="ask-admin-meta">Saved as draft (not published).</p>
+                                  ) : (
+                                    <p class="ask-admin-meta">Not yet added to the Reading Library.</p>
+                                  )}
+                                  <form
+                                    class="ask-admin-form"
+                                    method="post"
+                                    action={`/api/ask-leilia/reading-library/${request.id}`}
+                                  >
+                                    <label>
+                                      Library title
+                                      <input
+                                        type="text"
+                                        name="libraryTitle"
+                                        required
+                                        minlength="4"
+                                        maxlength="200"
+                                        value={libraryPublication?.title ?? ""}
+                                      />
+                                    </label>
+                                    <label>
+                                      URL slug
+                                      <input
+                                        type="text"
+                                        name="librarySlug"
+                                        required
+                                        pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                                        value={libraryPublication?.slug ?? suggestedSlug}
+                                      />
+                                    </label>
+                                    <label>
+                                      Short excerpt (card summary)
+                                      <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">
+                                        {libraryPublication?.summary ?? ""}
+                                      </textarea>
+                                    </label>
+                                    <label>
+                                      SEO description
+                                      <textarea
+                                        name="librarySeoDescription"
+                                        rows="2"
+                                        required
+                                        minlength="40"
+                                        maxlength="320"
+                                      >
+                                        {libraryPublication?.seoDescription ?? ""}
+                                      </textarea>
+                                    </label>
+                                    <label>
+                                      Reading body (Markdown)
+                                      <textarea name="libraryBody" rows="8" required minlength="100">
+                                        {libraryPublication?.body ?? ""}
+                                      </textarea>
+                                    </label>
+                                    <label>
+                                      Primary life areas (comma-separated)
+                                      <input
+                                        type="text"
+                                        name="libraryLifeAreas"
+                                        value={libraryPublication?.lifeAreas.join(", ") ?? ""}
+                                      />
+                                    </label>
+                                    <label>
+                                      Primary cards featured (comma-separated)
+                                      <input
+                                        type="text"
+                                        name="libraryPrimaryCards"
+                                        value={libraryPublication?.primaryCards.join(", ") ?? ""}
+                                      />
+                                    </label>
+                                    <label>
+                                      Spread used
+                                      <input
+                                        type="text"
+                                        name="librarySpreadUsed"
+                                        value={libraryPublication?.spreadUsed ?? readingTypeLabel(request.reading_type)}
+                                      />
+                                    </label>
+                                    <label>
+                                      Spread image paths (one per line, under public/)
+                                      <textarea name="librarySpreadImages" rows="3">
+                                        {libraryPublication?.spreadImagePaths.join("\n") ?? ""}
+                                      </textarea>
+                                    </label>
+                                    <label class="ask-admin-publish">
+                                      <input
+                                        type="checkbox"
+                                        name="libraryPublish"
+                                        checked={libraryPublication?.isPublished ?? false}
+                                      />
+                                      Publish to Reading Library
+                                    </label>
+                                    <button type="submit" class="ask-admin-btn">Save library entry</button>
+                                  </form>
+                                </details>
+                              ) : null}
+                            </section>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       ) : (
-        <p class="ask-admin__empty">No Ask Leilia requests match this filter.</p>
+        <p class="ask-admin__empty">No Ask Leilia readings match this filter.</p>
       )
     }
   </main>
@@ -506,7 +1122,7 @@ const matchLabel =
       if (Number.isNaN(date.getTime())) return null;
       const dateText = new Intl.DateTimeFormat(undefined, {
         day: "numeric",
-        month: "long",
+        month: "short",
         year: "numeric",
       }).format(date);
       const timeText = new Intl.DateTimeFormat(undefined, {
@@ -546,18 +1162,99 @@ const matchLabel =
       });
     }
 
-    hydrateLocalTimes();
-    document.addEventListener("astro:page-load", () => hydrateLocalTimes());
+    function setExpanded(id, expanded) {
+      const detail = document.querySelector(`[data-ask-admin-detail="${id}"]`);
+      const toggle = document.querySelector(`[data-ask-admin-toggle="${id}"]`);
+      if (!(detail instanceof HTMLElement) || !(toggle instanceof HTMLButtonElement)) return;
+      detail.hidden = !expanded;
+      toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+      toggle.classList.toggle("ask-admin-expand--open", expanded);
+    }
+
+    function bindExpandControls() {
+      document.querySelectorAll("[data-ask-admin-toggle]").forEach((button) => {
+        if (!(button instanceof HTMLButtonElement)) return;
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const id = button.getAttribute("data-ask-admin-toggle");
+          if (!id) return;
+          const expanded = button.getAttribute("aria-expanded") === "true";
+          setExpanded(id, !expanded);
+        });
+      });
+
+      document.querySelectorAll("[data-ask-admin-expand]").forEach((link) => {
+        if (!(link instanceof HTMLAnchorElement)) return;
+        link.addEventListener("click", (event) => {
+          const id = link.getAttribute("data-ask-admin-expand");
+          if (!id) return;
+          event.preventDefault();
+          setExpanded(id, true);
+          document.getElementById(`ask-admin-panel-${id}`)?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        });
+      });
+
+      document.querySelectorAll("[data-ask-admin-row]").forEach((row) => {
+        if (!(row instanceof HTMLTableRowElement)) return;
+        row.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          if (target.closest("a, button, form, input, select, textarea, label")) return;
+          const id = row.getAttribute("data-ask-admin-row");
+          if (!id) return;
+          const toggle = document.querySelector(`[data-ask-admin-toggle="${id}"]`);
+          const expanded = toggle?.getAttribute("aria-expanded") === "true";
+          setExpanded(id, !expanded);
+        });
+      });
+    }
+
+    function boot() {
+      hydrateLocalTimes();
+      bindExpandControls();
+    }
+
+    boot();
+    document.addEventListener("astro:page-load", boot);
   </script>
 </BaseLayout>
 
 <style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .ask-admin {
     padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
   }
 
   .ask-admin__head {
-    max-width: 44rem;
+    max-width: 52rem;
+  }
+
+  .ask-admin__lede,
+  .ask-admin p,
+  .ask-admin dd {
+    color: var(--tok-text-dark);
+    line-height: 1.65;
+  }
+
+  .ask-admin__summary {
+    margin: 0.85rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
   }
 
   .ask-admin__notice {
@@ -583,18 +1280,46 @@ const matchLabel =
   }
 
   .ask-admin h1 {
-    margin: 0 0 0.85rem;
+    margin: 0 0 0.55rem;
     font-family: var(--font-accent);
-    font-size: clamp(2.4rem, 9vw, 4.8rem);
+    font-size: clamp(2.2rem, 8vw, 4.2rem);
     font-weight: 400;
     line-height: 1;
     color: var(--tok-water);
   }
 
-  .ask-admin p,
-  .ask-admin dd {
+  .ask-admin__views {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.35rem;
+  }
+
+  .ask-admin__view {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.42rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-control);
     color: var(--tok-text-dark);
-    line-height: 1.75;
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  .ask-admin__view:focus-visible,
+  .ask-admin-btn:focus-visible,
+  .ask-admin-expand:focus-visible,
+  .ask-admin__filters :focus-visible,
+  .ask-admin-form :focus-visible {
+    outline: 2px solid var(--tok-teal);
+    outline-offset: 2px;
+  }
+
+  .ask-admin__view--active {
+    background: var(--tok-btn-filled-bg);
+    border-color: transparent;
+    color: var(--tok-btn-filled-fg);
   }
 
   .ask-admin__filters {
@@ -602,19 +1327,27 @@ const matchLabel =
     flex-wrap: wrap;
     gap: 0.75rem;
     align-items: end;
-    margin-top: 1.5rem;
+    margin-top: 1.15rem;
   }
 
-  .ask-admin__filters label {
+  .ask-admin__filters label,
+  .ask-admin-form label {
     display: grid;
-    gap: 0.35rem;
+    gap: 0.3rem;
     font-size: var(--tok-type-label);
     font-weight: 700;
   }
 
   .ask-admin__filters select,
-  .ask-admin__filters button {
-    padding: 0.6rem 0.75rem;
+  .ask-admin__filters input,
+  .ask-admin__filters button,
+  .ask-admin-form select,
+  .ask-admin-form textarea,
+  .ask-admin-form input[type="text"],
+  .ask-admin-form input[type="search"],
+  .ask-admin-form input[type="file"],
+  .ask-admin-form input[type="datetime-local"] {
+    padding: 0.55rem 0.7rem;
     border: 1px solid var(--tok-border-light);
     border-radius: var(--radius-control);
     background: var(--tok-surface-reading);
@@ -622,294 +1355,332 @@ const matchLabel =
     font: inherit;
   }
 
-  .ask-admin__filters button {
+  .ask-admin__filters button,
+  .ask-admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.75rem;
     border: 0;
+    border-radius: var(--radius-control);
     background: var(--tok-btn-filled-bg);
     color: var(--tok-btn-filled-fg);
+    font: inherit;
     font-weight: var(--tok-ui-btn-font-weight);
+    text-decoration: none;
     cursor: pointer;
   }
 
-  .ask-admin__count {
-    margin: 1rem 0 0;
-    font-size: 0.95rem;
-    color: var(--tok-text-muted);
-  }
-
-  .ask-admin__list {
-    display: grid;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-  }
-
-  .ask-admin-card,
-  .ask-admin__empty {
-    padding: 0;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
-    overflow: hidden;
-  }
-
-  .ask-admin__empty {
-    padding: clamp(1rem, 4vw, 1.65rem);
-  }
-
-  .ask-admin-card__summary {
-    display: grid;
-    grid-template-columns: minmax(9rem, 12rem) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.4fr) auto;
-    gap: 0.65rem 1rem;
-    align-items: center;
-    padding: 0.9rem 1rem;
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .ask-admin-card__summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .ask-admin-card__summary:focus-visible {
-    outline: 2px solid var(--tok-teal);
-    outline-offset: -2px;
-  }
-
-  .ask-admin-card__when {
-    font-size: 0.86rem;
-    font-weight: 600;
+  .ask-admin-btn--ghost {
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
     color: var(--tok-text-dark);
   }
 
-  .ask-admin-card__seeker {
-    display: grid;
-    gap: 0.1rem;
-    min-width: 0;
+  .ask-admin-btn--primary {
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
   }
 
-  .ask-admin-card__name {
+  .ask-admin__count {
+    margin: 0.85rem 0 0;
+    font-size: 0.92rem;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-admin__empty {
+    margin-top: 1.25rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+  }
+
+  .ask-admin__table-wrap {
+    margin-top: 1rem;
+    overflow-x: auto;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
+  }
+
+  .ask-admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+  }
+
+  .ask-admin-table th,
+  .ask-admin-table td {
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 18%, transparent);
+    font-size: 0.9rem;
+  }
+
+  .ask-admin-table th {
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--tok-text-muted);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, transparent);
+  }
+
+  .ask-admin-table__row {
+    cursor: pointer;
+  }
+
+  .ask-admin-table__row:hover {
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 40%, transparent);
+  }
+
+  .ask-admin-table__row--archived {
+    opacity: 0.82;
+  }
+
+  .ask-admin-table__name {
+    display: block;
     font-weight: 700;
     color: var(--tok-water);
   }
 
-  .ask-admin-card__email {
-    font-size: 0.82rem;
+  .ask-admin-table__email,
+  .ask-admin-table__muted,
+  .ask-admin-meta {
+    display: block;
+    font-size: 0.8rem;
     color: var(--tok-text-muted);
-    overflow-wrap: anywhere;
   }
 
-  .ask-admin-card__type {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--tok-text-dark);
-  }
-
-  .ask-admin-card__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .ask-admin-card__badge {
+  .ask-admin-status,
+  .ask-admin-review {
     display: inline-flex;
     align-items: center;
-    padding: 0.28rem 0.5rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
-    border-radius: var(--radius-pill);
-    font-size: 0.68rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    border-radius: var(--radius-control);
+    font-size: 0.78rem;
+    font-weight: 700;
     color: var(--tok-text-dark);
-    background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 50%, transparent);
   }
 
-  .ask-admin-card__badge--archived {
-    border-color: color-mix(in srgb, var(--tok-teal) 40%, transparent);
-    color: var(--tok-teal-dim);
+  .ask-admin-payment {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    font-size: 0.92rem;
   }
 
-  .ask-admin-card__chevron {
-    width: 0.7rem;
-    height: 0.7rem;
+  .ask-admin-payment__mark {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .ask-admin-payment--paid {
+    color: #0f6b3c;
+  }
+
+  .ask-admin-payment--unpaid {
+    color: #9b1c1c;
+  }
+
+  .ask-admin-dl--compact {
+    margin-top: 0.65rem;
+  }
+
+  .ask-admin-status--ready_to_send,
+  .ask-admin-review--requested {
+    border-color: color-mix(in srgb, var(--tok-teal) 45%, transparent);
+  }
+
+  .ask-admin-status--delivered,
+  .ask-admin-review--provided {
+    border-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
+  }
+
+  .ask-admin-inline-form {
+    display: inline;
+  }
+
+  .ask-admin-expand {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+    border-radius: var(--radius-control);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .ask-admin-expand__chevron {
+    width: 0.55rem;
+    height: 0.55rem;
     border-right: 2px solid var(--tok-text-dark);
     border-bottom: 2px solid var(--tok-text-dark);
     transform: rotate(45deg);
     transition: transform var(--dur-fast) var(--ease-out);
-    justify-self: end;
   }
 
-  .ask-admin-card[open] .ask-admin-card__chevron {
+  .ask-admin-expand--open .ask-admin-expand__chevron {
     transform: rotate(225deg);
   }
 
-  .ask-admin-card__panel {
-    padding: 0 1rem 1.15rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+  .ask-admin-table__detail td {
+    padding: 0;
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 35%, transparent);
   }
 
-  .ask-admin-card__warning {
-    margin-top: 1rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
-    border-radius: var(--radius-control);
-    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, transparent);
+  .ask-admin-panel {
+    padding: 1rem 0.9rem 1.15rem;
   }
 
-  .ask-admin-card__warning p {
-    margin: 0 0 0.5rem;
-  }
-
-  .ask-admin-card__warning ul {
-    margin: 0;
-    padding-left: 1.15rem;
-  }
-
-  .ask-admin-card dl {
+  .ask-admin-panel__grid {
     display: grid;
-    gap: 0.85rem;
-    margin: 1rem 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 1.15rem;
   }
 
-  .ask-admin-card dt {
-    margin-bottom: 0.15rem;
-    font-size: var(--tok-type-meta);
+  .ask-admin-panel__section h2 {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    color: var(--tok-water);
+  }
+
+  .ask-admin-panel__section h3 {
+    margin: 0.85rem 0 0.45rem;
+    font-size: 0.92rem;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-admin-dl {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+  }
+
+  .ask-admin-dl dt {
+    margin-bottom: 0.12rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: var(--tok-letter-upper);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--tok-text-muted);
   }
 
-  .ask-admin-card dd {
+  .ask-admin-dl dd {
     margin: 0;
   }
 
-  .ask-admin-card__form {
+  .ask-admin-dl__question dd {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--tok-water);
+    line-height: 1.55;
+  }
+
+  .ask-admin-form {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.65rem;
+    margin-top: 0.75rem;
   }
 
-  .ask-admin-card__form label {
-    display: grid;
-    gap: 0.35rem;
-    font-size: var(--tok-type-label);
-    font-weight: 700;
+  .ask-admin-form--inline {
+    margin-top: 0.5rem;
   }
 
-  .ask-admin-card__form select,
-  .ask-admin-card__form textarea,
-  .ask-admin-card__form input[type="file"] {
-    padding: 0.6rem 0.75rem;
-    border: 1px solid var(--tok-border-light);
-    border-radius: var(--radius-control);
-    background: var(--tok-surface-reading);
-    color: var(--tok-text-dark);
-    font: inherit;
-  }
-
-  .ask-admin-card__form textarea {
+  .ask-admin-form textarea {
     width: 100%;
-    line-height: 1.6;
+    line-height: 1.55;
     resize: vertical;
   }
 
-  .ask-admin-card__notes {
-    max-width: 42rem;
-  }
-
-  .ask-admin-card__form button,
-  .ask-admin-card__archive-btn {
-    justify-self: start;
-    padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
-    border: 0;
+  .ask-admin-pdf__row,
+  .ask-admin-pdf__empty {
+    margin-top: 0.5rem;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
     border-radius: var(--radius-control);
-    background: var(--tok-btn-filled-bg);
-    color: var(--tok-btn-filled-fg);
-    font-weight: var(--tok-ui-btn-font-weight);
-    cursor: pointer;
+    background: color-mix(in srgb, var(--tok-surface-reading) 80%, transparent);
   }
 
-  .ask-admin-card__archive-form {
+  .ask-admin-pdf__name {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .ask-admin-pdf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.55rem;
+  }
+
+  .ask-admin-secondary {
     margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 18%, transparent);
   }
 
-  .ask-admin-card__archive-btn {
-    background: transparent;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
-    color: var(--tok-text-dark);
-  }
-
-  .ask-admin-card__library {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
-  }
-
-  .ask-admin-card__library summary {
+  .ask-admin-secondary summary {
     cursor: pointer;
     font-weight: 700;
     color: var(--tok-water);
   }
 
-  .ask-admin-card__library-status {
-    margin: 0.85rem 0;
-    font-size: 0.96rem;
-    color: var(--tok-text-muted);
-  }
-
-  .ask-admin-card__library-status a {
-    color: var(--tok-teal);
-    font-weight: 600;
-  }
-
-  .ask-admin-card__library-form {
-    margin-top: 0.75rem;
-  }
-
-  .ask-admin-card__library-form input[type="text"] {
-    padding: 0.6rem 0.75rem;
-    border: 1px solid var(--tok-border-light);
-    border-radius: var(--radius-control);
-    background: var(--tok-surface-reading);
-    color: var(--tok-text-dark);
-    font: inherit;
-  }
-
-  .ask-admin-card__publish {
-    display: flex;
+  .ask-admin-publish {
+    display: flex !important;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     font-weight: 600;
   }
 
-  @media (max-width: 900px) {
-    .ask-admin-card__summary {
-      grid-template-columns: 1fr auto;
-      grid-template-areas:
-        "when chevron"
-        "seeker chevron"
-        "type type"
-        "badges badges";
+  @media (max-width: 980px) {
+    .ask-admin-panel__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .ask-admin-table {
+      min-width: 0;
+      display: block;
     }
 
-    .ask-admin-card__when {
-      grid-area: when;
+    .ask-admin-table thead {
+      display: none;
     }
 
-    .ask-admin-card__seeker {
-      grid-area: seeker;
+    .ask-admin-table tbody,
+    .ask-admin-table tr,
+    .ask-admin-table td {
+      display: block;
+      width: 100%;
     }
 
-    .ask-admin-card__type {
-      grid-area: type;
+    .ask-admin-table__row {
+      padding: 0.75rem 0.7rem 0.35rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 18%, transparent);
     }
 
-    .ask-admin-card__badges {
-      grid-area: badges;
+    .ask-admin-table__row td {
+      border: 0;
+      padding: 0.2rem 0;
     }
 
-    .ask-admin-card__chevron {
-      grid-area: chevron;
-      align-self: start;
-      margin-top: 0.35rem;
+    .ask-admin-table__row td:last-child {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -2.2rem;
+    }
+
+    .ask-admin-table__detail td {
+      padding: 0;
     }
   }
 </style>

@@ -260,7 +260,23 @@ export async function insertAskLeiliaReview(
     return { ok: false, error: "Unable to submit the review right now." };
   }
 
-  return { ok: true, id: (data as { id: string }).id };
+  const reviewId = (data as { id: string }).id;
+
+  if (input.requestId) {
+    const { error: linkError } = await service
+      .from("ask_leilia_requests")
+      .update({
+        review_status: "provided",
+        linked_review_id: reviewId,
+      })
+      .eq("id", input.requestId);
+
+    if (linkError) {
+      console.error("Unable to link Ask Leilia review to request:", linkError);
+    }
+  }
+
+  return { ok: true, id: reviewId };
 }
 
 export async function listAskLeiliaReviews(

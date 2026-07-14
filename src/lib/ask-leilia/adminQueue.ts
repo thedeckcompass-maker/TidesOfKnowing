@@ -3,6 +3,29 @@ import type { AskLeiliaRequest } from "./types";
 export const ASK_LEILIA_ADMIN_SORTS = ["newest", "oldest"] as const;
 export type AskLeiliaAdminSort = (typeof ASK_LEILIA_ADMIN_SORTS)[number];
 
+export const ASK_LEILIA_ADMIN_VIEWS = [
+  "active",
+  "unpaid",
+  "paid",
+  "new",
+  "in_progress",
+  "ready_to_send",
+  "delivered",
+  "review_outstanding",
+  "review_provided",
+  "archived",
+] as const;
+
+export type AskLeiliaAdminView = (typeof ASK_LEILIA_ADMIN_VIEWS)[number];
+
+export function parseAskLeiliaAdminView(value: unknown): AskLeiliaAdminView {
+  if (typeof value === "string" && (ASK_LEILIA_ADMIN_VIEWS as readonly string[]).includes(value)) {
+    return value as AskLeiliaAdminView;
+  }
+  return "active";
+}
+
+/** @deprecated Prefer AskLeiliaAdminView — kept for test/compatibility shims. */
 export const ASK_LEILIA_ARCHIVE_FILTERS = ["active", "archived", "all"] as const;
 export type AskLeiliaArchiveFilter = (typeof ASK_LEILIA_ARCHIVE_FILTERS)[number];
 
@@ -36,7 +59,6 @@ export function compareAskLeiliaAdminRequests(
     return sort === "oldest" ? aTime - bTime : bTime - aTime;
   }
   if (aValid !== bValid) {
-    // Valid timestamps sort ahead of invalid ones for newest; behind for oldest.
     if (sort === "oldest") return aValid ? -1 : 1;
     return aValid ? -1 : 1;
   }
@@ -58,19 +80,6 @@ export function filterAskLeiliaAdminRequestsByArchive<
     return requests.filter((request) => Boolean(request.archived_at));
   }
   return requests.filter((request) => !request.archived_at);
-}
-
-export function paymentStatusLabel(
-  request: Pick<AskLeiliaRequest, "status" | "payment">,
-): string {
-  if (request.payment?.payment_status) {
-    const raw = request.payment.payment_status.trim();
-    if (!raw) return "Unknown";
-    return raw.charAt(0).toUpperCase() + raw.slice(1);
-  }
-  if (request.status === "Pending Payment") return "Awaiting payment";
-  if (request.status === "Payment Exception") return "Exception";
-  return "Not linked";
 }
 
 export type LocalSubmissionDisplay = {
@@ -103,7 +112,7 @@ export function formatSubmissionDisplayUtc(iso: string | null | undefined): Loca
 
   const dateText = new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
-    month: "long",
+    month: "short",
     year: "numeric",
     timeZone: "UTC",
   }).format(date);
@@ -123,15 +132,31 @@ export function formatSubmissionDisplayUtc(iso: string | null | undefined): Loca
   };
 }
 
+/** Compact date/time for table cells (UTC fallback). */
+export function formatCompactDateTimeUtc(iso: string | null | undefined): string {
+  const formatted = formatSubmissionDisplayUtc(iso);
+  if (formatted.unavailable) return "—";
+  return `${formatted.dateText}, ${formatted.timeText}`;
+}
+
+export function formatFileSize(bytes: number | null | undefined): string {
+  if (bytes == null || !Number.isFinite(bytes) || bytes < 0) return "";
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 export function adminQueueReturnPath(input: {
   readingType: string;
   sort: AskLeiliaAdminSort;
-  archive: AskLeiliaArchiveFilter;
+  view: AskLeiliaAdminView;
+  search?: string;
 }): string {
   const params = new URLSearchParams();
+  if (input.view !== "active") params.set("view", input.view);
   if (input.readingType !== "all") params.set("reading_type", input.readingType);
   if (input.sort !== "newest") params.set("sort", input.sort);
-  if (input.archive !== "active") params.set("archive", input.archive);
+  if (input.search?.trim()) params.set("q", input.search.trim());
   const query = params.toString();
   return query ? `/ask-leilia/admin/?${query}` : "/ask-leilia/admin/";
 }

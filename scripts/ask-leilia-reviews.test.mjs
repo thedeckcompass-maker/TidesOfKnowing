@@ -669,19 +669,27 @@ run("submit API consumes token and redirects to thank-you", () => {
   assert.match(source, /honeypot|website/);
 });
 
-run("delivery email includes review invitation only when reviewUrl set", () => {
+run("review request email is sent separately after delivery", () => {
   const source = readFileSync(
     join(REPO_ROOT, "src/lib/ask-leilia/notifications.ts"),
     "utf8",
   );
-  assert.match(source, /How Was Your Reading\?/);
+  assert.match(source, /sendAskLeiliaReviewRequest/);
+  assert.match(source, /How was your Ask Leilia reading\?/);
   assert.match(source, /Share Your Experience/);
   assert.match(source, /reviewUrl/);
+
+  const deliveryFn = source.slice(
+    source.indexOf("export async function sendAskLeiliaCustomerDelivery"),
+    source.indexOf("export async function sendAskLeiliaReviewRequest"),
+  );
+  assert.equal(deliveryFn.includes("Share Your Experience"), false);
+
   const paymentFn = source.slice(
     source.indexOf("sendAskLeiliaCustomerPaymentConfirmation"),
     source.indexOf("export async function notifyAskLeiliaPaymentException"),
   );
-  assert.equal(paymentFn.includes("How Was Your Reading?"), false);
+  assert.equal(paymentFn.includes("Share Your Experience"), false);
 });
 
 run("carousel renders review text in SSR HTML and hides controls for one card", () => {

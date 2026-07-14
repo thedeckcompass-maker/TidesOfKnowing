@@ -1,5 +1,13 @@
 import type { AskLeiliaCardPreference, AskLeiliaStatus } from "./types";
-import { ASK_LEILIA_STATUSES, ASK_LEILIA_WORKFLOW_STATUSES } from "./types";
+import { ASK_LEILIA_STATUSES } from "./types";
+import {
+  isAskLeiliaEffectivelyPaid,
+  isAskLeiliaManualPaymentActive,
+  isAskLeiliaManualPaymentMethod,
+  isAskLeiliaStripePaymentVerified,
+  type AskLeiliaManualPaymentMethod,
+  type PaymentStateFields,
+} from "./fulfilment";
 import { isAskLeiliaDbReadingType } from "./readingTypes";
 
 export type ValidationResult<T> =
@@ -23,6 +31,15 @@ export function isAskLeiliaReadingTypeFilter(value: unknown): boolean {
   return value === "all" || isAskLeiliaDbReadingType(value);
 }
 
+/** Effective payment gates fulfilment — Stripe verified OR active manual override. */
+export function isActionableAskLeiliaStatus(status: AskLeiliaStatus): boolean {
+  return status === "Paid" || status === "In Progress" || status === "Delivered";
+}
+
+/**
+ * Legacy status-dropdown transitions (payment exception resolution, etc.).
+ * Fulfilment workflow prefers explicit actions (start / send / archive).
+ */
 export function validateStatusTransition(input: {
   currentStatus: AskLeiliaStatus;
   nextStatus: AskLeiliaStatus;
@@ -69,6 +86,7 @@ export function validateStatusTransition(input: {
   return { ok: true, value: nextStatus };
 }
 
+/** @deprecated Prefer contextual fulfilment actions. Kept for payment-exception resolution. */
 export function adminSelectableStatuses(currentStatus: AskLeiliaStatus): AskLeiliaStatus[] {
   if (currentStatus === "Payment Exception") {
     return ["Payment Exception", "Paid"];
@@ -78,8 +96,179 @@ export function adminSelectableStatuses(currentStatus: AskLeiliaStatus): AskLeil
     return ["Pending Payment"];
   }
 
-  return [...ASK_LEILIA_WORKFLOW_STATUSES];
+  return ["Paid", "In Progress", "Delivered"];
 }
+
+export function validateStartReading(input: {
+  status: AskLeiliaStatus;
+  archivedAt: string | null;
+  effectivelyPaid: boolean;
+}): ValidationResult<"In Progress"> {
+  if (input.archivedAt) {
+    return { ok: false, error: "Restore this reading before starting work." };
+  }
+  if (!input.effectivelyPaid) {
+    return {
+      ok: false,
+      error: "Mark this reading as paid before starting fulfilment.",
+    };
+  }
+  if (input.status === "Delivered") {
+    return { ok: false, error: "This reading has already been delivered." };
+  }
+  return { ok: true, value: "In Progress" };
+}
+
+export function validateSystemDelivery(input: {
+  status: AskLeiliaStatus;
+  archivedAt: string | null;
+  hasDeliveryPdf: boolean;
+  email: string;
+  effectivelyPaid: boolean;
+}): ValidationResult<true> {
+  if (input.archivedAt) {
+    return { ok: false, error: "Restore this reading before sending." };
+  }
+  if (input.status === "Delivered") {
+    return { ok: false, error: "This reading has already been delivered. Use Resend instead." };
+  }
+  if (!input.effectivelyPaid) {
+    return { ok: false, error: "Mark this reading as paid before sending." };
+  }
+  if (!input.hasDeliveryPdf) {
+    return { ok: false, error: "Upload a completed reading PDF before sending." };
+  }
+  if (!input.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
+    return { ok: false, error: "A valid client email address is required to send the reading." };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateManualDelivery(input: {
+  status: AskLeiliaStatus;
+  archivedAt: string | null;
+  effectivelyPaid: boolean;
+}): ValidationResult<true> {
+  if (input.archivedAt) {
+    return { ok: false, error: "Restore this reading before marking it delivered." };
+  }
+  if (input.status === "Delivered") {
+    return { ok: false, error: "This reading has already been delivered." };
+  }
+  if (!input.effectivelyPaid) {
+    return { ok: false, error: "Mark this reading as paid before marking delivery." };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateUploadDeliveryPdf(input: {
+  archivedAt: string | null;
+  effectivelyPaid: boolean;
+}): ValidationResult<true> {
+  if (input.archivedAt) {
+    return { ok: false, error: "Restore this reading before uploading a PDF." };
+  }
+  if (!input.effectivelyPaid) {
+    return { ok: false, error: "Mark this reading as paid before uploading a completed PDF." };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateMarkAsPaid(input: {
+  effectivelyPaid: boolean;
+  method: unknown;
+  reference: unknown;
+  note: unknown;
+}): ValidationResult<{
+  method: AskLeiliaManualPaymentMethod;
+  reference: string | null;
+  note: string | null;
+}> {
+  if (input.effectivelyPaid) {
+    return { ok: false, error: "This reading is already effectively paid." };
+  }
+  if (!isAskLeiliaManualPaymentMethod(input.method)) {
+    return { ok: false, error: "Choose a payment method." };
+  }
+  const reference = cleanText(input.reference).slice(0, 200) || null;
+  const note = cleanText(input.note).slice(0, 2000) || null;
+  return { ok: true, value: { method: input.method, reference, note } };
+}
+
+export function validateReverseManualPayment(input: PaymentStateFields): ValidationResult<true> {
+  if (!isAskLeiliaManualPaymentActive(input)) {
+    return { ok: false, error: "There is no active manual payment confirmation to reverse." };
+  }
+  if (input.status === "Delivered") {
+    return {
+      ok: false,
+      error: "Manual payment cannot be reversed after the reading has been delivered.",
+    };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateResendDelivery(input: {
+  status: AskLeiliaStatus;
+  hasDeliveryPdf: boolean;
+  email: string;
+}): ValidationResult<true> {
+  if (input.status !== "Delivered") {
+    return { ok: false, error: "Only delivered readings can be resent." };
+  }
+  if (!input.hasDeliveryPdf) {
+    return { ok: false, error: "A completed reading PDF is required to resend." };
+  }
+  if (!input.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
+    return { ok: false, error: "A valid client email address is required to resend." };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateRemoveDeliveryPdf(input: {
+  status: AskLeiliaStatus;
+  hasDeliveryPdf: boolean;
+}): ValidationResult<true> {
+  if (!input.hasDeliveryPdf) {
+    return { ok: false, error: "There is no completed reading PDF to remove." };
+  }
+  if (input.status === "Delivered") {
+    return {
+      ok: false,
+      error:
+        "Completed PDFs cannot be removed after delivery. Upload a replacement if you need a corrected file.",
+    };
+  }
+  return { ok: true, value: true };
+}
+
+export function validateRequestReview(input: {
+  status: AskLeiliaStatus;
+  reviewStatus: string;
+  linkedReviewId: string | null;
+}): ValidationResult<true> {
+  if (input.status !== "Delivered") {
+    return { ok: false, error: "Request a review only after the reading has been delivered." };
+  }
+  if (input.linkedReviewId || input.reviewStatus === "provided") {
+    return { ok: false, error: "A review has already been provided for this reading." };
+  }
+  return { ok: true, value: true };
+}
+
+/** After reversing a manual override, restore Stripe lifecycle status when fulfilment was not Stripe-verified. */
+export function statusAfterManualPaymentReversal(input: PaymentStateFields): AskLeiliaStatus {
+  if (isAskLeiliaStripePaymentVerified({ ...input, manually_marked_paid: false })) {
+    return input.status;
+  }
+  if (input.status === "In Progress" || input.status === "Paid") {
+    return "Pending Payment";
+  }
+  return input.status;
+}
+
+// Re-export for admin callers that already import payment helpers via validation.
+export { isAskLeiliaEffectivelyPaid, isAskLeiliaStripePaymentVerified };
 
 export function validateAskLeiliaRequest(input: {
   name: unknown;

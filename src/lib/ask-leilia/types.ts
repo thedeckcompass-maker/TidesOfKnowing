@@ -1,4 +1,9 @@
 import type { AskLeiliaDbReadingType } from "./readingTypes";
+import type {
+  AskLeiliaDeliveryMethod,
+  AskLeiliaManualPaymentMethod,
+  AskLeiliaReviewWorkflowStatus,
+} from "./fulfilment";
 
 export const ASK_LEILIA_STATUSES = [
   "Pending Payment",
@@ -10,6 +15,7 @@ export const ASK_LEILIA_STATUSES = [
 
 export type AskLeiliaStatus = (typeof ASK_LEILIA_STATUSES)[number];
 
+/** Legacy workflow statuses used by Stripe + stored request.status (Paid = New queue entry). */
 export const ASK_LEILIA_WORKFLOW_STATUSES = [
   "Pending Payment",
   "Paid",
@@ -53,7 +59,32 @@ export type AskLeiliaRequest = {
   payment_exception_reference: string | null;
   archived_at: string | null;
   archived_by: string | null;
-  payment?: Pick<AskLeiliaPayment, "payment_status" | "amount" | "currency" | "stripe_payment_intent"> | null;
+  started_at: string | null;
+  delivered_to: string | null;
+  delivery_method: AskLeiliaDeliveryMethod | null;
+  manually_delivered: boolean;
+  delivery_note: string | null;
+  delivery_pdf_filename: string | null;
+  delivery_pdf_uploaded_at: string | null;
+  delivery_pdf_size_bytes: number | null;
+  delivery_attempt_count: number;
+  last_resent_at: string | null;
+  review_status: AskLeiliaReviewWorkflowStatus;
+  review_requested_at: string | null;
+  review_request_recipient: string | null;
+  linked_review_id: string | null;
+  manually_marked_paid: boolean;
+  manual_payment_method: AskLeiliaManualPaymentMethod | null;
+  manual_payment_reference: string | null;
+  manual_payment_note: string | null;
+  manual_payment_recorded_at: string | null;
+  manual_payment_recorded_by: string | null;
+  manual_payment_reversed_at: string | null;
+  manual_payment_reversed_by: string | null;
+  payment?: Pick<
+    AskLeiliaPayment,
+    "payment_status" | "amount" | "currency" | "stripe_payment_intent"
+  > | null;
 };
 
 export function cardPreferenceLabel(value: AskLeiliaCardPreference): string {

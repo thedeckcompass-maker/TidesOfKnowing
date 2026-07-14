@@ -361,13 +361,23 @@ export async function notifyAskLeiliaStatusChanged(
   );
 }
 
+function escapeEmailText(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 export async function sendAskLeiliaCustomerDelivery(
   input: {
     name: string;
     email: string;
+    readingType?: AskLeiliaDbReadingType;
     pdfContentBase64: string;
+    pdfFilename?: string;
     audioContentBase64?: string;
-    reviewUrl?: string;
+    isResend?: boolean;
   },
   locals?: unknown,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
@@ -377,12 +387,21 @@ export async function sendAskLeiliaCustomerDelivery(
     return { ok: false, error: "Email is not configured." };
   }
 
+  const readingLabel = input.readingType ? readingTypeLabel(input.readingType) : "Ask Leilia reading";
+  const pdfFilename = input.pdfFilename?.endsWith(".pdf")
+    ? input.pdfFilename
+    : "Ask-Leilia-Reading.pdf";
+
   const bodyLines = [
     `Hello ${input.name},`,
     "",
-    "Your personalised Ask Leilia reading has now been completed.",
+    input.isResend
+      ? "I am resending your completed Ask Leilia reading."
+      : "Your personalised Ask Leilia reading has now been completed.",
     "",
-    "Your reading is attached.",
+    `Reading: ${readingLabel}`,
+    "",
+    "Your completed reading is attached as a PDF.",
   ];
 
   if (input.audioContentBase64) {
@@ -395,20 +414,8 @@ export async function sendAskLeiliaCustomerDelivery(
   bodyLines.push(
     "",
     "Thank you for placing your trust in Ask Leilia.",
-  );
-
-  if (input.reviewUrl) {
-    bodyLines.push(
-      "",
-      "How Was Your Reading?",
-      "",
-      "Once you have had time to reflect on your reading, I would appreciate hearing about your experience. Your feedback helps other Seekers understand what an Ask Leilia reading offers.",
-      "",
-      `Share Your Experience: ${input.reviewUrl}`,
-    );
-  }
-
-  bodyLines.push(
+    "",
+    `If you have any questions about your reading, reply to this email or write to ${SUPPORT_EMAIL}.`,
     "",
     "Warm regards,",
     "",
@@ -418,7 +425,7 @@ export async function sendAskLeiliaCustomerDelivery(
 
   const attachments: { filename: string; content: string }[] = [
     {
-      filename: "Ask-Leilia-Reading.pdf",
+      filename: pdfFilename,
       content: input.pdfContentBase64,
     },
   ];
@@ -430,17 +437,15 @@ export async function sendAskLeiliaCustomerDelivery(
     });
   }
 
-  const escapeEmailText = (value: string) =>
-    value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-
   const htmlParts = [
     `<p>Hello ${escapeEmailText(input.name)},</p>`,
-    "<p>Your personalised Ask Leilia reading has now been completed.</p>",
-    "<p>Your reading is attached.</p>",
+    `<p>${
+      input.isResend
+        ? "I am resending your completed Ask Leilia reading."
+        : "Your personalised Ask Leilia reading has now been completed."
+    }</p>`,
+    `<p>Reading: <strong>${escapeEmailText(readingLabel)}</strong></p>`,
+    "<p>Your completed reading is attached as a PDF.</p>",
   ];
 
   if (input.audioContentBase64) {
@@ -449,19 +454,9 @@ export async function sendAskLeiliaCustomerDelivery(
     );
   }
 
-  htmlParts.push("<p>Thank you for placing your trust in Ask Leilia.</p>");
-
-  if (input.reviewUrl) {
-    const safeReviewUrl = escapeEmailText(input.reviewUrl);
-    htmlParts.push(
-      "<h2 style=\"font-size:18px;margin:24px 0 8px;font-weight:600;\">How Was Your Reading?</h2>",
-      "<p>Once you have had time to reflect on your reading, I would appreciate hearing about your experience. Your feedback helps other Seekers understand what an Ask Leilia reading offers.</p>",
-      `<p style="margin:20px 0;"><a href="${safeReviewUrl}" style="display:inline-block;padding:12px 18px;background:#1a3a4a;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:600;">Share Your Experience</a></p>`,
-      `<p style="font-size:14px;color:#555;">Or open this link: <a href="${safeReviewUrl}">${safeReviewUrl}</a></p>`,
-    );
-  }
-
   htmlParts.push(
+    "<p>Thank you for placing your trust in Ask Leilia.</p>",
+    `<p>If you have any questions about your reading, reply to this email or write to <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.</p>`,
     "<p>Warm regards,</p>",
     "<p>Leilia<br />Tides of Knowing</p>",
   );
@@ -470,7 +465,9 @@ export async function sendAskLeiliaCustomerDelivery(
   const result = await resend.emails.send({
     from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
     to: input.email,
-    subject: "Your Ask Leilia reading is ready",
+    subject: input.isResend
+      ? "Your Ask Leilia reading (resent)"
+      : "Your Ask Leilia reading is ready",
     text: bodyLines.join("\n"),
     html: htmlParts.join("\n"),
     attachments,
@@ -479,6 +476,72 @@ export async function sendAskLeiliaCustomerDelivery(
   if (result.error) {
     console.error("Ask Leilia customer delivery failed:", result.error);
     return { ok: false, error: "Unable to send the delivery email." };
+  }
+
+  return { ok: true };
+}
+
+export async function sendAskLeiliaReviewRequest(
+  input: {
+    name: string;
+    email: string;
+    readingType: AskLeiliaDbReadingType;
+    reviewUrl: string;
+  },
+  locals?: unknown,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const env = communityEnv(locals);
+  if (!env.emailApiKey) {
+    console.error("Ask Leilia review request skipped: EMAIL_API_KEY is not configured.");
+    return { ok: false, error: "Email is not configured." };
+  }
+
+  const readingLabel = readingTypeLabel(input.readingType);
+  const safeReviewUrl = escapeEmailText(input.reviewUrl);
+
+  const bodyLines = [
+    `Hello ${input.name},`,
+    "",
+    "I hope you have had a little time with your Ask Leilia reading.",
+    "",
+    `Reading: ${readingLabel}`,
+    "",
+    "If you would like to share how the reading landed for you, you can leave a short review using the private link below. Your feedback helps other Seekers understand what an Ask Leilia reading offers.",
+    "",
+    `Share your experience: ${input.reviewUrl}`,
+    "",
+    "This link is unique to your reading and can only be used once.",
+    "",
+    "Warm regards,",
+    "",
+    "Leilia",
+    "Tides of Knowing",
+  ];
+
+  const htmlParts = [
+    `<p>Hello ${escapeEmailText(input.name)},</p>`,
+    "<p>I hope you have had a little time with your Ask Leilia reading.</p>",
+    `<p>Reading: <strong>${escapeEmailText(readingLabel)}</strong></p>`,
+    "<p>If you would like to share how the reading landed for you, you can leave a short review using the private link below. Your feedback helps other Seekers understand what an Ask Leilia reading offers.</p>",
+    `<p style="margin:20px 0;"><a href="${safeReviewUrl}" style="display:inline-block;padding:12px 18px;background:#1a3a4a;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:600;">Share Your Experience</a></p>`,
+    `<p style="font-size:14px;color:#555;">Or open this link: <a href="${safeReviewUrl}">${safeReviewUrl}</a></p>`,
+    "<p>This link is unique to your reading and can only be used once.</p>",
+    "<p>Warm regards,</p>",
+    "<p>Leilia<br />Tides of Knowing</p>",
+  ];
+
+  const resend = new Resend(env.emailApiKey);
+  const result = await resend.emails.send({
+    from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
+    to: input.email,
+    subject: "How was your Ask Leilia reading?",
+    text: bodyLines.join("\n"),
+    html: htmlParts.join("\n"),
+  });
+
+  if (result.error) {
+    console.error("Ask Leilia review request email failed:", result.error);
+    return { ok: false, error: "Unable to send the review request email." };
   }
 
   return { ok: true };

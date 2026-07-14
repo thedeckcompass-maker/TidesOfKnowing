@@ -13,8 +13,39 @@
 }
 
 .ask-review {
+  /* Form controls pin their own light/dark colours so remapped page text tokens
+     (e.g. cream --tok-text-dark on night reading) never paint native light UIs. */
+  --ask-review-form-control-bg: #ffffff;
+  --ask-review-form-control-text: var(--tok-deep-ocean);
+  --ask-review-form-control-border: color-mix(in srgb, var(--tok-deep-ocean) 28%, #cec9c1);
+  --ask-review-form-option-bg: #ffffff;
+  --ask-review-form-option-text: var(--tok-deep-ocean);
+  --ask-review-form-placeholder: #4a5568;
+  --ask-review-form-disabled-bg: #f2efe9;
+  --ask-review-form-disabled-text: #3d4f66;
+  --ask-review-form-focus-border: #0891b2;
+  --ask-review-form-focus-ring: color-mix(in srgb, #0891b2 55%, transparent);
+  --ask-review-form-label: var(--tok-deep-ocean);
+  --ask-review-form-hint: #4b5563;
   max-width: 42rem;
   padding-block: 2.5rem 4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ask-review {
+    --ask-review-form-control-bg: #152d4a;
+    --ask-review-form-control-text: #f2efe9;
+    --ask-review-form-control-border: color-mix(in srgb, #f2efe9 28%, transparent);
+    --ask-review-form-option-bg: #0b1f3a;
+    --ask-review-form-option-text: #f2efe9;
+    --ask-review-form-placeholder: #a8b4c2;
+    --ask-review-form-disabled-bg: #0b1f3a;
+    --ask-review-form-disabled-text: #9aa8b8;
+    --ask-review-form-focus-border: #6bc9e0;
+    --ask-review-form-focus-ring: color-mix(in srgb, #c6a85a 45%, #6bc9e0);
+    --ask-review-form-label: #f2efe9;
+    --ask-review-form-hint: #a8b4c2;
+  }
 }
 
 .ask-review__header {
@@ -26,7 +57,7 @@
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: var(--tok-line-body);
-  color: var(--tok-text-muted);
+  color: var(--ask-review-form-hint);
 }
 
 .ask-review__privacy {
@@ -34,7 +65,7 @@
   padding: 0.9rem 1rem;
   border-left: 3px solid var(--tok-gold);
   background: color-mix(in srgb, var(--tok-surface-reading-soft) 80%, transparent);
-  color: var(--tok-text-dark);
+  color: var(--ask-review-form-label);
 }
 
 .ask-review__alert,
@@ -52,12 +83,19 @@
 
 .ask-review__notice {
   background: color-mix(in srgb, var(--tok-teal) 12%, var(--tok-surface-reading));
-  color: var(--tok-text-dark);
+  color: var(--ask-review-form-label);
 }
 
 .ask-review__form {
   display: grid;
   gap: 1.35rem;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ask-review__form {
+    color-scheme: dark;
+  }
 }
 
 .ask-review__field,
@@ -71,13 +109,13 @@
   font-family: var(--font-body);
   font-size: var(--tok-type-label);
   font-weight: 600;
-  color: var(--tok-text-dark);
+  color: var(--ask-review-form-label);
 }
 
 .ask-review__hint,
 .ask-review__optional {
   font-size: 0.88rem;
-  color: var(--tok-text-muted);
+  color: var(--ask-review-form-hint);
   margin: 0;
 }
 
@@ -86,28 +124,57 @@
 .ask-review__field textarea {
   width: 100%;
   padding: 0.7rem 0.8rem;
-  border: 1px solid var(--tok-border-light);
+  border: 1px solid var(--ask-review-form-control-border);
   border-radius: var(--radius-control);
-  background: #fff;
-  color: var(--tok-text-dark);
+  background-color: var(--ask-review-form-control-bg);
+  color: var(--ask-review-form-control-text);
   font: inherit;
+  color-scheme: inherit;
 }
 
-.ask-review__field input:focus,
-.ask-review__field select:focus,
-.ask-review__field textarea:focus,
-.ask-review__star input:focus + span,
+.ask-review__field select option {
+  color: var(--ask-review-form-option-text);
+  background-color: var(--ask-review-form-option-bg);
+}
+
+.ask-review__field select option:disabled,
+.ask-review__field select option[value=""] {
+  color: var(--ask-review-form-disabled-text);
+  background-color: var(--ask-review-form-option-bg);
+}
+
+.ask-review__field input::placeholder,
+.ask-review__field textarea::placeholder {
+  color: var(--ask-review-form-placeholder);
+  opacity: 1;
+}
+
+.ask-review__field input:disabled,
+.ask-review__field select:disabled,
+.ask-review__field textarea:disabled {
+  background-color: var(--ask-review-form-disabled-bg);
+  color: var(--ask-review-form-disabled-text);
+  border-color: var(--ask-review-form-control-border);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.ask-review__field input:focus-visible,
+.ask-review__field select:focus-visible,
+.ask-review__field textarea:focus-visible,
+.ask-review__star:has(input:focus-visible),
 .ask-review__submit:focus-visible {
-  outline: 2px solid var(--tok-teal);
+  border-color: var(--ask-review-form-focus-border);
+  outline: 2px solid var(--ask-review-form-focus-ring);
   outline-offset: 2px;
 }
 
 .ask-review__locked {
   margin: 0;
   padding: 0.7rem 0.8rem;
-  border: 1px dashed var(--tok-border-light);
+  border: 1px dashed var(--ask-review-form-control-border);
   border-radius: var(--radius-control);
-  color: var(--tok-text-muted);
+  color: var(--ask-review-form-hint);
   font-size: 0.95rem;
 }
 
@@ -124,12 +191,12 @@
   justify-content: center;
   min-width: 2.5rem;
   min-height: 2.5rem;
-  border: 1px solid var(--tok-border-light);
+  border: 1px solid var(--ask-review-form-control-border);
   border-radius: var(--radius-control);
-  background: #fff;
+  background: var(--ask-review-form-control-bg);
   cursor: pointer;
   font-weight: 600;
-  color: var(--tok-text-dark);
+  color: var(--ask-review-form-control-text);
 }
 
 .ask-review__star input {
@@ -142,7 +209,7 @@
 
 .ask-review__star:has(input:checked) {
   border-color: var(--tok-gold-deep);
-  background: color-mix(in srgb, var(--tok-gold) 22%, #fff);
+  background: color-mix(in srgb, var(--tok-gold) 22%, var(--ask-review-form-control-bg));
   color: var(--tok-gold-deep);
 }
 
@@ -158,7 +225,7 @@
   align-items: start;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: var(--tok-text-dark);
+  color: var(--ask-review-form-label);
 }
 
 .ask-review__submit {
