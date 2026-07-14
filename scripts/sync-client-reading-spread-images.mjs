@@ -41,11 +41,17 @@ function parseImageName(filename) {
 
 function loadKnownSlugs() {
   const slugs = new Set();
-  for (const file of fs.readdirSync(CONTENT_DIR)) {
-    if (!file.endsWith(".md")) continue;
-    const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
-    const { data } = matter(raw);
-    if (data.slug) slugs.add(data.slug);
+  if (!fs.existsSync(CONTENT_DIR)) {
+    console.info(
+      "[sync-client-reading-spread-images] No recent-client-readings directory; treating as zero known Markdown readings.",
+    );
+  } else {
+    for (const file of fs.readdirSync(CONTENT_DIR)) {
+      if (!file.endsWith(".md")) continue;
+      const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
+      const { data } = matter(raw);
+      if (data.slug) slugs.add(data.slug);
+    }
   }
   for (const file of fs.readdirSync(DOCX_DIR)) {
     if (!file.endsWith(".docx")) continue;
@@ -174,6 +180,9 @@ function updateFrontmatter(slug, spreadImages) {
 }
 
 function loadAllContentSlugs() {
+  if (!fs.existsSync(CONTENT_DIR)) {
+    return [];
+  }
   return fs
     .readdirSync(CONTENT_DIR)
     .filter((f) => f.endsWith(".md"))
