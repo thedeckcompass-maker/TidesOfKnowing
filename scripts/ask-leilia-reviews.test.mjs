@@ -71,9 +71,8 @@ const PUBLIC_READING_TYPES = [
   "one-question",
   "in-depth",
   "personal-guidance",
-  "complimentary",
 ];
-const DB_READING_TYPES = [...PUBLIC_READING_TYPES];
+const DB_READING_TYPES = [...PUBLIC_READING_TYPES, "complimentary"];
 const READING_TYPE_LABELS = {
   "one-question": "One Question Reading",
   "in-depth": "In-Depth Reading",
@@ -298,7 +297,59 @@ run("short body is rejected", () => {
   assert.equal(result.ok, false);
 });
 
-run("generic complimentary submission is accepted without token", () => {
+run("untokened submission using One Question Reading", () => {
+  const result = validateSubmission({
+    displayName: "Jordan",
+    email: "jordan@example.com",
+    readingType: "one-question",
+    rating: 5,
+    title: "Clear answer",
+    body: "I received an Ask Leilia One Question Reading and found the written guidance clear, grounded, and carefully considered.",
+    consentPublish: "on",
+    consentMarketing: "",
+    token: "",
+    honeypot: "",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(result.value.readingType, "one-question");
+  assert.equal(result.value.token, "");
+});
+
+run("untokened submission using In-Depth Reading", () => {
+  const result = validateSubmission({
+    displayName: "Jordan",
+    email: "jordan@example.com",
+    readingType: "in-depth",
+    rating: 5,
+    title: "Thorough guidance",
+    body: "I received an Ask Leilia In-Depth Reading and found the written guidance clear, grounded, and carefully considered.",
+    consentPublish: "on",
+    consentMarketing: "",
+    token: "",
+    honeypot: "",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(result.value.readingType, "in-depth");
+});
+
+run("untokened submission using Personal Guidance Reading", () => {
+  const result = validateSubmission({
+    displayName: "Jordan",
+    email: "jordan@example.com",
+    readingType: "personal-guidance",
+    rating: 4,
+    title: "",
+    body: "I received an Ask Leilia Personal Guidance Reading and found the written guidance clear, grounded, and carefully considered.",
+    consentPublish: "on",
+    consentMarketing: "",
+    token: "",
+    honeypot: "",
+  });
+  assert.equal(result.ok, true);
+  assert.equal(result.value.readingType, "personal-guidance");
+});
+
+run("invalid or deprecated client-supplied complimentary rejected for untokened submissions", () => {
   const result = validateSubmission({
     displayName: "Jordan",
     email: "jordan@example.com",
@@ -311,45 +362,11 @@ run("generic complimentary submission is accepted without token", () => {
     token: "",
     honeypot: "",
   });
-  assert.equal(result.ok, true);
-  assert.equal(result.value.readingType, "complimentary");
-  assert.equal(result.value.token, "");
+  assert.equal(result.ok, false);
+  assert.equal(result.error, "type");
 });
 
-run("generic complimentary submission stays pending and unverified", () => {
-  const submission = validateSubmission({
-    displayName: "Jordan",
-    email: "jordan@example.com",
-    readingType: "complimentary",
-    rating: 4,
-    title: "",
-    body: "I received a complimentary Ask Leilia reading through Facebook and found the written guidance clear, grounded, and carefully considered.",
-    consentPublish: "on",
-    consentMarketing: "",
-    token: "",
-    honeypot: "",
-  });
-  assert.equal(submission.ok, true);
-
-  // Mirror insertAskLeiliaReview defaults for untokened public submissions.
-  const stored = {
-    reading_type: submission.value.readingType,
-    moderation_status: "pending",
-    verification_status: "unverified",
-    review_token_id: null,
-    request_id: null,
-  };
-
-  assert.equal(stored.moderation_status, "pending");
-  assert.equal(stored.verification_status, "unverified");
-  assert.equal(stored.review_token_id, null);
-  assert.equal(
-    stored.verification_status === "verified_completed_reading",
-    false,
-  );
-});
-
-run("complimentary label displays correctly for admin and public surfaces", () => {
+run("historical complimentary label still maps for existing records", () => {
   assert.equal(READING_TYPE_LABELS.complimentary, "Complimentary Reading");
 
   const approvedPublic = toPublicReview({
@@ -377,22 +394,26 @@ run("complimentary label displays correctly for admin and public surfaces", () =
 
   assert.equal(approvedPublic.is_verified, false);
   assert.equal(approvedPublic.reading_type_label, "Complimentary Reading");
-  assert.equal(JSON.stringify(approvedPublic).includes("unverified"), false);
-  assert.equal(JSON.stringify(approvedPublic).includes("Verified Ask Leilia reading"), false);
 });
 
-run("untokened form source includes Complimentary Reading option", () => {
+run("generic form offers three actual reading products and not Complimentary Reading", () => {
   const source = readFileSync(
     join(REPO_ROOT, "src/pages/submit-a-review/index.astro"),
     "utf8",
   );
-  assert.match(source, /ASK_LEILIA_DB_READING_TYPES/);
-  assert.equal(source.includes("ASK_LEILIA_READING_TYPES.map"), false);
+  assert.match(source, /ASK_LEILIA_READING_TYPES\.map/);
+  assert.equal(source.includes("ASK_LEILIA_DB_READING_TYPES"), false);
+  assert.equal(source.includes("Complimentary Reading"), false);
 
   const labels = readFileSync(
     join(REPO_ROOT, "src/lib/ask-leilia/readingTypes.ts"),
     "utf8",
   );
+  assert.match(labels, /ASK_LEILIA_READING_TYPES/);
+  assert.match(labels, /"one-question"/);
+  assert.match(labels, /"in-depth"/);
+  assert.match(labels, /"personal-guidance"/);
+  // Label remains for historical DB records; not offered on the public form.
   assert.match(labels, /Complimentary Reading/);
 });
 
@@ -404,16 +425,17 @@ run("submit API overrides token reading type and defaults untokened to unverifie
   assert.match(source, /readingType = resolved\.readingType/);
   assert.match(source, /verificationStatus = "verified_completed_reading"/);
   assert.match(source, /let verificationStatus[\s\S]*?= "unverified"/);
+  assert.match(source, /isAskLeiliaReadingType/);
 });
 
-run("token path overrides browser reading type and can verify complimentary", () => {
+run("tokened submissions retain the server-side request type", () => {
   const browserAttempt = validateSubmission({
     displayName: "Alex",
     email: "",
     readingType: "one-question",
     rating: 5,
     title: "",
-    body: "The complimentary reading through the verified delivery link still felt precise and personal without overstating certainty.",
+    body: "The reading through the verified delivery link still felt precise and personal without overstating certainty.",
     consentPublish: "on",
     consentMarketing: "",
     token: "b".repeat(40),
@@ -422,12 +444,114 @@ run("token path overrides browser reading type and can verify complimentary", ()
   assert.equal(browserAttempt.ok, true);
 
   // API resolveAskLeiliaReviewToken replaces reading type from the completed request.
-  const tokenResolvedReadingType = "complimentary";
+  const tokenResolvedReadingType = "personal-guidance";
   const verificationStatus = "verified_completed_reading";
   assert.notEqual(browserAttempt.value.readingType, tokenResolvedReadingType);
-  assert.equal(tokenResolvedReadingType, "complimentary");
+  assert.equal(tokenResolvedReadingType, "personal-guidance");
   assert.equal(verificationStatus, "verified_completed_reading");
-  assert.equal(READING_TYPE_LABELS[tokenResolvedReadingType], "Complimentary Reading");
+  assert.equal(READING_TYPE_LABELS[tokenResolvedReadingType], "Personal Guidance Reading");
+});
+
+run("zero-dollar order retains its actual product type", () => {
+  // A 100% discount does not change the purchased reading type.
+  const requestReadingType = "in-depth";
+  const paymentAmount = 0;
+  const browserAttempt = validateSubmission({
+    displayName: "Casey",
+    email: "",
+    readingType: "complimentary",
+    rating: 5,
+    title: "",
+    body: "Even though the checkout total was zero through a discount code, the reading was still the In-Depth product I selected.",
+    consentPublish: "on",
+    consentMarketing: "",
+    token: "c".repeat(40),
+    honeypot: "",
+  });
+  assert.equal(browserAttempt.ok, true);
+  assert.equal(DB_READING_TYPES.includes("complimentary"), true);
+
+  const storedReadingType = requestReadingType; // server override from request
+  assert.equal(paymentAmount, 0);
+  assert.equal(storedReadingType, "in-depth");
+  assert.equal(READING_TYPE_LABELS[storedReadingType], "In-Depth Reading");
+  assert.notEqual(storedReadingType, "complimentary");
+});
+
+run("corrected testimonials use Leilia and display One Question Reading", () => {
+  const migration = readFileSync(
+    join(
+      REPO_ROOT,
+      "supabase/migrations/20260714230000_ask_leilia_correct_testimonial_attribution.sql",
+    ),
+    "utf8",
+  );
+  assert.match(migration, /c5e1f8a0-0708-4111-8b25-00a5c1e11001/);
+  assert.match(migration, /c5e1f8a0-0710-4111-8b25-00a5c1e11002/);
+  assert.match(migration, /c5e1f8a0-0712-4111-8b25-00a5c1e11003/);
+  assert.match(migration, /reading_type = 'one-question'/);
+  assert.match(migration, /Leilia helped me step back/);
+  assert.match(migration, /I loved Leilia/);
+  assert.match(migration, /the way Leilia explained/);
+  assert.equal(migration.includes("Leigh"), false);
+
+  const testimonials = [
+    {
+      id: "c5e1f8a0-0708-4111-8b25-00a5c1e11001",
+      title: "Clearer than my own perspective",
+      reading_type: "one-question",
+      body_public:
+        "Leilia helped me step back from my own emotional bias and see the situation more clearly. Her interpretation was thoughtful, balanced and genuinely useful, especially because I tend to view my own readings more negatively.",
+    },
+    {
+      id: "c5e1f8a0-0710-4111-8b25-00a5c1e11002",
+      title: "Insightful and easy to understand",
+      reading_type: "one-question",
+      body_public:
+        "I loved Leilia’s interpretation. It was insightful, thoughtful and gave me a fresh way to understand both the cards and the situation.",
+    },
+    {
+      id: "c5e1f8a0-0712-4111-8b25-00a5c1e11003",
+      title: "A beautiful interpretation",
+      reading_type: "one-question",
+      body_public:
+        "This was such a beautiful interpretation. It made sense immediately, and I especially appreciated the way Leilia explained how she was reading the cards, not just the conclusion she reached.",
+    },
+  ];
+
+  for (const row of testimonials) {
+    const publicReview = toPublicReview({
+      ...row,
+      request_id: null,
+      review_token_id: null,
+      reviewer_email: "seed@example.invalid",
+      display_name: "Seed",
+      rating: 5,
+      body_original: row.body_public,
+      consent_publish: true,
+      consent_marketing: false,
+      verification_status: "manually_verified",
+      moderation_status: "approved",
+      is_featured: true,
+      submitted_at: "2026-07-08T12:00:00.000Z",
+      approved_at: "2026-07-08T12:00:00.000Z",
+      approved_by: null,
+      updated_at: "2026-07-08T12:00:00.000Z",
+    });
+    assert.equal(publicReview.reading_type_label, "One Question Reading");
+    assert.match(publicReview.body, /Leilia/);
+    assert.equal(publicReview.body.includes("Leigh"), false);
+  }
+});
+
+run("source validation rejects complimentary for untokened and accepts public products", () => {
+  const source = readFileSync(
+    join(REPO_ROOT, "src/lib/ask-leilia/reviews/validation.ts"),
+    "utf8",
+  );
+  assert.match(source, /isAskLeiliaReadingType/);
+  assert.match(source, /isAskLeiliaDbReadingType/);
+  assert.match(source, /token/);
 });
 
 run("script tags are stripped from body", () => {

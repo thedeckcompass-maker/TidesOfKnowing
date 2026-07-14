@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
-import { ASK_LEILIA_DB_READING_TYPES, readingTypeLabel } from "../../lib/ask-leilia/readingTypes";
+import { ASK_LEILIA_READING_TYPES, readingTypeLabel } from "../../lib/ask-leilia/readingTypes";
 import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
 import { resolveAskLeiliaReviewToken } from "../../lib/ask-leilia/reviews/queries";
 import { siteBase } from "../../lib/site";
@@ -157,7 +157,7 @@ if (token) {
             <select id="readingType" name="readingType" required>
               <option value="">Select a reading</option>
               {
-                ASK_LEILIA_DB_READING_TYPES.map((type) => (
+                ASK_LEILIA_READING_TYPES.map((type) => (
                   <option value={type}>{readingTypeLabel(type)}</option>
                 ))
               }

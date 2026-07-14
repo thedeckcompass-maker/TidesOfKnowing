@@ -10,7 +10,7 @@ import {
   consumeRateLimit,
 } from "../../../../lib/ask-leilia/reviews/rateLimit";
 import { validateAskLeiliaReviewSubmission } from "../../../../lib/ask-leilia/reviews/validation";
-import { isAskLeiliaDbReadingType } from "../../../../lib/ask-leilia/readingTypes";
+import { isAskLeiliaReadingType } from "../../../../lib/ask-leilia/readingTypes";
 
 export const prerender = false;
 
@@ -83,7 +83,7 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
           303,
         );
       }
-      if (!isAskLeiliaDbReadingType(submission.readingType)) {
+      if (!isAskLeiliaReadingType(submission.readingType)) {
         return redirect(
           `/submit-a-review/?error=${encodeURIComponent("Please choose a reading type.")}`,
           303,

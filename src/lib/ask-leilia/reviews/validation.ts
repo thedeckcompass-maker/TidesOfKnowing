@@ -1,6 +1,7 @@
 import { cleanText, type ValidationResult } from "../validation";
 import {
   isAskLeiliaDbReadingType,
+  isAskLeiliaReadingType,
   type AskLeiliaDbReadingType,
 } from "../readingTypes";
 
@@ -93,7 +94,14 @@ export function validateAskLeiliaReviewSubmission(input: {
     }
   }
 
-  if (!isAskLeiliaDbReadingType(input.readingType)) {
+  // Untokened public form: only the three current Ask Leilia products.
+  // Tokened path: accept stored DB types (including historical complimentary);
+  // the API still overrides reading type from the linked request.
+  if (token) {
+    if (!isAskLeiliaDbReadingType(input.readingType)) {
+      return { ok: false, error: "Please choose a reading type." };
+    }
+  } else if (!isAskLeiliaReadingType(input.readingType)) {
     return { ok: false, error: "Please choose a reading type." };
   }
 
