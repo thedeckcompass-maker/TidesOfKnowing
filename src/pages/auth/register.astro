@@ -176,9 +176,15 @@ if (Astro.request.method === "POST") {
           <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
           <label for="email">Email address</label>
           <input id="email" name="email" type="email" autocomplete="email" required />
-          <button type="submit" data-auth-register-submit>Continue</button>
+          <button
+            type="submit"
+            data-auth-register-submit
+            data-sending-text="Sending sign-in link..."
+          >
+            Continue
+          </button>
           <p class="auth-submit-status" data-auth-register-status hidden>
-            Please wait... we're sending your secure sign-in link.
+            Please wait while we prepare your secure sign-in link.
           </p>
         </form>
       </div>

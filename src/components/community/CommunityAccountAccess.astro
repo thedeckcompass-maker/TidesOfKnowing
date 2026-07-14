@@ -75,9 +75,10 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
 
 <script>
   import {
+    AUTH_OTP_ERROR_MESSAGE,
     AUTH_OTP_RESEND_COOLDOWN_MS,
-    AUTH_OTP_SLOW_REQUEST_MESSAGE,
-    AUTH_OTP_SLOW_THRESHOLD_MS,
+    AUTH_OTP_SENDING_BUTTON_TEXT,
+    AUTH_OTP_SENDING_STATUS_MESSAGE,
   } from "../../lib/community/authRegisterForm";
   import { createAuthOtpSubmissionId } from "../../lib/community/authOtpSubmissionId";
 
@@ -89,7 +90,6 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
     button.dataset.bound = "true";
     const defaultText = button.dataset.defaultText ?? "Send me a new sign-in link";
     let fadeTimer: number | undefined;
-    let slowTimer: number | undefined;
     let unlockTimer: number | undefined;
     let submitted = false;
     let lastSuccessAt = 0;
@@ -139,7 +139,7 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
 
     function setSending(isSending: boolean) {
       button.disabled = isSending;
-      button.textContent = isSending ? "Sending..." : defaultText;
+      button.textContent = isSending ? AUTH_OTP_SENDING_BUTTON_TEXT : defaultText;
     }
 
     function scheduleUnlock(submissionId: string) {
@@ -173,13 +173,7 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
       activeSubmissionId = submissionId;
       clearStatus();
       setSending(true);
-
-      if (slowTimer) window.clearTimeout(slowTimer);
-      slowTimer = window.setTimeout(() => {
-        if (activeSubmissionId === submissionId) {
-          showStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, "neutral");
-        }
-      }, AUTH_OTP_SLOW_THRESHOLD_MS);
+      showStatus(AUTH_OTP_SENDING_STATUS_MESSAGE, "neutral");
 
       try {
         const response = await fetch("/api/community/account/sign-in-link", {
@@ -197,7 +191,7 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
         try {
           payload = await response.json();
         } catch {
-          // Keep uncertain/neutral handling below.
+          // Fall through to the clear error state below.
         }
 
         if (response.ok && payload.ok) {
@@ -210,29 +204,13 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
           return;
         }
 
-        if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-          lastSuccessAt = Date.now();
-          scheduleUnlock(submissionId);
-          showStatus(
-            payload.error || "Unable to send a sign-in link right now. Please try again.",
-            "error",
-          );
-          return;
-        }
-
-        // Soft failure / timeout uncertainty: do not claim the email was never sent.
         lastSuccessAt = Date.now();
         scheduleUnlock(submissionId);
-        showStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, "neutral");
+        showStatus(payload.error || AUTH_OTP_ERROR_MESSAGE, "error");
       } catch {
         lastSuccessAt = Date.now();
         scheduleUnlock(submissionId);
-        showStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, "neutral");
-      } finally {
-        if (slowTimer) {
-          window.clearTimeout(slowTimer);
-          slowTimer = undefined;
-        }
+        showStatus(AUTH_OTP_ERROR_MESSAGE, "error");
       }
     });
   }

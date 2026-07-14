@@ -7,16 +7,16 @@ export type AuthRegisterFormOptions = {
   cardSelector: string;
   defaultButtonText?: string;
   confirmedClass: string;
-  /** After this many ms without a response, show a neutral “still processing” message. */
-  slowThresholdMs?: number;
   /** Minimum ms before a deliberate second send after success reset. */
   resendCooldownMs?: number;
 };
 
-export const AUTH_OTP_SLOW_THRESHOLD_MS = 12_000;
 export const AUTH_OTP_RESEND_COOLDOWN_MS = 60_000;
-export const AUTH_OTP_SLOW_REQUEST_MESSAGE =
-  "This is taking longer than expected. Your sign-in email may still arrive. Please wait before requesting another.";
+export const AUTH_OTP_SENDING_BUTTON_TEXT = "Sending sign-in link...";
+export const AUTH_OTP_SENDING_STATUS_MESSAGE =
+  "Please wait while we prepare your secure sign-in link.";
+export const AUTH_OTP_ERROR_MESSAGE =
+  "Unable to send a sign-in link right now. Please try again.";
 
 export function ensureAuthOtpSubmissionField(form: HTMLFormElement): string {
   let field = form.querySelector<HTMLInputElement>('input[name="submissionId"]');
@@ -58,7 +58,6 @@ export function readAuthOtpSubmissionIdForRequest(form: HTMLFormElement): string
 }
 
 export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
-  const slowThresholdMs = options.slowThresholdMs ?? AUTH_OTP_SLOW_THRESHOLD_MS;
   const resendCooldownMs = options.resendCooldownMs ?? AUTH_OTP_RESEND_COOLDOWN_MS;
   const forms = document.querySelectorAll("[data-auth-register-form]");
 
@@ -96,7 +95,7 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
       if (!(submitButton instanceof HTMLButtonElement)) return;
       submitButton.disabled = isSending;
       submitButton.textContent = isSending
-        ? submitButton.dataset.sendingText || "Sending sign-in link..."
+        ? submitButton.dataset.sendingText || AUTH_OTP_SENDING_BUTTON_TEXT
         : defaultButtonText;
     }
 
@@ -130,7 +129,7 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
       }
 
       if (submitted && activeSubmissionId) {
-        setStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, true);
+        setStatus(AUTH_OTP_SENDING_STATUS_MESSAGE, true);
         return;
       }
 
@@ -144,7 +143,7 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
         if (content instanceof HTMLElement) content.hidden = false;
       });
       setSending(false);
-      setStatus("Please wait... we're sending your secure sign-in link.", false);
+      setStatus(AUTH_OTP_SENDING_STATUS_MESSAGE, false);
     }
 
     resetButton?.addEventListener("click", restoreForm);
@@ -172,19 +171,11 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
       activeSubmissionId = correlationId;
 
       setSending(true);
-      setStatus("Please wait... we're sending your secure sign-in link.", true);
+      setStatus(AUTH_OTP_SENDING_STATUS_MESSAGE, true);
 
       const formData = new FormData(form);
       formData.set("submissionId", correlationId);
       const email = String(formData.get("email") || "").trim();
-
-      // Soft threshold only: aborting fetch does not cancel the server OTP call,
-      // and must not be presented as a confirmed send failure.
-      const slowTimerId = window.setTimeout(() => {
-        if (activeSubmissionId === correlationId && !card?.classList.contains(options.confirmedClass)) {
-          setStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, true);
-        }
-      }, slowThresholdMs);
 
       try {
         const response = await fetch(originalAction, {
@@ -237,12 +228,11 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
         }
 
         lastSuccessAt = Date.now();
-        setStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, true);
+        setStatus(AUTH_OTP_ERROR_MESSAGE, true);
       } catch (_error) {
         lastSuccessAt = Date.now();
-        setStatus(AUTH_OTP_SLOW_REQUEST_MESSAGE, true);
+        setStatus(AUTH_OTP_ERROR_MESSAGE, true);
       } finally {
-        window.clearTimeout(slowTimerId);
         if (card?.classList.contains(options.confirmedClass)) {
           activeSubmissionId = null;
         } else if (!submitted) {

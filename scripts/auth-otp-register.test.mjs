@@ -362,13 +362,16 @@ await run("JavaScript reuses the existing UUID", async () => {
   assert.match(formSrc, /formData\.set\("submissionId", correlationId\)/);
 });
 
-await run("slow-message behaviour remains neutral", async () => {
+await run("loading copy stays calm until success or clear error", async () => {
   const formSrc = readFileSync(join(REPO_ROOT, "src/lib/community/authRegisterForm.ts"), "utf8");
-  assert.match(formSrc, /AUTH_OTP_SLOW_THRESHOLD_MS = 12_000/);
-  assert.match(formSrc, /Your sign-in email may still arrive/);
-  assert.match(formSrc, /Soft threshold only/);
-  assert.equal(/failed to send/i.test(formSrc), false);
-  assert.equal(/request failed with status/i.test(formSrc), false);
+  assert.match(formSrc, /AUTH_OTP_SENDING_STATUS_MESSAGE/);
+  assert.match(formSrc, /Please wait while we prepare your secure sign-in link\./);
+  assert.match(formSrc, /AUTH_OTP_SENDING_BUTTON_TEXT = "Sending sign-in link\.\.\."/);
+  assert.match(formSrc, /AUTH_OTP_ERROR_MESSAGE/);
+  assert.equal(/taking longer than expected/i.test(formSrc), false);
+  assert.equal(/AUTH_OTP_SLOW_THRESHOLD_MS/.test(formSrc), false);
+  assert.equal(/setTimeout\(\s*\(\)\s*=>\s*\{[\s\S]*taking longer/.test(formSrc), false);
+  assert.equal(/slowThresholdMs/.test(formSrc), false);
 });
 
 await run("sensitive values are excluded from logs", async () => {
@@ -431,7 +434,8 @@ await run("no automatic retry occurs", async () => {
   const formSrc = readFileSync(join(REPO_ROOT, "src/lib/community/authRegisterForm.ts"), "utf8");
   assert.equal(/signInWithOtp[\s\S]{0,80}signInWithOtp/.test(registerSrc.replace(/\n/g, " ")), false);
   assert.equal(/\bretry\b/i.test(formSrc), false);
-  assert.match(formSrc, /Soft threshold only/);
+  assert.match(formSrc, /if \(submitted\) \{/);
+  assert.equal(/taking longer than expected/i.test(formSrc), false);
 });
 
 console.log("");

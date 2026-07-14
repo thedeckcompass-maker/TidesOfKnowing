@@ -302,7 +302,11 @@ await run("no automatic retry", async () => {
   assert.equal(/\bretry\b/i.test(apiSrc), false);
   assert.equal(/\bretry\b/i.test(clientSrc), false);
   assert.equal((apiSrc.match(/auth\.signInWithOtp/g) || []).length, 1);
-  assert.match(clientSrc, /AUTH_OTP_SLOW_REQUEST_MESSAGE/);
+  assert.match(clientSrc, /AUTH_OTP_SENDING_STATUS_MESSAGE/);
+  assert.match(clientSrc, /AUTH_OTP_SENDING_BUTTON_TEXT/);
+  assert.match(clientSrc, /AUTH_OTP_ERROR_MESSAGE/);
+  assert.equal(/AUTH_OTP_SLOW_THRESHOLD_MS/.test(clientSrc), false);
+  assert.equal(/taking longer than expected/i.test(clientSrc), false);
   assert.match(clientSrc, /if \(submitted\) return/);
 });
 
