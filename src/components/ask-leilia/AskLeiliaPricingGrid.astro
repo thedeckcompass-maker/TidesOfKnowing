@@ -17,11 +17,20 @@ const {
   intro,
 } = Astro.props;
 
+/** One Question → compass; In-Depth → feather; Personal Guidance → hourglass. */
 const PRICING_CARD_SYMBOLS = [
-  "ask-leilia-pricing__card--feather",
   "ask-leilia-pricing__card--compass",
+  "ask-leilia-pricing__card--feather",
   "ask-leilia-pricing__card--hourglass",
 ] as const;
+
+function splitUsdPrice(price: string): { qualifier: string; amount: string } {
+  const match = price.match(/^(US)(\$\d+)$/);
+  if (!match) {
+    return { qualifier: "", amount: price };
+  }
+  return { qualifier: match[1], amount: match[2] };
+}
 ---
 
 <section
@@ -32,32 +41,46 @@ const PRICING_CARD_SYMBOLS = [
   {intro ? <p class="ask-leilia-pricing__intro">{intro}</p> : null}
   <div class="ask-leilia-pricing__grid">
     {
-      readings.map((reading, index) => (
-        <article
-          class:list={[
-            "ask-leilia-pricing__card",
-            PRICING_CARD_SYMBOLS[index] ?? PRICING_CARD_SYMBOLS[0],
-          ]}
-        >
-          <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
-          <p class="ask-leilia-pricing__description">{reading.intro}</p>
-          <p class="ask-leilia-pricing__description">{reading.body}</p>
-          <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>
-            {reading.features.map((feature) => (
-              <li>
-                <span class="ask-leilia-pricing__feature-mark" aria-hidden="true">
-                  •
-                </span>
-                {feature}
-              </li>
-            ))}
-          </ul>
-          <p class="ask-leilia-pricing__price">{reading.price}</p>
-          <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
-            {reading.ctaLabel ?? buttonLabel}
-          </a>
-        </article>
-      ))
+      readings.map((reading, index) => {
+        const { qualifier, amount } = splitUsdPrice(reading.price);
+        return (
+          <article
+            class:list={[
+              "ask-leilia-pricing__card",
+              PRICING_CARD_SYMBOLS[index] ?? PRICING_CARD_SYMBOLS[0],
+            ]}
+          >
+            <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
+            <p class="ask-leilia-pricing__description">{reading.intro}</p>
+            <p class="ask-leilia-pricing__description">{reading.body}</p>
+            <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>
+              {reading.features.map((feature) => (
+                <li>
+                  <span class="ask-leilia-pricing__feature-mark" aria-hidden="true">
+                    •
+                  </span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <p class="ask-leilia-pricing__price" aria-label={reading.price}>
+              {
+                qualifier ? (
+                  <span class="ask-leilia-pricing__price-visual" aria-hidden="true">
+                    <span class="ask-leilia-pricing__currency">{qualifier}</span>
+                    <span class="ask-leilia-pricing__amount">{amount}</span>
+                  </span>
+                ) : (
+                  reading.price
+                )
+              }
+            </p>
+            <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
+              {reading.ctaLabel ?? buttonLabel}
+            </a>
+          </article>
+        );
+      })
     }
   </div>
 </section>

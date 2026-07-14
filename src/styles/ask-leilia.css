@@ -116,6 +116,10 @@
   margin-top: clamp(2rem, 5vw, 3.5rem);
 }
 
+.ask-leilia-pricing {
+  overflow-x: clip;
+}
+
 .ask-leilia-pricing__heading,
 .ask-leilia-features__heading,
 .ask-leilia-explore__heading,
@@ -206,10 +210,33 @@
 
 .ask-leilia-pricing__price {
   margin: 0.35rem 0 0.15rem;
-  font-family: var(--font-heading);
   font-size: clamp(1.5rem, 4vw, 1.85rem);
-  font-weight: 400;
+  line-height: 1;
   color: var(--tok-water);
+  white-space: nowrap;
+}
+
+.ask-leilia-pricing__price-visual {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.02em;
+  white-space: nowrap;
+}
+
+.ask-leilia-pricing__currency {
+  font-family: var(--font-body);
+  font-size: 0.5em;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  margin-top: 0.38em;
+}
+
+.ask-leilia-pricing__amount {
+  font-family: var(--font-heading);
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
 }
 
 .ask-leilia-pricing__cta {
@@ -269,35 +296,66 @@
   content: "";
   background-image: url("/images/community/compass-feather-hourglass.png");
   background-repeat: no-repeat;
-  opacity: 0.065;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
   pointer-events: none;
 }
 
+/* In-Depth — feather / quill; upper-right overhang from top-left of sprite. */
 .ask-leilia-pricing__card--feather::before {
-  top: -4%;
-  right: -6%;
-  width: min(58%, 13rem);
+  top: -12%;
+  right: -16%;
+  width: min(50%, 13rem);
   aspect-ratio: 1;
-  background-position: left top;
-  background-size: 195% auto;
+  background-position: left 8% top 0%;
+  background-size: 210% auto;
 }
 
+/* One Question — compass; lower-right overhang above the price/CTA band. */
 .ask-leilia-pricing__card--compass::before {
-  right: -4%;
-  bottom: -6%;
-  width: min(54%, 12rem);
+  right: -18%;
+  bottom: 4.75rem;
+  width: min(48%, 12.5rem);
   aspect-ratio: 1;
-  background-position: left bottom;
-  background-size: 185% auto;
+  background-position: 18% 100%;
+  background-size: 205% auto;
 }
 
+/* Personal Guidance — hourglass; upper-right overhang from top-right of sprite. */
 .ask-leilia-pricing__card--hourglass::before {
-  top: -2%;
-  right: -2%;
-  width: min(50%, 11rem);
-  aspect-ratio: 1;
+  top: -10%;
+  right: -12%;
+  width: min(44%, 11.5rem);
+  aspect-ratio: 0.82;
   background-position: right top;
-  background-size: 200% auto;
+  background-size: 230% auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ask-leilia-pricing__card::before {
+    opacity: 0.18;
+    mix-blend-mode: soft-light;
+  }
+}
+
+@media (max-width: 759px) {
+  .ask-leilia-pricing__card--feather::before {
+    top: -8%;
+    right: -12%;
+    width: min(44%, 11rem);
+  }
+
+  .ask-leilia-pricing__card--compass::before {
+    right: -14%;
+    bottom: 4.5rem;
+    width: min(42%, 10.5rem);
+  }
+
+  .ask-leilia-pricing__card--hourglass::before {
+    top: -6%;
+    right: -8%;
+    width: min(38%, 9.75rem);
+  }
 }
 
 .ask-leilia-portfolio__name {
