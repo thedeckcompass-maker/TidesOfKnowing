@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { cleanDisplayName } from "../../lib/community/auth";
+import { runAuthOtpRegisterFlow } from "../../lib/community/authOtpRegister";
+import {
+  createAuthOtpSubmissionId,
+  normalizeAuthOtpClaimMode,
+} from "../../lib/community/otpIdempotency";
 import { authRedirect } from "../../lib/community/supabaseServer";
 import { validateDisplayName } from "../../lib/community/validation";
 
@@ -11,12 +16,8 @@ const description = "Join the Practice Commons at Tides of Knowing with a simple
 
 let error = "";
 let errorReference = "";
-let errorCode = "";
 const redirectTo = "/community/";
-
-function emailDomain(email: string): string {
-  return email.split("@")[1] ?? "";
-}
+const joinSubmissionId = createAuthOtpSubmissionId();
 
 function authErrorDetails(error: unknown) {
   if (!error || typeof error !== "object") {
@@ -46,28 +47,6 @@ function authErrorDetails(error: unknown) {
   };
 }
 
-function adminDiagnosticForAuthError(message: string): string {
-  const normalized = message.toLowerCase();
-
-  if (normalized.includes("redirect") || normalized.includes("not allowed")) {
-    return "Check Supabase Auth Site URL and Redirect URLs. The production callback URL must be allowed.";
-  }
-
-  if (normalized.includes("email") && normalized.includes("disabled")) {
-    return "Check Supabase Auth providers. Email authentication may be disabled.";
-  }
-
-  if (normalized.includes("invalid api key") || normalized.includes("jwt")) {
-    return "Check PUBLIC_SUPABASE_ANON_KEY in Cloudflare Pages.";
-  }
-
-  if (normalized.includes("rate")) {
-    return "Check Supabase Auth rate limits and recent repeated magic-link requests.";
-  }
-
-  return "Check Supabase Auth logs for this reference id and confirm email provider, redirect allow-list, and email delivery settings.";
-}
-
 function isExpectedReturningMemberPrivacyError(error: unknown): boolean {
   const details = authErrorDetails(error);
   const normalized = details.message.toLowerCase();
@@ -82,32 +61,34 @@ function isExpectedReturningMemberPrivacyError(error: unknown): boolean {
   );
 }
 
+function checkEmailRedirect(
+  email: string,
+  displayName: string,
+  next: string,
+  includeDisplayName: boolean,
+) {
+  const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
+  checkEmailUrl.searchParams.set("email", email);
+  if (includeDisplayName) {
+    checkEmailUrl.searchParams.set("displayName", displayName);
+  }
+  checkEmailUrl.searchParams.set("redirectTo", next);
+  return authRedirect(checkEmailUrl.pathname + checkEmailUrl.search, Astro.cookies);
+}
+
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
   const email = String(form.get("email") ?? "").trim().toLowerCase();
-  const authMode = String(form.get("authMode") ?? "join");
-  const isReturningMemberSignIn = authMode === "sign-in";
+  const authModeRaw = String(form.get("authMode") ?? "join");
+  const claimMode = normalizeAuthOtpClaimMode(authModeRaw);
+  const isReturningMemberSignIn = claimMode === "sign-in";
   const displayName = cleanDisplayName(form.get("displayName"));
-  const displayNameValidation = isReturningMemberSignIn
-    ? ({ ok: true, value: { displayName: "" } } as const)
-    : validateDisplayName(form.get("displayName"));
+  const displayNameValidation = claimMode === "join"
+    ? validateDisplayName(form.get("displayName"))
+    : ({ ok: true, value: { displayName: "" } } as const);
   const next = "/community/";
-  const registrationReference = crypto.randomUUID();
-
-  console.warn("TEMP Practice Commons register POST received", {
-    reference: registrationReference,
-    method: Astro.request.method,
-    requestUrl: Astro.url.href,
-    emailDomain: emailDomain(email),
-    displayNameLength: displayName.length,
-    authMode: isReturningMemberSignIn ? "sign-in" : "join",
-    userAgent: Astro.request.headers.get("user-agent"),
-    referer: Astro.request.headers.get("referer"),
-    origin: Astro.request.headers.get("origin"),
-    fetchSite: Astro.request.headers.get("sec-fetch-site"),
-    fetchMode: Astro.request.headers.get("sec-fetch-mode"),
-    fetchDest: Astro.request.headers.get("sec-fetch-dest"),
-  });
+  const submissionId = String(form.get("submissionId") ?? "").trim();
+  const headerSubmissionId = Astro.request.headers.get("x-auth-submission-id")?.trim() ?? "";
 
   if (!Astro.locals.supabase) {
     error = "Practice Commons sign-in is not configured yet.";
@@ -121,81 +102,48 @@ if (Astro.request.method === "POST") {
       Astro.url,
     ).href;
 
-    let signInError: unknown = null;
-
-    try {
-      console.warn("TEMP Practice Commons signInWithOtp call starting", {
-        reference: registrationReference,
-        emailDomain: emailDomain(email),
-        redirectTo: next,
-        emailRedirectTo,
-        authMode: isReturningMemberSignIn ? "sign-in" : "join",
-      });
-      const result = await Astro.locals.supabase.auth.signInWithOtp({
+    const flow = await runAuthOtpRegisterFlow(
+      {
+        submissionId,
+        headerSubmissionId,
+        authMode: claimMode,
         email,
-        options: {
-          emailRedirectTo,
-          shouldCreateUser: !isReturningMemberSignIn,
-          ...(isReturningMemberSignIn ? {} : { data: { display_name: displayName } }),
-        },
-      });
-      signInError = result.error;
-      console.warn("TEMP Practice Commons signInWithOtp call completed", {
-        reference: registrationReference,
-        emailDomain: emailDomain(email),
-        hasError: Boolean(result.error),
-        errorCode: result.error && "code" in result.error ? result.error.code : null,
-        errorMessage: result.error?.message ?? null,
-        authMode: isReturningMemberSignIn ? "sign-in" : "join",
-      });
-    } catch (caughtError) {
-      signInError = caughtError;
-      console.error("TEMP Practice Commons signInWithOtp call threw", {
-        reference: registrationReference,
-        emailDomain: emailDomain(email),
-        errorName:
-          caughtError && typeof caughtError === "object" && "name" in caughtError
-            ? caughtError.name
-            : null,
-        errorMessage:
-          caughtError && typeof caughtError === "object" && "message" in caughtError
-            ? caughtError.message
-            : String(caughtError),
-      });
-    }
-
-    if (signInError) {
-      if (isReturningMemberSignIn && isExpectedReturningMemberPrivacyError(signInError)) {
-        signInError = null;
-      }
-    }
-
-    if (signInError) {
-      const details = authErrorDetails(signInError);
-      console.error("Practice Commons sign-in link request failed", {
-        reference: registrationReference,
-        errorName: details.name,
-        errorCode: details.code,
-        errorMessage: details.message,
-        errorStatus: details.status,
-        adminDiagnostic: adminDiagnosticForAuthError(details.message),
-        emailDomain: emailDomain(email),
-        redirectTo: next,
+        displayName,
         emailRedirectTo,
-        requestUrl: Astro.url.href,
-        authMode: isReturningMemberSignIn ? "sign-in" : "join",
-      });
+      },
+      {
+        locals: Astro.locals,
+        isExpectedReturningMemberPrivacyError,
+        signInWithOtp: async ({ email: otpEmail, emailRedirectTo: redirect, shouldCreateUser, displayName: otpDisplayName }) => {
+          const result = await Astro.locals.supabase!.auth.signInWithOtp({
+            email: otpEmail,
+            options: {
+              emailRedirectTo: redirect,
+              shouldCreateUser,
+              ...(otpDisplayName ? { data: { display_name: otpDisplayName } } : {}),
+            },
+          });
+          return { error: result.error };
+        },
+      },
+    );
+
+    if (flow.outcome === "accepted") {
+      return checkEmailRedirect(
+        email,
+        displayName,
+        next,
+        !isReturningMemberSignIn && Boolean(displayName),
+      );
+    }
+
+    errorReference = flow.invocationId;
+    if (flow.reason === "missing_submission") {
+      error = "Unable to send a sign-in link right now. Please try again from the sign-in form.";
+    } else if (flow.reason === "claim_unavailable") {
       error = "Unable to send a sign-in link right now. Please try again.";
-      errorReference = registrationReference;
-      errorCode = details.code ?? "";
     } else {
-      const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
-      checkEmailUrl.searchParams.set("email", email);
-      if (!isReturningMemberSignIn) {
-        checkEmailUrl.searchParams.set("displayName", displayName);
-      }
-      checkEmailUrl.searchParams.set("redirectTo", next);
-      return authRedirect(checkEmailUrl.pathname + checkEmailUrl.search, Astro.cookies);
+      error = "Unable to send a sign-in link right now. Please try again.";
     }
   }
 }
@@ -216,7 +164,6 @@ if (Astro.request.method === "POST") {
             <div class="auth-notice auth-notice--error">
               <p>{error}</p>
               {errorReference ? <p>Reference: {errorReference}</p> : null}
-              {errorCode ? <p>Error code: {errorCode}</p> : null}
             </div>
           ) : null
         }
@@ -224,6 +171,7 @@ if (Astro.request.method === "POST") {
         <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
           <input type="hidden" name="authMode" value="join" />
           <input type="hidden" name="redirectTo" value={redirectTo} />
+          <input type="hidden" name="submissionId" value={joinSubmissionId} />
           <label for="displayName">Your name</label>
           <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
           <label for="email">Email address</label>
@@ -237,7 +185,7 @@ if (Astro.request.method === "POST") {
       <div class="auth-confirmation" data-auth-confirmation hidden>
         <h2>✓ Check your email</h2>
         <p>
-          We've sent a secure sign-in link to:
+          Check your email for your secure sign-in link:
           <strong data-auth-confirmation-email></strong>
         </p>
         <p>Click the link in that email to enter the Practice Commons.</p>
@@ -249,98 +197,12 @@ if (Astro.request.method === "POST") {
 </BaseLayout>
 
 <script>
-  const forms = document.querySelectorAll("[data-auth-register-form]");
+  import { bindAuthRegisterForms } from "../../lib/community/authRegisterForm";
 
-  forms.forEach((form) => {
-    if (!(form instanceof HTMLFormElement) || form.dataset.submitBound === "true") return;
-
-    form.dataset.submitBound = "true";
-    let submitted = false;
-    const originalAction = form.getAttribute("action") || window.location.pathname;
-    const submitButton = form.querySelector("[data-auth-register-submit]");
-    const statusMessage = form.querySelector("[data-auth-register-status]");
-    const entry = form.closest("[data-auth-entry]");
-    const card = form.closest(".auth-card");
-    const confirmation = card?.querySelector("[data-auth-confirmation]");
-    const confirmationEmail = confirmation?.querySelector("[data-auth-confirmation-email]");
-    const resetButton = confirmation?.querySelector("[data-auth-reset]");
-
-    function restoreForm() {
-      submitted = false;
-      card?.classList.remove("auth-card--confirmed");
-      if (entry instanceof HTMLElement) entry.hidden = false;
-      if (confirmation instanceof HTMLElement) confirmation.hidden = true;
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = "Continue";
-      }
-      if (statusMessage instanceof HTMLElement) {
-        statusMessage.hidden = true;
-        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
-      }
-    }
-
-    resetButton?.addEventListener("click", restoreForm);
-
-    form.addEventListener("submit", async (event) => {
-      if (submitted) {
-        event.preventDefault();
-        return;
-      }
-
-      if (!form.checkValidity()) return;
-
-      event.preventDefault();
-      submitted = true;
-
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = true;
-        submitButton.textContent = "Sending sign-in link...";
-      }
-
-      if (statusMessage instanceof HTMLElement) {
-        statusMessage.hidden = false;
-        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
-      }
-
-      const formData = new FormData(form);
-      const email = String(formData.get("email") || "").trim();
-
-      try {
-        const response = await fetch(originalAction, {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "text/html" },
-          credentials: "same-origin",
-        });
-        const responseUrl = new URL(response.url);
-
-        if (response.redirected && responseUrl.pathname === "/auth/check-email/") {
-          if (confirmationEmail instanceof HTMLElement) confirmationEmail.textContent = email;
-          card?.classList.add("auth-card--confirmed");
-          if (entry instanceof HTMLElement) entry.hidden = true;
-          if (confirmation instanceof HTMLElement) confirmation.hidden = false;
-          return;
-        }
-
-        if (response.redirected) {
-          window.location.assign(response.url);
-          return;
-        }
-
-        throw new Error("Sign-in link request did not reach the confirmation page.");
-      } catch (_error) {
-        submitted = false;
-        if (submitButton instanceof HTMLButtonElement) {
-          submitButton.disabled = false;
-          submitButton.textContent = "Continue";
-        }
-        if (statusMessage instanceof HTMLElement) {
-          statusMessage.hidden = false;
-          statusMessage.textContent = "Unable to send a sign-in link right now. Please try again.";
-        }
-      }
-    });
+  bindAuthRegisterForms({
+    cardSelector: ".auth-card",
+    confirmedClass: "auth-card--confirmed",
+    defaultButtonText: "Continue",
   });
 </script>
 

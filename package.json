@@ -21,6 +21,8 @@
     "test:rcm-eof-normalise": "node scripts/normalise-rcm-eof.test.mjs",
     "test:ask-leilia-reviews": "node scripts/ask-leilia-reviews.test.mjs",
     "test:ask-leilia-admin": "node scripts/ask-leilia-admin.test.mjs",
+    "test:auth-callback": "node scripts/auth-callback.test.mjs",
+    "test:auth-otp": "node scripts/auth-otp-claim.test.mjs && node scripts/auth-otp-register.test.mjs && node scripts/auth-otp-account-sign-in-link.test.mjs",
     "verify:reading-library-head": "node scripts/verify-reading-library-head.mjs",
     "seo:rcm-tracker": "node scripts/generate-repeating-card-index-tracker.mjs",
     "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs"

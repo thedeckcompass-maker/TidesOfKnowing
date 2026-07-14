@@ -1,112 +1,127 @@
 import type { APIRoute } from "astro";
+import {
+  isValidAuthCallbackTokenHash,
+  logAuthCallbackEvent,
+  parseAuthCallbackOtpType,
+  safeAuthCallbackRedirect,
+} from "../../lib/community/authCallback";
 import { authRedirect } from "../../lib/community/supabaseServer";
 
 export const prerender = false;
 
-type SupabaseOtpType =
-  | "signup"
-  | "invite"
-  | "magiclink"
-  | "recovery"
-  | "email_change"
-  | "email";
-
-function safeRedirect(value: string | null): string {
-  if (!value || !value.startsWith("/") || value.startsWith("//")) return "/community/";
-  return value;
-}
-
-function safeOtpType(value: string | null): SupabaseOtpType {
-  if (
-    value === "signup" ||
-    value === "invite" ||
-    value === "magiclink" ||
-    value === "recovery" ||
-    value === "email_change" ||
-    value === "email"
-  ) {
-    return value;
-  }
-
-  return "email";
-}
-
-function tokenPreview(value: string | null): string {
-  if (!value) return "not present";
-  return `${value.slice(0, 8)}... (length ${value.length})`;
-}
-
 export const GET: APIRoute = async ({ url, locals, cookies }) => {
+  const invocationId = crypto.randomUUID();
   const code = url.searchParams.get("code");
   const tokenHash = url.searchParams.get("token_hash");
-  const token = url.searchParams.get("token");
-  const otpType = safeOtpType(url.searchParams.get("type"));
-  const redirectTo = safeRedirect(url.searchParams.get("redirectTo"));
-  const callbackReference = crypto.randomUUID();
-  const callbackBranch = tokenHash ? "verifyOtp_token_hash" : code || token ? "exchangeCodeForSession_code" : "missing_auth_params";
+  const rawType = url.searchParams.get("type");
+  const otpType = parseAuthCallbackOtpType(rawType);
+  const redirectTo = safeAuthCallbackRedirect(url.searchParams.get("redirectTo"));
 
-  console.warn("TEMP Practice Commons auth callback received", {
-    reference: callbackReference,
-    callbackBranch,
-    pathname: url.pathname,
-    hasCode: Boolean(code),
-    code: tokenPreview(code),
+  logAuthCallbackEvent({
+    invocationId,
+    event: "callback_received",
+    status: "received",
     hasTokenHash: Boolean(tokenHash),
-    tokenHash: tokenPreview(tokenHash),
-    hasToken: Boolean(token),
-    token: tokenPreview(token),
-    rawType: url.searchParams.get("type"),
+    hasCode: Boolean(code),
     otpType,
-    redirectTo,
+    redirectPath: redirectTo,
   });
 
   if (!locals.supabase) {
-    console.error("Practice Commons auth callback missing Supabase client", {
-      reference: callbackReference,
-      callbackBranch,
+    logAuthCallbackEvent({
+      invocationId,
+      event: "callback_rejected",
+      status: "missing_supabase",
+      redirectPath: redirectTo,
     });
     return authRedirect("/auth/register/", cookies);
   }
 
-  if (!code && !tokenHash && !token) {
-    console.error("Practice Commons auth callback missing code, token_hash, and token", {
-      reference: callbackReference,
-      callbackBranch,
+  // Primary email-link path: TokenHash templates.
+  if (tokenHash !== null || rawType !== null) {
+    if (!isValidAuthCallbackTokenHash(tokenHash) || !tokenHash) {
+      logAuthCallbackEvent({
+        invocationId,
+        event: "callback_rejected",
+        status: "missing_or_invalid_token_hash",
+        hasTokenHash: Boolean(tokenHash),
+        otpType,
+        redirectPath: redirectTo,
+      });
+      return authRedirect("/auth/register/", cookies);
+    }
+
+    if (!otpType) {
+      logAuthCallbackEvent({
+        invocationId,
+        event: "callback_rejected",
+        status: rawType === null || rawType.trim() === "" ? "missing_or_empty_type" : "unsupported_type",
+        hasTokenHash: true,
+        otpType: rawType,
+        redirectPath: redirectTo,
+      });
+      return authRedirect("/auth/register/", cookies);
+    }
+
+    const verifiedTokenHash = tokenHash.trim();
+    const { error } = await locals.supabase.auth.verifyOtp({
+      token_hash: verifiedTokenHash,
+      type: otpType,
     });
-    return authRedirect("/auth/register/", cookies);
-  }
 
-  console.warn("TEMP Practice Commons auth callback executing branch", {
-    reference: callbackReference,
-    callbackBranch,
-  });
+    if (error) {
+      logAuthCallbackEvent({
+        invocationId,
+        event: "callback_verify_failed",
+        status: "verify_otp_failed",
+        hasTokenHash: true,
+        otpType,
+        redirectPath: redirectTo,
+      });
+      return authRedirect("/auth/register/", cookies);
+    }
 
-  const { error } = tokenHash
-    ? await locals.supabase.auth.verifyOtp({
-          token_hash: tokenHash ?? "",
-          type: otpType,
-        })
-    : await locals.supabase.auth.exchangeCodeForSession(code ?? token ?? "");
-
-  if (error) {
-    console.error("Practice Commons auth callback session exchange failed", {
-      reference: callbackReference,
-      callbackBranch,
-      errorName: error.name,
-      errorCode: "code" in error ? error.code : null,
-      errorMessage: error.message,
-      errorStatus: "status" in error ? error.status : null,
+    logAuthCallbackEvent({
+      invocationId,
+      event: "callback_succeeded",
+      status: "accepted",
+      hasTokenHash: true,
       otpType,
-      redirectTo,
+      redirectPath: redirectTo,
     });
-    return authRedirect("/auth/register/", cookies);
+    return authRedirect(redirectTo, cookies);
   }
 
-  console.warn("TEMP Practice Commons auth callback succeeded", {
-    reference: callbackReference,
-    callbackBranch,
-    redirectTo,
-  });
+  // Secondary PKCE code exchange (no email token_hash / type query params).
+  if (code) {
+    const { error } = await locals.supabase.auth.exchangeCodeForSession(code);
 
-  return authRedirect(redirectTo, cookies);
+    if (error) {
+      logAuthCallbackEvent({
+        invocationId,
+        event: "callback_verify_failed",
+        status: "exchange_code_failed",
+        hasCode: true,
+        redirectPath: redirectTo,
+      });
+      return authRedirect("/auth/register/", cookies);
+    }
+
+    logAuthCallbackEvent({
+      invocationId,
+      event: "callback_succeeded",
+      status: "accepted",
+      hasCode: true,
+      redirectPath: redirectTo,
+    });
+    return authRedirect(redirectTo, cookies);
+  }
+
+  logAuthCallbackEvent({
+    invocationId,
+    event: "callback_rejected",
+    status: "missing_auth_params",
+    redirectPath: redirectTo,
+  });
+  return authRedirect("/auth/register/", cookies);
 };

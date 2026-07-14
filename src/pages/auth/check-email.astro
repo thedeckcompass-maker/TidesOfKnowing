@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { createAuthOtpSubmissionId } from "../../lib/community/otpIdempotency";
 
 export const prerender = false;
 
@@ -9,6 +10,7 @@ const description = "Check your email for a secure Practice Commons sign-in link
 const email = Astro.url.searchParams.get("email")?.trim().toLowerCase() ?? "";
 const displayName = Astro.url.searchParams.get("displayName")?.trim() ?? "";
 const redirectTo = "/community/";
+const resendSubmissionId = createAuthOtpSubmissionId();
 ---
 
 <BaseLayout title={title} description={description} metaRobots="noindex, nofollow">
@@ -31,11 +33,21 @@ const redirectTo = "/community/";
 
       {
         email && displayName ? (
-          <form method="post" action="/auth/register/" class="auth-form">
+          <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
+            <input type="hidden" name="authMode" value="resend" />
             <input type="hidden" name="displayName" value={displayName} />
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="redirectTo" value={redirectTo} />
-            <button type="submit">Send another email</button>
+            <input type="hidden" name="submissionId" value={resendSubmissionId} />
+            <button
+              type="submit"
+              data-auth-register-submit
+              data-default-text="Send another email"
+              data-sending-text="Sending sign-in link..."
+            >
+              Send another email
+            </button>
+            <p class="auth-alt" data-auth-register-status hidden></p>
           </form>
         ) : (
           <p class="auth-alt">
@@ -46,6 +58,16 @@ const redirectTo = "/community/";
     </section>
   </main>
 </BaseLayout>
+
+<script>
+  import { bindAuthRegisterForms } from "../../lib/community/authRegisterForm";
+
+  bindAuthRegisterForms({
+    cardSelector: ".auth-card",
+    confirmedClass: "auth-card--confirmed",
+    defaultButtonText: "Send another email",
+  });
+</script>
 
 <style>
   .auth-page {

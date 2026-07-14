@@ -35,6 +35,8 @@ const canPost = canContribute(Astro.locals.profile);
 const isAuthenticated = Boolean(Astro.locals.user);
 const displayName = Astro.locals.profile?.display_name ?? "Reader";
 const signedOut = Astro.url.searchParams.get("signed_out") === "true";
+const joinSubmissionId = crypto.randomUUID();
+const signInSubmissionId = crypto.randomUUID();
 const jsonLd = [
   breadcrumbJsonLd(crumbs, base.href),
   {
@@ -135,6 +137,7 @@ const jsonLd = [
               </div>
               <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
                 <input type="hidden" name="authMode" value="join" />
+                <input type="hidden" name="submissionId" value={joinSubmissionId} />
                 <label for="community-display-name">Your name</label>
                 <input
                   id="community-display-name"
@@ -167,6 +170,7 @@ const jsonLd = [
                 </div>
                 <form class="community-join-form" method="post" action="/auth/register/" data-auth-register-form>
                   <input type="hidden" name="authMode" value="sign-in" />
+                  <input type="hidden" name="submissionId" value={signInSubmissionId} />
                   <label for="community-returning-email">Email address</label>
                   <input id="community-returning-email" name="email" type="email" autocomplete="email" required />
                   <button
@@ -186,7 +190,7 @@ const jsonLd = [
             <div class="community-auth-confirmation" data-auth-confirmation hidden>
               <h3>✓ Check your email</h3>
               <p>
-                We've sent a secure sign-in link to:
+                Check your email for your secure sign-in link:
                 <strong data-auth-confirmation-email></strong>
               </p>
               <p>Click the link in that email to enter the Practice Commons.</p>
@@ -218,105 +222,11 @@ const jsonLd = [
 </BaseLayout>
 
 <script>
-  const forms = document.querySelectorAll("[data-auth-register-form]");
+  import { bindAuthRegisterForms } from "../../lib/community/authRegisterForm";
 
-  forms.forEach((form) => {
-    if (!(form instanceof HTMLFormElement) || form.dataset.submitBound === "true") return;
-
-    form.dataset.submitBound = "true";
-    let submitted = false;
-    const originalAction = form.getAttribute("action") || window.location.pathname;
-    const submitButton = form.querySelector("[data-auth-register-submit]");
-    const statusMessage = form.querySelector("[data-auth-register-status]");
-    const entry = form.closest("[data-auth-entry]");
-    const card = form.closest(".community-auth-card");
-    const confirmation = card?.querySelector("[data-auth-confirmation]");
-    const secondaryContent = document.querySelectorAll("[data-auth-secondary]");
-    const confirmationEmail = confirmation?.querySelector("[data-auth-confirmation-email]");
-    const resetButton = confirmation?.querySelector("[data-auth-reset]");
-
-    function restoreForm() {
-      submitted = false;
-      card?.classList.remove("community-auth-card--confirmed");
-      if (entry instanceof HTMLElement) entry.hidden = false;
-      if (confirmation instanceof HTMLElement) confirmation.hidden = true;
-      secondaryContent.forEach((content) => {
-        if (content instanceof HTMLElement) content.hidden = false;
-      });
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = false;
-        submitButton.textContent = submitButton.dataset.defaultText || "Continue";
-      }
-      if (statusMessage instanceof HTMLElement) {
-        statusMessage.hidden = true;
-        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
-      }
-    }
-
-    resetButton?.addEventListener("click", restoreForm);
-
-    form.addEventListener("submit", async (event) => {
-      if (submitted) {
-        event.preventDefault();
-        return;
-      }
-
-      if (!form.checkValidity()) return;
-
-      event.preventDefault();
-      submitted = true;
-
-      if (submitButton instanceof HTMLButtonElement) {
-        submitButton.disabled = true;
-        submitButton.textContent = submitButton.dataset.sendingText || "Sending sign-in link...";
-      }
-
-      if (statusMessage instanceof HTMLElement) {
-        statusMessage.hidden = false;
-        statusMessage.textContent = "Please wait... we're sending your secure sign-in link.";
-      }
-
-      const formData = new FormData(form);
-      const email = String(formData.get("email") || "").trim();
-
-      try {
-        const response = await fetch(originalAction, {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "text/html" },
-          credentials: "same-origin",
-        });
-        const responseUrl = new URL(response.url);
-
-        if (response.redirected && responseUrl.pathname === "/auth/check-email/") {
-          if (confirmationEmail instanceof HTMLElement) confirmationEmail.textContent = email;
-          card?.classList.add("community-auth-card--confirmed");
-          if (entry instanceof HTMLElement) entry.hidden = true;
-          if (confirmation instanceof HTMLElement) confirmation.hidden = false;
-          secondaryContent.forEach((content) => {
-            if (content instanceof HTMLElement) content.hidden = true;
-          });
-          return;
-        }
-
-        if (response.redirected) {
-          window.location.assign(response.url);
-          return;
-        }
-
-        throw new Error("Sign-in link request did not reach the confirmation page.");
-      } catch (_error) {
-        submitted = false;
-        if (submitButton instanceof HTMLButtonElement) {
-          submitButton.disabled = false;
-          submitButton.textContent = submitButton.dataset.defaultText || "Continue";
-        }
-        if (statusMessage instanceof HTMLElement) {
-          statusMessage.hidden = false;
-          statusMessage.textContent = "Unable to send a sign-in link right now. Please try again.";
-        }
-      }
-    });
+  bindAuthRegisterForms({
+    cardSelector: ".community-auth-card",
+    confirmedClass: "community-auth-card--confirmed",
   });
 </script>
 
