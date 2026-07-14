@@ -97,10 +97,7 @@
 .ask-review__field select:focus,
 .ask-review__field textarea:focus,
 .ask-review__star input:focus + span,
-.ask-review__submit:focus-visible,
-.ask-reviews__nav:focus-visible,
-.ask-reviews__dot:focus-visible,
-.ask-reviews__track:focus-visible {
+.ask-review__submit:focus-visible {
   outline: 2px solid var(--tok-teal);
   outline-offset: 2px;
 }
@@ -202,9 +199,22 @@
   font-weight: 600;
 }
 
-/* Carousel */
+/* Carousel — cream editorial cards that stay distinct on navy Ask Leilia surfaces */
 
 .ask-reviews {
+  /* Pinned light reading identity so cards remain warm vs remapped dark-mode tokens */
+  --ask-review-surface: #f2efe9;
+  --ask-review-surface-soft: #e8e3db;
+  --ask-review-ink: var(--tok-deep-ocean);
+  --ask-review-ink-soft: #1e3a5f;
+  --ask-review-meta: #4b5563;
+  --ask-review-meta-quiet: #555e6b;
+  --ask-review-gold: #c6a85a;
+  --ask-review-gold-deep: #7a5c18;
+  --ask-review-teal: #0891b2;
+  --ask-review-teal-dim: #065e73;
+  --ask-review-border: color-mix(in srgb, var(--ask-review-gold) 42%, transparent);
+  --ask-review-rule: color-mix(in srgb, var(--ask-review-gold) 70%, var(--ask-review-gold-deep));
   margin: 3rem 0 2.5rem;
 }
 
@@ -214,15 +224,18 @@
 }
 
 .ask-reviews__intro h2 {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  margin: 0 0 0.5rem;
-  color: var(--tok-text-dark);
+  font-family: var(--font-accent);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6vw, 3rem);
+  line-height: 1.08;
+  margin: 0 0 0.55rem;
+  color: var(--tok-water);
 }
 
 .ask-reviews__intro p {
   margin: 0;
   color: var(--tok-text-muted);
+  font-size: 1.03rem;
   line-height: var(--tok-line-body);
 }
 
@@ -232,21 +245,48 @@
 
 .ask-reviews__controls {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.55rem;
   justify-content: flex-end;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 .ask-reviews__nav {
-  padding: 0.45rem 0.8rem;
-  border: 1px solid var(--tok-border-light);
+  min-height: 2.5rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--ask-review-gold) 55%, transparent);
   border-radius: var(--radius-control);
-  background: #fff;
-  color: var(--tok-text-dark);
+  background: var(--ask-review-surface);
+  color: var(--ask-review-ink);
+  font-family: var(--font-body);
   font-size: var(--tok-type-ui-button);
+  font-weight: var(--tok-ui-btn-font-weight);
   letter-spacing: var(--tok-letter-upper);
   text-transform: uppercase;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.ask-reviews__nav:hover {
+  background: var(--ask-review-surface-soft);
+  border-color: var(--ask-review-gold);
+}
+
+.ask-reviews__nav:disabled,
+.ask-reviews__nav[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.ask-reviews__nav:focus-visible,
+.ask-reviews__dot:focus-visible,
+.ask-reviews__track:focus-visible {
+  outline: 2px solid var(--ask-review-teal);
+  outline-offset: 2px;
 }
 
 .ask-reviews__track {
@@ -283,95 +323,169 @@
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.7rem;
   min-height: 100%;
-  padding: 1.15rem 1.2rem 1.25rem;
-  border: 1px solid var(--tok-border-light);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, #fff 70%, var(--tok-surface-reading));
+  padding: 1.25rem 1.25rem 1.35rem;
+  border: 1px solid var(--ask-review-border);
+  border-top: 3px solid var(--ask-review-rule);
+  border-radius: var(--radius-promo);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--ask-review-surface) 92%, #fff),
+      var(--ask-review-surface-soft)
+    );
+  box-shadow: var(--shadow-sm);
+  color: var(--ask-review-ink);
 }
 
 .ask-reviews__rating {
   margin: 0;
-  letter-spacing: 0.08em;
-  color: var(--tok-gold-deep);
-  font-size: 0.95rem;
 }
 
 .ask-reviews__title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--tok-text-dark);
+  font-size: clamp(1.15rem, 2.4vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ask-review-ink-soft);
 }
 
 .ask-reviews__quote {
-  margin: 0;
+  position: relative;
+  margin: 0.15rem 0 0;
+  padding-top: 0.35rem;
   flex: 1;
 }
 
-.ask-reviews__quote p {
-  margin: 0;
-  font-family: var(--font-accent);
-  font-size: 1.08rem;
-  line-height: 1.55;
-  color: var(--tok-text-dark);
+.ask-reviews__quote::before {
+  content: "“";
+  display: block;
+  margin-bottom: 0.15rem;
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--ask-review-gold) 78%, var(--ask-review-gold-deep));
+  pointer-events: none;
 }
 
 .ask-reviews__meta {
   display: grid;
-  gap: 0.15rem;
-  margin-top: 0.35rem;
+  gap: 0.28rem;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid color-mix(in srgb, var(--ask-review-gold) 28%, transparent);
 }
 
-.ask-reviews__name,
-.ask-reviews__type,
-.ask-reviews__verified,
-.ask-reviews__date {
+/* Higher specificity than `.ask-leilia p` so cream-card ink survives dark-mode remaps. */
+.ask-reviews .ask-reviews__rating {
+  letter-spacing: 0.12em;
+  color: var(--ask-review-gold-deep);
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.ask-reviews .ask-reviews__quote p {
   margin: 0;
-  font-size: 0.86rem;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--ask-review-ink);
 }
 
-.ask-reviews__name {
+.ask-reviews .ask-reviews__name {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
   font-weight: 600;
-  color: var(--tok-text-dark);
+  color: var(--ask-review-ink);
 }
 
-.ask-reviews__type,
-.ask-reviews__date {
-  color: var(--tok-text-muted);
+.ask-reviews .ask-reviews__type {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ask-review-meta);
 }
 
-.ask-reviews__verified {
-  color: var(--tok-teal-dim);
+.ask-reviews .ask-reviews__verified {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0.15rem 0 0;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--ask-review-teal) 35%, transparent);
+  border-radius: var(--radius-soft);
+  background: color-mix(in srgb, var(--ask-review-teal) 10%, var(--ask-review-surface));
+  color: var(--ask-review-teal-dim);
+  font-size: var(--tok-type-meta);
   font-weight: 600;
+  letter-spacing: var(--tok-letter-upper-tight);
+  text-transform: uppercase;
+}
+
+.ask-reviews .ask-reviews__date {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ask-review-meta-quiet);
 }
 
 .ask-reviews__dots {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.45rem;
   justify-content: center;
-  margin-top: 0.9rem;
+  margin-top: 1rem;
 }
 
 .ask-reviews__dot {
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.5rem;
+  height: 0.5rem;
   padding: 0;
-  border: 0;
+  border: 1px solid color-mix(in srgb, var(--ask-review-gold) 55%, #fff);
   border-radius: 999px;
-  background: var(--tok-border-light);
+  background: color-mix(in srgb, var(--ask-review-surface) 82%, #fff);
   cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    width var(--dur-fast) var(--ease-out);
 }
 
 .ask-reviews__dot[aria-selected="true"] {
-  background: var(--tok-teal);
+  width: 1.1rem;
+  border-radius: var(--radius-pill);
+  border-color: var(--ask-review-teal-dim);
+  background: var(--ask-review-teal);
+  transform: none;
+}
+
+@media (max-width: 719px) {
+  .ask-reviews__card {
+    padding: 1.15rem 1.1rem 1.25rem;
+  }
+
+  .ask-reviews__quote p {
+    font-size: 0.96rem;
+  }
+
+  .ask-reviews__controls {
+    justify-content: stretch;
+  }
+
+  .ask-reviews__nav {
+    flex: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ask-reviews__track {
     scroll-behavior: auto;
+  }
+
+  .ask-reviews__nav,
+  .ask-reviews__dot {
+    transition: none;
   }
 }
