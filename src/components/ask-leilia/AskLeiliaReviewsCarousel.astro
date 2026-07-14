@@ -1,0 +1,218 @@
+---
+import type { AskLeiliaPublicReview } from "../../lib/ask-leilia/reviews/types";
+
+interface Props {
+  reviews: AskLeiliaPublicReview[];
+  heading?: string;
+  supporting?: string;
+}
+
+const {
+  reviews,
+  heading = "What Seekers Say",
+  supporting = "Experiences shared by people who have received an Ask Leilia reading.",
+} = Astro.props;
+
+const count = reviews.length;
+const canScroll = count > 1;
+---
+
+{
+  count > 0 ? (
+    <section class="ask-reviews" aria-labelledby="ask-reviews-heading">
+      <div class="ask-reviews__intro">
+        <h2 id="ask-reviews-heading">{heading}</h2>
+        <p>{supporting}</p>
+      </div>
+
+      <div
+        class:list={["ask-reviews__shell", !canScroll && "ask-reviews__shell--static"]}
+        data-ask-reviews-carousel
+        data-count={String(count)}
+      >
+        {
+          canScroll ? (
+            <div class="ask-reviews__controls">
+              <button
+                type="button"
+                class="ask-reviews__nav"
+                data-ask-reviews-prev
+                aria-controls="ask-reviews-track"
+                aria-label="Show previous reviews"
+              >
+                Previous
+              </button>
+              <button
+                type="button"
+                class="ask-reviews__nav"
+                data-ask-reviews-next
+                aria-controls="ask-reviews-track"
+                aria-label="Show next reviews"
+              >
+                Next
+              </button>
+            </div>
+          ) : null
+        }
+
+        <div
+          id="ask-reviews-track"
+          class="ask-reviews__track"
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Ask Leilia reviews"
+          data-ask-reviews-track
+        >
+          {
+            reviews.map((review, index) => (
+              <article
+                class="ask-reviews__card"
+                aria-label={`Review ${index + 1} of ${count}`}
+                data-ask-reviews-card
+              >
+                <p class="ask-reviews__rating" aria-label={`${review.rating} out of 5`}>
+                  <span aria-hidden="true">
+                    {"★".repeat(review.rating)}
+                    {"☆".repeat(5 - review.rating)}
+                  </span>
+                </p>
+                {review.title ? <h3 class="ask-reviews__title">{review.title}</h3> : null}
+                <blockquote class="ask-reviews__quote">
+                  <p>{review.body}</p>
+                </blockquote>
+                <footer class="ask-reviews__meta">
+                  <p class="ask-reviews__name">{review.display_name}</p>
+                  <p class="ask-reviews__type">{review.reading_type_label}</p>
+                  {review.is_verified ? (
+                    <p class="ask-reviews__verified">Verified Ask Leilia reading</p>
+                  ) : null}
+                  <p class="ask-reviews__date">
+                    <time>{review.published_month_year}</time>
+                  </p>
+                </footer>
+              </article>
+            ))
+          }
+        </div>
+
+        {
+          canScroll ? (
+            <div
+              class="ask-reviews__dots"
+              data-ask-reviews-dots
+              role="tablist"
+              aria-label="Review position"
+            >
+              {reviews.map((_, index) => (
+                <button
+                  type="button"
+                  class="ask-reviews__dot"
+                  role="tab"
+                  aria-label={`Go to review ${index + 1}`}
+                  aria-selected={index === 0 ? "true" : "false"}
+                  data-ask-reviews-dot
+                  data-index={String(index)}
+                />
+              ))}
+            </div>
+          ) : null
+        }
+
+        <p class="visually-hidden" aria-live="polite" data-ask-reviews-live></p>
+      </div>
+    </section>
+  ) : null
+}
+
+{
+  canScroll ? (
+    <script>
+      function initAskReviewsCarousel(root) {
+        if (!(root instanceof HTMLElement) || root.dataset.bound === "true") return;
+        root.dataset.bound = "true";
+
+        const track = root.querySelector("[data-ask-reviews-track]");
+        const prev = root.querySelector("[data-ask-reviews-prev]");
+        const next = root.querySelector("[data-ask-reviews-next]");
+        const dots = Array.from(root.querySelectorAll("[data-ask-reviews-dot]"));
+        const live = root.querySelector("[data-ask-reviews-live]");
+        const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
+        if (!(track instanceof HTMLElement) || cards.length < 2) return;
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function cardWidth() {
+          const first = cards[0];
+          if (!(first instanceof HTMLElement)) return track.clientWidth;
+          const styles = window.getComputedStyle(track);
+          const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
+          return first.getBoundingClientRect().width + gap;
+        }
+
+        function currentIndex() {
+          const width = cardWidth();
+          if (width <= 0) return 0;
+          return Math.round(track.scrollLeft / width);
+        }
+
+        function updateUi() {
+          const index = Math.max(0, Math.min(cards.length - 1, currentIndex()));
+          dots.forEach((dot, i) => {
+            if (dot instanceof HTMLElement) {
+              dot.setAttribute("aria-selected", i === index ? "true" : "false");
+            }
+          });
+          if (live instanceof HTMLElement) {
+            live.textContent = `Review ${index + 1} of ${cards.length}`;
+          }
+        }
+
+        function goTo(index) {
+          const width = cardWidth();
+          track.scrollTo({
+            left: width * index,
+            behavior: reduceMotion ? "auto" : "smooth",
+          });
+        }
+
+        prev?.addEventListener("click", () => {
+          goTo(Math.max(0, currentIndex() - 1));
+        });
+        next?.addEventListener("click", () => {
+          goTo(Math.min(cards.length - 1, currentIndex() + 1));
+        });
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const index = Number.parseInt(String(dot.getAttribute("data-index") || "0"), 10);
+            if (!Number.isNaN(index)) goTo(index);
+          });
+        });
+
+        track.addEventListener("scroll", () => {
+          window.requestAnimationFrame(updateUi);
+        });
+
+        track.addEventListener("keydown", (event) => {
+          if (!(event instanceof KeyboardEvent)) return;
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            goTo(Math.min(cards.length - 1, currentIndex() + 1));
+          } else if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            goTo(Math.max(0, currentIndex() - 1));
+          }
+        });
+
+        updateUi();
+      }
+
+      function boot() {
+        document.querySelectorAll("[data-ask-reviews-carousel]").forEach(initAskReviewsCarousel);
+      }
+
+      boot();
+      document.addEventListener("astro:page-load", boot);
+    </script>
+  ) : null
+}

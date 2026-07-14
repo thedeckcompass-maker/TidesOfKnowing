@@ -7,6 +7,10 @@ import {
   notifyAskLeiliaStatusChanged,
   sendAskLeiliaCustomerDelivery,
 } from "../../../../lib/ask-leilia/notifications";
+import {
+  buildAskLeiliaReviewUrl,
+  ensureAskLeiliaReviewToken,
+} from "../../../../lib/ask-leilia/reviews/queries";
 import { isAskLeiliaDbReadingType } from "../../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaStatus } from "../../../../lib/ask-leilia/types";
 import {
@@ -14,6 +18,7 @@ import {
   isAskLeiliaStatus,
   validateStatusTransition,
 } from "../../../../lib/ask-leilia/validation";
+import { siteBase } from "../../../../lib/site";
 
 export const prerender = false;
 
@@ -138,11 +143,21 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
         return json({ ok: false, error: pdf.error }, 500);
       }
 
+      let reviewUrl: string | undefined;
+      const tokenResult = await ensureAskLeiliaReviewToken(service, requestId);
+      if (tokenResult.ok) {
+        const origin = siteBase({ site: undefined, url: new URL(request.url) }).origin;
+        reviewUrl = buildAskLeiliaReviewUrl({ site: undefined, url: new URL(origin) }, tokenResult.token);
+      } else if (tokenResult.error !== "Review already submitted for this reading.") {
+        console.error("Ask Leilia review token preparation failed:", tokenResult.error);
+      }
+
       const delivery = await sendAskLeiliaCustomerDelivery(
         {
           name: current.name,
           email: current.email,
           pdfContentBase64: pdf.contentBase64,
+          reviewUrl,
         },
         locals,
       );

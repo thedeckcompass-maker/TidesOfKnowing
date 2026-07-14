@@ -1,0 +1,228 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
+import { ASK_LEILIA_DB_READING_TYPES, readingTypeLabel } from "../../lib/ask-leilia/readingTypes";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
+import { resolveAskLeiliaReviewToken } from "../../lib/ask-leilia/reviews/queries";
+import { siteBase } from "../../lib/site";
+import "../../styles/ask-leilia.css";
+import "../../styles/ask-leilia-reviews.css";
+
+export const prerender = false;
+
+const canonical = new URL("/submit-a-review/", siteBase(Astro)).href;
+const title = "Share Your Experience | Ask Leilia";
+const description =
+  "Share your experience of an Ask Leilia reading. Reviews are checked before publication. Your email and private reading details are never displayed.";
+
+const token = Astro.url.searchParams.get("token")?.trim() ?? "";
+const errorMessage = Astro.url.searchParams.get("error")?.trim() ?? "";
+
+let tokenContext:
+  | {
+      email: string;
+      name: string;
+      readingType: string;
+      readingTypeLabel: string;
+      locked: true;
+    }
+  | null = null;
+let tokenNotice = "";
+
+if (token) {
+  try {
+    const service = createCommunityServiceClient(Astro.locals);
+    const resolved = await resolveAskLeiliaReviewToken(service, token);
+    if (resolved.ok) {
+      const firstName = resolved.name.trim().split(/\s+/)[0] || "";
+      tokenContext = {
+        email: resolved.email,
+        name: firstName,
+        readingType: resolved.readingType,
+        readingTypeLabel: readingTypeLabel(resolved.readingType),
+        locked: true,
+      };
+    } else {
+      tokenNotice =
+        "This review link is not available. You can still submit a review using the form below.";
+    }
+  } catch {
+    tokenNotice =
+      "This review link could not be checked right now. You can still submit a review using the form below.";
+  }
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={canonical}
+  ogTitle={title}
+  ogDescription={description}
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
+>
+  <main class="ask-leilia page-inner ask-review">
+    <header class="ask-review__header">
+      <p class="ask-leilia__kicker">Ask Leilia</p>
+      <h1>Share Your Experience</h1>
+      <p class="ask-review__lede">
+        Thank you for choosing an Ask Leilia reading. Your feedback helps other Seekers understand
+        what receiving a reading is like and helps me continue refining the experience.
+      </p>
+      <p class="ask-review__privacy">
+        Reviews are checked before publication. Your email address and private reading details will
+        never be displayed.
+      </p>
+    </header>
+
+    {
+      errorMessage ? (
+        <p class="ask-review__alert" role="alert">{errorMessage}</p>
+      ) : null
+    }
+    {
+      tokenNotice ? (
+        <p class="ask-review__notice" role="status">{tokenNotice}</p>
+      ) : null
+    }
+    {
+      tokenContext ? (
+        <p class="ask-review__notice" role="status">
+          This form is linked to your completed Ask Leilia reading
+          ({tokenContext.readingTypeLabel}).
+        </p>
+      ) : null
+    }
+
+    <form class="ask-review__form" method="post" action="/api/ask-leilia/reviews/" novalidate>
+      <input type="hidden" name="token" value={tokenContext ? token : ""} />
+
+      <p class="ask-review__honeypot" aria-hidden="true">
+        <label>
+          Website
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+      </p>
+
+      <div class="ask-review__field">
+        <label for="displayName">Public display name</label>
+        <p class="ask-review__hint" id="displayName-hint">
+          You may use your first name, your first name and surname initial, your initials, or
+          “Anonymous”.
+        </p>
+        <input
+          id="displayName"
+          name="displayName"
+          type="text"
+          maxlength="80"
+          required
+          value={tokenContext?.name ?? ""}
+          aria-describedby="displayName-hint"
+        />
+      </div>
+
+      <div class="ask-review__field">
+        <label for="email">Email address</label>
+        <p class="ask-review__hint" id="email-hint">
+          Used only for verification and administration. Never displayed publicly.
+        </p>
+        {
+          tokenContext ? (
+            <p class="ask-review__locked" id="email" aria-describedby="email-hint">
+              We’ll use the email address already associated with your completed reading.
+            </p>
+          ) : (
+            <input
+              id="email"
+              name="email"
+              type="email"
+              maxlength="320"
+              required
+              autocomplete="email"
+              aria-describedby="email-hint"
+            />
+          )
+        }
+      </div>
+
+      <div class="ask-review__field">
+        <label for="readingType">Reading type</label>
+        {
+          tokenContext ? (
+            <>
+              <input type="hidden" name="readingType" value={tokenContext.readingType} />
+              <input id="readingType" type="text" value={tokenContext.readingTypeLabel} disabled />
+            </>
+          ) : (
+            <select id="readingType" name="readingType" required>
+              <option value="">Select a reading</option>
+              {
+                ASK_LEILIA_DB_READING_TYPES.map((type) => (
+                  <option value={type}>{readingTypeLabel(type)}</option>
+                ))
+              }
+            </select>
+          )
+        }
+      </div>
+
+      <fieldset class="ask-review__rating">
+        <legend>Rating</legend>
+        <div class="ask-review__stars" role="radiogroup" aria-label="Rating from 1 to 5">
+          {
+            [1, 2, 3, 4, 5].map((value) => (
+              <label class="ask-review__star">
+                <input type="radio" name="rating" value={String(value)} required />
+                <span aria-hidden="true">{value}</span>
+                <span class="visually-hidden">{value} out of 5</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <div class="ask-review__field">
+        <label for="title">Review heading <span class="ask-review__optional">(optional)</span></label>
+        <input id="title" name="title" type="text" maxlength="120" />
+      </div>
+
+      <div class="ask-review__field">
+        <label for="body">Your review</label>
+        <p class="ask-review__hint" id="body-hint">
+          You might comment on how clearly the reading addressed your question, what stood out,
+          whether it gave you a different perspective, or what you found valuable about the way the
+          reading was communicated.
+        </p>
+        <textarea
+          id="body"
+          name="body"
+          rows="8"
+          minlength="40"
+          maxlength="4000"
+          required
+          aria-describedby="body-hint"
+        ></textarea>
+      </div>
+
+      <div class="ask-review__consent">
+        <label class="ask-review__check">
+          <input type="checkbox" name="consentPublish" value="on" required />
+          <span>
+            I give permission for this review to be published on the Tides of Knowing website. I
+            understand that minor spelling, punctuation or grammatical corrections may be made
+            without changing the meaning of my review.
+          </span>
+        </label>
+        <label class="ask-review__check">
+          <input type="checkbox" name="consentMarketing" value="on" />
+          <span>
+            Tides of Knowing may also use this review, or an excerpt from it, in email, social media
+            and other promotional material.
+          </span>
+        </label>
+      </div>
+
+      <button class="ask-review__submit" type="submit">Submit your review</button>
+    </form>
+  </main>
+</BaseLayout>

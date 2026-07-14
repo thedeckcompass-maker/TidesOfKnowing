@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
+import { siteBase } from "../../lib/site";
+import "../../styles/ask-leilia.css";
+import "../../styles/ask-leilia-reviews.css";
+
+export const prerender = false;
+
+const canonical = new URL("/submit-a-review/thank-you/", siteBase(Astro)).href;
+const title = "Thank You for Sharing Your Experience | Ask Leilia";
+const description =
+  "Your Ask Leilia review has been received and will be checked before publication.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogUrl={canonical}
+  ogTitle={title}
+  ogDescription={description}
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
+  metaRobots="noindex, follow"
+>
+  <main class="ask-leilia page-inner ask-review ask-review--confirm">
+    <header class="ask-review__header">
+      <p class="ask-leilia__kicker">Ask Leilia</p>
+      <h1>Thank You for Sharing Your Experience</h1>
+      <p class="ask-review__lede">
+        Your review has been received and will be checked before publication. I appreciate you
+        taking the time to describe your experience of the reading.
+      </p>
+    </header>
+
+    <nav class="ask-review__next" aria-label="Continue exploring">
+      <ul>
+        <li><a href="/blog/">Explore the Field Notes</a></li>
+        <li><a href="/repeating-card-meanings/">Use the Repeating Card Meanings resource</a></li>
+        <li><a href="/articles/compass-method/">Learn about The COMPASS Method™</a></li>
+        <li><a href="/ask-leilia/">Return to Ask Leilia</a></li>
+      </ul>
+    </nav>
+  </main>
+</BaseLayout>
+
+<script is:inline>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, "", window.location.href);
+  }
+</script>

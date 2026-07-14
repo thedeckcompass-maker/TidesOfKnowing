@@ -1,0 +1,364 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { isAdminProfile } from "../../../lib/community/auth";
+import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
+import { readingTypeLabel } from "../../../lib/ask-leilia/readingTypes";
+import {
+  listAskLeiliaReviews,
+} from "../../../lib/ask-leilia/reviews/queries";
+import {
+  isAskLeiliaReviewModerationStatus,
+  isVerifiedAskLeiliaReview,
+  reviewPublicBody,
+  type AskLeiliaReviewModerationStatus,
+} from "../../../lib/ask-leilia/reviews/types";
+
+export const prerender = false;
+
+if (!Astro.locals.user) {
+  return Astro.redirect("/auth/register/", 303);
+}
+
+if (!isAdminProfile(Astro.locals.profile)) {
+  return Astro.redirect("/ask-leilia/", 302);
+}
+
+const statusRaw = Astro.url.searchParams.get("status") ?? "pending";
+const status: AskLeiliaReviewModerationStatus | "all" =
+  statusRaw === "all" || isAskLeiliaReviewModerationStatus(statusRaw) ? statusRaw : "pending";
+const saved = Astro.url.searchParams.get("saved") === "1";
+const errorMessage = Astro.url.searchParams.get("error")?.trim() ?? "";
+
+const service = createCommunityServiceClient(Astro.locals);
+const reviews = await listAskLeiliaReviews(service, status);
+
+function formatDate(value: string | null): string {
+  if (!value) return "—";
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function verificationLabel(value: string): string {
+  if (value === "verified_completed_reading") return "Verified completed reading";
+  if (value === "manually_verified") return "Manually verified";
+  return "Not verified via completed reading";
+}
+---
+
+<BaseLayout
+  title="Ask Leilia Reviews | Administration"
+  description="Moderate Ask Leilia reviews before publication."
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
+  metaRobots="noindex, nofollow"
+>
+  <main class="ask-admin page-inner ask-admin-reviews">
+    <header class="ask-admin__head">
+      <p class="ask-admin__kicker">Ask Leilia</p>
+      <h1>Reviews</h1>
+      <p>Moderate submissions before they appear publicly. Original text cannot be overwritten.</p>
+      <p class="ask-admin-reviews__nav">
+        <a href="/ask-leilia/admin/">Reading requests</a>
+        <span aria-hidden="true">·</span>
+        <a href="/ask-leilia/">Public Ask Leilia page</a>
+      </p>
+      {
+        saved ? (
+          <p class="ask-admin__notice" role="status">Review updated.</p>
+        ) : null
+      }
+      {
+        errorMessage ? (
+          <p class="ask-admin__notice ask-admin__notice--error" role="alert">{errorMessage}</p>
+        ) : null
+      }
+    </header>
+
+    <form class="ask-admin__filters" method="get" action="/ask-leilia/admin/reviews/">
+      <label>
+        Filter by status
+        <select name="status">
+          <option value="pending" selected={status === "pending"}>Pending</option>
+          <option value="approved" selected={status === "approved"}>Approved</option>
+          <option value="archived" selected={status === "archived"}>Archived</option>
+          <option value="all" selected={status === "all"}>All</option>
+        </select>
+      </label>
+      <button type="submit">Apply filter</button>
+    </form>
+
+    {
+      reviews.length === 0 ? (
+        <p>No reviews in this view.</p>
+      ) : (
+        <div class="ask-admin__list">
+          {reviews.map((review) => {
+            const publicBody = reviewPublicBody(review);
+            const verified = isVerifiedAskLeiliaReview(review.verification_status);
+            return (
+              <article class="ask-admin-card ask-admin-review-card">
+                <div class="ask-admin-card__top">
+                  <div>
+                    <h2>{review.display_name}</h2>
+                    <p>
+                      <a href={`mailto:${review.reviewer_email}`}>{review.reviewer_email}</a>
+                    </p>
+                  </div>
+                  <p class="ask-admin-card__status">{review.moderation_status}</p>
+                </div>
+
+                <dl class="ask-admin-review-card__meta">
+                  <div>
+                    <dt>Rating</dt>
+                    <dd>{review.rating} / 5</dd>
+                  </div>
+                  <div>
+                    <dt>Reading type</dt>
+                    <dd>{readingTypeLabel(review.reading_type)}</dd>
+                  </div>
+                  <div>
+                    <dt>Verification</dt>
+                    <dd>{verificationLabel(review.verification_status)}</dd>
+                  </div>
+                  <div>
+                    <dt>Featured</dt>
+                    <dd>{review.is_featured ? "Yes" : "No"}</dd>
+                  </div>
+                  <div>
+                    <dt>Submitted</dt>
+                    <dd>{formatDate(review.submitted_at)}</dd>
+                  </div>
+                  <div>
+                    <dt>Approved</dt>
+                    <dd>{formatDate(review.approved_at)}</dd>
+                  </div>
+                  <div>
+                    <dt>Website publication consent</dt>
+                    <dd>{review.consent_publish ? "Yes" : "No"}</dd>
+                  </div>
+                  <div>
+                    <dt>Marketing consent</dt>
+                    <dd>{review.consent_marketing ? "Yes" : "No"}</dd>
+                  </div>
+                </dl>
+
+                {review.title ? <p><strong>Heading:</strong> {review.title}</p> : null}
+
+                <div class="ask-admin-review-card__bodies">
+                  <section>
+                    <h3>Original submitted text</h3>
+                    <blockquote>
+                      <p>{review.body_original}</p>
+                    </blockquote>
+                  </section>
+                  <section aria-label="Public preview">
+                    <h3>Public preview</h3>
+                    <article class="ask-admin-review-card__preview">
+                      <p aria-label={`${review.rating} out of 5`}>
+                        {"★".repeat(review.rating)}
+                        {"☆".repeat(5 - review.rating)}
+                      </p>
+                      {review.title ? <h4>{review.title}</h4> : null}
+                      <blockquote>
+                        <p>{publicBody}</p>
+                      </blockquote>
+                      <p>{review.display_name}</p>
+                      <p>{readingTypeLabel(review.reading_type)}</p>
+                      {verified ? <p>Verified Ask Leilia reading</p> : null}
+                    </article>
+                  </section>
+                </div>
+
+                <form
+                  class="ask-admin-review-card__form"
+                  method="post"
+                  action={`/api/ask-leilia/reviews/${review.id}/`}
+                >
+                  <label>
+                    Public display name
+                    <input type="text" name="displayName" maxlength="80" required value={review.display_name} />
+                  </label>
+                  <label>
+                    Public heading
+                    <input type="text" name="title" maxlength="120" value={review.title ?? ""} />
+                  </label>
+                  <label>
+                    Public review text
+                    <textarea name="bodyPublic" rows="6" minlength="40" maxlength="4000" required>{publicBody}</textarea>
+                  </label>
+                  <label>
+                    Verification status
+                    <select name="verificationStatus">
+                      <option
+                        value="unverified"
+                        selected={review.verification_status === "unverified"}
+                      >
+                        Not verified via completed reading
+                      </option>
+                      <option
+                        value="verified_completed_reading"
+                        selected={review.verification_status === "verified_completed_reading"}
+                      >
+                        Verified completed reading
+                      </option>
+                      <option
+                        value="manually_verified"
+                        selected={review.verification_status === "manually_verified"}
+                      >
+                        Manually verified
+                      </option>
+                    </select>
+                  </label>
+
+                  <div class="ask-admin-review-card__actions">
+                    <button type="submit" name="action" value="save_public">Save public fields</button>
+                    {
+                      review.moderation_status !== "approved" ? (
+                        <button
+                          type="submit"
+                          name="action"
+                          value="approve"
+                          onclick="return confirm('Approve this review for public display on Ask Leilia?');"
+                        >
+                          Approve
+                        </button>
+                      ) : null
+                    }
+                    {
+                      review.moderation_status !== "archived" ? (
+                        <button
+                          type="submit"
+                          name="action"
+                          value="archive"
+                          onclick="return confirm('Archive this review? It will no longer appear publicly.');"
+                        >
+                          Archive
+                        </button>
+                      ) : null
+                    }
+                    {
+                      review.moderation_status === "archived" ? (
+                        <button type="submit" name="action" value="restore">
+                          Restore to pending
+                        </button>
+                      ) : null
+                    }
+                    {
+                      review.moderation_status === "approved" && !review.is_featured ? (
+                        <button type="submit" name="action" value="feature">
+                          Mark featured
+                        </button>
+                      ) : null
+                    }
+                    {
+                      review.is_featured ? (
+                        <button type="submit" name="action" value="unfeature">
+                          Unmark featured
+                        </button>
+                      ) : null
+                    }
+                  </div>
+                </form>
+              </article>
+            );
+          })}
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .ask-admin-reviews__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .ask-admin-review-card__meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+
+  .ask-admin-review-card__meta dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--tok-text-muted);
+  }
+
+  .ask-admin-review-card__meta dd {
+    margin: 0.15rem 0 0;
+  }
+
+  .ask-admin-review-card__bodies {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .ask-admin-review-card__bodies {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .ask-admin-review-card__bodies h3,
+  .ask-admin-review-card__preview h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+  }
+
+  .ask-admin-review-card__bodies blockquote,
+  .ask-admin-review-card__preview {
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+
+  .ask-admin-review-card__form {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .ask-admin-review-card__form label {
+    display: grid;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+  }
+
+  .ask-admin-review-card__form input,
+  .ask-admin-review-card__form select,
+  .ask-admin-review-card__form textarea {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    font: inherit;
+  }
+
+  .ask-admin-review-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ask-admin-review-card__actions button {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    background: var(--tok-deep-ocean);
+    color: #fff;
+    cursor: pointer;
+  }
+</style>

@@ -367,6 +367,7 @@ export async function sendAskLeiliaCustomerDelivery(
     email: string;
     pdfContentBase64: string;
     audioContentBase64?: string;
+    reviewUrl?: string;
   },
   locals?: unknown,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
@@ -394,6 +395,20 @@ export async function sendAskLeiliaCustomerDelivery(
   bodyLines.push(
     "",
     "Thank you for placing your trust in Ask Leilia.",
+  );
+
+  if (input.reviewUrl) {
+    bodyLines.push(
+      "",
+      "How Was Your Reading?",
+      "",
+      "Once you have had time to reflect on your reading, I would appreciate hearing about your experience. Your feedback helps other Seekers understand what an Ask Leilia reading offers.",
+      "",
+      `Share Your Experience: ${input.reviewUrl}`,
+    );
+  }
+
+  bodyLines.push(
     "",
     "Warm regards,",
     "",
@@ -415,12 +430,49 @@ export async function sendAskLeiliaCustomerDelivery(
     });
   }
 
+  const escapeEmailText = (value: string) =>
+    value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
+  const htmlParts = [
+    `<p>Hello ${escapeEmailText(input.name)},</p>`,
+    "<p>Your personalised Ask Leilia reading has now been completed.</p>",
+    "<p>Your reading is attached.</p>",
+  ];
+
+  if (input.audioContentBase64) {
+    htmlParts.push(
+      "<p>As I worked through your reading there were a number of additional thoughts and impressions that didn't naturally belong in the written interpretation. I've recorded them for you as a private audio reflection and attached it alongside your reading.</p>",
+    );
+  }
+
+  htmlParts.push("<p>Thank you for placing your trust in Ask Leilia.</p>");
+
+  if (input.reviewUrl) {
+    const safeReviewUrl = escapeEmailText(input.reviewUrl);
+    htmlParts.push(
+      "<h2 style=\"font-size:18px;margin:24px 0 8px;font-weight:600;\">How Was Your Reading?</h2>",
+      "<p>Once you have had time to reflect on your reading, I would appreciate hearing about your experience. Your feedback helps other Seekers understand what an Ask Leilia reading offers.</p>",
+      `<p style="margin:20px 0;"><a href="${safeReviewUrl}" style="display:inline-block;padding:12px 18px;background:#1a3a4a;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:600;">Share Your Experience</a></p>`,
+      `<p style="font-size:14px;color:#555;">Or open this link: <a href="${safeReviewUrl}">${safeReviewUrl}</a></p>`,
+    );
+  }
+
+  htmlParts.push(
+    "<p>Warm regards,</p>",
+    "<p>Leilia<br />Tides of Knowing</p>",
+  );
+
   const resend = new Resend(env.emailApiKey);
   const result = await resend.emails.send({
     from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
     to: input.email,
     subject: "Your Ask Leilia reading is ready",
     text: bodyLines.join("\n"),
+    html: htmlParts.join("\n"),
     attachments,
   });
 

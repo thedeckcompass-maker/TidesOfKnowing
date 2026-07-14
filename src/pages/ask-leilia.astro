@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import AskLeiliaTrustList from "../components/ask-leilia/AskLeiliaTrustList.astro";
 import AskLeiliaPricingGrid from "../components/ask-leilia/AskLeiliaPricingGrid.astro";
 import AskLeiliaReadingLibrary from "../components/ask-leilia/AskLeiliaReadingLibrary.astro";
+import AskLeiliaReviewsCarousel from "../components/ask-leilia/AskLeiliaReviewsCarousel.astro";
 import {
   ASK_LEILIA_PUBLIC_TRUST_POINTS,
   ASK_LEILIA_READINGS,
@@ -13,12 +14,25 @@ import {
   askLeiliaAuthorPersonNode,
 } from "../data/askLeilia";
 import { siteBase } from "../lib/site";
+import { createCommunityServiceClient } from "../lib/community/supabaseServer";
+import { listPublicAskLeiliaReviews } from "../lib/ask-leilia/reviews/queries";
 import "../styles/ask-leilia.css";
+import "../styles/ask-leilia-reviews.css";
+
+export const prerender = false;
 
 const title = "Ask Leilia | Professional Written Tarot Readings";
 const description =
   "Professional written tarot readings personally interpreted by Leilia. Choose a one-question reading, in-depth reading, or personal guidance reading — each delivered within 48 hours as a PDF, with private audio on the in-depth and personal guidance tiers.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
+
+let publicReviews: Awaited<ReturnType<typeof listPublicAskLeiliaReviews>> = [];
+try {
+  const service = createCommunityServiceClient(Astro.locals);
+  publicReviews = await listPublicAskLeiliaReviews(service, 6);
+} catch (error) {
+  console.error("Unable to load Ask Leilia public reviews:", error);
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -170,6 +184,8 @@ const jsonLd = {
         </ul>
       </article>
     </section>
+
+    <AskLeiliaReviewsCarousel reviews={publicReviews} />
 
     <section class="ask-leilia-section" aria-labelledby="questions-heading">
       <h2 id="questions-heading">Questions People Bring</h2>
