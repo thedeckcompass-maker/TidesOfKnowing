@@ -51,6 +51,8 @@ export type AskLeiliaRequest = {
   payment_expected_amount: number | null;
   payment_actual_amount: number | null;
   payment_exception_reference: string | null;
+  archived_at: string | null;
+  archived_by: string | null;
   payment?: Pick<AskLeiliaPayment, "payment_status" | "amount" | "currency" | "stripe_payment_intent"> | null;
 };
 

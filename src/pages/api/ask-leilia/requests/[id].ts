@@ -11,6 +11,7 @@ import {
   buildAskLeiliaReviewUrl,
   ensureAskLeiliaReviewToken,
 } from "../../../../lib/ask-leilia/reviews/queries";
+import { parseAdminReturnPath } from "../../../../lib/ask-leilia/adminQueue";
 import { isAskLeiliaDbReadingType } from "../../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaStatus } from "../../../../lib/ask-leilia/types";
 import {
@@ -34,6 +35,35 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
 
   const service = createCommunityServiceClient(locals);
   const form = await request.formData();
+  const actionRaw = form.get("action");
+  const returnTo = parseAdminReturnPath(form.get("return_to"));
+
+  if (actionRaw === "archive" || actionRaw === "restore") {
+    const now = new Date().toISOString();
+    const patch =
+      actionRaw === "archive"
+        ? { archived_at: now, archived_by: locals.profile.id }
+        : { archived_at: null, archived_by: null };
+
+    const { data, error } = await service
+      .from("ask_leilia_requests")
+      .update(patch)
+      .eq("id", requestId)
+      .select("id, status, archived_at")
+      .maybeSingle();
+
+    if (error || !data) {
+      console.error("Unable to update Ask Leilia archive state:", error);
+      return json({ ok: false, error: "Unable to update the request." }, 500);
+    }
+
+    const redirectUrl = new URL(returnTo, "https://www.tidesofknowing.com");
+    redirectUrl.searchParams.delete("archived");
+    redirectUrl.searchParams.delete("restored");
+    redirectUrl.searchParams.set(actionRaw === "archive" ? "archived" : "restored", "1");
+    return redirect(`${redirectUrl.pathname}${redirectUrl.search}`, 303);
+  }
+
   const statusRaw = form.get("status");
   const submittedNotes = typeof form.get("notes") === "string" ? String(form.get("notes")).trim() : "";
   const deliveryPdf = form.get("deliveryPdf");
@@ -212,5 +242,5 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     }
   }
 
-  return redirect("/ask-leilia/admin/", 303);
+  return redirect(returnTo, 303);
 };

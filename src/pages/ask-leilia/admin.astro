@@ -10,6 +10,14 @@ import {
 import { cardPreferenceLabel } from "../../lib/ask-leilia/types";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../data/askLeilia";
 import {
+  adminQueueReturnPath,
+  formatSubmissionDisplayUtc,
+  isAskLeiliaRequestArchived,
+  parseAskLeiliaAdminSort,
+  parseAskLeiliaArchiveFilter,
+  paymentStatusLabel,
+} from "../../lib/ask-leilia/adminQueue";
+import {
   getAskLeiliaDeliveryPdfUrl,
   getAskLeiliaRequests,
   getAskLeiliaUploadUrl,
@@ -37,12 +45,23 @@ const readingTypeFilter =
   ASK_LEILIA_DB_READING_TYPES.includes(readingTypeFilterRaw as AskLeiliaDbReadingType)
     ? readingTypeFilterRaw
     : "all";
+const sortFilter = parseAskLeiliaAdminSort(Astro.url.searchParams.get("sort"));
+const archiveFilter = parseAskLeiliaArchiveFilter(Astro.url.searchParams.get("archive"));
+const returnTo = adminQueueReturnPath({
+  readingType: readingTypeFilter,
+  sort: sortFilter,
+  archive: archiveFilter,
+});
 const librarySaved = Astro.url.searchParams.get("library_saved") === "1";
 const libraryError = Astro.url.searchParams.get("library_error")?.trim() ?? "";
+const archiveSaved = Astro.url.searchParams.get("archived") === "1";
+const restoredSaved = Astro.url.searchParams.get("restored") === "1";
 
 const service = createCommunityServiceClient(Astro.locals);
 const requests = await getAskLeiliaRequests(service, {
   readingType: readingTypeFilter === "all" ? "all" : (readingTypeFilter as AskLeiliaDbReadingType),
+  sort: sortFilter,
+  archive: archiveFilter,
 });
 const libraryByRequestId = await getLibraryPublicationsByRequestIds(
   service,
@@ -53,6 +72,9 @@ const rows = await Promise.all(
     request,
     imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
     deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
+    submission: formatSubmissionDisplayUtc(request.created_at),
+    paymentLabel: paymentStatusLabel(request),
+    isArchived: isAskLeiliaRequestArchived(request),
   })),
 );
 
@@ -73,6 +95,9 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     "Not available"
   );
 }
+
+const matchLabel =
+  rows.length === 1 ? "1 matching reading" : `${rows.length} matching readings`;
 ---
 
 <BaseLayout
@@ -99,13 +124,23 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
           <p class="ask-admin__notice ask-admin__notice--error" role="alert">{libraryError}</p>
         ) : null
       }
+      {
+        archiveSaved ? (
+          <p class="ask-admin__notice" role="status">Reading archived. It remains fully recoverable.</p>
+        ) : null
+      }
+      {
+        restoredSaved ? (
+          <p class="ask-admin__notice" role="status">Reading restored to the active queue.</p>
+        ) : null
+      }
     </header>
 
     <form class="ask-admin__filters" method="get" action="/ask-leilia/admin/">
       <label>
         Filter by reading type
         <select name="reading_type">
-          <option value="all" selected={readingTypeFilter === "all"}>All readings</option>
+          <option value="all" selected={readingTypeFilter === "all"}>All reading types</option>
           {
             ASK_LEILIA_DB_READING_TYPES.map((readingType) => (
               <option value={readingType} selected={readingTypeFilter === readingType}>
@@ -115,13 +150,30 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
           }
         </select>
       </label>
-      <button type="submit">Apply filter</button>
+      <label>
+        Archive view
+        <select name="archive">
+          <option value="active" selected={archiveFilter === "active"}>Active readings</option>
+          <option value="archived" selected={archiveFilter === "archived"}>Archived readings</option>
+          <option value="all" selected={archiveFilter === "all"}>All readings</option>
+        </select>
+      </label>
+      <label>
+        Sort by submission
+        <select name="sort">
+          <option value="newest" selected={sortFilter === "newest"}>Newest first</option>
+          <option value="oldest" selected={sortFilter === "oldest"}>Oldest first</option>
+        </select>
+      </label>
+      <button type="submit">Apply filters</button>
     </form>
+
+    <p class="ask-admin__count" aria-live="polite">{matchLabel}</p>
 
     {
       rows.length > 0 ? (
         <div class="ask-admin__list">
-          {rows.map(({ request, imageUrl, deliveryPdfUrl }) => {
+          {rows.map(({ request, imageUrl, deliveryPdfUrl, submission, paymentLabel, isArchived }) => {
             const selectableStatuses = adminSelectableStatuses(request.status);
             const isPaymentException = request.status === "Payment Exception";
             const libraryPublication = libraryByRequestId.get(request.id);
@@ -135,243 +187,310 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
               expectedAmount !== null && actualAmount !== null
                 ? actualAmount - expectedAmount
                 : null;
+            const detailsId = `ask-admin-details-${request.id}`;
+            const panelId = `ask-admin-panel-${request.id}`;
 
             return (
-              <article class:list={["ask-admin-card", isPaymentException && "ask-admin-card--exception"]}>
-                <div class="ask-admin-card__top">
-                  <div>
-                    <h2>{request.name}</h2>
-                    <p>
-                      <a href={`mailto:${request.email}`}>{request.email}</a>
-                    </p>
-                  </div>
-                  <p class="ask-admin-card__status">{request.status}</p>
-                </div>
+              <details
+                id={detailsId}
+                class:list={[
+                  "ask-admin-card",
+                  isPaymentException && "ask-admin-card--exception",
+                  isArchived && "ask-admin-card--archived",
+                ]}
+              >
+                <summary class="ask-admin-card__summary" aria-controls={panelId}>
+                  <span
+                    class="ask-admin-card__when"
+                    data-ask-admin-local-time={submission.unavailable ? "" : request.created_at}
+                    title={submission.title}
+                  >
+                    <span data-ask-admin-date>{submission.dateText}</span>
+                    {submission.timeText ? (
+                      <>
+                        <span aria-hidden="true"> · </span>
+                        <span data-ask-admin-time>{submission.timeText}</span>
+                      </>
+                    ) : null}
+                  </span>
+                  <span class="ask-admin-card__seeker">
+                    <span class="ask-admin-card__name">{request.name}</span>
+                    <span class="ask-admin-card__email">{request.email}</span>
+                  </span>
+                  <span class="ask-admin-card__type">{readingTypeLabel(request.reading_type)}</span>
+                  <span class="ask-admin-card__badges">
+                    <span class="ask-admin-card__badge ask-admin-card__badge--payment">
+                      Payment: {paymentLabel}
+                    </span>
+                    <span class="ask-admin-card__badge ask-admin-card__badge--status">
+                      Request: {request.status}
+                    </span>
+                    {isArchived ? (
+                      <span class="ask-admin-card__badge ask-admin-card__badge--archived">
+                        Archived
+                      </span>
+                    ) : null}
+                  </span>
+                  <span class="ask-admin-card__chevron" aria-hidden="true"></span>
+                </summary>
 
-                {
-                  isPaymentException ? (
-                    <div class="ask-admin-card__warning" role="alert">
-                      <p><strong>Payment Exception</strong></p>
-                      <p>Manual resolution is required before this request can proceed.</p>
-                      <ul>
-                        <li>Expected payment: {expectedAmount !== null ? formatUsdCents(expectedAmount) : "Unknown"}</li>
-                        <li>Actual payment: {actualAmount !== null ? formatUsdCents(actualAmount) : "Unknown"}</li>
-                        <li>
-                          Payment difference:{" "}
-                          {paymentDifference !== null ? formatUsdCents(paymentDifference) : "Unknown"}
-                        </li>
-                        <li>Stripe payment reference: {paymentReference(request)}</li>
-                      </ul>
+                <div id={panelId} class="ask-admin-card__panel">
+                  {
+                    isPaymentException ? (
+                      <div class="ask-admin-card__warning" role="alert">
+                        <p><strong>Payment Exception</strong></p>
+                        <p>Manual resolution is required before this request can proceed.</p>
+                        <ul>
+                          <li>Expected payment: {expectedAmount !== null ? formatUsdCents(expectedAmount) : "Unknown"}</li>
+                          <li>Actual payment: {actualAmount !== null ? formatUsdCents(actualAmount) : "Unknown"}</li>
+                          <li>
+                            Payment difference:{" "}
+                            {paymentDifference !== null ? formatUsdCents(paymentDifference) : "Unknown"}
+                          </li>
+                          <li>Stripe payment reference: {paymentReference(request)}</li>
+                        </ul>
+                      </div>
+                    ) : null
+                  }
+
+                  <dl>
+                    <div>
+                      <dt>Reading type</dt>
+                      <dd>{readingTypeLabel(request.reading_type)}</dd>
                     </div>
-                  ) : null
-                }
-
-                <dl>
-                  <div>
-                    <dt>Reading type</dt>
-                    <dd>{readingTypeLabel(request.reading_type)}</dd>
-                  </div>
-                  <div>
-                    <dt>Question</dt>
-                    <dd>{request.question}</dd>
-                  </div>
-                  <div>
-                    <dt>Context</dt>
-                    <dd>{request.context || "No additional context."}</dd>
-                  </div>
-                  <div>
-                    <dt>Image upload</dt>
-                    <dd>
-                      {imageUrl ? (
-                        <a href={imageUrl}>View uploaded image</a>
-                      ) : (
-                        "No image uploaded."
-                      )}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Card preference</dt>
-                    <dd>{cardPreferenceLabel(request.card_preference)}</dd>
-                  </div>
-                  <div>
-                    <dt>Payment status</dt>
-                    <dd>
-                      {
-                        request.payment?.payment_status ??
-                          (request.status === "Pending Payment"
-                            ? "Awaiting payment."
-                            : "Payment record not linked.")
-                      }
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Request status</dt>
-                    <dd>{request.status}</dd>
-                  </div>
-                  <div>
-                    <dt>Submitted</dt>
-                    <dd>{formatDate(request.created_at)}</dd>
-                  </div>
-                  <div>
-                    <dt>Delivery PDF</dt>
-                    <dd>
-                      {
-                        deliveryPdfUrl ? (
-                          <a href={deliveryPdfUrl}>View uploaded PDF</a>
+                    <div>
+                      <dt>Question</dt>
+                      <dd>{request.question}</dd>
+                    </div>
+                    <div>
+                      <dt>Context</dt>
+                      <dd>{request.context || "No additional context."}</dd>
+                    </div>
+                    <div>
+                      <dt>Image upload</dt>
+                      <dd>
+                        {imageUrl ? (
+                          <a href={imageUrl}>View uploaded image</a>
                         ) : (
-                          "No delivery PDF uploaded yet."
-                        )
-                      }
-                      {request.delivery_sent_at ? (
-                        <p>Delivered to customer: {formatDate(request.delivery_sent_at)}</p>
-                      ) : null}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt>Internal notes</dt>
-                    <dd>{request.admin_notes || "No internal notes yet."}</dd>
-                  </div>
-                </dl>
-
-                <form
-                  class="ask-admin-card__form"
-                  method="post"
-                  action={`/api/ask-leilia/requests/${request.id}`}
-                  enctype="multipart/form-data"
-                >
-                  <label>
-                    Completed reading PDF
-                    <input type="file" name="deliveryPdf" accept="application/pdf" />
-                  </label>
-                  <label>
-                    Status
-                    <select name="status">
-                      {selectableStatuses.map((status) => (
-                        <option
-                          value={status}
-                          selected={status === request.status}
-                          disabled={status === "Delivered" && !request.delivery_pdf_path}
+                          "No image uploaded."
+                        )}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Card preference</dt>
+                      <dd>{cardPreferenceLabel(request.card_preference)}</dd>
+                    </div>
+                    <div>
+                      <dt>Payment status</dt>
+                      <dd>
+                        {
+                          request.payment?.payment_status ??
+                            (request.status === "Pending Payment"
+                              ? "Awaiting payment."
+                              : "Payment record not linked.")
+                        }
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Request status</dt>
+                      <dd>{request.status}</dd>
+                    </div>
+                    <div>
+                      <dt>Submitted</dt>
+                      <dd>
+                        <span
+                          data-ask-admin-local-time={submission.unavailable ? "" : request.created_at}
+                          title={submission.title}
                         >
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label class="ask-admin-card__notes">
-                    Internal notes
-                    <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
-                  </label>
-                  <button type="submit">Update request</button>
-                </form>
+                          <span data-ask-admin-date>{submission.dateText}</span>
+                          {submission.timeText ? (
+                            <>
+                              <span aria-hidden="true"> · </span>
+                              <span data-ask-admin-time>{submission.timeText}</span>
+                            </>
+                          ) : null}
+                        </span>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Delivery PDF</dt>
+                      <dd>
+                        {
+                          deliveryPdfUrl ? (
+                            <a href={deliveryPdfUrl}>View uploaded PDF</a>
+                          ) : (
+                            "No delivery PDF uploaded yet."
+                          )
+                        }
+                        {request.delivery_sent_at ? (
+                          <p>Delivered to customer: {formatDate(request.delivery_sent_at)}</p>
+                        ) : null}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Internal notes</dt>
+                      <dd>{request.admin_notes || "No internal notes yet."}</dd>
+                    </div>
+                  </dl>
 
-                {
-                  request.status === "Delivered" ? (
-                    <details class="ask-admin-card__library">
-                      <summary>Reading Library publication</summary>
-                      {
-                        libraryPublication?.isPublished ? (
-                          <p class="ask-admin-card__library-status">
-                            Published:{" "}
-                            <a href={`/recent-client-readings/${libraryPublication.slug}/`}>
-                              View in library
-                            </a>
-                          </p>
-                        ) : libraryPublication ? (
-                          <p class="ask-admin-card__library-status">Saved as draft (not published).</p>
-                        ) : (
-                          <p class="ask-admin-card__library-status">
-                            Not yet added to the Reading Library.
-                          </p>
-                        )
-                      }
-                      <form
-                        class="ask-admin-card__form ask-admin-card__library-form"
-                        method="post"
-                        action={`/api/ask-leilia/reading-library/${request.id}`}
-                      >
-                        <label>
-                          Library title
-                          <input
-                            type="text"
-                            name="libraryTitle"
-                            required
-                            minlength="4"
-                            maxlength="200"
-                            value={libraryPublication?.title ?? ""}
-                          />
-                        </label>
-                        <label>
-                          URL slug
-                          <input
-                            type="text"
-                            name="librarySlug"
-                            required
-                            pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                            value={libraryPublication?.slug ?? suggestedSlug}
-                          />
-                        </label>
-                        <label>
-                          Short excerpt (card summary)
-                          <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">
-                            {libraryPublication?.summary ?? ""}
-                          </textarea>
-                        </label>
-                        <label>
-                          SEO description
-                          <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">
-                            {libraryPublication?.seoDescription ?? ""}
-                          </textarea>
-                        </label>
-                        <label>
-                          Reading body (Markdown)
-                          <textarea name="libraryBody" rows="12" required minlength="100">
-                            {libraryPublication?.body ?? ""}
-                          </textarea>
-                        </label>
-                        <label>
-                          Primary life areas (comma-separated)
-                          <input
-                            type="text"
-                            name="libraryLifeAreas"
-                            value={libraryPublication?.lifeAreas.join(", ") ?? ""}
-                          />
-                        </label>
-                        <label>
-                          Primary cards featured (comma-separated)
-                          <input
-                            type="text"
-                            name="libraryPrimaryCards"
-                            value={libraryPublication?.primaryCards.join(", ") ?? ""}
-                          />
-                        </label>
-                        <label>
-                          Spread used
-                          <input
-                            type="text"
-                            name="librarySpreadUsed"
-                            value={libraryPublication?.spreadUsed ?? readingTypeLabel(request.reading_type)}
-                          />
-                        </label>
-                        <label>
-                          Spread image paths (one per line, under public/)
-                          <textarea name="librarySpreadImages" rows="3">
-                            {libraryPublication?.spreadImagePaths.join("\n") ?? ""}
-                          </textarea>
-                        </label>
-                        <label class="ask-admin-card__publish">
-                          <input
-                            type="checkbox"
-                            name="libraryPublish"
-                            checked={libraryPublication?.isPublished ?? false}
-                          />
-                          Publish to Reading Library
-                        </label>
-                        <button type="submit">Save library entry</button>
-                      </form>
-                    </details>
-                  ) : null
-                }
-              </article>
+                  <form
+                    class="ask-admin-card__form"
+                    method="post"
+                    action={`/api/ask-leilia/requests/${request.id}`}
+                    enctype="multipart/form-data"
+                  >
+                    <input type="hidden" name="return_to" value={returnTo} />
+                    <label>
+                      Completed reading PDF
+                      <input type="file" name="deliveryPdf" accept="application/pdf" />
+                    </label>
+                    <label>
+                      Status
+                      <select name="status">
+                        {selectableStatuses.map((status) => (
+                          <option
+                            value={status}
+                            selected={status === request.status}
+                            disabled={status === "Delivered" && !request.delivery_pdf_path}
+                          >
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label class="ask-admin-card__notes">
+                      Internal notes
+                      <textarea name="notes" rows="4">{request.admin_notes ?? ""}</textarea>
+                    </label>
+                    <button type="submit">Update request</button>
+                  </form>
+
+                  <form
+                    class="ask-admin-card__archive-form"
+                    method="post"
+                    action={`/api/ask-leilia/requests/${request.id}`}
+                    onsubmit={
+                      isArchived
+                        ? "return confirm('Restore this reading to the active queue?');"
+                        : "return confirm('Archive this reading? It will leave the active queue but will not be deleted.');"
+                    }
+                  >
+                    <input type="hidden" name="return_to" value={returnTo} />
+                    <input type="hidden" name="action" value={isArchived ? "restore" : "archive"} />
+                    <button type="submit" class="ask-admin-card__archive-btn">
+                      {isArchived ? "Restore to active readings" : "Archive reading"}
+                    </button>
+                  </form>
+
+                  {
+                    request.status === "Delivered" ? (
+                      <details class="ask-admin-card__library">
+                        <summary>Reading Library publication</summary>
+                        {
+                          libraryPublication?.isPublished ? (
+                            <p class="ask-admin-card__library-status">
+                              Published:{" "}
+                              <a href={`/recent-client-readings/${libraryPublication.slug}/`}>
+                                View in library
+                              </a>
+                            </p>
+                          ) : libraryPublication ? (
+                            <p class="ask-admin-card__library-status">Saved as draft (not published).</p>
+                          ) : (
+                            <p class="ask-admin-card__library-status">
+                              Not yet added to the Reading Library.
+                            </p>
+                          )
+                        }
+                        <form
+                          class="ask-admin-card__form ask-admin-card__library-form"
+                          method="post"
+                          action={`/api/ask-leilia/reading-library/${request.id}`}
+                        >
+                          <label>
+                            Library title
+                            <input
+                              type="text"
+                              name="libraryTitle"
+                              required
+                              minlength="4"
+                              maxlength="200"
+                              value={libraryPublication?.title ?? ""}
+                            />
+                          </label>
+                          <label>
+                            URL slug
+                            <input
+                              type="text"
+                              name="librarySlug"
+                              required
+                              pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                              value={libraryPublication?.slug ?? suggestedSlug}
+                            />
+                          </label>
+                          <label>
+                            Short excerpt (card summary)
+                            <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">
+                              {libraryPublication?.summary ?? ""}
+                            </textarea>
+                          </label>
+                          <label>
+                            SEO description
+                            <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">
+                              {libraryPublication?.seoDescription ?? ""}
+                            </textarea>
+                          </label>
+                          <label>
+                            Reading body (Markdown)
+                            <textarea name="libraryBody" rows="12" required minlength="100">
+                              {libraryPublication?.body ?? ""}
+                            </textarea>
+                          </label>
+                          <label>
+                            Primary life areas (comma-separated)
+                            <input
+                              type="text"
+                              name="libraryLifeAreas"
+                              value={libraryPublication?.lifeAreas.join(", ") ?? ""}
+                            />
+                          </label>
+                          <label>
+                            Primary cards featured (comma-separated)
+                            <input
+                              type="text"
+                              name="libraryPrimaryCards"
+                              value={libraryPublication?.primaryCards.join(", ") ?? ""}
+                            />
+                          </label>
+                          <label>
+                            Spread used
+                            <input
+                              type="text"
+                              name="librarySpreadUsed"
+                              value={libraryPublication?.spreadUsed ?? readingTypeLabel(request.reading_type)}
+                            />
+                          </label>
+                          <label>
+                            Spread image paths (one per line, under public/)
+                            <textarea name="librarySpreadImages" rows="3">
+                              {libraryPublication?.spreadImagePaths.join("\n") ?? ""}
+                            </textarea>
+                          </label>
+                          <label class="ask-admin-card__publish">
+                            <input
+                              type="checkbox"
+                              name="libraryPublish"
+                              checked={libraryPublication?.isPublished ?? false}
+                            />
+                            Publish to Reading Library
+                          </label>
+                          <button type="submit">Save library entry</button>
+                        </form>
+                      </details>
+                    ) : null
+                  }
+                </div>
+              </details>
             );
           })}
         </div>
@@ -380,6 +499,56 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
       )
     }
   </main>
+
+  <script>
+    function formatLocalSubmission(iso) {
+      const date = new Date(iso);
+      if (Number.isNaN(date.getTime())) return null;
+      const dateText = new Intl.DateTimeFormat(undefined, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(date);
+      const timeText = new Intl.DateTimeFormat(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+      }).format(date);
+      const tz =
+        new Intl.DateTimeFormat(undefined, { timeZoneName: "short" })
+          .formatToParts(date)
+          .find((part) => part.type === "timeZoneName")?.value ?? "";
+      return {
+        dateText,
+        timeText,
+        title: `${dateText} ${timeText}${tz ? ` ${tz}` : ""}`,
+      };
+    }
+
+    function hydrateLocalTimes(root = document) {
+      root.querySelectorAll("[data-ask-admin-local-time]").forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        const iso = node.getAttribute("data-ask-admin-local-time")?.trim() ?? "";
+        if (!iso) return;
+        const formatted = formatLocalSubmission(iso);
+        if (!formatted) {
+          node.setAttribute("title", "Submission time unavailable");
+          const dateEl = node.querySelector("[data-ask-admin-date]");
+          if (dateEl) dateEl.textContent = "Submission time unavailable";
+          const timeEl = node.querySelector("[data-ask-admin-time]");
+          if (timeEl) timeEl.textContent = "";
+          return;
+        }
+        node.setAttribute("title", formatted.title);
+        const dateEl = node.querySelector("[data-ask-admin-date]");
+        const timeEl = node.querySelector("[data-ask-admin-time]");
+        if (dateEl) dateEl.textContent = formatted.dateText;
+        if (timeEl) timeEl.textContent = formatted.timeText;
+      });
+    }
+
+    hydrateLocalTimes();
+    document.addEventListener("astro:page-load", () => hydrateLocalTimes());
+  </script>
 </BaseLayout>
 
 <style>
@@ -461,44 +630,120 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     cursor: pointer;
   }
 
+  .ask-admin__count {
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+    color: var(--tok-text-muted);
+  }
+
   .ask-admin__list {
     display: grid;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
   }
 
   .ask-admin-card,
   .ask-admin__empty {
-    padding: clamp(1rem, 4vw, 1.65rem);
+    padding: 0;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     border-radius: var(--radius-lg);
     background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+    overflow: hidden;
   }
 
-  .ask-admin-card__top {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
-    padding-bottom: 0.85rem;
+  .ask-admin__empty {
+    padding: clamp(1rem, 4vw, 1.65rem);
   }
 
-  .ask-admin-card h2 {
-    margin: 0 0 0.25rem;
-    font-family: var(--font-heading);
+  .ask-admin-card__summary {
+    display: grid;
+    grid-template-columns: minmax(9rem, 12rem) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.4fr) auto;
+    gap: 0.65rem 1rem;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ask-admin-card__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ask-admin-card__summary:focus-visible {
+    outline: 2px solid var(--tok-teal);
+    outline-offset: -2px;
+  }
+
+  .ask-admin-card__when {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-admin-card__seeker {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .ask-admin-card__name {
+    font-weight: 700;
     color: var(--tok-water);
   }
 
-  .ask-admin-card__status {
-    margin: 0;
-    padding: 0.35rem 0.55rem;
+  .ask-admin-card__email {
+    font-size: 0.82rem;
+    color: var(--tok-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .ask-admin-card__type {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+  }
+
+  .ask-admin-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .ask-admin-card__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.28rem 0.5rem;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
     border-radius: var(--radius-pill);
-    font-size: var(--tok-type-meta);
-    letter-spacing: 0.04em;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
+    color: var(--tok-text-dark);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, transparent);
+  }
+
+  .ask-admin-card__badge--archived {
+    border-color: color-mix(in srgb, var(--tok-teal) 40%, transparent);
+    color: var(--tok-teal-dim);
+  }
+
+  .ask-admin-card__chevron {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-right: 2px solid var(--tok-text-dark);
+    border-bottom: 2px solid var(--tok-text-dark);
+    transform: rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease-out);
+    justify-self: end;
+  }
+
+  .ask-admin-card[open] .ask-admin-card__chevron {
+    transform: rotate(225deg);
+  }
+
+  .ask-admin-card__panel {
+    padding: 0 1rem 1.15rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
   }
 
   .ask-admin-card__warning {
@@ -570,7 +815,8 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     max-width: 42rem;
   }
 
-  .ask-admin-card__form button {
+  .ask-admin-card__form button,
+  .ask-admin-card__archive-btn {
     justify-self: start;
     padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
     border: 0;
@@ -579,6 +825,16 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     color: var(--tok-btn-filled-fg);
     font-weight: var(--tok-ui-btn-font-weight);
     cursor: pointer;
+  }
+
+  .ask-admin-card__archive-form {
+    margin-top: 0.85rem;
+  }
+
+  .ask-admin-card__archive-btn {
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
+    color: var(--tok-text-dark);
   }
 
   .ask-admin-card__library {
@@ -622,5 +878,38 @@ function paymentReference(request: (typeof rows)[number]["request"]): string {
     align-items: center;
     gap: 0.5rem;
     font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .ask-admin-card__summary {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "when chevron"
+        "seeker chevron"
+        "type type"
+        "badges badges";
+    }
+
+    .ask-admin-card__when {
+      grid-area: when;
+    }
+
+    .ask-admin-card__seeker {
+      grid-area: seeker;
+    }
+
+    .ask-admin-card__type {
+      grid-area: type;
+    }
+
+    .ask-admin-card__badges {
+      grid-area: badges;
+    }
+
+    .ask-admin-card__chevron {
+      grid-area: chevron;
+      align-self: start;
+      margin-top: 0.35rem;
+    }
   }
 </style>
