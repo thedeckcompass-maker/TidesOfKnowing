@@ -1,4 +1,6 @@
 # Used by `wrangler pages dev` / deploy. Keeps compatibility_date within the
 # Workers binary supported range (avoids "newest date supported is …" errors).
+name = "tidesofknowing"
+pages_build_output_dir = "dist"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
