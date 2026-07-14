@@ -374,6 +374,34 @@ await run("loading copy stays calm until success or clear error", async () => {
   assert.equal(/slowThresholdMs/.test(formSrc), false);
 });
 
+await run("JS confirmation uses readable JSON success, not Location header", async () => {
+  const formSrc = readFileSync(join(REPO_ROOT, "src/lib/community/authRegisterForm.ts"), "utf8");
+  const registerSrc = readFileSync(join(REPO_ROOT, "src/pages/auth/register.astro"), "utf8");
+
+  assert.match(formSrc, /Accept:\s*"application\/json"/);
+  assert.match(formSrc, /payload\.ok === true/);
+  assert.match(formSrc, /showConfirmation\(email\)/);
+  assert.equal(/redirect:\s*"manual"/.test(formSrc), false);
+  assert.equal(/headers\.get\("Location"\)/.test(formSrc), false);
+  assert.equal(/response\.status === 303/.test(formSrc), false);
+  assert.match(formSrc, /AUTH_OTP_ERROR_MESSAGE/);
+  assert.match(formSrc, /setSending\(true\)/);
+  assert.match(formSrc, /AUTH_OTP_SENDING_STATUS_MESSAGE/);
+
+  assert.match(registerSrc, /prefersJsonResponse/);
+  assert.match(registerSrc, /application\/json/);
+  assert.match(registerSrc, /return json\(\{ ok: true \}\)/);
+  assert.match(registerSrc, /checkEmailRedirect/);
+  assert.match(registerSrc, /Unable to send a sign-in link right now\. Please try again\./);
+});
+
+await run("non-JavaScript fallback still redirects to check-email", async () => {
+  const registerSrc = readFileSync(join(REPO_ROOT, "src/pages/auth/register.astro"), "utf8");
+  assert.match(registerSrc, /if \(prefersJson\) \{\s*return json\(\{ ok: true \}\);\s*\}/);
+  assert.match(registerSrc, /return checkEmailRedirect\(/);
+  assert.match(registerSrc, /authRedirect/);
+});
+
 await run("sensitive values are excluded from logs", async () => {
   const dirty = sanitizeAuthOtpLogFields({
     channel: "pc-auth-otp",

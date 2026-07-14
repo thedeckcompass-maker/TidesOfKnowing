@@ -178,57 +178,38 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
       const email = String(formData.get("email") || "").trim();
 
       try {
+        // Request a readable JSON contract so success does not depend on a
+        // browser-opaque redirect Location header.
         const response = await fetch(originalAction, {
           method: "POST",
           body: formData,
           headers: {
-            Accept: "text/html",
+            Accept: "application/json",
             "X-Auth-Submission-Id": correlationId,
           },
           credentials: "same-origin",
-          redirect: "manual",
         });
 
-        if (
-          response.status === 303 ||
-          response.status === 302 ||
-          response.status === 301 ||
-          response.status === 307 ||
-          response.status === 308
-        ) {
-          const locationHeader = response.headers.get("Location") || "";
-          let nextPath = "";
-          try {
-            nextPath = new URL(locationHeader, window.location.origin).pathname;
-          } catch {
-            nextPath = "";
-          }
-
-          if (nextPath === "/auth/check-email/") {
-            showConfirmation(email);
-            setStatus("", false);
-            return;
-          }
-
-          if (locationHeader) {
-            window.location.assign(locationHeader);
-            return;
-          }
+        let payload: { ok?: boolean; error?: string } = { ok: false };
+        try {
+          payload = (await response.json()) as { ok?: boolean; error?: string };
+        } catch {
+          payload = { ok: false };
         }
 
-        if (response.redirected) {
-          const responseUrl = new URL(response.url);
-          if (responseUrl.pathname === "/auth/check-email/") {
-            showConfirmation(email);
-            setStatus("", false);
-            return;
-          }
-          window.location.assign(response.url);
+        if (response.ok && payload.ok === true) {
+          showConfirmation(email);
+          setStatus("", false);
           return;
         }
 
         lastSuccessAt = Date.now();
-        setStatus(AUTH_OTP_ERROR_MESSAGE, true);
+        setStatus(
+          typeof payload.error === "string" && payload.error.trim()
+            ? payload.error
+            : AUTH_OTP_ERROR_MESSAGE,
+          true,
+        );
       } catch (_error) {
         lastSuccessAt = Date.now();
         setStatus(AUTH_OTP_ERROR_MESSAGE, true);

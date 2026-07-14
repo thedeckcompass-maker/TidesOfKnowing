@@ -308,6 +308,9 @@ await run("no automatic retry", async () => {
   assert.equal(/AUTH_OTP_SLOW_THRESHOLD_MS/.test(clientSrc), false);
   assert.equal(/taking longer than expected/i.test(clientSrc), false);
   assert.match(clientSrc, /if \(submitted\) return/);
+  assert.match(clientSrc, /accept:\s*"application\/json"/i);
+  assert.match(clientSrc, /response\.ok && payload\.ok/);
+  assert.equal(/headers\.get\(["']Location["']\)/.test(clientSrc), false);
 });
 
 await run("existing authorisation rules remain enforced", async () => {
