@@ -37,7 +37,7 @@ export const GET: APIRoute = async ({ url, locals, cookies }) => {
     return authRedirect("/auth/register/", cookies);
   }
 
-  // Primary email-link path: TokenHash templates.
+  // Primary email-link path: TokenHash templates (type=email per current PKCE docs).
   if (tokenHash !== null || rawType !== null) {
     if (!isValidAuthCallbackTokenHash(tokenHash) || !tokenHash) {
       logAuthCallbackEvent({

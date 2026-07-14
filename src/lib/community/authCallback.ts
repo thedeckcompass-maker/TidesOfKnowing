@@ -1,14 +1,30 @@
 /**
  * Practice Commons auth callback parsing and redirect hardening.
  * Used by /auth/callback — no sensitive values are logged from here.
+ *
+ * TokenHash email links standardise on `type=email` to match current
+ * @supabase/supabase-js / auth-js PKCE examples (Confirm Signup and Magic Link).
+ * `signup` / `magiclink` remain EmailOtpType values in the SDK but are not used
+ * in this project's planned dashboard TokenHash templates.
+ *
+ * Planned dashboard hrefs (manual — not applied by this repo):
+ * Confirm Signup: {{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email
+ * Magic Link:     {{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email
  */
 
-export type AuthCallbackOtpType = "signup" | "magiclink" | "email";
+export type AuthCallbackOtpType = "email";
+
+/** Manual Supabase Confirm Signup / Magic Link TokenHash query (type=email). */
+export const AUTH_CALLBACK_TOKEN_HASH_TYPE = "email" as const;
+
+export const PLANNED_CONFIRM_SIGNUP_TOKEN_HASH_HREF =
+  "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email";
+
+export const PLANNED_MAGIC_LINK_TOKEN_HASH_HREF =
+  "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email";
 
 const ACCEPTED_OTP_TYPES = new Set<AuthCallbackOtpType>([
-  "signup",
-  "magiclink",
-  "email",
+  AUTH_CALLBACK_TOKEN_HASH_TYPE,
 ]);
 
 /** Post-auth destinations used by current Practice Commons email flows. */

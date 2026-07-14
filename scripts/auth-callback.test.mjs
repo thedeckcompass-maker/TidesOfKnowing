@@ -30,13 +30,19 @@ function run(name, fn) {
   else failed += 1;
 }
 
-const ACCEPTED = new Set(["signup", "magiclink", "email"]);
+/** Current PKCE TokenHash standard — Confirm Signup and Magic Link both use email. */
+const ACCEPTED = new Set(["email"]);
 const ALLOWED_REDIRECTS = new Set([
   "/community",
   "/community/",
   "/community/account",
   "/community/account/",
 ]);
+
+const PLANNED_CONFIRM_SIGNUP_TOKEN_HASH_HREF =
+  "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email";
+const PLANNED_MAGIC_LINK_TOKEN_HASH_HREF =
+  "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email";
 
 function parseAuthCallbackOtpType(value) {
   if (typeof value !== "string") return null;
@@ -117,17 +123,16 @@ function sanitizeAuthCallbackLogFields(fields) {
 
 const SAMPLE_HASH = "pkce_539917fb0123456789abcdef01234567";
 
-run("valid signup", () => {
-  assert.equal(parseAuthCallbackOtpType("signup"), "signup");
-  assert.equal(parseAuthCallbackOtpType("SIGNUP"), "signup");
-});
-
-run("valid magiclink", () => {
-  assert.equal(parseAuthCallbackOtpType("magiclink"), "magiclink");
-});
-
-run("valid email retained for current Supabase TokenHash docs", () => {
+run("valid email for current Supabase TokenHash PKCE docs", () => {
   assert.equal(parseAuthCallbackOtpType("email"), "email");
+  assert.equal(parseAuthCallbackOtpType("EMAIL"), "email");
+});
+
+run("signup and magiclink rejected — templates standardise on type=email", () => {
+  assert.equal(parseAuthCallbackOtpType("signup"), null);
+  assert.equal(parseAuthCallbackOtpType("SIGNUP"), null);
+  assert.equal(parseAuthCallbackOtpType("magiclink"), null);
+  assert.equal(parseAuthCallbackOtpType("magicLink"), null);
 });
 
 run("missing type", () => {
@@ -145,6 +150,26 @@ run("unsupported type", () => {
   assert.equal(parseAuthCallbackOtpType("recovery"), null);
   assert.equal(parseAuthCallbackOtpType("email_change"), null);
   assert.equal(parseAuthCallbackOtpType("not-a-type"), null);
+});
+
+run("planned Confirm Signup and Magic Link templates use type=email", () => {
+  assert.equal(
+    PLANNED_CONFIRM_SIGNUP_TOKEN_HASH_HREF,
+    "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email",
+  );
+  assert.equal(
+    PLANNED_MAGIC_LINK_TOKEN_HASH_HREF,
+    "{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=email",
+  );
+  const helperSrc = readFileSync(
+    join(REPO_ROOT, "src/lib/community/authCallback.ts"),
+    "utf8",
+  );
+  assert.match(helperSrc, /PLANNED_CONFIRM_SIGNUP_TOKEN_HASH_HREF[\s\S]*type=email/);
+  assert.match(helperSrc, /PLANNED_MAGIC_LINK_TOKEN_HASH_HREF[\s\S]*type=email/);
+  assert.match(helperSrc, /AuthCallbackOtpType = "email"/);
+  assert.equal(/"signup"/.test(helperSrc), false);
+  assert.equal(/"magiclink"/.test(helperSrc), false);
 });
 
 run("missing token_hash", () => {
@@ -203,7 +228,7 @@ run("no sensitive callback data in logs", () => {
     event: "callback_succeeded",
     status: "accepted",
     hasTokenHash: true,
-    otpType: "signup",
+    otpType: "email",
     redirectPath: "/community/",
     token: "secret-token",
     token_hash: SAMPLE_HASH,
