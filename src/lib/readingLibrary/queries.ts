@@ -214,6 +214,31 @@ export async function getAuthorisedSampleById(
   return data ? mapAdminPublication(data as ReadingLibraryPublicationRow) : null;
 }
 
+/**
+ * Look up an authorised sample by its (unique) slug. Used to keep "create"
+ * idempotent: a retried creation with the same slug resolves the existing row
+ * and updates it in place instead of hitting the unique-slug constraint or
+ * creating a duplicate.
+ */
+export async function getAuthorisedSampleBySlug(
+  service: SupabaseClient,
+  slug: string,
+): Promise<ReadingLibraryAdminPublication | null> {
+  const { data, error } = await service
+    .from("reading_library_publications")
+    .select(ADMIN_COLUMNS)
+    .eq("slug", slug)
+    .eq("source_type", "authorised_sample")
+    .maybeSingle();
+
+  if (error) {
+    console.error("Unable to load authorised sample by slug:", error);
+    return null;
+  }
+
+  return data ? mapAdminPublication(data as ReadingLibraryPublicationRow) : null;
+}
+
 export async function upsertLibraryPublication(
   service: SupabaseClient,
   input: {

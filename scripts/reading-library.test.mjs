@@ -53,10 +53,18 @@ function validateCoreDraft(draft) {
   return { ok: true };
 }
 
+// The only three valid public product labels (mirrors
+// ASK_LEILIA_PUBLIC_READING_TYPE_LABELS). "Twelve-Month Reading" is not one.
+const PUBLIC_READING_TYPE_LABELS = [
+  "One Question Reading",
+  "In-Depth Reading",
+  "Personal Guidance Reading",
+];
+
 function validateAuthorisedSampleDraft(draft) {
   const core = validateCoreDraft(draft);
   if (!core.ok) return core;
-  if (draft.readingType.trim().length < 2 || draft.readingType.trim().length > 80)
+  if (!PUBLIC_READING_TYPE_LABELS.includes(draft.readingType.trim()))
     return { ok: false, error: "reading_type" };
   if (draft.question.trim().length < 10 || draft.question.trim().length > 2000)
     return { ok: false, error: "question" };
@@ -577,6 +585,7 @@ run("the four candidate readings are not hardcoded in application code", () => {
     "src/lib/readingLibrary/storage.ts",
     "src/lib/readingLibrary/types.ts",
     "src/pages/ask-leilia/admin/samples.astro",
+    "src/components/ask-leilia/AuthorisedSampleForm.astro",
     "src/pages/api/ask-leilia/reading-library/samples/[id].ts",
   ]) {
     const src = readSource(rel).toLowerCase();
@@ -584,6 +593,207 @@ run("the four candidate readings are not hardcoded in application code", () => {
       assert.equal(src.includes(name), false, `${rel} must not hardcode ${name}`);
     }
   }
+});
+
+// ---------------------------------------------------------------------------
+// Admin workflow: single create panel, compact cards, one-step publish, and
+// error-preserving fetch submission (no redirect that clears the form).
+// ---------------------------------------------------------------------------
+run("draft save retains entered values: submission is fetch-based, not a clearing redirect", () => {
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  // The active form submits via fetch with preventDefault, so the browser never
+  // reloads and typed values are never discarded on validation failure.
+  assert.match(page, /event\.preventDefault\(\)/);
+  assert.match(page, /fetch\(form\.action/);
+  assert.match(page, /Accept: "application\/json"/);
+  // On error the banner is shown; the form is never reset or cleared.
+  assert.equal(page.includes("form.reset()"), false, "form must never be reset on error");
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  // For JSON callers, failures return JSON (no redirect that reloads the page).
+  assert.match(api, /function wantsJson/);
+  assert.match(api, /if \(!wantsJson\(request\)\) return redirectSamples\("error"/);
+  assert.match(api, /return json\(\{ ok: false, error: message \}, statusCode\)/);
+});
+
+run("publication is intent-driven and validated in one submission", () => {
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  assert.match(api, /String\(form\.get\("intent"\) \?\? ""\)\.trim\(\) === "publish"/);
+  assert.match(api, /isPublished: wantsPublish/);
+  // The full publish gate runs on the same request before upsert.
+  assert.match(api, /const validation = validateAuthorisedSampleDraft\(draft\);/);
+  assert.ok(
+    api.indexOf("validateAuthorisedSampleDraft(draft)") <
+      api.indexOf("await upsertAuthorisedSample"),
+    "full validation must run before upsert",
+  );
+});
+
+run("one-step publish requires consent and PDF (mirror behaviour)", () => {
+  // Missing PDF blocks publish.
+  assert.equal(
+    validateAuthorisedSampleDraft(
+      baseSampleDraft({ isPublished: true, consentConfirmedAt: "2026-07-10T00:00:00.000Z", samplePdfStoragePath: null }),
+    ).ok,
+    false,
+  );
+  // Missing consent blocks publish.
+  assert.equal(
+    validateAuthorisedSampleDraft(
+      baseSampleDraft({ isPublished: true, samplePdfStoragePath: "reading-library-samples/x/y.pdf", consentConfirmedAt: null }),
+    ).ok,
+    false,
+  );
+  // Both present publishes in the same submission.
+  assert.equal(
+    validateAuthorisedSampleDraft(
+      baseSampleDraft({ isPublished: true, samplePdfStoragePath: "reading-library-samples/x/y.pdf", consentConfirmedAt: "2026-07-10T00:00:00.000Z" }),
+    ).ok,
+    true,
+  );
+});
+
+run("existing PDF stays attached unless a replacement is uploaded", () => {
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  assert.match(api, /uploadedPath \?\? existing\?\.samplePdfStoragePath \?\? null/);
+  // A new File is only uploaded when one was actually chosen.
+  assert.match(api, /samplePdf instanceof File && samplePdf\.size > 0/);
+  const form = readSource("src/components/ask-leilia/AuthorisedSampleForm.astro");
+  // The UI explains an already-uploaded PDF instead of the misleading "No file chosen".
+  assert.match(form, /Private PDF already uploaded/);
+});
+
+run("saved readings render as compact cards with a collapsed edit panel", () => {
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  assert.match(page, /samples\.map\(\(sample\) =>/);
+  assert.match(page, /class="rls-card"/);
+  // Every edit form starts hidden; it is not an always-expanded form.
+  assert.match(page, /id=\{`edit-\$\{sample\.id\}`\} hidden/);
+  assert.match(page, /class="rls-card__edit"/);
+});
+
+run("only the selected record opens for editing (others collapse)", () => {
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  assert.match(page, /data-edit-toggle/);
+  // Clicking Edit collapses all panels before opening the chosen one.
+  assert.match(page, /\.rls-card__edit"\)\.forEach\(\(p\) => \(p\.hidden = true\)\)/);
+});
+
+run("successful draft save shows a clear confirmation", () => {
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  assert.match(page, /Draft saved successfully/);
+});
+
+run("successful publication shows confirmation and a public URL", () => {
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  assert.match(page, /Reading published successfully/);
+  assert.match(page, /View published reading/);
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  assert.match(api, /viewUrl: sample\.isPublished \? getReadingLibraryPath\(sample\.slug\) : null/);
+});
+
+run("admin API performs no destructive writes (Hannah/Sasha are safe)", () => {
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  // No table deletes, no ad-hoc unpublish of other rows: only upsert by id/slug.
+  assert.equal(/\.delete\(/.test(api), false, "API must not delete publications");
+  assert.match(api, /id: existing\?\.id \?\? null/);
+});
+
+run("create is idempotent by slug (no duplicate on retry)", () => {
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  assert.match(api, /if \(isCreate\) \{[\s\S]*?getAuthorisedSampleBySlug\(service, preDraft\.slug\)/);
+  assert.match(api, /if \(bySlug\) existing = bySlug;/);
+  const queries = readSource("src/lib/readingLibrary/queries.ts");
+  const fn = queries.slice(queries.indexOf("export async function getAuthorisedSampleBySlug"));
+  assert.match(fn, /\.eq\("slug", slug\)/);
+  assert.match(fn, /\.eq\("source_type", "authorised_sample"\)/);
+});
+
+// ---------------------------------------------------------------------------
+// Reading type is restricted to the three valid Ask Leilia products.
+// ---------------------------------------------------------------------------
+run("only the three recognised reading types are offered in the form", () => {
+  const form = readSource("src/components/ask-leilia/AuthorisedSampleForm.astro");
+  // Rendered from the canonical allowlist, not free text or a hardcoded set.
+  assert.match(form, /import \{ ASK_LEILIA_PUBLIC_READING_TYPE_LABELS \}/);
+  assert.match(form, /<select name="sampleReadingType" required>/);
+  assert.match(form, /ASK_LEILIA_PUBLIC_READING_TYPE_LABELS\.map/);
+  // The invalid category is never offered.
+  assert.equal(form.includes("Twelve-Month Reading"), false);
+  assert.equal(form.includes("Twelve Month Reading"), false);
+
+  const types = readSource("src/lib/ask-leilia/readingTypes.ts");
+  // The public allowlist is derived from the three request products, in order.
+  assert.match(
+    types,
+    /ASK_LEILIA_PUBLIC_READING_TYPE_LABELS: string\[\] = ASK_LEILIA_READING_TYPES\.map/,
+  );
+  assert.match(types, /export function isAskLeiliaPublicReadingTypeLabel/);
+});
+
+run("Personal Guidance Reading is accepted for a sample", () => {
+  const result = validateAuthorisedSampleDraft(
+    baseSampleDraft({ readingType: "Personal Guidance Reading" }),
+  );
+  assert.equal(result.ok, true);
+});
+
+run("Twelve-Month Reading is rejected with a clear allowlist message", () => {
+  const result = validateAuthorisedSampleDraft(
+    baseSampleDraft({ readingType: "Twelve-Month Reading" }),
+  );
+  assert.equal(result.ok, false);
+  assert.equal(result.error, "reading_type");
+  // The real validator returns a specific, human-readable allowlist message and
+  // enforces the same three-value allowlist server-side.
+  const validation = readSource("src/lib/readingLibrary/validation.ts");
+  assert.match(validation, /isAskLeiliaPublicReadingTypeLabel\(draft\.readingType\.trim\(\)\)/);
+  assert.match(validation, /Reading type must be one of: \$\{ASK_LEILIA_PUBLIC_READING_TYPE_LABELS\.join\(", "\)\}/);
+});
+
+run("rejecting an unsupported reading type never clears or saves the record", () => {
+  // Invalid drafts do not validate, so nothing is upserted.
+  assert.equal(
+    validateAuthorisedSampleDraft(baseSampleDraft({ readingType: "Twelve-Month Reading" })).ok,
+    false,
+  );
+  // The failure travels the JSON error path (no redirect/reload), and the page
+  // never resets the form, so entered values remain visible.
+  const api = readSource("src/pages/api/ask-leilia/reading-library/samples/[id].ts");
+  assert.match(api, /const validation = validateAuthorisedSampleDraft\(draft\);/);
+  assert.match(api, /if \(!validation\.ok\) \{[\s\S]*?return failure\(request, validation\.error\)/);
+  const page = readSource("src/pages/ask-leilia/admin/samples.astro");
+  assert.equal(page.includes("form.reset()"), false);
+});
+
+run("Hannah/Sasha One Question Reading records remain valid", () => {
+  // Draft and published One Question Reading samples still validate.
+  assert.equal(
+    validateAuthorisedSampleDraft(baseSampleDraft({ readingType: "One Question Reading" })).ok,
+    true,
+  );
+  assert.equal(
+    validateAuthorisedSampleDraft(
+      baseSampleDraft({
+        readingType: "One Question Reading",
+        isPublished: true,
+        samplePdfStoragePath: "reading-library-samples/x/y.pdf",
+        consentConfirmedAt: "2026-07-10T00:00:00.000Z",
+      }),
+    ).ok,
+    true,
+  );
+});
+
+run("one-step Save and publish still works with a valid reading type", () => {
+  const result = validateAuthorisedSampleDraft(
+    baseSampleDraft({
+      readingType: "Personal Guidance Reading",
+      isPublished: true,
+      samplePdfStoragePath: "reading-library-samples/x/y.pdf",
+      consentConfirmedAt: "2026-07-10T00:00:00.000Z",
+    }),
+  );
+  assert.equal(result.ok, true);
 });
 
 console.log(`\n${passed} passed, ${failed} failed`);

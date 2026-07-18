@@ -1,4 +1,8 @@
 import { slugify } from "../../utils/slugify";
+import {
+  ASK_LEILIA_PUBLIC_READING_TYPE_LABELS,
+  isAskLeiliaPublicReadingTypeLabel,
+} from "../ask-leilia/readingTypes";
 import type { AuthorisedSampleDraft, ReadingLibraryAdminDraft } from "./types";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -72,8 +76,11 @@ export function validateAuthorisedSampleDraft(
   const core = validateCoreDraft(draft);
   if (!core.ok) return core;
 
-  if (draft.readingType.trim().length < 2 || draft.readingType.trim().length > 80) {
-    return { ok: false, error: "Reading type must be between 2 and 80 characters." };
+  if (!isAskLeiliaPublicReadingTypeLabel(draft.readingType.trim())) {
+    return {
+      ok: false,
+      error: `Reading type must be one of: ${ASK_LEILIA_PUBLIC_READING_TYPE_LABELS.join(", ")}.`,
+    };
   }
 
   if (draft.question.trim().length < 10 || draft.question.trim().length > 2000) {

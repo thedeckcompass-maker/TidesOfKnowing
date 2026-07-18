@@ -23,6 +23,7 @@ export {
   getLibraryPublicationsByRequestIds,
   getAuthorisedSamplePublications,
   getAuthorisedSampleById,
+  getAuthorisedSampleBySlug,
   resolveLibraryPdfSource,
   upsertLibraryPublication,
   upsertAuthorisedSample,

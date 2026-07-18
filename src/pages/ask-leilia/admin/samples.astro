@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import AuthorisedSampleForm from "../../../components/ask-leilia/AuthorisedSampleForm.astro";
 import { isAdminProfile } from "../../../lib/community/auth";
 import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
 import { ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
 import {
+  formatLibraryDate,
+  getReadingLibraryPath,
   getAuthorisedSamplePublications,
-  type ReadingLibraryAdminPublication,
 } from "../../../lib/readingLibrary";
 
 export const prerender = false;
@@ -21,32 +23,9 @@ if (!isAdminProfile(Astro.locals.profile)) {
 const service = createCommunityServiceClient(Astro.locals);
 const samples = await getAuthorisedSamplePublications(service);
 
+// No-JS fallback flags (the primary flow uses fetch and never reloads).
 const saved = Astro.url.searchParams.get("sample_saved") === "1";
 const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
-
-function toDateTimeLocal(value: Date | null): string {
-  if (!value) return "";
-  // yyyy-MM-ddTHH:mm in UTC (admin-only convenience default).
-  return value.toISOString().slice(0, 16);
-}
-
-type SampleFormModel = {
-  action: string;
-  heading: string;
-  sample: ReadingLibraryAdminPublication | null;
-};
-
-const createModel: SampleFormModel = {
-  action: "/api/ask-leilia/reading-library/samples/new/",
-  heading: "Add an authorised sample reading",
-  sample: null,
-};
-
-const editModels: SampleFormModel[] = samples.map((sample) => ({
-  action: `/api/ask-leilia/reading-library/samples/${sample.id}/`,
-  heading: sample.title,
-  sample,
-}));
 ---
 
 <BaseLayout
@@ -62,8 +41,8 @@ const editModels: SampleFormModel[] = samples.map((sample) => ({
       <p>
         Publish historical readings that were completed outside the current Ask Leilia order
         system. These are separate from request-linked readings and are never attached to a fake
-        order. A sample can only be published once its private PDF is uploaded and consent has been
-        confirmed.
+        order. A reading can be saved as a draft or published directly once its private PDF is
+        uploaded and consent has been confirmed.
       </p>
       <p class="rls-admin__nav">
         <a href="/ask-leilia/admin/">Reading requests</a>
@@ -78,138 +57,181 @@ const editModels: SampleFormModel[] = samples.map((sample) => ({
       }
     </header>
 
-    {
-      [createModel, ...editModels].map((model) => (
-        <section class="rls-admin__panel" aria-label={model.heading}>
-          <h2>{model.heading}</h2>
-          {model.sample ? (
-            <p class="rls-admin__meta">
-              {model.sample.isPublished ? (
-                <span>
-                  Published ·{" "}
-                  <a href={`/recent-client-readings/${model.sample.slug}/`}>View in library</a>
-                </span>
-              ) : (
-                <span>Draft (not published)</span>
-              )}
-              <span aria-hidden="true"> · </span>
-              <span>{model.sample.samplePdfStoragePath ? "Private PDF uploaded" : "No PDF uploaded"}</span>
-              <span aria-hidden="true"> · </span>
-              <span>
-                {model.sample.sampleConsentConfirmedAt ? "Consent confirmed" : "Consent not confirmed"}
-              </span>
-            </p>
-          ) : null}
+    <section class="rls-admin__create" aria-label="Add a new authorised sample">
+      <h2>Add a new authorised sample</h2>
+      <AuthorisedSampleForm
+        mode="create"
+        action="/api/ask-leilia/reading-library/samples/new/"
+        sample={null}
+      />
+    </section>
 
-          <form class="rls-admin__form" method="post" action={model.action} enctype="multipart/form-data">
-            <div class="rls-admin__grid">
-              <label>
-                Title
-                <input type="text" name="libraryTitle" required minlength="4" maxlength="200" value={model.sample?.title ?? ""} />
-              </label>
-              <label>
-                URL slug
-                <input
-                  type="text"
-                  name="librarySlug"
-                  required
-                  pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-                  value={model.sample?.slug ?? ""}
-                />
-              </label>
-              <label>
-                Reading type
-                <input type="text" name="sampleReadingType" required minlength="2" maxlength="80" value={model.sample?.readingType ?? ""} />
-              </label>
-              <label>
-                Spread used
-                <input type="text" name="librarySpreadUsed" value={model.sample?.spreadUsed ?? ""} />
-              </label>
-            </div>
+    <section class="rls-admin__list" aria-label="Saved authorised samples">
+      <h2>Saved readings ({samples.length})</h2>
+      {samples.length === 0 ? <p class="rls-admin__empty">No authorised samples yet.</p> : null}
 
-            <label>
-              Original question
-              <textarea name="sampleQuestion" rows="2" required minlength="10" maxlength="2000">{model.sample?.question ?? ""}</textarea>
-            </label>
-
-            <fieldset class="rls-admin__fieldset">
-              <legend>Client and consent</legend>
-              <div class="rls-admin__grid">
-                <label>
-                  Client display name
-                  <input type="text" name="sampleClientDisplayName" maxlength="80" value={model.sample?.sampleClientDisplayName ?? ""} />
-                </label>
-                <label class="rls-admin__check">
-                  <input type="checkbox" name="sampleDisplayNamePublic" checked={model.sample?.sampleDisplayNamePublic ?? false} />
-                  May display the client name publicly
-                </label>
-                <label class="rls-admin__check">
-                  <input type="checkbox" name="sampleConsentConfirmed" checked={Boolean(model.sample?.sampleConsentConfirmedAt)} />
-                  Consent confirmed
-                </label>
-                <label>
-                  Consent confirmed date/time
-                  <input type="datetime-local" name="sampleConsentConfirmedAt" value={toDateTimeLocal(model.sample?.sampleConsentConfirmedAt ?? null)} />
-                </label>
-                <label>
-                  Consent scope / basis
-                  <input type="text" name="sampleConsentScope" maxlength="200" value={model.sample?.sampleConsentScope ?? ""} />
-                </label>
+      {
+        samples.map((sample) => (
+          <article class="rls-card" data-sample-id={sample.id}>
+            <div class="rls-card__row">
+              <div class="rls-card__meta">
+                <h3 class="rls-card__title">{sample.title}</h3>
+                <p class="rls-card__facts">
+                  <span>{sample.sampleClientDisplayName || "No name"}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{sample.readingType}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Updated {formatLibraryDate(sample.updatedAt)}</span>
+                </p>
+                <p class="rls-card__badges">
+                  <span class={`rls-badge ${sample.isPublished ? "rls-badge--published" : "rls-badge--draft"}`}>
+                    {sample.isPublished ? "Published" : "Draft"}
+                  </span>
+                  <span class={`rls-badge ${sample.samplePdfStoragePath ? "rls-badge--ok" : "rls-badge--warn"}`}>
+                    {sample.samplePdfStoragePath ? "Private PDF uploaded" : "No PDF"}
+                  </span>
+                  <span class={`rls-badge ${sample.sampleConsentConfirmedAt ? "rls-badge--ok" : "rls-badge--warn"}`}>
+                    {sample.sampleConsentConfirmedAt ? "Consent confirmed" : "Consent not confirmed"}
+                  </span>
+                </p>
               </div>
-              <label>
-                Internal consent note (never shown publicly)
-                <textarea name="sampleConsentNote" rows="2" maxlength="2000">{model.sample?.sampleConsentNote ?? ""}</textarea>
-              </label>
-            </fieldset>
-
-            <label>
-              Short excerpt (summary)
-              <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">{model.sample?.summary ?? ""}</textarea>
-            </label>
-            <label>
-              SEO description
-              <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">{model.sample?.seoDescription ?? ""}</textarea>
-            </label>
-            <label>
-              Reading body (Markdown)
-              <textarea name="libraryBody" rows="10" required minlength="100">{model.sample?.body ?? ""}</textarea>
-            </label>
-
-            <div class="rls-admin__grid">
-              <label>
-                Primary life areas (comma-separated)
-                <input type="text" name="libraryLifeAreas" value={model.sample?.lifeAreas.join(", ") ?? ""} />
-              </label>
-              <label>
-                Primary cards featured (comma-separated)
-                <input type="text" name="libraryPrimaryCards" value={model.sample?.primaryCards.join(", ") ?? ""} />
-              </label>
+              <div class="rls-card__actions">
+                <button
+                  type="button"
+                  class="rls-btn rls-btn--edit"
+                  data-edit-toggle={sample.id}
+                  aria-expanded="false"
+                  aria-controls={`edit-${sample.id}`}
+                >
+                  Edit
+                </button>
+                {
+                  sample.isPublished ? (
+                    <a class="rls-btn rls-btn--view" href={getReadingLibraryPath(sample.slug)}>
+                      View published reading
+                    </a>
+                  ) : null
+                }
+              </div>
             </div>
 
-            <label>
-              Spread image paths (one per line, under public/)
-              <textarea name="librarySpreadImages" rows="3">{model.sample?.spreadImagePaths.join("\n") ?? ""}</textarea>
-            </label>
-
-            <label>
-              Private sample PDF (stored privately; never placed under public/)
-              <input type="file" name="samplePdf" accept="application/pdf,.pdf" />
-            </label>
-
-            <label class="rls-admin__check">
-              <input type="checkbox" name="libraryPublish" checked={model.sample?.isPublished ?? false} />
-              Publish to Reading Library (requires uploaded PDF and confirmed consent)
-            </label>
-
-            <div class="rls-admin__actions">
-              <button type="submit">{model.sample ? "Save sample" : "Create draft"}</button>
+            <div class="rls-card__edit" id={`edit-${sample.id}`} hidden>
+              <AuthorisedSampleForm
+                mode="edit"
+                action={`/api/ask-leilia/reading-library/samples/${sample.id}/`}
+                sample={sample}
+              />
             </div>
-          </form>
-        </section>
-      ))
-    }
+          </article>
+        ))
+      }
+    </section>
   </main>
 </BaseLayout>
+
+<script>
+  function setLoading(form: HTMLFormElement, loading: boolean, submitter?: HTMLButtonElement) {
+    const buttons = form.querySelectorAll<HTMLButtonElement>("button[type=submit]");
+    buttons.forEach((btn) => {
+      btn.disabled = loading;
+      const def = btn.getAttribute("data-label-default");
+      const load = btn.getAttribute("data-label-loading");
+      if (!def || !load) return;
+      if (loading && btn === submitter) {
+        btn.textContent = load;
+      } else if (!loading) {
+        btn.textContent = def;
+      }
+    });
+  }
+
+  function showBanner(
+    form: HTMLFormElement,
+    kind: "success" | "error",
+    message: string,
+    links: { label: string; href: string }[] = [],
+  ) {
+    const banner = form.querySelector<HTMLElement>("[data-banner]");
+    if (!banner) return;
+    banner.hidden = false;
+    banner.className = `rls-banner rls-banner--${kind}`;
+    banner.textContent = message;
+    for (const link of links) {
+      const a = document.createElement("a");
+      a.href = link.href;
+      a.textContent = link.label;
+      a.className = "rls-banner__link";
+      banner.appendChild(a);
+    }
+    banner.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  async function submitForm(form: HTMLFormElement, submitter: HTMLButtonElement) {
+    const intent = submitter.value === "publish" ? "publish" : "draft";
+    const formData = new FormData(form);
+    formData.set("intent", intent);
+
+    setLoading(form, true, submitter);
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
+      const data = await res.json().catch(() => ({ ok: false, error: "Unexpected server response." }));
+
+      if (res.ok && data.ok) {
+        const links: { label: string; href: string }[] = [];
+        if (data.viewUrl) links.push({ label: "View published reading", href: data.viewUrl });
+        // Once created, the form must edit the saved record (no duplicate on re-save).
+        if (form.dataset.mode === "create" && data.editAction) {
+          form.setAttribute("action", data.editAction);
+          form.dataset.mode = "edit";
+          form.dataset.id = data.id;
+          links.push({ label: "Edit saved draft", href: "#" });
+        }
+        showBanner(
+          form,
+          "success",
+          data.published ? "Reading published successfully. " : "Draft saved successfully. ",
+          links,
+        );
+      } else {
+        showBanner(form, "error", data.error || "Something went wrong. Your entries have been kept.");
+      }
+    } catch {
+      showBanner(form, "error", "Network error. Your entries have been kept, please try again.");
+    } finally {
+      setLoading(form, false);
+    }
+  }
+
+  document.querySelectorAll<HTMLFormElement>(".rls-sample-form").forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const submitter = (event as SubmitEvent).submitter as HTMLButtonElement | null;
+      if (!submitter || submitter.type !== "submit") return;
+      void submitForm(form, submitter);
+    });
+  });
+
+  // Expand exactly one saved reading for editing at a time.
+  document.querySelectorAll<HTMLButtonElement>("[data-edit-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-edit-toggle");
+      const panel = document.getElementById(`edit-${id}`);
+      if (!panel) return;
+      const willOpen = panel.hidden;
+      document.querySelectorAll<HTMLElement>(".rls-card__edit").forEach((p) => (p.hidden = true));
+      document
+        .querySelectorAll<HTMLButtonElement>("[data-edit-toggle]")
+        .forEach((b) => b.setAttribute("aria-expanded", "false"));
+      panel.hidden = !willOpen;
+      btn.setAttribute("aria-expanded", String(willOpen));
+      if (willOpen) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+</script>
 
 <style>
   .rls-admin {
@@ -240,65 +262,224 @@ const editModels: SampleFormModel[] = samples.map((sample) => ({
     border-color: color-mix(in srgb, #b42318 35%, transparent);
     color: #7a271a;
   }
-  .rls-admin__panel {
+  .rls-admin__create {
     margin-top: 1.5rem;
-    padding: 1.15rem 1.15rem 1.4rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+    padding: 1.25rem 1.25rem 1.5rem;
+    border: 2px solid color-mix(in srgb, var(--tok-water) 40%, transparent);
     border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 82%, transparent);
   }
-  .rls-admin__panel h2 {
-    margin: 0 0 0.35rem;
+  .rls-admin__create h2,
+  .rls-admin__list h2 {
+    margin: 0 0 0.75rem;
     color: var(--tok-water);
   }
-  .rls-admin__meta {
-    margin: 0 0 0.75rem;
+  .rls-admin__list {
+    margin-top: 2.5rem;
+  }
+  .rls-admin__empty {
+    color: var(--tok-text-muted);
+  }
+
+  /* Compact saved-reading cards */
+  .rls-card {
+    margin-top: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--tok-surface-reading) 60%, transparent);
+  }
+  .rls-card__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.1rem;
+  }
+  .rls-card__title {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+  }
+  .rls-card__facts {
+    margin: 0 0 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
     font-size: 0.85rem;
     color: var(--tok-text-muted);
   }
-  .rls-admin__form {
-    display: grid;
-    gap: 0.85rem;
+  .rls-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
   }
-  .rls-admin__grid {
+  .rls-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+  .rls-badge--published {
+    background: color-mix(in srgb, #067647 18%, transparent);
+    color: #067647;
+  }
+  .rls-badge--draft {
+    background: color-mix(in srgb, var(--tok-gold) 20%, transparent);
+    color: var(--tok-gold-deep);
+  }
+  .rls-badge--ok {
+    background: color-mix(in srgb, #067647 14%, transparent);
+    color: #067647;
+  }
+  .rls-badge--warn {
+    background: color-mix(in srgb, #b42318 14%, transparent);
+    color: #b42318;
+  }
+  .rls-card__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .rls-card__edit {
+    padding: 0 1.1rem 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 20%, transparent);
+  }
+
+  /* Buttons */
+  .rls-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.15rem;
+    border: 0;
+    border-radius: var(--radius-control);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.1;
+  }
+  .rls-btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+  .rls-btn--edit {
+    background: var(--tok-water);
+    color: #fff;
+  }
+  .rls-btn--view {
+    background: color-mix(in srgb, var(--tok-water) 16%, transparent);
+    color: var(--tok-water);
+    border: 1px solid color-mix(in srgb, var(--tok-water) 45%, transparent);
+  }
+  .rls-btn--draft {
+    background: color-mix(in srgb, var(--tok-gold) 24%, transparent);
+    color: var(--tok-gold-deep);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+  }
+  .rls-btn--publish {
+    background: var(--tok-deep-ocean);
+    color: #fff;
+    font-size: 1.02rem;
+  }
+
+  /* Shared form styles (used by the imported component) */
+  .rls-sample-form {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+  .rls-grid {
     display: grid;
     gap: 0.85rem;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
   }
-  .rls-admin__form label {
+  .rls-sample-form label {
     display: grid;
     gap: 0.3rem;
     font-size: 0.9rem;
     font-weight: 600;
   }
-  .rls-admin__check {
-    display: flex !important;
+  .rls-checks {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.4rem 0;
+  }
+  .rls-check {
+    display: grid !important;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.5rem;
     font-weight: 600;
   }
-  .rls-admin__fieldset {
+  .rls-check input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+  }
+  .rls-fieldset {
     display: grid;
-    gap: 0.85rem;
+    gap: 0.75rem;
     border: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
     border-radius: var(--radius-md);
     padding: 0.85rem 1rem 1rem;
   }
-  .rls-admin__form input,
-  .rls-admin__form textarea {
+  .rls-fieldset--publish {
+    border-color: color-mix(in srgb, var(--tok-deep-ocean) 35%, transparent);
+    background: color-mix(in srgb, var(--tok-deep-ocean) 6%, transparent);
+  }
+  .rls-fieldset legend {
+    font-weight: 700;
+    padding: 0 0.4rem;
+  }
+  .rls-pdf-status {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tok-water);
+  }
+  .rls-publish-hint {
+    margin: 0;
+    font-size: 0.83rem;
+    color: var(--tok-text-muted);
+  }
+  .rls-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .rls-sample-form input,
+  .rls-sample-form textarea {
     width: 100%;
     padding: 0.55rem 0.65rem;
     border: 1px solid var(--tok-border-light);
     border-radius: var(--radius-control);
     font: inherit;
   }
-  .rls-admin__actions button {
-    padding: 0.6rem 1rem;
-    border: 0;
+
+  /* Result banner */
+  .rls-banner {
+    padding: 0.85rem 1rem;
     border-radius: var(--radius-control);
-    background: var(--tok-deep-ocean);
-    color: #fff;
-    cursor: pointer;
     font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .rls-banner--success {
+    background: color-mix(in srgb, #067647 12%, transparent);
+    border-color: color-mix(in srgb, #067647 40%, transparent);
+    color: #05603a;
+  }
+  .rls-banner--error {
+    background: color-mix(in srgb, #b42318 10%, transparent);
+    border-color: color-mix(in srgb, #b42318 40%, transparent);
+    color: #7a271a;
+  }
+  .rls-banner__link {
+    display: inline-block;
+    margin-left: 0.75rem;
+    font-weight: 700;
+    text-decoration: underline;
   }
 </style>
