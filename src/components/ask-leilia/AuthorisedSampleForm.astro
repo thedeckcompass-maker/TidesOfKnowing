@@ -10,14 +10,17 @@ interface Props {
 
 const { mode, action, sample } = Astro.props;
 const selectedReadingType = sample?.readingType ?? "";
+const hasPdf = Boolean(sample?.samplePdfStoragePath);
+const consentConfirmed = Boolean(sample?.sampleConsentConfirmedAt);
+
+// Unique id prefix so every input can carry an explicit <label for>, even when
+// multiple edit forms are present on the page at once.
+const uid = `f-${sample?.id ?? "new"}`;
 
 function toDateTimeLocal(value: Date | null): string {
   if (!value) return "";
   return value.toISOString().slice(0, 16);
 }
-
-const hasPdf = Boolean(sample?.samplePdfStoragePath);
-const consentConfirmed = Boolean(sample?.sampleConsentConfirmedAt);
 ---
 
 <form
@@ -27,130 +30,135 @@ const consentConfirmed = Boolean(sample?.sampleConsentConfirmedAt);
   enctype="multipart/form-data"
   data-mode={mode}
   data-id={sample?.id ?? "new"}
-  data-create-action="/api/ask-leilia/reading-library/samples/new/"
 >
   <div class="rls-banner" data-banner hidden role="status" aria-live="polite"></div>
 
-  <div class="rls-grid">
-    <label>
-      Title
-      <input type="text" name="libraryTitle" required minlength="4" maxlength="200" value={sample?.title ?? ""} />
-    </label>
-    <label>
-      URL slug
-      <input
-        type="text"
-        name="librarySlug"
-        required
-        pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
-        value={sample?.slug ?? ""}
-      />
-    </label>
-    <label>
-      Reading type
-      <select name="sampleReadingType" required>
-        <option value="" disabled selected={selectedReadingType === ""}>
-          Select a reading type
-        </option>
-        {
-          ASK_LEILIA_PUBLIC_READING_TYPE_LABELS.map((label) => (
-            <option value={label} selected={selectedReadingType === label}>
-              {label}
-            </option>
-          ))
-        }
-      </select>
-    </label>
-    <label>
-      Spread used
-      <input type="text" name="librarySpreadUsed" value={sample?.spreadUsed ?? ""} />
-    </label>
-  </div>
-
-  <label>
-    Original question
-    <textarea name="sampleQuestion" rows="2" required minlength="10" maxlength="2000">{sample?.question ?? ""}</textarea>
-  </label>
-
-  <fieldset class="rls-fieldset">
-    <legend>Client and consent</legend>
+  <fieldset class="rls-section">
+    <legend class="rls-section__title">Reading details</legend>
     <div class="rls-grid">
-      <label>
-        Client first name (display name)
-        <input type="text" name="sampleClientDisplayName" maxlength="80" value={sample?.sampleClientDisplayName ?? ""} />
-      </label>
-      <label>
-        Consent confirmed date/time
-        <input type="datetime-local" name="sampleConsentConfirmedAt" value={toDateTimeLocal(sample?.sampleConsentConfirmedAt ?? null)} />
-      </label>
-      <label>
-        Consent scope / basis
-        <input type="text" name="sampleConsentScope" maxlength="200" value={sample?.sampleConsentScope ?? ""} />
-      </label>
+      <div class="rls-field rls-col-4">
+        <label for={`${uid}-title`}>Title</label>
+        <input id={`${uid}-title`} type="text" name="libraryTitle" required minlength="4" maxlength="200" value={sample?.title ?? ""} />
+      </div>
+      <div class="rls-field rls-col-2">
+        <label for={`${uid}-type`}>Reading type</label>
+        <select id={`${uid}-type`} name="sampleReadingType" required>
+          <option value="" disabled selected={selectedReadingType === ""}>Select a reading type</option>
+          {
+            ASK_LEILIA_PUBLIC_READING_TYPE_LABELS.map((label) => (
+              <option value={label} selected={selectedReadingType === label}>
+                {label}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="rls-field rls-col-3">
+        <label for={`${uid}-slug`}>URL slug</label>
+        <input id={`${uid}-slug`} type="text" name="librarySlug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" value={sample?.slug ?? ""} />
+      </div>
+      <div class="rls-field rls-col-3">
+        <label for={`${uid}-spread`}>Spread used</label>
+        <input id={`${uid}-spread`} type="text" name="librarySpreadUsed" value={sample?.spreadUsed ?? ""} />
+      </div>
+
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-question`}>Original question</label>
+        <textarea id={`${uid}-question`} class="rls-ta rls-ta--q" name="sampleQuestion" required minlength="10" maxlength="2000">{sample?.question ?? ""}</textarea>
+      </div>
     </div>
-    <div class="rls-checks">
-      <label class="rls-check">
-        <input type="checkbox" name="sampleDisplayNamePublic" checked={sample?.sampleDisplayNamePublic ?? false} />
-        <span>May display the client first name publicly</span>
-      </label>
-      <label class="rls-check">
-        <input type="checkbox" name="sampleConsentConfirmed" checked={consentConfirmed} />
-        <span>Consent confirmed (required to publish)</span>
-      </label>
-    </div>
-    <label>
-      Internal consent note (never shown publicly)
-      <textarea name="sampleConsentNote" rows="2" maxlength="2000">{sample?.sampleConsentNote ?? ""}</textarea>
-    </label>
   </fieldset>
 
-  <label>
-    Short excerpt (summary)
-    <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">{sample?.summary ?? ""}</textarea>
-  </label>
-  <label>
-    SEO description
-    <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">{sample?.seoDescription ?? ""}</textarea>
-  </label>
-  <label>
-    Reading body (Markdown)
-    <textarea name="libraryBody" rows="12" required minlength="100">{sample?.body ?? ""}</textarea>
-  </label>
+  <fieldset class="rls-section">
+    <legend class="rls-section__title">Client and consent</legend>
+    <div class="rls-grid">
+      <div class="rls-field rls-col-2">
+        <label for={`${uid}-clientname`}>Client first name</label>
+        <input id={`${uid}-clientname`} type="text" name="sampleClientDisplayName" maxlength="80" value={sample?.sampleClientDisplayName ?? ""} />
+      </div>
+      <div class="rls-field rls-col-2">
+        <label for={`${uid}-consentdate`}>Consent confirmed date/time</label>
+        <input id={`${uid}-consentdate`} type="datetime-local" name="sampleConsentConfirmedAt" value={toDateTimeLocal(sample?.sampleConsentConfirmedAt ?? null)} />
+      </div>
 
-  <div class="rls-grid">
-    <label>
-      Primary life areas (comma-separated)
-      <input type="text" name="libraryLifeAreas" value={sample?.lifeAreas.join(", ") ?? ""} />
-    </label>
-    <label>
-      Primary cards featured (comma-separated)
-      <input type="text" name="libraryPrimaryCards" value={sample?.primaryCards.join(", ") ?? ""} />
-    </label>
-  </div>
+      <div class="rls-col-6">
+        <div class="rls-checks">
+          <div class="rls-check">
+            <input id={`${uid}-namepublic`} type="checkbox" name="sampleDisplayNamePublic" checked={sample?.sampleDisplayNamePublic ?? false} />
+            <label for={`${uid}-namepublic`}>May display the client first name publicly</label>
+          </div>
+          <div class="rls-check">
+            <input id={`${uid}-consentok`} type="checkbox" name="sampleConsentConfirmed" checked={consentConfirmed} />
+            <label for={`${uid}-consentok`}>Consent confirmed (required to publish)</label>
+          </div>
+        </div>
+      </div>
 
-  <label>
-    Spread image paths (one per line, under public/)
-    <textarea name="librarySpreadImages" rows="3">{sample?.spreadImagePaths.join("\n") ?? ""}</textarea>
-  </label>
-
-  <fieldset class="rls-fieldset">
-    <legend>Private PDF</legend>
-    <p class="rls-pdf-status" data-pdf-status>
-      {
-        hasPdf
-          ? "Private PDF already uploaded. It stays attached unless you choose a replacement below."
-          : "No PDF uploaded yet. A PDF is required before publishing."
-      }
-    </p>
-    <label>
-      {hasPdf ? "Replace private PDF (optional)" : "Upload private PDF"}
-      <input type="file" name="samplePdf" accept="application/pdf,.pdf" data-pdf-input />
-    </label>
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-scope`}>Consent scope / basis</label>
+        <textarea id={`${uid}-scope`} class="rls-ta rls-ta--scope" name="sampleConsentScope" maxlength="200">{sample?.sampleConsentScope ?? ""}</textarea>
+      </div>
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-note`}>Internal consent note (never shown publicly)</label>
+        <textarea id={`${uid}-note`} class="rls-ta rls-ta--note" name="sampleConsentNote" maxlength="2000">{sample?.sampleConsentNote ?? ""}</textarea>
+      </div>
+    </div>
   </fieldset>
 
-  <fieldset class="rls-fieldset rls-fieldset--publish">
-    <legend>Save or publish</legend>
-    <p class="rls-publish-hint">
+  <fieldset class="rls-section">
+    <legend class="rls-section__title">Public reading content</legend>
+    <div class="rls-grid">
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-summary`}>Short excerpt (summary)</label>
+        <textarea id={`${uid}-summary`} class="rls-ta rls-ta--excerpt" name="librarySummary" required minlength="20" maxlength="500">{sample?.summary ?? ""}</textarea>
+      </div>
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-seo`}>SEO description</label>
+        <textarea id={`${uid}-seo`} class="rls-ta rls-ta--seo" name="librarySeoDescription" required minlength="40" maxlength="320">{sample?.seoDescription ?? ""}</textarea>
+      </div>
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-body`}>Reading body (Markdown)</label>
+        <textarea id={`${uid}-body`} class="rls-ta rls-ta--body" name="libraryBody" required minlength="100">{sample?.body ?? ""}</textarea>
+      </div>
+
+      <div class="rls-field rls-col-3">
+        <label for={`${uid}-areas`}>Primary life areas (comma-separated)</label>
+        <input id={`${uid}-areas`} type="text" name="libraryLifeAreas" value={sample?.lifeAreas.join(", ") ?? ""} />
+      </div>
+      <div class="rls-field rls-col-3">
+        <label for={`${uid}-cards`}>Primary cards featured (comma-separated)</label>
+        <input id={`${uid}-cards`} type="text" name="libraryPrimaryCards" value={sample?.primaryCards.join(", ") ?? ""} />
+      </div>
+
+      <div class="rls-field rls-col-6">
+        <label for={`${uid}-images`}>Spread image paths (one per line, under public/)</label>
+        <textarea id={`${uid}-images`} class="rls-ta rls-ta--images" name="librarySpreadImages">{sample?.spreadImagePaths.join("\n") ?? ""}</textarea>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="rls-section">
+    <legend class="rls-section__title">Private PDF</legend>
+    <div class={`rls-pdf-status ${hasPdf ? "is-attached" : "is-missing"}`}>
+      <span class="rls-pdf-status__dot" aria-hidden="true"></span>
+      <span class="rls-pdf-status__label">
+        {hasPdf ? "Private PDF already uploaded" : "No PDF uploaded yet"}
+      </span>
+    </div>
+    <div class="rls-field">
+      <label for={`${uid}-pdf`}>{hasPdf ? "Replace private PDF (optional)" : "Upload private PDF"}</label>
+      <input id={`${uid}-pdf`} type="file" name="samplePdf" accept="application/pdf,.pdf" data-pdf-input />
+      <p class="rls-hint">
+        A private PDF is required before publishing. It stays attached unless you choose a
+        replacement file above. PDFs remain private and are delivered through signed links only.
+      </p>
+    </div>
+  </fieldset>
+
+  <fieldset class="rls-section rls-section--publish">
+    <legend class="rls-section__title">Save or publish</legend>
+    <p class="rls-hint">
       Publishing requires all fields, a confirmed consent date and an uploaded private PDF. You can
       publish directly, no separate draft step is needed.
     </p>

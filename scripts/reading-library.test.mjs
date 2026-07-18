@@ -715,7 +715,7 @@ run("only the three recognised reading types are offered in the form", () => {
   const form = readSource("src/components/ask-leilia/AuthorisedSampleForm.astro");
   // Rendered from the canonical allowlist, not free text or a hardcoded set.
   assert.match(form, /import \{ ASK_LEILIA_PUBLIC_READING_TYPE_LABELS \}/);
-  assert.match(form, /<select name="sampleReadingType" required>/);
+  assert.match(form, /<select[^>]*name="sampleReadingType"[^>]*required/);
   assert.match(form, /ASK_LEILIA_PUBLIC_READING_TYPE_LABELS\.map/);
   // The invalid category is never offered.
   assert.equal(form.includes("Twelve-Month Reading"), false);

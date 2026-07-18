@@ -38,7 +38,7 @@ const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
     <header class="rls-admin__head">
       <p class="rls-admin__kicker">Ask Leilia · Reading Library</p>
       <h1>Authorised sample readings</h1>
-      <p>
+      <p class="rls-admin__lede">
         Publish historical readings that were completed outside the current Ask Leilia order
         system. These are separate from request-linked readings and are never attached to a fake
         order. A reading can be saved as a draft or published directly once its private PDF is
@@ -233,60 +233,330 @@ const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
   });
 </script>
 
-<style>
+<style is:global>
+  /* ── Authorised sample admin (scoped by rls- prefix) ───────────────────── */
   .rls-admin {
-    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 5vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+    color: var(--tok-text-dark);
   }
   .rls-admin__head {
-    max-width: 60rem;
+    margin-bottom: 1.75rem;
   }
   .rls-admin__kicker {
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
     color: var(--tok-gold-deep);
+    margin: 0 0 0.35rem;
+  }
+  .rls-admin h1 {
+    font-family: var(--font-heading);
+    color: var(--tok-text-dark);
+    margin: 0 0 0.75rem;
+  }
+  .rls-admin__lede {
+    max-width: 62ch;
+    color: var(--tok-text-muted);
+    line-height: 1.6;
+    margin: 0 0 0.85rem;
   }
   .rls-admin__nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .rls-admin__nav a {
+    color: var(--tok-water);
+    font-weight: 600;
   }
   .rls-admin__notice {
     margin: 1rem 0 0;
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-control);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+    padding: 0.85rem 1.1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
+    background: color-mix(in srgb, var(--tok-gold) 14%, transparent);
+    color: var(--tok-text-dark);
   }
   .rls-admin__notice--error {
-    border-color: color-mix(in srgb, #b42318 35%, transparent);
+    border-color: color-mix(in srgb, #b42318 45%, transparent);
+    background: color-mix(in srgb, #b42318 12%, transparent);
     color: #7a271a;
   }
+
+  /* ── Section panels ────────────────────────────────────────────────────── */
   .rls-admin__create {
     margin-top: 1.5rem;
-    padding: 1.25rem 1.25rem 1.5rem;
-    border: 2px solid color-mix(in srgb, var(--tok-water) 40%, transparent);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--tok-border-light);
     border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-surface-reading) 82%, transparent);
+    background: var(--tok-surface-reading-soft);
+    box-shadow: var(--shadow-sm);
   }
-  .rls-admin__create h2,
-  .rls-admin__list h2 {
-    margin: 0 0 0.75rem;
-    color: var(--tok-water);
+  .rls-admin__create > h2,
+  .rls-admin__list > h2 {
+    font-family: var(--font-heading);
+    color: var(--tok-text-dark);
+    font-size: 1.4rem;
+    margin: 0 0 1.1rem;
   }
   .rls-admin__list {
     margin-top: 2.5rem;
   }
   .rls-admin__empty {
     color: var(--tok-text-muted);
+    padding: 1.25rem 0;
   }
 
-  /* Compact saved-reading cards */
-  .rls-card {
-    margin-top: 0.85rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+  /* ── Form layout ───────────────────────────────────────────────────────── */
+  .rls-sample-form {
+    display: grid;
+    gap: 1.5rem;
+  }
+  .rls-section {
+    margin: 0;
+    min-width: 0;
+    border: 1px solid var(--tok-border-light);
     border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--tok-surface-reading) 60%, transparent);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+  }
+  .rls-section--publish {
+    border-color: color-mix(in srgb, var(--tok-teal) 45%, transparent);
+    background: color-mix(in srgb, var(--tok-teal) 8%, transparent);
+  }
+  .rls-section__title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--tok-text-dark);
+    padding: 0 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .rls-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.15rem 1.35rem;
+  }
+  .rls-col-6 { grid-column: span 6; }
+  .rls-col-4 { grid-column: span 4; }
+  .rls-col-3 { grid-column: span 3; }
+  .rls-col-2 { grid-column: span 2; }
+
+  .rls-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+  .rls-field > label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+    line-height: 1.3;
+  }
+
+  .rls-sample-form input:not([type="checkbox"]):not([type="file"]),
+  .rls-sample-form select,
+  .rls-sample-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 0.65rem 0.75rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--tok-text-dark);
+    background: var(--tok-surface-reading);
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    transition:
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .rls-sample-form input:not([type="checkbox"]):not([type="file"]):focus-visible,
+  .rls-sample-form select:focus-visible,
+  .rls-sample-form textarea:focus-visible {
+    outline: none;
+    border-color: var(--tok-teal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tok-teal) 32%, transparent);
+  }
+  .rls-sample-form textarea {
+    resize: vertical;
+    line-height: 1.55;
+  }
+  .rls-ta--q { min-height: 100px; }
+  .rls-ta--scope { min-height: 100px; }
+  .rls-ta--note { min-height: 120px; }
+  .rls-ta--excerpt { min-height: 110px; }
+  .rls-ta--seo { min-height: 100px; }
+  .rls-ta--body { min-height: 500px; }
+  .rls-ta--images { min-height: 100px; }
+
+  .rls-sample-form input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--tok-text-muted);
+    background: var(--tok-surface-reading);
+    border: 1px dashed color-mix(in srgb, var(--tok-border-light) 100%, transparent);
+    border-radius: var(--radius-control);
+  }
+  .rls-sample-form input[type="file"]:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--tok-teal) 55%, transparent);
+    outline-offset: 2px;
+  }
+
+  /* ── Checkboxes ────────────────────────────────────────────────────────── */
+  .rls-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 0.25rem 0;
+  }
+  .rls-check {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .rls-check input[type="checkbox"] {
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: none;
+    margin: 0;
+    accent-color: var(--tok-teal);
+    cursor: pointer;
+  }
+  .rls-check label {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+    cursor: pointer;
+    line-height: 1.35;
+  }
+
+  /* ── Private PDF status ────────────────────────────────────────────────── */
+  .rls-pdf-status {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-control);
+    border: 1px solid transparent;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .rls-pdf-status__dot {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    flex: none;
+  }
+  .rls-pdf-status.is-attached {
+    background: color-mix(in srgb, #067647 14%, transparent);
+    border-color: color-mix(in srgb, #067647 40%, transparent);
+    color: #05603a;
+  }
+  .rls-pdf-status.is-attached .rls-pdf-status__dot { background: #067647; }
+  .rls-pdf-status.is-missing {
+    background: color-mix(in srgb, #b42318 12%, transparent);
+    border-color: color-mix(in srgb, #b42318 40%, transparent);
+    color: #7a271a;
+  }
+  .rls-pdf-status.is-missing .rls-pdf-status__dot { background: #b42318; }
+
+  .rls-hint {
+    margin: 0.6rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--tok-text-muted);
+  }
+  .rls-section--publish .rls-hint {
+    margin: 0 0 1rem;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────────────────────── */
+  .rls-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    align-items: center;
+  }
+  .rls-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .rls-btn:hover {
+    transform: translateY(-1px);
+  }
+  .rls-btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--tok-teal) 55%, transparent);
+    outline-offset: 2px;
+  }
+  .rls-btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+    transform: none;
+  }
+  .rls-btn--publish {
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+    font-size: 1rem;
+    padding-inline: 1.85rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .rls-btn--publish:hover {
+    background: color-mix(in srgb, var(--tok-btn-filled-bg) 86%, #000);
+  }
+  .rls-btn--draft,
+  .rls-btn--view {
+    background: transparent;
+    color: var(--tok-text-dark);
+    border-color: var(--tok-border-light);
+  }
+  .rls-btn--draft:hover,
+  .rls-btn--view:hover {
+    background: color-mix(in srgb, var(--tok-text-dark) 8%, transparent);
+  }
+  .rls-btn--edit {
+    background: var(--tok-btn-filled-bg);
+    color: var(--tok-btn-filled-fg);
+  }
+  .rls-btn--edit:hover {
+    background: color-mix(in srgb, var(--tok-btn-filled-bg) 86%, #000);
+  }
+
+  /* ── Saved reading cards ───────────────────────────────────────────────── */
+  .rls-card {
+    margin-top: 1rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-md);
+    background: var(--tok-surface-reading-soft);
+    box-shadow: var(--shadow-sm);
   }
   .rls-card__row {
     display: flex;
@@ -294,14 +564,20 @@ const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
     gap: 1rem;
     align-items: center;
     justify-content: space-between;
-    padding: 0.9rem 1.1rem;
+    padding: 1rem 1.25rem;
+  }
+  .rls-card__meta {
+    min-width: 0;
+    flex: 1 1 20rem;
   }
   .rls-card__title {
-    margin: 0 0 0.25rem;
-    font-size: 1.05rem;
+    margin: 0 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: var(--tok-text-dark);
   }
   .rls-card__facts {
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.55rem;
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
@@ -311,175 +587,157 @@ const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
   .rls-card__badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.45rem;
     margin: 0;
   }
   .rls-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
     font-size: 0.72rem;
     font-weight: 700;
-    padding: 0.2rem 0.55rem;
+    padding: 0.28rem 0.6rem;
     border-radius: 999px;
     border: 1px solid transparent;
   }
-  .rls-badge--published {
-    background: color-mix(in srgb, #067647 18%, transparent);
-    color: #067647;
+  .rls-badge--published,
+  .rls-badge--ok {
+    background: color-mix(in srgb, #067647 16%, transparent);
+    color: #05603a;
+    border-color: color-mix(in srgb, #067647 35%, transparent);
   }
   .rls-badge--draft {
     background: color-mix(in srgb, var(--tok-gold) 20%, transparent);
     color: var(--tok-gold-deep);
-  }
-  .rls-badge--ok {
-    background: color-mix(in srgb, #067647 14%, transparent);
-    color: #067647;
+    border-color: color-mix(in srgb, var(--tok-gold) 45%, transparent);
   }
   .rls-badge--warn {
     background: color-mix(in srgb, #b42318 14%, transparent);
-    color: #b42318;
+    color: #7a271a;
+    border-color: color-mix(in srgb, #b42318 35%, transparent);
   }
   .rls-card__actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
   }
   .rls-card__edit {
-    padding: 0 1.1rem 1.25rem;
-    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 20%, transparent);
+    padding: 0 1.25rem 1.5rem;
+    border-top: 1px solid var(--tok-border-light);
+  }
+  .rls-card__edit .rls-sample-form {
+    margin-top: 1.25rem;
   }
 
-  /* Buttons */
-  .rls-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.7rem 1.15rem;
-    border: 0;
-    border-radius: var(--radius-control);
-    font: inherit;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1.1;
-  }
-  .rls-btn:disabled {
-    opacity: 0.6;
-    cursor: progress;
-  }
-  .rls-btn--edit {
-    background: var(--tok-water);
-    color: #fff;
-  }
-  .rls-btn--view {
-    background: color-mix(in srgb, var(--tok-water) 16%, transparent);
-    color: var(--tok-water);
-    border: 1px solid color-mix(in srgb, var(--tok-water) 45%, transparent);
-  }
-  .rls-btn--draft {
-    background: color-mix(in srgb, var(--tok-gold) 24%, transparent);
-    color: var(--tok-gold-deep);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
-  }
-  .rls-btn--publish {
-    background: var(--tok-deep-ocean);
-    color: #fff;
-    font-size: 1.02rem;
-  }
-
-  /* Shared form styles (used by the imported component) */
-  .rls-sample-form {
-    display: grid;
-    gap: 0.9rem;
-    margin-top: 1rem;
-  }
-  .rls-grid {
-    display: grid;
-    gap: 0.85rem;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  }
-  .rls-sample-form label {
-    display: grid;
-    gap: 0.3rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-  .rls-checks {
-    display: grid;
-    gap: 0.5rem;
-    margin: 0.4rem 0;
-  }
-  .rls-check {
-    display: grid !important;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-  }
-  .rls-check input {
-    width: 1.15rem;
-    height: 1.15rem;
-    margin: 0;
-  }
-  .rls-fieldset {
-    display: grid;
-    gap: 0.75rem;
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
-    border-radius: var(--radius-md);
-    padding: 0.85rem 1rem 1rem;
-  }
-  .rls-fieldset--publish {
-    border-color: color-mix(in srgb, var(--tok-deep-ocean) 35%, transparent);
-    background: color-mix(in srgb, var(--tok-deep-ocean) 6%, transparent);
-  }
-  .rls-fieldset legend {
-    font-weight: 700;
-    padding: 0 0.4rem;
-  }
-  .rls-pdf-status {
-    margin: 0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--tok-water);
-  }
-  .rls-publish-hint {
-    margin: 0;
-    font-size: 0.83rem;
-    color: var(--tok-text-muted);
-  }
-  .rls-actions {
+  /* ── Result banner ─────────────────────────────────────────────────────── */
+  .rls-banner {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  .rls-sample-form input,
-  .rls-sample-form textarea {
-    width: 100%;
-    padding: 0.55rem 0.65rem;
-    border: 1px solid var(--tok-border-light);
-    border-radius: var(--radius-control);
-    font: inherit;
-  }
-
-  /* Result banner */
-  .rls-banner {
-    padding: 0.85rem 1rem;
-    border-radius: var(--radius-control);
+    align-items: center;
+    gap: 0.55rem;
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-md);
     font-weight: 600;
     border: 1px solid transparent;
   }
+  .rls-banner::before {
+    font-weight: 900;
+    font-size: 1.15rem;
+    line-height: 1;
+  }
   .rls-banner--success {
-    background: color-mix(in srgb, #067647 12%, transparent);
-    border-color: color-mix(in srgb, #067647 40%, transparent);
+    background: color-mix(in srgb, #067647 14%, transparent);
+    border-color: color-mix(in srgb, #067647 45%, transparent);
     color: #05603a;
   }
+  .rls-banner--success::before {
+    content: "\2713";
+  }
   .rls-banner--error {
-    background: color-mix(in srgb, #b42318 10%, transparent);
-    border-color: color-mix(in srgb, #b42318 40%, transparent);
+    background: color-mix(in srgb, #b42318 12%, transparent);
+    border-color: color-mix(in srgb, #b42318 45%, transparent);
     color: #7a271a;
   }
+  .rls-banner--error::before {
+    content: "\26A0";
+  }
   .rls-banner__link {
-    display: inline-block;
-    margin-left: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin-left: 0.25rem;
+    padding: 0.4rem 1rem;
     font-weight: 700;
-    text-decoration: underline;
+    text-decoration: none;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-control);
+    background: rgba(255, 255, 255, 0.35);
+    color: inherit;
+  }
+  .rls-banner__link:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .rls-banner__link:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--tok-teal) 55%, transparent);
+    outline-offset: 2px;
+  }
+
+  /* ── Responsive: stack to one column on tablet/mobile ──────────────────── */
+  @media (max-width: 768px) {
+    .rls-grid {
+      grid-template-columns: 1fr;
+    }
+    .rls-col-6,
+    .rls-col-4,
+    .rls-col-3,
+    .rls-col-2 {
+      grid-column: span 1;
+    }
+    .rls-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .rls-actions .rls-btn {
+      width: 100%;
+    }
+    .rls-card__row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .rls-card__actions {
+      width: 100%;
+    }
+    .rls-card__actions .rls-btn {
+      flex: 1 1 auto;
+    }
+  }
+
+  /* ── Dark mode: lift semantic status colours for contrast on navy ──────── */
+  @media (prefers-color-scheme: dark) {
+    .rls-admin__notice--error {
+      color: #ffb3aa;
+      background: color-mix(in srgb, #b42318 26%, transparent);
+    }
+    .rls-banner--success,
+    .rls-pdf-status.is-attached,
+    .rls-badge--published,
+    .rls-badge--ok {
+      color: #8ee6b0;
+      background: color-mix(in srgb, #067647 24%, transparent);
+      border-color: color-mix(in srgb, #8ee6b0 42%, transparent);
+    }
+    .rls-banner--error,
+    .rls-pdf-status.is-missing,
+    .rls-badge--warn {
+      color: #ffb3aa;
+      background: color-mix(in srgb, #b42318 28%, transparent);
+      border-color: color-mix(in srgb, #ffb3aa 40%, transparent);
+    }
+    .rls-banner__link {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .rls-banner__link:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
   }
 </style>
