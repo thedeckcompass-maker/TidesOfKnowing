@@ -426,7 +426,7 @@ def import_reading(stem: str, all_slugs: list[str]) -> ImportResult:
     overrides = {
         "shelly-wages-owed-reading": ("One Question", "One Question"),
         "hannah-rebrand-reading": ("In-Depth", "Custom"),
-        "shelley-twelve-month-reading": ("Personal Guidance", "Twelve Month Timeline"),
+        "shelly-twelve-month-reading": ("Personal Guidance", "Twelve Month Timeline"),
     }
     if slug in overrides:
         reading_type, spread = overrides[slug]
@@ -438,7 +438,7 @@ def import_reading(stem: str, all_slugs: list[str]) -> ImportResult:
     published = parse_date(paragraphs)
     body = build_full_markdown_body(to_markdown_body(paragraphs))
 
-    if re.search(r"\bfor (Hannah|Shelley|Shelly)\b", title, re.I):
+    if re.search(r"\bfor (Hannah|Shelly)\b", title, re.I):
         manual.append("Client first name appears in title; anonymise before setting publicationStatus to published.")
     if "Hi Hannah" in full_text:
         manual.append("Greeting uses client first name in body; anonymise before publication.")

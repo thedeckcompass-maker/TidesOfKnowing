@@ -14,6 +14,7 @@ import {
   getFeaturedSpreadImage,
   getPublishedLibraryPublicationBySlug,
   getPublishedLibraryPublications,
+  resolveLibraryPdfSource,
   getReadingBreadcrumbs,
   getReadingCanonicalUrl,
   getReadingJsonLd,
@@ -49,7 +50,10 @@ const canonical = getReadingCanonicalUrl(publication, base.href);
 const title = getReadingMetaTitle(publication);
 const crumbs = getReadingBreadcrumbs(publication);
 const jsonLd = getReadingJsonLd(publication, base.href);
-const pdfHref = publication.pdfStoragePath
+// Presence-only check; the resolved storage path stays server-side and is never
+// rendered. The link points at the signed-URL route, not the storage path.
+const pdfSource = await resolveLibraryPdfSource(service, publication.slug);
+const pdfHref = pdfSource
   ? new URL(`/api/reading-library/${publication.slug}/pdf`, base).href
   : null;
 const featuredSpreadSrc = getFeaturedSpreadImage(publication);

@@ -5,21 +5,46 @@ import type { ReadingLibraryPublication } from "./types";
 
 export const READING_LIBRARY_HUB_PATH = "/recent-client-readings/";
 
-export type { ReadingLibraryPublication, ReadingLibraryAdminDraft } from "./types";
+export type {
+  ReadingLibraryPublication,
+  ReadingLibraryAdminPublication,
+  ReadingLibraryAdminDraft,
+  AuthorisedSampleDraft,
+  ReadingLibrarySourceType,
+} from "./types";
+export {
+  READING_LIBRARY_SOURCE_TYPES,
+  isReadingLibrarySourceType,
+} from "./types";
 export {
   getPublishedLibraryPublications,
   getPublishedLibraryPublicationBySlug,
   getLibraryPublicationByRequestId,
   getLibraryPublicationsByRequestIds,
+  getAuthorisedSamplePublications,
+  getAuthorisedSampleById,
+  resolveLibraryPdfSource,
   upsertLibraryPublication,
+  upsertAuthorisedSample,
 } from "./queries";
 export {
   normalizeLibrarySlug,
   parseCommaSeparatedList,
   parseLineSeparatedList,
+  parseConsentConfirmedAt,
   readingLibraryDraftFromForm,
+  authorisedSampleDraftFromForm,
   validateReadingLibraryDraft,
+  validateAuthorisedSampleDraft,
 } from "./validation";
+export {
+  READING_LIBRARY_BUCKET,
+  READING_LIBRARY_SAMPLE_PREFIX,
+  readingLibrarySamplePathPrefix,
+  safeSampleSlug,
+  uploadAuthorisedSamplePdf,
+  removeAuthorisedSamplePdfObject,
+} from "./storage";
 
 export function getReadingLibraryPath(slug: string): string {
   const normalized = slug.replace(/^\/+|\/+$/g, "");

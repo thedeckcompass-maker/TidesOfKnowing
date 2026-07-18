@@ -1,0 +1,304 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { isAdminProfile } from "../../../lib/community/auth";
+import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
+import { ASK_LEILIA_PUBLIC_BRAND } from "../../../data/askLeilia";
+import {
+  getAuthorisedSamplePublications,
+  type ReadingLibraryAdminPublication,
+} from "../../../lib/readingLibrary";
+
+export const prerender = false;
+
+if (!Astro.locals.user) {
+  return Astro.redirect("/auth/register/", 303);
+}
+
+if (!isAdminProfile(Astro.locals.profile)) {
+  return Astro.redirect("/ask-leilia/", 302);
+}
+
+const service = createCommunityServiceClient(Astro.locals);
+const samples = await getAuthorisedSamplePublications(service);
+
+const saved = Astro.url.searchParams.get("sample_saved") === "1";
+const errorMessage = Astro.url.searchParams.get("sample_error")?.trim() ?? "";
+
+function toDateTimeLocal(value: Date | null): string {
+  if (!value) return "";
+  // yyyy-MM-ddTHH:mm in UTC (admin-only convenience default).
+  return value.toISOString().slice(0, 16);
+}
+
+type SampleFormModel = {
+  action: string;
+  heading: string;
+  sample: ReadingLibraryAdminPublication | null;
+};
+
+const createModel: SampleFormModel = {
+  action: "/api/ask-leilia/reading-library/samples/new/",
+  heading: "Add an authorised sample reading",
+  sample: null,
+};
+
+const editModels: SampleFormModel[] = samples.map((sample) => ({
+  action: `/api/ask-leilia/reading-library/samples/${sample.id}/`,
+  heading: sample.title,
+  sample,
+}));
+---
+
+<BaseLayout
+  title="Authorised Sample Readings | Administration"
+  description="Create and edit authorised historical sample readings for the Reading Library."
+  metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
+  metaRobots="noindex, nofollow"
+>
+  <main class="rls-admin page-inner">
+    <header class="rls-admin__head">
+      <p class="rls-admin__kicker">Ask Leilia · Reading Library</p>
+      <h1>Authorised sample readings</h1>
+      <p>
+        Publish historical readings that were completed outside the current Ask Leilia order
+        system. These are separate from request-linked readings and are never attached to a fake
+        order. A sample can only be published once its private PDF is uploaded and consent has been
+        confirmed.
+      </p>
+      <p class="rls-admin__nav">
+        <a href="/ask-leilia/admin/">Reading requests</a>
+        <span aria-hidden="true">·</span>
+        <a href="/recent-client-readings/">Public Reading Library</a>
+      </p>
+      {saved ? <p class="rls-admin__notice" role="status">Authorised sample saved.</p> : null}
+      {
+        errorMessage ? (
+          <p class="rls-admin__notice rls-admin__notice--error" role="alert">{errorMessage}</p>
+        ) : null
+      }
+    </header>
+
+    {
+      [createModel, ...editModels].map((model) => (
+        <section class="rls-admin__panel" aria-label={model.heading}>
+          <h2>{model.heading}</h2>
+          {model.sample ? (
+            <p class="rls-admin__meta">
+              {model.sample.isPublished ? (
+                <span>
+                  Published ·{" "}
+                  <a href={`/recent-client-readings/${model.sample.slug}/`}>View in library</a>
+                </span>
+              ) : (
+                <span>Draft (not published)</span>
+              )}
+              <span aria-hidden="true"> · </span>
+              <span>{model.sample.samplePdfStoragePath ? "Private PDF uploaded" : "No PDF uploaded"}</span>
+              <span aria-hidden="true"> · </span>
+              <span>
+                {model.sample.sampleConsentConfirmedAt ? "Consent confirmed" : "Consent not confirmed"}
+              </span>
+            </p>
+          ) : null}
+
+          <form class="rls-admin__form" method="post" action={model.action} enctype="multipart/form-data">
+            <div class="rls-admin__grid">
+              <label>
+                Title
+                <input type="text" name="libraryTitle" required minlength="4" maxlength="200" value={model.sample?.title ?? ""} />
+              </label>
+              <label>
+                URL slug
+                <input
+                  type="text"
+                  name="librarySlug"
+                  required
+                  pattern="[a-z0-9]+(?:-[a-z0-9]+)*"
+                  value={model.sample?.slug ?? ""}
+                />
+              </label>
+              <label>
+                Reading type
+                <input type="text" name="sampleReadingType" required minlength="2" maxlength="80" value={model.sample?.readingType ?? ""} />
+              </label>
+              <label>
+                Spread used
+                <input type="text" name="librarySpreadUsed" value={model.sample?.spreadUsed ?? ""} />
+              </label>
+            </div>
+
+            <label>
+              Original question
+              <textarea name="sampleQuestion" rows="2" required minlength="10" maxlength="2000">{model.sample?.question ?? ""}</textarea>
+            </label>
+
+            <fieldset class="rls-admin__fieldset">
+              <legend>Client and consent</legend>
+              <div class="rls-admin__grid">
+                <label>
+                  Client display name
+                  <input type="text" name="sampleClientDisplayName" maxlength="80" value={model.sample?.sampleClientDisplayName ?? ""} />
+                </label>
+                <label class="rls-admin__check">
+                  <input type="checkbox" name="sampleDisplayNamePublic" checked={model.sample?.sampleDisplayNamePublic ?? false} />
+                  May display the client name publicly
+                </label>
+                <label class="rls-admin__check">
+                  <input type="checkbox" name="sampleConsentConfirmed" checked={Boolean(model.sample?.sampleConsentConfirmedAt)} />
+                  Consent confirmed
+                </label>
+                <label>
+                  Consent confirmed date/time
+                  <input type="datetime-local" name="sampleConsentConfirmedAt" value={toDateTimeLocal(model.sample?.sampleConsentConfirmedAt ?? null)} />
+                </label>
+                <label>
+                  Consent scope / basis
+                  <input type="text" name="sampleConsentScope" maxlength="200" value={model.sample?.sampleConsentScope ?? ""} />
+                </label>
+              </div>
+              <label>
+                Internal consent note (never shown publicly)
+                <textarea name="sampleConsentNote" rows="2" maxlength="2000">{model.sample?.sampleConsentNote ?? ""}</textarea>
+              </label>
+            </fieldset>
+
+            <label>
+              Short excerpt (summary)
+              <textarea name="librarySummary" rows="3" required minlength="20" maxlength="500">{model.sample?.summary ?? ""}</textarea>
+            </label>
+            <label>
+              SEO description
+              <textarea name="librarySeoDescription" rows="2" required minlength="40" maxlength="320">{model.sample?.seoDescription ?? ""}</textarea>
+            </label>
+            <label>
+              Reading body (Markdown)
+              <textarea name="libraryBody" rows="10" required minlength="100">{model.sample?.body ?? ""}</textarea>
+            </label>
+
+            <div class="rls-admin__grid">
+              <label>
+                Primary life areas (comma-separated)
+                <input type="text" name="libraryLifeAreas" value={model.sample?.lifeAreas.join(", ") ?? ""} />
+              </label>
+              <label>
+                Primary cards featured (comma-separated)
+                <input type="text" name="libraryPrimaryCards" value={model.sample?.primaryCards.join(", ") ?? ""} />
+              </label>
+            </div>
+
+            <label>
+              Spread image paths (one per line, under public/)
+              <textarea name="librarySpreadImages" rows="3">{model.sample?.spreadImagePaths.join("\n") ?? ""}</textarea>
+            </label>
+
+            <label>
+              Private sample PDF (stored privately; never placed under public/)
+              <input type="file" name="samplePdf" accept="application/pdf,.pdf" />
+            </label>
+
+            <label class="rls-admin__check">
+              <input type="checkbox" name="libraryPublish" checked={model.sample?.isPublished ?? false} />
+              Publish to Reading Library (requires uploaded PDF and confirmed consent)
+            </label>
+
+            <div class="rls-admin__actions">
+              <button type="submit">{model.sample ? "Save sample" : "Create draft"}</button>
+            </div>
+          </form>
+        </section>
+      ))
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .rls-admin {
+    padding: clamp(1.5rem, 5vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+  }
+  .rls-admin__head {
+    max-width: 60rem;
+  }
+  .rls-admin__kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.72rem;
+    color: var(--tok-gold-deep);
+  }
+  .rls-admin__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .rls-admin__notice {
+    margin: 1rem 0 0;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-control);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+  .rls-admin__notice--error {
+    border-color: color-mix(in srgb, #b42318 35%, transparent);
+    color: #7a271a;
+  }
+  .rls-admin__panel {
+    margin-top: 1.5rem;
+    padding: 1.15rem 1.15rem 1.4rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-surface-reading) 78%, transparent);
+  }
+  .rls-admin__panel h2 {
+    margin: 0 0 0.35rem;
+    color: var(--tok-water);
+  }
+  .rls-admin__meta {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    color: var(--tok-text-muted);
+  }
+  .rls-admin__form {
+    display: grid;
+    gap: 0.85rem;
+  }
+  .rls-admin__grid {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+  .rls-admin__form label {
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .rls-admin__check {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+  }
+  .rls-admin__fieldset {
+    display: grid;
+    gap: 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem 1rem;
+  }
+  .rls-admin__form input,
+  .rls-admin__form textarea {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--tok-border-light);
+    border-radius: var(--radius-control);
+    font: inherit;
+  }
+  .rls-admin__actions button {
+    padding: 0.6rem 1rem;
+    border: 0;
+    border-radius: var(--radius-control);
+    background: var(--tok-deep-ocean);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+  }
+</style>
