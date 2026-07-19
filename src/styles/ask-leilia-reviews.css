@@ -273,6 +273,9 @@
 
 .ask-reviews {
   --ask-reviews-gap: 1rem;
+  /* JS sets --ask-reviews-card-width from measured viewport + gap (see carouselGeometry). */
+  --ask-reviews-per-page: 1;
+  --ask-reviews-card-width: 100%;
   /* Dark branded section chrome (stable; not remapped reading-surface tokens) */
   --ask-reviews-section-heading: var(--tok-text-light-strong);
   --ask-reviews-section-lede: color-mix(in srgb, var(--tok-text-light-soft) 88%, transparent);
@@ -404,9 +407,10 @@
   flex-direction: column;
   gap: 0.4rem;
   box-sizing: border-box;
-  flex: 0 0 100cqi;
-  width: 100cqi;
-  max-width: 100cqi;
+  /* Width comes from measured viewport via --ask-reviews-card-width (JS). */
+  flex: 0 0 var(--ask-reviews-card-width);
+  width: var(--ask-reviews-card-width);
+  max-width: var(--ask-reviews-card-width);
   min-width: 0;
   min-height: 100%;
   padding: 1.05rem 1.1rem 1.1rem;
@@ -415,22 +419,6 @@
   background: var(--ask-review-card-surface);
   box-shadow: none;
   color: var(--ask-review-card-ink);
-}
-
-@container ask-reviews (min-width: 720px) {
-  .ask-reviews__card {
-    flex-basis: calc((100cqi - var(--ask-reviews-gap)) / 2);
-    width: calc((100cqi - var(--ask-reviews-gap)) / 2);
-    max-width: calc((100cqi - var(--ask-reviews-gap)) / 2);
-  }
-}
-
-@container ask-reviews (min-width: 1080px) {
-  .ask-reviews__card {
-    flex-basis: calc((100cqi - 2 * var(--ask-reviews-gap)) / 3);
-    width: calc((100cqi - 2 * var(--ask-reviews-gap)) / 3);
-    max-width: calc((100cqi - 2 * var(--ask-reviews-gap)) / 3);
-  }
 }
 
 .ask-reviews__rating {

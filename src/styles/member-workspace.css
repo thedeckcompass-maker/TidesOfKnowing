@@ -8,10 +8,6 @@
   :global(body.tok-body--member-workspace) {
     --tok-header-height: 3.35rem;
   }
-
-  :global(body.member-workspace-nav-open) {
-    overflow-x: clip;
-  }
 }
 
 :global(body.tok-body--member-workspace #main-content) {
@@ -304,21 +300,38 @@
     position: relative;
   }
 
+  /*
+   * Centred inset panel (not full page-inner width).
+   * On narrow phones: width tracks the content column.
+   * On foldable/tablet widths: capped so the drawer does not become an
+   * edge-to-edge slab with labels hard against the left.
+   */
   .member-workspace-header__nav {
+    --mwh-nav-gutter: 1.15rem;
+    --mwh-nav-max: 22rem;
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: auto;
     z-index: calc(var(--z-header) + 1);
+    box-sizing: border-box;
+    width: min(var(--mwh-nav-max), 100%);
+    max-width: 100%;
+    transform: translateX(-50%);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
     margin: 0;
-    padding: 0.35rem 0 0.55rem;
+    padding: 0.35rem max(var(--mwh-nav-gutter), env(safe-area-inset-right, 0px)) 0.55rem
+      max(var(--mwh-nav-gutter), env(safe-area-inset-left, 0px));
     border-top: 1px solid var(--mwh-border);
     background: var(--mwh-bg);
     box-shadow: var(--shadow-sys-md);
+    max-height: calc(100dvh - var(--tok-header-height) - 0.5rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .member-workspace-header__nav.member-workspace-header__nav--open {
@@ -329,6 +342,9 @@
   .member-workspace-header__nav button,
   .member-workspace-header__placeholder {
     display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
     padding: 0.62rem 0;
     border-top: 1px solid color-mix(in srgb, #0b1f3a 8%, transparent);
     text-align: left;

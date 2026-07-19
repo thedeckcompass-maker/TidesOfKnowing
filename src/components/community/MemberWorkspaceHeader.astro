@@ -79,15 +79,26 @@ const { section, isAdmin } = Astro.props;
     if (toggle.dataset.bound === "true") return;
     toggle.dataset.bound = "true";
 
-    function setOpen(isOpen) {
-      nav.classList.toggle("member-workspace-header__nav--open", isOpen);
-      document.body.classList.toggle("member-workspace-nav-open", isOpen);
-      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      toggle.setAttribute("aria-label", isOpen ? "Close member navigation" : "Open member navigation");
+    function isOpen() {
+      return nav.classList.contains("member-workspace-header__nav--open");
+    }
+
+    function setOpen(nextOpen) {
+      const open = Boolean(nextOpen);
+      nav.classList.toggle("member-workspace-header__nav--open", open);
+      document.body.classList.toggle("member-workspace-nav-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute(
+        "aria-label",
+        open ? "Close member navigation" : "Open member navigation",
+      );
+      if (!open && document.activeElement && nav.contains(document.activeElement)) {
+        toggle.focus({ preventScroll: true });
+      }
     }
 
     toggle.addEventListener("click", () => {
-      setOpen(!nav.classList.contains("member-workspace-header__nav--open"));
+      setOpen(!isOpen());
     });
 
     nav.addEventListener("click", (event) => {
@@ -98,12 +109,20 @@ const { section, isAdmin } = Astro.props;
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape" && isOpen()) {
+        setOpen(false);
+        toggle.focus({ preventScroll: true });
+      }
     });
 
-    window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 901px)").matches) setOpen(false);
-    });
+    function onViewportChange() {
+      if (window.matchMedia("(min-width: 901px)").matches && isOpen()) {
+        setOpen(false);
+      }
+    }
+
+    window.addEventListener("resize", onViewportChange);
+    window.addEventListener("orientationchange", onViewportChange);
   }
 
   initMemberWorkspaceHeader();

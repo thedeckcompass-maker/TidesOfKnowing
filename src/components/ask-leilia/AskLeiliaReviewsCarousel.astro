@@ -205,24 +205,14 @@ function reviewBodyParagraphs(body: string): string[] {
         isAskLeiliaDialogOpen,
         openAskLeiliaDialog,
       } from "../../scripts/askLeiliaDialog";
-
-      /** Visible cards per viewport width. */
-      function askReviewsPerPage(width) {
-        if (width >= 1080) return 3;
-        if (width >= 720) return 2;
-        return 1;
-      }
-
-      function askReviewsPageCount(cardCount, perPage) {
-        if (cardCount < 1 || perPage < 1) return 0;
-        return Math.ceil(cardCount / perPage);
-      }
-
-      /** Wrapping page step for Previous / Next. */
-      function askReviewsWrapPage(page, delta, pageCount) {
-        if (pageCount < 1) return 0;
-        return (((page + delta) % pageCount) + pageCount) % pageCount;
-      }
+      import {
+        askReviewsCardWidth,
+        askReviewsClampPage,
+        askReviewsPageCount,
+        askReviewsPageOffset,
+        askReviewsPerPage,
+        askReviewsWrapPage,
+      } from "../../lib/ask-leilia/reviews/carouselGeometry";
 
       function initAskReviewsDialog(root) {
         if (!(root instanceof HTMLElement) || root.dataset.dialogBound === "true") return;
@@ -347,13 +337,30 @@ function reviewBodyParagraphs(body: string): string[] {
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let page = 0;
         let dots = [];
+        let layout = { perPage: 1, pageCount: 1, viewportWidth: 0, gap: 0, cardWidth: 0 };
 
-        function perPage() {
-          return askReviewsPerPage(viewport.clientWidth || window.innerWidth);
+        function readGap() {
+          const styles = window.getComputedStyle(track);
+          const raw = styles.columnGap || styles.gap || "0";
+          const parsed = Number.parseFloat(raw);
+          return Number.isFinite(parsed) ? parsed : 0;
         }
 
-        function pageCount() {
-          return askReviewsPageCount(cards.length, perPage());
+        function measureLayout() {
+          const viewportWidth = viewport.clientWidth;
+          const gap = readGap();
+          const perPage = askReviewsPerPage(viewportWidth, gap);
+          const cardWidth = askReviewsCardWidth(viewportWidth, perPage, gap);
+          const pages = askReviewsPageCount(cards.length, perPage);
+          layout = { perPage, pageCount: pages, viewportWidth, gap, cardWidth };
+
+          root.style.setProperty("--ask-reviews-per-page", String(perPage));
+          root.style.setProperty(
+            "--ask-reviews-card-width",
+            cardWidth > 0 ? `${cardWidth}px` : "100%",
+          );
+
+          return layout;
         }
 
         function rebuildDots() {
@@ -361,7 +368,7 @@ function reviewBodyParagraphs(body: string): string[] {
             dots = [];
             return;
           }
-          const pages = pageCount();
+          const pages = layout.pageCount;
           dotsHost.replaceChildren();
           dots = [];
           if (pages <= 1) {
@@ -382,10 +389,37 @@ function reviewBodyParagraphs(body: string): string[] {
           }
         }
 
+        function syncCardVisibility() {
+          const start = page * layout.perPage;
+          const end = start + layout.perPage;
+          const active = document.activeElement;
+          cards.forEach((card, index) => {
+            if (!(card instanceof HTMLElement)) return;
+            const onPage = index >= start && index < end;
+            if (onPage) {
+              card.removeAttribute("aria-hidden");
+              card.inert = false;
+            } else {
+              card.setAttribute("aria-hidden", "true");
+              card.inert = true;
+            }
+          });
+          // Keep keyboard focus out of off-page (inert) cards without chasing resize.
+          if (
+            active instanceof HTMLElement &&
+            root.contains(active) &&
+            active.closest("[data-ask-reviews-card][aria-hidden='true']")
+          ) {
+            track.focus({ preventScroll: true });
+          }
+        }
+
         function updateUi() {
-          const pages = pageCount();
-          page = askReviewsWrapPage(page, 0, pages);
-          const offset = pages <= 1 ? 0 : page * viewport.clientWidth;
+          page = askReviewsClampPage(page, layout.pageCount);
+          const offset =
+            layout.pageCount <= 1
+              ? 0
+              : askReviewsPageOffset(page, layout.viewportWidth, layout.gap);
           track.style.transform = `translate3d(-${offset}px, 0, 0)`;
           track.style.transition = reduceMotion ? "none" : "";
 
@@ -396,29 +430,36 @@ function reviewBodyParagraphs(body: string): string[] {
             dot.classList.toggle("ask-reviews__dot--active", active);
           });
 
-          const navigate = pages > 1;
+          const navigate = layout.pageCount > 1;
           if (controls instanceof HTMLElement) controls.hidden = !navigate;
           if (dotsHost instanceof HTMLElement) dotsHost.hidden = !navigate;
 
+          syncCardVisibility();
+
           if (live instanceof HTMLElement) {
-            if (pages <= 1) {
+            if (layout.pageCount <= 1) {
               live.textContent = `${cards.length} review${cards.length === 1 ? "" : "s"}`;
             } else {
-              live.textContent = `Reviews page ${page + 1} of ${pages}`;
+              live.textContent = `Reviews page ${page + 1} of ${layout.pageCount}`;
             }
           }
         }
 
+        function refreshLayout({ rebuild = true } = {}) {
+          measureLayout();
+          page = askReviewsClampPage(page, layout.pageCount);
+          if (rebuild) rebuildDots();
+          updateUi();
+        }
+
         function goToPage(nextPage) {
-          const pages = pageCount();
-          page = askReviewsWrapPage(nextPage, 0, pages);
+          page = askReviewsClampPage(nextPage, layout.pageCount);
           updateUi();
         }
 
         function step(delta) {
-          const pages = pageCount();
-          if (pages <= 1) return;
-          page = askReviewsWrapPage(page, delta, pages);
+          if (layout.pageCount <= 1) return;
+          page = askReviewsWrapPage(page, delta, layout.pageCount);
           updateUi();
         }
 
@@ -440,25 +481,19 @@ function reviewBodyParagraphs(body: string): string[] {
         function onResize() {
           window.clearTimeout(resizeTimer);
           resizeTimer = window.setTimeout(() => {
-            const previousPages = dots.length || pageCount();
-            rebuildDots();
-            if (page >= pageCount()) page = Math.max(0, pageCount() - 1);
-            // Keep relative position when page count changes with viewport.
-            if (previousPages > 0 && pageCount() !== previousPages) {
-              page = Math.min(page, Math.max(0, pageCount() - 1));
-            }
-            updateUi();
+            refreshLayout({ rebuild: true });
           }, 80);
         }
 
         window.addEventListener("resize", onResize);
+        window.addEventListener("orientationchange", onResize);
+        window.addEventListener("pageshow", onResize);
         if (typeof ResizeObserver !== "undefined") {
           const observer = new ResizeObserver(() => onResize());
           observer.observe(viewport);
         }
 
-        rebuildDots();
-        updateUi();
+        refreshLayout({ rebuild: true });
       }
 
       function boot() {

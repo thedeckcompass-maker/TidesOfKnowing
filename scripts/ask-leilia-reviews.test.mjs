@@ -731,10 +731,32 @@ run("carousel renders review text in SSR HTML and hides controls for one card", 
   assert.equal(source.includes("Show less"), false);
 });
 
-/** Mirrors AskLeiliaReviewsCarousel.astro page helpers. */
-function askReviewsPerPage(width) {
-  if (width >= 1080) return 3;
-  if (width >= 720) return 2;
+/**
+ * Mirrors src/lib/ask-leilia/reviews/carouselGeometry.ts
+ * (self-contained; Node runs this file without a TS loader).
+ */
+const ASK_REVIEWS_MIN_CARD_WIDTH = 320;
+const ASK_REVIEWS_MAX_PER_PAGE = 3;
+
+function askReviewsCardWidth(viewportWidth, perPage, gap) {
+  if (!(viewportWidth > 0) || perPage < 1) return 0;
+  const totalGaps = Math.max(0, perPage - 1) * Math.max(0, gap);
+  return Math.max(0, (viewportWidth - totalGaps) / perPage);
+}
+
+function askReviewsPerPage(
+  viewportWidth,
+  gap,
+  minCardWidth = ASK_REVIEWS_MIN_CARD_WIDTH,
+) {
+  if (!(viewportWidth > 0)) return 1;
+  const safeGap = Math.max(0, gap);
+  const safeMin = Math.max(1, minCardWidth);
+  for (let n = ASK_REVIEWS_MAX_PER_PAGE; n >= 1; n -= 1) {
+    if (askReviewsCardWidth(viewportWidth, n, safeGap) >= safeMin - 0.01) {
+      return n;
+    }
+  }
   return 1;
 }
 
@@ -743,9 +765,24 @@ function askReviewsPageCount(cardCount, perPage) {
   return Math.ceil(cardCount / perPage);
 }
 
+function askReviewsPageStride(viewportWidth, gap) {
+  if (!(viewportWidth > 0)) return 0;
+  return viewportWidth + Math.max(0, gap);
+}
+
+function askReviewsPageOffset(page, viewportWidth, gap) {
+  if (page <= 0) return 0;
+  return page * askReviewsPageStride(viewportWidth, gap);
+}
+
 function askReviewsWrapPage(page, delta, pageCount) {
   if (pageCount < 1) return 0;
   return (((page + delta) % pageCount) + pageCount) % pageCount;
+}
+
+function askReviewsClampPage(page, pageCount) {
+  if (pageCount < 1) return 0;
+  return Math.min(Math.max(0, page), pageCount - 1);
 }
 
 run("carousel arrow controls are type=button and initialise from the carousel root", () => {
@@ -766,26 +803,110 @@ run("carousel arrow controls are type=button and initialise from the carousel ro
   assert.match(carouselInit, /root\.querySelector\(\s*["']\[data-ask-reviews-next\]["']\s*\)/);
   assert.match(carouselInit, /askReviewsWrapPage/);
   assert.match(carouselInit, /askReviewsPerPage/);
+  assert.match(carouselInit, /askReviewsPageOffset/);
+  assert.match(carouselInit, /askReviewsClampPage/);
   assert.match(carouselInit, /rebuildDots/);
   assert.match(carouselInit, /translate3d/);
+  assert.match(carouselInit, /ResizeObserver/);
+  assert.match(carouselInit, /orientationchange/);
+  assert.match(carouselInit, /pageshow/);
+  assert.match(carouselInit, /--ask-reviews-card-width/);
+  assert.match(source, /carouselGeometry/);
+  assert.equal(carouselInit.includes("page * viewport.clientWidth"), false);
 });
 
-run("carousel pages by responsive visible-card count and wraps", () => {
-  assert.equal(askReviewsPerPage(390), 1);
-  assert.equal(askReviewsPerPage(800), 2);
-  assert.equal(askReviewsPerPage(1200), 3);
+run("carousel resolves 1/2/3 complete cards from measured width and gaps", () => {
+  const gap = 16;
 
+  // 1-card: narrow / foldable intermediate widths
+  assert.equal(askReviewsPerPage(360, gap), 1);
+  assert.equal(askReviewsPerPage(600, gap), 1);
+  assert.equal(askReviewsPerPage(650, gap), 1);
+
+  // 2-card: tablet / small desktop when both cards stay >= min width
+  assert.equal(askReviewsPerPage(680, gap), 2);
+  assert.equal(askReviewsPerPage(800, gap), 2);
+  assert.equal(askReviewsPerPage(900, gap), 2);
+
+  // 3-card: large desktop
+  assert.equal(askReviewsPerPage(992, gap), 3);
+  assert.equal(askReviewsPerPage(1160, gap), 3);
+  assert.equal(askReviewsPerPage(1400, gap), 3);
+
+  assert.equal(askReviewsCardWidth(800, 2, gap), (800 - gap) / 2);
+  assert.equal(askReviewsCardWidth(1160, 3, gap), (1160 - 2 * gap) / 3);
+  assert.equal(askReviewsCardWidth(360, 1, gap), 360);
+});
+
+run("carousel page count recalculates when visible-card count changes", () => {
   assert.equal(askReviewsPageCount(6, 3), 2);
   assert.equal(askReviewsPageCount(6, 2), 3);
   assert.equal(askReviewsPageCount(6, 1), 6);
   assert.equal(askReviewsPageCount(1, 3), 1);
+  assert.equal(askReviewsPageCount(5, 2), 3);
+  assert.equal(askReviewsPageCount(0, 2), 0);
+});
 
+run("carousel clamps current page after resize page-count changes", () => {
+  assert.equal(askReviewsClampPage(5, 3), 2);
+  assert.equal(askReviewsClampPage(2, 3), 2);
+  assert.equal(askReviewsClampPage(0, 1), 0);
+  assert.equal(askReviewsClampPage(-1, 4), 0);
+  assert.equal(askReviewsClampPage(3, 0), 0);
+
+  // Desktop (3/page, 2 pages) → narrow (1/page, 6 pages): page stays if still valid
+  assert.equal(askReviewsClampPage(1, askReviewsPageCount(6, 1)), 1);
+  // Wide page index becomes invalid when collapsing to fewer pages
+  assert.equal(askReviewsClampPage(2, askReviewsPageCount(6, 3)), 1);
+});
+
+run("carousel page translation includes inter-card gaps (no peek)", () => {
+  const gap = 16;
+  const viewport = 800;
+  // Next page starts after N cards AND N gaps (gap after the last visible card).
+  assert.equal(askReviewsPageStride(viewport, gap), viewport + gap);
+  assert.equal(askReviewsPageOffset(0, viewport, gap), 0);
+  assert.equal(askReviewsPageOffset(1, viewport, gap), 816);
+  assert.equal(askReviewsPageOffset(2, viewport, gap), 1632);
+
+  const perPage = 2;
+  const cardWidth = askReviewsCardWidth(viewport, perPage, gap);
+  const startOfNextPage = perPage * (cardWidth + gap);
+  assert.equal(startOfNextPage, askReviewsPageOffset(1, viewport, gap));
+});
+
+run("carousel Previous and Next still wrap", () => {
   assert.equal(askReviewsWrapPage(0, 1, 2), 1);
   assert.equal(askReviewsWrapPage(1, 1, 2), 0);
   assert.equal(askReviewsWrapPage(0, -1, 2), 1);
   assert.equal(askReviewsWrapPage(1, -1, 2), 0);
   assert.equal(askReviewsWrapPage(0, 1, 1), 0);
   assert.equal(askReviewsWrapPage(3, 1, 0), 0);
+  assert.equal(askReviewsWrapPage(2, 1, 3), 0);
+  assert.equal(askReviewsWrapPage(0, -1, 3), 2);
+});
+
+run("carousel geometry module is the shared source of truth", () => {
+  const geometry = readFileSync(
+    join(REPO_ROOT, "src/lib/ask-leilia/reviews/carouselGeometry.ts"),
+    "utf8",
+  );
+  assert.match(geometry, /ASK_REVIEWS_MIN_CARD_WIDTH\s*=\s*320/);
+  assert.match(geometry, /ASK_REVIEWS_MAX_PER_PAGE\s*=\s*3/);
+  assert.match(geometry, /export function askReviewsPerPage/);
+  assert.match(geometry, /export function askReviewsPageOffset/);
+  assert.match(geometry, /viewportWidth \+ Math\.max\(0, gap\)/);
+  assert.match(geometry, /export function askReviewsClampPage/);
+
+  const source = readFileSync(
+    join(REPO_ROOT, "src/components/ask-leilia/AskLeiliaReviewsCarousel.astro"),
+    "utf8",
+  );
+  assert.match(source, /from ["'].*carouselGeometry["']/);
+  assert.match(source, /refreshLayout/);
+  assert.match(source, /measureLayout/);
+  assert.match(source, /aria-hidden/);
+  assert.match(source, /\.inert/);
 });
 
 run("carousel verification badge and continue-reading stay data-driven", () => {
@@ -810,7 +931,10 @@ run("review carousel CSS clamps long quotes with equal card stretch", () => {
   assert.match(css, /\.ask-reviews__more/);
   assert.match(css, /height:\s*calc\(1\.6em \* 7\)/);
   assert.match(css, /border-radius:\s*50%/);
-  assert.match(css, /100cqi/);
+  assert.match(css, /--ask-reviews-card-width/);
+  assert.match(css, /flex:\s*0 0 var\(--ask-reviews-card-width\)/);
+  assert.match(css, /overflow:\s*hidden/);
+  assert.equal(css.includes("100cqi"), false);
   assert.equal(css.includes("Show previous reviews"), false);
 });
 
