@@ -77,6 +77,34 @@
   color: var(--tok-text-dark);
 }
 
+.ask-leilia-hero__actions {
+  margin: 0.35rem 0 0;
+}
+
+.ask-leilia-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-control);
+  background: var(--tok-btn-filled-bg);
+  color: var(--tok-btn-filled-fg);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.ask-leilia-hero__cta:hover {
+  opacity: 0.9;
+}
+
+.ask-leilia-hero__cta:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 3px;
+}
+
 .ask-leilia-hero__trust {
   display: grid;
   gap: 0.5rem;
@@ -118,6 +146,7 @@
 
 .ask-leilia-pricing {
   overflow-x: clip;
+  scroll-margin-top: var(--tok-scroll-anchor-offset);
 }
 
 .ask-leilia-pricing__heading,
@@ -358,6 +387,370 @@
   }
 }
 
+.ask-leilia-pricing__head {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.ask-leilia-pricing__descriptor {
+  margin: 0;
+  font-size: var(--tok-type-meta);
+  font-weight: 700;
+  letter-spacing: var(--tok-letter-upper);
+  text-transform: uppercase;
+  color: var(--tok-gold-deep);
+}
+
+.ask-leilia-pricing__positioning {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-pricing__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.ask-leilia-pricing__actions .ask-leilia-pricing__cta {
+  margin-top: 0;
+}
+
+.ask-leilia-pricing__info-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--tok-water);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ask-leilia-pricing__info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid color-mix(in srgb, var(--tok-water) 55%, transparent);
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ask-leilia-pricing__info-toggle:hover .ask-leilia-pricing__info-icon {
+  border-color: var(--tok-water);
+  background: color-mix(in srgb, var(--tok-water) 8%, transparent);
+}
+
+.ask-leilia-pricing__info-toggle:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 2px;
+}
+
+.ask-leilia-pricing__info-toggle[aria-expanded="true"] .ask-leilia-pricing__info-icon {
+  border-color: var(--tok-water);
+  background: color-mix(in srgb, var(--tok-water) 12%, transparent);
+}
+
+.ask-leilia-pricing__info-panel {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, transparent);
+}
+
+.ask-leilia-pricing__info-panel[hidden] {
+  display: none;
+}
+
+.ask-leilia-pricing__info-panel p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--tok-text-dark);
+}
+
+/* Restrained signature emphasis for Personal Guidance Reading; same design system. */
+.ask-leilia-pricing__card--signature {
+  border-color: color-mix(in srgb, var(--tok-gold) 60%, transparent);
+  box-shadow: var(--shadow-md);
+}
+
+.ask-leilia-proof,
+.ask-leilia-reassure,
+.ask-leilia-samples,
+.ask-leilia-library-cta,
+.ask-leilia-return {
+  margin-top: clamp(1.75rem, 4.5vw, 3rem);
+}
+
+.ask-leilia-proof h2,
+.ask-leilia-samples h2,
+.ask-leilia-library-cta h2,
+.ask-leilia-return h2 {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-accent);
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--tok-water);
+}
+
+.ask-leilia-proof__grid {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask-leilia-proof__card {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--tok-surface-reading-soft) 48%, transparent);
+}
+
+.ask-leilia-proof__quote {
+  margin: 0;
+}
+
+.ask-leilia-proof__quote p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-proof__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.85rem;
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--tok-text-muted);
+}
+
+.ask-leilia-proof__name {
+  font-weight: 700;
+  color: var(--tok-water);
+}
+
+.ask-leilia-proof__verified {
+  color: var(--tok-gold-deep);
+}
+
+.ask-leilia-reassure {
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 26%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--tok-surface-reading) 55%, transparent);
+}
+
+.ask-leilia-reassure__list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask-leilia-reassure__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-reassure__mark {
+  color: var(--tok-gold-deep);
+  font-weight: 700;
+}
+
+.ask-leilia-samples__intro {
+  max-width: 42rem;
+  margin: 0 0 1.15rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-samples__grid {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask-leilia-sample-card {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.ask-leilia-sample-card__media {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, transparent);
+  aspect-ratio: 4 / 3;
+  background: color-mix(in srgb, var(--tok-surface-reading-soft) 70%, transparent);
+}
+
+.ask-leilia-sample-card__media:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 3px;
+}
+
+.ask-leilia-sample-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ask-leilia-sample-card__body {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.ask-leilia-sample-card__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--tok-water);
+}
+
+.ask-leilia-sample-card__client {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: var(--tok-letter-upper);
+  text-transform: uppercase;
+  color: var(--tok-gold-deep);
+}
+
+.ask-leilia-sample-card__desc {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-sample-card__link {
+  margin-top: 0.2rem;
+  color: var(--tok-water);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.ask-leilia-sample-card__link:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 3px;
+}
+
+.ask-leilia-library-cta {
+  max-width: 40rem;
+  padding: 1.1rem 0 0;
+}
+
+.ask-leilia-library-cta p {
+  margin: 0 0 0.85rem;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-library-cta__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  color: var(--tok-water);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.ask-leilia-library-cta__link:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 3px;
+}
+
+.ask-leilia-return {
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  border: 1px solid color-mix(in srgb, var(--tok-gold) 34%, transparent);
+  border-radius: var(--radius-promo);
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--tok-surface-reading) 88%, transparent),
+      color-mix(in srgb, var(--tok-surface-reading-soft) 70%, transparent)
+    );
+}
+
+.ask-leilia-return p {
+  margin: 0 0 0.85rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--tok-text-dark);
+}
+
+.ask-leilia-return__actions {
+  margin-bottom: 0.85rem;
+}
+
+.ask-leilia-return__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ask-leilia-return__links a {
+  color: var(--tok-water);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.ask-leilia-return__links a:focus-visible {
+  outline: 2px solid var(--tok-water);
+  outline-offset: 3px;
+}
+
 .ask-leilia-portfolio__name {
   margin: 0;
   font-family: var(--font-heading);
@@ -530,6 +923,14 @@
   border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
   border-radius: var(--radius-lg);
   background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
+}
+
+.ask-leilia-card__descriptor {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: var(--tok-letter-upper);
+  text-transform: uppercase;
+  color: var(--tok-gold-deep);
 }
 
 .ask-leilia-card h2,
@@ -707,9 +1108,19 @@
 @media (min-width: 760px) {
   .ask-leilia-pricing__grid,
   .ask-leilia-features__grid,
-  .ask-leilia-portfolio__grid {
+  .ask-leilia-portfolio__grid,
+  .ask-leilia-samples__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: stretch;
+  }
+
+  .ask-leilia-proof__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ask-leilia-reassure__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
   }
 
   .ask-leilia-explore__grid {

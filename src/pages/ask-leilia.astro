@@ -1,21 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import AskLeiliaTrustList from "../components/ask-leilia/AskLeiliaTrustList.astro";
 import AskLeiliaPricingGrid from "../components/ask-leilia/AskLeiliaPricingGrid.astro";
-import AskLeiliaReadingLibrary from "../components/ask-leilia/AskLeiliaReadingLibrary.astro";
+import AskLeiliaProofReviews from "../components/ask-leilia/AskLeiliaProofReviews.astro";
+import AskLeiliaSamplePreviews from "../components/ask-leilia/AskLeiliaSamplePreviews.astro";
 import AskLeiliaReviewsCarousel from "../components/ask-leilia/AskLeiliaReviewsCarousel.astro";
 import {
-  ASK_LEILIA_PUBLIC_TRUST_POINTS,
+  ASK_LEILIA_PURCHASE_REASSURANCE,
   ASK_LEILIA_READINGS,
   ASK_LEILIA_DELIVERABLES,
+  ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS,
   ASK_LEILIA_PUBLIC_BRAND,
+  ASK_LEILIA_SALES_SAMPLE_PREVIEWS,
   LEILIA_PORTRAIT_ALT,
   LEILIA_PORTRAIT_PATH,
   askLeiliaAuthorPersonNode,
+  type AskLeiliaSalesSamplePreview,
 } from "../data/askLeilia";
 import { siteBase } from "../lib/site";
 import { createCommunityServiceClient } from "../lib/community/supabaseServer";
 import { listPublicAskLeiliaReviews } from "../lib/ask-leilia/reviews/queries";
+import { selectAskLeiliaProofReviews } from "../lib/ask-leilia/salesPageProof";
+import { getPublishedLibraryPublicationBySlug } from "../lib/readingLibrary";
 import "../styles/ask-leilia.css";
 import "../styles/ask-leilia-reviews.css";
 
@@ -23,15 +28,41 @@ export const prerender = false;
 
 const title = "Ask Leilia | Professional Written Tarot Readings";
 const description =
-  "Professional written tarot readings personally interpreted by Leilia. Choose a one-question reading, in-depth reading, or personal guidance reading — each delivered within 48 hours as a PDF, with private audio on the in-depth and personal guidance tiers.";
+  "Choose a personally interpreted tarot reading from Leilia: one focused question, an in-depth exploration, or a Personal Guidance Reading that includes her signature Waka Spread and private recorded interpretation. Delivered within 48 hours.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
 
 let publicReviews: Awaited<ReturnType<typeof listPublicAskLeiliaReviews>> = [];
+let proofReviews: typeof publicReviews = [];
+let salesSamples: AskLeiliaSalesSamplePreview[] = ASK_LEILIA_SALES_SAMPLE_PREVIEWS;
+
 try {
   const service = createCommunityServiceClient(Astro.locals);
   publicReviews = await listPublicAskLeiliaReviews(service, 6);
+  proofReviews = selectAskLeiliaProofReviews(publicReviews, 2);
+
+  const resolvedSamples = await Promise.all(
+    ASK_LEILIA_SALES_SAMPLE_PREVIEWS.map(async (fallback) => {
+      const publication = await getPublishedLibraryPublicationBySlug(service, fallback.slug);
+      if (!publication) return fallback;
+      const imagePath = publication.spreadImagePaths[0] || fallback.imagePath;
+      const summary = publication.summary?.trim();
+      return {
+        ...fallback,
+        title: publication.title || fallback.title,
+        description:
+          summary && summary.length > 0
+            ? summary.length > 160
+              ? `${summary.slice(0, 157).trim()}…`
+              : summary
+            : fallback.description,
+        imagePath,
+      };
+    }),
+  );
+  salesSamples = resolvedSamples;
 } catch (error) {
-  console.error("Unable to load Ask Leilia public reviews:", error);
+  console.error("Unable to load Ask Leilia sales-page proof content:", error);
+  proofReviews = selectAskLeiliaProofReviews(publicReviews, 2);
 }
 
 const jsonLd = {
@@ -44,6 +75,7 @@ const jsonLd = {
   offers: ASK_LEILIA_READINGS.map((reading) => ({
     "@type": "Offer",
     name: reading.name,
+    description: reading.positioning,
     price: reading.price.replace(/[^\d.]/g, ""),
     priceCurrency: "USD",
     availability: "https://schema.org/PreOrder",
@@ -77,21 +109,67 @@ const jsonLd = {
           general spread. It's interpreted entirely by me, with no AI involved at any stage, and
           delivered within 48 hours.
         </p>
+        <p class="ask-leilia-hero__actions">
+          <a class="ask-leilia-hero__cta" href="#choose-your-reading">Choose Your Reading</a>
+        </p>
       </div>
     </section>
 
+    <AskLeiliaProofReviews reviews={proofReviews} />
+
     <AskLeiliaPricingGrid
-      heading="Choose Your Reading"
+      sectionId="choose-your-reading"
+      heading="Choose the depth that fits what you need"
       headingId="readings-heading"
+      intro="Every reading is interpreted personally by me. The difference is the scope of what you bring, the depth of the exploration, and the way the reading is delivered."
       readings={ASK_LEILIA_READINGS}
       buttonLabel="Request This Reading"
     />
 
-    <div class="ask-leilia-hero__copy">
-      <AskLeiliaTrustList points={ASK_LEILIA_PUBLIC_TRUST_POINTS} />
-    </div>
+    <aside class="ask-leilia-reassure" aria-label="Purchase reassurance">
+      <ul class="ask-leilia-reassure__list">
+        {
+          ASK_LEILIA_PURCHASE_REASSURANCE.map((point) => (
+            <li>
+              <span class="ask-leilia-reassure__mark" aria-hidden="true">
+                •
+              </span>
+              {point}
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
 
-    <AskLeiliaReadingLibrary />
+    <AskLeiliaSamplePreviews samples={salesSamples} />
+
+    <section class="ask-leilia-library-cta" aria-labelledby="ask-leilia-library-cta-heading">
+      <h2 id="ask-leilia-library-cta-heading">Explore more genuine readings</h2>
+      <p>
+        Browse authorised client readings and see the cards, spreads, and full interpretations across
+        different questions and situations.
+      </p>
+      <a class="ask-leilia-library-cta__link" href="/recent-client-readings/">
+        Explore the Reading Library
+      </a>
+    </section>
+
+    <section class="ask-leilia-return" aria-labelledby="ask-leilia-return-heading">
+      <h2 id="ask-leilia-return-heading">Ready to choose your reading?</h2>
+      <p>Select the level of depth that fits what you need now.</p>
+      <p class="ask-leilia-return__actions">
+        <a class="ask-leilia-hero__cta" href="#choose-your-reading">Choose My Reading</a>
+      </p>
+      <ul class="ask-leilia-return__links">
+        {
+          ASK_LEILIA_READINGS.map((reading) => (
+            <li>
+              <a href={reading.requestHref}>{reading.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
     <section class="ask-leilia-hero__copy" aria-label="About Ask Leilia readings">
       <p class="ask-leilia-hero__subheading">
@@ -113,7 +191,7 @@ const jsonLd = {
           width="640"
           height="853"
           alt={LEILIA_PORTRAIT_ALT}
-          loading="eager"
+          loading="lazy"
           decoding="async"
         />
       </figure>
@@ -164,19 +242,20 @@ const jsonLd = {
         <ul>
           <li>A personally interpreted tarot reading.</li>
           <li>
-            <strong>One Question:</strong>
+            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["one-question"]}:</strong>
             <ul>
               {ASK_LEILIA_DELIVERABLES["one-question"].map((item) => <li>{item}</li>)}
             </ul>
           </li>
           <li>
-            <strong>In-Depth:</strong>
+            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["in-depth"]}:</strong>
             <ul>
               {ASK_LEILIA_DELIVERABLES["in-depth"].map((item) => <li>{item}</li>)}
             </ul>
           </li>
           <li>
-            <strong>Personal Guidance:</strong>
+            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["personal-guidance"]}:</strong>
+            <span class="ask-leilia-card__descriptor"> Includes Leilia’s signature Waka Spread.</span>
             <ul>
               {ASK_LEILIA_DELIVERABLES["personal-guidance"].map((item) => <li>{item}</li>)}
             </ul>

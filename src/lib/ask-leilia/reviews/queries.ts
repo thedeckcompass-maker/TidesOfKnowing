@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { siteBase } from "../../site";
-import { readingTypeLabel, type AskLeiliaDbReadingType } from "../readingTypes";
+import { publicReadingTypeLabel, type AskLeiliaDbReadingType } from "../readingTypes";
 import {
   generateAskLeiliaReviewToken,
   hashAskLeiliaReviewToken,
@@ -30,7 +30,7 @@ export function toPublicReview(row: AskLeiliaReview): AskLeiliaPublicReview {
     id: row.id,
     display_name: row.display_name,
     reading_type: row.reading_type,
-    reading_type_label: readingTypeLabel(row.reading_type),
+    reading_type_label: publicReadingTypeLabel(row.reading_type),
     rating: row.rating,
     title: row.title,
     body: reviewPublicBody(row),

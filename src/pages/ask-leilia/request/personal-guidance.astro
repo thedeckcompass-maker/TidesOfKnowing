@@ -12,18 +12,21 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
 <BaseLayout
   title="Request Personal Guidance Reading | Ask Leilia"
-  description="Share your personal guidance Ask Leilia reading request before completing your booking."
+  description="Request a Personal Guidance Reading from Ask Leilia. Includes Leilia’s signature Waka Spread, a written PDF, spread imagery, and a private recorded interpretation."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <AskLeiliaRequestShell
-      title="Request Your Personal Guidance Consultation"
+      title="Personal Guidance Reading"
+      descriptor="Includes Leilia’s signature Waka Spread."
       intro={[
-        "Share the wider picture below. After you submit, you will be taken to secure payment to complete your booking.",
+        "Bring the questions, concerns, or areas of life that matter most. The reading is not confined to them. I will also follow the patterns, influences, and information that emerge through my signature Waka Spread, including what you may not yet have realised you needed to ask.",
+        "Your reading includes the signature Waka Spread, a written interpretation, spread imagery, and a private recorded interpretation.",
+        "After you submit, you will be taken to secure payment to complete your booking.",
       ]}
       summaryItems={[
-        "Comprehensive consultation",
+        "Personal Guidance Reading",
         ...ASK_LEILIA_DELIVERABLES["personal-guidance"],
         "Payment follows",
       ]}

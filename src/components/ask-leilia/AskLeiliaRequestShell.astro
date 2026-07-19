@@ -1,18 +1,28 @@
 ---
 interface Props {
   title: string;
+  /** Optional restrained public descriptor (e.g. Includes Leilia’s signature Waka Spread.). */
+  descriptor?: string;
   intro: string[];
   summaryItems: string[];
   paymentCancelled?: boolean;
   submitted?: boolean;
 }
 
-const { title, intro, summaryItems, paymentCancelled = false, submitted = false } = Astro.props;
+const {
+  title,
+  descriptor,
+  intro,
+  summaryItems,
+  paymentCancelled = false,
+  submitted = false,
+} = Astro.props;
 ---
 
 <section class="ask-request__head" aria-labelledby="request-heading">
   <p class="ask-request__kicker">Ask Leilia</p>
   <h1 id="request-heading">{title}</h1>
+  {descriptor ? <p class="ask-request__descriptor">{descriptor}</p> : null}
   {intro.map((paragraph) => <p>{paragraph}</p>)}
   <ul class="ask-request__summary" aria-label="Ask Leilia request summary">
     {summaryItems.map((item) => <li>{item}</li>)}
@@ -58,6 +68,15 @@ const { title, intro, summaryItems, paymentCancelled = false, submitted = false 
   .ask-request__kicker {
     margin: 0 0 0.25rem;
     font-size: var(--tok-type-meta);
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .ask-request__descriptor {
+    margin: 0 0 0.55rem;
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
     letter-spacing: var(--tok-letter-upper);
     text-transform: uppercase;
     color: var(--tok-gold-deep);

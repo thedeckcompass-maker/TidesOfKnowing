@@ -12,18 +12,20 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 
 <BaseLayout
   title="Request In-Depth Reading | Ask Leilia"
-  description="Share your in-depth Ask Leilia reading request before completing your booking."
+  description="Request an In-Depth Reading from Ask Leilia for a complex situation, connected concerns, or a decision with more than one layer. Written PDF with spread photographs — no audio or video."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <AskLeiliaRequestShell
-      title="Request Your In-Depth Consultation"
+      title="In-Depth Reading"
       intro={[
-        "Share your question and background below. After you submit, you will be taken to secure payment to complete your booking.",
+        "Tell me about the complex situation, decision, or connected concerns you want explored. You do not need to reduce everything to one perfectly phrased question. Include the context, the people or choices involved, and what feels most important or uncertain.",
+        "This reading can follow several connected questions and explore different areas of life where they form part of the same situation. It is not limited to two areas, and it is not an unlimited bundle of unrelated questions.",
+        "After you submit, you will be taken to secure payment to complete your booking.",
       ]}
       summaryItems={[
-        "In-depth consultation",
+        "In-Depth Reading",
         ...ASK_LEILIA_DELIVERABLES["in-depth"],
         "Payment follows",
       ]}

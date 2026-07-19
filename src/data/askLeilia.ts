@@ -23,80 +23,169 @@ export const LEILIA_PORTRAIT_ALT =
 
 export type AskLeiliaReading = {
   name: string;
-  intro: string;
-  body: string;
-  features: string[];
+  /** Stable Reading Library taxonomy label for schema/offer matching. */
+  libraryTypeLabel: "One Question" | "In-Depth" | "Personal Guidance";
+  /** Optional restrained sub-title shown beneath the name. */
+  descriptor?: string;
+  /** Single concise positioning statement shown on the card. */
+  positioning: string;
+  /** Three concise visible key points. */
+  keyPoints: string[];
+  /** Accessible label for the disclosure button, e.g. "More information about the In-Depth Reading". */
+  moreInfoLabel: string;
+  /** Fuller explanation revealed by the disclosure, one entry per paragraph. */
+  moreInfo: string[];
   price: string;
   requestHref: string;
   ctaLabel?: string;
 };
 
 export const ASK_LEILIA_DELIVERABLES = {
-  "one-question": ["Professional PDF within 48 hours"],
+  "one-question": [
+    "Written PDF with a photograph of the spread",
+    "No audio or video",
+    "Delivered within 48 hours",
+  ],
   "in-depth": [
-    "Professionally written PDF",
-    "A private audio reflection expanding on the themes, patterns and insights that emerged during your reading",
+    "Substantial written PDF with photographs of the spreads",
+    "No audio or video",
     "Delivered within 48 hours",
   ],
   "personal-guidance": [
-    "Professionally written PDF",
-    "A private audio consultation exploring the broader themes, relationships and guidance that emerged throughout your reading",
+    "Written PDF with photographs of the spread",
+    "Private video recording of the interpretation",
     "Delivered within 48 hours",
   ],
+} as const;
+
+/** Public labels for the What You Receive section (keys match deliverable product IDs). */
+export const ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS = {
+  "one-question": "One Question Reading",
+  "in-depth": "In-Depth Reading",
+  "personal-guidance": "Personal Guidance Reading",
 } as const;
 
 export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
   {
     name: "One Question Reading",
-    intro: "For the question you need a straight answer to.",
-    body: "You know what you're asking. You don't need it unpacked, you need it answered clearly enough to act on.",
-    features: [
-      "One clearly defined question",
-      "Minimum four-card reading, extended as far as needed for a clear answer",
-      "Personally interpreted, no fluff",
-      "Direct answer to exactly what you asked",
-      ...ASK_LEILIA_DELIVERABLES["one-question"],
+    libraryTypeLabel: "One Question",
+    positioning: "For one focused question that needs a clear, complete answer.",
+    keyPoints: [
+      "The spread is chosen to suit your question",
+      "As many cards as the answer requires",
+      "Written PDF with a photograph of the spread",
+    ],
+    moreInfoLabel: "More information about the One Question Reading",
+    moreInfo: [
+      "Bring one clearly defined question. I choose the spread most appropriate to what you are asking and draw as many cards as needed to answer it properly. There is no arbitrary card limit and no automated interpretation. You receive a professionally presented written PDF with a photograph of your spread. This reading does not include audio or video.",
     ],
     price: "US$25",
     requestHref: "/ask-leilia/request/",
-    ctaLabel: "Request This Reading",
+    ctaLabel: "Ask My Question",
   },
   {
     name: "In-Depth Reading",
-    intro: "For the situation that needs more than a quick read.",
-    body: "Something's been sitting with you longer than a single question can hold, a relationship, a decision, a pattern you keep circling back to. This reading gives it the room it needs.",
-    features: [
-      "One important question or life area",
-      "Spread chosen specifically to suit what you're asking",
-      "Detailed written interpretation, not a summary",
-      ...ASK_LEILIA_DELIVERABLES["in-depth"],
+    libraryTypeLabel: "In-Depth",
+    positioning: "For a complex situation, connected questions, or a decision with more than one layer.",
+    keyPoints: [
+      "Explore the wider situation, not only one isolated answer",
+      "Tailored spreads and as many cards as needed",
+      "Substantial written PDF with spread photographs",
+    ],
+    moreInfoLabel: "More information about the In-Depth Reading",
+    moreInfo: [
+      "Choose this reading when the issue cannot be reduced to one contained question. You may bring one complex situation, several connected concerns, a decision with competing options, or a pattern affecting different parts of your life. I choose the spread or combination of spreads that best fits what you bring, follow the relationships between the cards, and examine the pressures, choices, underlying dynamics, and likely direction involved. You receive a substantial written PDF with photographs of the spreads. This reading does not include audio or video.",
     ],
     price: "US$75",
     requestHref: "/ask-leilia/request/in-depth/",
-    ctaLabel: "Request This Reading",
+    ctaLabel: "Explore My Situation",
   },
   {
     name: "Personal Guidance Reading",
-    intro: "For when several things are tangled together.",
-    body: "You're not asking one question, you're trying to understand a whole season of your life, and how the different threads connect. This reading looks at the full picture rather than one part of it.",
-    features: [
-      "Multiple questions or themes, read together",
-      "Comprehensive written consultation",
-      "Practical guidance across everything you've brought to it",
-      ...ASK_LEILIA_DELIVERABLES["personal-guidance"],
+    libraryTypeLabel: "Personal Guidance",
+    descriptor: "Includes Leilia’s signature Waka Spread.",
+    positioning:
+      "For deep personal guidance when the important questions are larger than what you already know to ask.",
+    keyPoints: [
+      "Includes Leilia’s signature fourteen-card Waka Spread",
+      "Tarot, channelled insight, and ancestral guidance",
+      "Written PDF, spread images, and private recorded interpretation",
+    ],
+    moreInfoLabel: "More information about the Personal Guidance Reading",
+    moreInfo: [
+      "Bring the questions or concerns that matter most, but the reading is not confined to them. This Personal Guidance Reading is designed to illuminate the wider path, including patterns, influences, and information you may not yet have realised you needed to ask about.",
+      "At its centre is my signature fourteen-card Waka Spread. Nine cards explore the structure of the person's journey, including foundation, capacity, purpose, momentum, agency, what is being left behind, and what is emerging ahead. Five further cards reveal the conditions acting on that journey.",
+      "I read the cards individually and in relationship, working with tarot, intuitive perception, channelled insight, and connection with my ancestors. You receive a professionally presented written PDF, photographs of the spread, and a private video recording of me laying out and interpreting the reading.",
     ],
     price: "US$150",
     requestHref: "/ask-leilia/request/personal-guidance/",
-    ctaLabel: "Request This Reading",
+    ctaLabel: "Begin My Personal Guidance Reading",
   },
 ];
 
 export const ASK_LEILIA_PUBLIC_TRUST_POINTS = [
-  "Personally interpreted by Leilia",
-  "Human-led. Never AI generated.",
-  "Professional PDF on every reading",
-  "Private audio on In-Depth and Personal Guidance readings",
+  "Every reading is interpreted personally by Leilia",
+  "Every reading includes a written PDF and spread imagery",
+  "The Personal Guidance Reading also includes a private recorded interpretation",
+  "No automated or AI-generated interpretation",
   "Delivered within 48 hours",
+];
+
+/** Compact purchase-reassurance strip beneath the offer cards. */
+export const ASK_LEILIA_PURCHASE_REASSURANCE = [
+  "Personally interpreted by Leilia",
+  "Written PDF and spread imagery with every reading",
+  "Delivered within 48 hours",
+  "Private recorded interpretation included only with Personal Guidance",
+] as const;
+
+/**
+ * Preferred seed review IDs for the upper compact proof section.
+ * Chosen for specificity (clarity, interpretive process), not generic praise.
+ */
+export const ASK_LEILIA_PROOF_REVIEW_IDS = [
+  "c5e1f8a0-0708-4111-8b25-00a5c1e11001", // Sarah — emotional bias / clearer perspective
+  "c5e1f8a0-0712-4111-8b25-00a5c1e11003", // Anonymous — how the cards were read
+] as const;
+
+export type AskLeiliaSalesSamplePreview = {
+  slug: string;
+  firstName: string;
+  title: string;
+  description: string;
+  imagePath: string;
+  href: string;
+};
+
+/** Authorised sample previews for the Ask Leilia sales page (fixed public slugs). */
+export const ASK_LEILIA_SALES_SAMPLE_PREVIEWS: AskLeiliaSalesSamplePreview[] = [
+  {
+    slug: "hannah-rebrand-reading",
+    firstName: "Hannah",
+    title: "Rebranding a Tea Blend",
+    description:
+      "A reading on creative direction and how a tea blend wants to be understood in the world.",
+    imagePath: "/images/client-readings/hannah-rebrand-reading/hannah-rebrand-reading-1.jpg",
+    href: "/recent-client-readings/hannah-rebrand-reading/",
+  },
+  {
+    slug: "sasha-two-jobs-reading",
+    firstName: "Sasha",
+    title: "Choosing Between Two Job Offers",
+    description:
+      "A decision reading that weighs two professional paths and the pressures shaping the choice.",
+    imagePath: "/images/client-readings/sasha-two-jobs-reading/sasha-two-jobs-reading-1.jpg",
+    href: "/recent-client-readings/sasha-two-jobs-reading/",
+  },
+  {
+    slug: "shelly-twelve-month-reading",
+    firstName: "Shelly",
+    title: "Twelve-Month Workplace Reading",
+    description:
+      "A year-ahead workplace reading that follows the arc of responsibility, pressure, and change.",
+    imagePath: "/images/client-readings/shelly-twelve-month-reading/shelly-twelve-month-reading-1.jpg",
+    href: "/recent-client-readings/shelly-twelve-month-reading/",
+  },
 ];
 
 export const LEILIA_GIFT_TRUST_POINTS = [

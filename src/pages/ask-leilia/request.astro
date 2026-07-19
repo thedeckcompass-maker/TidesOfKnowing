@@ -11,19 +11,20 @@ const paymentCancelled = Astro.url.searchParams.get("payment") === "cancelled";
 ---
 
 <BaseLayout
-  title="Request Your Reading | Ask Leilia"
-  description="Share your Ask Leilia question before completing your booking."
+  title="Request One Question Reading | Ask Leilia"
+  description="Request a One Question Reading from Ask Leilia. Bring one clearly defined question for a personally interpreted written PDF with a photograph of your spread."
   metaAuthor={ASK_LEILIA_PUBLIC_BRAND}
   metaRobots="noindex, nofollow"
 >
   <main class="ask-request page-inner">
     <AskLeiliaRequestShell
-      title="Request Your One Question Reading"
+      title="One Question Reading"
       intro={[
-        "Share your question below. After you submit, you will be taken to secure payment to complete your booking.",
+        "Bring one clearly defined question. Include enough context for me to understand what is happening and what you most need clarity about. I will choose the spread and draw as many cards as the question requires.",
+        "After you submit, you will be taken to secure payment to complete your booking.",
       ]}
       summaryItems={[
-        "One question reading",
+        "One Question Reading",
         ...ASK_LEILIA_DELIVERABLES["one-question"],
         "Payment follows",
         "Optional card photo upload",

@@ -1,0 +1,49 @@
+---
+import type { AskLeiliaSalesSamplePreview } from "../../data/askLeilia";
+
+interface Props {
+  samples: AskLeiliaSalesSamplePreview[];
+}
+
+const { samples } = Astro.props;
+---
+
+{
+  samples.length > 0 ? (
+    <section class="ask-leilia-samples" aria-labelledby="ask-leilia-samples-heading">
+      <p class="ask-leilia__kicker">Real Client Readings</p>
+      <h2 id="ask-leilia-samples-heading">See how I read</h2>
+      <p class="ask-leilia-samples__intro">
+        These genuine client readings are shared with permission. See the spread, follow how the
+        cards are read in combination, and review the depth of the interpretation before choosing
+        your own reading.
+      </p>
+      <ul class="ask-leilia-samples__grid">
+        {samples.map((sample) => (
+          <li>
+            <article class="ask-leilia-sample-card">
+              <a class="ask-leilia-sample-card__media" href={sample.href}>
+                <img
+                  src={sample.imagePath}
+                  alt={`Spread photograph for ${sample.firstName}'s reading: ${sample.title}`}
+                  width="640"
+                  height="480"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+              <div class="ask-leilia-sample-card__body">
+                <h3 class="ask-leilia-sample-card__title">{sample.title}</h3>
+                <p class="ask-leilia-sample-card__client">{sample.firstName}</p>
+                <p class="ask-leilia-sample-card__desc">{sample.description}</p>
+                <a class="ask-leilia-sample-card__link" href={sample.href}>
+                  {`Read ${sample.firstName}’s reading`}
+                </a>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ) : null
+}

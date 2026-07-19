@@ -699,11 +699,26 @@ run("carousel renders review text in SSR HTML and hides controls for one card", 
   );
   assert.match(source, /blockquote/);
   assert.match(source, /review\.body/);
+  assert.match(source, /What Clients Say/);
+  assert.equal(source.includes("What Seekers Say"), false);
+  assert.match(source, /Continue reading/);
+  assert.match(source, /Show less/);
+  assert.match(source, /aria-expanded/);
+  assert.match(source, /data-ask-reviews-quote/);
   assert.match(source, /canScroll = count > 1/);
   assert.match(source, /prefers-reduced-motion|reduceMotion/);
   assert.match(source, /ArrowLeft|ArrowRight/);
   assert.equal(source.includes("setInterval"), false);
   assert.equal(source.includes("autoplay"), false);
+});
+
+run("review carousel CSS clamps long quotes without equalising card stretch", () => {
+  const css = readFileSync(join(REPO_ROOT, "src/styles/ask-leilia-reviews.css"), "utf8");
+  assert.match(css, /-webkit-line-clamp:\s*6/);
+  assert.match(css, /-webkit-line-clamp:\s*8/);
+  assert.match(css, /align-items:\s*start/);
+  assert.match(css, /\.ask-reviews__more/);
+  assert.equal(css.includes("min-height: 100%"), false);
 });
 
 run("secure review URL shape hides private identifiers", () => {

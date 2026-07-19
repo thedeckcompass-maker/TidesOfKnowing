@@ -1,0 +1,37 @@
+---
+import type { AskLeiliaPublicReview } from "../../lib/ask-leilia/reviews/types";
+import { excerptAskLeiliaReview } from "../../lib/ask-leilia/salesPageProof";
+
+interface Props {
+  reviews: AskLeiliaPublicReview[];
+}
+
+const { reviews } = Astro.props;
+---
+
+{
+  reviews.length > 0 ? (
+    <section class="ask-leilia-proof" aria-labelledby="ask-leilia-proof-heading">
+      <p class="ask-leilia__kicker">Client Experiences</p>
+      <h2 id="ask-leilia-proof-heading">What clients notice in the reading</h2>
+      <ul class="ask-leilia-proof__grid">
+        {reviews.map((review) => (
+          <li>
+            <figure class="ask-leilia-proof__card">
+              <blockquote class="ask-leilia-proof__quote">
+                <p>“{excerptAskLeiliaReview(review.body)}”</p>
+              </blockquote>
+              <figcaption class="ask-leilia-proof__meta">
+                <span class="ask-leilia-proof__name">{review.display_name}</span>
+                <span class="ask-leilia-proof__type">{review.reading_type_label}</span>
+                {review.is_verified ? (
+                  <span class="ask-leilia-proof__verified">Verified Ask Leilia reading</span>
+                ) : null}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ) : null
+}

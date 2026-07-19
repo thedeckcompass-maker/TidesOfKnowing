@@ -9,12 +9,21 @@ interface Props {
 
 const {
   reviews,
-  heading = "What Seekers Say",
+  heading = "What Clients Say",
   supporting = "Experiences shared by people who have received an Ask Leilia reading.",
 } = Astro.props;
 
 const count = reviews.length;
 const canScroll = count > 1;
+
+function reviewBodyParagraphs(body: string): string[] {
+  const parts = body
+    .replace(/\r\n/g, "\n")
+    .split(/\n+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.length > 0 ? parts : [body.trim()].filter(Boolean);
+}
 ---
 
 {
@@ -65,34 +74,52 @@ const canScroll = count > 1;
           data-ask-reviews-track
         >
           {
-            reviews.map((review, index) => (
-              <article
-                class="ask-reviews__card"
-                aria-label={`Review ${index + 1} of ${count}`}
-                data-ask-reviews-card
-              >
-                <p class="ask-reviews__rating" aria-label={`${review.rating} out of 5`}>
-                  <span aria-hidden="true">
-                    {"★".repeat(review.rating)}
-                    {"☆".repeat(5 - review.rating)}
-                  </span>
-                </p>
-                {review.title ? <h3 class="ask-reviews__title">{review.title}</h3> : null}
-                <blockquote class="ask-reviews__quote">
-                  <p>{review.body}</p>
-                </blockquote>
-                <footer class="ask-reviews__meta">
-                  <p class="ask-reviews__name">{review.display_name}</p>
-                  <p class="ask-reviews__type">{review.reading_type_label}</p>
-                  {review.is_verified ? (
-                    <p class="ask-reviews__verified">Verified Ask Leilia reading</p>
-                  ) : null}
-                  <p class="ask-reviews__date">
-                    <time>{review.published_month_year}</time>
+            reviews.map((review, index) => {
+              const bodyId = `ask-review-body-${review.id}`;
+              const paragraphs = reviewBodyParagraphs(review.body);
+              return (
+                <article
+                  class="ask-reviews__card"
+                  aria-label={`Review ${index + 1} of ${count}`}
+                  data-ask-reviews-card
+                >
+                  <p class="ask-reviews__rating" aria-label={`${review.rating} out of 5`}>
+                    <span aria-hidden="true">
+                      {"★".repeat(review.rating)}
+                      {"☆".repeat(5 - review.rating)}
+                    </span>
                   </p>
-                </footer>
-              </article>
-            ))
+                  {review.title ? <h3 class="ask-reviews__title">{review.title}</h3> : null}
+                  <blockquote class="ask-reviews__quote">
+                    <div class="ask-reviews__quote-body" id={bodyId} data-ask-reviews-quote>
+                      {paragraphs.map((paragraph) => (
+                        <p>{paragraph}</p>
+                      ))}
+                    </div>
+                    <button
+                      type="button"
+                      class="ask-reviews__more"
+                      data-ask-reviews-more
+                      aria-expanded="false"
+                      aria-controls={bodyId}
+                      hidden
+                    >
+                      Continue reading
+                    </button>
+                  </blockquote>
+                  <footer class="ask-reviews__meta">
+                    <p class="ask-reviews__name">{review.display_name}</p>
+                    <p class="ask-reviews__type">{review.reading_type_label}</p>
+                    {review.is_verified ? (
+                      <p class="ask-reviews__verified">Verified Ask Leilia reading</p>
+                    ) : null}
+                    <p class="ask-reviews__date">
+                      <time>{review.published_month_year}</time>
+                    </p>
+                  </footer>
+                </article>
+              );
+            })
           }
         </div>
 
@@ -126,8 +153,71 @@ const canScroll = count > 1;
 }
 
 {
-  canScroll ? (
+  count > 0 ? (
     <script>
+      function initAskReviewsExpand(root) {
+        if (!(root instanceof HTMLElement) || root.dataset.expandBound === "true") return;
+        root.dataset.expandBound = "true";
+        root.dataset.enhanced = "true";
+
+        const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
+
+        function syncCard(card) {
+          if (!(card instanceof HTMLElement)) return;
+          const body = card.querySelector("[data-ask-reviews-quote]");
+          const button = card.querySelector("[data-ask-reviews-more]");
+          if (!(body instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) return;
+
+          if (body.dataset.expanded === "true") {
+            button.hidden = false;
+            button.setAttribute("aria-expanded", "true");
+            button.textContent = "Show less";
+            return;
+          }
+
+          const overflows = body.scrollHeight > body.clientHeight + 1;
+          button.hidden = !overflows;
+          button.setAttribute("aria-expanded", "false");
+          button.textContent = "Continue reading";
+        }
+
+        function syncAll() {
+          cards.forEach(syncCard);
+        }
+
+        cards.forEach((card) => {
+          const body = card.querySelector("[data-ask-reviews-quote]");
+          const button = card.querySelector("[data-ask-reviews-more]");
+          if (!(body instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) return;
+
+          button.addEventListener("click", () => {
+            const expanded = body.dataset.expanded === "true";
+            if (expanded) {
+              delete body.dataset.expanded;
+            } else {
+              body.dataset.expanded = "true";
+            }
+            syncCard(card);
+            button.focus({ preventScroll: true });
+          });
+        });
+
+        window.requestAnimationFrame(syncAll);
+        window.addEventListener("resize", () => {
+          window.requestAnimationFrame(syncAll);
+        });
+
+        if (typeof ResizeObserver !== "undefined") {
+          const observer = new ResizeObserver(() => {
+            window.requestAnimationFrame(syncAll);
+          });
+          cards.forEach((card) => {
+            const body = card.querySelector("[data-ask-reviews-quote]");
+            if (body instanceof HTMLElement) observer.observe(body);
+          });
+        }
+      }
+
       function initAskReviewsCarousel(root) {
         if (!(root instanceof HTMLElement) || root.dataset.bound === "true") return;
         root.dataset.bound = "true";
@@ -208,7 +298,10 @@ const canScroll = count > 1;
       }
 
       function boot() {
-        document.querySelectorAll("[data-ask-reviews-carousel]").forEach(initAskReviewsCarousel);
+        document.querySelectorAll("[data-ask-reviews-carousel]").forEach((root) => {
+          initAskReviewsExpand(root);
+          initAskReviewsCarousel(root);
+        });
       }
 
       boot();

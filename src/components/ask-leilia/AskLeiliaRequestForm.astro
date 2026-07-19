@@ -39,11 +39,11 @@ const PERSONAL_GUIDANCE_LIFE_AREAS_STANDARD = PERSONAL_GUIDANCE_LIFE_AREAS.filte
 
 const tierGuidance: Record<AskLeiliaReadingType, string> = {
   "one-question":
-    "If you find yourself trying to ask several questions at once, the In-Depth Reading will usually provide a more satisfying result.",
+    "If you find yourself trying to ask several questions at once, the In-Depth Reading will usually provide a more satisfying result. This One Question Reading does not include audio or video.",
   "in-depth":
-    "If your situation spans several areas of life or you're seeking guidance across the bigger picture, the Personal Guidance Reading may be the better choice.",
+    "If the questions that matter most feel larger than a connected situation — including what you may not yet know to ask — the Personal Guidance Reading may be the better choice. This In-Depth Reading does not include audio or video.",
   "personal-guidance":
-    "This is my most comprehensive written consultation and is designed to explore the whole landscape of your situation rather than one isolated issue.",
+    "This Personal Guidance Reading includes Leilia’s signature Waka Spread, a written PDF, spread imagery, and a private recorded interpretation.",
 };
 ---
 
@@ -55,9 +55,10 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
       <div class="ask-request-form__intro">
         <h3>One clear question often leads to the clearest answer.</h3>
         <p>
-          This reading is designed for a single, well-defined question or situation. If, as you begin
-          writing, you realise you're trying to untangle several connected issues, you'll usually
-          receive greater value from an In-Depth or Personal Guidance Reading.
+          Bring one clearly defined question and enough context for me to understand what is happening
+          and what you most need clarity about. I will choose the spread and draw as many cards as the
+          question requires. If you realise you are untangling several connected issues, the In-Depth
+          Reading or Personal Guidance Reading will usually serve you better.
         </p>
       </div>
     ) : null
@@ -66,11 +67,12 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
   {
     showTierIntro && readingType === "in-depth" ? (
       <div class="ask-request-form__intro">
-        <h3>Some questions deserve more space than a quick answer.</h3>
+        <h3>Some situations need more than one contained answer.</h3>
         <p>
-          This reading is designed for situations that have developed over time, where context matters
-          as much as the question itself. The more clearly you describe what has brought you here, the
-          more deeply I can explore the patterns within the reading.
+          Use this reading for a complex situation, a major decision, or connected concerns with more
+          than one layer. You may follow several related questions, and different areas of life can be
+          explored where they belong to the same situation. It is not limited to two areas, and it is
+          not an unlimited list of unrelated questions.
         </p>
       </div>
     ) : null
@@ -79,11 +81,12 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
   {
     showTierIntro && readingType === "personal-guidance" ? (
       <div class="ask-request-form__intro">
-        <h3>Sometimes it's not one question. It's an entire season of life.</h3>
+        <h3>Bring what matters most — and leave room for what you have not yet asked.</h3>
         <p>
-          This consultation is for those moments when several areas of life overlap and influence one
-          another. Rather than exploring one issue in isolation, this reading looks at the wider
-          picture and how the different threads connect.
+          This Personal Guidance Reading includes my signature Waka Spread, structured around the
+          metaphor and mechanics of a vessel in motion. Share the questions, concerns, or areas of
+          life that matter most; the reading is not confined to them. I also follow the patterns and
+          information that emerge through the Waka Spread.
         </p>
       </div>
     ) : null
@@ -215,7 +218,9 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           <legend class="ask-request-form__section-legend">Life areas</legend>
 
           <p class="ask-request-form__section-note">
-            Select the areas of life you would like this reading to consider.
+            Select the areas of life that matter most for this Personal Guidance Reading. These help
+            me understand the ground of your situation; the reading is not limited to the boxes you
+            tick.
           </p>
 
           <div class="ask-request-form__life-areas">

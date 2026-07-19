@@ -231,8 +231,8 @@ export function getReadingJsonLd(
     breadcrumbJsonLd(getReadingBreadcrumbs(entry), siteOrigin),
   ];
 
-  const matchingOffer = ASK_LEILIA_READINGS.find((reading) =>
-    reading.name.startsWith(entry.data.readingType),
+  const matchingOffer = ASK_LEILIA_READINGS.find(
+    (reading) => reading.libraryTypeLabel === entry.data.readingType,
   );
   if (matchingOffer) {
     graph.push({

@@ -50,3 +50,8 @@ export function isAskLeiliaDbReadingType(value: unknown): value is AskLeiliaDbRe
 export function readingTypeLabel(readingType: AskLeiliaDbReadingType): string {
   return ASK_LEILIA_READING_TYPE_LABELS[readingType];
 }
+
+/** Client-facing product name; identical to {@link readingTypeLabel} for all reading types. */
+export function publicReadingTypeLabel(readingType: AskLeiliaDbReadingType): string {
+  return readingTypeLabel(readingType);
+}

@@ -158,11 +158,11 @@ export async function notifyAskLeiliaPaymentCompleted(
 const SUPPORT_EMAIL = "hello@tidesofknowing.com";
 
 function paymentConfirmationDeliveryLine(readingType: AskLeiliaDbReadingType): string {
-  if (readingType === "one-question") {
-    return "Your completed reading will be delivered as a professionally written PDF within 48 hours.";
+  if (readingType === "personal-guidance") {
+    return "Your completed reading will be delivered as a professionally written PDF within 48 hours. Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread.";
   }
 
-  return "Your completed reading will be delivered as a professionally written PDF within 48 hours. If your reading includes a private audio reflection or consultation, it will arrive alongside your written reading.";
+  return "Your completed reading will be delivered as a professionally written PDF within 48 hours.";
 }
 
 export async function sendAskLeiliaCustomerPaymentConfirmation(
@@ -404,10 +404,10 @@ export async function sendAskLeiliaCustomerDelivery(
     "Your completed reading is attached as a PDF.",
   ];
 
-  if (input.audioContentBase64) {
+  if (input.audioContentBase64 && input.readingType === "personal-guidance") {
     bodyLines.push(
       "",
-      "As I worked through your reading there were a number of additional thoughts and impressions that didn't naturally belong in the written interpretation. I've recorded them for you as a private audio reflection and attached it alongside your reading.",
+      "Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread. The recording is attached alongside your written reading.",
     );
   }
 
@@ -448,9 +448,9 @@ export async function sendAskLeiliaCustomerDelivery(
     "<p>Your completed reading is attached as a PDF.</p>",
   ];
 
-  if (input.audioContentBase64) {
+  if (input.audioContentBase64 && input.readingType === "personal-guidance") {
     htmlParts.push(
-      "<p>As I worked through your reading there were a number of additional thoughts and impressions that didn't naturally belong in the written interpretation. I've recorded them for you as a private audio reflection and attached it alongside your reading.</p>",
+      "<p>Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread. The recording is attached alongside your written reading.</p>",
     );
   }
 

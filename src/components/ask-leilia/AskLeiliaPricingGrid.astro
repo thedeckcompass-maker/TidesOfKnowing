@@ -4,6 +4,8 @@ import type { AskLeiliaReading } from "../../data/askLeilia";
 interface Props {
   heading?: string;
   headingId?: string;
+  /** Optional section id for in-page anchors (e.g. choose-your-reading). */
+  sectionId?: string;
   readings: AskLeiliaReading[];
   buttonLabel: string;
   intro?: string;
@@ -12,6 +14,7 @@ interface Props {
 const {
   heading,
   headingId = "ask-leilia-offers-heading",
+  sectionId,
   readings,
   buttonLabel,
   intro,
@@ -24,6 +27,17 @@ const PRICING_CARD_SYMBOLS = [
   "ask-leilia-pricing__card--hourglass",
 ] as const;
 
+/** Card index that receives restrained signature emphasis (Personal Guidance Reading). */
+const SIGNATURE_CARD_INDEX = 2;
+
+/** Stable slug used to wire each disclosure button to its panel via aria-controls. */
+function readingSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 function splitUsdPrice(price: string): { qualifier: string; amount: string } {
   const match = price.match(/^(US)(\$\d+)$/);
   if (!match) {
@@ -35,6 +49,7 @@ function splitUsdPrice(price: string): { qualifier: string; amount: string } {
 
 <section
   class="ask-leilia-pricing"
+  id={sectionId}
   {...heading ? { "aria-labelledby": headingId } : { "aria-label": "Ask Leilia readings" }}
 >
   {heading ? <h2 id={headingId} class="ask-leilia-pricing__heading">{heading}</h2> : null}
@@ -43,26 +58,24 @@ function splitUsdPrice(price: string): { qualifier: string; amount: string } {
     {
       readings.map((reading, index) => {
         const { qualifier, amount } = splitUsdPrice(reading.price);
+        const slug = readingSlug(reading.name);
+        const panelId = `ask-leilia-info-${slug}`;
+        const toggleId = `ask-leilia-info-toggle-${slug}`;
+        const isSignature = index === SIGNATURE_CARD_INDEX;
         return (
           <article
             class:list={[
               "ask-leilia-pricing__card",
               PRICING_CARD_SYMBOLS[index] ?? PRICING_CARD_SYMBOLS[0],
+              isSignature ? "ask-leilia-pricing__card--signature" : null,
             ]}
           >
-            <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
-            <p class="ask-leilia-pricing__description">{reading.intro}</p>
-            <p class="ask-leilia-pricing__description">{reading.body}</p>
-            <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} includes`}>
-              {reading.features.map((feature) => (
-                <li>
-                  <span class="ask-leilia-pricing__feature-mark" aria-hidden="true">
-                    •
-                  </span>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+            <div class="ask-leilia-pricing__head">
+              <h3 class="ask-leilia-pricing__name">{reading.name}</h3>
+              {reading.descriptor ? (
+                <p class="ask-leilia-pricing__descriptor">{reading.descriptor}</p>
+              ) : null}
+            </div>
             <p class="ask-leilia-pricing__price" aria-label={reading.price}>
               {
                 qualifier ? (
@@ -75,12 +88,70 @@ function splitUsdPrice(price: string): { qualifier: string; amount: string } {
                 )
               }
             </p>
-            <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
-              {reading.ctaLabel ?? buttonLabel}
-            </a>
+            <p class="ask-leilia-pricing__positioning">{reading.positioning}</p>
+            <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} key points`}>
+              {reading.keyPoints.map((point) => (
+                <li>
+                  <span class="ask-leilia-pricing__feature-mark" aria-hidden="true">
+                    •
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <div class="ask-leilia-pricing__actions">
+              <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
+                {reading.ctaLabel ?? buttonLabel}
+              </a>
+              <button
+                type="button"
+                id={toggleId}
+                class="ask-leilia-pricing__info-toggle"
+                aria-expanded="false"
+                aria-controls={panelId}
+                aria-label={reading.moreInfoLabel}
+              >
+                <span class="ask-leilia-pricing__info-icon" aria-hidden="true">i</span>
+              </button>
+            </div>
+            <div
+              id={panelId}
+              class="ask-leilia-pricing__info-panel"
+              role="region"
+              aria-label={reading.moreInfoLabel}
+              hidden
+            >
+              {reading.moreInfo.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
           </article>
         );
       })
     }
   </div>
 </section>
+
+<script>
+  function setupAskLeiliaDisclosures() {
+    const toggles = document.querySelectorAll<HTMLButtonElement>(
+      ".ask-leilia-pricing__info-toggle",
+    );
+    toggles.forEach((toggle) => {
+      if (toggle.dataset.disclosureBound === "true") return;
+      const panelId = toggle.getAttribute("aria-controls");
+      if (!panelId) return;
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+      toggle.dataset.disclosureBound = "true";
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        panel.hidden = expanded;
+      });
+    });
+  }
+
+  setupAskLeiliaDisclosures();
+  document.addEventListener("astro:page-load", setupAskLeiliaDisclosures);
+</script>
