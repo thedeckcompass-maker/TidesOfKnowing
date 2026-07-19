@@ -699,26 +699,119 @@ run("carousel renders review text in SSR HTML and hides controls for one card", 
   );
   assert.match(source, /blockquote/);
   assert.match(source, /review\.body/);
+  assert.match(source, /review\.display_name/);
+  assert.match(source, /review\.reading_type_label/);
+  assert.match(source, /review\.published_month_year/);
   assert.match(source, /What Clients Say/);
   assert.equal(source.includes("What Seekers Say"), false);
+  assert.equal(source.includes("Hannah Ruhamah"), false);
+  assert.equal(/\bJoyce\b/.test(source), false);
   assert.match(source, /Continue reading/);
-  assert.match(source, /Show less/);
-  assert.match(source, /aria-expanded/);
+  assert.match(source, /ask-reviews-full-dialog|data-ask-reviews-dialog/);
+  assert.match(source, /openAskLeiliaDialog|showModal/);
   assert.match(source, /data-ask-reviews-quote/);
-  assert.match(source, /canScroll = count > 1/);
+  assert.match(source, /aria-label="Previous reviews"/);
+  assert.match(source, /aria-label="Next reviews"/);
+  assert.equal(source.includes(">Previous<"), false);
+  assert.equal(source.includes(">Next<"), false);
+
+  const dialogHelper = readFileSync(
+    join(REPO_ROOT, "src/scripts/askLeiliaDialog.ts"),
+    "utf8",
+  );
+  assert.match(dialogHelper, /showModal/);
+  assert.match(dialogHelper, /ask-leilia-dialog--fallback/);
+  assert.match(dialogHelper, /Escape/);
+  assert.equal(/window\.open\s*\(/.test(dialogHelper), false);
+  assert.match(source, /canNavigate = count > 1/);
   assert.match(source, /prefers-reduced-motion|reduceMotion/);
   assert.match(source, /ArrowLeft|ArrowRight/);
   assert.equal(source.includes("setInterval"), false);
   assert.equal(source.includes("autoplay"), false);
+  assert.equal(source.includes("Show less"), false);
 });
 
-run("review carousel CSS clamps long quotes without equalising card stretch", () => {
+/** Mirrors AskLeiliaReviewsCarousel.astro page helpers. */
+function askReviewsPerPage(width) {
+  if (width >= 1080) return 3;
+  if (width >= 720) return 2;
+  return 1;
+}
+
+function askReviewsPageCount(cardCount, perPage) {
+  if (cardCount < 1 || perPage < 1) return 0;
+  return Math.ceil(cardCount / perPage);
+}
+
+function askReviewsWrapPage(page, delta, pageCount) {
+  if (pageCount < 1) return 0;
+  return (((page + delta) % pageCount) + pageCount) % pageCount;
+}
+
+run("carousel arrow controls are type=button and initialise from the carousel root", () => {
+  const source = readFileSync(
+    join(REPO_ROOT, "src/components/ask-leilia/AskLeiliaReviewsCarousel.astro"),
+    "utf8",
+  );
+
+  assert.match(source, /data-ask-reviews-carousel/);
+  assert.match(source, /type="button"/);
+  assert.match(source, /data-ask-reviews-prev/);
+  assert.match(source, /data-ask-reviews-next/);
+  assert.match(source, /astro:page-load/);
+
+  const carouselInit = source.slice(source.indexOf("function initAskReviewsCarousel"));
+  assert.match(carouselInit, /dataset\.bound === ["']true["']/);
+  assert.match(carouselInit, /root\.querySelector\(\s*["']\[data-ask-reviews-prev\]["']\s*\)/);
+  assert.match(carouselInit, /root\.querySelector\(\s*["']\[data-ask-reviews-next\]["']\s*\)/);
+  assert.match(carouselInit, /askReviewsWrapPage/);
+  assert.match(carouselInit, /askReviewsPerPage/);
+  assert.match(carouselInit, /rebuildDots/);
+  assert.match(carouselInit, /translate3d/);
+});
+
+run("carousel pages by responsive visible-card count and wraps", () => {
+  assert.equal(askReviewsPerPage(390), 1);
+  assert.equal(askReviewsPerPage(800), 2);
+  assert.equal(askReviewsPerPage(1200), 3);
+
+  assert.equal(askReviewsPageCount(6, 3), 2);
+  assert.equal(askReviewsPageCount(6, 2), 3);
+  assert.equal(askReviewsPageCount(6, 1), 6);
+  assert.equal(askReviewsPageCount(1, 3), 1);
+
+  assert.equal(askReviewsWrapPage(0, 1, 2), 1);
+  assert.equal(askReviewsWrapPage(1, 1, 2), 0);
+  assert.equal(askReviewsWrapPage(0, -1, 2), 1);
+  assert.equal(askReviewsWrapPage(1, -1, 2), 0);
+  assert.equal(askReviewsWrapPage(0, 1, 1), 0);
+  assert.equal(askReviewsWrapPage(3, 1, 0), 0);
+});
+
+run("carousel verification badge and continue-reading stay data-driven", () => {
+  const source = readFileSync(
+    join(REPO_ROOT, "src/components/ask-leilia/AskLeiliaReviewsCarousel.astro"),
+    "utf8",
+  );
+  assert.match(source, /review\.is_verified/);
+  assert.match(source, /Verified Ask Leilia Reading/);
+  assert.match(source, /data-ask-reviews-more/);
+  assert.match(source, /button\.hidden = !overflows/);
+  assert.match(source, /openAskLeiliaDialog/);
+  assert.equal(/display_name\s*===\s*['"]Sasha['"]/.test(source), false);
+  assert.equal(source.includes("role=\"tab\""), false);
+});
+
+run("review carousel CSS clamps long quotes with equal card stretch", () => {
   const css = readFileSync(join(REPO_ROOT, "src/styles/ask-leilia-reviews.css"), "utf8");
   assert.match(css, /-webkit-line-clamp:\s*6/);
-  assert.match(css, /-webkit-line-clamp:\s*8/);
-  assert.match(css, /align-items:\s*start/);
+  assert.match(css, /-webkit-line-clamp:\s*7/);
+  assert.match(css, /align-items:\s*stretch/);
   assert.match(css, /\.ask-reviews__more/);
-  assert.equal(css.includes("min-height: 100%"), false);
+  assert.match(css, /height:\s*calc\(1\.6em \* 7\)/);
+  assert.match(css, /border-radius:\s*50%/);
+  assert.match(css, /100cqi/);
+  assert.equal(css.includes("Show previous reviews"), false);
 });
 
 run("secure review URL shape hides private identifiers", () => {
@@ -727,6 +820,91 @@ run("secure review URL shape hides private identifiers", () => {
   assert.equal(url.includes("email="), false);
   assert.equal(/request_id|order_id|reading_id/.test(url), false);
   assert.match(url, /\/submit-a-review\/\?token=/);
+});
+
+run("Sasha verification correction uses status field, not a name-hardcoded badge", () => {
+  const migration = readFileSync(
+    join(
+      REPO_ROOT,
+      "supabase/migrations/20260719000000_ask_leilia_sasha_review_verification.sql",
+    ),
+    "utf8",
+  );
+  assert.match(migration, /b071db83-f330-4f64-a54f-c397f6109923/);
+  assert.match(migration, /verification_status = 'verified_completed_reading'/);
+  assert.match(migration, /verification_status = 'unverified'/);
+  assert.match(migration, /display_name = 'Sasha'/);
+  assert.equal(/set[\s\S]*consent_/i.test(migration), false);
+  assert.equal(/set[\s\S]*body_/i.test(migration), false);
+
+  const sashaRow = {
+    id: "b071db83-f330-4f64-a54f-c397f6109923",
+    request_id: null,
+    review_token_id: null,
+    reviewer_email: "sasha@example.invalid",
+    display_name: "Sasha",
+    reading_type: "one-question",
+    rating: 5,
+    title: "A great choice",
+    body_original:
+      "The reading I received was deeply insightful and provided sound advice on the issue I was facing.",
+    body_public:
+      "The reading I received was deeply insightful and provided sound advice on the issue I was facing.",
+    consent_publish: true,
+    consent_marketing: false,
+    moderation_status: "approved",
+    is_featured: false,
+    submitted_at: "2026-07-15T12:00:00.000Z",
+    approved_at: "2026-07-15T12:00:00.000Z",
+    approved_by: null,
+    updated_at: "2026-07-15T12:00:00.000Z",
+  };
+
+  assert.equal(toPublicReview({ ...sashaRow, verification_status: "unverified" }).is_verified, false);
+  const corrected = toPublicReview({
+    ...sashaRow,
+    verification_status: "verified_completed_reading",
+  });
+  assert.equal(corrected.is_verified, true);
+  assert.equal(corrected.display_name, "Sasha");
+
+  const hannahLike = toPublicReview({
+    ...sashaRow,
+    id: "00fe28a7-452a-429d-8adc-edcee721e1b3",
+    display_name: "Hannah Ruhamah",
+    title: "The Power of Less",
+    verification_status: "verified_completed_reading",
+  });
+  assert.equal(hannahLike.is_verified, true);
+  assert.equal(
+    corrected.is_verified,
+    hannahLike.is_verified,
+    "Sasha uses the same verification projection as Hannah",
+  );
+
+  const carousel = readFileSync(
+    join(REPO_ROOT, "src/components/ask-leilia/AskLeiliaReviewsCarousel.astro"),
+    "utf8",
+  );
+  assert.match(carousel, /review\.is_verified/);
+  assert.equal(carousel.includes("Sasha"), false);
+
+  const fallbacks = readFileSync(
+    join(REPO_ROOT, "src/lib/ask-leilia/reviews/publicReviewFallbacks.ts"),
+    "utf8",
+  );
+  assert.match(fallbacks, /b071db83-f330-4f64-a54f-c397f6109923/);
+  assert.match(
+    fallbacks,
+    /id:\s*"b071db83-f330-4f64-a54f-c397f6109923"[\s\S]*?is_verified:\s*true/,
+  );
+  assert.equal(fallbacks.includes('display_name === "Sasha"'), false);
+  assert.equal(fallbacks.includes("display_name == 'Sasha'"), false);
+
+  const salesPage = readFileSync(join(REPO_ROOT, "src/pages/ask-leilia.astro"), "utf8");
+  assert.match(salesPage, /allowReviewFallbacks/);
+  assert.match(salesPage, /import\.meta\.env\.DEV/);
+  assert.match(salesPage, /publicReviews\.length === 0 && allowReviewFallbacks/);
 });
 
 console.log(`\n${passed} passed, ${failed} failed`);

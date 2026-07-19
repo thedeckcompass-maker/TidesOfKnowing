@@ -139,6 +139,39 @@ export const ASK_LEILIA_PURCHASE_REASSURANCE = [
   "Private recorded interpretation included only with Personal Guidance",
 ] as const;
 
+/** Concise closing-offer summaries for the final purchase invitation (sales page). */
+export const ASK_LEILIA_CLOSING_OFFERS = [
+  {
+    id: "one-question" as const,
+    name: "One Question Reading",
+    price: "US$25",
+    summary: "One focused question that needs a clear, complete answer.",
+    compactSummary: "A focused reading for one clear, specific question.",
+    ctaLabel: "Ask My Question",
+    requestHref: "/ask-leilia/request/",
+  },
+  {
+    id: "in-depth" as const,
+    name: "In-Depth Reading",
+    price: "US$75",
+    summary: "A complex situation, connected concerns, or a decision with more than one layer.",
+    compactSummary:
+      "A deeper reading for a complex situation, connected concerns or a layered decision.",
+    ctaLabel: "Explore My Situation",
+    requestHref: "/ask-leilia/request/in-depth/",
+  },
+  {
+    id: "personal-guidance" as const,
+    name: "Personal Guidance Reading",
+    price: "US$150",
+    summary: "Deep personal guidance using Leilia’s signature Waka Spread.",
+    compactSummary:
+      "Extended personal guidance for questions that reach beyond the obvious answer.",
+    ctaLabel: "Begin My Personal Guidance Reading",
+    requestHref: "/ask-leilia/request/personal-guidance/",
+  },
+] as const;
+
 /**
  * Preferred seed review IDs for the upper compact proof section.
  * Chosen for specificity (clarity, interpretive process), not generic praise.

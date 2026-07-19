@@ -14,7 +14,7 @@ const {
 } = Astro.props;
 
 const count = reviews.length;
-const canScroll = count > 1;
+const canNavigate = count > 1;
 
 function reviewBodyParagraphs(body: string): string[] {
   const parts = body
@@ -28,126 +28,171 @@ function reviewBodyParagraphs(body: string): string[] {
 
 {
   count > 0 ? (
-    <section class="ask-reviews" aria-labelledby="ask-reviews-heading">
-      <div class="ask-reviews__intro">
-        <h2 id="ask-reviews-heading">{heading}</h2>
-        <p>{supporting}</p>
-      </div>
-
-      <div
-        class:list={["ask-reviews__shell", !canScroll && "ask-reviews__shell--static"]}
-        data-ask-reviews-carousel
-        data-count={String(count)}
-      >
+    <section
+      class="ask-reviews"
+      aria-labelledby="ask-reviews-heading"
+      data-ask-reviews-carousel
+      data-count={String(count)}
+    >
+      <div class="ask-reviews__toolbar">
+        <div class="ask-reviews__intro">
+          <h2 id="ask-reviews-heading">{heading}</h2>
+          <p>{supporting}</p>
+        </div>
         {
-          canScroll ? (
-            <div class="ask-reviews__controls">
+          canNavigate ? (
+            <div class="ask-reviews__controls" data-ask-reviews-controls>
               <button
                 type="button"
                 class="ask-reviews__nav"
                 data-ask-reviews-prev
                 aria-controls="ask-reviews-track"
-                aria-label="Show previous reviews"
+                aria-label="Previous reviews"
               >
-                Previous
+                <svg class="ask-reviews__nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M14.5 5.5 8 12l6.5 6.5"
+                  ></path>
+                </svg>
               </button>
               <button
                 type="button"
                 class="ask-reviews__nav"
                 data-ask-reviews-next
                 aria-controls="ask-reviews-track"
-                aria-label="Show next reviews"
+                aria-label="Next reviews"
               >
-                Next
+                <svg class="ask-reviews__nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9.5 5.5 16 12l-6.5 6.5"
+                  ></path>
+                </svg>
               </button>
             </div>
           ) : null
         }
+      </div>
 
-        <div
-          id="ask-reviews-track"
-          class="ask-reviews__track"
-          tabindex="0"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Ask Leilia reviews"
-          data-ask-reviews-track
-        >
-          {
-            reviews.map((review, index) => {
-              const bodyId = `ask-review-body-${review.id}`;
-              const paragraphs = reviewBodyParagraphs(review.body);
-              return (
-                <article
-                  class="ask-reviews__card"
-                  aria-label={`Review ${index + 1} of ${count}`}
-                  data-ask-reviews-card
-                >
-                  <p class="ask-reviews__rating" aria-label={`${review.rating} out of 5`}>
-                    <span aria-hidden="true">
-                      {"★".repeat(review.rating)}
-                      {"☆".repeat(5 - review.rating)}
-                    </span>
-                  </p>
-                  {review.title ? <h3 class="ask-reviews__title">{review.title}</h3> : null}
-                  <blockquote class="ask-reviews__quote">
-                    <div class="ask-reviews__quote-body" id={bodyId} data-ask-reviews-quote>
+      <div class:list={["ask-reviews__shell", !canNavigate && "ask-reviews__shell--static"]}>
+        <div class="ask-reviews__viewport" data-ask-reviews-viewport>
+          <div
+            id="ask-reviews-track"
+            class="ask-reviews__track"
+            tabindex="0"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Ask Leilia reviews"
+            data-ask-reviews-track
+          >
+            {
+              reviews.map((review, index) => {
+                const paragraphs = reviewBodyParagraphs(review.body);
+                const dialogId = `ask-review-dialog-${review.id}`;
+                return (
+                  <article
+                    class="ask-reviews__card"
+                    aria-label={`Review ${index + 1} of ${count}`}
+                    data-ask-reviews-card
+                    data-review-title={review.title || ""}
+                    data-review-name={review.display_name}
+                    data-review-type={review.reading_type_label}
+                    data-review-verified={review.is_verified ? "true" : "false"}
+                    data-review-date={review.published_month_year}
+                    data-review-body={review.body}
+                  >
+                    <p
+                      class="ask-reviews__rating"
+                      aria-label={`${review.rating} out of 5 stars`}
+                    >
+                      <span aria-hidden="true">
+                        {"★".repeat(review.rating)}
+                        {"☆".repeat(5 - review.rating)}
+                      </span>
+                    </p>
+                    <span class="ask-reviews__mark" aria-hidden="true">“</span>
+                    {review.title ? <h3 class="ask-reviews__title">{review.title}</h3> : null}
+                    <blockquote class="ask-reviews__quote">
+                      <div class="ask-reviews__quote-body" data-ask-reviews-quote>
+                        {paragraphs.map((paragraph) => (
+                          <p>{paragraph}</p>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        class="ask-reviews__more"
+                        data-ask-reviews-more
+                        aria-haspopup="dialog"
+                        aria-controls="ask-reviews-full-dialog"
+                        hidden
+                      >
+                        Continue reading
+                      </button>
+                    </blockquote>
+                    <footer class="ask-reviews__meta">
+                      <p class="ask-reviews__name">{review.display_name}</p>
+                      <p class="ask-reviews__type">{review.reading_type_label}</p>
+                      {review.is_verified ? (
+                        <p class="ask-reviews__verified">Verified Ask Leilia Reading</p>
+                      ) : null}
+                      <p class="ask-reviews__date">
+                        <time>{review.published_month_year}</time>
+                      </p>
+                    </footer>
+                    <template data-ask-reviews-full-template id={dialogId}>
                       {paragraphs.map((paragraph) => (
                         <p>{paragraph}</p>
                       ))}
-                    </div>
-                    <button
-                      type="button"
-                      class="ask-reviews__more"
-                      data-ask-reviews-more
-                      aria-expanded="false"
-                      aria-controls={bodyId}
-                      hidden
-                    >
-                      Continue reading
-                    </button>
-                  </blockquote>
-                  <footer class="ask-reviews__meta">
-                    <p class="ask-reviews__name">{review.display_name}</p>
-                    <p class="ask-reviews__type">{review.reading_type_label}</p>
-                    {review.is_verified ? (
-                      <p class="ask-reviews__verified">Verified Ask Leilia reading</p>
-                    ) : null}
-                    <p class="ask-reviews__date">
-                      <time>{review.published_month_year}</time>
-                    </p>
-                  </footer>
-                </article>
-              );
-            })
-          }
+                    </template>
+                  </article>
+                );
+              })
+            }
+          </div>
         </div>
 
         {
-          canScroll ? (
-            <div
-              class="ask-reviews__dots"
-              data-ask-reviews-dots
-              role="tablist"
-              aria-label="Review position"
-            >
-              {reviews.map((_, index) => (
-                <button
-                  type="button"
-                  class="ask-reviews__dot"
-                  role="tab"
-                  aria-label={`Go to review ${index + 1}`}
-                  aria-selected={index === 0 ? "true" : "false"}
-                  data-ask-reviews-dot
-                  data-index={String(index)}
-                />
-              ))}
-            </div>
+          canNavigate ? (
+            <div class="ask-reviews__dots" data-ask-reviews-dots aria-label="Review pages"></div>
           ) : null
         }
 
         <p class="visually-hidden" aria-live="polite" data-ask-reviews-live></p>
       </div>
+
+      <dialog
+        class="ask-leilia-dialog ask-reviews__dialog"
+        id="ask-reviews-full-dialog"
+        data-ask-reviews-dialog
+        aria-labelledby="ask-reviews-dialog-title"
+      >
+        <div class="ask-leilia-dialog__panel">
+          <button type="button" class="ask-leilia-dialog__close" data-ask-reviews-dialog-close>
+            Close
+          </button>
+          <h3
+            class="ask-leilia-dialog__title"
+            id="ask-reviews-dialog-title"
+            data-ask-reviews-dialog-title
+          ></h3>
+          <div class="ask-leilia-dialog__body" data-ask-reviews-dialog-body></div>
+          <footer class="ask-leilia-dialog__meta">
+            <p data-ask-reviews-dialog-name></p>
+            <p data-ask-reviews-dialog-type></p>
+            <p data-ask-reviews-dialog-verified hidden>Verified Ask Leilia Reading</p>
+            <p data-ask-reviews-dialog-date></p>
+          </footer>
+        </div>
+      </dialog>
     </section>
   ) : null
 }
@@ -155,10 +200,46 @@ function reviewBodyParagraphs(body: string): string[] {
 {
   count > 0 ? (
     <script>
-      function initAskReviewsExpand(root) {
-        if (!(root instanceof HTMLElement) || root.dataset.expandBound === "true") return;
-        root.dataset.expandBound = "true";
+      import {
+        closeAskLeiliaDialog,
+        isAskLeiliaDialogOpen,
+        openAskLeiliaDialog,
+      } from "../../scripts/askLeiliaDialog";
+
+      /** Visible cards per viewport width. */
+      function askReviewsPerPage(width) {
+        if (width >= 1080) return 3;
+        if (width >= 720) return 2;
+        return 1;
+      }
+
+      function askReviewsPageCount(cardCount, perPage) {
+        if (cardCount < 1 || perPage < 1) return 0;
+        return Math.ceil(cardCount / perPage);
+      }
+
+      /** Wrapping page step for Previous / Next. */
+      function askReviewsWrapPage(page, delta, pageCount) {
+        if (pageCount < 1) return 0;
+        return (((page + delta) % pageCount) + pageCount) % pageCount;
+      }
+
+      function initAskReviewsDialog(root) {
+        if (!(root instanceof HTMLElement) || root.dataset.dialogBound === "true") return;
+        root.dataset.dialogBound = "true";
         root.dataset.enhanced = "true";
+
+        const dialog = root.querySelector("[data-ask-reviews-dialog]");
+        if (!(dialog instanceof HTMLDialogElement)) return;
+
+        const titleEl = dialog.querySelector("[data-ask-reviews-dialog-title]");
+        const bodyEl = dialog.querySelector("[data-ask-reviews-dialog-body]");
+        const nameEl = dialog.querySelector("[data-ask-reviews-dialog-name]");
+        const typeEl = dialog.querySelector("[data-ask-reviews-dialog-type]");
+        const verifiedEl = dialog.querySelector("[data-ask-reviews-dialog-verified]");
+        const dateEl = dialog.querySelector("[data-ask-reviews-dialog-date]");
+        const closeBtn = dialog.querySelector("[data-ask-reviews-dialog-close]");
+        let lastTrigger = null;
 
         const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
 
@@ -167,50 +248,79 @@ function reviewBodyParagraphs(body: string): string[] {
           const body = card.querySelector("[data-ask-reviews-quote]");
           const button = card.querySelector("[data-ask-reviews-more]");
           if (!(body instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) return;
-
-          if (body.dataset.expanded === "true") {
-            button.hidden = false;
-            button.setAttribute("aria-expanded", "true");
-            button.textContent = "Show less";
-            return;
-          }
-
           const overflows = body.scrollHeight > body.clientHeight + 1;
           button.hidden = !overflows;
-          button.setAttribute("aria-expanded", "false");
-          button.textContent = "Continue reading";
         }
 
         function syncAll() {
           cards.forEach(syncCard);
         }
 
-        cards.forEach((card) => {
-          const body = card.querySelector("[data-ask-reviews-quote]");
-          const button = card.querySelector("[data-ask-reviews-more]");
-          if (!(body instanceof HTMLElement) || !(button instanceof HTMLButtonElement)) return;
+        function openDialog(card, trigger) {
+          if (!(card instanceof HTMLElement)) return;
+          const template = card.querySelector("[data-ask-reviews-full-template]");
+          if (
+            !(titleEl instanceof HTMLElement) ||
+            !(bodyEl instanceof HTMLElement) ||
+            !(nameEl instanceof HTMLElement) ||
+            !(typeEl instanceof HTMLElement) ||
+            !(verifiedEl instanceof HTMLElement) ||
+            !(dateEl instanceof HTMLElement)
+          ) {
+            return;
+          }
 
-          button.addEventListener("click", () => {
-            const expanded = body.dataset.expanded === "true";
-            if (expanded) {
-              delete body.dataset.expanded;
-            } else {
-              body.dataset.expanded = "true";
-            }
-            syncCard(card);
-            button.focus({ preventScroll: true });
-          });
+          const title = card.dataset.reviewTitle || "Client review";
+          titleEl.textContent = title;
+          bodyEl.replaceChildren();
+          if (template instanceof HTMLTemplateElement) {
+            bodyEl.appendChild(template.content.cloneNode(true));
+          } else {
+            const paragraphs = String(card.dataset.reviewBody || "")
+              .replace(/\r\n/g, "\n")
+              .split(/\n+/)
+              .map((part) => part.trim())
+              .filter(Boolean);
+            paragraphs.forEach((text) => {
+              const p = document.createElement("p");
+              p.textContent = text;
+              bodyEl.appendChild(p);
+            });
+          }
+          nameEl.textContent = card.dataset.reviewName || "";
+          typeEl.textContent = card.dataset.reviewType || "";
+          dateEl.textContent = card.dataset.reviewDate || "";
+          verifiedEl.hidden = card.dataset.reviewVerified !== "true";
+          lastTrigger = trigger;
+          if (!isAskLeiliaDialogOpen(dialog)) openAskLeiliaDialog(dialog);
+          if (closeBtn instanceof HTMLElement) closeBtn.focus();
+        }
+
+        function closeDialog() {
+          if (isAskLeiliaDialogOpen(dialog)) closeAskLeiliaDialog(dialog);
+        }
+
+        cards.forEach((card) => {
+          const button = card.querySelector("[data-ask-reviews-more]");
+          if (!(button instanceof HTMLButtonElement)) return;
+          button.addEventListener("click", () => openDialog(card, button));
+        });
+
+        closeBtn?.addEventListener("click", closeDialog);
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog) closeDialog();
+        });
+        dialog.addEventListener("close", () => {
+          if (lastTrigger instanceof HTMLElement) {
+            lastTrigger.focus({ preventScroll: true });
+          }
+          lastTrigger = null;
         });
 
         window.requestAnimationFrame(syncAll);
-        window.addEventListener("resize", () => {
-          window.requestAnimationFrame(syncAll);
-        });
-
+        window.addEventListener("resize", () => window.requestAnimationFrame(syncAll));
         if (typeof ResizeObserver !== "undefined") {
-          const observer = new ResizeObserver(() => {
-            window.requestAnimationFrame(syncAll);
-          });
+          const observer = new ResizeObserver(() => window.requestAnimationFrame(syncAll));
           cards.forEach((card) => {
             const body = card.querySelector("[data-ask-reviews-quote]");
             if (body instanceof HTMLElement) observer.observe(body);
@@ -222,84 +332,138 @@ function reviewBodyParagraphs(body: string): string[] {
         if (!(root instanceof HTMLElement) || root.dataset.bound === "true") return;
         root.dataset.bound = "true";
 
+        const viewport = root.querySelector("[data-ask-reviews-viewport]");
         const track = root.querySelector("[data-ask-reviews-track]");
         const prev = root.querySelector("[data-ask-reviews-prev]");
         const next = root.querySelector("[data-ask-reviews-next]");
-        const dots = Array.from(root.querySelectorAll("[data-ask-reviews-dot]"));
+        const controls = root.querySelector("[data-ask-reviews-controls]");
+        const dotsHost = root.querySelector("[data-ask-reviews-dots]");
         const live = root.querySelector("[data-ask-reviews-live]");
         const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
-        if (!(track instanceof HTMLElement) || cards.length < 2) return;
+        if (!(viewport instanceof HTMLElement) || !(track instanceof HTMLElement) || cards.length < 1) {
+          return;
+        }
 
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let page = 0;
+        let dots = [];
 
-        function cardWidth() {
-          const first = cards[0];
-          if (!(first instanceof HTMLElement)) return track.clientWidth;
-          const styles = window.getComputedStyle(track);
-          const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
-          return first.getBoundingClientRect().width + gap;
+        function perPage() {
+          return askReviewsPerPage(viewport.clientWidth || window.innerWidth);
         }
 
-        function currentIndex() {
-          const width = cardWidth();
-          if (width <= 0) return 0;
-          return Math.round(track.scrollLeft / width);
+        function pageCount() {
+          return askReviewsPageCount(cards.length, perPage());
         }
 
-        function updateUi() {
-          const index = Math.max(0, Math.min(cards.length - 1, currentIndex()));
-          dots.forEach((dot, i) => {
-            if (dot instanceof HTMLElement) {
-              dot.setAttribute("aria-selected", i === index ? "true" : "false");
-            }
-          });
-          if (live instanceof HTMLElement) {
-            live.textContent = `Review ${index + 1} of ${cards.length}`;
+        function rebuildDots() {
+          if (!(dotsHost instanceof HTMLElement)) {
+            dots = [];
+            return;
+          }
+          const pages = pageCount();
+          dotsHost.replaceChildren();
+          dots = [];
+          if (pages <= 1) {
+            dotsHost.hidden = true;
+            return;
+          }
+          dotsHost.hidden = false;
+          for (let i = 0; i < pages; i += 1) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "ask-reviews__dot";
+            button.setAttribute("data-ask-reviews-dot", "");
+            button.setAttribute("data-page", String(i));
+            button.setAttribute("aria-label", `Go to reviews page ${i + 1}`);
+            button.addEventListener("click", () => goToPage(i));
+            dotsHost.appendChild(button);
+            dots.push(button);
           }
         }
 
-        function goTo(index) {
-          const width = cardWidth();
-          track.scrollTo({
-            left: width * index,
-            behavior: reduceMotion ? "auto" : "smooth",
+        function updateUi() {
+          const pages = pageCount();
+          page = askReviewsWrapPage(page, 0, pages);
+          const offset = pages <= 1 ? 0 : page * viewport.clientWidth;
+          track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+          track.style.transition = reduceMotion ? "none" : "";
+
+          dots.forEach((dot, i) => {
+            const active = i === page;
+            if (active) dot.setAttribute("aria-current", "true");
+            else dot.removeAttribute("aria-current");
+            dot.classList.toggle("ask-reviews__dot--active", active);
           });
+
+          const navigate = pages > 1;
+          if (controls instanceof HTMLElement) controls.hidden = !navigate;
+          if (dotsHost instanceof HTMLElement) dotsHost.hidden = !navigate;
+
+          if (live instanceof HTMLElement) {
+            if (pages <= 1) {
+              live.textContent = `${cards.length} review${cards.length === 1 ? "" : "s"}`;
+            } else {
+              live.textContent = `Reviews page ${page + 1} of ${pages}`;
+            }
+          }
         }
 
-        prev?.addEventListener("click", () => {
-          goTo(Math.max(0, currentIndex() - 1));
-        });
-        next?.addEventListener("click", () => {
-          goTo(Math.min(cards.length - 1, currentIndex() + 1));
-        });
-        dots.forEach((dot) => {
-          dot.addEventListener("click", () => {
-            const index = Number.parseInt(String(dot.getAttribute("data-index") || "0"), 10);
-            if (!Number.isNaN(index)) goTo(index);
-          });
-        });
+        function goToPage(nextPage) {
+          const pages = pageCount();
+          page = askReviewsWrapPage(nextPage, 0, pages);
+          updateUi();
+        }
 
-        track.addEventListener("scroll", () => {
-          window.requestAnimationFrame(updateUi);
-        });
+        function step(delta) {
+          const pages = pageCount();
+          if (pages <= 1) return;
+          page = askReviewsWrapPage(page, delta, pages);
+          updateUi();
+        }
+
+        prev?.addEventListener("click", () => step(-1));
+        next?.addEventListener("click", () => step(1));
 
         track.addEventListener("keydown", (event) => {
           if (!(event instanceof KeyboardEvent)) return;
           if (event.key === "ArrowRight") {
             event.preventDefault();
-            goTo(Math.min(cards.length - 1, currentIndex() + 1));
+            step(1);
           } else if (event.key === "ArrowLeft") {
             event.preventDefault();
-            goTo(Math.max(0, currentIndex() - 1));
+            step(-1);
           }
         });
 
+        let resizeTimer = 0;
+        function onResize() {
+          window.clearTimeout(resizeTimer);
+          resizeTimer = window.setTimeout(() => {
+            const previousPages = dots.length || pageCount();
+            rebuildDots();
+            if (page >= pageCount()) page = Math.max(0, pageCount() - 1);
+            // Keep relative position when page count changes with viewport.
+            if (previousPages > 0 && pageCount() !== previousPages) {
+              page = Math.min(page, Math.max(0, pageCount() - 1));
+            }
+            updateUi();
+          }, 80);
+        }
+
+        window.addEventListener("resize", onResize);
+        if (typeof ResizeObserver !== "undefined") {
+          const observer = new ResizeObserver(() => onResize());
+          observer.observe(viewport);
+        }
+
+        rebuildDots();
         updateUi();
       }
 
       function boot() {
         document.querySelectorAll("[data-ask-reviews-carousel]").forEach((root) => {
-          initAskReviewsExpand(root);
+          initAskReviewsDialog(root);
           initAskReviewsCarousel(root);
         });
       }

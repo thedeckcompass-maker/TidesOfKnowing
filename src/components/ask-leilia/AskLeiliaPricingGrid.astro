@@ -1,5 +1,5 @@
 ---
-import type { AskLeiliaReading } from "../../data/askLeilia";
+import { ASK_LEILIA_DELIVERABLES, type AskLeiliaReading } from "../../data/askLeilia";
 
 interface Props {
   heading?: string;
@@ -30,37 +30,54 @@ const PRICING_CARD_SYMBOLS = [
 /** Card index that receives restrained signature emphasis (Personal Guidance Reading). */
 const SIGNATURE_CARD_INDEX = 2;
 
-/** Stable slug used to wire each disclosure button to its panel via aria-controls. */
-function readingSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function splitUsdPrice(price: string): { qualifier: string; amount: string } {
-  const match = price.match(/^(US)(\$\d+)$/);
+  const match = price.match(/^(US)\s?(\$\d+)$/);
   if (!match) {
     return { qualifier: "", amount: price };
   }
   return { qualifier: match[1], amount: match[2] };
 }
+
+function deliverableKey(href: string): keyof typeof ASK_LEILIA_DELIVERABLES {
+  if (href.includes("personal-guidance")) return "personal-guidance";
+  if (href.includes("in-depth")) return "in-depth";
+  return "one-question";
+}
+
+const readingPayload = readings.map((reading) => {
+  const id = deliverableKey(reading.requestHref);
+  return {
+    id,
+    name: reading.name,
+    price: reading.price,
+    positioning: reading.positioning,
+    moreInfo: reading.moreInfo,
+    deliverables: [...ASK_LEILIA_DELIVERABLES[id]],
+    ctaLabel: reading.ctaLabel ?? buttonLabel,
+    requestHref: reading.requestHref,
+    descriptor: reading.descriptor ?? "",
+  };
+});
 ---
 
 <section
   class="ask-leilia-pricing"
   id={sectionId}
   {...heading ? { "aria-labelledby": headingId } : { "aria-label": "Ask Leilia readings" }}
+  data-ask-leilia-pricing
 >
-  {heading ? <h2 id={headingId} class="ask-leilia-pricing__heading">{heading}</h2> : null}
-  {intro ? <p class="ask-leilia-pricing__intro">{intro}</p> : null}
+  {
+    heading || intro ? (
+      <div class="ask-leilia-pricing__intro-row">
+        {heading ? <h2 id={headingId} class="ask-leilia-pricing__heading">{heading}</h2> : null}
+        {intro ? <p class="ask-leilia-pricing__intro">{intro}</p> : null}
+      </div>
+    ) : null
+  }
   <div class="ask-leilia-pricing__grid">
     {
       readings.map((reading, index) => {
         const { qualifier, amount } = splitUsdPrice(reading.price);
-        const slug = readingSlug(reading.name);
-        const panelId = `ask-leilia-info-${slug}`;
-        const toggleId = `ask-leilia-info-toggle-${slug}`;
         const isSignature = index === SIGNATURE_CARD_INDEX;
         return (
           <article
@@ -75,20 +92,29 @@ function splitUsdPrice(price: string): { qualifier: string; amount: string } {
               {reading.descriptor ? (
                 <p class="ask-leilia-pricing__descriptor">{reading.descriptor}</p>
               ) : null}
-            </div>
-            <p class="ask-leilia-pricing__price" aria-label={reading.price}>
-              {
-                qualifier ? (
+              <p class="ask-leilia-pricing__price" aria-label={reading.price}>
+                {qualifier ? (
                   <span class="ask-leilia-pricing__price-visual" aria-hidden="true">
                     <span class="ask-leilia-pricing__currency">{qualifier}</span>
                     <span class="ask-leilia-pricing__amount">{amount}</span>
                   </span>
                 ) : (
                   reading.price
-                )
-              }
-            </p>
-            <p class="ask-leilia-pricing__positioning">{reading.positioning}</p>
+                )}
+              </p>
+              <p class="ask-leilia-pricing__positioning">{reading.positioning}</p>
+              <button
+                type="button"
+                class="ask-leilia-pricing__details"
+                data-ask-leilia-details
+                data-reading-index={String(index)}
+                aria-haspopup="dialog"
+                aria-controls="ask-leilia-details-dialog"
+              >
+                <span class="ask-leilia-pricing__details-label">View full details</span>
+                <span class="ask-leilia-pricing__details-icon" aria-hidden="true">i</span>
+              </button>
+            </div>
             <ul class="ask-leilia-pricing__features" aria-label={`${reading.name} key points`}>
               {reading.keyPoints.map((point) => (
                 <li>
@@ -100,58 +126,146 @@ function splitUsdPrice(price: string): { qualifier: string; amount: string } {
               ))}
             </ul>
             <div class="ask-leilia-pricing__actions">
-              <a class="ask-leilia-pricing__cta" href={reading.requestHref}>
+              <a class="ask-leilia-pricing__cta ask-leilia-purchase-cta" href={reading.requestHref}>
                 {reading.ctaLabel ?? buttonLabel}
               </a>
-              <button
-                type="button"
-                id={toggleId}
-                class="ask-leilia-pricing__info-toggle"
-                aria-expanded="false"
-                aria-controls={panelId}
-                aria-label={reading.moreInfoLabel}
-              >
-                <span class="ask-leilia-pricing__info-icon" aria-hidden="true">i</span>
-              </button>
-            </div>
-            <div
-              id={panelId}
-              class="ask-leilia-pricing__info-panel"
-              role="region"
-              aria-label={reading.moreInfoLabel}
-              hidden
-            >
-              {reading.moreInfo.map((paragraph) => (
-                <p>{paragraph}</p>
-              ))}
             </div>
           </article>
         );
       })
     }
   </div>
+
+  <script type="application/json" data-ask-leilia-readings-json is:inline set:html={JSON.stringify(readingPayload)} />
+
+  <dialog
+    class="ask-leilia-dialog ask-leilia-pricing__dialog"
+    id="ask-leilia-details-dialog"
+    data-ask-leilia-details-dialog
+    aria-labelledby="ask-leilia-details-title"
+  >
+    <div class="ask-leilia-dialog__panel">
+      <button type="button" class="ask-leilia-dialog__close" data-ask-leilia-details-close>
+        Close
+      </button>
+      <h3 class="ask-leilia-dialog__title" id="ask-leilia-details-title" data-details-title></h3>
+      <p class="ask-leilia-dialog__price" data-details-price></p>
+      <p class="ask-leilia-dialog__descriptor" data-details-descriptor hidden></p>
+      <p class="ask-leilia-dialog__positioning" data-details-positioning></p>
+      <div class="ask-leilia-dialog__body" data-details-more></div>
+      <h4 class="ask-leilia-dialog__subhead">What you receive</h4>
+      <ul class="ask-leilia-dialog__list" data-details-deliverables></ul>
+      <p class="ask-leilia-dialog__actions">
+        <a class="ask-leilia-pricing__cta ask-leilia-purchase-cta" data-details-cta href="#"
+          >Request this reading</a
+        >
+      </p>
+    </div>
+  </dialog>
 </section>
 
 <script>
-  function setupAskLeiliaDisclosures() {
-    const toggles = document.querySelectorAll<HTMLButtonElement>(
-      ".ask-leilia-pricing__info-toggle",
-    );
-    toggles.forEach((toggle) => {
-      if (toggle.dataset.disclosureBound === "true") return;
-      const panelId = toggle.getAttribute("aria-controls");
-      if (!panelId) return;
-      const panel = document.getElementById(panelId);
-      if (!panel) return;
-      toggle.dataset.disclosureBound = "true";
-      toggle.addEventListener("click", () => {
-        const expanded = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", String(!expanded));
-        panel.hidden = expanded;
+  import {
+    closeAskLeiliaDialog,
+    isAskLeiliaDialogOpen,
+    openAskLeiliaDialog,
+  } from "../../scripts/askLeiliaDialog";
+
+  function setupAskLeiliaDetailsDialog() {
+    const root = document.querySelector("[data-ask-leilia-pricing]");
+    if (!(root instanceof HTMLElement) || root.dataset.detailsBound === "true") return;
+    root.dataset.detailsBound = "true";
+
+    const dialog = root.querySelector("[data-ask-leilia-details-dialog]");
+    const jsonEl = root.querySelector("[data-ask-leilia-readings-json]");
+    if (!(dialog instanceof HTMLDialogElement) || !(jsonEl instanceof HTMLElement)) return;
+
+    let readings = [];
+    try {
+      readings = JSON.parse(jsonEl.textContent || "[]");
+    } catch {
+      readings = [];
+    }
+
+    const titleEl = dialog.querySelector("[data-details-title]");
+    const priceEl = dialog.querySelector("[data-details-price]");
+    const descriptorEl = dialog.querySelector("[data-details-descriptor]");
+    const positioningEl = dialog.querySelector("[data-details-positioning]");
+    const moreEl = dialog.querySelector("[data-details-more]");
+    const listEl = dialog.querySelector("[data-details-deliverables]");
+    const ctaEl = dialog.querySelector("[data-details-cta]");
+    const closeBtn = dialog.querySelector("[data-ask-leilia-details-close]");
+    let lastTrigger = null;
+
+    function openDetails(index, trigger) {
+      const reading = readings[index];
+      if (!reading) return;
+      if (
+        !(titleEl instanceof HTMLElement) ||
+        !(priceEl instanceof HTMLElement) ||
+        !(descriptorEl instanceof HTMLElement) ||
+        !(positioningEl instanceof HTMLElement) ||
+        !(moreEl instanceof HTMLElement) ||
+        !(listEl instanceof HTMLElement) ||
+        !(ctaEl instanceof HTMLAnchorElement)
+      ) {
+        return;
+      }
+
+      titleEl.textContent = reading.name;
+      priceEl.textContent = String(reading.price || "").replace(/^US\$/, "US $");
+      if (reading.descriptor) {
+        descriptorEl.hidden = false;
+        descriptorEl.textContent = reading.descriptor;
+      } else {
+        descriptorEl.hidden = true;
+        descriptorEl.textContent = "";
+      }
+      positioningEl.textContent = reading.positioning || "";
+      moreEl.replaceChildren();
+      (reading.moreInfo || []).forEach((paragraph) => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        moreEl.appendChild(p);
       });
+      listEl.replaceChildren();
+      (reading.deliverables || [])
+        .filter((item) => !/^no audio or video$/i.test(String(item)))
+        .forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          listEl.appendChild(li);
+        });
+      ctaEl.href = reading.requestHref;
+      ctaEl.textContent = reading.ctaLabel || "Request this reading";
+      lastTrigger = trigger;
+      if (!isAskLeiliaDialogOpen(dialog)) openAskLeiliaDialog(dialog);
+      if (closeBtn instanceof HTMLElement) closeBtn.focus();
+    }
+
+    function closeDetails() {
+      if (isAskLeiliaDialogOpen(dialog)) closeAskLeiliaDialog(dialog);
+    }
+
+    root.querySelectorAll("[data-ask-leilia-details]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const index = Number.parseInt(String(button.getAttribute("data-reading-index") || "0"), 10);
+        openDetails(index, button);
+      });
+    });
+
+    closeBtn?.addEventListener("click", closeDetails);
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) closeDetails();
+    });
+    dialog.addEventListener("close", () => {
+      if (lastTrigger instanceof HTMLElement) {
+        lastTrigger.focus({ preventScroll: true });
+      }
+      lastTrigger = null;
     });
   }
 
-  setupAskLeiliaDisclosures();
-  document.addEventListener("astro:page-load", setupAskLeiliaDisclosures);
+  setupAskLeiliaDetailsDialog();
+  document.addEventListener("astro:page-load", setupAskLeiliaDetailsDialog);
 </script>

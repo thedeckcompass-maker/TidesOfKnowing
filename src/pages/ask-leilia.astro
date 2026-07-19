@@ -1,17 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AskLeiliaPricingGrid from "../components/ask-leilia/AskLeiliaPricingGrid.astro";
-import AskLeiliaProofReviews from "../components/ask-leilia/AskLeiliaProofReviews.astro";
 import AskLeiliaSamplePreviews from "../components/ask-leilia/AskLeiliaSamplePreviews.astro";
 import AskLeiliaReviewsCarousel from "../components/ask-leilia/AskLeiliaReviewsCarousel.astro";
 import {
-  ASK_LEILIA_PURCHASE_REASSURANCE,
   ASK_LEILIA_READINGS,
-  ASK_LEILIA_DELIVERABLES,
-  ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS,
+  ASK_LEILIA_CLOSING_OFFERS,
   ASK_LEILIA_PUBLIC_BRAND,
   ASK_LEILIA_SALES_SAMPLE_PREVIEWS,
-  LEILIA_PORTRAIT_ALT,
   LEILIA_PORTRAIT_PATH,
   askLeiliaAuthorPersonNode,
   type AskLeiliaSalesSamplePreview,
@@ -19,26 +15,31 @@ import {
 import { siteBase } from "../lib/site";
 import { createCommunityServiceClient } from "../lib/community/supabaseServer";
 import { listPublicAskLeiliaReviews } from "../lib/ask-leilia/reviews/queries";
-import { selectAskLeiliaProofReviews } from "../lib/ask-leilia/salesPageProof";
+import { ASK_LEILIA_PUBLIC_REVIEW_FALLBACKS } from "../lib/ask-leilia/reviews/publicReviewFallbacks";
 import { getPublishedLibraryPublicationBySlug } from "../lib/readingLibrary";
 import "../styles/ask-leilia.css";
 import "../styles/ask-leilia-reviews.css";
 
 export const prerender = false;
 
-const title = "Ask Leilia | Professional Written Tarot Readings";
+const title = "Ask Leilia | Tarot, Oracle & Intuitive Readings";
 const description =
-  "Choose a personally interpreted tarot reading from Leilia: one focused question, an in-depth exploration, or a Personal Guidance Reading that includes her signature Waka Spread and private recorded interpretation. Delivered within 48 hours.";
+  "Professional intuitive readings from Leilia, integrating tarot, oracle insight and intuitive channelling to bring clarity to questions, decisions and complex life situations.";
 const canonical = new URL("/ask-leilia/", siteBase(Astro)).href;
 
+/** COMPASS Method “Center” icon — clear compass/direction motif (decorative only). */
+const HERO_MOTIF_SRC = "/images/compass/icons/center/center-transparent.png";
+
 let publicReviews: Awaited<ReturnType<typeof listPublicAskLeiliaReviews>> = [];
-let proofReviews: typeof publicReviews = [];
 let salesSamples: AskLeiliaSalesSamplePreview[] = ASK_LEILIA_SALES_SAMPLE_PREVIEWS;
+
+const host = Astro.url.hostname;
+const allowReviewFallbacks =
+  import.meta.env.DEV || host === "127.0.0.1" || host === "localhost";
 
 try {
   const service = createCommunityServiceClient(Astro.locals);
   publicReviews = await listPublicAskLeiliaReviews(service, 6);
-  proofReviews = selectAskLeiliaProofReviews(publicReviews, 2);
 
   const resolvedSamples = await Promise.all(
     ASK_LEILIA_SALES_SAMPLE_PREVIEWS.map(async (fallback) => {
@@ -61,8 +62,19 @@ try {
   );
   salesSamples = resolvedSamples;
 } catch (error) {
-  console.error("Unable to load Ask Leilia sales-page proof content:", error);
-  proofReviews = selectAskLeiliaProofReviews(publicReviews, 2);
+  console.error("Unable to load Ask Leilia sales-page content:", error);
+}
+
+// Fallbacks are for local development/tests only. Production must surface live query
+// results (or an empty carousel) and must not silently substitute stale reviews.
+if (publicReviews.length === 0 && allowReviewFallbacks) {
+  publicReviews = ASK_LEILIA_PUBLIC_REVIEW_FALLBACKS;
+}
+
+function splitUsdPrice(price: string): { qualifier: string; amount: string } {
+  const match = price.match(/^(US)\s?(\$\d+)$/);
+  if (!match) return { qualifier: "", amount: price };
+  return { qualifier: match[1], amount: match[2] };
 }
 
 const jsonLd = {
@@ -81,6 +93,13 @@ const jsonLd = {
     availability: "https://schema.org/PreOrder",
   })),
 };
+
+const processSteps = [
+  "Choose the reading that fits what you need.",
+  "Share your question, situation, or concerns.",
+  "Complete your booking.",
+  "Receive your reading within 48 hours.",
+] as const;
 ---
 
 <BaseLayout
@@ -93,227 +112,318 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <main class="ask-leilia page-inner">
-    <section class="ask-leilia-hero" aria-labelledby="ask-leilia-heading">
-      <div class="ask-leilia-hero__copy">
-        <p class="ask-leilia__kicker">Professional Tarot Readings</p>
-        <h1 id="ask-leilia-heading">Ask Leilia</h1>
-        <p class="ask-leilia-hero__lede">
-          What the cards actually show, not what would feel nice to hear.
-        </p>
-        <p class="ask-leilia-hero__lede">
-          Forty years of tarot practice, read honestly, whatever you're asking. The aim is clarity
-          you can use, not comfort you'll outgrow.
-        </p>
-        <p class="ask-leilia-hero__lede">
-          Every Ask Leilia reading is written personally for your question, not a template, not a
-          general spread. It's interpreted entirely by me, with no AI involved at any stage, and
-          delivered within 48 hours.
-        </p>
-        <p class="ask-leilia-hero__actions">
-          <a class="ask-leilia-hero__cta" href="#choose-your-reading">Choose Your Reading</a>
-        </p>
+    <section
+      class="ask-leilia-hero ask-leilia-hero--editorial"
+      aria-labelledby="ask-leilia-heading"
+    >
+      <div class="ask-leilia-hero__grid">
+        <div class="ask-leilia-hero__primary">
+          <p class="ask-leilia-hero__kicker">
+            Professional readings integrating tarot, oracle &amp; intuitive channelling
+          </p>
+          <h1 id="ask-leilia-heading">Ask Leilia</h1>
+          <p class="ask-leilia-hero__promise">
+            See your situation clearly. Understand the deeper forces shaping it. Find a more
+            informed way forward.
+          </p>
+          <p class="ask-leilia-hero__authority">
+            40+ years of tarot practice · 30 years as a professional journalist and editor ·
+            Fourth-generation Matakite (seer) · Founder of The COMPASS Method™
+          </p>
+          <p class="ask-leilia-hero__actions">
+            <a class="ask-leilia-hero__cta ask-leilia-purchase-cta" href="#choose-your-reading"
+              >Choose Your Reading</a
+            >
+            <a class="ask-leilia-hero__secondary-link" href="#real-client-readings">
+              See how a reading works →
+            </a>
+          </p>
+        </div>
+        <div class="ask-leilia-hero__secondary">
+          <div class="ask-leilia-hero__motif" aria-hidden="true">
+            <img src={HERO_MOTIF_SRC} alt="" width="800" height="800" decoding="async" />
+          </div>
+          <div class="ask-leilia-hero__method">
+            <p>
+              I bring the cards, oracle insight and intuitive channelling together to read beyond
+              the obvious answer. The aim is clarity you can use, not comfort you’ll outgrow.
+            </p>
+            <p>Every reading is tailored to you and your situation. No rigid template, no generic spread.</p>
+          </div>
+          <aside class="ask-leilia-hero__trust-panel">
+            <span class="ask-leilia-hero__trust-dot" aria-hidden="true"></span>
+            <p>
+              <span class="ask-leilia-hero__trust-lead">100% human-led.</span>
+              <span class="ask-leilia-hero__trust-rest">
+                No AI-generated content. Every reading is interpreted personally by Leilia.
+              </span>
+            </p>
+          </aside>
+          <blockquote class="ask-leilia-hero__quote">
+            <p>
+              “The reading I received was deeply insightful and provided sound advice on the issue I
+              was facing. The way it was delivered made me feel seen and supported.”
+            </p>
+            <footer>
+              <cite>Sasha</cite>
+            </footer>
+          </blockquote>
+        </div>
       </div>
     </section>
 
-    <AskLeiliaProofReviews reviews={proofReviews} />
+    <AskLeiliaReviewsCarousel reviews={publicReviews} />
 
     <AskLeiliaPricingGrid
       sectionId="choose-your-reading"
-      heading="Choose the depth that fits what you need"
+      heading="Tailored readings, drawing on 40 years’ experience"
       headingId="readings-heading"
-      intro="Every reading is interpreted personally by me. The difference is the scope of what you bring, the depth of the exploration, and the way the reading is delivered."
       readings={ASK_LEILIA_READINGS}
       buttonLabel="Request This Reading"
     />
 
-    <aside class="ask-leilia-reassure" aria-label="Purchase reassurance">
-      <ul class="ask-leilia-reassure__list">
-        {
-          ASK_LEILIA_PURCHASE_REASSURANCE.map((point) => (
-            <li>
-              <span class="ask-leilia-reassure__mark" aria-hidden="true">
-                •
-              </span>
-              {point}
-            </li>
-          ))
-        }
-      </ul>
-    </aside>
+    <section
+      class="ask-leilia-about ask-leilia-about--meet"
+      aria-labelledby="meet-leilia-heading"
+      id="meet-leilia"
+    >
+      <header class="ask-leilia-about__masthead">
+        <p class="ask-leilia-about__eyebrow">The Reader Behind the Reading</p>
+        <h2 id="meet-leilia-heading">Meet Leilia</h2>
+      </header>
 
-    <AskLeiliaSamplePreviews samples={salesSamples} />
-
-    <section class="ask-leilia-library-cta" aria-labelledby="ask-leilia-library-cta-heading">
-      <h2 id="ask-leilia-library-cta-heading">Explore more genuine readings</h2>
-      <p>
-        Browse authorised client readings and see the cards, spreads, and full interpretations across
-        different questions and situations.
-      </p>
-      <a class="ask-leilia-library-cta__link" href="/recent-client-readings/">
-        Explore the Reading Library
-      </a>
-    </section>
-
-    <section class="ask-leilia-return" aria-labelledby="ask-leilia-return-heading">
-      <h2 id="ask-leilia-return-heading">Ready to choose your reading?</h2>
-      <p>Select the level of depth that fits what you need now.</p>
-      <p class="ask-leilia-return__actions">
-        <a class="ask-leilia-hero__cta" href="#choose-your-reading">Choose My Reading</a>
-      </p>
-      <ul class="ask-leilia-return__links">
-        {
-          ASK_LEILIA_READINGS.map((reading) => (
-            <li>
-              <a href={reading.requestHref}>{reading.name}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="ask-leilia-hero__copy" aria-label="About Ask Leilia readings">
-      <p class="ask-leilia-hero__subheading">
-        Professional written tarot readings, personally interpreted by Leilia.
-      </p>
-      <p class="ask-leilia-hero__lede">
-        Whether you're facing a difficult decision, seeking clarity about a relationship,
-        wondering what comes next, or simply looking for another perspective, each reading is
-        personally completed using traditional tarot methods and delivered as a professionally
-        written PDF.
-      </p>
-    </section>
-
-    <section class="ask-leilia-about" aria-labelledby="meet-leilia-heading">
       <figure class="ask-leilia-about__portrait">
         <img
           class="ask-leilia-about__photo"
           src={LEILIA_PORTRAIT_PATH}
           width="640"
           height="853"
-          alt={LEILIA_PORTRAIT_ALT}
+          alt="Professional portrait of Leilia, smiling outdoors in a park setting."
           loading="lazy"
           decoding="async"
         />
       </figure>
 
       <div class="ask-leilia-about__copy">
-        <h2 id="meet-leilia-heading">Meet Leilia</h2>
         <p>
-          Leilia – Tides of Knowing is the name I use for my professional tarot practice. I've been
-          reading tarot since I first carried a deck to school at the age of ten. What began as
-          childhood curiosity slowly became a lifelong practice.
+          I bring tarot, oracle insight and intuitive channelling together to offer a deeper reading
+          of the question or situation in front of you. Whether you are facing a difficult decision,
+          seeking clarity about a relationship, wondering what comes next, or simply looking for
+          another perspective, every reading is shaped around what you actually need.
         </p>
         <p>
-          Over the last four decades, I've read cards through many seasons of life.
-          Alongside that journey, I spent more than thirty years working as a
-          journalist, broadcaster and editor, learning to listen carefully, ask
-          thoughtful questions and look beneath the surface of people's stories.
+          Leilia is the name I use for my professional reading practice. I have been reading tarot
+          since I first carried a deck to school at the age of ten. What began as childhood curiosity
+          gradually became a lifelong practice.
         </p>
         <p>
-          My approach is less about prediction and more about understanding. I am
-          interested in the patterns beneath experience, the tensions we carry, the
-          choices before us, and the guidance that emerges when we look honestly at
-          what the cards reveal.
+          Over the last four decades, I have read cards through many seasons of life. Alongside that
+          work, I spent more than thirty years as a professional journalist and editor, learning to
+          listen carefully, ask useful questions and look beneath the surface of people’s stories.
+        </p>
+        <blockquote class="ask-leilia-about__pull">
+          <p>“My approach is less about prediction and more about understanding.”</p>
+        </blockquote>
+        <p>
+          I am interested in the patterns beneath experience, the tensions we carry, the choices
+          before us, and the guidance that emerges when we look honestly at what the cards reveal.
         </p>
         <p>
-          Every Ask Leilia reading is written personally by me. There are no templates
-          and no automated interpretations. I spend time with your question, the cards
-          and the wider story surrounding what you are experiencing.
+          Every Ask Leilia reading is completed personally by me. There are no rigid templates, no
+          generic spreads and no automated interpretations. I spend time with your question, the
+          cards and the wider story surrounding what you are experiencing.
         </p>
-        <p class="ask-leilia-about__trust">
-          Reading cards for more than 40 years • Journalist and editor for more than 30
-          years • Creator of The COMPASS Method™
+        <p class="ask-leilia-about__authority">
+          40+ years of tarot practice · 30 years as a professional journalist and editor ·
+          Fourth-generation Matakite (seer) · Founder of The COMPASS Method™
         </p>
       </div>
     </section>
 
-    <section class="ask-leilia-grid" aria-label="Process and service details">
-      <article class="ask-leilia-card">
-        <h2>How It Works</h2>
-        <ol>
-          <li>Choose your reading and share your question.</li>
-          <li>Complete your booking.</li>
-          <li>Receive your reading within 48 hours.</li>
+    <AskLeiliaSamplePreviews samples={salesSamples} />
+
+    <section class="ask-leilia-reprise" aria-labelledby="ask-leilia-reprise-heading">
+      <h2 id="ask-leilia-reprise-heading" class="visually-hidden">Choose a reading</h2>
+      <ul class="ask-leilia-reprise__grid">
+        {
+          ASK_LEILIA_CLOSING_OFFERS.map((offer) => {
+            const { qualifier, amount } = splitUsdPrice(offer.price);
+            return (
+              <li>
+                <article class="ask-leilia-reprise__card">
+                  <h3 class="ask-leilia-reprise__name">{offer.name}</h3>
+                  <p class="ask-leilia-pricing__price" aria-label={offer.price}>
+                    {qualifier ? (
+                      <span class="ask-leilia-pricing__price-visual" aria-hidden="true">
+                        <span class="ask-leilia-pricing__currency">{qualifier}</span>
+                        <span class="ask-leilia-pricing__amount">{amount}</span>
+                      </span>
+                    ) : (
+                      offer.price
+                    )}
+                  </p>
+                  <p class="ask-leilia-reprise__summary">{offer.summary}</p>
+                  <a class="ask-leilia-pricing__cta ask-leilia-purchase-cta" href={offer.requestHref}>
+                    {offer.ctaLabel}
+                  </a>
+                </article>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </section>
+
+    <section class="ask-leilia-fulfilment ask-leilia-fulfilment--process-only" aria-labelledby="how-it-works-heading">
+      <h2 id="how-it-works-heading">How It Works</h2>
+      <ol class="ask-leilia-process">
+        {
+          processSteps.map((step, index) => (
+            <li class="ask-leilia-process__step">
+              <span class="ask-leilia-process__num" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="ask-leilia-process__text">{step}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="ask-leilia-questions" aria-labelledby="questions-heading">
+      <header class="ask-leilia-questions__masthead">
+        <div class="ask-leilia-questions__intro">
+          <p class="ask-leilia-questions__dateline">
+            FIELD NOTES / FROM THE JOURNALIST’S NOTEBOOK
+          </p>
+          <h2 id="questions-heading">Questions People Bring</h2>
+          <p>
+            Good readings begin with the right questions.
+            <strong class="ask-leilia-questions__emphasis">My journalism background</strong> taught
+            me to look at a situation from more than one angle, and tarot works the same way. These
+            are the questions people bring when they want clarity that goes beyond a simple
+            prediction.
+          </p>
+        </div>
+        <div class="ask-leilia-questions__stamp" aria-hidden="true">
+          <span class="ask-leilia-questions__stamp-line">40+ YEARS</span>
+          <span class="ask-leilia-questions__stamp-line">ON THE STORY</span>
+        </div>
+      </header>
+
+      <div class="ask-leilia-questions__dossier">
+        <ol class="ask-leilia-questions__index" aria-hidden="true">
+          <li><span class="ask-leilia-questions__index-num">01</span> Who</li>
+          <li><span class="ask-leilia-questions__index-num">02</span> What</li>
+          <li><span class="ask-leilia-questions__index-num">03</span> Where</li>
+          <li><span class="ask-leilia-questions__index-num">04</span> When</li>
+          <li><span class="ask-leilia-questions__index-num">05</span> How</li>
         </ol>
-      </article>
 
-      <article class="ask-leilia-card">
-        <h2>What You Receive</h2>
-        <ul>
-          <li>A personally interpreted tarot reading.</li>
-          <li>
-            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["one-question"]}:</strong>
+        <div class="ask-leilia-questions__cases">
+          <article class="ask-leilia-questions__case">
+            <h3>Who</h3>
             <ul>
-              {ASK_LEILIA_DELIVERABLES["one-question"].map((item) => <li>{item}</li>)}
+              <li>Who am I becoming through this experience?</li>
+              <li>Who or what is asking for my attention?</li>
+              <li>Who am I when familiar roles no longer fit?</li>
             </ul>
-          </li>
-          <li>
-            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["in-depth"]}:</strong>
+          </article>
+          <article class="ask-leilia-questions__case">
+            <h3>What</h3>
             <ul>
-              {ASK_LEILIA_DELIVERABLES["in-depth"].map((item) => <li>{item}</li>)}
+              <li>What am I being invited to understand?</li>
+              <li>What assumptions am I carrying into this situation?</li>
+              <li>What might I be overlooking?</li>
+              <li>What is trying to emerge here?</li>
             </ul>
-          </li>
-          <li>
-            <strong>{ASK_LEILIA_DELIVERABLE_PUBLIC_LABELS["personal-guidance"]}:</strong>
-            <span class="ask-leilia-card__descriptor"> Includes Leilia’s signature Waka Spread.</span>
+          </article>
+          <article class="ask-leilia-questions__case">
+            <h3>Where</h3>
             <ul>
-              {ASK_LEILIA_DELIVERABLES["personal-guidance"].map((item) => <li>{item}</li>)}
+              <li>Where am I being asked to place my attention?</li>
+              <li>Where have I become disconnected from myself?</li>
+              <li>Where does this path appear to be leading?</li>
+              <li>Where is growth asking something of me?</li>
             </ul>
-          </li>
-        </ul>
-      </article>
+          </article>
+          <article class="ask-leilia-questions__case">
+            <h3>When</h3>
+            <ul>
+              <li>When might this situation begin to shift?</li>
+              <li>When would action be more useful than waiting?</li>
+              <li>When am I likely to have enough information to decide?</li>
+              <li>When does patience become avoidance?</li>
+            </ul>
+          </article>
+          <article class="ask-leilia-questions__case">
+            <h3>How</h3>
+            <ul>
+              <li>How might I work consciously with this transition?</li>
+              <li>How do these cards deepen my understanding?</li>
+              <li>How can I navigate this with greater awareness?</li>
+              <li>How might I respond rather than react?</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <footer class="ask-leilia-questions__on-file">
+        <p class="ask-leilia-questions__on-file-label">ALSO ON FILE →</p>
+        <p class="ask-leilia-questions__on-file-quote">
+          “I’ve pulled these cards. What might I not be seeing?”
+        </p>
+      </footer>
     </section>
 
-    <AskLeiliaReviewsCarousel reviews={publicReviews} />
-
-    <section class="ask-leilia-section" aria-labelledby="questions-heading">
-      <h2 id="questions-heading">Questions People Bring</h2>
-      <p>
-        Whether you are navigating a crossroads, seeking clarity around a relationship,
-        or wondering what comes next, Ask Leilia offers professional written guidance
-        grounded in traditional tarot interpretation.
-      </p>
-      <div class="ask-leilia-question-grid">
-        <article>
-          <h3>Who</h3>
-          <ul>
-            <li>Who am I becoming through this experience?</li>
-            <li>Who or what is asking for my attention?</li>
-            <li>Who am I when familiar roles no longer fit?</li>
-          </ul>
-        </article>
-        <article>
-          <h3>What</h3>
-          <ul>
-            <li>What am I being invited to understand?</li>
-            <li>What assumptions am I carrying into this situation?</li>
-            <li>What might I be overlooking?</li>
-            <li>What is trying to emerge here?</li>
-          </ul>
-        </article>
-        <article>
-          <h3>Where</h3>
-          <ul>
-            <li>Where am I being asked to place my attention?</li>
-            <li>Where have I become disconnected from myself?</li>
-            <li>Where does this path appear to be leading?</li>
-            <li>Where is growth asking something of me?</li>
-          </ul>
-        </article>
-        <article>
-          <h3>How</h3>
-          <ul>
-            <li>How might I work consciously with this transition?</li>
-            <li>How do these cards deepen my understanding?</li>
-            <li>How can I navigate this with greater awareness?</li>
-            <li>How might I respond rather than react?</li>
-          </ul>
-        </article>
+    <section class="ask-leilia-final" aria-labelledby="closing-offers-heading">
+      <div class="ask-leilia-final__copy">
+        <h2 id="closing-offers-heading">Ready to bring your own question?</h2>
+        <p>
+          Choose the reading that matches the depth and complexity of what you need to understand.
+        </p>
       </div>
-      <p class="ask-leilia-pull">
-        Many people also bring their own cards and simply ask:
-        <span>"I've pulled these cards. What might I not be seeing?"</span>
-      </p>
+      <ul class="ask-leilia-final__tiers">
+        {
+          ASK_LEILIA_CLOSING_OFFERS.map((offer) => {
+            const { qualifier, amount } = splitUsdPrice(offer.price);
+            const accessiblePrice = offer.price.replace("US$", "US $");
+            const featured = offer.id === "in-depth";
+            return (
+              <li
+                class:list={[
+                  "ask-leilia-final__tier-item",
+                  featured && "ask-leilia-final__tier-item--featured",
+                ]}
+              >
+                {featured ? (
+                  <p class="ask-leilia-final__tier-label">FOR COMPLEX SITUATIONS</p>
+                ) : null}
+                <a
+                  class="ask-leilia-final__tier"
+                  href={offer.requestHref}
+                  aria-label={`${offer.name}, ${accessiblePrice}`}
+                >
+                  <span class="ask-leilia-final__tier-copy">
+                    <span class="ask-leilia-final__tier-name">{offer.name}</span>
+                    <span class="ask-leilia-final__tier-desc">{offer.compactSummary}</span>
+                  </span>
+                  <span class="ask-leilia-final__tier-price" aria-hidden="true">
+                    {qualifier ? (
+                      <span class="ask-leilia-final__tier-price-visual">
+                        <span class="ask-leilia-final__tier-currency">{qualifier}</span>
+                        <span class="ask-leilia-final__tier-amount">{amount}</span>
+                      </span>
+                    ) : (
+                      accessiblePrice
+                    )}
+                  </span>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
     </section>
   </main>
 </BaseLayout>

@@ -6,24 +6,36 @@ interface Props {
 }
 
 const { samples } = Astro.props;
+
+function readingLinkLabel(firstName: string): string {
+  return `Read ${firstName}’s reading →`;
+}
 ---
 
 {
   samples.length > 0 ? (
-    <section class="ask-leilia-samples" aria-labelledby="ask-leilia-samples-heading">
-      <p class="ask-leilia__kicker">Real Client Readings</p>
-      <h2 id="ask-leilia-samples-heading">See how I read</h2>
-      <p class="ask-leilia-samples__intro">
-        These genuine client readings are shared with permission. See the spread, follow how the
-        cards are read in combination, and review the depth of the interpretation before choosing
-        your own reading.
-      </p>
+    <section
+      class="ask-leilia-samples"
+      id="real-client-readings"
+      aria-labelledby="ask-leilia-samples-heading"
+    >
+      <header class="ask-leilia-samples__masthead">
+        <p class="ask-leilia-samples__eyebrow">REAL CLIENT READINGS</p>
+        <h2 id="ask-leilia-samples-heading">See how I read</h2>
+        <p class="ask-leilia-samples__intro">
+          These real client readings are shared with permission. See the spread, follow how the cards
+          are read in combination, and review the depth of the interpretation before choosing your own
+          reading.
+        </p>
+      </header>
+
       <ul class="ask-leilia-samples__grid">
         {samples.map((sample) => (
           <li>
-            <article class="ask-leilia-sample-card">
-              <a class="ask-leilia-sample-card__media" href={sample.href}>
+            <article class="ask-leilia-sample-card" data-sample-slug={sample.slug}>
+              <figure class="ask-leilia-sample-card__frame">
                 <img
+                  class="ask-leilia-sample-card__image"
                   src={sample.imagePath}
                   alt={`Spread photograph for ${sample.firstName}'s reading: ${sample.title}`}
                   width="640"
@@ -31,19 +43,24 @@ const { samples } = Astro.props;
                   loading="lazy"
                   decoding="async"
                 />
-              </a>
+              </figure>
               <div class="ask-leilia-sample-card__body">
                 <h3 class="ask-leilia-sample-card__title">{sample.title}</h3>
                 <p class="ask-leilia-sample-card__client">{sample.firstName}</p>
                 <p class="ask-leilia-sample-card__desc">{sample.description}</p>
                 <a class="ask-leilia-sample-card__link" href={sample.href}>
-                  {`Read ${sample.firstName}’s reading`}
+                  {readingLinkLabel(sample.firstName)}
                 </a>
               </div>
             </article>
           </li>
         ))}
       </ul>
+
+      <p class="ask-leilia-samples__library">
+        See more real client readings in the full{" "}
+        <a href="/recent-client-readings/">Reading Library</a>.
+      </p>
     </section>
   ) : null
 }
