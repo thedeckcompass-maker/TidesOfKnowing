@@ -14,6 +14,7 @@ import {
 import { logAskLeiliaPipeline } from "../../../lib/ask-leilia/pipelineLog";
 import { isAskLeiliaDbReadingType, type AskLeiliaDbReadingType } from "../../../lib/ask-leilia/readingTypes";
 import type { AskLeiliaCardPreference } from "../../../lib/ask-leilia/types";
+import { tryFulfillCompassEnrolment } from "../../../lib/compass/fulfilment";
 
 export const prerender = false;
 
@@ -157,6 +158,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const currency = session.currency ?? "usd";
   const paymentStatus = session.payment_status ?? "paid";
   const service = createCommunityServiceClient(locals);
+
+  // COMPASS enrolments share this webhook endpoint via client_reference_id.
+  const compassResult = await tryFulfillCompassEnrolment(service, session, event, locals);
+  if (compassResult.handled) {
+    logAskLeiliaPipeline("WEBHOOK_COMPLETE", {
+      ...baseFields,
+      paymentAmount: amount,
+      currency,
+      requestStatus: compassResult.ok ? "compass_paid" : "compass_error",
+      error: compassResult.ok ? undefined : compassResult.error,
+    });
+    if (!compassResult.ok) {
+      return json({ ok: false, error: compassResult.error }, compassResult.httpStatus);
+    }
+    return json({ ok: true, product: "compass", idempotent: compassResult.idempotent ?? false });
+  }
 
   const { data: paymentRecord, error } = await service
     .from("ask_leilia_payments")

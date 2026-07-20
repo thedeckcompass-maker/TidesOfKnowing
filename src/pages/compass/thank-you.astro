@@ -1,11 +1,50 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { compassCohortCalendarPath } from "../../lib/compass/calendar";
+import { getCompassEnrolmentByCheckoutSession } from "../../lib/compass/enrolments";
+import { formatCompassEnrolmentSchedule, type CompassEnrolmentRow } from "../../lib/compass/offer";
+import { createCommunityServiceClient } from "../../lib/community/supabaseServer";
 import { siteBase } from "../../lib/site";
 
-const title = "Thank You | Tides of Knowing";
+export const prerender = false;
+
+const title = "Thank You | COMPASS Training";
 const description =
-  "Thank you for joining The COMPASS Method. Your place has been reserved and Leigh Spencer will follow up personally.";
+  "Thank you for enrolling in The COMPASS Method™ Live Practitioner Training.";
 const ogUrl = new URL("/compass/thank-you/", siteBase(Astro)).href;
+
+const sessionIdRaw = Astro.url.searchParams.get("session_id")?.trim() ?? "";
+const sessionId =
+  sessionIdRaw.startsWith("cs_") && sessionIdRaw.length >= 20 && sessionIdRaw.length <= 200
+    ? sessionIdRaw
+    : "";
+
+type ThanksView =
+  | { kind: "paid"; schedule: NonNullable<ReturnType<typeof formatCompassEnrolmentSchedule>>; calendarHref: string; emailSent: boolean; startLabel: string }
+  | { kind: "fallback" };
+
+let view: ThanksView = { kind: "fallback" };
+
+if (sessionId) {
+  try {
+    const service = createCommunityServiceClient(Astro.locals);
+    const row = await getCompassEnrolmentByCheckoutSession(service, sessionId);
+    if (row && row.status === "paid") {
+      const schedule = formatCompassEnrolmentSchedule(row as CompassEnrolmentRow);
+      if (schedule) {
+        view = {
+          kind: "paid",
+          schedule,
+          calendarHref: compassCohortCalendarPath(row.cohort_id),
+          emailSent: Boolean(row.student_confirmation_sent_at),
+          startLabel: schedule.startDateLabel,
+        };
+      }
+    }
+  } catch (err) {
+    console.error("COMPASS thank-you enrolment lookup failed:", err);
+  }
+}
 ---
 
 <BaseLayout
@@ -18,23 +57,97 @@ const ogUrl = new URL("/compass/thank-you/", siteBase(Astro)).href;
   <article class="compass-thanks page-inner">
     <header class="compass-thanks__hero">
       <p class="compass-thanks__eyebrow">COMPASS Training</p>
-      <h1 class="compass-thanks__title">Thank you. Your place has been reserved.</h1>
+      <h1 class="compass-thanks__title">
+        {
+          view.kind === "paid"
+            ? "Payment received. Your cohort place is confirmed."
+            : "Thank you. Your payment is being confirmed."
+        }
+      </h1>
     </header>
 
     <div class="compass-thanks__body">
-      <p class="compass-thanks__p">Thank you for joining The COMPASS Method™.</p>
-      <p class="compass-thanks__p">
-        I'll personally be in touch within 48 hours with the next steps, cohort information, and platform access details.
-      </p>
-      <p class="compass-thanks__p">There is nothing you need to prepare right now.</p>
-      <p class="compass-thanks__p">
-        If you have timezone constraints, scheduling questions, or anything feels unclear, you are welcome to contact me at:
-      </p>
-      <p class="compass-thanks__contact">
-        <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>
-      </p>
-      <p class="compass-thanks__p">I'm looking forward to working with you.</p>
-      <p class="compass-thanks__signature">— Leigh Spencer (Leilia)</p>
+      {
+        view.kind === "paid" ? (
+          <>
+            <p class="compass-thanks__p">
+              Thank you for enrolling in The COMPASS Method™ Live Practitioner Training (US$997).
+            </p>
+            <p class="compass-thanks__p">
+              <strong>Your cohort begins:</strong> {view.startLabel}
+            </p>
+            <p class="compass-thanks__p">
+              <strong>Session time:</strong> 7:00–8:30 pm Mexico City time
+            </p>
+            <p class="compass-thanks__p">
+              <strong>Timezone:</strong> America/Mexico_City
+            </p>
+            <p class="compass-thanks__p">
+              <strong>Further teaching sessions:</strong> {view.schedule.furtherSessionsLabel}
+            </p>
+            <p class="compass-thanks__p">All four teaching dates:</p>
+            <ul class="compass-thanks__dates">
+              {view.schedule.sessionDateLabels.map((label) => (
+                <li>{label}</li>
+              ))}
+            </ul>
+            <p class="compass-thanks__p">
+              Please confirm the conversion for your location before the first session. Each live
+              teaching session runs 60–90 minutes, and attendance is strongly recommended.
+            </p>
+            <p class="compass-thanks__p">
+              <a class="compass-thanks__cal" href={view.calendarHref}>
+                Download calendar (.ics) for all four sessions
+              </a>
+            </p>
+            {view.emailSent ? (
+              <p class="compass-thanks__p">
+                A confirmation email with your cohort dates and next steps has been sent.
+              </p>
+            ) : (
+              <p class="compass-thanks__p">
+                Your payment is confirmed. A confirmation email with your cohort dates will arrive
+                shortly. If you do not receive it within a few hours, contact{" "}
+                <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>.
+              </p>
+            )}
+            <h2 class="compass-thanks__h2">The Deck Compass</h2>
+            <p class="compass-thanks__p">
+              Three months of The Deck Compass membership are included with your enrolment.
+              Platform access instructions will be sent separately. Onboarding into the platform
+              occurs during the fourth teaching session. Journalling and journal-sharing are built
+              into the platform, and one guaranteed live member training occurs each month.
+            </p>
+            <p class="compass-thanks__p">
+              Questions:{" "}
+              <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a>
+            </p>
+          </>
+        ) : (
+          <>
+            <p class="compass-thanks__p">
+              Thank you for enrolling in The COMPASS Method™ Live Practitioner Training.
+            </p>
+            <p class="compass-thanks__p">
+              If your payment completed successfully, your place is being confirmed now. Cohort
+              dates and next steps will appear here once confirmation finishes, and the same
+              details will be sent by email.
+            </p>
+            <p class="compass-thanks__p">
+              You can refresh this page in a minute or two. If nothing appears, check your email,
+              or contact{" "}
+              <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> with the email
+              address used at checkout.
+            </p>
+            <h2 class="compass-thanks__h2">The Deck Compass</h2>
+            <p class="compass-thanks__p">
+              Three months of membership are included. Platform access instructions will be sent
+              separately. Onboarding into the platform occurs during the fourth teaching session.
+            </p>
+          </>
+        )
+      }
+      <p class="compass-thanks__signature">Leigh Spencer (Leilia)</p>
     </div>
   </article>
 </BaseLayout>
@@ -77,8 +190,15 @@ const ogUrl = new URL("/compass/thank-you/", siteBase(Astro)).href;
     background: color-mix(in srgb, var(--tok-surface-reading) 72%, transparent);
   }
 
+  .compass-thanks__h2 {
+    margin: 1.35rem 0 0.65rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+  }
+
   .compass-thanks__p,
-  .compass-thanks__contact,
   .compass-thanks__signature {
     margin: 0 0 1rem;
     font-family: var(--font-body);
@@ -87,14 +207,26 @@ const ogUrl = new URL("/compass/thank-you/", siteBase(Astro)).href;
     color: var(--tok-text-dark);
   }
 
-  .compass-thanks__contact a {
+  .compass-thanks__dates {
+    margin: 0 0 1rem;
+    padding-left: 1.2rem;
+    color: var(--tok-text-dark);
+    line-height: 1.6;
+  }
+
+  .compass-thanks__cal {
     color: var(--tok-water);
     font-weight: 600;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
   }
 
-  .compass-thanks__contact a:hover {
+  .compass-thanks__body a {
+    color: var(--tok-water);
+    font-weight: 600;
+  }
+
+  .compass-thanks__body a:hover {
     color: var(--tok-teal);
   }
 

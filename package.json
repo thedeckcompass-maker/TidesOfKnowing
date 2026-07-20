@@ -21,6 +21,8 @@
     "test:rcm-eof-normalise": "node scripts/normalise-rcm-eof.test.mjs",
     "test:ask-leilia-reviews": "node scripts/ask-leilia-reviews.test.mjs",
     "test:ask-leilia-admin": "node scripts/ask-leilia-admin.test.mjs",
+    "test:compass-cohorts": "node scripts/compass-cohorts.test.mjs",
+    "test:compass-fulfilment": "node scripts/compass-fulfilment.test.mjs",
     "test:member-workspace-nav": "node scripts/member-workspace-nav.test.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",
     "test:auth-callback": "node scripts/auth-callback.test.mjs",

@@ -1,19 +1,405 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BrandImagePlaceholder from "../components/home/BrandImagePlaceholder.astro";
+import DiscernmentChecklistCapture from "../components/lead-magnets/DiscernmentChecklistCapture.astro";
+import {
+  COMPASS_CAPACITY,
+  COMPASS_OFFER_ID,
+  COMPASS_SESSION_TIME_LABEL,
+  COMPASS_TIMEZONE,
+} from "../data/training/compass-cohorts";
+import { listCompassCohortViews, type CompassCohortView } from "../lib/compass/cohorts";
 import { faqPageJsonLd } from "../lib/faqPageJsonLd";
 import { siteBase } from "../lib/site";
-import { activeCompassTraining as T } from "../data/training/active-training";
+import {
+  compassPageFooterAttribution,
+  compassPageMeta,
+} from "../data/training/compass-page";
+import "../styles/home.css";
 
-const title = T.meta.title;
-const description = T.meta.description;
+const title = compassPageMeta.title;
+const description = compassPageMeta.description;
 const ogUrl = new URL("/compass/", siteBase(Astro)).href;
 
-const cs = T.cohortSchedule;
+/** Stable in-page anchor for cohort selection (not a Stripe redirect). */
+const COMPASS_CHOOSE_COHORT_HREF = "#choose-your-cohort";
+
+let paidCounts = new Map<string, number>();
+try {
+  const { createCommunityServiceClient } = await import("../lib/community/supabaseServer");
+  const { getCompassPaidCountsByCohort } = await import("../lib/compass/capacity");
+  const service = createCommunityServiceClient(Astro.locals);
+  paidCounts = await getCompassPaidCountsByCohort(service);
+} catch {
+  // Sales page still renders with configured open/full/closed when DB is unavailable.
+}
+
+const cohortViews = listCompassCohortViews(new Date(), paidCounts);
+
+type CompassMonthViewGroup = {
+  monthKey: string;
+  monthLabel: string;
+  cohorts: CompassCohortView[];
+};
+
+const cohortMonthGroups: CompassMonthViewGroup[] = [];
+for (const view of cohortViews) {
+  const existing = cohortMonthGroups.find((g) => g.monthKey === view.monthKey);
+  if (existing) existing.cohorts.push(view);
+  else {
+    cohortMonthGroups.push({
+      monthKey: view.monthKey,
+      monthLabel: view.monthLabel,
+      cohorts: [view],
+    });
+  }
+}
+
+const firstOpenMonthKey =
+  cohortMonthGroups.find((g) => g.cohorts.some((c) => c.selectable))?.monthKey ??
+  cohortMonthGroups[0]?.monthKey;
+
+const enrolQuery = Astro.url.searchParams.get("enrol");
+const enrolFlash =
+  enrolQuery === "invalid"
+    ? "Please check your cohort selection, contact details, and confirmations, then try again."
+    : enrolQuery === "full"
+      ? "That cohort is full. Please choose another available cohort."
+      : enrolQuery === "unavailable"
+        ? "We could not start enrolment just now. Please try again shortly, or contact hello@tidesofknowing.com."
+        : "";
+
+const recognitionCards = [
+  {
+    heading: "You sense the answer but cannot yet hold the thread",
+    copy: "You recognise that something important is present, but the reading fragments into individual meanings, extra cards, and explanations that do not resolve into one coherent understanding.",
+  },
+  {
+    heading: "You question what you perceived",
+    copy: "You receive an intuitive impression, then immediately wonder whether it is accurate, imagined, influenced by fear, or simply what you expected to find.",
+  },
+  {
+    heading: "You understand more than you can communicate",
+    copy: "The insight feels clear internally, but translating it into language another person can understand becomes difficult. You soften, qualify, over-explain, or lose the central point.",
+  },
+] as const;
+
+const practicalCostItems = [
+  "Pull more cards because the first answer does not feel complete",
+  "Keep searching for clarification instead of trusting what is present",
+  "Give clients broad or vague interpretations",
+  "Struggle to explain how they reached a conclusion",
+  "Lose time moving between meanings, impressions, and possibilities",
+  "Second-guess themselves after the reading",
+  "Confuse additional information with greater accuracy",
+  "Recognise something important but cannot identify the central thread",
+] as const;
+
+/** Compact asymmetric results: short label + supporting line. */
+const transformationOutcomes = [
+  {
+    label: "Business decisions",
+    copy: "Recognise patterns earlier and act with clearer professional judgement.",
+  },
+  {
+    label: "Relationship dynamics",
+    copy: "See what sits beneath words, behaviour, and recurring tension.",
+  },
+  {
+    label: "Meaning in transition",
+    copy: "Find direction within challenging or uncertain periods.",
+  },
+  {
+    label: "Clarity and agency",
+    copy: "Navigate readings and everyday life with greater confidence.",
+  },
+  {
+    label: "Clearer self-readings",
+    copy: "Settle with what is present instead of chasing the next card.",
+  },
+  {
+    label: "Clearer client readings",
+    copy: "Give friends and clients a coherent thread they can use.",
+  },
+  {
+    label: "Less anxiety, less over-pulling",
+    copy: "Stop treating extra cards as proof that the answer was incomplete.",
+  },
+  {
+    label: "Less over-explaining",
+    copy: "Say what belongs without diluting the central point.",
+  },
+  {
+    label: "Interpretive precision",
+    copy: "Test impressions against context until the reading coheres.",
+  },
+  {
+    label: "Knowing when it has landed",
+    copy: "Recognise when the answer is complete and the work can stop.",
+  },
+] as const;
+
+const differentiationBlocks = [
+  {
+    heading: "Meanings give you vocabulary",
+    copy: "They help you recognise what an individual card may represent. They do not automatically tell you which meaning matters here, in this question, for this person, at this moment.",
+  },
+  {
+    heading: "Intuition gives you information",
+    copy: "It may arrive as an image, feeling, physical response, association, memory, tension, or sudden knowing. Without a structure for testing and organising it, valuable information can remain unclear or become mixed with assumption.",
+  },
+  {
+    heading: "Interpretation creates understanding",
+    copy: "Interpretation is the disciplined work of bringing card, question, context, relationship, and intuitive signal together until the reading becomes coherent and useful.",
+  },
+] as const;
+
+const compassPillars = [
+  {
+    name: "Center",
+    key: "center",
+    icon: "/images/compass/icons/center/center-transparent.svg",
+    copy: "Arrive before interpreting. Settle attention, establish the question, and recognise what you are bringing into the reading.",
+  },
+  {
+    name: "Open",
+    key: "open",
+    icon: "/images/compass/icons/open/open-transparent.svg",
+    copy: "Make space for information that does not match the answer you expected or preferred.",
+  },
+  {
+    name: "Map",
+    key: "map",
+    icon: "/images/compass/icons/map/map-transparent.svg",
+    copy: "See the structure of the whole reading before becoming absorbed in individual details.",
+  },
+  {
+    name: "Perceive",
+    key: "perceive",
+    icon: "/images/compass/icons/perceive/perceive-transparent.svg",
+    copy: "Notice what is actually present through cards, imagery, sensation, pattern, language, and intuitive response.",
+  },
+  {
+    name: "Align",
+    key: "align",
+    icon: "/images/compass/icons/align/align-transparent.svg",
+    copy: "Test what you perceive against the question, context, evidence, and relationships within the reading.",
+  },
+  {
+    name: "Sense",
+    key: "sense",
+    icon: "/images/compass/icons/sense/sense-transparent.svg",
+    copy: "Follow the living thread between the elements and recognise where meaning gathers weight.",
+  },
+  {
+    name: "Seal",
+    key: "seal",
+    icon: "/images/compass/icons/seal/seal-transparent.svg",
+    copy: "Recognise when the answer has landed, communicate the central understanding, and close without adding noise.",
+  },
+] as const;
+
+const COMPASS_METHOD_BANNER = "/images/home/tok-home-compass-method-banner.png";
+
+const programmeFacts = [
+  "Four live teaching sessions",
+  "60–90 minutes per session",
+  "Maximum six participants",
+  "Almost three weeks of guided application",
+  "One observed seeker reading with private feedback",
+  "Three months of The Deck Compass membership included",
+] as const;
+
+const phaseOneSessions = [
+  {
+    label: "Session 1",
+    heading: "Establish the container",
+    copy: "Learn Center and Seal as the structural bookends of the method, including how to arrive before interpreting and how to recognise when the answer has landed.",
+  },
+  {
+    label: "Session 2",
+    heading: "Develop perceptual range",
+    copy: "Work with two of the internal pillars and begin recognising how intuitive information arrives through imagery, language, sensation, pattern, and relationship.",
+  },
+  {
+    label: "Session 3",
+    heading: "Test and organise meaning",
+    copy: "Add two further pillars and practise distinguishing useful signal from assumption, habit, emotional investment, and unnecessary complication.",
+  },
+  {
+    label: "Session 4",
+    heading: "Complete the framework and enter practice",
+    copy: "Learn the final pillar, bring the full method together, and receive your onboarding into The Deck Compass platform.",
+  },
+] as const;
+
+const phaseTwoPractices = [
+  {
+    heading: "Conduct readings through the platform",
+    copy: "Use the COMPASS framework in live and personal readings while the method is still fresh.",
+  },
+  {
+    heading: "Journal inside each reading",
+    copy: "The Deck Compass includes structured journalling so you can record impressions, decisions, changes in emphasis, and the point at which the answer became clear.",
+  },
+  {
+    heading: "Share your journal for review",
+    copy: "You can share selected journalling notes with Leigh for review through the platform, helping you identify patterns in how you perceive and interpret.",
+  },
+  {
+    heading: "Build your own responsive practice",
+    copy: "You learn which pillars require greater attention in different circumstances and how to use the framework without turning it into a mechanical checklist.",
+  },
+] as const;
+
+const membershipBenefits = [
+  "Continued access to the reading and journalling platform",
+  "Journal sharing and review through the member interface",
+  "One guaranteed live member training each month",
+  "Access to other member activities scheduled during your membership",
+  "Connection with your cohort and the wider practitioner community",
+] as const;
+
+const offerInclusions = [
+  "Four live teaching sessions",
+  "60–90 minutes per session",
+  "Almost three weeks of guided application",
+  "One observed seeker reading with private feedback",
+  "Journal sharing and review through The Deck Compass",
+  "Three months of Deck Compass membership",
+  "One guaranteed live member training each month",
+  "Maximum six participants",
+  "Every confirmed cohort proceeds",
+] as const;
+
+/** Approved COMPASS training testimonial reused from the homepage proof section. */
+const mareeTestimonial = {
+  name: "Maree",
+  credential: "Business and life coach · The COMPASS Method™ practitioner",
+  resultLabel: "Stronger professional interpretation",
+  paragraphs: [
+    "Working with Leigh has been a game changer for me.",
+    "I’ve worked with tarot and oracle in my practice for many years, but I had a wall around trusting my intuition and knowing what to do with the intuitive information I was receiving. As a business and life coach, I often receive messages that do not come from the material directly in front of me, and I did not know how to ground that information practically or communicate it clearly to clients.",
+    "Leigh’s training reflects the real depth of her experience and goes far beyond the topic on the surface. For me, as an adult student wanting to tighten my practice, that breadth was pure gold. I cannot speak highly enough of her skill as a trainer or the depth of knowledge she brings to this work.",
+    "I am deeply grateful for what I have learned. I will continue applying these skills and will return for any training Leigh offers next. I highly recommend her training to anyone who has reached the point in their practice where they want to go deeper but are unsure how to develop their skills and offerings.",
+  ],
+} as const;
+
+const supportingTestimonials = [
+  {
+    name: "April",
+    resultLabel: "A clearer container for self-reading",
+    pullQuote:
+      "What the method gave me was a way to anchor my own readings in a system that brought real clarity.",
+    paragraphs: [
+      "One of the challenges when you read for yourself is not continuing to reach for more cards, looking for deeper answers or different answers, instead of settling with the cards already in front of you. The COMPASS Method did exactly that, and it reduced my anxiety considerably.",
+      "I used to read and then wonder, have I got this right, what am I supposed to do next. What this gave me instead was a container to hold the information, and by being able to sit with it in a still way, I was able to glean the answers I actually needed.",
+      "This has been incredibly valuable, and it is now something I work with automatically as part of my practice.",
+    ],
+  },
+  {
+    name: "Alexandra",
+    resultLabel: "Greater accuracy, control, and confidence",
+    pullQuote:
+      "This training has given me the confidence to read well and to use the cards as a tool rather than let them dictate the reading.",
+    paragraphs: [
+      "I’m relatively new to tarot, and I did this training so I’d have a system I could actually use. What I’d tried before mostly followed the Golden Dawn method, and I found the cards tended to drive the process. What I found with the COMPASS Method training was that it gave me a way of actually being in charge of the tools I was using, which is ultimately what I want to be able to do.",
+      "So many spreads and ways of using the cards end up determining the direction of the reading, when I think it should be the other way around.",
+      "This training has given me, as a relatively new reader, the confidence to read well and to use the cards as a tool rather than let them dictate the reading, while still getting really clear responses. The best part is that my accuracy has gone through the roof because I’m taking my time, and yet I’m actually a lot faster at reading the cards than I was before. It’s an interesting thing when you learn a skill properly: you can end up getting better results in less time.",
+    ],
+  },
+] as const;
+
+const compassFaqItems = [
+  {
+    q: "How do I choose a cohort and enrol?",
+    a: "Select a month, choose one cohort by its start date, review the three further teaching dates, enter your name and email, confirm attendance and terms, then continue to payment. Your place is reserved only after payment is completed.",
+  },
+  {
+    q: "Do I need to be an experienced professional reader?",
+    a: "No. COMPASS is for readers who already understand the basic language of their cards and can complete a reading independently. You may read professionally, for friends, or primarily for yourself.",
+  },
+  {
+    q: "Is COMPASS only for tarot readers?",
+    a: "Tarot and oracle readers are the primary audience. The interpretive principles can also support coaching, facilitation, writing, leadership, and other work involving pattern recognition and intuitive judgement.",
+  },
+  {
+    q: "Is this suitable for complete beginners?",
+    a: "No. The programme does not teach basic card meanings. You should already be able to work with your deck and complete a reading without step-by-step instruction.",
+  },
+  {
+    q: "Will I have to read in front of the group?",
+    a: "Live practice is part of the programme, but the environment is small, structured, and developmental. You are not expected to perform. The purpose is to apply the method and receive useful feedback.",
+  },
+  {
+    q: "What happens if I miss a teaching session?",
+    a: "Attendance is strongly recommended. Where scheduling permits, you may attend the equivalent lesson with another cohort. Relevant written materials will also be provided. The programme is not designed as a replay-based course.",
+  },
+  {
+    q: "Are sessions recorded?",
+    a: "Teaching sessions are not routinely recorded, protecting participant privacy and live discussion.",
+  },
+  {
+    q: "How much time should I allow?",
+    a: "Allow 60–90 minutes for each of the four live sessions, plus time for practice readings and journalling during the remaining integration period.",
+  },
+  {
+    q: "What does the observed reading involve?",
+    a: "You conduct a reading for a seeker while Leigh observes. The seeker must understand the training context. The reading is not recorded by default. Leigh provides private feedback afterwards.",
+  },
+  {
+    q: "When must I complete the observed reading?",
+    a: "You may schedule it when you feel ready, provided it takes place before your complimentary three-month Deck Compass membership expires.",
+  },
+  {
+    q: "What happens after the three complimentary months?",
+    a: "Your access ends unless you choose to continue your Deck Compass membership at US$39 per month.",
+  },
+  {
+    q: "Is membership renewed automatically?",
+    a: "Renewal mechanics are confirmed separately at checkout. This page does not state that billing is automatic until the Stripe configuration has been audited.",
+  },
+  {
+    q: "What is the refund and transfer policy?",
+    a: "You may request a full refund within 48 hours of purchase, provided the cohort has not begun. After that period, payment is non-refundable because your place and live delivery capacity have been reserved. One transfer to another available cohort is permitted with at least 72 hours’ notice. If Tides of Knowing postpones or cancels a cohort, you may transfer or receive a full refund.",
+  },
+  {
+    q: "What if the method changes after I enrol?",
+    a: "COMPASS is a proprietary system and may be refined as it is applied and taught. Any change affecting your confirmed cohort or included benefits will be communicated in advance and will not reduce the value of your enrolment.",
+  },
+] as const;
+
+const LEIGH_AUTHORITY_PORTRAIT = "/images/home/leigh-spencer-profile.png";
 
 const compassFaqJsonLd = faqPageJsonLd(
-  T.faq.items.map((item) => ({ question: item.q, answerHtml: item.a })),
+  compassFaqItems.map((item) => ({ question: item.q, answerHtml: item.a })),
   ogUrl,
 );
+
+const compassOfferJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "@id": `${ogUrl}#course`,
+  name: "The COMPASS Method™ Live Practitioner Training",
+  description,
+  url: ogUrl,
+  provider: {
+    "@type": "Organization",
+    name: "Tides of Knowing",
+    url: siteBase(Astro).href,
+  },
+  offers: {
+    "@type": "Offer",
+    "@id": `${ogUrl}#offer`,
+    name: "The COMPASS Method™ Live Practitioner Training",
+    price: "997.00",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+    url: ogUrl,
+  },
+};
+
+const pageJsonLd = [compassFaqJsonLd, compassOfferJsonLd];
 ---
 
 <BaseLayout
@@ -21,273 +407,2655 @@ const compassFaqJsonLd = faqPageJsonLd(
   description={description}
   ogUrl={ogUrl}
   tdcPlacement="none"
-  jsonLd={compassFaqJsonLd}
+  jsonLd={pageJsonLd}
 >
-  <article class="compass page-inner">
-    <section class="compass__hero">
-      <div class="compass__hero-copy compass__panel">
-        <p class="compass__eyebrow">{T.hero.eyebrow}</p>
-        <h1 class="compass__h1">{T.hero.heading}</h1>
-        {T.hero.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
+  <article class="compass">
+    <div class="tok-home compass-open">
+      <section
+        class="tok-home__band tok-home__band--ocean compass-open__hero"
+        aria-labelledby="compass-hero-heading"
+      >
+        <div class="tok-home__inner compass-open__banner-shell">
+          <figure class="compass-open__banner">
+            <img
+              class="compass-open__banner-img"
+              src={COMPASS_METHOD_BANNER}
+              alt="Tides of Knowing COMPASS Method banner showing the seven pillars of the interpretive framework"
+              width="1640"
+              height="720"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </figure>
+        </div>
 
-        <a class="compass__cta compass__cta--primary" href={T.apply.ctaHref}>
-          {T.apply.ctaLabel}
-        </a>
-      </div>
+        <div class="tok-home__inner compass-open__hero-split">
+          <div class="compass-open__hero-copy">
+            <p class="tok-home__eyebrow">The COMPASS Method™</p>
+            <h1 id="compass-hero-heading" class="tok-home__h1 compass-open__h1">
+              Turn intuitive perception into clear, coherent understanding
+            </h1>
+            <p class="tok-home__lede">
+              Learn to recognise and accurately decode the information that arrives before words, then
+              give it a reliable structure for interpretation. The COMPASS Method™ helps you understand
+              what is moving beneath the surface, communicate what you perceive clearly, and use that
+              insight to navigate readings, relationships, business decisions, and life with greater
+              confidence.
+            </p>
+          </div>
 
-      <figure class="compass__hero-figure compass__panel">
-        <img
-          src="/images/compass/system/compass-method-light.png"
-          alt="Illustration of The COMPASS Method™ framework for clear intuitive readings."
-          loading="lazy"
-          decoding="async"
-          class="compass__hero-image"
-        />
-      </figure>
-    </section>
+          <aside class="compass-open__hero-panel" aria-label="Enrolment details">
+            <p class="compass-open__audience">
+              Live small-cohort training for tarot and oracle readers who already understand the
+              language of their cards and are ready to move beyond meanings into interpretation.
+            </p>
+            <p class="tok-home__actions compass-open__actions">
+              <a
+                class="tok-home__cta tok-home__cta--primary compass-open__cta"
+                href={COMPASS_CHOOSE_COHORT_HREF}
+              >
+                Choose Your Cohort
+              </a>
+              <a
+                class="tok-home__cta tok-home__cta--secondary compass-open__cta"
+                href="#programme-details"
+              >
+                Explore What’s Included
+              </a>
+            </p>
+            <p class="compass-open__offer">US$997 · Direct enrolment · Maximum six participants</p>
+            <p class="tok-home__trust compass-open__reassure">
+              Two cohorts begin each month. Every confirmed cohort proceeds, even with one participant.
+            </p>
+          </aside>
+        </div>
+      </section>
 
-    <section
-      class="compass__section compass__section--distinction"
-      aria-labelledby="compass-training-practice-heading"
-    >
-      <h2 id="compass-training-practice-heading" class="compass__h2">
-        {T.trainingPractice.heading}
-      </h2>
-      {T.trainingPractice.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
-    </section>
+      <section
+        class="tok-home__band tok-home__band--cream compass-open__recognition"
+        aria-labelledby="compass-recognition-heading"
+      >
+        <div class="tok-home__inner compass-open__recognition-split">
+          <header class="compass-open__recognition-intro">
+            <p class="tok-home__eyebrow">You already perceive more than you can explain</p>
+            <h2 id="compass-recognition-heading" class="tok-home__h2">
+              The difficulty is not always receiving the information. It is knowing what to do with
+              it.
+            </h2>
+            <p class="tok-home__lede">
+              Intuitive information often arrives before language. It may appear as a feeling, image,
+              tension, bodily response, pattern, or half-formed knowing. Without a reliable
+              interpretive structure, it can remain vague, become distorted by projection, or
+              disappear beneath too much analysis.
+            </p>
+            <p class="compass-open__close">
+              The result is not a lack of intuition. It is intuitive information without a dependable
+              container.
+            </p>
+          </header>
 
-    <section class="compass__section compass__section--soft">
-      <p class="compass__eyebrow">{T.problemFit.label}</p>
-      <h2 class="compass__h2">{T.problemFit.heading}</h2>
-      <ul class="compass__list compass__list--card">
-        {T.problemFit.bullets.map((item) => <li>{item}</li>)}
-      </ul>
-    </section>
+          <ol class="compass-open__recognition-stack">
+            {
+              recognitionCards.map((card, index) => (
+                <li class:list={[{ "compass-open__recognition-stack-item--lead": index === 0 }]}>
+                  <h3>{card.heading}</h3>
+                  <p>{card.copy}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </section>
 
-    <section class="compass__section">
-      <p class="compass__eyebrow">{T.method.label}</p>
-      <h2 class="compass__h2">{T.method.heading}</h2>
-      <p class="compass__pillars">
-        {T.method.pillars.map((pillar) => <span>{pillar}</span>)}
-      </p>
-      {T.method.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
-      <p class="compass__sub-note">
-        Read the <a href="/articles/compass-method/">full COMPASS Method™ article</a>, or see how
-        <a href="/practice/">practice on The Deck Compass</a> stabilises the work after training.
-      </p>
-    </section>
+      <section
+        class="tok-home__band tok-home__band--ocean compass-open__cost"
+        aria-labelledby="compass-cost-heading"
+      >
+        <div class="tok-home__inner compass-open__cost-split">
+          <header class="compass-open__cost-intro">
+            <p class="tok-home__eyebrow">When the answer never quite lands</p>
+            <h2 id="compass-cost-heading" class="tok-home__h2">
+              Unstructured intuition creates more work, not more clarity
+            </h2>
+            <p class="tok-home__lede">
+              Without a reliable interpretive container, capable readers often keep working the
+              reading long after the useful signal has already arrived.
+            </p>
+          </header>
 
-    <section class="compass__section compass__section--soft">
-      <p class="compass__eyebrow">{T.learningOutcomes.label}</p>
-      <h2 class="compass__h2">{T.learningOutcomes.heading}</h2>
-      <p class="compass__p">{T.learningOutcomes.intro}</p>
-      <ul class="compass__list compass__list--card">
-        {T.learningOutcomes.bullets.map((item) => <li>{item}</li>)}
-      </ul>
-    </section>
+          <ol class="compass-open__cost-list">
+            {
+              practicalCostItems.map((item, index) => (
+                <li>
+                  <span class="compass-open__cost-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ol>
 
-    <section class="compass__section">
-      <p class="compass__eyebrow">{T.howItWorks.label}</p>
-      <h2 class="compass__h2">{T.howItWorks.heading}</h2>
-      <p class="compass__p compass__process-intro">{T.howItWorks.intro}</p>
-      <ul class="compass__list compass__list--card">
-        {T.howItWorks.bullets.map((item) => <li>{item}</li>)}
-      </ul>
-      {T.howItWorks.closingParagraphs.map((p) => <p class="compass__p">{p}</p>)}
-    </section>
+          <p class="compass-open__cost-bridge">
+            The problem is rarely that nothing is coming through. The problem is knowing what
+            belongs, what matters, and when the answer is complete.
+          </p>
+        </div>
+      </section>
 
-    <section class="compass__section compass__section--schedule" aria-labelledby="compass-cohort-heading">
-      <p class="compass__eyebrow">{cs.label}</p>
-      <h2 id="compass-cohort-heading" class="compass__h2">{cs.heading}</h2>
+      <section
+        class="tok-home__band tok-home__band--muted-teal compass-open__bridge"
+        aria-labelledby="compass-bridge-heading"
+      >
+        <div class="tok-home__inner">
+          <div class="compass-open__bridge-lead">
+            <p class="tok-home__eyebrow">What changes</p>
+            <h2 id="compass-bridge-heading" class="tok-home__h2">
+              What once arrived as a vague feeling, image, tension, or half-formed knowing becomes
+              information you can decode, test, and use.
+            </h2>
+            <p class="tok-home__lede">
+              The COMPASS Method™ gives intuitive perception a disciplined interpretive structure. You
+              learn to recognise the deeper pattern, test meaning against context, and translate
+              pre-verbal information into clear understanding.
+            </p>
+          </div>
+          <ul class="compass-open__outcome-asymmetric">
+            {
+              transformationOutcomes.map((item, index) => (
+                <li
+                  class:list={[
+                    {
+                      "compass-open__outcome-asymmetric-item--wide":
+                        index === 0 || index === 4 || index === 9,
+                    },
+                  ]}
+                >
+                  <strong>{item.label}</strong>
+                  <span>{item.copy}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="tok-home__lede tok-home__lede--follow compass-open__bridge-end">
+            You learn to see more of what is happening, understand what it means, and decide how to
+            respond.
+          </p>
+        </div>
+      </section>
 
-      {
-        cs.variant === "nz" && (
-          <>
-            {cs.introParagraphs.map((p) => (
-              <p class="compass__p">{p}</p>
-            ))}
+      <section
+        class="tok-home__band tok-home__band--cream compass-method__diff"
+        aria-labelledby="compass-diff-heading"
+      >
+        <div class="tok-home__inner">
+          <header class="compass-method__intro">
+            <p class="tok-home__eyebrow">Why other training often stops too soon</p>
+            <h2 id="compass-diff-heading" class="tok-home__h2">
+              Knowing card meanings is not the same as knowing how to interpret what is happening.
+            </h2>
+            <p class="tok-home__lede">
+              Most tarot and oracle education concentrates on symbols, keywords, spreads, and
+              technique. Those foundations matter, but they do not fully address the moment when
+              several impressions arrive at once and you must decide what belongs, what carries the
+              most weight, and how the pieces resolve into one useful understanding.
+            </p>
+          </header>
 
-            <div class="compass__cohort-cards">
-              {cs.cohortCards.map((c) => (
-                <div class="compass__cohort-card compass__panel">
-                  <p class="compass__cohort-card-title">{c.title}</p>
-                  <p class="compass__cohort-card-status">{c.status}</p>
-                </div>
-              ))}
-            </div>
+          <ol class="compass-method__progression" aria-label="Meanings to intuition to interpretation">
+            {
+              differentiationBlocks.map((block, index) => (
+                <li>
+                  <span class="compass-method__progression-step" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{block.heading}</h3>
+                  <p>{block.copy}</p>
+                </li>
+              ))
+            }
+          </ol>
 
-            <h3 class="compass__h3">{cs.sessionWindowsSubheading}</h3>
+          <p class="compass-method__highlight">
+            The COMPASS Method™ teaches the part between perception and understanding.
+          </p>
+        </div>
+      </section>
 
-            <div class="compass__schedule-window-grid">
-              {cs.sessionWindowCards.map((w) => (
-                <div class="compass__schedule-window-card compass__panel">
-                  <p class="compass__schedule-window-title">{w.title}</p>
-                  <ul class="compass__schedule-window-list">
-                    {w.lines.map((line) => (
-                      <li>{line}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+      <section
+        class="tok-home__band tok-home__band--pale-teal compass-method__framework"
+        aria-labelledby="compass-framework-heading"
+      >
+        <div class="tok-home__inner compass-method__framework-split">
+          <div class="compass-method__intro">
+            <p class="tok-home__eyebrow">A proprietary interpretive framework</p>
+            <h2 id="compass-framework-heading" class="tok-home__h2">
+              Seven pillars create the container. You learn how to work within it.
+            </h2>
+            <p class="tok-home__lede">
+              The COMPASS Method™ is not another card-meaning system, spread library,
+              psychic-development course, or fixed script. It is a structured framework for
+              recognising, testing, organising, and communicating intuitive information.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              Center and Seal form the bookends of the method. They establish how you enter the work
+              and how you recognise completion. The five pillars within that container are not used as
+              a rigid sequence. Their emphasis changes according to the reading, the context, and your
+              own intuitive strengths.
+            </p>
+          </div>
 
-            <div class="compass__from-august compass__panel">
-              <h3 class="compass__h3 compass__from-august-heading">{cs.fromAugustHeading}</h3>
-              <p class="compass__p compass__from-august-lead">{cs.fromAugustLead}</p>
-              <ul class="compass__list compass__from-august-list">
-                {cs.fromAugustBullets.map((b) => (
-                  <li>{b}</li>
-                ))}
-              </ul>
-            </div>
+          <ul class="compass-method__symbol-strip" aria-hidden="true">
+            {
+              compassPillars.map((pillar) => (
+                <li>
+                  <img
+                    src={pillar.icon}
+                    alt=""
+                    width="72"
+                    height="72"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span>{pillar.name}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
 
-            <p class="compass__p">{cs.usWaitParagraph}</p>
+      <section
+        class="tok-home__band tok-home__band--cream compass-method__pillars-band"
+        aria-labelledby="compass-pillars-heading"
+      >
+        <div class="tok-home__inner">
+          <h2 id="compass-pillars-heading" class="visually-hidden">The seven COMPASS pillars</h2>
 
-            <a class="compass__cta compass__cta--secondary" href={cs.registerInterest.href}>
-              {cs.registerInterest.text}
-            </a>
-          </>
-        )
-      }
-
-      {
-        cs.variant === "mexico" && (
-          <>
-            {cs.introParagraphs.map((p) => (
-              <p class="compass__p">{p}</p>
-            ))}
-
-            <div class="compass__cohort-cards">
-              {cs.availabilityItems.map((row) => (
-                <div class="compass__cohort-card compass__panel">
-                  <p class="compass__cohort-card-title">{row.period}</p>
-                  <p class="compass__cohort-card-status">{row.status}</p>
-                </div>
-              ))}
-            </div>
-
-            {cs.timezoneParagraphs.map((p) => (
-              <p class="compass__p">{p}</p>
-            ))}
-
-            {cs.closingParagraph && <p class="compass__p">{cs.closingParagraph}</p>}
-          </>
-        )
-      }
-    </section>
-
-    <section class="compass__section compass__section--investment" aria-labelledby="compass-investment-heading">
-      <p class="compass__eyebrow">{T.investment.label}</p>
-      <h2 id="compass-investment-heading" class="compass__h2">{T.investment.heading}</h2>
-      <p class="compass__p">{T.investment.intro}</p>
-
-      <div class="compass__pricing-grid">
-        {
-          T.investment.tiers.map((tier) => (
-            <div class="compass__pricing-card compass__panel">
-              <h3 class="compass__pricing-tier-title">{tier.title}</h3>
-              {tier.body.map((para) => (
-                <p class="compass__pricing-tier-p">{para}</p>
-              ))}
-              {
-                tier.enrollHref && (
-                  <a
-                    class="compass__cta compass__pricing-cta"
-                    href={tier.enrollHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
+          <ul class="compass-method__pillars">
+            {
+              compassPillars.map((pillar) => (
+                <li
+                  class:list={[
+                    {
+                      "compass-method__pillars-item--bookend":
+                        pillar.key === "center" || pillar.key === "seal",
+                    },
+                  ]}
+                >
+                  <article
+                    class="compass-method__pillar"
+                    aria-labelledby={`compass-pillar-${pillar.key}`}
                   >
-                    Enrol Now
-                  </a>
-                )
+                    <img
+                      class="compass-method__pillar-icon"
+                      src={pillar.icon}
+                      alt=""
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      decoding="async"
+                      aria-hidden="true"
+                    />
+                    <h3 id={`compass-pillar-${pillar.key}`}>{pillar.name}</h3>
+                    <p>{pillar.copy}</p>
+                  </article>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="compass-method__pillars-close">
+            The framework is consistent. Its application remains responsive.
+          </p>
+          <p class="tok-home__lede compass-method__pillars-support">
+            You are not taught to force every reading through seven mechanical steps. You learn how to
+            hold a dependable interpretive container while working intelligently with the information,
+            strengths, and circumstances present.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--muted-teal compass-method__example"
+        aria-labelledby="compass-example-heading"
+      >
+        <div class="tok-home__inner">
+          <header class="compass-method__example-head">
+            <p class="tok-home__eyebrow">The method in practice</p>
+            <h2 id="compass-example-heading" class="tok-home__h2">
+              From a collection of card meanings to one coherent answer
+            </h2>
+          </header>
+
+          <div class="compass-method__compare" aria-label="Before and with COMPASS">
+            <article class="compass-method__compare-card">
+              <p class="compass-method__compare-label">Before COMPASS</p>
+              <p>
+                A reader understands each card individually but cannot identify which one is central.
+                They pull clarifiers, add more possibilities, and explain every symbol. The seeker
+                receives information, but no clear answer.
+              </p>
+            </article>
+            <div class="compass-method__compare-arrow" aria-hidden="true">→</div>
+            <article class="compass-method__compare-card compass-method__compare-card--after">
+              <p class="compass-method__compare-label">With COMPASS</p>
+              <p>
+                The reader centres the question, maps the spread, identifies the cards carrying the
+                answer, tests the intuitive signal against context, follows the relationship between
+                the central and supporting cards, and stops when the reading has landed.
+              </p>
+            </article>
+          </div>
+
+          <p class="compass-method__example-close">
+            The difference is not more information. It is greater coherence.
+          </p>
+        </div>
+      </section>
+
+      <!--
+        Intended subject: Leigh facilitating a live online COMPASS cohort.
+        Cohort size: maximum six participants.
+        Recommended aspect ratio: 16:9 (3:2 also acceptable).
+        Framing: keep Leigh and participants visible without tight cropping.
+        Replace BrandImagePlaceholder with the final local WebP without restructuring this section.
+      -->
+      <section
+        class="tok-home__band tok-home__band--ocean compass-method__training-media"
+        aria-label="Live COMPASS training image placeholder"
+      >
+        <div class="tok-home__inner">
+          <BrandImagePlaceholder
+            imageId="TOK-COMPASS-LIVE-TRAINING-01"
+            alt="Placeholder for a photograph of Leigh facilitating a live online COMPASS cohort with no more than six participants"
+            aspectRatio="16 / 9"
+            width={1600}
+            height={900}
+            class="compass-method__training-placeholder"
+          />
+        </div>
+      </section>
+
+      <section
+        id="programme-details"
+        class="tok-home__band tok-home__band--cream compass-programme__overview"
+        aria-labelledby="compass-programme-heading"
+      >
+        <div class="tok-home__inner compass-programme__overview-split">
+          <header class="compass-programme__overview-copy">
+            <p class="tok-home__eyebrow">The live training experience</p>
+            <h2 id="compass-programme-heading" class="tok-home__h2">
+              A concentrated method. Three months to put it into practice.
+            </h2>
+            <p class="tok-home__lede">
+              COMPASS begins with an intensive live teaching phase, then moves quickly into
+              application. You learn the full interpretive framework, begin using it inside The Deck
+              Compass, and continue refining it through real readings, journalling, observation, and
+              feedback.
+            </p>
+          </header>
+
+          <aside class="compass-programme__facts" aria-label="Programme at a glance">
+            <p class="compass-programme__facts-label">Programme at a glance</p>
+            <ul>
+              {programmeFacts.map((fact) => <li>{fact}</li>)}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--pale-teal compass-programme__phase-one"
+        aria-labelledby="compass-phase-one-heading"
+      >
+        <div class="tok-home__inner">
+          <header class="compass-programme__phase-intro">
+            <p class="tok-home__eyebrow">Phase One · Install the framework</p>
+            <h2 id="compass-phase-one-heading" class="tok-home__h2">
+              Learn the seven pillars across four live sessions
+            </h2>
+            <p class="tok-home__lede">
+              The teaching phase takes place over four alternate days. Each session lasts 60–90
+              minutes and generally introduces two pillars of the method.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              Center and Seal are taught first because they form the bookends of the framework.
+              Center establishes how you enter the work. Seal establishes how you recognise
+              completion and close cleanly.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              The five pillars held within that container are equally important, but they are not
+              taught as a rigid sequence. You learn how their emphasis changes according to the
+              question, the reading, the context, and your own intuitive strengths.
+            </p>
+          </header>
+
+          <ol class="compass-programme__timeline">
+            {
+              phaseOneSessions.map((session) => (
+                <li>
+                  <p class="compass-programme__timeline-label">{session.label}</p>
+                  <h3>{session.heading}</h3>
+                  <p>{session.copy}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--cream compass-programme__phase-two"
+        aria-labelledby="compass-phase-two-heading"
+      >
+        <div class="tok-home__inner">
+          <header class="compass-programme__phase-intro">
+            <p class="tok-home__eyebrow">Phase Two · Apply and integrate</p>
+            <h2 id="compass-phase-two-heading" class="tok-home__h2">
+              The method becomes useful through real practice
+            </h2>
+            <p class="tok-home__lede">
+              For the remaining almost three weeks, you use The Deck Compass to conduct readings,
+              document what you perceive, and examine how you moved from intuitive information to
+              interpretation.
+            </p>
+          </header>
+
+          <ul class="compass-programme__practice-grid">
+            {
+              phaseTwoPractices.map((item) => (
+                <li>
+                  <article>
+                    <h3>{item.heading}</h3>
+                    <p>{item.copy}</p>
+                  </article>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--muted-teal compass-programme__mentorship"
+        aria-labelledby="compass-mentorship-heading"
+      >
+        <div class="tok-home__inner compass-programme__mentorship-split">
+          <div class="compass-programme__mentorship-copy">
+            <p class="tok-home__eyebrow">Personalised mentorship</p>
+            <h2 id="compass-mentorship-heading" class="tok-home__h2">
+              One of your readings is observed, then reviewed with you privately
+            </h2>
+            <p class="tok-home__lede">
+              When you feel ready, you conduct a reading for a seeker while Leigh observes. The
+              purpose is not performance or assessment. It is to see how the method functions inside
+              your real reading practice.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              After the reading, you receive private feedback on how you held the structure, where the
+              intuitive signal was strongest, how you tested and communicated the interpretation, and
+              whether you recognised the point of completion.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              You may schedule this observation at any point before your complimentary three-month
+              Deck Compass membership expires.
+            </p>
+          </div>
+
+          <!--
+            Intended subject: Leigh observing a participant reading for a seeker.
+            Visible people: no more than three.
+            Setting: private, focused, human-centred.
+            Recommended aspect ratio: 4:5 or 3:4 editorial portrait/landscape frame.
+            Framing: keep faces and reading space visible without tight cropping.
+            Replace BrandImagePlaceholder with the final local WebP without restructuring this section.
+          -->
+          <BrandImagePlaceholder
+            imageId="TOK-COMPASS-OBSERVED-READING-01"
+            alt="Placeholder for a photograph of Leigh observing a participant reading for a seeker in a private, focused setting"
+            aspectRatio="4 / 5"
+            width={800}
+            height={1000}
+            class="compass-programme__mentorship-media"
+          />
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--pale-teal compass-programme__membership"
+        aria-labelledby="compass-membership-heading"
+      >
+        <div class="tok-home__inner compass-programme__membership-panel">
+          <header>
+            <p class="tok-home__eyebrow">Three months included</p>
+            <h2 id="compass-membership-heading" class="tok-home__h2">
+              Continue practising after the teaching phase ends
+            </h2>
+            <p class="tok-home__lede">
+              Your enrolment includes three months of membership in The Deck Compass, valued at
+              US$117.
+            </p>
+          </header>
+
+          <ul class="compass-programme__membership-list">
+            {membershipBenefits.map((item) => <li>{item}</li>)}
+          </ul>
+
+          <p class="compass-programme__membership-boundary">
+            At the end of the complimentary three months, access ends unless you choose to continue
+            your membership at US$39 per month.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--ocean compass-programme__close"
+        aria-labelledby="compass-programme-close-heading"
+      >
+        <div class="tok-home__inner compass-programme__close-inner">
+          <h2 id="compass-programme-close-heading" class="tok-home__h2">
+            You are not buying four lessons.
+          </h2>
+          <p class="tok-home__lede">
+            You are receiving the complete COMPASS framework, concentrated live teaching, structured
+            platform practice, personalised observation and feedback, ongoing journal review, and
+            three months in a live practitioner environment.
+          </p>
+          <p class="tok-home__lede tok-home__lede--follow">
+            The aim is not simply to understand the method. It is to make it part of how you
+            perceive, interpret, and respond.
+          </p>
+          <p class="tok-home__actions compass-open__actions">
+            <a
+              class="tok-home__cta tok-home__cta--primary compass-open__cta"
+              href={COMPASS_CHOOSE_COHORT_HREF}
+            >
+              Choose Your Cohort
+            </a>
+          </p>
+          <p class="compass-open__offer">US$997 · Direct enrolment · Maximum six participants</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="tok-home compass-lower">
+      <section
+        class="tok-home__band tok-home__band--cream compass-lower__schedule"
+        aria-labelledby="compass-cohort-heading"
+        id="choose-your-cohort"
+        data-compass-enrol-root
+      >
+        <div class="tok-home__inner">
+          <header class="compass-lower__schedule-intro">
+            <p class="tok-home__eyebrow">Choose your cohort</p>
+            <h2 id="compass-cohort-heading" class="tok-home__h2">
+              Two new cohorts begin each month
+            </h2>
+            <p class="tok-home__lede">
+              COMPASS cohorts begin near the start and middle of each month. Each cohort follows the
+              same four-session intensive and guided practice structure.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              Choose the cohort whose four live sessions you can attend. Your place is reserved only
+              after payment is completed.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              All sessions are shown in Mexico City time. Please confirm the conversion for your
+              location before enrolling.
+            </p>
+          </header>
+
+          <div class="compass-enrol" id="compass-enrol">
+            <div
+              class="compass-enrol__months"
+              role="tablist"
+              aria-label="Cohort month"
+            >
+              {
+                cohortMonthGroups.map((group) => (
+                  <button
+                    type="button"
+                    class:list={[
+                      "compass-enrol__month-btn",
+                      group.monthKey === firstOpenMonthKey && "is-active",
+                    ]}
+                    role="tab"
+                    id={`compass-month-tab-${group.monthKey}`}
+                    aria-selected={group.monthKey === firstOpenMonthKey ? "true" : "false"}
+                    aria-controls={`compass-month-panel-${group.monthKey}`}
+                    data-compass-month={group.monthKey}
+                  >
+                    {group.monthLabel}
+                  </button>
+                ))
               }
             </div>
-          ))
-        }
-      </div>
 
-      <h3 class="compass__h3">{T.investment.afterHeading}</h3>
-      {T.investment.afterParagraphs.map((p) => <p class="compass__p">{p}</p>)}
-    </section>
+            {
+              cohortMonthGroups.map((group) => (
+                <div
+                  class="compass-enrol__month-panel"
+                  role="tabpanel"
+                  id={`compass-month-panel-${group.monthKey}`}
+                  aria-labelledby={`compass-month-tab-${group.monthKey}`}
+                  data-compass-month-panel={group.monthKey}
+                  hidden={group.monthKey !== firstOpenMonthKey}
+                >
+                  <div class="compass-enrol__options" role="radiogroup" aria-label={`${group.monthLabel} cohorts`}>
+                    {group.cohorts.map((cohort) => (
+                      <label
+                        class:list={[
+                          "compass-enrol__option",
+                          !cohort.selectable && "compass-enrol__option--disabled",
+                        ]}
+                      >
+                        <input
+                          type="radio"
+                          name="cohortId"
+                          value={cohort.id}
+                          form="compass-enrol-form"
+                          disabled={!cohort.selectable}
+                          data-cohort-label={cohort.label}
+                          data-start-label={cohort.startDateLabel}
+                          data-further-label={cohort.furtherSessionsLabel}
+                          data-session-dates={JSON.stringify(cohort.sessionDates)}
+                        />
+                        <span class="compass-enrol__option-body">
+                          <span class="compass-enrol__option-top">
+                            <span class="compass-enrol__option-slot">{cohort.slotLabel}</span>
+                            <span
+                              class:list={[
+                                "compass-enrol__status",
+                                `compass-enrol__status--${cohort.availabilityStatus}`,
+                              ]}
+                            >
+                              {cohort.availabilityLabel}
+                            </span>
+                          </span>
+                          <span class="compass-enrol__option-start">
+                            Starts {cohort.startDateLabel}
+                          </span>
+                          <span class="compass-enrol__option-time">{COMPASS_SESSION_TIME_LABEL}</span>
+                          <span class="compass-enrol__option-further">
+                            Further teaching sessions: {cohort.furtherSessionsLabel}
+                          </span>
+                          <span class="compass-enrol__option-meta">
+                            Maximum {COMPASS_CAPACITY} participants · This cohort proceeds even with
+                            one participant
+                          </span>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
 
-    <section class="compass__section compass__section--warm compass__section--post-investment">
-      <h2 class="compass__h2">Ready for the next cohort?</h2>
-      <p class="compass__p">
-        If one of these options feels right, you are welcome to enrol directly. If you are still exploring, register your interest and I will follow up personally when the next cohort opens.
-      </p>
-      <div class="compass__cta-row">
-        <a class="compass__cta" href="/compass/apply/">Register Interest for the Next Cohort</a>
-        <a class="compass__text-link" href="/articles/compass-method/">
-          Read The COMPASS Method™ article
-        </a>
-      </div>
-    </section>
+            <ul class="compass-lower__cohort-assurances">
+              <li>Every confirmed cohort proceeds, even with one participant.</li>
+              <li>Maximum six participants per cohort.</li>
+              <li>Enrolment closes 48 hours before the first session.</li>
+            </ul>
 
-    <section class="compass__section compass__section--warm">
-      <p class="compass__eyebrow">{T.about.label}</p>
-      <h2 class="compass__h2">{T.about.heading}</h2>
-      {T.about.paragraphs.map((p) => <p class="compass__p">{p}</p>)}
-    </section>
+            <div
+              class="compass-enrol__panel"
+              data-compass-enrol-panel
+              hidden={!enrolFlash}
+            >
+              <h3 class="compass-enrol__panel-heading">Complete your enrolment</h3>
+              <div class="compass-enrol__summary" data-compass-summary aria-live="polite"></div>
 
-    <section class="compass__section compass__section--soft">
-      <p class="compass__eyebrow">{T.notFor.label}</p>
-      <h2 class="compass__h2">{T.notFor.heading}</h2>
-      <ul class="compass__list compass__list--card">
-        {T.notFor.bullets.map((item) => <li>{item}</li>)}
-      </ul>
-    </section>
+              <form
+                class="compass-enrol__form"
+                method="post"
+                action="/api/compass/enrol"
+                id="compass-enrol-form"
+                data-compass-enrol-form
+                novalidate
+              >
+                {
+                  enrolFlash ? (
+                    <p class="compass-enrol__error" role="alert">
+                      {enrolFlash}
+                    </p>
+                  ) : (
+                    <p class="compass-enrol__error" data-compass-form-error hidden role="alert"></p>
+                  )
+                }
 
-    <section class="compass__section compass__section--soft" aria-labelledby="compass-faq-heading">
-      <p class="compass__eyebrow">{T.faq.label}</p>
-      <h2 id="compass-faq-heading" class="compass__h2">{T.faq.heading}</h2>
-      <dl class="compass__faq">
-        {
-          T.faq.items.map((item) => (
-            <div class="compass__faq-item">
-              <dt class="compass__faq-q">{item.q}</dt>
-              <dd class="compass__faq-a" set:html={item.a} />
+                <div class="compass-enrol__fields">
+                  <label class="compass-enrol__field">
+                    <span>First name</span>
+                    <input type="text" name="firstName" autocomplete="given-name" required maxlength="80" />
+                  </label>
+                  <label class="compass-enrol__field">
+                    <span>Last name</span>
+                    <input type="text" name="lastName" autocomplete="family-name" required maxlength="80" />
+                  </label>
+                  <label class="compass-enrol__field compass-enrol__field--wide">
+                    <span>Email address</span>
+                    <input type="email" name="email" autocomplete="email" required maxlength="320" />
+                  </label>
+                </div>
+
+                <label class="compass-enrol__check">
+                  <input type="checkbox" name="attendConfirmed" value="true" required />
+                  <span data-compass-attend-label>
+                    I can attend the cohort beginning the selected start date and have reviewed the
+                    three further teaching dates shown above.
+                  </span>
+                </label>
+
+                <label class="compass-enrol__check">
+                  <input type="checkbox" name="termsAccepted" value="true" required />
+                  <span>
+                    I have read and accept the enrolment, refund, transfer,{" "}
+                    <a href="/privacy/">privacy</a>, and{" "}
+                    <a href="/terms/">training terms</a>. One transfer to another available cohort is
+                    permitted with at least 72 hours’ notice. Full refunds are available within 48
+                    hours of purchase if the cohort has not begun.
+                  </span>
+                </label>
+
+                {/* Honeypot */}
+                <div class="compass-enrol__hp" aria-hidden="true">
+                  <label>
+                    Website
+                    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+                  </label>
+                </div>
+
+                <input type="hidden" name="sessionDates" value="" />
+                <input type="hidden" name="timezone" value={COMPASS_TIMEZONE} />
+                <input type="hidden" name="offerId" value={COMPASS_OFFER_ID} />
+
+                <button
+                  type="submit"
+                  class="tok-home__cta tok-home__cta--primary compass-open__cta compass-enrol__submit"
+                  data-compass-submit
+                  disabled
+                >
+                  Enrol and Pay · US$997
+                </button>
+              </form>
             </div>
-          ))
-        }
-      </dl>
-    </section>
+          </div>
+        </div>
+      </section>
 
-    <section class="compass__section compass__section--final" id="apply" aria-labelledby="compass-apply-heading">
-      <p class="compass__eyebrow">{T.apply.label}</p>
-      <h2 id="compass-apply-heading" class="compass__h2">{T.apply.heading}</h2>
-      <p class="compass__p">{T.apply.intro}</p>
-      <ul class="compass__list">
-        {T.apply.checklist.map((item) => <li>{item}</li>)}
-      </ul>
-      <p class="compass__p">{T.apply.note}</p>
-      <a class="compass__cta" href={T.apply.ctaHref}>
-        {T.apply.ctaLabel}
-      </a>
-    </section>
+      <section
+        class="tok-home__band tok-home__band--muted-teal compass-lower__offer"
+        aria-labelledby="compass-offer-heading"
+        id="investment"
+      >
+        <div class="tok-home__inner">
+          <div class="compass-lower__offer-panel">
+            <p class="tok-home__eyebrow">One complete offer</p>
+            <h2 id="compass-offer-heading" class="tok-home__h2">
+              The COMPASS Method™ Live Practitioner Training
+            </h2>
+            <p class="compass-lower__offer-price">US$997</p>
+            <p class="tok-home__lede">
+              One programme. No stripped-back version. No need to decide how much support you will
+              need before you begin.
+            </p>
+            <ul class="compass-lower__offer-list">
+              {offerInclusions.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <p class="compass-lower__offer-value">Included membership value: US$117</p>
+            <p class="tok-home__actions compass-open__actions">
+              <a
+                class="tok-home__cta tok-home__cta--primary compass-open__cta"
+                href={COMPASS_CHOOSE_COHORT_HREF}
+              >
+                Choose Your Cohort
+              </a>
+            </p>
+            <p class="compass-lower__offer-secondary">
+              <a class="tok-home__text-link" href="#programme-details">Review the programme structure</a>
+            </p>
+          </div>
+        </div>
+      </section>
 
-    <p class="compass__page-attribution tok-ip-attribution">{T.footerAttribution}</p>
+      <section
+        class="tok-home__band tok-home__band--cream compass-lower__proof"
+        aria-labelledby="compass-proof-heading"
+      >
+        <div class="tok-home__inner">
+          <header class="compass-lower__proof-intro">
+            <p class="tok-home__eyebrow">Results in practice</p>
+            <h2 id="compass-proof-heading" class="tok-home__h2">
+              What Changes When the Method Becomes Part of Your Practice
+            </h2>
+          </header>
+
+          <figure class="compass-lower__proof-featured">
+            <p class="compass-lower__proof-result">{mareeTestimonial.resultLabel}</p>
+            <blockquote class="compass-lower__proof-quote">
+              {mareeTestimonial.paragraphs.map((p) => (
+                <p>{p}</p>
+              ))}
+            </blockquote>
+            <figcaption class="compass-lower__proof-meta">
+              <span class="compass-lower__proof-name">{mareeTestimonial.name}</span>
+              <span>{mareeTestimonial.credential}</span>
+            </figcaption>
+          </figure>
+
+          <div class="compass-lower__proof-support">
+            {
+              supportingTestimonials.map((t) => (
+                <figure class="compass-lower__proof-card">
+                  <p class="compass-lower__proof-result">{t.resultLabel}</p>
+                  <blockquote class="compass-lower__proof-pull">
+                    <p>“{t.pullQuote}”</p>
+                  </blockquote>
+                  <div class="compass-lower__proof-body">
+                    {t.paragraphs.map((p) => (
+                      <p>{p}</p>
+                    ))}
+                  </div>
+                  <figcaption class="compass-lower__proof-meta">
+                    <span class="compass-lower__proof-name">{t.name}</span>
+                  </figcaption>
+                </figure>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--pale-teal compass-lower__founder"
+        aria-labelledby="compass-founder-heading"
+      >
+        <div class="tok-home__inner tok-home__split tok-home__split--media-left">
+          <div class="tok-home__split-copy">
+            <p class="tok-home__eyebrow">Why Leigh created COMPASS</p>
+            <h2 id="compass-founder-heading" class="tok-home__h2">
+              Four decades of intuitive practice, shaped by the discipline of clear communication
+            </h2>
+            <p class="tok-home__lede">
+              Leigh Spencer is a fourth-generation Matakite, tarot practitioner of more than 40 years,
+              professional journalist and editor of more than 30 years, and founder of The COMPASS
+              Method™.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              The method emerged from the meeting point between intuitive perception and editorial
+              discipline: noticing what is present, testing what belongs, identifying the central
+              thread, and communicating it in language another person can understand and use.
+            </p>
+            <p class="tok-home__lede tok-home__lede--follow">
+              COMPASS was developed because many capable readers do not need more meanings. They need
+              a reliable way to organise what they already perceive.
+            </p>
+            <p class="compass-lower__founder-note">
+              The COMPASS Method™ is a proprietary interpretive framework developed by Leigh Spencer.
+              As the method continues to be applied and taught, aspects of its language, supporting
+              materials, platform experience, and teaching sequence may be refined for the benefit of
+              participants. Any change affecting a confirmed cohort or included benefit will be
+              communicated in advance and will not reduce the value of what has been purchased.
+            </p>
+          </div>
+          <div class="tok-home__split-media">
+            <figure class="compass-lower__founder-frame">
+              <img
+                class="compass-lower__founder-img"
+                src={LEIGH_AUTHORITY_PORTRAIT}
+                alt="Portrait of Leigh Spencer, founder of The COMPASS Method™."
+                width="723"
+                height="1024"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--cream compass-lower__faq"
+        aria-labelledby="compass-faq-heading"
+      >
+        <div class="tok-home__inner compass-lower__faq-inner">
+          <header class="compass-lower__faq-intro">
+            <p class="tok-home__eyebrow">FAQ</p>
+            <h2 id="compass-faq-heading" class="tok-home__h2">Common questions</h2>
+          </header>
+          <div class="compass-lower__accordion">
+            {
+              compassFaqItems.map((item) => (
+                <details class="compass-lower__faq-item">
+                  <summary class="compass-lower__faq-q">{item.q}</summary>
+                  <p class="compass-lower__faq-a">{item.a}</p>
+                </details>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--ocean compass-lower__final"
+        aria-labelledby="compass-final-heading"
+        id="apply"
+      >
+        <div class="tok-home__inner compass-lower__final-inner">
+          <p class="tok-home__eyebrow">Ready to work with what you already perceive?</p>
+          <h2 id="compass-final-heading" class="tok-home__h2">
+            Learn to decode intuitive information, give it structure, and use it with greater clarity
+          </h2>
+          <p class="tok-home__lede">
+            COMPASS is designed for readers who are ready to move beyond meanings and build a
+            dependable interpretive practice.
+          </p>
+          <p class="tok-home__actions compass-open__actions">
+            <a
+              class="tok-home__cta tok-home__cta--primary compass-open__cta"
+              href={COMPASS_CHOOSE_COHORT_HREF}
+            >
+              Choose Your Cohort
+            </a>
+          </p>
+          <p class="compass-open__offer">US$997 · Direct enrolment · Maximum six participants</p>
+          <p class="compass-lower__final-note">
+            Two cohorts begin each month. Every confirmed cohort proceeds. Enrolment closes 48 hours
+            before the first session.
+          </p>
+          <p class="compass-lower__final-secondary">
+            <a class="tok-home__text-link compass-lower__final-link" href="#compass-checklist">
+              Not ready yet? Start with discernment
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="tok-home__band tok-home__band--pale-teal compass-lower__checklist"
+        aria-labelledby="compass-checklist-heading"
+        id="compass-checklist"
+      >
+        <div class="tok-home__inner compass-lower__checklist-inner">
+          <p class="tok-home__eyebrow">A lower-commitment path</p>
+          <h2 id="compass-checklist-heading" class="tok-home__h2">
+            Not ready to enrol yet? Start with discernment.
+          </h2>
+          <p class="tok-home__lede">
+            If you are not ready for The COMPASS Method™ live training, The Discernment Checklist is
+            the quieter alternative: a practical way to sharpen question framing and reading closure
+            before you commit to the full programme.
+          </p>
+          <DiscernmentChecklistCapture
+            sourceComponent="compass-discernment-checklist"
+            placement="inline"
+            variant="secondary"
+            headingId="compass-checklist-heading"
+          />
+        </div>
+      </section>
+    </div>
+
+    <p class="compass__page-attribution tok-ip-attribution page-inner">
+      {compassPageFooterAttribution}
+    </p>
   </article>
 </BaseLayout>
 
+<script>
+  import { initCompassEnrolForm } from "../scripts/compassEnrolForm";
+
+  const root = document.querySelector<HTMLElement>("[data-compass-enrol-root]");
+  if (root) initCompassEnrolForm(root);
+</script>
+
 <style>
   .compass {
-    padding: clamp(2rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
-    max-width: 62rem;
+    overflow-x: clip;
     color: var(--tok-text-light);
   }
 
-  .compass__hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-    gap: clamp(1.25rem, 3vw, 2rem);
-    align-items: start;
-    margin-bottom: 3rem;
+  .compass__remainder {
+    padding: clamp(2rem, 6vw, 4rem) 0 clamp(3rem, 8vw, 5rem);
+    max-width: 62rem;
   }
 
-  .compass__hero-copy {
+  /* —— Lower page: schedule, offer, proof, founder, FAQ, final —— */
+  .compass-lower {
+    overflow-x: clip;
+  }
+
+  .compass-lower__schedule-intro,
+  .compass-lower__proof-intro,
+  .compass-lower__faq-intro {
+    max-width: 40rem;
+    margin-bottom: clamp(1.35rem, 3.5vw, 2rem);
+  }
+
+  .compass-enrol {
+    display: grid;
+    gap: clamp(1.15rem, 3vw, 1.65rem);
+  }
+
+  .compass-enrol__months {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .compass-enrol__month-btn {
+    margin: 0;
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius-control);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 30%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 88%, transparent);
+    color: var(--tok-text-dark);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+
+  .compass-enrol__month-btn.is-active,
+  .compass-enrol__month-btn[aria-selected="true"] {
+    border-color: color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    background: color-mix(in srgb, var(--tok-gold) 16%, var(--tok-surface-reading));
+    color: var(--tok-deep-ocean);
+  }
+
+  .compass-enrol__month-btn:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+
+  .compass-enrol__options {
+    display: grid;
     gap: 0.85rem;
+  }
+
+  @media (min-width: 720px) {
+    .compass-enrol__options {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .compass-enrol__option {
+    display: block;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .compass-enrol__option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .compass-enrol__option-body {
+    display: grid;
+    gap: 0.4rem;
+    height: 100%;
+    padding: clamp(1rem, 2.5vw, 1.25rem);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 26%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 92%, var(--tok-pale-teal));
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .compass-enrol__option input:focus-visible + .compass-enrol__option-body {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+
+  .compass-enrol__option input:checked + .compass-enrol__option-body {
+    border-color: color-mix(in srgb, var(--tok-gold) 60%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--tok-gold) 40%, transparent);
+    background: color-mix(in srgb, var(--tok-gold) 10%, var(--tok-surface-reading));
+  }
+
+  .compass-enrol__option--disabled {
+    cursor: not-allowed;
+  }
+
+  .compass-enrol__option--disabled .compass-enrol__option-body {
+    opacity: 0.62;
+  }
+
+  .compass-enrol__option-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .compass-enrol__option-slot {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-teal-dim);
+  }
+
+  .compass-enrol__status {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tok-teal);
+  }
+
+  .compass-enrol__status--full,
+  .compass-enrol__status--closed {
+    color: color-mix(in srgb, var(--tok-text-dark) 70%, transparent);
+  }
+
+  .compass-enrol__option-start {
+    font-family: var(--font-heading);
+    font-size: clamp(1.08rem, 2.3vw, 1.28rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__option-time {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__option-further {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--tok-text-dark) 78%, transparent);
+  }
+
+  .compass-enrol__option-meta {
+    margin-top: 0.2rem;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--tok-teal-dim);
+  }
+
+  .compass-enrol__panel {
+    margin-top: 0.35rem;
+    padding: clamp(1.2rem, 3vw, 1.75rem);
+    border-radius: var(--radius-promo);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 36%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 94%, var(--tok-gold));
+    box-sizing: border-box;
+  }
+
+  .compass-enrol__panel-heading {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 600;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__summary {
+    margin: 0 0 1.15rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
+    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 70%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 88%, transparent);
+  }
+
+  .compass-enrol__summary-label,
+  .compass-enrol__summary-start,
+  .compass-enrol__summary-time,
+  .compass-enrol__summary-further {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    line-height: 1.5;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__summary-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tok-teal-dim);
+  }
+
+  .compass-enrol__summary-start {
+    font-family: var(--font-heading);
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+
+  .compass-enrol__summary-further {
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--tok-text-dark) 78%, transparent);
+  }
+
+  .compass-enrol__form {
+    display: grid;
+    gap: 0.95rem;
+  }
+
+  .compass-enrol__error {
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--radius-control);
+    border: 1px solid color-mix(in srgb, #8a2f2f 35%, transparent);
+    background: color-mix(in srgb, #8a2f2f 8%, var(--tok-surface-reading));
+    color: var(--tok-text-dark);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .compass-enrol__fields {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 640px) {
+    .compass-enrol__fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .compass-enrol__field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .compass-enrol__field {
+    display: grid;
+    gap: 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem 0.8rem;
+    border-radius: var(--radius-control);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 30%, transparent);
+    background: var(--tok-surface-reading);
+    color: var(--tok-text-dark);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .compass-enrol__field input:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 2px;
+  }
+
+  .compass-enrol__check {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: start;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-enrol__check input {
+    margin-top: 0.2rem;
+  }
+
+  .compass-enrol__check a {
+    color: var(--tok-teal-dim);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .compass-enrol__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .compass-enrol__submit {
+    justify-self: start;
+    margin-top: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.82rem;
+  }
+
+  .compass-enrol__submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .compass-lower__cohort-assurances {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    max-width: 40rem;
+  }
+
+  .compass-lower__cohort-assurances li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-lower__cohort-assurances li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--tok-teal);
+  }
+
+  .compass-lower__offer-panel {
+    margin: 0 auto;
+    max-width: 40rem;
+    padding: clamp(1.5rem, 4vw, 2.35rem);
+    border-radius: var(--radius-promo);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 42%, transparent);
+    background: color-mix(in srgb, #061526 42%, transparent);
+    box-sizing: border-box;
+  }
+
+  .compass-lower__offer-panel .tok-home__h2 {
+    max-width: 18ch;
+  }
+
+  .compass-lower__offer-price {
+    margin: 0.85rem 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.15rem, 5vw, 2.85rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-lower__offer-list {
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .compass-lower__offer-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass-lower__offer-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--tok-gold);
+  }
+
+  .compass-lower__offer-value {
+    margin: 1.25rem 0 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-lower__offer-secondary {
+    margin: 1rem 0 0;
+  }
+
+  .compass-lower__proof-featured {
+    margin: 0 0 clamp(1.25rem, 3vw, 1.75rem);
+    padding: clamp(1.25rem, 3.5vw, 1.85rem);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 24%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading) 90%, var(--tok-pale-teal));
+    box-sizing: border-box;
+  }
+
+  .compass-lower__proof-support {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .compass-lower__proof-support {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.15rem;
+    }
+  }
+
+  .compass-lower__proof-card {
+    margin: 0;
+    padding: clamp(1.1rem, 2.8vw, 1.4rem);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    background: var(--tok-surface-reading);
+    box-sizing: border-box;
+  }
+
+  .compass-lower__proof-result {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tok-teal-dim);
+  }
+
+  .compass-lower__proof-quote {
+    margin: 0;
+  }
+
+  .compass-lower__proof-quote p {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-lower__proof-quote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .compass-lower__proof-pull {
+    margin: 0 0 0.75rem;
+  }
+
+  .compass-lower__proof-pull p {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-lower__proof-body {
+    margin: 0 0 0.85rem;
+  }
+
+  .compass-lower__proof-body p {
+    margin: 0 0 0.7rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--tok-text-dark) 92%, transparent);
+  }
+
+  .compass-lower__proof-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .compass-lower__proof-excerpt {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--tok-text-dark-soft, #3a4550);
+  }
+
+  .compass-lower__proof-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.85rem;
+    margin-top: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: var(--tok-teal-dim);
+  }
+
+  .compass-lower__proof-name {
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-lower__founder-frame {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 28%, transparent);
+    background: var(--tok-deep-ocean);
+  }
+
+  .compass-lower__founder-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .compass-lower__founder-note {
+    margin: 1.15rem 0 0;
+    padding: 0.95rem 1.05rem;
+    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 70%, transparent);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--tok-text-dark);
+    background: color-mix(in srgb, var(--tok-surface-reading) 70%, transparent);
+  }
+
+  .compass-lower__faq-inner {
+    max-width: 44rem;
+  }
+
+  .compass-lower__checklist {
+    padding-block: clamp(2.25rem, 5vw, 3.25rem);
+  }
+
+  .compass-lower__checklist-inner {
+    max-width: 44rem;
+  }
+
+  .compass-lower__checklist .tok-home__h2 {
+    max-width: 22ch;
+    font-size: clamp(1.35rem, 2.8vw, 1.7rem);
+  }
+
+  .compass-lower__checklist .tok-home__lede {
+    max-width: 38rem;
+    font-size: 1rem;
+  }
+
+  .compass-lower__checklist :global(.tok-disc-capture) {
+    margin-top: 1.15rem;
+  }
+
+  .compass-lower__checklist :global(.tok-disc-capture__img) {
+    max-width: min(100%, 14.5rem);
+  }
+
+  .compass-lower__checklist :global(.tok-lead-magnet-cta__title) {
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+  }
+
+  .compass-lower__accordion {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-teal) 22%, transparent);
+  }
+
+  .compass-lower__faq-item {
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-teal) 22%, transparent);
+  }
+
+  .compass-lower__faq-q {
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 1.75rem 1rem 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.02rem, 2vw, 1.12rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--tok-text-dark);
+    position: relative;
+  }
+
+  .compass-lower__faq-q::-webkit-details-marker {
+    display: none;
+  }
+
+  .compass-lower__faq-q::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 1rem;
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--tok-teal);
+  }
+
+  .compass-lower__faq-item[open] .compass-lower__faq-q::after {
+    content: "–";
+  }
+
+  .compass-lower__faq-q:focus-visible {
+    outline: 2px solid var(--tok-gold);
+    outline-offset: 3px;
+  }
+
+  .compass-lower__faq-a {
+    margin: 0 0 1.1rem;
+    padding-right: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--tok-text-dark);
+  }
+
+  .compass-lower__final-inner {
+    max-width: 40rem;
+    text-align: left;
+  }
+
+  .compass-lower__final .compass-open__offer {
+    color: var(--tok-gold-light);
+  }
+
+  .compass-lower__final-note {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass-lower__final-secondary {
+    margin: 1.25rem 0 0;
+  }
+
+  .compass-lower__final-link {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.78rem;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    padding-bottom: 0.15rem;
+  }
+
+  .compass__page-attribution {
+    margin: clamp(1.5rem, 4vw, 2.5rem) auto clamp(2rem, 5vw, 3rem);
+    max-width: 62rem;
+    padding-inline: var(--page-gutter, 1.25rem);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--tok-text-light-soft);
+  }
+
+  /* Hero banner — primary visual, full width in the page frame */
+  .compass-open__banner-shell {
+    margin-bottom: clamp(1.5rem, 4vw, 2.35rem);
+  }
+
+  .compass-open__banner {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: clamp(0.65rem, 2vw, 1.15rem);
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 34%, transparent);
+    background: var(--tok-deep-ocean);
+  }
+
+  .compass-open__banner-img {
+    display: block;
+    width: 100%;
+    max-height: min(42vh, 28rem);
+    height: auto;
+    margin-inline: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .compass-open__hero-split {
+    display: grid;
+    gap: clamp(1.35rem, 4vw, 2.5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .compass-open__hero-split {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+      gap: clamp(1.75rem, 4vw, 3rem);
+      align-items: stretch;
+    }
+  }
+
+  .compass-open__h1 {
+    max-width: 16ch;
+  }
+
+  .compass-open__hero-panel {
+    margin: 0;
+    padding: clamp(1.15rem, 3vw, 1.55rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 38%, transparent);
+    border-radius: var(--radius-promo);
+    background: color-mix(in srgb, #061526 48%, transparent);
+    box-sizing: border-box;
+  }
+
+  .compass-open__audience {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 90%, var(--tok-gold));
+  }
+
+  .compass-open__actions {
+    margin-top: 1.25rem;
+  }
+
+  .compass-open__cta {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.82rem;
+    text-decoration: none;
+  }
+
+  /*
+   * Compass routes use tok-body--system, whose #main-content a rule beats
+   * .tok-home__cta--primary. Restore homepage CTA colours for open + lower.
+   */
+  :global(.tok-body--system #main-content .compass-open .tok-home__cta--primary),
+  :global(.tok-body--system #main-content .compass-lower .tok-home__cta--primary) {
+    color: var(--tok-deep-ocean);
+    background: var(--tok-gold);
+    border-color: var(--tok-gold);
+  }
+
+  :global(.tok-body--system #main-content .compass-open .tok-home__cta--primary:hover),
+  :global(.tok-body--system #main-content .compass-lower .tok-home__cta--primary:hover) {
+    color: var(--tok-deep-ocean);
+    background: var(--tok-gold-light);
+    border-color: var(--tok-gold-light);
+  }
+
+  :global(.tok-body--system #main-content .compass-open .tok-home__cta--secondary),
+  :global(.tok-body--system #main-content .compass-lower .tok-home__cta--secondary) {
+    color: var(--tok-text-light-strong);
+    background: transparent;
+    border-color: color-mix(in srgb, var(--tok-gold) 70%, transparent);
+  }
+
+  :global(.tok-body--system #main-content .compass-open .tok-home__cta--secondary:hover),
+  :global(.tok-body--system #main-content .compass-lower .tok-home__cta--secondary:hover) {
+    color: var(--tok-text-light-strong);
+    background: color-mix(in srgb, var(--tok-gold) 12%, transparent);
+  }
+
+  :global(.tok-body--system #main-content .compass-lower .tok-home__text-link) {
+    color: var(--tok-teal-light);
+  }
+
+  :global(.tok-body--system #main-content .compass-lower .tok-home__band--cream .tok-home__text-link),
+  :global(.tok-body--system #main-content .compass-lower .tok-home__band--pale-teal .tok-home__text-link) {
+    color: var(--tok-teal-dim);
+  }
+
+  :global(.tok-body--system #main-content .compass-lower__final .tok-home__text-link) {
+    color: var(--tok-gold-light);
+  }
+
+  :global(.tok-body--system #main-content .compass-lower__final .tok-home__text-link:hover) {
+    color: var(--tok-air);
+  }
+
+  .compass-open__offer {
+    margin: 1.1rem 0 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-open__reassure {
+    margin-top: 0.55rem;
+  }
+
+  /* Recognition — asymmetrical intro + stacked points */
+  .compass-open__recognition-split {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .compass-open__recognition-split {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: clamp(2rem, 5vw, 3.5rem);
+    }
+  }
+
+  .compass-open__recognition-intro .tok-home__h2 {
+    max-width: 22ch;
+  }
+
+  .compass-open__close {
+    margin: 1.35rem 0 0;
+    max-width: 36rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--tok-water);
+  }
+
+  .compass-open__recognition-stack {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .compass-open__recognition-stack li {
+    margin: 0;
+    padding: 0.95rem 1.05rem 1.05rem 1.15rem;
+    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 70%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 70%, transparent);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  }
+
+  .compass-open__recognition-stack-item--lead {
+    padding: 1.2rem 1.2rem 1.3rem 1.3rem;
+    background: var(--tok-surface-reading);
+    border-left-width: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .compass-open__recognition-stack h3 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    font-weight: 600;
+    line-height: 1.28;
+    color: var(--tok-water);
+  }
+
+  .compass-open__recognition-stack-item--lead h3 {
+    font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+  }
+
+  .compass-open__recognition-stack p {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+  }
+
+  /* Practical cost — progressive numbered list, not a card grid */
+  .compass-open__cost-split {
+    display: grid;
+    gap: clamp(1.35rem, 3.5vw, 2.25rem);
+  }
+
+  .compass-open__cost-intro {
+    max-width: 38rem;
+  }
+
+  .compass-open__cost .tok-home__h2 {
+    max-width: 22ch;
+  }
+
+  .compass-open__cost-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+  }
+
+  .compass-open__cost-list li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.85rem 1.1rem;
+    align-items: baseline;
+    margin: 0;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+    line-height: 1.55;
+    color: var(--tok-text-light-soft);
+  }
+
+  .compass-open__cost-index {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-open__cost-bridge {
+    margin: 0;
+    max-width: 40rem;
+    padding: 1.1rem 1.15rem;
+    border-left: 3px solid color-mix(in srgb, var(--tok-gold) 75%, transparent);
+    font-family: var(--font-heading);
+    font-size: clamp(1.08rem, 2.2vw, 1.28rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--tok-text-light);
+    background: color-mix(in srgb, #061820 35%, transparent);
+  }
+
+  /* Transformation bridge — compact asymmetric results */
+  .compass-open__bridge-lead {
+    max-width: 44rem;
+  }
+
+  .compass-open__bridge .tok-home__h2 {
+    max-width: 34ch;
+  }
+
+  .compass-open__outcome-asymmetric {
+    list-style: none;
+    margin: 1.65rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .compass-open__outcome-asymmetric {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .compass-open__outcome-asymmetric > li {
+      grid-column: span 2;
+    }
+
+    .compass-open__outcome-asymmetric-item--wide {
+      grid-column: span 3;
+    }
+  }
+
+  .compass-open__outcome-asymmetric > li {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border-top: 2px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    background: color-mix(in srgb, #061820 28%, transparent);
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .compass-open__outcome-asymmetric strong {
+    font-family: var(--font-heading);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-open__outcome-asymmetric span {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 94%, transparent);
+  }
+
+  .compass-open__bridge-end {
+    max-width: 38rem;
+    margin-top: 1.5rem;
+    font-weight: 500;
+  }
+
+  /* Differentiation — connected Meanings → Intuition → Interpretation */
+  .compass-method__intro {
+    max-width: 42rem;
+  }
+
+  .compass-method__intro .tok-home__h2 {
+    max-width: 28ch;
+  }
+
+  .compass-method__progression {
+    list-style: none;
+    margin: 1.85rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: none;
+  }
+
+  .compass-method__progression li {
+    position: relative;
+    margin: 0;
+    padding: 1.15rem 0 1.25rem 1.15rem;
+    border-left: 2px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+  }
+
+  .compass-method__progression li:last-child {
+    padding-bottom: 0.35rem;
+  }
+
+  .compass-method__progression-step {
+    display: block;
+    margin: 0 0 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--tok-gold-deep);
+  }
+
+  .compass-method__progression h3 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.28;
+    color: var(--tok-water);
+  }
+
+  .compass-method__progression p {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+  }
+
+  @media (min-width: 900px) {
+    .compass-method__progression {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      border-top: 2px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
+    }
+
+    .compass-method__progression li {
+      padding: 1.35rem 1.25rem 0.25rem 0;
+      border-left: none;
+      border-top: none;
+    }
+
+    .compass-method__progression li:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -0.15rem;
+      top: 1.55rem;
+      font-size: 1.1rem;
+      color: var(--tok-gold-deep);
+    }
+  }
+
+  .compass-method__highlight {
+    margin: 1.85rem 0 0;
+    max-width: 40rem;
+    padding: 1.1rem 1.25rem;
+    border-left: 3px solid var(--tok-gold);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    background: color-mix(in srgb, var(--tok-gold) 10%, var(--tok-surface-reading));
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--tok-water);
+  }
+
+  /* Method introduction — split copy + restrained symbol strip */
+  .compass-method__framework-split {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .compass-method__framework-split {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: clamp(2rem, 5vw, 3.25rem);
+      align-items: center;
+    }
+  }
+
+  .compass-method__symbol-strip {
+    list-style: none;
+    margin: 0;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, var(--tok-border-light));
+    border-radius: var(--radius-promo);
+    background: var(--tok-surface-reading);
+    box-sizing: border-box;
+  }
+
+  .compass-method__symbol-strip li {
+    display: grid;
+    justify-items: center;
+    gap: 0.3rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  .compass-method__symbol-strip li:nth-child(5) {
+    grid-column: 2;
+  }
+
+  .compass-method__symbol-strip img {
+    display: block;
+    width: clamp(2.4rem, 6vw, 3.1rem);
+    height: auto;
+  }
+
+  .compass-method__symbol-strip span {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tok-water);
+  }
+
+  /* Seven pillars — 2–3–2 with Center/Seal bookends */
+  .compass-method__pillars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .compass-method__pillars {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.95rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .compass-method__pillars {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .compass-method__pillars > li:nth-child(1),
+    .compass-method__pillars > li:nth-child(2),
+    .compass-method__pillars > li:nth-child(6),
+    .compass-method__pillars > li:nth-child(7) {
+      grid-column: span 3;
+    }
+
+    .compass-method__pillars > li:nth-child(3),
+    .compass-method__pillars > li:nth-child(4),
+    .compass-method__pillars > li:nth-child(5) {
+      grid-column: span 2;
+    }
+  }
+
+  .compass-method__pillar {
+    height: 100%;
+    margin: 0;
+    padding: 1rem 1.05rem 1.15rem;
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 24%, var(--tok-border-light));
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 55%, var(--tok-surface-reading));
+    box-sizing: border-box;
+  }
+
+  .compass-method__pillars-item--bookend .compass-method__pillar {
+    padding: 1.15rem 1.2rem 1.3rem;
+    border-color: color-mix(in srgb, var(--tok-gold) 48%, var(--tok-border-light));
+    background: var(--tok-surface-reading);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .compass-method__pillar-icon {
+    display: block;
+    width: clamp(2.6rem, 6vw, 3.35rem);
+    height: auto;
+    margin: 0 0 0.55rem;
+  }
+
+  .compass-method__pillars-item--bookend .compass-method__pillar-icon {
+    width: clamp(3rem, 7vw, 3.75rem);
+  }
+
+  .compass-method__pillar h3 {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.08rem, 2vw, 1.22rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--tok-water);
+  }
+
+  .compass-method__pillar p {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+  }
+
+  .compass-method__pillars-close {
+    margin: 1.75rem 0 0;
+    max-width: 40rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--tok-water);
+  }
+
+  .compass-method__pillars-support {
+    margin-top: 0.85rem;
+    max-width: 40rem;
+  }
+
+  /* Worked example — before/after with directional cue */
+  .compass-method__example-head {
+    max-width: 40rem;
+  }
+
+  .compass-method__example-head .tok-home__h2 {
+    max-width: 24ch;
+  }
+
+  .compass-method__compare {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1.75rem 0 0;
+    align-items: stretch;
+  }
+
+  @media (min-width: 768px) {
+    .compass-method__compare {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+
+  .compass-method__compare-arrow {
+    display: none;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--tok-gold-light);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .compass-method__compare-arrow {
+      display: block;
+    }
+  }
+
+  .compass-method__compare-card {
+    margin: 0;
+    padding: 1.25rem 1.3rem 1.4rem;
+    border: 1px solid color-mix(in srgb, var(--tok-text-light-soft) 22%, transparent);
+    border-radius: var(--radius-promo);
+    background: color-mix(in srgb, #061526 50%, transparent);
+    box-sizing: border-box;
+    height: 100%;
+  }
+
+  .compass-method__compare-card--after {
+    border-color: color-mix(in srgb, var(--tok-gold) 58%, transparent);
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--tok-gold) 14%, #0a2034) 0%,
+        color-mix(in srgb, #061526 70%, transparent) 100%
+      );
+  }
+
+  .compass-method__compare-label {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-method__compare-card p:last-child {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--tok-text-light-soft) 94%, transparent);
+  }
+
+  .compass-method__example-close {
+    margin: 1.75rem 0 0;
+    max-width: 36rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--tok-gold-light);
+  }
+
+  .compass-method__training-placeholder {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  /* Programme delivery block — varied editorial treatments */
+  .compass-programme__overview-split {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+
+  @media (min-width: 800px) {
+    .compass-programme__overview-split {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap: clamp(2rem, 5vw, 3.25rem);
+      align-items: stretch;
+    }
+  }
+
+  .compass-programme__overview-copy .tok-home__h2 {
+    max-width: 20ch;
+  }
+
+  .compass-programme__facts {
+    margin: 0;
+    padding: clamp(1.2rem, 3vw, 1.55rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 34%, var(--tok-border-light));
+    border-radius: var(--radius-promo);
+    background: var(--tok-surface-reading);
+    box-shadow: var(--shadow-sm);
+    box-sizing: border-box;
+  }
+
+  .compass-programme__facts-label {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .compass-programme__facts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .compass-programme__facts li {
+    margin: 0;
+    padding: 0.55rem 0 0.55rem 0.95rem;
+    border-left: 2px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+    font-size: 0.96rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--tok-text-dark) 92%, transparent);
+  }
+
+  .compass-programme__phase-intro {
+    max-width: 44rem;
+  }
+
+  .compass-programme__phase-intro .tok-home__h2 {
+    max-width: 22ch;
+  }
+
+  .compass-programme__timeline {
+    list-style: none;
+    margin: 1.85rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+
+  .compass-programme__timeline li {
+    position: relative;
+    margin: 0;
+    padding: 1.2rem 0 1.35rem 1.25rem;
+    border-left: 2px solid color-mix(in srgb, var(--tok-gold) 48%, transparent);
+  }
+
+  .compass-programme__timeline li:last-child {
+    padding-bottom: 0.25rem;
+  }
+
+  .compass-programme__timeline-label {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tok-gold-deep);
+  }
+
+  .compass-programme__timeline h3 {
+    margin: 0 0 0.45rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.28;
+    color: var(--tok-water);
+  }
+
+  .compass-programme__timeline p:last-child {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+  }
+
+  @media (min-width: 900px) {
+    .compass-programme__timeline {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.15rem 1.5rem;
+    }
+
+    .compass-programme__timeline li {
+      padding: 1.15rem 1.2rem 1.25rem;
+      border-left: none;
+      border-top: 3px solid color-mix(in srgb, var(--tok-gold) 55%, transparent);
+      background: var(--tok-surface-reading);
+      border-radius: 0 0 var(--radius-control) var(--radius-control);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+
+  .compass-programme__practice-grid {
+    list-style: none;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 700px) {
+    .compass-programme__practice-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.15rem;
+    }
+  }
+
+  .compass-programme__practice-grid article {
+    height: 100%;
+    margin: 0;
+    padding: 1.2rem 1.2rem 1.3rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 40%, transparent);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 65%, transparent);
+    box-sizing: border-box;
+  }
+
+  .compass-programme__practice-grid h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.1rem, 2.1vw, 1.28rem);
+    font-weight: 600;
+    line-height: 1.28;
+    color: var(--tok-water);
+  }
+
+  .compass-programme__practice-grid p {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--tok-text-dark) 90%, transparent);
+  }
+
+  .compass-programme__mentorship-split {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: center;
+  }
+
+  @media (min-width: 800px) {
+    .compass-programme__mentorship-split {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: clamp(2rem, 5vw, 3.25rem);
+    }
+  }
+
+  .compass-programme__mentorship-copy .tok-home__h2 {
+    max-width: 18ch;
+  }
+
+  .compass-programme__mentorship-media {
+    max-width: 28rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 800px) {
+    .compass-programme__mentorship-media {
+      margin-inline: 0 0 auto;
+      max-width: none;
+    }
+  }
+
+  .compass-programme__membership-panel {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: clamp(1.35rem, 3.5vw, 2rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 32%, var(--tok-border-light));
+    border-radius: var(--radius-promo);
+    background: var(--tok-surface-reading);
+    box-sizing: border-box;
+  }
+
+  .compass-programme__membership-panel .tok-home__h2 {
+    max-width: 20ch;
+  }
+
+  .compass-programme__membership-list {
+    list-style: none;
+    margin: 1.35rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .compass-programme__membership-list li {
+    position: relative;
+    margin: 0;
+    padding: 0.15rem 0 0.15rem 1.15rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--tok-text-dark) 92%, transparent);
+  }
+
+  .compass-programme__membership-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--tok-gold);
+  }
+
+  .compass-programme__membership-boundary {
+    margin: 1.45rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: color-mix(in srgb, var(--tok-text-dark) 88%, transparent);
+  }
+
+  .compass-programme__close-inner {
+    max-width: 42rem;
+  }
+
+  .compass-programme__close .tok-home__h2 {
+    max-width: 16ch;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 374px) {
+    .compass-open__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .compass-open__cta {
+      width: 100%;
+    }
+
+    .compass-open__h1 {
+      max-width: none;
+    }
+
+    .compass-open__banner-img {
+      max-height: 34vh;
+    }
+
+    .compass-method__pillar {
+      padding: 0.9rem;
+    }
+
+    .compass-programme__facts,
+    .compass-programme__membership-panel {
+      padding: 1rem;
+    }
   }
 
   .compass__panel {
@@ -297,20 +3065,6 @@ const compassFaqJsonLd = faqPageJsonLd(
     padding: clamp(1rem, 3vw, 1.5rem);
     color: var(--tok-text-light);
     box-shadow: var(--shadow-sys-sm);
-  }
-
-  .compass__hero-figure {
-    margin: 0;
-  }
-
-  .compass__hero-image {
-    display: block;
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    border-radius: var(--radius-soft);
-    border: 1px solid var(--tok-border-system);
-    box-shadow: var(--shadow-sys-md);
   }
 
   .compass__eyebrow {
@@ -369,6 +3123,29 @@ const compassFaqJsonLd = faqPageJsonLd(
 
   .compass__section--distinction .compass__h2 {
     color: var(--tok-text-light);
+  }
+
+  /* Secondary entry: checklist must stay quieter than training/investment CTAs */
+  .compass__section--checklist {
+    padding: clamp(1.1rem, 2.5vw, 1.45rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 22%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-panel) 55%, transparent);
+  }
+
+  .compass__section--checklist .compass__h2 {
+    font-size: clamp(1.2rem, 2.4vw, 1.4rem);
+    font-weight: 500;
+  }
+
+  .compass__section--checklist .compass__p {
+    font-size: 1rem;
+    max-width: 40rem;
+  }
+
+  .compass__section--checklist :global(.tok-disc-capture) {
+    margin-top: 0.85rem;
+    margin-bottom: 0;
   }
 
   .compass__p {
@@ -442,121 +3219,6 @@ const compassFaqJsonLd = faqPageJsonLd(
     margin-bottom: 0.7rem;
   }
 
-  .compass__cohort-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 0.85rem;
-    margin: 0 0 1.25rem;
-  }
-
-  .compass__cohort-card {
-    margin: 0;
-  }
-
-  .compass__cohort-card-title {
-    margin: 0 0 0.35rem;
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--tok-text-light);
-  }
-
-  .compass__cohort-card-status {
-    margin: 0;
-    font-size: 0.98rem;
-    line-height: 1.55;
-    color: var(--tok-text-light-soft);
-  }
-
-  .compass__schedule-window-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    gap: 0.85rem;
-    margin: 0 0 1.25rem;
-  }
-
-  .compass__schedule-window-card {
-    margin: 0;
-    height: 100%;
-  }
-
-  .compass__schedule-window-title {
-    margin: 0 0 0.5rem;
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--tok-text-light);
-  }
-
-  .compass__schedule-window-list {
-    margin: 0;
-    padding-left: 1.1rem;
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--tok-text-light-soft);
-  }
-
-  .compass__schedule-window-list li {
-    margin-bottom: 0.35rem;
-  }
-
-  .compass__from-august {
-    margin: 0 0 1rem;
-  }
-
-  .compass__from-august-heading {
-    margin-top: 0;
-  }
-
-  .compass__from-august-lead {
-    margin-bottom: 0.5rem;
-  }
-
-  .compass__from-august-list {
-    margin-bottom: 0;
-    color: var(--tok-text-light-soft);
-  }
-
-  .compass__pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr));
-    gap: 1rem;
-    margin: 1rem 0 1.25rem;
-  }
-
-  .compass__pricing-card {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    height: 100%;
-  }
-
-  .compass__pricing-tier-title {
-    margin: 0;
-    font-family: var(--font-heading);
-    font-size: 1.08rem;
-    font-weight: 600;
-    color: var(--tok-text-light);
-    line-height: 1.3;
-  }
-
-  .compass__pricing-tier-p {
-    margin: 0;
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--tok-text-light-soft);
-  }
-
-  .compass__pricing-cta {
-    align-self: flex-start;
-    margin-top: auto;
-  }
-
-  .compass__section--investment .compass__h3 {
-    margin-top: 1.5rem;
-  }
-
   .compass__table-wrap {
     margin: 0.5rem 0 0;
     width: 100%;
@@ -609,140 +3271,9 @@ const compassFaqJsonLd = faqPageJsonLd(
     margin-top: 0.35rem;
   }
 
-  .compass__faq {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .compass__faq-item {
-    padding: 1rem 0;
-    border-top: 1px solid color-mix(in srgb, var(--tok-teal-light) 28%, transparent);
-  }
-
-  .compass__faq-item:first-of-type {
-    border-top: none;
-    padding-top: 0.35rem;
-  }
-
-  .compass__faq-q {
-    margin: 0 0 0.45rem;
-    font-family: var(--font-heading);
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--tok-water);
-  }
-
-  .compass__faq-a {
-    margin: 0;
-    font-size: 1.06rem;
-    line-height: 1.72;
-    color: var(--tok-text-dark);
-  }
-
-  .compass__faq-link {
-    color: var(--tok-water);
-    font-weight: 600;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.15em;
-  }
-
-  .compass__faq-link:hover {
-    color: var(--tok-teal);
-  }
-
   .compass__section {
     padding: clamp(1.1rem, 2.6vw, 1.45rem);
     border-radius: var(--radius-control);
-  }
-
-  .compass__section--soft {
-    background: var(--tok-surface-reading-soft);
-    border: 1px solid var(--tok-border-light);
-    color: var(--tok-text-dark);
-  }
-
-  .compass__section--soft .compass__h2,
-  .compass__section--soft .compass__p,
-  .compass__section--soft .compass__list {
-    color: var(--tok-text-dark);
-  }
-
-  .compass__section--warm {
-    background: color-mix(in srgb, var(--tok-gold) 8%, var(--tok-surface-reading));
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 30%, transparent);
-    color: var(--tok-text-dark);
-  }
-
-  .compass__section--warm .compass__h2,
-  .compass__section--warm .compass__p {
-    color: var(--tok-text-dark);
-  }
-
-  .compass__section--post-investment {
-    display: grid;
-    gap: 0.35rem;
-  }
-
-  .compass__section--post-investment .compass__h2,
-  .compass__section--post-investment .compass__p {
-    margin-bottom: 0;
-  }
-
-  .compass__cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.85rem 1.25rem;
-    align-items: center;
-    margin-top: 0.5rem;
-  }
-
-  .compass__cta-row .compass__cta {
-    margin-top: 0;
-  }
-
-  .compass__text-link {
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--tok-water);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
-  }
-
-  .compass__text-link:hover {
-    color: var(--tok-teal);
-  }
-
-  .compass__section--final {
-    background: var(--tok-deep-ocean);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 45%, transparent);
-  }
-
-  .compass__section--final .compass__h2,
-  .compass__section--final .compass__p,
-  .compass__section--final .compass__list {
-    color: var(--tok-text-light);
-  }
-
-  .compass__section--final .compass__eyebrow {
-    color: var(--tok-gold);
-  }
-
-  .compass__section--final .compass__cta {
-    color: var(--tok-text-light);
-    border-color: var(--tok-gold);
-  }
-
-  .compass__page-attribution {
-    margin: 2rem 0 0;
-    text-align: center;
-    font-style: italic;
-    max-width: none;
   }
 
   .compass__sub-link {
@@ -810,51 +3341,18 @@ const compassFaqJsonLd = faqPageJsonLd(
     border-color: var(--tok-gold);
   }
 
-  .compass__section--soft .compass__cta,
-  .compass__section--warm .compass__cta {
-    color: var(--tok-water);
-  }
-
-  .compass__section--soft .compass__cta:hover,
-  .compass__section--warm .compass__cta:hover {
-    color: var(--tok-water);
-  }
-
-  .compass__section--schedule .compass__cta--secondary {
-    color: var(--tok-text-light);
-  }
-
-  .compass__section--schedule .compass__cta--secondary:hover {
-    color: var(--tok-text-light-strong);
-  }
-
-  .compass__section--final .compass__cta:hover {
-    color: var(--tok-text-light-strong);
-    background: color-mix(in srgb, var(--tok-gold) 20%, transparent);
-  }
-
   .compass__cta:focus-visible {
     outline: 2px solid var(--tok-gold);
     outline-offset: 4px;
   }
 
-  @media (max-width: var(--bp-nav)) {
-    .compass__hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .compass__hero-figure {
-      order: -1;
-    }
-  }
-
-  @media (max-width: var(--bp-xs)) {
-    .compass__section {
-      padding: 0.95rem;
-    }
-
-    .compass__h1 {
-      font-size: clamp(2rem, 9vw, 2.45rem);
+  @media (max-width: 639px) {
+    .compass__cta,
+    .compass-open__cta,
+    .compass-lower .tok-home__cta {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
   }
 </style>
