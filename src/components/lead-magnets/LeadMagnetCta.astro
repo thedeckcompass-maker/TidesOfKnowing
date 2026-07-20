@@ -53,7 +53,12 @@ const resolvedSourceComponent =
     novalidate
   >
     <input type="hidden" name="resourceSlug" value={resourceSlug} />
-    <input type="hidden" name="source_component" value={resolvedSourceComponent} />
+    <input
+      type="hidden"
+      name="source_component"
+      value={resolvedSourceComponent}
+      data-source-locked={sourceComponent ? "1" : undefined}
+    />
     <input
       class="tok-lead-magnet-cta__hp"
       type="text"

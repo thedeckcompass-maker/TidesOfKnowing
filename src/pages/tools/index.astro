@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import DiscernmentChecklistCapture from "../../components/lead-magnets/DiscernmentChecklistCapture.astro";
 import { siteBase } from "../../lib/site";
 import { withSubscribeSourceAttribution } from "../../lib/subscribeAttribution";
 
@@ -53,6 +54,25 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
         <p class="tools-hub__status tools-hub__status--next">COMING SOON</p>
       </li>
     </ul>
+
+    <section
+      class="tools-hub__checklist"
+      aria-labelledby="tools-checklist-heading"
+    >
+      <h2 id="tools-checklist-heading" class="tools-hub__checklist-title">
+        A practical companion for cleaner readings
+      </h2>
+      <p class="tools-hub__checklist-lede">
+        Before you open another practice space, use The Discernment Checklist to test the question,
+        recognise which cards are carrying the answer, and know when further cards add noise rather
+        than clarity.
+      </p>
+      <DiscernmentChecklistCapture
+        sourceComponent="tools-hub-discernment-checklist"
+        placement="inline"
+        headingId="tools-checklist-heading"
+      />
+    </section>
 
     <section class="tools-hub__prompt" aria-labelledby="tools-prompt-heading">
       <h2 id="tools-prompt-heading" class="tools-hub__prompt-title">Practice Prompt of the Week</h2>
@@ -197,6 +217,31 @@ const notifySubscribeHref = withSubscribeSourceAttribution("/subscribe/", {
     opacity: 0.92;
     padding-top: 0.35rem;
     border-top: 1px solid color-mix(in srgb, var(--tok-water) 12%, transparent);
+  }
+
+  .tools-hub__checklist {
+    margin: clamp(2rem, 5vw, 2.75rem) 0 0;
+    padding: clamp(1.35rem, 4vw, 1.85rem) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    max-width: 100%;
+  }
+
+  .tools-hub__checklist-title {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.25;
+    color: var(--tok-text-light);
+  }
+
+  .tools-hub__checklist-lede {
+    margin: 0 0 0.35rem;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: var(--tok-text-light-soft);
+    max-width: 42rem;
   }
 
   .tools-hub__prompt {

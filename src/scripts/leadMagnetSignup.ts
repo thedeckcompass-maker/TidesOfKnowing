@@ -22,6 +22,9 @@ function updateSourceComponent(form: HTMLFormElement): void {
   const root = form.closest<HTMLElement>("[data-lead-magnet-cta]");
   if (!sourceInput || !root) return;
 
+  // Keep page-authored attribution (homepage, tools hub, COMPASS, series, etc.).
+  if (sourceInput.dataset.sourceLocked === "1") return;
+
   const slug = form.querySelector<HTMLInputElement>('input[name="resourceSlug"]')?.value.trim();
   const placement = root.dataset.leadMagnetPlacement?.trim();
   if (slug && placement) {

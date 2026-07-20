@@ -1,693 +1,744 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+import BrandImagePlaceholder from "../components/home/BrandImagePlaceholder.astro";
+import LeadMagnetCta from "../components/lead-magnets/LeadMagnetCta.astro";
 import { getCollection } from "astro:content";
 import { ENTITY_IDS, TIDES_OF_KNOWING_ORIGIN } from "../lib/ecosystem-structured-data";
 import { siteBase } from "../lib/site";
-import { sortArticlesLibraryNewest } from "../lib/articleLibraryOrder";
-import { getStandaloneFieldNotes, standaloneSlugFromEntry } from "../lib/blogFieldNotes";
-import { sortBlogPostsForListing } from "../lib/sortBlogPosts";
-
-const latest = sortBlogPostsForListing(
-  getStandaloneFieldNotes(await getCollection("blog", ({ data }) => !data.draft)),
-);
-
-const latestMethodology = sortArticlesLibraryNewest(
-  await getCollection("articles"),
-).slice(0, 5);
+import { ASK_LEILIA_PUBLIC_REVIEW_FALLBACKS } from "../lib/ask-leilia/reviews/publicReviewFallbacks";
+import "../styles/home.css";
 
 const homeUrl = new URL("/", siteBase(Astro)).href;
 
-/** Same @id as ecosystem graph; adds home-specific description without a second publisher object. */
+const pageTitle = "Tides of Knowing | Symbolic Perception & The COMPASS Method™";
+const pageDescription =
+  "Tides of Knowing helps people turn intuitive perception into coherent, grounded understanding through reflective Ask Leilia tarot readings, practical resources, and The COMPASS Method™—a structured framework for symbolic interpretation beyond memorised meanings.";
+
+/** Same @id as ecosystem graph; home-specific description without a second publisher object. */
 const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": ENTITY_IDS.tidesWebSite,
   name: "Tides of Knowing™",
   url: TIDES_OF_KNOWING_ORIGIN,
-  description:
-    "Symbolic perception, intuitive discernment, and interpretive intelligence through The COMPASS Method™. Tarot and oracle serve as the practice environment for reflective reading and trustworthy interpretation.",
+  description: pageDescription,
   about: { "@id": ENTITY_IDS.compassMethod },
   publisher: { "@id": ENTITY_IDS.tidesOrg },
 };
+
+const webPageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${TIDES_OF_KNOWING_ORIGIN}/#homepage`,
+  name: pageTitle,
+  description: pageDescription,
+  url: homeUrl,
+  isPartOf: { "@id": ENTITY_IDS.tidesWebSite },
+  about: [
+    { "@id": ENTITY_IDS.compassMethod },
+    { "@id": ENTITY_IDS.person },
+  ],
+  primaryEntityOfPage: { "@id": ENTITY_IDS.tidesOrg },
+  author: { "@id": ENTITY_IDS.person },
+  publisher: { "@id": ENTITY_IDS.tidesOrg },
+};
+
+const curatedSlugs = [
+  "meaning-not-in-card",
+  "second-guessing-tarot-readings",
+  "practitioners-edge-perceptual-capacity",
+] as const;
+
+const curatedMeta: Record<
+  (typeof curatedSlugs)[number],
+  { kind: string; width: number; height: number }
+> = {
+  "meaning-not-in-card": {
+    kind: "Practical interpretation",
+    width: 1024,
+    height: 682,
+  },
+  "second-guessing-tarot-readings": {
+    kind: "Intuition & discernment",
+    width: 1734,
+    height: 907,
+  },
+  "practitioners-edge-perceptual-capacity": {
+    kind: "Wider application",
+    width: 1734,
+    height: 907,
+  },
+};
+
+const allArticles = await getCollection("articles");
+const curatedArticles = curatedSlugs
+  .map((slug) => {
+    const entry = allArticles.find((a) => a.data.slug === slug);
+    if (!entry) return null;
+    const meta = curatedMeta[slug];
+    return {
+      slug,
+      title: entry.data.title,
+      excerpt: entry.data.excerpt,
+      href: `/articles/${slug}/`,
+      heroImage: entry.data.heroImage,
+      heroImageAlt: entry.data.heroImageAlt,
+      kind: meta.kind,
+      width: meta.width,
+      height: meta.height,
+    };
+  })
+  .filter((item): item is NonNullable<typeof item> => item !== null);
+
+/** Approved Ask Leilia client testimonial (published review corpus). */
+const askLeiliaTestimonial = ASK_LEILIA_PUBLIC_REVIEW_FALLBACKS.find(
+  (r) => r.display_name === "Hannah Ruhamah",
+);
+
+const recognitionStatements = [
+  "You have pulled cards around a personal question, but the reading still feels unresolved.",
+  "You understand individual meanings but cannot see how the whole reading fits together.",
+  "You sense more than you can clearly explain.",
+  "You struggle to distinguish intuition from projection or emotional involvement.",
+  "You use intuitive perception in your work but want a more dependable interpretive process.",
+  "You are ready to move beyond memorised meanings without becoming vague or ungrounded.",
+] as const;
+
+const compassOutcomes = [
+  "recognise relevant intuitive signals",
+  "understand them within the wider context",
+  "test impressions rather than immediately believing them",
+  "distinguish perception from projection",
+  "communicate insight with clarity and restraint",
+  "apply intuitive understanding responsibly",
+] as const;
+
+const askTrustPoints = [
+  "Human-led interpretation",
+  "No AI-generated readings",
+  "Reflective rather than fortune-telling",
+  "Three levels of reading",
+  "Examples available in the Reading Library",
+] as const;
+
+const principles = [
+  "Context before conclusion",
+  "Relationship before definition",
+  "Discernment before certainty",
+  "Usefulness before performance",
+] as const;
 ---
 
 <BaseLayout
-  title="Tides of Knowing | Symbolic Perception & The COMPASS Method™"
-  description="Develop symbolic perception and interpretive intelligence through The COMPASS Method™. Tarot and oracle practice for intuitive discernment, reflective reading, and human meaning-making."
+  title={pageTitle}
+  description={pageDescription}
   ogUrl={homeUrl}
+  ogTitle={pageTitle}
+  ogDescription={pageDescription}
+  metaAuthor="Leigh Spencer"
   tdcPlacement="none"
-  jsonLd={websiteLd}
+  jsonLd={[websiteLd, webPageLd]}
 >
-  <section class="home-gate surface-system tok-home-hero" aria-labelledby="home-gate-heading">
-    <div class="page-inner home-gate__inner">
-      <h1 id="home-gate-heading" class="home-gate__h1" data-reveal>
-        For people drawn to deeper perception beneath surface meanings.
-      </h1>
-      <p class="home-gate__support" data-reveal>
-        Tides of Knowing is a structured body of work on symbolic interpretation, intuitive literacy,
-        and reflective tarot practice, developed through The COMPASS Method™.
-      </p>
-      <p class="home-gate__support" data-reveal>
-        The method teaches readers how to perceive relationships, patterns, and meaning beyond
-        memorised interpretations, with decades of tarot and oracle practice behind the work.
-      </p>
-      <p class="home-gate__trust" data-reveal>
-        40+ years tarot practice · 30 years as a professional journalist · Fourth-generation Matakite (seer)
-        · Founder of The COMPASS Method™
-      </p>
-    </div>
-  </section>
+  <div class="tok-home">
+    <!-- 1. Hero -->
+    <section class="tok-home__band tok-home__band--ocean tok-home-hero" aria-labelledby="home-hero-heading">
+      <div class="tok-home__inner tok-home-hero__grid">
+        <div class="tok-home-hero__copy" data-reveal>
+          <p class="tok-home__eyebrow">Intuitive interpretation · Symbolic perception</p>
+          <h1 id="home-hero-heading" class="tok-home__h1">
+            Turn what you perceive into clearer, grounded understanding.
+          </h1>
+          <p class="tok-home__lede">
+            Tides of Knowing is for people who sense that more is present than surface information
+            can explain. Through reflective tarot readings, practical resources, and The COMPASS
+            Method™, it helps you recognise patterns, interpret what you perceive in context, and
+            communicate that understanding with greater clarity.
+          </p>
+          <p class="tok-home__actions">
+            <a class="tok-home__cta tok-home__cta--primary" href="/ask-leilia/">
+              Find clarity for a personal question
+            </a>
+            <a class="tok-home__cta tok-home__cta--secondary" href="/articles/compass-method/">
+              Develop your intuitive practice
+            </a>
+            <a class="tok-home__text-link" href="/articles/">
+              Explore articles and practical resources
+            </a>
+          </p>
+          <p class="tok-home__trust">
+            Human-led interpretation grounded in more than 40 years of tarot and intuitive practice.
+          </p>
+        </div>
+        <div class="tok-home-hero__media" data-reveal>
+          <figure class="tok-home-hero__frame">
+            <img
+              class="tok-home-hero__img"
+              src="/images/home/leigh-spencer-tides-of-knowing-homepage-hero.png"
+              alt="Leigh Spencer, founder of Tides of Knowing and creator of The COMPASS Method"
+              width="1122"
+              height="1402"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
 
-  <section class="home-pathways surface-reading-soft" aria-labelledby="home-pathways-heading">
-    <div class="page-inner home-pathways__inner">
-      <h2 id="home-pathways-heading" class="home-pathways__vh">Ways into the work</h2>
-      <ul class="home-pathways__list">
-        <li class="home-pathways__item" data-reveal>
-          <a class="home-pathways__card" href="/articles/compass-method/">
-            <span class="home-pathways__context">Your readings feel close, but something still slips away</span>
-            <span class="home-pathways__action">Explore the Method</span>
-          </a>
-        </li>
-        <li class="home-pathways__item" data-reveal>
-          <a class="home-pathways__card" href="/repeating-card-meanings/">
-            <span class="home-pathways__context">The same card keeps showing up in your readings</span>
-            <span class="home-pathways__action">Explore repeating meanings</span>
-          </a>
-        </li>
-        <li class="home-pathways__item" data-reveal>
-          <a class="home-pathways__card" href="/tools/">
-            <span class="home-pathways__context">You want to strengthen your intuitive perception directly</span>
-            <span class="home-pathways__action">Try a Tool</span>
-          </a>
-        </li>
-        <li class="home-pathways__item" data-reveal>
-          <a class="home-pathways__card" href="/practice/">
-            <span class="home-pathways__context">You want to develop your perception through real practice</span>
-            <span class="home-pathways__action">Enter the Practice Space</span>
-          </a>
-        </li>
-        <li class="home-pathways__item" data-reveal>
-          <a class="home-pathways__card" href="/compass/" data-link="compass">
-            <span class="home-pathways__context">You're ready to develop this as a disciplined intuitive skill</span>
-            <span class="home-pathways__action">See the Training</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+    <!-- 2. Recognition -->
+    <section
+      class="tok-home__band tok-home__band--cream tok-home-recognition"
+      aria-labelledby="home-recognition-heading"
+    >
+      <div class="tok-home__inner">
+        <header class="tok-home-recognition__intro">
+          <p class="tok-home__eyebrow" data-reveal>You may recognise this</p>
+          <h2 id="home-recognition-heading" class="tok-home__h2" data-reveal>
+            You perceive something important, but the meaning does not always arrive fully formed.
+          </h2>
+          <p class="tok-home__lede" data-reveal>
+            Intuition rarely presents itself as a complete answer. It may arrive through a card,
+            image, bodily response, pattern, phrase, contradiction, or quiet sense that something does
+            not fit. The challenge is learning how to interpret what you receive without reducing it
+            to a formula or confusing it with fear, hope, or assumption.
+          </p>
+        </header>
+        <ul class="tok-home-recognition__list">
+          {
+            recognitionStatements.map((statement) => (
+              <li data-reveal>{statement}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
 
-  <section class="intro surface-reading">
-    <div class="page-inner intro__inner">
-      <p class="intro__text" data-reveal>
-        Tides of Knowing is a practical body of work about perception, interpretation, and the
-        disciplined use of intuition through symbolic systems.
-      </p>
-      <p class="intro__text" data-reveal>
-        It is grounded in tarot and oracle practice, but it is not limited to learning card meanings.
-        Some readers work for themselves. Some read for others. Many do both. What matters is the
-        desire to perceive more clearly, interpret more accurately, and trust what is actually being
-        shown.
-      </p>
-      <p class="intro__text" data-reveal>
-        This site is not built around collecting endless interpretations.
-      </p>
-      <p class="intro__text" data-reveal>
-        It is built around learning how to recognise what matters, follow what is relevant, and
-        translate what you perceive into something coherent, grounded, and <a href="/compass/" data-link="compass">usable</a>.
-      </p>
-      <p class="intro__text" data-reveal>
-        Because the deeper value of working with cards is not confined to the reading table.
-      </p>
-      <p class="intro__text" data-reveal>
-        These skills shape how you read people, how you recognise what is and is not yours to carry,
-        how you restore boundaries, how you make more meaningful space for yourself, and how you
-        navigate life with greater calm, clarity, and self-trust.
-      </p>
-      <h2 class="latest__title" data-reveal>What you’ll find here</h2>
-      <p class="intro__text" data-reveal>
-        Tides of Knowing is structured around long-form article series and standalone essays.
-      </p>
-      <p class="intro__text" data-reveal>
-        The series are designed to help readers deepen their relationship with the cards, with
-        themselves, and with others. They explore the practical foundations of intuitive work: how
-        perception functions, what makes a reading hold together, why meaning alone is often not
-        enough, and how intuitive skill can be strengthened through attention, structure, and practice.
-      </p>
-      <p class="intro__text" data-reveal>
-        Alongside these are individual articles written when a particular insight needs to be
-        shared. These pieces may respond to something observed in practice, a question that keeps
-        arising, or a deeper truth about intuitive work that deserves its own space.
-      </p>
-      <p class="intro__text" data-reveal>
-        Together, the content is intended to support both personal development and better guidance
-        for others.
-      </p>
-      <h2 class="latest__title" data-reveal>What this work is for</h2>
-      <p class="intro__text" data-reveal>The purpose of this site is simple:</p>
-      <p class="intro__text" data-reveal>
-        to help you read, reflect, and deepen your intuition in ways that bring more peace, more
-        clarity, and more structure to your life.
-      </p>
-      <p class="intro__text" data-reveal>
-        For some, that will mean becoming a more grounded and trustworthy reader.
-      </p>
-      <p class="intro__text" data-reveal>
-        For others, it will mean using the cards as a tool for personal insight, emotional honesty,
-        stronger boundaries, and better decision-making.
-      </p>
-      <p class="intro__text" data-reveal>
-        In both cases, the aim is the same: to make intuitive knowledge more coherent, more
-        practical, and more fully lived.
-      </p>
-      <h2 class="latest__title" data-reveal>About the work</h2>
-      <p class="intro__text" data-reveal>
-        I have spent more than thirty years working with language, perception, and interpretation
-        as a journalist, reader, and educator.
-      </p>
-      <p class="intro__text" data-reveal>Tides of Knowing grows out of that intersection.</p>
-      <p class="intro__text" data-reveal>
-        It is the written companion to The Deck Compass and a place for serious, thoughtful
-        exploration of what intuition is, how it works, and how it can be developed into a skill that
-        serves everyday life.
-      </p>
-      <p class="intro__text" data-reveal>
-        You can read more about my background on the{" "}
-        <a href="/about/">About page</a>.
-      </p>
-    </div>
-  </section>
+    <!-- 3. Primary pathways -->
+    <section
+      class="tok-home__band tok-home__band--pale-teal tok-home-pathways"
+      aria-labelledby="home-pathways-heading"
+    >
+      <div class="tok-home__inner">
+        <p class="tok-home__eyebrow" data-reveal>Begin where you are</p>
+        <h2 id="home-pathways-heading" class="tok-home__h2" data-reveal>
+          There is more than one way into the work.
+        </h2>
+        <p class="tok-home__lede" data-reveal>
+          You may be looking for perspective on something personal, trying to understand the cards
+          or impressions you receive, or ready to develop your intuitive practice more seriously.
+          Tides of Knowing supports personal seekers, informal learners, emerging and established
+          practitioners, and professionals who work with intuitive perception in coaching, writing,
+          facilitation, leadership, and creative fields.
+        </p>
+        <ul class="tok-home-pathways__grid">
+          <li data-reveal>
+            <article class="tok-home-pathways__card">
+              <div class="tok-home-pathways__media">
+                <img
+                  class="tok-home-pathways__img tok-home-pathways__img--guidance"
+                  src="/images/home/tok-home-personal-guidance.png"
+                  alt="One woman offering calm, attentive support to another during a reflective card reading"
+                  width="1734"
+                  height="907"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="tok-home-pathways__body">
+                <p class="tok-home-pathways__card-eyebrow">Personal guidance</p>
+                <h3>Find perspective on something you are facing</h3>
+                <p class="tok-home-pathways__copy">
+                  You may already have pulled cards around the situation, or simply know you need an
+                  experienced perspective. Ask Leilia readings help you step back from emotional
+                  proximity, identify the wider pattern, and understand what the cards are showing
+                  in context. The aim is not prediction for its own sake, but clearer insight into
+                  what matters and what deserves your attention now.
+                </p>
+                <a class="tok-home__cta tok-home__cta--primary" href="/ask-leilia/">
+                  Explore Ask Leilia readings
+                </a>
+              </div>
+            </article>
+          </li>
+          <li data-reveal>
+            <article class="tok-home-pathways__card">
+              <div class="tok-home-pathways__media">
+                <img
+                  class="tok-home-pathways__img"
+                  src="/images/home/tok-home-self-directed-exploration.png"
+                  alt="A woman studying her own oracle cards and recording observations in a journal"
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="tok-home-pathways__body">
+                <p class="tok-home-pathways__card-eyebrow">Self-directed exploration</p>
+                <h3>Understand the cards and patterns you are noticing</h3>
+                <p class="tok-home-pathways__copy">
+                  Explore practical articles,{" "}
+                  <a href="/repeating-card-meanings/">repeating-card meanings</a>,{" "}
+                  <a href="/tools/">interpretive tools</a>, and{" "}
+                  <a href="/community/">Practice Commons</a> if you read for yourself, are learning
+                  informally, or want a stronger way to understand what keeps emerging. These
+                  resources help you move beyond isolated card definitions, recognise patterns
+                  across a reading, and develop greater confidence in how you interpret and apply
+                  what you receive.
+                </p>
+                <a class="tok-home__cta tok-home__cta--primary" href="/articles/">
+                  Explore practical resources
+                </a>
+              </div>
+            </article>
+          </li>
+          <li data-reveal>
+            <article class="tok-home-pathways__card">
+              <div class="tok-home-pathways__media">
+                <img
+                  class="tok-home-pathways__img"
+                  src="/images/home/tok-home-practitioner-development.png"
+                  alt="Leigh Spencer facilitating a small online COMPASS Method practitioner cohort"
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="tok-home-pathways__body">
+                <p class="tok-home-pathways__card-eyebrow">Practitioner development</p>
+                <h3>Develop a clearer and more dependable intuitive practice</h3>
+                <p class="tok-home-pathways__copy">
+                  The COMPASS Method™ provides a structured way to recognise, organise, test, and
+                  communicate intuitive perception. Developed through tarot and oracle practice, it
+                  also supports coaching, writing, facilitation, leadership, creative work, and
+                  other intuition-led fields. It is designed for practitioners who want to deepen
+                  discernment, strengthen their language, and make intuitive insight more grounded,
+                  coherent, and useful.
+                </p>
+                <a class="tok-home__cta tok-home__cta--primary" href="/articles/compass-method/">
+                  Discover The COMPASS Method™
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-  <section class="home-arch surface-reading-soft" aria-labelledby="home-arch-heading">
-    <div class="page-inner home-arch__inner">
-      <h2 id="home-arch-heading" class="home-arch__title" data-reveal>How this work is organised</h2>
-      <ul class="home-arch__list">
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/articles/compass-method/">
-            <span class="home-arch__label">Method</span>
-            <span class="home-arch__desc">Understand the framework</span>
-          </a>
-        </li>
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/repeating-card-meanings/">
-            <span class="home-arch__label">Patterns</span>
-            <span class="home-arch__desc">When the same card keeps returning</span>
-          </a>
-        </li>
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/tools/">
-            <span class="home-arch__label">Tools</span>
-            <span class="home-arch__desc">Experience it directly</span>
-          </a>
-        </li>
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/articles/">
-            <span class="home-arch__label">Articles</span>
-            <span class="home-arch__desc">Deepen the thinking</span>
-          </a>
-        </li>
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/practice/">
-            <span class="home-arch__label">Practice</span>
-            <span class="home-arch__desc">Build the habit through The Deck Compass</span>
-          </a>
-        </li>
-        <li class="home-arch__item" data-reveal>
-          <a class="home-arch__card" href="/compass/" data-link="compass">
-            <span class="home-arch__label">Training</span>
-            <span class="home-arch__desc">Learn the system in a guided cohort</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
+    <!-- 4. Core differentiation -->
+    <section
+      class="tok-home__band tok-home__band--ocean tok-home-difference"
+      aria-labelledby="home-difference-heading"
+    >
+      <div class="tok-home__inner tok-home__split">
+        <div class="tok-home__split-copy" data-reveal>
+          <p class="tok-home__eyebrow">A different way of working with intuition</p>
+          <h2 id="home-difference-heading" class="tok-home__h2">
+            Meaning does not exist in the card, symbol, or impression alone.
+          </h2>
+          <p class="tok-home__lede">
+            Meaning emerges through relationship. A card changes according to the question, the
+            cards around it, the position it occupies, the movement within the spread, the emotional
+            field, and what is already known or not yet acknowledged.
+          </p>
+          <p class="tok-home__lede">
+            The same principle applies beyond cards. Intuitive perception becomes useful when it can
+            be understood in context, examined with discernment, and translated into language that
+            another person can recognise and use. The difference between intuitive perception and
+            interpretation is the disciplined work of turning what is sensed into coherent,
+            grounded understanding.
+          </p>
+          <ul class="tok-home-principles">
+            {principles.map((item) => <li>{item}</li>)}
+          </ul>
+          <p class="tok-home__actions">
+            <a class="tok-home__cta tok-home__cta--primary" href="/articles/compass-method/">
+              Read about the approach
+            </a>
+            <a class="tok-home__text-link" href="/articles/meaning-not-in-card/">
+              Meaning does not live in the card
+            </a>
+          </p>
+        </div>
+        <div class="tok-home__split-media" data-reveal>
+          <figure class="tok-home-difference__frame">
+            <img
+              class="tok-home-difference__img"
+              src="/images/home/tok-home-meaning-through-relationship.png"
+              alt="Abstract art installation in deep blue, moss green, cream, and gold expressing context, relationship, discernment, and usefulness"
+              width="1122"
+              height="1402"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
 
-  <div class="tok-home-cta-band surface-system" data-reveal>
-    <div class="page-inner tok-home-cta-band__inner">
-      <TdcConversionBlock subscribePlacement="homepage-conversion-block" />
-    </div>
+    <!-- 5. The COMPASS Method -->
+    <section
+      class="tok-home__band tok-home__band--cream tok-home-compass"
+      aria-labelledby="home-compass-heading"
+    >
+      <div class="tok-home__inner">
+        <div class="tok-home-compass__copy" data-reveal>
+          <div class="tok-home-compass__intro">
+            <p class="tok-home__eyebrow">The framework</p>
+            <h2 id="home-compass-heading" class="tok-home__h2">
+              A structured method for developing intuitive interpretation
+            </h2>
+            <p class="tok-home__lede">
+              The COMPASS Method™ was developed by Leigh Spencer through more than four decades of
+              tarot, symbolic, and intuitive practice. It addresses a common problem: many people
+              perceive more than they can reliably interpret, organise, or communicate.
+            </p>
+            <p class="tok-home__lede">
+              Rather than teaching people to become “more intuitive” in an undefined way, The COMPASS
+              Method™ develops their ability to work carefully with what they already perceive. It is
+              not limited to tarot or oracle reading, though those remain central teaching fields
+              because they make symbolic relationships visible.
+            </p>
+          </div>
+          <div class="tok-home-compass__aside">
+            <ul class="tok-home-outcomes">
+              {compassOutcomes.map((item) => <li>{item}</li>)}
+            </ul>
+            <p class="tok-home__lede tok-home__lede--follow">
+              The same interpretive capability can also support coaching, facilitation, writing,
+              leadership, creative practice, animal communication, and other fields in which pattern,
+              subtext, and non-linear perception matter.
+            </p>
+            <p class="tok-home__actions">
+              <a class="tok-home__cta tok-home__cta--primary" href="/articles/compass-method/">
+                Explore The COMPASS Method™
+              </a>
+              <a class="tok-home__text-link" href="/compass/">View current training options</a>
+            </p>
+          </div>
+        </div>
+        <figure class="tok-home-compass__media" data-reveal>
+          <img
+            class="tok-home-compass__img"
+            src="/images/home/tok-home-compass-method-banner.png"
+            alt="The COMPASS Method banner over the Bluff coastal landscape, showing the seven conditions of awareness"
+            width="1640"
+            height="720"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <!-- 6. Ask Leilia -->
+    <section
+      class="tok-home__band tok-home__band--muted-teal tok-home-ask"
+      aria-labelledby="home-ask-heading"
+    >
+      <div class="tok-home__inner tok-home__split">
+        <div class="tok-home__split-copy" data-reveal>
+          <p class="tok-home__eyebrow">Personal tarot readings</p>
+          <h2 id="home-ask-heading" class="tok-home__h2">
+            When you need perspective beyond your own reading of the situation
+          </h2>
+          <p class="tok-home__lede">
+            Ask Leilia is the personal tarot-reading service of Tides of Knowing. It is often
+            hardest to read clearly when the question matters most. You may be emotionally involved,
+            searching for a particular answer, or working with cards that appear contradictory.
+          </p>
+          <p class="tok-home__lede">
+            Ask Leilia readings bring an experienced external perspective to the question. Each
+            reading is completed personally by Leilia and interprets the cards as a connected field
+            rather than as a sequence of isolated meanings. Ask Leilia does not use AI to create
+            reading interpretations.
+          </p>
+          <ul class="tok-home-ask__trust">
+            {
+              askTrustPoints.map((point) => (
+                <li>
+                  <span class="tok-home-ask__trust-mark" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="tok-home__actions">
+            <a class="tok-home__cta tok-home__cta--primary" href="/ask-leilia/">
+              Find the right reading
+            </a>
+            <a class="tok-home__cta tok-home__cta--secondary" href="/recent-client-readings/">
+              View recent client readings
+            </a>
+          </p>
+          <p class="tok-home-ask__bridge">
+            Read for yourself? A professional reading can also help you recognise where context,
+            emotional proximity, or unconscious assumptions may be shaping your interpretation.
+          </p>
+        </div>
+        <div class="tok-home__split-media" data-reveal>
+          <figure class="tok-home-ask__frame">
+            <img
+              class="tok-home-ask__img"
+              src="/images/home/tok-home-ask-leilia-reflective-reading.png"
+              alt="Reflective tarot reading scene overlooking the sea at sunset"
+              width="1122"
+              height="1402"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Social proof -->
+    <section
+      class="tok-home__band tok-home__band--cream-soft tok-home-proof"
+      aria-labelledby="home-proof-heading"
+    >
+      <div class="tok-home__inner">
+        <p class="tok-home__eyebrow" data-reveal>Experience of the work</p>
+        <h2 id="home-proof-heading" class="tok-home__h2" data-reveal>
+          Clarity is felt in both the reading and the process.
+        </h2>
+        <ul class="tok-home-proof__grid">
+          <li data-reveal>
+            <figure class="tok-home-proof__card">
+              <p class="tok-home-proof__label">Ask Leilia client</p>
+              {
+                askLeiliaTestimonial ? (
+                  <>
+                    <blockquote class="tok-home-proof__quote">
+                      {
+                        askLeiliaTestimonial.body
+                          .split(/\n\n+/)
+                          .map((paragraph, index, parts) => {
+                            const text = paragraph.trim();
+                            if (!text) return null;
+                            const isFirst = index === 0;
+                            const isLast = index === parts.length - 1;
+                            return (
+                              <p>{`${isFirst ? "“" : ""}${text}${isLast ? "”" : ""}`}</p>
+                            );
+                          })
+                      }
+                    </blockquote>
+                    <figcaption class="tok-home-proof__meta">
+                      <span class="tok-home-proof__name">{askLeiliaTestimonial.display_name}</span>
+                      <span>{askLeiliaTestimonial.reading_type_label}</span>
+                      {askLeiliaTestimonial.is_verified ? (
+                        <span class="tok-home-proof__verified">Verified Ask Leilia reading</span>
+                      ) : null}
+                    </figcaption>
+                  </>
+                ) : (
+                  <p class="tok-home-proof__dev-note">
+                    Ask Leilia testimonial unavailable in this build.
+                  </p>
+                )
+              }
+            </figure>
+          </li>
+          <li data-reveal>
+            <figure class="tok-home-proof__card">
+              <p class="tok-home-proof__label">The COMPASS Method™ training</p>
+              <blockquote class="tok-home-proof__quote">
+                <p>“Working with Leigh has been a game changer for me.</p>
+                <p>
+                  I’ve worked with tarot and oracle in my practice for many years, but I had a wall
+                  around trusting my intuition and knowing what to do with the intuitive
+                  information I was receiving. As a business and life coach, I often receive
+                  messages that do not come from the material directly in front of me, and I did
+                  not know how to ground that information practically or communicate it clearly to
+                  clients.
+                </p>
+                <p>
+                  Leigh’s training reflects the real depth of her experience and goes far beyond
+                  the topic on the surface. For me, as an adult student wanting to tighten my
+                  practice, that breadth was pure gold. I cannot speak highly enough of her skill
+                  as a trainer or the depth of knowledge she brings to this work.
+                </p>
+                <p>
+                  I am deeply grateful for what I have learned. I will continue applying these
+                  skills and will return for any training Leigh offers next. I highly recommend her
+                  training to anyone who has reached the point in their practice where they want to
+                  go deeper but are unsure how to develop their skills and offerings.”
+                </p>
+              </blockquote>
+              <figcaption class="tok-home-proof__meta">
+                <span class="tok-home-proof__name">Maree</span>
+                <span>Business and life coach · The COMPASS Method™ practitioner</span>
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+        <p class="tok-home__authority" data-reveal>
+          More than 40 years of tarot and intuitive practice · 30 years of professional journalism ·
+          Fourth-generation Matakite · Founder of The COMPASS Method™
+        </p>
+      </div>
+    </section>
+
+    <!-- 8. About Leigh / Leilia -->
+    <section
+      class="tok-home__band tok-home__band--ocean tok-home-about"
+      aria-labelledby="home-about-heading"
+    >
+      <div class="tok-home__inner tok-home__split tok-home__split--media-left">
+        <div class="tok-home__split-copy" data-reveal>
+          <p class="tok-home__eyebrow">The person behind the work</p>
+          <h2 id="home-about-heading" class="tok-home__h2">
+            A lifetime of perception, interpretation, and language
+          </h2>
+          <p class="tok-home__lede">
+            I am Leigh Spencer, a fourth-generation Matakite, tarot practitioner of more than 40
+            years, professional journalist of more than 30 years, and founder of The COMPASS
+            Method™ and Tides of Knowing.
+          </p>
+          <p class="tok-home__lede">
+            My work sits at the meeting point between intuitive perception and clear communication.
+            Tarot has been one of my longest and most exacting teachers, but the deeper subject has
+            always been how people recognise what lies beneath surface information and turn that
+            recognition into understanding.
+          </p>
+          <p class="tok-home__lede">
+            I use the name Leilia for personal readings and within the practitioner community.
+            Whether I am reading, teaching, or writing, the standard remains the same: depth without
+            obscurity, intuition without overstatement, and insight that remains useful in real
+            life.
+          </p>
+          <p class="tok-home__actions">
+            <a class="tok-home__cta tok-home__cta--primary" href="/about/">
+              Read more about Leigh and the work
+            </a>
+          </p>
+        </div>
+        <div class="tok-home__split-media" data-reveal>
+          <figure class="tok-home-about__frame">
+            <img
+              class="tok-home-about__img"
+              src="/images/home/leigh-spencer-profile.png"
+              alt="Leigh Spencer, founder of Tides of Knowing and creator of The COMPASS Method"
+              width="723"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Curated authority content -->
+    <section
+      class="tok-home__band tok-home__band--cream tok-home-field"
+      aria-labelledby="home-field-heading"
+    >
+      <div class="tok-home__inner">
+        <p class="tok-home__eyebrow" data-reveal>From the Field Notes</p>
+        <h2 id="home-field-heading" class="tok-home__h2" data-reveal>
+          Explore the ideas behind the practice
+        </h2>
+        <p class="tok-home__lede" data-reveal>
+          Manually curated essays from the Tides of Knowing article library—chosen for interpretive
+          practice, discernment, and application beyond card memorisation.
+        </p>
+        {
+          curatedArticles.length > 0 ? (
+            <ul class="tok-home-field__grid">
+              {curatedArticles.map((article) => (
+                <li data-reveal>
+                  <a class="tok-home-field__card" href={article.href}>
+                    <div class="tok-home-field__media">
+                      <img
+                        class:list={[
+                          "tok-home-field__img",
+                          article.slug === "meaning-not-in-card" && "tok-home-field__img--photo",
+                        ]}
+                        src={article.heroImage}
+                        alt={article.heroImageAlt}
+                        width={article.width}
+                        height={article.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div class="tok-home-field__body">
+                      <p class="tok-home-field__kind">{article.kind}</p>
+                      <h3>{article.title}</h3>
+                      <p>{article.excerpt}</p>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="tok-home__lede" data-reveal>
+              Browse the{" "}
+              <a class="tok-home__text-link" href="/articles/">
+                article library
+              </a>{" "}
+              and{" "}
+              <a class="tok-home__text-link" href="/blog/">
+                Field Notes archive
+              </a>
+              .
+            </p>
+          )
+        }
+        <p class="tok-home__actions" data-reveal>
+          <a class="tok-home__cta tok-home__cta--primary" href="/articles/">Browse all articles</a>
+          <a class="tok-home__text-link" href="/blog/">Latest Field Notes</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 10. Lead capture -->
+    <section
+      class="tok-home__band tok-home__band--ocean tok-home-lead"
+      aria-labelledby="home-lead-heading"
+    >
+      <div class="tok-home__inner tok-home-lead__layout">
+        <div data-reveal>
+          <p class="tok-home__eyebrow">Continue the exploration</p>
+          <h2 id="home-lead-heading" class="tok-home__h2">
+            Know when the question is right, the answer has arrived, and the reading is complete
+          </h2>
+          <p class="tok-home__lede">
+            The Discernment Checklist gives tarot and oracle readers 21 practical questions to use
+            before, during, and at the close of a reading. It helps you recognise the real question,
+            identify which cards are carrying the answer, and know when further cards or explanation
+            are adding noise rather than clarity.
+          </p>
+          <LeadMagnetCta
+            title="The Discernment Checklist"
+            subtitle="21 Questions to Ask Before Pulling Another Card"
+            description="Use this reader’s checklist to test the question, recognise the cards carrying the answer, decide whether another card is needed, and close the reading cleanly when the answer has landed."
+            buttonLabel="Get the checklist"
+            resourceSlug="discernment-checklist"
+            redirectUrl="/resources/discernment-checklist/thank-you/"
+            sourceComponent="homepage-lead-capture"
+            placement="bottom"
+          />
+        </div>
+        <div data-reveal>
+          <figure class="tok-home-lead__frame">
+            <img
+              class="tok-home-lead__img"
+              src="/images/home/tides-of-knowing-descernement-checklist-cover.png"
+              alt="Cover of The Discernment Checklist by Leigh Spencer, featuring 21 questions to ask before pulling another card"
+              width="633"
+              height="819"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <section class="latest surface-reading-soft" aria-labelledby="field-notes-latest-heading">
-    <div class="page-inner latest__inner">
-      <h2 id="field-notes-latest-heading" class="latest__title" data-reveal>
-        Latest Field Notes
-      </h2>
-      {
-        latest.length === 0 ? (
-          <p class="latest__empty" data-reveal>
-            New entries will appear here as they are published. Browse the{" "}
-            <a href="/blog/">Field Notes archive</a>
-            {" "}for shorter pieces. Evergreen methodology and essays live in the{" "}
-            <a href="/articles/">article library</a>.
-          </p>
-        ) : (
-          <ul class="latest__list">
-            {latest.map((post) => (
-              <li class="latest__item" data-reveal>
-                <a class="latest__link" href={`/blog/${standaloneSlugFromEntry(post)}/`}>
-                  <span class="latest__post-title">{post.data.title}</span>
-                  <span class="latest__post-meta">
-                    {post.data.date.toLocaleDateString("en-AU", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
-                  <span class="latest__post-desc">{post.data.description}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </div>
-  </section>
-
-  <section class="latest methodology surface-reading" aria-labelledby="methodology-heading">
-    <div class="page-inner latest__inner">
-      <h2 id="methodology-heading" class="latest__title" data-reveal>
-        Articles and methodology
-      </h2>
-      <p class="methodology__intro" data-reveal>
-        Long-form methodology pieces, series, and topics.{" "}
-        <a class="methodology__hub-link" href="/articles/">Browse the full article library</a>
-      </p>
-      {
-        latestMethodology.length === 0 ? (
-          <p class="latest__empty" data-reveal>
-            Articles will appear here as they are published. Open the{" "}
-            <a href="/articles/">article library</a> for the full catalog.
-          </p>
-        ) : (
-          <ul class="latest__list">
-            {latestMethodology.map((article) => (
-              <li class="latest__item" data-reveal>
-                <a
-                  class="latest__link"
-                  href={`/articles/${article.data.slug}/`}
-                >
-                  <span class="latest__post-title">{article.data.title}</span>
-                  <span class="latest__post-meta">
-                    {article.data.publishDate.toLocaleDateString("en-AU", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
-                  <span class="latest__post-desc">{article.data.excerpt}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-    </div>
-  </section>
 </BaseLayout>
-
-<style>
-  .home-gate {
-    padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 5vw, 3rem);
-  }
-
-  .home-gate__inner {
-    max-width: 46rem;
-  }
-
-  .home-gate__h1 {
-    margin: 0 0 1.15rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(2rem, 5.5vw, 3rem);
-    line-height: 1.12;
-    color: var(--tok-text-light);
-  }
-
-  .home-gate__support {
-    margin: 0 0 0.85rem;
-    font-family: var(--font-body);
-    font-size: clamp(1.05rem, 2.2vw, 1.22rem);
-    line-height: 1.68;
-    color: var(--tok-text-light-soft);
-    opacity: 0.96;
-    max-width: 42rem;
-  }
-
-  .home-gate__support:last-of-type {
-    margin-bottom: 1.35rem;
-  }
-
-  .home-gate__trust {
-    margin: 0;
-    max-width: 44rem;
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    line-height: 1.65;
-    color: color-mix(in srgb, var(--tok-gold) 88%, var(--tok-text-light-soft));
-  }
-
-  .home-pathways {
-    padding: clamp(1.75rem, 5vw, 2.75rem) 0;
-    border-top: 1px solid var(--tok-border-light);
-  }
-
-  .home-pathways__inner {
-    max-width: 48rem;
-  }
-
-  .home-pathways__vh {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .home-pathways__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.85rem;
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 640px) {
-    .home-pathways__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-    }
-  }
-
-  .home-pathways__item {
-    margin: 0;
-  }
-
-  .home-pathways__card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    height: 100%;
-    padding: 1.1rem 1.2rem 1.15rem;
-    text-decoration: none;
-    color: inherit;
-    background: var(--tok-surface-reading);
-    border: 1px solid var(--tok-border-light);
-    border-left: 3px solid var(--tok-gold);
-    border-radius: 0 var(--radius-soft) var(--radius-soft) 0;
-    transition:
-      background var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out);
-  }
-
-  .home-pathways__card:hover {
-    background: color-mix(in srgb, var(--tok-surface-reading) 88%, var(--tok-surface-reading-soft));
-    border-left-color: var(--tok-teal);
-  }
-
-  .home-pathways__context {
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    line-height: 1.55;
-    color: var(--tok-text-dark);
-    opacity: 0.92;
-  }
-
-  .home-pathways__action {
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--tok-water);
-  }
-
-  .home-pathways__card:hover .home-pathways__action {
-    color: var(--tok-teal);
-  }
-
-  .home-arch {
-    padding: clamp(2.25rem, 6vw, 3.5rem) 0;
-    border-top: 1px solid var(--tok-border-light);
-  }
-
-  .home-arch__inner {
-    max-width: 52rem;
-  }
-
-  .home-arch__title {
-    margin: 0 0 1.35rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.65rem, 3.5vw, 2.1rem);
-    line-height: 1.2;
-    color: var(--tok-water);
-    max-width: 40rem;
-  }
-
-  .home-arch__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.85rem;
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 560px) {
-    .home-arch__list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: var(--bp-nav-min)) {
-    .home-arch__list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  .home-arch__item {
-    margin: 0;
-  }
-
-  .home-arch__card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    height: 100%;
-    min-height: var(--tok-sticky-under-header);
-    padding: 1rem 1.1rem;
-    text-decoration: none;
-    color: inherit;
-    background: var(--tok-surface-reading);
-    border: 1px solid var(--tok-border-light);
-    border-radius: var(--radius-soft);
-    box-shadow: var(--shadow-sm);
-    transition:
-      background var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out);
-  }
-
-  .home-arch__card:hover {
-    border-color: color-mix(in srgb, var(--tok-teal) 35%, var(--tok-border-light));
-    background: color-mix(in srgb, var(--tok-surface-reading) 92%, var(--tok-surface-reading-soft));
-  }
-
-  .home-arch__label {
-    font-family: var(--font-heading);
-    font-size: 1.12rem;
-    font-weight: 600;
-    font-style: normal;
-    color: var(--tok-teal-dim);
-  }
-
-  .home-arch__desc {
-    font-family: var(--font-body);
-    font-size: 0.92rem;
-    line-height: 1.55;
-    color: var(--tok-text-dark);
-    opacity: 0.9;
-  }
-
-  .tok-home-cta-band {
-    padding: var(--space-lg) 0;
-    border-top: 1px solid var(--tok-border-system);
-    border-bottom: 1px solid var(--tok-border-system);
-  }
-
-  .tok-home-cta-band__inner {
-    max-width: var(--reading-width);
-  }
-
-  .tok-home-hero a {
-    color: var(--tok-teal-light);
-  }
-
-  .tok-home-hero a:hover {
-    color: var(--tok-text-light-strong);
-  }
-
-  .intro {
-    padding: clamp(2rem, 5vw, 3rem) 0;
-    border-top: 1px solid var(--tok-border-light);
-  }
-
-  .intro__inner {
-    max-width: 40rem;
-  }
-
-  .intro__text {
-    margin: 0;
-    font-size: 1.08rem;
-    line-height: 1.8;
-  }
-
-  .intro__text + .intro__text {
-    margin-top: 1.25rem;
-  }
-
-  .intro__text br {
-    display: block;
-    margin-top: 0.35rem;
-  }
-
-  .latest {
-    padding: clamp(2.5rem, 7vw, 4.5rem) 0 clamp(3rem, 8vw, 5rem);
-    border-top: 1px solid var(--tok-border-light);
-  }
-
-  .latest.methodology {
-    padding-top: clamp(1.5rem, 4vw, 2.5rem);
-  }
-
-  .methodology__intro {
-    margin: 0 0 1.5rem;
-    font-size: 1.05rem;
-    line-height: 1.75;
-    max-width: 40rem;
-  }
-
-  .methodology__hub-link {
-    font-family: var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--tok-water);
-  }
-
-  .methodology__hub-link:hover {
-    color: var(--tok-teal);
-  }
-
-  .tok-home-cta-band .tdc {
-    background: transparent;
-    margin-top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .latest__inner {
-    max-width: 44rem;
-  }
-
-  .latest__title {
-    margin: 0 0 1.75rem;
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-weight: 400;
-    font-size: clamp(1.85rem, 4vw, 2.35rem);
-    color: var(--tok-water);
-  }
-
-  .intro__inner > .latest__title {
-    margin-top: 2.2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .intro__inner > .latest__title + .intro__text {
-    margin-top: 1rem;
-  }
-
-  .intro__inner > .latest__title ~ .intro__text + .intro__text {
-    margin-top: 1.25rem;
-  }
-
-  .latest__empty {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.75;
-    max-width: 36rem;
-  }
-
-  .latest__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .latest__item {
-    margin: 0;
-  }
-
-  .latest__link {
-    display: block;
-    padding: 1.25rem 1.35rem;
-    text-decoration: none;
-    color: inherit;
-    background: var(--tok-surface-reading-soft);
-    border-left: 3px solid var(--tok-gold);
-    border-radius: 0 var(--radius-2) var(--radius-2) 0;
-    transition:
-      background var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out);
-  }
-
-  .latest__link:hover {
-    background: var(--tok-surface-reading);
-    border-left-color: var(--tok-teal);
-  }
-
-  .latest__post-title {
-    display: block;
-    font-family: var(--font-accent);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.35rem;
-    color: var(--tok-water);
-    margin-bottom: 0.35rem;
-  }
-
-  .latest__post-meta {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--tok-gold);
-    margin-bottom: 0.5rem;
-  }
-
-  .latest__post-desc {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--tok-text-dark);
-    opacity: 0.88;
-  }
-</style>

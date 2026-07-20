@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
-import LeadMagnetCta from "../../components/lead-magnets/LeadMagnetCta.astro";
+import DiscernmentChecklistCapture from "../../components/lead-magnets/DiscernmentChecklistCapture.astro";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { ENTITY_IDS } from "../../lib/ecosystem-structured-data";
 import { siteBase } from "../../lib/site";
 
 const PAGE_TITLE =
-  "The Discernment Checklist: 21 Questions to Ask Before Pulling Another Tarot Card";
+  "The Discernment Checklist: 21 Questions to Ask Before Pulling Another Card";
 const PAGE_DESCRIPTION =
   "Download The Discernment Checklist, a practical tarot reader's guide with 21 questions for clarifying the right question, recognising the cards carrying the answer, and knowing when a reading is complete.";
 const canonicalPath = "/resources/discernment-checklist/";
@@ -62,13 +62,8 @@ const jsonLd = [pageLd, breadcrumbJsonLd(crumbs, siteHref)];
         reading closure.
       </p>
 
-      <LeadMagnetCta
-        title="The Discernment Checklist"
-        subtitle="21 Questions to Ask Before Pulling Another Card"
-        description="Get the practical checklist for clarifying the right question, recognising which cards carry the answer, and knowing when a reading is complete."
-        buttonLabel="Send Me the Checklist"
-        resourceSlug="discernment-checklist"
-        redirectUrl="/resources/discernment-checklist/thank-you/"
+      <DiscernmentChecklistCapture
+        sourceComponent="resource-discernment-checklist"
         placement="resource"
       />
     </section>
@@ -124,6 +119,11 @@ const jsonLd = [pageLd, breadcrumbJsonLd(crumbs, siteHref)];
     margin-bottom: clamp(1.75rem, 4vw, 2.25rem);
     padding-bottom: clamp(1.75rem, 4vw, 2.25rem);
     border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 32%, transparent);
+  }
+
+  .tok-resource__hero :global(.tok-disc-capture) {
+    margin-top: 1.35rem;
+    margin-bottom: 0;
   }
 
   .tok-resource__eyebrow {

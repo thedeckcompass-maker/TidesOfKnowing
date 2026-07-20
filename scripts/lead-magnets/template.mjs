@@ -82,7 +82,7 @@ export function renderLeadMagnetHtml({ metadata, bodyHtml, headings, printCss })
         </div>
         <div class="tok-pdf-cover__grid">
           <div class="tok-pdf-cover__content">
-            <p class="tok-pdf-eyebrow">Lead Magnet</p>
+            <p class="tok-pdf-eyebrow">Free checklist</p>
             <h1 class="tok-pdf-cover__title">${escapeHtml(metadata.title)}</h1>
             ${
               metadata.subtitle

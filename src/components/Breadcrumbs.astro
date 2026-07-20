@@ -35,7 +35,10 @@ const { items } = Astro.props;
 
 <style>
   .breadcrumbs {
-    max-width: 72rem;
+    box-sizing: border-box;
+    max-width: min(72rem, 100%);
+    width: 100%;
+    min-width: 0;
     margin: 0 auto;
     padding: 0 1rem 1rem;
   }
@@ -46,8 +49,10 @@ const { items } = Astro.props;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: baseline;
     gap: 0.35rem 0.5rem;
+    max-width: 100%;
+    min-width: 0;
     font-family: var(--font-body);
     font-size: 0.65rem;
     font-weight: 600;
@@ -58,13 +63,19 @@ const { items } = Astro.props;
 
   .breadcrumbs__item {
     display: inline-flex;
-    align-items: center;
+    flex-wrap: nowrap;
+    align-items: baseline;
     gap: 0.5rem;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .breadcrumbs__link {
     color: var(--tok-teal);
     text-decoration: none;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .breadcrumbs__link:hover {
@@ -73,13 +84,14 @@ const { items } = Astro.props;
 
   .breadcrumbs__current {
     color: var(--tok-text-dark);
-    max-width: min(100%, 28rem);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .breadcrumbs__sep {
+    flex: 0 0 auto;
     color: color-mix(in srgb, var(--tok-teal-dim) 45%, var(--tok-surface-reading));
     user-select: none;
   }

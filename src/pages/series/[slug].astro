@@ -9,11 +9,13 @@ import {
 } from "../../data/series";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
+import DiscernmentChecklistCapture from "../../components/lead-magnets/DiscernmentChecklistCapture.astro";
 import { readingMinutesForArticle } from "../../lib/articleReadingMinutes";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
 
 const { slug } = Astro.params;
+const isDiscernmentSeries = slug === "the-discernment-series";
 const articles = await getCollection("articles");
 const inSeries = articles.filter(
   (a) => a.data.seriesName && slugify(a.data.seriesName) === slug,
@@ -91,6 +93,17 @@ const ogImage = sorted[0]
     </header>
 
     {
+      isDiscernmentSeries ? (
+        <div class="tok-series-landing__checklist" data-reveal>
+          <DiscernmentChecklistCapture
+            sourceComponent="series-discernment-checklist"
+            placement="inline"
+          />
+        </div>
+      ) : null
+    }
+
+    {
       sorted.length === 0 ? (
         <p class="tok-series-landing__empty">No articles in this series.</p>
       ) : (
@@ -153,6 +166,12 @@ const ogImage = sorted[0]
   .tok-series-landing__filter {
     margin: 1rem 0 0;
     font-size: 0.95rem;
+  }
+
+  .tok-series-landing__checklist {
+    margin: 0 0 2rem;
+    padding: 0 0 1.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--tok-gold) 28%, transparent);
   }
 
   .tok-series-landing__empty {
