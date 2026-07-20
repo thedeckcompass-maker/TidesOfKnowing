@@ -14,6 +14,7 @@ import {
 export const COMPASS_AMOUNT_CENTS = COMPASS_PRICE_USD * 100;
 export const COMPASS_STRIPE_PAYMENT_LINK_ID = "cNi9ASeie24O8ea9f57N603";
 
+/** Minimal enrolment row used after checkout fulfilment. */
 export type CompassEnrolmentRow = {
   id: string;
   first_name: string;
@@ -22,19 +23,11 @@ export type CompassEnrolmentRow = {
   cohort_id: string;
   cohort_label: string;
   start_date: string;
-  session_dates: string[] | unknown;
-  timezone: string;
-  price_usd: number;
-  offer_id: string;
-  stripe_payment_link_id: string;
   status: string;
   stripe_checkout_session_id: string | null;
-  stripe_payment_intent: string | null;
+  stripe_payment_link_id: string;
   paid_at: string | null;
-  student_confirmation_sent_at: string | null;
-  internal_notification_sent_at: string | null;
   created_at?: string;
-  admin_notes?: string | null;
 };
 
 export function isUuid(value: string): boolean {
@@ -43,34 +36,18 @@ export function isUuid(value: string): boolean {
   );
 }
 
-export function parseCompassSessionDates(raw: unknown): string[] | null {
-  if (!Array.isArray(raw) || raw.length !== 4) return null;
-  if (!raw.every((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))) return null;
-  return raw as string[];
-}
+export type CompassPaymentOfferCheck = { ok: true } | { ok: false; reason: string };
 
-export function compassSessionDatesFromEnrolment(row: CompassEnrolmentRow): string[] | null {
-  const fromRow = parseCompassSessionDates(row.session_dates);
-  if (fromRow) return fromRow;
-  const cohort = getCompassCohortById(row.cohort_id);
-  return cohort ? [...cohort.sessionDates] : null;
-}
-
-export type CompassPaymentOfferCheck =
-  | { ok: true }
-  | { ok: false; reason: string };
-
-/** Verify checkout belongs to the US$997 COMPASS Payment Link offer. */
+/**
+ * Accept the live US$997 COMPASS Payment Link, including 100% discounted checkouts
+ * (`amount_total` 0 / `no_payment_required`).
+ */
 export function verifyCompassCheckoutOffer(input: {
   amountTotal: number | null;
   currency: string | null;
   paymentLink: string | null;
-  offerIdOnRecord: string;
+  paymentStatus?: string | null;
 }): CompassPaymentOfferCheck {
-  if (input.offerIdOnRecord !== COMPASS_OFFER_ID) {
-    return { ok: false, reason: "Enrolment offer_id is not the COMPASS live programme." };
-  }
-
   const currency = (input.currency ?? "").toLowerCase();
   if (currency && currency !== "usd") {
     return { ok: false, reason: `Unexpected currency ${currency}.` };
@@ -88,26 +65,32 @@ export function verifyCompassCheckoutOffer(input: {
   }
 
   const amount = input.amountTotal ?? 0;
-  if (amount !== COMPASS_AMOUNT_CENTS) {
+  const paymentStatus = (input.paymentStatus ?? "").toLowerCase();
+  const discounted =
+    amount === 0 &&
+    (paymentStatus === "no_payment_required" || paymentStatus === "paid" || !paymentStatus);
+
+  if (amount !== COMPASS_AMOUNT_CENTS && !discounted) {
     return {
       ok: false,
-      reason: `Expected ${COMPASS_AMOUNT_CENTS} cents, received ${amount}.`,
+      reason: `Expected ${COMPASS_AMOUNT_CENTS} cents or a fully discounted checkout, received ${amount}.`,
     };
   }
 
   return { ok: true };
 }
 
-export function formatCompassEnrolmentSchedule(row: CompassEnrolmentRow): {
+/** Cohort schedule for the internal notification email (from server config, not DB). */
+export function formatCompassEnrolmentSchedule(row: Pick<CompassEnrolmentRow, "cohort_id">): {
   startDateLabel: string;
   furtherSessionsLabel: string;
   sessionDateLabels: string[];
   timeLabel: string;
   timezone: string;
 } | null {
-  const dates = compassSessionDatesFromEnrolment(row);
-  if (!dates || dates.length !== 4) return null;
-  const tuple = dates as [string, string, string, string];
+  const cohort = getCompassCohortById(row.cohort_id);
+  if (!cohort) return null;
+  const tuple = cohort.sessionDates;
   return {
     startDateLabel: formatCompassSessionDateLong(tuple[0]),
     furtherSessionsLabel: formatCompassFurtherSessions(tuple),
@@ -116,3 +99,5 @@ export function formatCompassEnrolmentSchedule(row: CompassEnrolmentRow): {
     timezone: COMPASS_TIMEZONE,
   };
 }
+
+export { COMPASS_OFFER_ID };

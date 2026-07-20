@@ -147,19 +147,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
     stripeEventType: event.type,
   };
 
-  if (!customerEmail) {
-    console.error("Stripe checkout session completed without customer email", {
-      sessionId: session.id,
-    });
-    return json({ ok: false, error: "Missing customer email." }, 400);
-  }
-
   const amount = session.amount_total ?? 0;
   const currency = session.currency ?? "usd";
   const paymentStatus = session.payment_status ?? "paid";
   const service = createCommunityServiceClient(locals);
 
   // COMPASS enrolments share this webhook endpoint via client_reference_id.
+  // Handled before the Ask Leilia email requirement so 100% discounted COMPASS
+  // checkouts can complete using the enrolment record email.
   const compassResult = await tryFulfillCompassEnrolment(service, session, event, locals);
   if (compassResult.handled) {
     logAskLeiliaPipeline("WEBHOOK_COMPLETE", {
@@ -173,6 +168,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ ok: false, error: compassResult.error }, compassResult.httpStatus);
     }
     return json({ ok: true, product: "compass", idempotent: compassResult.idempotent ?? false });
+  }
+
+  if (!customerEmail) {
+    console.error("Stripe checkout session completed without customer email", {
+      sessionId: session.id,
+    });
+    return json({ ok: false, error: "Missing customer email." }, 400);
   }
 
   const { data: paymentRecord, error } = await service

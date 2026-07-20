@@ -12,12 +12,10 @@ export const COMPASS_OFFER_ID = "compass-live-997" as const;
 export const COMPASS_PRICE_USD = 997 as const;
 export const COMPASS_PAYMENT_LINK =
   "https://buy.stripe.com/cNi9ASeie24O8ea9f57N603" as const;
-export const COMPASS_SOURCE_PAGE = "/compass/" as const;
 
-/** Session local start: 19:00; end: 20:30. Fixed offset −06:00 (no DST). */
+/** Session local start 19:00. Fixed offset −06:00 (no DST). */
 export const COMPASS_SESSION_UTC_OFFSET = "-06:00" as const;
 export const COMPASS_SESSION_START = { hour: 19, minute: 0 } as const;
-export const COMPASS_SESSION_END = { hour: 20, minute: 30 } as const;
 
 export type CompassCohortSlot = "early" | "mid";
 export type CompassCohortConfiguredStatus = "open" | "full" | "closed";

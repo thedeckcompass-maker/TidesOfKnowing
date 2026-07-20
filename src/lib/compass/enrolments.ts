@@ -1,11 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import {
-  COMPASS_OFFER_ID,
-  COMPASS_PRICE_USD,
-  COMPASS_SOURCE_PAGE,
-  COMPASS_TIMEZONE,
-} from "../../data/training/compass-cohorts";
 import { assertCompassCohortHasSeat } from "./capacity";
+import { COMPASS_STRIPE_PAYMENT_LINK_ID } from "./offer";
 import type { CompassCohortView } from "./cohorts";
 
 export type CompassEnrolmentInsert = {
@@ -33,12 +28,7 @@ export async function insertCompassPendingEnrolment(
       cohort_id: input.cohort.id,
       cohort_label: input.cohort.label,
       start_date: input.cohort.startDate,
-      session_dates: [...input.cohort.sessionDates],
-      timezone: COMPASS_TIMEZONE,
-      price_usd: COMPASS_PRICE_USD,
-      offer_id: COMPASS_OFFER_ID,
-      stripe_payment_link_id: "cNi9ASeie24O8ea9f57N603",
-      source_page: COMPASS_SOURCE_PAGE,
+      stripe_payment_link_id: COMPASS_STRIPE_PAYMENT_LINK_ID,
       status: "pending_payment",
     })
     .select("id")
@@ -50,24 +40,4 @@ export async function insertCompassPendingEnrolment(
   }
 
   return { id: (data as { id: string }).id };
-}
-
-export async function getCompassEnrolmentByCheckoutSession(
-  service: SupabaseClient,
-  checkoutSessionId: string,
-) {
-  const { data, error } = await service
-    .from("compass_enrolments")
-    .select(
-      "id, first_name, last_name, email, cohort_id, cohort_label, start_date, session_dates, timezone, status, student_confirmation_sent_at, paid_at",
-    )
-    .eq("stripe_checkout_session_id", checkoutSessionId)
-    .maybeSingle();
-
-  if (error) {
-    console.error("COMPASS enrolment lookup by checkout session failed:", error);
-    return null;
-  }
-
-  return data;
 }
