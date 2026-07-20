@@ -57,17 +57,26 @@ function isUuid(value) {
   );
 }
 
+function isCompassPublicPaymentLink(link) {
+  if (!link) return false;
+  return (
+    link.includes(COMPASS_STRIPE_PAYMENT_LINK_ID) || link.endsWith(COMPASS_STRIPE_PAYMENT_LINK_ID)
+  );
+}
+
+function paymentLinkConflictsWithCompassOffer(link) {
+  if (!link) return false;
+  if (isCompassPublicPaymentLink(link)) return false;
+  if (/^plink_/i.test(link)) return false;
+  return /buy\.stripe\.com/i.test(link);
+}
+
 function verifyCompassCheckoutOffer(input) {
   const currency = (input.currency ?? "").toLowerCase();
   if (currency && currency !== "usd") {
     return { ok: false, reason: `Unexpected currency ${currency}.` };
   }
-  const link = input.paymentLink ?? "";
-  const linkOk =
-    !link ||
-    link.includes(COMPASS_STRIPE_PAYMENT_LINK_ID) ||
-    link.endsWith(COMPASS_STRIPE_PAYMENT_LINK_ID);
-  if (link && !linkOk) {
+  if (paymentLinkConflictsWithCompassOffer(input.paymentLink)) {
     return { ok: false, reason: "Checkout payment_link does not match the COMPASS offer." };
   }
   const amount = input.amountTotal ?? 0;
@@ -133,6 +142,25 @@ run("100% discount checkout completion is accepted", () => {
   assert.match(offerSrc, /no_payment_required/);
 });
 
+run("zero-value Checkout Session with plink id and null payment_intent is accepted", () => {
+  const result = verifyCompassCheckoutOffer({
+    amountTotal: 0,
+    currency: "usd",
+    paymentLink: "plink_1CompassLiveObjectIdExample",
+    paymentStatus: "no_payment_required",
+  });
+  assert.equal(result.ok, true);
+  assert.match(offerSrc, /plink_/);
+  assert.match(offerSrc, /paymentLinkConflictsWithCompassOffer/);
+  // Fulfilment must not require a PaymentIntent for discounted COMPASS checkouts.
+  assert.doesNotMatch(fulfilmentSrc, /payment_intent/);
+});
+
+run("Checkout Session payment_link object id is extracted when expanded", () => {
+  assert.match(fulfilmentSrc, /typeof link === "object"/);
+  assert.match(fulfilmentSrc, /link\.id/);
+});
+
 run("wrong Stripe offer / amount is rejected", () => {
   const wrongAmount = verifyCompassCheckoutOffer({
     amountTotal: 69700,
@@ -151,6 +179,16 @@ run("wrong Stripe offer / amount is rejected", () => {
   assert.equal(wrongLink.ok, false);
 });
 
+run("missing client_reference_id handling exists", () => {
+  assert.match(fulfilmentSrc, /Missing COMPASS enrolment reference/);
+  assert.match(fulfilmentSrc, /client_reference_id/);
+  assert.match(paymentLinksSrc, /buildCompassPaymentRedirectUrl|buildPaymentLinkRedirectUrl/);
+  assert.match(
+    readFileSync(join(REPO_ROOT, "src/lib/ask-leilia/paymentLinks.ts"), "utf8"),
+    /client_reference_id/,
+  );
+});
+
 run("unknown enrolment reference handling exists", () => {
   assert.match(fulfilmentSrc, /COMPASS enrolment not found/);
   assert.match(fulfilmentSrc, /Missing COMPASS enrolment reference/);
@@ -158,12 +196,24 @@ run("unknown enrolment reference handling exists", () => {
   assert.equal(isUuid("11111111-1111-4111-8111-111111111111"), true);
 });
 
-run("status changes to paid via RPC or fallback", () => {
+run("status changes to paid via 3-argument RPC or fallback", () => {
   assert.match(fulfilmentSrc, /mark_compass_enrolment_paid/);
+  assert.match(fulfilmentSrc, /p_enrolment_id/);
+  assert.match(fulfilmentSrc, /p_stripe_checkout_session_id/);
+  assert.match(fulfilmentSrc, /p_max_paid/);
+  assert.doesNotMatch(fulfilmentSrc, /p_stripe_event_id|p_payment_intent|p_amount/);
   assert.match(fulfilmentSrc, /status: "paid"/);
   assert.match(fulfilmentSrc, /paid_at/);
   assert.match(simplifyMigrationSrc, /mark_compass_enrolment_paid/);
   assert.match(simplifyMigrationSrc, /status in \('pending_payment', 'paid'\)/);
+});
+
+run("Ask Leilia webhook still runs after COMPASS branch", () => {
+  const idxCompass = webhookSrc.indexOf("tryFulfillCompassEnrolment");
+  const idxEmailGate = webhookSrc.indexOf("if (!customerEmail)");
+  const idxUpsert = webhookSrc.indexOf('from("ask_leilia_payments")');
+  assert.ok(idxCompass > 0 && idxEmailGate > idxCompass && idxUpsert > idxEmailGate);
+  assert.match(webhookSrc, /Missing customer email/);
 });
 
 run("duplicate webhook does not send a second email", () => {

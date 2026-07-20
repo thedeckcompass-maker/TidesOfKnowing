@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
 import { sendCompassInternalNotification } from "./notifications";
 import {
-  COMPASS_STRIPE_PAYMENT_LINK_ID,
+  isCompassPublicPaymentLink,
   isUuid,
   verifyCompassCheckoutOffer,
   type CompassEnrolmentRow,
@@ -17,13 +17,15 @@ const ENROLMENT_SELECT =
   "id, first_name, last_name, email, cohort_id, cohort_label, start_date, status, stripe_checkout_session_id, stripe_payment_link_id, paid_at, created_at";
 
 function paymentLinkFromSession(session: Stripe.Checkout.Session): string | null {
-  if (typeof session.payment_link === "string") return session.payment_link;
+  const link = session.payment_link;
+  if (typeof link === "string") return link;
+  if (link && typeof link === "object" && typeof link.id === "string") return link.id;
   return null;
 }
 
+/** Positive COMPASS Payment Link match from the public URL slug (not a `plink_…` id). */
 function isCompassPaymentLink(session: Stripe.Checkout.Session): boolean {
-  const link = paymentLinkFromSession(session);
-  return Boolean(link && link.includes(COMPASS_STRIPE_PAYMENT_LINK_ID));
+  return isCompassPublicPaymentLink(paymentLinkFromSession(session));
 }
 
 async function loadCompassEnrolment(

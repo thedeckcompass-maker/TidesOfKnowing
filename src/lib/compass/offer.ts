@@ -39,8 +39,35 @@ export function isUuid(value: string): boolean {
 export type CompassPaymentOfferCheck = { ok: true } | { ok: false; reason: string };
 
 /**
+ * Public buy.stripe.com slug / full URL for the COMPASS Payment Link.
+ * Checkout Session `payment_link` is normally a Stripe object id (`plink_…`), not this slug.
+ */
+export function isCompassPublicPaymentLink(link: string | null | undefined): boolean {
+  if (!link) return false;
+  return (
+    link.includes(COMPASS_STRIPE_PAYMENT_LINK_ID) ||
+    link === COMPASS_PAYMENT_LINK ||
+    link.endsWith(COMPASS_STRIPE_PAYMENT_LINK_ID)
+  );
+}
+
+/**
+ * True when `payment_link` is an identifiable non-COMPASS hosted Payment Link URL.
+ * `plink_…` object ids cannot be compared to the public URL slug and are not treated as mismatches.
+ */
+export function paymentLinkConflictsWithCompassOffer(link: string | null | undefined): boolean {
+  if (!link) return false;
+  if (isCompassPublicPaymentLink(link)) return false;
+  if (/^plink_/i.test(link)) return false;
+  return /buy\.stripe\.com/i.test(link);
+}
+
+/**
  * Accept the live US$997 COMPASS Payment Link, including 100% discounted checkouts
  * (`amount_total` 0 / `no_payment_required`).
+ *
+ * Important: webhook payloads set `session.payment_link` to a `plink_…` id. Rejecting those
+ * as “wrong offer” left paid checkouts stuck in `pending_payment`.
  */
 export function verifyCompassCheckoutOffer(input: {
   amountTotal: number | null;
@@ -53,14 +80,7 @@ export function verifyCompassCheckoutOffer(input: {
     return { ok: false, reason: `Unexpected currency ${currency}.` };
   }
 
-  const link = input.paymentLink ?? "";
-  const linkOk =
-    !link ||
-    link.includes(COMPASS_STRIPE_PAYMENT_LINK_ID) ||
-    link === COMPASS_PAYMENT_LINK ||
-    link.endsWith(COMPASS_STRIPE_PAYMENT_LINK_ID);
-
-  if (link && !linkOk) {
+  if (paymentLinkConflictsWithCompassOffer(input.paymentLink)) {
     return { ok: false, reason: "Checkout payment_link does not match the COMPASS offer." };
   }
 
