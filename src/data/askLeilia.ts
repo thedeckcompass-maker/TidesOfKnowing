@@ -79,7 +79,7 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
     moreInfo: [
       "Bring one clearly defined question. I choose the spread most appropriate to what you are asking and draw as many cards as needed to answer it properly. There is no arbitrary card limit and no automated interpretation. You receive a professionally presented written PDF with a photograph of your spread. This reading does not include audio or video.",
     ],
-    price: "US$25",
+    price: "US$45",
     requestHref: "/ask-leilia/request/",
     ctaLabel: "Ask My Question",
   },
@@ -144,7 +144,7 @@ export const ASK_LEILIA_CLOSING_OFFERS = [
   {
     id: "one-question" as const,
     name: "One Question Reading",
-    price: "US$25",
+    price: "US$45",
     summary: "One focused question that needs a clear, complete answer.",
     compactSummary: "A focused reading for one clear, specific question.",
     ctaLabel: "Ask My Question",

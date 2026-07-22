@@ -5,7 +5,7 @@ export const ASK_LEILIA_STRIPE_WEBHOOK_URL =
   "https://www.tidesofknowing.com/api/ask-leilia/stripe-webhook";
 
 export const ONE_QUESTION_PAYMENT_LINK =
-  "https://buy.stripe.com/5kQ14m7TQ5h01PMezp7N601";
+  "https://buy.stripe.com/5kQ28qb62fVE8ea8b17N607";
 
 export const IN_DEPTH_PAYMENT_LINK =
   "https://buy.stripe.com/5kQ8wO2zw6l451YgHx7N605";

@@ -2,7 +2,7 @@ import type { AskLeiliaDbReadingType } from "./readingTypes";
 
 /** Expected Stripe charge amounts in cents (USD). */
 export const EXPECTED_PAYMENT_CENTS: Record<AskLeiliaDbReadingType, number> = {
-  "one-question": 2500,
+  "one-question": 4500,
   "in-depth": 7500,
   "personal-guidance": 15000,
   complimentary: 0,
