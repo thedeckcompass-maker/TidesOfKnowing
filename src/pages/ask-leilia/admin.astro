@@ -114,6 +114,9 @@ const rows = await Promise.all(
       imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
       deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
       submission: formatSubmissionDisplayUtc(request.created_at),
+      startedDisplay: request.started_at
+        ? formatSubmissionDisplayUtc(request.started_at)
+        : null,
       isArchived: isAskLeiliaRequestArchived(request),
     };
   }),
@@ -292,6 +295,7 @@ function compactPdfLabel(
                 imageUrl,
                 deliveryPdfUrl,
                 submission,
+                startedDisplay,
                 isArchived,
               }) => {
                 const panelId = `ask-admin-panel-${request.id}`;
@@ -652,13 +656,22 @@ function compactPdfLabel(
                                   paid).
                                 </p>
                               ) : null}
-                              {request.started_at ? (
+                              {startedDisplay ? (
                                 <p class="ask-admin-meta">
                                   Started:{" "}
-                                  <span data-ask-admin-local-time={request.started_at}>
-                                    <span data-ask-admin-date>
-                                      {formatCompactDateTimeUtc(request.started_at)}
-                                    </span>
+                                  <span
+                                    data-ask-admin-local-time={
+                                      startedDisplay.unavailable ? "" : request.started_at
+                                    }
+                                    title={startedDisplay.title}
+                                  >
+                                    <span data-ask-admin-date>{startedDisplay.dateText}</span>
+                                    {startedDisplay.timeText ? (
+                                      <>
+                                        <span aria-hidden="true"> · </span>
+                                        <span data-ask-admin-time>{startedDisplay.timeText}</span>
+                                      </>
+                                    ) : null}
                                   </span>
                                 </p>
                               ) : null}
