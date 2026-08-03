@@ -770,22 +770,21 @@ run("expanded admin panel uses two-column workspace hierarchy", () => {
     /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+minmax\(0,\s*1\.2fr\)/,
   );
   assert.doesNotMatch(adminPage, /grid-template-columns:\s*repeat\(3,/);
+  assert.doesNotMatch(adminPage, /grid-row:\s*1\s*\/\s*-1/);
+  assert.doesNotMatch(adminPage, /nth-child\(3\)/);
 
-  assert.match(
-    adminPage,
-    /\.ask-admin-panel__grid > \.ask-admin-panel__section\s*\{\s*min-width:\s*0;/,
-  );
-  assert.match(
-    adminPage,
-    /\.ask-admin-panel__grid > \.ask-admin-panel__section:nth-child\(3\)\s*\{\s*grid-column:\s*2;\s*grid-row:\s*1\s*\/\s*-1;/,
-  );
+  assert.match(adminPage, /ask-admin-panel__column ask-admin-panel__column--main/);
+  assert.match(adminPage, /ask-admin-panel__column ask-admin-panel__column--fulfilment/);
+  assert.match(adminPage, /\.ask-admin-panel__column\s*\{/);
+  assert.match(adminPage, /align-items:\s*start/);
+  assert.match(adminPage, /\.ask-admin-panel__section\s*\{\s*min-width:\s*0;/);
   assert.match(adminPage, /\.ask-admin-panel dd,\s*\.ask-admin-panel code\s*\{/);
   assert.match(adminPage, /overflow-wrap:\s*anywhere/);
   assert.match(adminPage, /word-break:\s*break-word/);
 
   assert.match(
     adminPage,
-    /@media \(max-width: 980px\) \{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?grid-column:\s*auto;[\s\S]*?grid-row:\s*auto;[\s\S]*?\.ask-admin-table\s*\{\s*min-width:\s*0;/,
+    /@media \(max-width: 980px\) \{[\s\S]*?display:\s*contents;[\s\S]*?\.ask-admin-panel__section--brief\s*\{\s*order:\s*1;[\s\S]*?\.ask-admin-panel__section--payment\s*\{\s*order:\s*2;[\s\S]*?\.ask-admin-panel__section--fulfilment\s*\{\s*order:\s*3;[\s\S]*?\.ask-admin-panel__section--review\s*\{\s*order:\s*4;[\s\S]*?\.ask-admin-panel__section--admin\s*\{\s*order:\s*5;[\s\S]*?\.ask-admin-table\s*\{\s*min-width:\s*0;/,
   );
   assert.doesNotMatch(
     adminPage,
@@ -795,6 +794,12 @@ run("expanded admin panel uses two-column workspace hierarchy", () => {
   assert.match(adminPage, /min-width:\s*860px/);
   assert.match(adminPage, /@media \(max-width: 760px\)/);
   assert.match(adminPage, /display:\s*block/);
+
+  assert.match(adminPage, /ask-admin-panel__section--brief/);
+  assert.match(adminPage, /ask-admin-panel__section--payment/);
+  assert.match(adminPage, /ask-admin-panel__section--fulfilment/);
+  assert.match(adminPage, /ask-admin-panel__section--review/);
+  assert.match(adminPage, /ask-admin-panel__section--admin/);
 
   assert.match(adminPage, /<summary>Payment details<\/summary>/);
   assert.match(adminPage, /Raw Stripe status/);
