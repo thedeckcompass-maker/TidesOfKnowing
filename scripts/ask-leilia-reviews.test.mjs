@@ -675,21 +675,25 @@ run("review request email is sent separately after delivery", () => {
     "utf8",
   );
   assert.match(source, /sendAskLeiliaReviewRequest/);
-  assert.match(source, /How was your Ask Leilia reading\?/);
-  assert.match(source, /Share Your Experience/);
+  assert.match(source, /How did your reading land for you\?/);
+  assert.match(source, /Leave your review/);
   assert.match(source, /reviewUrl/);
+  assert.doesNotMatch(source.slice(
+    source.indexOf("export async function sendAskLeiliaReviewRequest"),
+  ), /unique to your reading/);
 
   const deliveryFn = source.slice(
     source.indexOf("export async function sendAskLeiliaCustomerDelivery"),
     source.indexOf("export async function sendAskLeiliaReviewRequest"),
   );
-  assert.equal(deliveryFn.includes("Share Your Experience"), false);
+  assert.equal(deliveryFn.includes("Leave your review"), false);
 
   const paymentFn = source.slice(
     source.indexOf("sendAskLeiliaCustomerPaymentConfirmation"),
     source.indexOf("export async function notifyAskLeiliaPaymentException"),
   );
-  assert.equal(paymentFn.includes("Share Your Experience"), false);
+  assert.equal(paymentFn.includes("Leave your review"), false);
+  assert.match(paymentFn, /Your reading is confirmed/);
 });
 
 run("carousel renders review text in SSR HTML and hides controls for one card", () => {

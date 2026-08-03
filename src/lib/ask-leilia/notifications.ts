@@ -197,23 +197,17 @@ export async function sendAskLeiliaCustomerPaymentConfirmation(
   const bodyLines = [
     `Hello ${input.name},`,
     "",
-    "Thank you for your payment. Your Ask Leilia reading request has been received and confirmed.",
+    "Thank you for your payment. I have received your reading request and everything is confirmed.",
     "",
-    `Reading purchased: ${readingLabel}`,
+    `Reading: ${readingLabel}`,
     "",
-    "What happens next:",
-    "",
-    "I will now begin preparing your reading personally. Every Ask Leilia reading is completed entirely by me, without AI, and takes the time needed to understand both the cards and the story they are telling.",
+    "Your reading will be prepared personally and with care. I take the time to sit with your question, read the cards closely, and bring everything together into a clear and thoughtful response.",
     "",
     paymentConfirmationDeliveryLine(input.readingType),
     "",
-    "If I need any clarification before I begin, I will be in touch by email.",
+    "Thank you for placing your trust in me. I look forward to sharing your reading with you.",
     "",
-    `If you remember something important after submitting your request, simply reply to this email or write to ${SUPPORT_EMAIL} and include your name so I can add it to your reading before I begin.`,
-    "",
-    "Thank you for placing your trust in Ask Leilia.",
-    "",
-    "Warm regards,",
+    "Warmly,",
     "",
     "Leilia",
     "Tides of Knowing",
@@ -223,7 +217,7 @@ export async function sendAskLeiliaCustomerPaymentConfirmation(
   const result = await resend.emails.send({
     from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
     to: input.email,
-    subject: "Your Ask Leilia reading request is confirmed",
+    subject: "Your reading is confirmed",
     text: bodyLines.join("\n"),
   });
 
@@ -545,23 +539,26 @@ export async function sendAskLeiliaReviewRequest(
     return { ok: false, error: "Email is not configured." };
   }
 
-  const readingLabel = readingTypeLabel(input.readingType);
   const safeReviewUrl = escapeEmailText(input.reviewUrl);
 
   const bodyLines = [
     `Hello ${input.name},`,
     "",
-    "I hope you have had a little time with your Ask Leilia reading.",
+    "While your reading and its impact are still fresh in your mind, I would be very grateful if you would take a moment to tell me how it landed for you.",
     "",
-    `Reading: ${readingLabel}`,
+    "Feedback is an important part of my reading process. Even after four decades of reading, I still value knowing whether what I saw, sensed and shared felt accurate, useful or meaningful to you.",
     "",
-    "If you would like to share how the reading landed for you, you can leave a short review using the private link below. Your feedback helps other Seekers understand what an Ask Leilia reading offers.",
+    "Hearing that a reading has helped someone understand their situation more clearly, recognise something important or find a way forward means the world to me. It is why I do this work.",
     "",
-    `Share your experience: ${input.reviewUrl}`,
+    "Please follow the link below and leave an honest review of your experience:",
     "",
-    "This link is unique to your reading and can only be used once.",
+    input.reviewUrl,
     "",
-    "Warm regards,",
+    "Your genuine feedback also helps other Seekers understand what they may receive from a reading with me and decide whether it is the right support for them.",
+    "",
+    "Thank you for taking the time to share your experience.",
+    "",
+    "Warmly,",
     "",
     "Leilia",
     "Tides of Knowing",
@@ -569,13 +566,15 @@ export async function sendAskLeiliaReviewRequest(
 
   const htmlParts = [
     `<p>Hello ${escapeEmailText(input.name)},</p>`,
-    "<p>I hope you have had a little time with your Ask Leilia reading.</p>",
-    `<p>Reading: <strong>${escapeEmailText(readingLabel)}</strong></p>`,
-    "<p>If you would like to share how the reading landed for you, you can leave a short review using the private link below. Your feedback helps other Seekers understand what an Ask Leilia reading offers.</p>",
-    `<p style="margin:20px 0;"><a href="${safeReviewUrl}" style="display:inline-block;padding:12px 18px;background:#1a3a4a;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:600;">Share Your Experience</a></p>`,
-    `<p style="font-size:14px;color:#555;">Or open this link: <a href="${safeReviewUrl}">${safeReviewUrl}</a></p>`,
-    "<p>This link is unique to your reading and can only be used once.</p>",
-    "<p>Warm regards,</p>",
+    "<p>While your reading and its impact are still fresh in your mind, I would be very grateful if you would take a moment to tell me how it landed for you.</p>",
+    "<p>Feedback is an important part of my reading process. Even after four decades of reading, I still value knowing whether what I saw, sensed and shared felt accurate, useful or meaningful to you.</p>",
+    "<p>Hearing that a reading has helped someone understand their situation more clearly, recognise something important or find a way forward means the world to me. It is why I do this work.</p>",
+    "<p>Please follow the link below and leave an honest review of your experience:</p>",
+    `<p style="margin:20px 0;"><a href="${safeReviewUrl}" style="display:inline-block;padding:12px 18px;background:#1a3a4a;color:#ffffff;text-decoration:none;border-radius:4px;font-weight:600;">Leave your review</a></p>`,
+    `<p style="font-size:14px;color:#555;"><a href="${safeReviewUrl}">${safeReviewUrl}</a></p>`,
+    "<p>Your genuine feedback also helps other Seekers understand what they may receive from a reading with me and decide whether it is the right support for them.</p>",
+    "<p>Thank you for taking the time to share your experience.</p>",
+    "<p>Warmly,</p>",
     "<p>Leilia<br />Tides of Knowing</p>",
   ];
 
@@ -583,7 +582,7 @@ export async function sendAskLeiliaReviewRequest(
   const result = await resend.emails.send({
     from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
     to: input.email,
-    subject: "How was your Ask Leilia reading?",
+    subject: "How did your reading land for you?",
     text: bodyLines.join("\n"),
     html: htmlParts.join("\n"),
   });
