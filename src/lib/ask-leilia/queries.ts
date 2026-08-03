@@ -292,12 +292,15 @@ export async function getAskLeiliaUploadUrl(
 export async function getAskLeiliaDeliveryPdfUrl(
   service: import("@supabase/supabase-js").SupabaseClient,
   deliveryPdfPath: string | null,
+  expiresInSeconds = 60 * 10,
+  options?: { download?: string | boolean },
 ): Promise<string | null> {
   if (!deliveryPdfPath) return null;
 
+  const ttl = Math.min(Math.max(1, Math.floor(expiresInSeconds)), 60 * 60);
   const { data, error } = await service.storage
     .from("ask-leilia-uploads")
-    .createSignedUrl(deliveryPdfPath, 60 * 10);
+    .createSignedUrl(deliveryPdfPath, ttl, options?.download !== undefined ? { download: options.download } : undefined);
 
   if (error) {
     console.error("Unable to create Ask Leilia delivery PDF URL:", error);
@@ -306,3 +309,6 @@ export async function getAskLeiliaDeliveryPdfUrl(
 
   return data.signedUrl;
 }
+
+/** Max TTL for admin on-demand delivery PDF links (seconds). */
+export const ASK_LEILIA_ADMIN_DELIVERY_PDF_TTL_SECONDS = 120;

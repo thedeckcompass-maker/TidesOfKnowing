@@ -37,7 +37,6 @@ import {
   reviewWorkflowStatusLabel,
 } from "../../lib/ask-leilia/fulfilment";
 import {
-  getAskLeiliaDeliveryPdfUrl,
   getAskLeiliaQueueCounts,
   getAskLeiliaRequests,
   getAskLeiliaUploadUrl,
@@ -112,7 +111,7 @@ const rows = await Promise.all(
       manualPaymentActive: isAskLeiliaManualPaymentActive(request),
       primaryAction,
       imageUrl: await getAskLeiliaUploadUrl(service, request.image_url),
-      deliveryPdfUrl: await getAskLeiliaDeliveryPdfUrl(service, request.delivery_pdf_path),
+      hasDeliveryPdf: Boolean(request.delivery_pdf_path),
       submission: formatSubmissionDisplayUtc(request.created_at),
       startedDisplay: request.started_at
         ? formatSubmissionDisplayUtc(request.started_at)
@@ -293,7 +292,7 @@ function compactPdfLabel(
                 manualPaymentActive,
                 primaryAction,
                 imageUrl,
-                deliveryPdfUrl,
+                hasDeliveryPdf,
                 submission,
                 startedDisplay,
                 isArchived,
@@ -710,11 +709,11 @@ function compactPdfLabel(
                                       </p>
                                     </div>
                                     <div class="ask-admin-pdf__actions">
-                                      {deliveryPdfUrl ? (
+                                      {hasDeliveryPdf ? (
                                         <>
                                           <a
                                             class="ask-admin-btn ask-admin-btn--ghost"
-                                            href={deliveryPdfUrl}
+                                            href={`/api/ask-leilia/requests/${request.id}/delivery-pdf`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                           >
@@ -722,8 +721,7 @@ function compactPdfLabel(
                                           </a>
                                           <a
                                             class="ask-admin-btn ask-admin-btn--ghost"
-                                            href={deliveryPdfUrl}
-                                            download={request.delivery_pdf_filename || "Ask-Leilia-Reading.pdf"}
+                                            href={`/api/ask-leilia/requests/${request.id}/delivery-pdf?download=1`}
                                           >
                                             Download
                                           </a>

@@ -733,6 +733,37 @@ run("PDF component and MIME validation present", () => {
   assert.match(deliverySource, /application\/pdf/);
 });
 
+run("admin delivery PDF uses on-demand authenticated endpoint", () => {
+  const deliveryPdfApi = readFileSync(
+    join(REPO_ROOT, "src/pages/api/ask-leilia/requests/[id]/delivery-pdf.ts"),
+    "utf8",
+  );
+
+  assert.match(deliveryPdfApi, /isAdminProfile\(locals\.profile\)/);
+  assert.match(deliveryPdfApi, /json\(\{ ok: false, error: "Not found\." \}, 404\)/);
+  assert.match(deliveryPdfApi, /ASK_LEILIA_ADMIN_DELIVERY_PDF_TTL_SECONDS/);
+  assert.match(deliveryPdfApi, /Response\.redirect\(signedUrl, 302\)/);
+  assert.match(deliveryPdfApi, /get\("download"\) === "1"/);
+  assert.match(deliveryPdfApi, /delivery_pdf_path/);
+  assert.doesNotMatch(deliveryPdfApi, /60 \* 10/);
+
+  assert.match(queriesSource, /ASK_LEILIA_ADMIN_DELIVERY_PDF_TTL_SECONDS = 120/);
+  assert.match(queriesSource, /Math\.min\(Math\.max\(1, Math\.floor\(expiresInSeconds\)\), 60 \* 60\)/);
+
+  assert.match(
+    adminPage,
+    /href=\{`\/api\/ask-leilia\/requests\/\$\{request\.id\}\/delivery-pdf`\}/,
+  );
+  assert.match(
+    adminPage,
+    /href=\{`\/api\/ask-leilia\/requests\/\$\{request\.id\}\/delivery-pdf\?download=1`\}/,
+  );
+  assert.doesNotMatch(adminPage, /getAskLeiliaDeliveryPdfUrl/);
+  assert.doesNotMatch(adminPage, /deliveryPdfUrl/);
+  assert.doesNotMatch(adminPage, /supabase\.co\/storage\/v1\/object\/sign/);
+  assert.doesNotMatch(adminPage, /createSignedUrl/);
+});
+
 run("review request email is separate from delivery email", () => {
   assert.match(notificationsSource, /sendAskLeiliaReviewRequest/);
   assert.match(apiSource, /actionRaw === "request_review"/);
