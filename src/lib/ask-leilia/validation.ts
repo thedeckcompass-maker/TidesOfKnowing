@@ -113,8 +113,8 @@ export function validateStartReading(input: {
       error: "Mark this reading as paid before starting fulfilment.",
     };
   }
-  if (input.status === "Delivered") {
-    return { ok: false, error: "This reading has already been delivered." };
+  if (input.status === "In Progress" || input.status === "Delivered") {
+    return { ok: false, error: "This reading has already been started." };
   }
   return { ok: true, value: "In Progress" };
 }

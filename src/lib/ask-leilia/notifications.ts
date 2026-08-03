@@ -361,6 +361,55 @@ export async function notifyAskLeiliaStatusChanged(
   );
 }
 
+function firstNameFromFullName(name: string): string {
+  const trimmed = name.trim();
+  if (!trimmed) return "there";
+  return trimmed.split(/\s+/)[0] ?? trimmed;
+}
+
+export async function sendAskLeiliaCustomerReadingStarted(
+  input: {
+    name: string;
+    email: string;
+  },
+  locals?: unknown,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const env = communityEnv(locals);
+  if (!env.emailApiKey) {
+    console.error("Ask Leilia customer reading-started email skipped: EMAIL_API_KEY is not configured.");
+    return { ok: false, error: "Email is not configured." };
+  }
+
+  const firstName = firstNameFromFullName(input.name);
+  const bodyLines = [
+    `Hello ${firstName},`,
+    "",
+    "I am writing to let you know that I have begun working on your Ask Leilia reading.",
+    "",
+    "Your reading is being prepared personally and with care. I will email you again as soon as your completed reading is ready.",
+    "",
+    "Warmly,",
+    "",
+    "Leilia",
+    "Tides of Knowing",
+  ];
+
+  const resend = new Resend(env.emailApiKey);
+  const result = await resend.emails.send({
+    from: "Leilia – Tides of Knowing <hello@tidesofknowing.com>",
+    to: input.email,
+    subject: "Your Ask Leilia reading is underway",
+    text: bodyLines.join("\n"),
+  });
+
+  if (result.error) {
+    console.error("Ask Leilia customer reading-started email failed:", result.error);
+    return { ok: false, error: "Unable to send the client notification email." };
+  }
+
+  return { ok: true };
+}
+
 function escapeEmailText(value: string): string {
   return value
     .replace(/&/g, "&amp;")

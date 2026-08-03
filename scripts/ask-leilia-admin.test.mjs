@@ -118,8 +118,8 @@ function validateStartReading(input) {
   if (!input.effectivelyPaid) {
     return { ok: false, error: "Mark this reading as paid before starting fulfilment." };
   }
-  if (input.status === "Delivered") {
-    return { ok: false, error: "This reading has already been delivered." };
+  if (input.status === "In Progress" || input.status === "Delivered") {
+    return { ok: false, error: "This reading has already been started." };
   }
   return { ok: true, value: "In Progress" };
 }
@@ -552,6 +552,37 @@ run("unpaid reading cannot start or send fulfilment", () => {
     }).ok,
     false,
   );
+});
+
+run("start reading notifies client once and rejects duplicates", () => {
+  assert.equal(
+    validateStartReading({
+      status: "In Progress",
+      archivedAt: null,
+      effectivelyPaid: true,
+    }).ok,
+    false,
+  );
+  assert.equal(
+    validateStartReading({
+      status: "Delivered",
+      archivedAt: null,
+      effectivelyPaid: true,
+    }).error,
+    "This reading has already been started.",
+  );
+  assert.match(adminPage, /Mark in progress and notify client/);
+  assert.match(notificationsSource, /sendAskLeiliaCustomerReadingStarted/);
+  assert.match(notificationsSource, /Your Ask Leilia reading is underway/);
+  const startBranch = apiSource.slice(
+    apiSource.indexOf('if (actionRaw === "start_reading")'),
+    apiSource.indexOf('if (actionRaw === "save_notes")'),
+  );
+  assert.match(startBranch, /sendAskLeiliaCustomerReadingStarted/);
+  assert.doesNotMatch(startBranch, /notifyAskLeiliaStatusChanged/);
+  assert.match(startBranch, /\.neq\("status", "In Progress"\)/);
+  assert.match(startBranch, /\.neq\("status", "Delivered"\)/);
+  assert.match(startBranch, /Client notified that the reading is in progress\./);
 });
 
 run("marking unpaid reading paid enables normal fulfilment", () => {

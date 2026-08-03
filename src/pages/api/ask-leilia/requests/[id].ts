@@ -16,6 +16,7 @@ import {
 import {
   notifyAskLeiliaStatusChanged,
   sendAskLeiliaCustomerDelivery,
+  sendAskLeiliaCustomerReadingStarted,
   sendAskLeiliaReviewRequest,
 } from "../../../../lib/ask-leilia/notifications";
 import {
@@ -300,30 +301,59 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
-    const { error } = await service
+    const startedAt = existing.started_at ?? now;
+    const { data: claimed, error: claimError } = await service
       .from("ask_leilia_requests")
       .update({
         status: "In Progress",
-        started_at: existing.started_at ?? now,
+        started_at: startedAt,
       })
-      .eq("id", requestId);
+      .eq("id", requestId)
+      .neq("status", "In Progress")
+      .neq("status", "Delivered")
+      .select("id")
+      .maybeSingle();
 
-    if (error) {
-      console.error("Unable to start Ask Leilia reading:", error);
+    if (claimError) {
+      console.error("Unable to start Ask Leilia reading:", claimError);
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    await notifyAskLeiliaStatusChanged(
+    if (!claimed) {
+      return redirectWithNotice(
+        request.url,
+        returnTo,
+        "This reading has already been started.",
+        "error",
+      );
+    }
+
+    const notified = await sendAskLeiliaCustomerReadingStarted(
       {
         name: existing.name,
         email: existing.email,
-        status: "In Progress",
-        readingType: existing.reading_type,
       },
       locals,
     );
 
-    return redirectWithNotice(request.url, returnTo, "Reading marked in progress.");
+    if (!notified.ok) {
+      await service
+        .from("ask_leilia_requests")
+        .update({
+          status: existing.status,
+          started_at: existing.started_at,
+        })
+        .eq("id", requestId)
+        .eq("status", "In Progress")
+        .eq("started_at", startedAt);
+      return redirectWithNotice(request.url, returnTo, notified.error, "error");
+    }
+
+    return redirectWithNotice(
+      request.url,
+      returnTo,
+      "Client notified that the reading is in progress.",
+    );
   }
 
   if (actionRaw === "save_notes") {
