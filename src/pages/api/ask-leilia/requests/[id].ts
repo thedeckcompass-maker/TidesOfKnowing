@@ -103,11 +103,12 @@ function asPaymentFields(existing: RequestRow) {
 }
 
 function redirectWithNotice(
+  requestUrl: string | URL,
   returnTo: string,
   notice: string,
   kind: "ok" | "error" = "ok",
 ): Response {
-  const redirectUrl = new URL(returnTo, "https://www.tidesofknowing.com");
+  const redirectUrl = new URL(returnTo, requestUrl);
   for (const key of [
     "archived",
     "restored",
@@ -127,7 +128,7 @@ function redirectWithNotice(
     redirectUrl.searchParams.delete(key);
   }
   redirectUrl.searchParams.set(kind === "ok" ? "notice" : "error", notice);
-  return Response.redirect(`${redirectUrl.pathname}${redirectUrl.search}`, 303);
+  return Response.redirect(redirectUrl, 303);
 }
 
 async function loadRequest(
@@ -184,8 +185,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(
-      returnTo,
+    return redirectWithNotice(request.url, returnTo,
       actionRaw === "archive"
         ? "Reading archived. It remains fully recoverable."
         : "Reading restored to the active queue.",
@@ -216,7 +216,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       note: form.get("manual_payment_note"),
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const recordedAtRaw =
@@ -227,7 +227,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     if (recordedAtRaw) {
       const parsed = new Date(recordedAtRaw);
       if (Number.isNaN(parsed.getTime())) {
-        return redirectWithNotice(returnTo, "Enter a valid payment date and time.", "error");
+        return redirectWithNotice(request.url, returnTo, "Enter a valid payment date and time.", "error");
       }
       recordedAt = parsed.toISOString();
     }
@@ -251,8 +251,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(
-      returnTo,
+    return redirectWithNotice(request.url, returnTo,
       "Manual payment recorded. The reading is now available for fulfilment.",
     );
   }
@@ -263,7 +262,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       reading_type: existing.reading_type,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const nextStatus = statusAfterManualPaymentReversal({
@@ -286,8 +285,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(
-      returnTo,
+    return redirectWithNotice(request.url, returnTo,
       "Manual payment confirmation reversed. Stripe data was not changed.",
     );
   }
@@ -299,7 +297,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       effectivelyPaid,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const { error } = await service
@@ -325,7 +323,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       locals,
     );
 
-    return redirectWithNotice(returnTo, "Reading marked in progress.");
+    return redirectWithNotice(request.url, returnTo, "Reading marked in progress.");
   }
 
   if (actionRaw === "save_notes") {
@@ -341,13 +339,13 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(returnTo, "Internal notes saved.");
+    return redirectWithNotice(request.url, returnTo, "Internal notes saved.");
   }
 
   if (actionRaw === "upload_pdf" || actionRaw === "replace_pdf") {
     const deliveryPdf = form.get("deliveryPdf");
     if (!(deliveryPdf instanceof File) || deliveryPdf.size < 1) {
-      return redirectWithNotice(returnTo, "Please choose a PDF file to upload.", "error");
+      return redirectWithNotice(request.url, returnTo, "Please choose a PDF file to upload.", "error");
     }
 
     const uploadGate = validateUploadDeliveryPdf({
@@ -355,12 +353,12 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       effectivelyPaid,
     });
     if (!uploadGate.ok) {
-      return redirectWithNotice(returnTo, uploadGate.error, "error");
+      return redirectWithNotice(request.url, returnTo, uploadGate.error, "error");
     }
 
     const upload = await uploadAskLeiliaDeliveryPdf(service, requestId, deliveryPdf);
     if ("error" in upload) {
-      return redirectWithNotice(returnTo, upload.error, "error");
+      return redirectWithNotice(request.url, returnTo, upload.error, "error");
     }
 
     if (existing.delivery_pdf_path && existing.delivery_pdf_path !== upload.deliveryPdfPath) {
@@ -389,7 +387,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(returnTo, "Completed reading PDF uploaded.");
+    return redirectWithNotice(request.url, returnTo, "Completed reading PDF uploaded.");
   }
 
   if (actionRaw === "remove_pdf") {
@@ -398,7 +396,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       hasDeliveryPdf: Boolean(existing.delivery_pdf_path),
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     if (existing.delivery_pdf_path) {
@@ -423,8 +421,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(
-      returnTo,
+    return redirectWithNotice(request.url, returnTo,
       "Completed reading PDF removed. Reading returned to In progress.",
     );
   }
@@ -438,7 +435,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       effectivelyPaid,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const pdfPath = existing.delivery_pdf_path!;
@@ -458,8 +455,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     }
 
     if (!claimed) {
-      return redirectWithNotice(
-        returnTo,
+      return redirectWithNotice(request.url, returnTo,
         "Delivery is already being processed, or this reading was already delivered.",
         "error",
       );
@@ -472,7 +468,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
         .update({ delivery_sent_at: null })
         .eq("id", requestId)
         .eq("delivery_sent_at", claimTimestamp);
-      return redirectWithNotice(returnTo, pdf.error, "error");
+      return redirectWithNotice(request.url, returnTo, pdf.error, "error");
     }
 
     const delivery = await sendAskLeiliaCustomerDelivery(
@@ -492,7 +488,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
         .update({ delivery_sent_at: null })
         .eq("id", requestId)
         .eq("delivery_sent_at", claimTimestamp);
-      return redirectWithNotice(returnTo, delivery.error, "error");
+      return redirectWithNotice(request.url, returnTo, delivery.error, "error");
     }
 
     const { error } = await service
@@ -524,7 +520,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       locals,
     );
 
-    return redirectWithNotice(returnTo, "Reading emailed to the client and marked delivered.");
+    return redirectWithNotice(request.url, returnTo, "Reading emailed to the client and marked delivered.");
   }
 
   if (actionRaw === "resend_delivery") {
@@ -534,12 +530,12 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       email: existing.email,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const pdf = await downloadAskLeiliaDeliveryPdf(service, existing.delivery_pdf_path!);
     if ("error" in pdf) {
-      return redirectWithNotice(returnTo, pdf.error, "error");
+      return redirectWithNotice(request.url, returnTo, pdf.error, "error");
     }
 
     const delivery = await sendAskLeiliaCustomerDelivery(
@@ -555,7 +551,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     );
 
     if (!delivery.ok) {
-      return redirectWithNotice(returnTo, delivery.error, "error");
+      return redirectWithNotice(request.url, returnTo, delivery.error, "error");
     }
 
     const { error } = await service
@@ -573,7 +569,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(returnTo, "Reading resent to the client.");
+    return redirectWithNotice(request.url, returnTo, "Reading resent to the client.");
   }
 
   if (actionRaw === "mark_delivered_manual") {
@@ -583,12 +579,12 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       effectivelyPaid,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     const methodRaw = form.get("delivery_method");
     if (!isAskLeiliaManualDeliveryMethod(methodRaw)) {
-      return redirectWithNotice(returnTo, "Choose a manual delivery method.", "error");
+      return redirectWithNotice(request.url, returnTo, "Choose a manual delivery method.", "error");
     }
     const method = methodRaw as AskLeiliaManualDeliveryMethod;
 
@@ -598,7 +594,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     if (deliveredAtRaw) {
       const parsed = new Date(deliveredAtRaw);
       if (Number.isNaN(parsed.getTime())) {
-        return redirectWithNotice(returnTo, "Enter a valid delivery date and time.", "error");
+        return redirectWithNotice(request.url, returnTo, "Enter a valid delivery date and time.", "error");
       }
       deliveredAt = parsed.toISOString();
     }
@@ -633,7 +629,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       locals,
     );
 
-    return redirectWithNotice(returnTo, "Reading manually marked as delivered.");
+    return redirectWithNotice(request.url, returnTo, "Reading manually marked as delivered.");
   }
 
   if (actionRaw === "request_review" || actionRaw === "resend_review_request") {
@@ -643,12 +639,11 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       linkedReviewId: existing.linked_review_id,
     });
     if (!validation.ok) {
-      return redirectWithNotice(returnTo, validation.error, "error");
+      return redirectWithNotice(request.url, returnTo, validation.error, "error");
     }
 
     if (actionRaw === "request_review" && existing.review_status === "requested") {
-      return redirectWithNotice(
-        returnTo,
+      return redirectWithNotice(request.url, returnTo,
         "A review has already been requested. Use Resend review request to send again.",
         "error",
       );
@@ -656,7 +651,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
 
     const tokenResult = await ensureAskLeiliaReviewToken(service, requestId);
     if (!tokenResult.ok) {
-      return redirectWithNotice(returnTo, tokenResult.error, "error");
+      return redirectWithNotice(request.url, returnTo, tokenResult.error, "error");
     }
 
     const origin = siteBase({ site: undefined, url: new URL(request.url) }).origin;
@@ -676,7 +671,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     );
 
     if (!sent.ok) {
-      return redirectWithNotice(returnTo, sent.error, "error");
+      return redirectWithNotice(request.url, returnTo, sent.error, "error");
     }
 
     const { error } = await service
@@ -693,8 +688,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
       return json({ ok: false, error: "Unable to update the request." }, 500);
     }
 
-    return redirectWithNotice(
-      returnTo,
+    return redirectWithNotice(request.url, returnTo,
       actionRaw === "resend_review_request"
         ? "Review request resent."
         : "Review request sent to the client.",
@@ -702,8 +696,7 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
   }
 
   void redirect;
-  return redirectWithNotice(
-    returnTo,
+  return redirectWithNotice(request.url, returnTo,
     "Unknown admin action. Use the fulfilment controls on the reading.",
     "error",
   );
