@@ -764,6 +764,69 @@ run("admin delivery PDF uses on-demand authenticated endpoint", () => {
   assert.doesNotMatch(adminPage, /createSignedUrl/);
 });
 
+run("expanded admin panel uses two-column workspace hierarchy", () => {
+  assert.match(
+    adminPage,
+    /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+minmax\(0,\s*1\.2fr\)/,
+  );
+  assert.doesNotMatch(adminPage, /grid-template-columns:\s*repeat\(3,/);
+
+  assert.match(
+    adminPage,
+    /\.ask-admin-panel__grid > \.ask-admin-panel__section\s*\{\s*min-width:\s*0;/,
+  );
+  assert.match(
+    adminPage,
+    /\.ask-admin-panel__grid > \.ask-admin-panel__section:nth-child\(3\)\s*\{\s*grid-column:\s*2;\s*grid-row:\s*1\s*\/\s*-1;/,
+  );
+  assert.match(adminPage, /\.ask-admin-panel dd,\s*\.ask-admin-panel code\s*\{/);
+  assert.match(adminPage, /overflow-wrap:\s*anywhere/);
+  assert.match(adminPage, /word-break:\s*break-word/);
+
+  assert.match(
+    adminPage,
+    /@media \(max-width: 980px\) \{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?grid-column:\s*auto;[\s\S]*?grid-row:\s*auto;[\s\S]*?\.ask-admin-table\s*\{\s*min-width:\s*0;/,
+  );
+  assert.doesNotMatch(
+    adminPage,
+    /@media \(max-width: 980px\) \{[\s\S]*?min-width:\s*860px/,
+  );
+
+  assert.match(adminPage, /min-width:\s*860px/);
+  assert.match(adminPage, /@media \(max-width: 760px\)/);
+  assert.match(adminPage, /display:\s*block/);
+
+  assert.match(adminPage, /<summary>Payment details<\/summary>/);
+  assert.match(adminPage, /Raw Stripe status/);
+  assert.match(adminPage, /stripe_payment_intent/);
+  assert.match(adminPage, /<summary id=\{`admin-\$\{request\.id\}`\}>Internal administration<\/summary>/);
+  assert.match(adminPage, /name="action" value="save_notes"/);
+  assert.match(adminPage, /isArchived \? "restore" : "archive"/);
+  assert.match(adminPage, /Reading Library publication/);
+
+  assert.match(adminPage, /Request review/);
+  assert.match(adminPage, /Resend review request/);
+  assert.match(adminPage, /Review actions unlock after delivery/);
+  assert.match(adminPage, /id=\{`review-\$\{request\.id\}`\}/);
+  assert.match(adminPage, /aria-labelledby=\{`review-\$\{request\.id\}`\}/);
+
+  assert.match(adminPage, /Mark in progress and notify client/);
+  assert.match(adminPage, /Upload completed reading PDF/);
+  assert.match(adminPage, /Send PDF and mark delivered/);
+  assert.match(adminPage, /Resend reading/);
+  assert.match(adminPage, /replace_pdf/);
+  assert.match(adminPage, /remove_pdf/);
+  assert.match(adminPage, /mark_delivered_manual/);
+  assert.match(
+    adminPage,
+    /href=\{`\/api\/ask-leilia\/requests\/\$\{request\.id\}\/delivery-pdf`\}/,
+  );
+  assert.match(
+    adminPage,
+    /href=\{`\/api\/ask-leilia\/requests\/\$\{request\.id\}\/delivery-pdf\?download=1`\}/,
+  );
+});
+
 run("review request email is separate from delivery email", () => {
   assert.match(notificationsSource, /sendAskLeiliaReviewRequest/);
   assert.match(apiSource, /actionRaw === "request_review"/);
