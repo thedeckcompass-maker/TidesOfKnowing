@@ -615,20 +615,121 @@ run("carousel count contracts for 0–6 reviews", () => {
   }
 });
 
+function askLeiliaReviewPublicDate(row) {
+  return row.approved_at || row.submitted_at;
+}
+
+function compareAskLeiliaReviewsForPublicDisplay(left, right) {
+  if (left.is_featured !== right.is_featured) {
+    return left.is_featured ? -1 : 1;
+  }
+  const byDate = askLeiliaReviewPublicDate(right).localeCompare(
+    askLeiliaReviewPublicDate(left),
+  );
+  if (byDate !== 0) return byDate;
+  return right.id.localeCompare(left.id);
+}
+
 run("featured reviews sort ahead of newer non-featured", () => {
   const rows = [
-    { id: "a", is_featured: false, approved_at: "2026-07-01T00:00:00.000Z" },
-    { id: "b", is_featured: true, approved_at: "2026-06-01T00:00:00.000Z" },
-    { id: "c", is_featured: false, approved_at: "2026-07-10T00:00:00.000Z" },
+    {
+      id: "a",
+      is_featured: false,
+      approved_at: "2026-07-01T00:00:00.000Z",
+      submitted_at: "2026-07-01T00:00:00.000Z",
+    },
+    {
+      id: "b",
+      is_featured: true,
+      approved_at: "2026-06-01T00:00:00.000Z",
+      submitted_at: "2026-06-01T00:00:00.000Z",
+    },
+    {
+      id: "c",
+      is_featured: false,
+      approved_at: "2026-07-10T00:00:00.000Z",
+      submitted_at: "2026-07-10T00:00:00.000Z",
+    },
   ];
-  const ordered = [...rows].sort((left, right) => {
-    if (left.is_featured !== right.is_featured) return left.is_featured ? -1 : 1;
-    return right.approved_at.localeCompare(left.approved_at);
-  });
+  const ordered = [...rows].sort(compareAskLeiliaReviewsForPublicDisplay);
   assert.deepEqual(
     ordered.map((row) => row.id),
     ["b", "c", "a"],
   );
+});
+
+run("newest unpinned review sorts ahead of older unpinned", () => {
+  const rows = [
+    {
+      id: "july-anon",
+      is_featured: false,
+      approved_at: "2026-07-12T12:00:00.000Z",
+      submitted_at: "2026-07-12T12:00:00.000Z",
+    },
+    {
+      id: "july-celia",
+      is_featured: false,
+      approved_at: "2026-07-08T12:00:00.000Z",
+      submitted_at: "2026-07-08T12:00:00.000Z",
+    },
+    {
+      id: "august-lish",
+      is_featured: false,
+      approved_at: null,
+      submitted_at: "2026-08-09T12:00:00.000Z",
+    },
+    {
+      id: "featured-older",
+      is_featured: true,
+      approved_at: "2026-07-15T12:00:00.000Z",
+      submitted_at: "2026-07-15T12:00:00.000Z",
+    },
+  ];
+  const ordered = [...rows].sort(compareAskLeiliaReviewsForPublicDisplay);
+  assert.deepEqual(
+    ordered.map((row) => row.id),
+    ["featured-older", "august-lish", "july-anon", "july-celia"],
+  );
+});
+
+run("public review sort is stable by id when dates match", () => {
+  const rows = [
+    {
+      id: "aaa",
+      is_featured: false,
+      approved_at: "2026-08-01T00:00:00.000Z",
+      submitted_at: "2026-08-01T00:00:00.000Z",
+    },
+    {
+      id: "zzz",
+      is_featured: false,
+      approved_at: "2026-08-01T00:00:00.000Z",
+      submitted_at: "2026-08-01T00:00:00.000Z",
+    },
+  ];
+  const ordered = [...rows].sort(compareAskLeiliaReviewsForPublicDisplay);
+  assert.deepEqual(
+    ordered.map((row) => row.id),
+    ["zzz", "aaa"],
+  );
+});
+
+run("listPublicAskLeiliaReviews sorts in query layer not carousel", () => {
+  const queries = readFileSync(
+    join(REPO_ROOT, "src/lib/ask-leilia/reviews/queries.ts"),
+    "utf8",
+  );
+  assert.match(queries, /compareAskLeiliaReviewsForPublicDisplay/);
+  assert.match(queries, /askLeiliaReviewPublicDate/);
+  assert.match(queries, /\.sort\(compareAskLeiliaReviewsForPublicDisplay\)/);
+  assert.match(queries, /\.order\("submitted_at", \{ ascending: false \}\)/);
+  assert.equal(queries.includes('.order("approved_at", { ascending: false })'), false);
+
+  const carousel = readFileSync(
+    join(REPO_ROOT, "src/components/ask-leilia/AskLeiliaReviewsCarousel.astro"),
+    "utf8",
+  );
+  assert.equal(/reviews\.sort|reviews\.reverse/.test(carousel), false);
 });
 
 run("migration defines pending/approved/archived and verification states", () => {

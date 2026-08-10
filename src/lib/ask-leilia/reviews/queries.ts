@@ -24,8 +24,32 @@ function formatMonthYear(iso: string): string {
   }).format(new Date(iso));
 }
 
+/** Canonical public date: approval/publication time, else submission time. */
+export function askLeiliaReviewPublicDate(
+  row: Pick<AskLeiliaReview, "approved_at" | "submitted_at">,
+): string {
+  return row.approved_at || row.submitted_at;
+}
+
+/**
+ * Public carousel order: featured/pinned first (existing behaviour), then newest
+ * public date first, then id for a stable tie-break.
+ */
+export function compareAskLeiliaReviewsForPublicDisplay(
+  left: Pick<AskLeiliaReview, "id" | "is_featured" | "approved_at" | "submitted_at">,
+  right: Pick<AskLeiliaReview, "id" | "is_featured" | "approved_at" | "submitted_at">,
+): number {
+  if (left.is_featured !== right.is_featured) {
+    return left.is_featured ? -1 : 1;
+  }
+  const byDate = askLeiliaReviewPublicDate(right).localeCompare(
+    askLeiliaReviewPublicDate(left),
+  );
+  if (byDate !== 0) return byDate;
+  return right.id.localeCompare(left.id);
+}
+
 export function toPublicReview(row: AskLeiliaReview): AskLeiliaPublicReview {
-  const publishedAt = row.approved_at || row.submitted_at;
   return {
     id: row.id,
     display_name: row.display_name,
@@ -35,7 +59,7 @@ export function toPublicReview(row: AskLeiliaReview): AskLeiliaPublicReview {
     title: row.title,
     body: reviewPublicBody(row),
     is_verified: isVerifiedAskLeiliaReview(row.verification_status),
-    published_month_year: formatMonthYear(publishedAt),
+    published_month_year: formatMonthYear(askLeiliaReviewPublicDate(row)),
   };
 }
 
@@ -319,11 +343,17 @@ export async function getAskLeiliaReviewById(
   return (data as AskLeiliaReview | null) ?? null;
 }
 
-/** Approved reviews for the Ask Leilia carousel (max 6). Featured first, then newest. */
+/**
+ * Approved reviews for the Ask Leilia carousel (max 6).
+ * Featured/pinned first, then reverse-chronological by public date
+ * (`approved_at` with `submitted_at` fallback), then id.
+ */
 export async function listPublicAskLeiliaReviews(
   service: SupabaseClient,
   limit = 6,
 ): Promise<AskLeiliaPublicReview[]> {
+  // Load all approved rows, then sort/slice in one place so LIMIT cannot drop a
+  // newer unpinned review when `approved_at` is null or lags `submitted_at`.
   const { data, error } = await service
     .from("ask_leilia_reviews")
     .select(
@@ -331,15 +361,19 @@ export async function listPublicAskLeiliaReviews(
     )
     .eq("moderation_status", "approved")
     .order("is_featured", { ascending: false })
-    .order("approved_at", { ascending: false })
-    .limit(limit);
+    .order("submitted_at", { ascending: false })
+    .order("id", { ascending: false });
 
   if (error) {
     console.error("Unable to load public Ask Leilia reviews:", error);
     return [];
   }
 
-  return ((data ?? []) as AskLeiliaReview[]).map(toPublicReview);
+  return ((data ?? []) as AskLeiliaReview[])
+    .slice()
+    .sort(compareAskLeiliaReviewsForPublicDisplay)
+    .slice(0, limit)
+    .map(toPublicReview);
 }
 
 export async function updateAskLeiliaReviewModeration(
