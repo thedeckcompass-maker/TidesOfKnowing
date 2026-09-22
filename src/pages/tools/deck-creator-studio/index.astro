@@ -28,7 +28,7 @@ const accessRequired = Astro.url.searchParams.get("access") === "required";
       <p>The Studio combines private project architecture, card and guidebook writing, research records, a creator journal, production preparation, exports and bounded professional support. It is designed for oracle, tarot and hybrid decks across personal, independent publishing and commercial pathways.</p>
     </section>
     <section id="plans" class="studio-grid" aria-labelledby="plans-heading">
-      <div class="studio-panel studio-panel--wide"><p class="studio-kicker">Commercial access</p><h2 id="plans-heading">Choose the level of guidance your deck needs</h2><p>All plans protect creator ownership and private project data. Guided Deck Circle is the principal twelve-week pathway.</p></div>
+      <div class="studio-panel"><p class="studio-kicker">Commercial access</p><h2 id="plans-heading">Choose the level of guidance your deck needs</h2><p>All plans protect creator ownership and private project data. Guided Deck Circle is the principal twelve-week pathway.</p></div>
       {STUDIO_PLAN_CODES.map((code) => {
         const plan = STUDIO_PLANS[code];
         return <article class="studio-panel studio-panel--side">

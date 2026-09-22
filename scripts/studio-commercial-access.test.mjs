@@ -28,6 +28,8 @@ assert.match(migration, /access_mode in \('write','read_only'\)/);
 assert.match(migration, /public\.studio_has_write_access\(\)/);
 assert.match(offer, /Creators? retain|You retain authorship/i);
 assert.match(offer, /does not include unlimited manuscript rewriting/i);
+assert.match(offer, /<div class="studio-panel"><p class="studio-kicker">Commercial access/);
+assert.match(offer, /<article class="studio-panel studio-panel--side">/);
 assert.match(checkout, /mode:\s*"subscription"/);
 assert.match(checkout, /studio_reserve_checkout/);
 assert.match(checkout, /minimum_payments/);
