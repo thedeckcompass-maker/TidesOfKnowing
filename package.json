@@ -26,6 +26,7 @@
     "test:compass-fulfilment": "node scripts/compass-fulfilment.test.mjs",
     "test:member-workspace-nav": "node scripts/member-workspace-nav.test.mjs",
     "test:studio-access": "node scripts/studio-access.test.mjs",
+    "test:studio-foundation": "node scripts/studio-project-foundation.test.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",
     "test:auth-callback": "node scripts/auth-callback.test.mjs",
     "test:auth-otp": "node scripts/auth-otp-claim.test.mjs && node scripts/auth-otp-register.test.mjs && node scripts/auth-otp-account-sign-in-link.test.mjs",

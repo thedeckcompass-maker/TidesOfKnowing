@@ -1,0 +1,150 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../lib/studio/access";
+import { getStudioProjectWorkspace } from "../../../../lib/studio/queries";
+import { studioDeckTypeLabel, studioPathwayLabel } from "../../../../lib/studio/types";
+import "../../../../styles/studio.css";
+
+export const prerender = false;
+
+const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
+if (accessResponse) return accessResponse;
+const projectId = Astro.params.id;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const workspace = await getStudioProjectWorkspace(Astro.locals.supabase, projectId);
+if (!workspace.project) return new Response(null, { status: 404 });
+const { project, families, cards, guidebook } = workspace;
+const saved = Astro.url.searchParams.get("saved");
+const created = Astro.url.searchParams.get("created") === "1";
+const error = Astro.url.searchParams.get("error");
+const completedCards = cards.filter((card) => card.status === "complete").length;
+const completedSections = guidebook.filter((section) => section.status === "complete").length;
+---
+
+<BaseLayout
+  title={`${project.name} | Deck Creator Studio`}
+  description="Private deck project dashboard."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-page page-inner">
+    <StudioHeader
+      eyebrow={`${studioDeckTypeLabel[project.deck_type]} · ${studioPathwayLabel[project.pathway]}`}
+      title={project.name}
+      lede={project.promise || project.purpose || "Shape the deck system, write each card and build the guidebook in one private workspace."}
+      projectId={project.id}
+    />
+
+    {created ? <p class="studio-notice" role="status">Project created. Add the structure you already know, then refine it as the deck develops.</p> : null}
+    {saved ? <p class="studio-notice" role="status">Changes saved.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="pulse-heading">
+        <p class="studio-kicker">Whole-deck view</p>
+        <h2 id="pulse-heading">Project pulse</h2>
+        <div class="studio-stats">
+          <div class="studio-stat"><strong>{cards.length}</strong> cards scaffolded</div>
+          <div class="studio-stat"><strong>{completedCards}</strong> cards complete</div>
+          <div class="studio-stat"><strong>{completedSections}/{guidebook.length}</strong> guidebook sections complete</div>
+        </div>
+        <p class="studio-panel__intro"><strong>Next action:</strong> {project.next_action || "Choose the next concrete piece of work."}</p>
+        {project.current_risk ? <p><strong>Current risk:</strong> {project.current_risk}</p> : null}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="settings-heading">
+        <p class="studio-kicker">Editable</p>
+        <h2 id="settings-heading">Project settings</h2>
+        <details>
+          <summary>Edit purpose, pathway and progress</summary>
+          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}`}>
+            <label class="studio-field"><span>Project name</span><input name="name" required maxlength="120" value={project.name} /></label>
+            <label class="studio-field"><span>Deck type</span><select name="deck_type"><option value="oracle" selected={project.deck_type === "oracle"}>Oracle</option><option value="tarot" selected={project.deck_type === "tarot"}>Tarot</option><option value="hybrid" selected={project.deck_type === "hybrid"}>Hybrid</option></select></label>
+            <label class="studio-field"><span>Pathway</span><select name="pathway"><option value="personal" selected={project.pathway === "personal"}>Personal or gift edition</option><option value="independent" selected={project.pathway === "independent"}>Independent publication</option><option value="commercial" selected={project.pathway === "commercial"}>Commercial or crowdfunded launch</option></select></label>
+            <label class="studio-field"><span>Status</span><select name="status"><option value="planning" selected={project.status === "planning"}>Planning</option><option value="writing" selected={project.status === "writing"}>Writing</option><option value="artwork" selected={project.status === "artwork"}>Artwork</option><option value="production" selected={project.status === "production"}>Production</option><option value="complete" selected={project.status === "complete"}>Complete</option><option value="archived" selected={project.status === "archived"}>Archived</option></select></label>
+            <label class="studio-field"><span>Deck size</span><input name="deck_size" type="number" min="1" max="240" value={project.deck_size ?? ""} /></label>
+            <label class="studio-field"><span>Purpose</span><textarea name="purpose">{project.purpose}</textarea></label>
+            <label class="studio-field"><span>Intended reader</span><textarea name="intended_reader">{project.intended_reader}</textarea></label>
+            <label class="studio-field"><span>Core promise</span><textarea name="promise">{project.promise}</textarea></label>
+            <label class="studio-field"><span>Project description</span><textarea name="description">{project.description}</textarea></label>
+            <label class="studio-field"><span>Next action</span><textarea name="next_action">{project.next_action}</textarea></label>
+            <label class="studio-field"><span>Current risk</span><textarea name="current_risk">{project.current_risk}</textarea></label>
+            <button class="studio-button" type="submit">Save settings</button>
+          </form>
+        </details>
+      </section>
+
+      <section id="cards" class="studio-panel studio-panel--wide" aria-labelledby="cards-heading">
+        <p class="studio-kicker">Card workspace</p>
+        <h2 id="cards-heading">Cards</h2>
+        <p class="studio-panel__intro">Order the whole deck, track progress and open a card for structured writing, research and artwork notes.</p>
+        {cards.length ? (
+          <ul class="studio-list">
+            {cards.map((card) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div><p class="studio-meta">{card.card_number || `Position ${card.sort_order}`} · version {card.version_number}</p><h3>{card.title}</h3></div>
+                  <div><span class="studio-status">{card.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/cards/${card.id}/`}>Write card</a></div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : <p class="studio-empty">No cards have been scaffolded yet.</p>}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="add-card-heading">
+        <p class="studio-kicker">Add structure</p>
+        <h2 id="add-card-heading">Add a card</h2>
+        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/cards`}>
+          <label class="studio-field"><span>Title</span><input name="title" required maxlength="120" /></label>
+          <label class="studio-field"><span>Card number or label</span><input name="card_number" maxlength="30" /></label>
+          <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={cards.length} required /></label>
+          <label class="studio-field"><span>Family</span><select name="family_id"><option value="">No family</option>{families.map((family) => <option value={family.id}>{family.name}</option>)}</select></label>
+          <button class="studio-button" type="submit">Create card</button>
+        </form>
+        <details>
+          <summary>Add a card family</summary>
+          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/families`}>
+            <label class="studio-field"><span>Family name</span><input name="name" required maxlength="80" /></label>
+            <label class="studio-field"><span>Description</span><textarea name="description" maxlength="1000"></textarea></label>
+            <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={families.length} required /></label>
+            <button class="studio-button" type="submit">Create family</button>
+          </form>
+        </details>
+      </section>
+
+      <section id="guidebook" class="studio-panel studio-panel--wide" aria-labelledby="guidebook-heading">
+        <p class="studio-kicker">Versioned manuscript</p>
+        <h2 id="guidebook-heading">Guidebook</h2>
+        <p class="studio-panel__intro">Build front matter, instructions, card entries, chapters and closing material as an ordered manuscript.</p>
+        {guidebook.length ? (
+          <ul class="studio-list">
+            {guidebook.map((section) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div><p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p><h3>{section.title}</h3></div>
+                  <div><span class="studio-status">{section.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/guidebook/${section.id}/`}>Edit section</a></div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : <p class="studio-empty">No guidebook sections yet.</p>}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="add-guidebook-heading">
+        <p class="studio-kicker">Manuscript structure</p>
+        <h2 id="add-guidebook-heading">Add a section</h2>
+        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/guidebook`}>
+          <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" /></label>
+          <label class="studio-field"><span>Section type</span><select name="section_type"><option value="front_matter">Front matter</option><option value="card_entry">Card entry</option><option value="instructions">Instructions</option><option value="chapter">Chapter</option><option value="closing">Closing material</option><option value="other">Other</option></select></label>
+          <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={guidebook.length} required /></label>
+          <button class="studio-button" type="submit">Create section</button>
+        </form>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

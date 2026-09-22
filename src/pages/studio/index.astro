@@ -1,16 +1,28 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { isAdminProfile } from "../../lib/community/auth";
+import StudioHeader from "../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../lib/studio/access";
+import { getStudioProjects } from "../../lib/studio/queries";
+import { studioDeckTypeLabel, studioPathwayLabel } from "../../lib/studio/types";
+import "../../styles/studio.css";
 
 export const prerender = false;
 
-if (!Astro.locals.user) {
-  return Astro.redirect("/auth/register/", 303);
-}
+const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
+if (accessResponse) return accessResponse;
 
-if (!isAdminProfile(Astro.locals.profile)) {
-  return new Response(null, { status: 404, statusText: "Not Found" });
+let projects: Awaited<ReturnType<typeof getStudioProjects>> = [];
+let databaseReady = Boolean(Astro.locals.supabase);
+if (Astro.locals.supabase) {
+  try {
+    projects = await getStudioProjects(Astro.locals.supabase);
+  } catch (queryError) {
+    databaseReady = false;
+    console.error("Deck Creator Studio schema is not ready:", queryError);
+  }
 }
+const created = Astro.url.searchParams.get("created") === "1";
+const error = Astro.url.searchParams.get("error");
 ---
 
 <BaseLayout
@@ -21,84 +33,81 @@ if (!isAdminProfile(Astro.locals.profile)) {
   memberWorkspace={false}
   bodyClass="tok-body--studio"
 >
-  <main class="studio-shell page-inner">
-    <header class="studio-shell__header">
-      <p class="studio-shell__eyebrow">Tides of Knowing</p>
-      <h1>Deck Creator Studio</h1>
-      <p class="studio-shell__lede">
-        Your private workspace for developing, writing and preparing an original deck.
-      </p>
-    </header>
+  <main class="studio-page page-inner">
+    <StudioHeader
+      title="Deck Creator Studio"
+      lede="A private working environment for shaping your deck, card system and guidebook from first idea to publication."
+    />
 
-    <section class="studio-shell__panel" aria-labelledby="studio-status-heading">
-      <p class="studio-shell__status">Private build access</p>
-      <h2 id="studio-status-heading">Studio foundation established</h2>
-      <p>
-        This protected workspace is now ready for the project dashboard, deck structure and
-        creator tools. Only an authorised Tides administrator can enter during the build.
-      </p>
-    </section>
+    {created ? <p class="studio-notice" role="status">Your project workspace is ready.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!databaseReady ? <p class="studio-notice" role="status">The private project workspace is being prepared. No project data has been changed.</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="projects-heading">
+        <p class="studio-kicker">Your work</p>
+        <h2 id="projects-heading">Deck projects</h2>
+        {projects.length ? (
+          <ul class="studio-list">
+            {projects.map((project) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div>
+                    <p class="studio-meta">
+                      {studioDeckTypeLabel[project.deck_type]} · {studioPathwayLabel[project.pathway]}
+                    </p>
+                    <h3>{project.name}</h3>
+                    <p>{project.next_action || project.purpose || "Define the next useful step for this deck."}</p>
+                  </div>
+                  <div>
+                    <span class="studio-status">{project.status}</span>
+                    <p><a class="studio-link-button" href={`/studio/projects/${project.id}/`}>Open project</a></p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="studio-empty">No projects yet. Create the first working space for your deck.</p>
+        )}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="create-project-heading">
+        <p class="studio-kicker">Start here</p>
+        <h2 id="create-project-heading">Create a project</h2>
+        <p class="studio-panel__intro">Choose the structure that fits the deck. You can change these settings later.</p>
+        {databaseReady ? <form class="studio-form" method="post" action="/api/studio/projects">
+          <label class="studio-field">
+            <span>Project name</span>
+            <input name="name" required maxlength="120" autocomplete="off" />
+          </label>
+          <label class="studio-field">
+            <span>Deck type</span>
+            <select name="deck_type" required>
+              <option value="oracle">Oracle</option>
+              <option value="tarot">Tarot</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </label>
+          <label class="studio-field">
+            <span>Creator pathway</span>
+            <select name="pathway" required>
+              <option value="personal">Personal or gift edition</option>
+              <option value="independent">Independent publication</option>
+              <option value="commercial">Commercial or crowdfunded launch</option>
+            </select>
+          </label>
+          <label class="studio-field">
+            <span>Planned deck size</span>
+            <input name="deck_size" type="number" min="1" max="240" inputmode="numeric" />
+          </label>
+          <label class="studio-field">
+            <span>What is this deck for?</span>
+            <textarea name="purpose" maxlength="1200"></textarea>
+          </label>
+          <button class="studio-button" type="submit">Create project</button>
+        </form> : <p class="studio-empty">Project creation will appear when the private Studio schema is ready.</p>}
+      </section>
+    </div>
   </main>
 </BaseLayout>
-
-<style>
-  .studio-shell {
-    max-width: 68rem;
-    padding: clamp(2rem, 7vw, 5.5rem) 0 clamp(4rem, 10vw, 7rem);
-  }
-
-  .studio-shell__header {
-    max-width: 48rem;
-  }
-
-  .studio-shell__eyebrow,
-  .studio-shell__status {
-    margin: 0 0 0.65rem;
-    color: var(--tok-text-muted);
-    font-size: var(--tok-type-meta);
-    font-weight: 700;
-    letter-spacing: var(--tok-letter-upper);
-    text-transform: uppercase;
-  }
-
-  .studio-shell h1 {
-    margin: 0;
-    color: var(--tok-water);
-    font-family: var(--font-accent);
-    font-size: clamp(2.6rem, 8vw, 5.4rem);
-    font-weight: 400;
-    line-height: 0.98;
-  }
-
-  .studio-shell__lede {
-    max-width: 42rem;
-    margin: 1.4rem 0 0;
-    color: var(--tok-text-dark);
-    font-size: clamp(1.08rem, 2.3vw, 1.3rem);
-    line-height: 1.65;
-  }
-
-  .studio-shell__panel {
-    margin-top: clamp(2.5rem, 7vw, 4.5rem);
-    padding: clamp(1.4rem, 4vw, 2.5rem);
-    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
-    border-radius: var(--radius-lg);
-    background: color-mix(in srgb, var(--tok-cream) 88%, white);
-    box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--tok-water) 10%, transparent);
-  }
-
-  .studio-shell__panel h2 {
-    margin: 0;
-    color: var(--tok-water);
-    font-family: var(--font-accent);
-    font-size: clamp(1.8rem, 4vw, 2.7rem);
-    font-weight: 400;
-  }
-
-  .studio-shell__panel p:last-child {
-    max-width: 46rem;
-    margin: 1rem 0 0;
-    color: var(--tok-text-dark);
-    line-height: 1.7;
-  }
-</style>
