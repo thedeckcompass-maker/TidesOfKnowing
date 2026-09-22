@@ -31,6 +31,17 @@ function checksum(value) {
   return createHash("sha256").update(value).digest("hex");
 }
 
+export function deterministicImportTargetId(projectId, targetType, sourceKey) {
+  const digest = createHash("sha256")
+    .update([SOURCE_SYSTEM, projectId, targetType, sourceKey].join("\0"))
+    .digest();
+  const bytes = Buffer.from(digest.subarray(0, 16));
+  bytes[6] = (bytes[6] & 0x0f) | 0x80;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const value = bytes.toString("hex");
+  return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
+}
+
 function sourceWorkspace(sourcePath) {
   const absolute = resolve(sourcePath);
   if (!existsSync(absolute)) throw new Error(`Source not found: ${absolute}`);
