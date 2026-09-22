@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import {
   SOURCE_SYSTEM,
   buildAotearoaBirdOraclePlan,
+  deterministicImportTargetId,
   summariseAotearoaBirdOraclePlan,
 } from "./lib/aotearoa-bird-oracle-importer.mjs";
 
@@ -94,7 +95,12 @@ async function applyPlan(plan, { projectId, environment }) {
       }
     }
 
-    const { data, error } = await supabase.from(table).insert({ project_id: projectId, ...value }).select("id").single();
+    const targetId = deterministicImportTargetId(projectId, targetType, item.sourceKey);
+    const { data, error } = await supabase
+      .from(table)
+      .upsert({ id: targetId, project_id: projectId, ...value }, { onConflict: "id" })
+      .select("id")
+      .single();
     if (error) throw error;
     results.inserted += 1;
     await record(item, targetType, data.id);

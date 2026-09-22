@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { buildAotearoaBirdOraclePlan } from "./lib/aotearoa-bird-oracle-importer.mjs";
+import {
+  buildAotearoaBirdOraclePlan,
+  deterministicImportTargetId,
+} from "./lib/aotearoa-bird-oracle-importer.mjs";
 
 const root = mkdtempSync(join(tmpdir(), "bird-import-test-"));
 const content = join(root, "src", "content");
@@ -64,6 +67,14 @@ try {
   assert.equal(plan.exceptions.filter((item) => item.code === "UNASSIGNED_TOC_POSITION").length, 3);
   assert.deepEqual(repeated.cards.map((card) => card.sourceKey), plan.cards.map((card) => card.sourceKey));
   assert.deepEqual(repeated.guidebookSections.map((section) => section.sourceKey), plan.guidebookSections.map((section) => section.sourceKey));
+  const cardTargetId = deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "card", "bird:G1-N01");
+  assert.equal(cardTargetId, deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "card", "bird:G1-N01"));
+  assert.notEqual(cardTargetId, deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "guidebook_section", "bird:G1-N01"));
+  assert.match(cardTargetId, /^[a-f0-9]{8}-[a-f0-9]{4}-8[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
+  const importer = readFileSync(new URL("./import-aotearoa-bird-oracle.mjs", import.meta.url), "utf8");
+  assert.match(importer, /deterministicImportTargetId\(projectId, targetType, item\.sourceKey\)/);
+  assert.match(importer, /\.upsert\(\{ id: targetId, project_id: projectId/);
+  assert.doesNotMatch(importer, /\.insert\(\{ project_id: projectId, \.\.\.value \}\)/);
   const migration = readFileSync(new URL("../supabase/migrations/20260922050000_deck_studio_import_provenance.sql", import.meta.url), "utf8");
   assert.match(migration, /unique \(project_id, source_system, source_key\)/);
   assert.match(migration, /Creators can read own Studio import records/);
