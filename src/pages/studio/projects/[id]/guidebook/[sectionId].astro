@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioGuidebookSection, getStudioGuidebookVersions, getStudioProject } from "../../../../../lib/studio/queries";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
+if (accessResponse) return accessResponse;
+const projectId = Astro.params.id;
+const sectionId = Astro.params.sectionId;
+if (!projectId || !sectionId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+const [project, section, versions] = await Promise.all([
+  getStudioProject(Astro.locals.supabase, projectId),
+  getStudioGuidebookSection(Astro.locals.supabase, projectId, sectionId),
+  getStudioGuidebookVersions(Astro.locals.supabase, projectId, sectionId),
+]);
+if (!project || !section) return new Response(null, { status: 404 });
+const saved = Astro.url.searchParams.get("saved") === "1";
+const created = Astro.url.searchParams.get("created") === "1";
+const restored = Astro.url.searchParams.get("restored") === "1";
+const error = Astro.url.searchParams.get("error");
+---
+
+<BaseLayout title={`${section.title} | Deck Creator Studio`} description="Private guidebook workspace." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow={`${project.name} · Guidebook`} title={section.title} lede={`Markdown manuscript editor · version ${section.version_number}`} projectId={projectId} />
+    {created ? <p class="studio-notice" role="status">Section created. Its first version has been recorded.</p> : null}
+    {saved ? <p class="studio-notice" role="status">Section saved as a new version.</p> : null}
+    {restored ? <p class="studio-notice" role="status">Earlier manuscript restored as a new current version.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <section class="studio-panel">
+      <form class="studio-form studio-form--two" method="post" action={`/api/studio/guidebook/${section.id}`}>
+        <input type="hidden" name="project_id" value={projectId} />
+        <label class="studio-field"><span>Section title</span><input name="title" required maxlength="160" value={section.title} /></label>
+        <label class="studio-field"><span>Type</span><select name="section_type"><option value="front_matter" selected={section.section_type === "front_matter"}>Front matter</option><option value="card_entry" selected={section.section_type === "card_entry"}>Card entry</option><option value="instructions" selected={section.section_type === "instructions"}>Instructions</option><option value="chapter" selected={section.section_type === "chapter"}>Chapter</option><option value="closing" selected={section.section_type === "closing"}>Closing material</option><option value="other" selected={section.section_type === "other"}>Other</option></select></label>
+        <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={section.sort_order} required /></label>
+        <label class="studio-field"><span>Status</span><select name="status"><option value="outline" selected={section.status === "outline"}>Outline</option><option value="draft" selected={section.status === "draft"}>Draft</option><option value="review" selected={section.status === "review"}>Review</option><option value="complete" selected={section.status === "complete"}>Complete</option></select></label>
+        <label class="studio-field studio-field--full"><span>Markdown manuscript</span><textarea class="studio-editor" name="body_markdown">{section.body_markdown}</textarea></label>
+        <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
+      </form>
+    </section>
+    <section class="studio-panel" aria-labelledby="guidebook-history-heading">
+      <p class="studio-kicker">Recoverable history</p>
+      <h2 id="guidebook-history-heading">Section versions</h2>
+      <ul class="studio-list">
+        {versions.map((version, index) => (
+          <li class="studio-card">
+            <div class="studio-card__row">
+              <div><h3>Version {version.version_number}</h3><p>{new Date(version.created_at).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</p></div>
+              {index > 0 ? (
+                <form method="post" action={`/api/studio/guidebook/${section.id}/restore`}>
+                  <input type="hidden" name="project_id" value={projectId} />
+                  <input type="hidden" name="version_id" value={version.id} />
+                  <button class="studio-link-button" type="submit">Restore this version</button>
+                </form>
+              ) : <span class="studio-status">Current</span>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

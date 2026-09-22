@@ -4,15 +4,18 @@ import { join } from "node:path";
 
 const repoRoot = new URL("../", import.meta.url).pathname;
 const studioPage = readFileSync(join(repoRoot, "src/pages/studio/index.astro"), "utf8");
+const studioAccess = readFileSync(join(repoRoot, "src/lib/studio/access.ts"), "utf8");
 const baseLayout = readFileSync(join(repoRoot, "src/layouts/BaseLayout.astro"), "utf8");
 const sitemap = readFileSync(join(repoRoot, "src/pages/sitemap.xml.ts"), "utf8");
 
 assert.match(studioPage, /export const prerender = false/);
-assert.match(studioPage, /if \(!Astro\.locals\.user\)/);
-assert.match(studioPage, /return Astro\.redirect\("\/auth\/register\/", 303\)/);
-assert.match(studioPage, /if \(!isAdminProfile\(Astro\.locals\.profile\)\)/);
-assert.match(studioPage, /return new Response\(null, \{ status: 404, statusText: "Not Found" \}\)/);
-assert.doesNotMatch(studioPage, /throw new Response/);
+assert.match(studioPage, /studioAccessResponse\(Astro\.locals\.user, Astro\.locals\.profile\)/);
+assert.match(studioAccess, /if \(!user\)/);
+assert.match(studioAccess, /status: 303/);
+assert.match(studioAccess, /Location: "\/auth\/register\/"/);
+assert.match(studioAccess, /if \(!isAdminProfile\(profile\)\)/);
+assert.match(studioAccess, /status: 404, statusText: "Not Found"/);
+assert.doesNotMatch(studioAccess, /throw new Response/);
 assert.match(studioPage, /metaRobots="noindex, nofollow"/);
 
 assert.doesNotMatch(baseLayout, /href=["'{`]\/studio\//);
