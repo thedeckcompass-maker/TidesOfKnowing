@@ -172,6 +172,31 @@ export type StudioProgrammeProgress = {
   updated_at: string;
 };
 
+export type StudioSupportRequest = {
+  id: string;
+  project_id: string;
+  owner_id: string;
+  plan_code: "circle" | "private";
+  support_kind: "circle_weekly" | "private_weekly";
+  support_week: string;
+  focus_question: string;
+  context_excerpt: string;
+  review_scopes: Array<"project" | "cards" | "guidebook">;
+  group_share_confirmed: boolean;
+  consent_granted_at: string;
+  consent_withdrawn_at: string | null;
+  facilitator_id: string | null;
+  status: "requested" | "accepted" | "completed" | "withdrawn" | "expired";
+  accepted_at: string | null;
+  access_expires_at: string | null;
+  session_scheduled_for: string | null;
+  facilitator_response: string;
+  next_step: string;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export const studioDeckTypeLabel: Record<StudioDeckType, string> = {
   oracle: "Oracle",
   tarot: "Tarot",

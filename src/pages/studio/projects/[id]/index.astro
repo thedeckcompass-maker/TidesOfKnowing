@@ -65,7 +65,7 @@ const unassignedCards = cards.filter((card) => !card.family_id || !families.some
         </div>
         <p class="studio-panel__intro"><strong>Next action:</strong> {project.next_action || "Choose the next concrete piece of work."}</p>
         {project.current_risk ? <p><strong>Current risk:</strong> {project.current_risk}</p> : null}
-        <div class="studio-export-links"><a class="studio-link-button" href={`/studio/projects/${project.id}/programme/`}>Open twelve-week programme</a><a class="studio-link-button" href={`/studio/projects/${project.id}/pulse/`}>Open Project Pulse</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/md`}>Export Markdown</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/json`}>Export JSON</a></div>
+        <div class="studio-export-links"><a class="studio-link-button" href={`/studio/projects/${project.id}/programme/`}>Open twelve-week programme</a><a class="studio-link-button" href={`/studio/projects/${project.id}/support/`}>Open plan support</a><a class="studio-link-button" href={`/studio/projects/${project.id}/pulse/`}>Open Project Pulse</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/md`}>Export Markdown</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/json`}>Export JSON</a></div>
       </section>
 
       <section class="studio-panel studio-panel--side" aria-labelledby="settings-heading">

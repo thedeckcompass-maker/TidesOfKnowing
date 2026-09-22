@@ -32,6 +32,7 @@
     "test:studio-pulse": "node scripts/studio-pulse-exports.test.mjs",
     "test:studio-commercial": "node scripts/studio-commercial-access.test.mjs",
     "test:studio-programme": "node scripts/studio-programme-foundation.test.mjs",
+    "test:studio-support": "node scripts/studio-support-workflows.test.mjs",
     "test:bird-oracle-import": "node scripts/bird-oracle-import.test.mjs",
     "studio:import-bird-oracle": "node scripts/import-aotearoa-bird-oracle.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",
