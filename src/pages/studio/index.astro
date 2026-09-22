@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { requireAdmin } from "../../lib/community/auth";
+
+export const prerender = false;
+
+requireAdmin({
+  user: Astro.locals.user,
+  profile: Astro.locals.profile,
+});
+---
+
+<BaseLayout
+  title="Deck Creator Studio | Tides of Knowing"
+  description="Private Deck Creator Studio build workspace."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-shell page-inner">
+    <header class="studio-shell__header">
+      <p class="studio-shell__eyebrow">Tides of Knowing</p>
+      <h1>Deck Creator Studio</h1>
+      <p class="studio-shell__lede">
+        Your private workspace for developing, writing and preparing an original deck.
+      </p>
+    </header>
+
+    <section class="studio-shell__panel" aria-labelledby="studio-status-heading">
+      <p class="studio-shell__status">Private build access</p>
+      <h2 id="studio-status-heading">Studio foundation established</h2>
+      <p>
+        This protected workspace is now ready for the project dashboard, deck structure and
+        creator tools. Only an authorised Tides administrator can enter during the build.
+      </p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .studio-shell {
+    max-width: 68rem;
+    padding: clamp(2rem, 7vw, 5.5rem) 0 clamp(4rem, 10vw, 7rem);
+  }
+
+  .studio-shell__header {
+    max-width: 48rem;
+  }
+
+  .studio-shell__eyebrow,
+  .studio-shell__status {
+    margin: 0 0 0.65rem;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    font-weight: 700;
+    letter-spacing: var(--tok-letter-upper);
+    text-transform: uppercase;
+  }
+
+  .studio-shell h1 {
+    margin: 0;
+    color: var(--tok-water);
+    font-family: var(--font-accent);
+    font-size: clamp(2.6rem, 8vw, 5.4rem);
+    font-weight: 400;
+    line-height: 0.98;
+  }
+
+  .studio-shell__lede {
+    max-width: 42rem;
+    margin: 1.4rem 0 0;
+    color: var(--tok-text-dark);
+    font-size: clamp(1.08rem, 2.3vw, 1.3rem);
+    line-height: 1.65;
+  }
+
+  .studio-shell__panel {
+    margin-top: clamp(2.5rem, 7vw, 4.5rem);
+    padding: clamp(1.4rem, 4vw, 2.5rem);
+    border: 1px solid color-mix(in srgb, var(--tok-gold) 35%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--tok-cream) 88%, white);
+    box-shadow: 0 1.2rem 3rem color-mix(in srgb, var(--tok-water) 10%, transparent);
+  }
+
+  .studio-shell__panel h2 {
+    margin: 0;
+    color: var(--tok-water);
+    font-family: var(--font-accent);
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    font-weight: 400;
+  }
+
+  .studio-shell__panel p:last-child {
+    max-width: 46rem;
+    margin: 1rem 0 0;
+    color: var(--tok-text-dark);
+    line-height: 1.7;
+  }
+</style>
