@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: deck-studio-stage8-import
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   import-and-reconcile:
@@ -63,8 +63,10 @@ jobs:
           received=false
           for attempt in $(seq 1 180); do
             git fetch origin "$BRANCH_NAME" --quiet
-            if git cat-file -e "origin/$BRANCH_NAME:.stage8-exchange/payload.cms" 2>/dev/null; then
-              git show "origin/$BRANCH_NAME:.stage8-exchange/payload.cms" > /tmp/stage8-payload.cms
+            if git cat-file -e "origin/$BRANCH_NAME:.stage8-exchange/payload.enc" 2>/dev/null \
+              && git cat-file -e "origin/$BRANCH_NAME:.stage8-exchange/key.enc" 2>/dev/null; then
+              git show "origin/$BRANCH_NAME:.stage8-exchange/payload.enc" > /tmp/stage8-payload.enc
+              git show "origin/$BRANCH_NAME:.stage8-exchange/key.enc" > /tmp/stage8-key.enc
               received=true
               break
             fi
@@ -74,11 +76,16 @@ jobs:
             echo "::error::The encrypted Stage 8 source payload was not received."
             exit 1
           fi
-          openssl cms -decrypt -binary -inform DER \
-            -in /tmp/stage8-payload.cms \
-            -recip /tmp/stage8-public.pem \
+          openssl pkeyutl -decrypt \
             -inkey /tmp/stage8-private.pem \
-            -out /tmp/stage8-source.tar.gz
+            -in /tmp/stage8-key.enc \
+            -out /tmp/stage8-transfer-key.txt \
+            -pkeyopt rsa_padding_mode:oaep \
+            -pkeyopt rsa_oaep_md:sha256
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
+            -in /tmp/stage8-payload.enc \
+            -out /tmp/stage8-source.tar.gz \
+            -pass file:/tmp/stage8-transfer-key.txt
 
       - name: Verify immutable source manifest
         shell: bash
@@ -224,5 +231,5 @@ jobs:
         if: always()
         shell: bash
         run: |
-          shred -u /tmp/stage8-private.pem /tmp/stage8-payload.cms /tmp/stage8-source.tar.gz 2>/dev/null || true
+          shred -u /tmp/stage8-private.pem /tmp/stage8-transfer-key.txt /tmp/stage8-key.enc /tmp/stage8-payload.enc /tmp/stage8-source.tar.gz 2>/dev/null || true
           rm -rf /tmp/stage8-source
