@@ -27,6 +27,16 @@ jobs:
             echo "::error::The authorised Studio staging database is unavailable."
             exit 1
           fi
+      - name: Install existing community schema in isolated staging
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --single-transaction \
+            --file supabase/migrations/20260623000000_practice_commons_v1.sql \
+            --file supabase/migrations/20260623002000_reading_practice_post_types.sql \
+            --file supabase/migrations/20260623003000_reading_practice_spread_images.sql \
+            --file supabase/migrations/20260625000000_reading_practice_field_note_consideration.sql \
+            --file supabase/migrations/20260625001000_expand_reading_practice_post_types.sql \
+            --file supabase/migrations/20260625002000_community_reports_and_locking.sql
       - name: Apply Stage 7 community migration
         shell: bash
         run: |
