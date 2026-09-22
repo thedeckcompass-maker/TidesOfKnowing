@@ -1,0 +1,117 @@
+name: Deck Studio artist staging migration
+
+on:
+  push:
+    branches:
+      - feature/deck-creator-studio-live
+    paths:
+      - .github/workflows/deck-studio-staging-artists.yml
+
+permissions:
+  contents: read
+
+jobs:
+  migrate-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_ID: 56976396-c97b-4a24-a097-e9331a5504a1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm staging target
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" || "$STUDIO_STAGING_DATABASE_URL" != *"utzcmbidotxgmulguzxo"* ]]; then
+            echo "::error::The authorised Studio staging database is unavailable."
+            exit 1
+          fi
+      - name: Apply artist collaboration migration
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --single-transaction --file supabase/migrations/20260923040000_deck_studio_artist_collaboration.sql
+      - name: Verify schema and reversible collaboration flow
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --set project_id="$STUDIO_PROJECT_ID" <<'SQL'
+          select set_config('app.studio_project_id', :'project_id', false);
+          do $verify$
+          declare
+            target_project uuid := current_setting('app.studio_project_id')::uuid;
+            policy_total integer;
+          begin
+            if to_regclass('public.studio_artist_profiles') is null
+              or to_regclass('public.studio_artist_contacts') is null
+              or to_regclass('public.studio_artist_shortlists') is null
+              or to_regclass('public.studio_artist_introductions') is null then
+              raise exception 'Artist collaboration tables are incomplete';
+            end if;
+            select count(*) into policy_total from pg_policies
+            where schemaname = 'public' and tablename = any(array[
+              'studio_artist_profiles','studio_artist_contacts',
+              'studio_artist_shortlists','studio_artist_introductions'
+            ]);
+            if policy_total <> 14 then raise exception 'Expected 14 artist privacy policies, found %', policy_total; end if;
+            if exists (
+              select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'studio_artist_profiles'
+                and column_name in ('contact_email','website_url')
+            ) then raise exception 'Private contact fields leaked into the directory profile'; end if;
+            if (select count(*) from public.studio_card_families where project_id = target_project) <> 5
+              or (select count(*) from public.studio_cards where project_id = target_project) <> 8
+              or (select count(*) from public.studio_guidebook_sections where project_id = target_project) <> 22
+              or (select count(*) from public.studio_import_records where project_id = target_project) <> 35 then
+              raise exception 'Representative project counts changed';
+            end if;
+          end
+          $verify$;
+
+          begin;
+          do $flow$
+          declare
+            target_project uuid := current_setting('app.studio_project_id')::uuid;
+            target_owner uuid;
+            artist_id uuid;
+          begin
+            select owner_id into target_owner from public.studio_projects where id = target_project;
+            perform set_config('request.jwt.claim.sub', target_owner::text, true);
+            insert into public.studio_artist_profiles (
+              user_id, professional_name, languages, biography, artistic_statement,
+              mediums, styles, availability, budget_approach, licensing_preferences,
+              collaboration_models, process_disclosure, portfolio_examples,
+              display_rights_confirmed_at, status
+            ) values (
+              target_owner, 'Staging validation artist', array['English'],
+              repeat('Biography ', 6), repeat('Statement ', 6),
+              array['watercolour'], array['symbolic'], 'Available by arrangement',
+              'Quoted by defined scope', 'Negotiated by written agreement',
+              array['commission'], 'human_created',
+              jsonb_build_array(
+                jsonb_build_object('url','https://example.com/1','title','One','description',''),
+                jsonb_build_object('url','https://example.com/2','title','Two','description',''),
+                jsonb_build_object('url','https://example.com/3','title','Three','description',''),
+                jsonb_build_object('url','https://example.com/4','title','Four','description',''),
+                jsonb_build_object('url','https://example.com/5','title','Five','description',''),
+                jsonb_build_object('url','https://example.com/6','title','Six','description','')
+              ), now(), 'approved'
+            ) returning id into artist_id;
+            insert into public.studio_artist_contacts (artist_profile_id,user_id,contact_email)
+            values (artist_id,target_owner,'staging-validation@example.com');
+            insert into public.studio_artist_shortlists (creator_id,project_id,artist_profile_id,note)
+            values (target_owner,target_project,artist_id,'Private validation note');
+            insert into public.studio_artist_introductions (
+              creator_id,project_id,artist_profile_id,brief,timeline,budget_context
+            ) values (
+              target_owner,target_project,artist_id,
+              'A sufficiently detailed staging brief used only to verify the controlled introduction workflow.',
+              'Staging timeline','Staging budget context'
+            );
+            if (select count(*) from public.studio_artist_introductions where artist_profile_id = artist_id) <> 1 then
+              raise exception 'Controlled introduction was not saved';
+            end if;
+          end
+          $flow$;
+          rollback;
+          select 'Artist collaboration staging verification passed.' as result;
+          SQL
