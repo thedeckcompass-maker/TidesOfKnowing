@@ -13,7 +13,7 @@ secondaryKeywords:
   - king of pentacles repeating tarot meaning
   - king of pentacles wealth tarot pattern
   - king of pentacles material authority tarot
-featuredSnippetAnswer: The King of Pentacles repeating in tarot readings points to an unresolved relationship with material authority: practical mastery, financial acumen, resource stewardship, or leadership that has been developed but is not yet being fully inhabited. It often appears when the seeker is ready to move from capable practitioner to grounded authority, exercising what they have built with confidence, responsibility, and long-term wisdom.
+featuredSnippetAnswer: "The King of Pentacles repeating in tarot readings points to an unresolved relationship with material authority: practical mastery, financial acumen, resource stewardship, or leadership that has been developed but is not yet being fully inhabited. It often appears when the seeker is ready to move from capable practitioner to grounded authority, exercising what they have built with confidence, responsibility, and long-term wisdom."
 answerEngineSummary: The King of Pentacles repeating in readings marks a sustained lesson in material authority and stewardship. The card may appear when the seeker underclaims hard-won competence, experiences responsibility mainly as burden, or uses accumulation and control to create security. Integration means inhabiting material authority with settled confidence, generosity, accountability, and a clear sense of what one's resources are for.
 canonicalUrl: /repeating-card-meanings/king-of-pentacles/
 openGraphImage: /images/tarot/rws/king-of-pentacles.jpg
