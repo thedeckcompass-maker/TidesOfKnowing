@@ -34,6 +34,7 @@ export const STUDIO_EXCERPT_PURPOSES = [
   "case_study",
   "private_record",
 ] as const;
+export const STUDIO_PROGRAMME_STATUSES = ["not_started", "in_progress", "complete"] as const;
 
 export type StudioDeckType = (typeof STUDIO_DECK_TYPES)[number];
 export type StudioPathway = (typeof STUDIO_PATHWAYS)[number];
@@ -43,6 +44,7 @@ export type StudioGuidebookType = (typeof STUDIO_GUIDEBOOK_TYPES)[number];
 export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
 export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
 export type StudioExcerptPurpose = (typeof STUDIO_EXCERPT_PURPOSES)[number];
+export type StudioProgrammeStatus = (typeof STUDIO_PROGRAMME_STATUSES)[number];
 
 export type StudioProject = {
   id: string;
@@ -138,6 +140,35 @@ export type StudioJournalExcerpt = {
   excerpt_text: string;
   photo_id: string | null;
   created_at: string;
+  updated_at: string;
+};
+
+export type StudioProgrammeModule = {
+  week_number: number;
+  slug: string;
+  title: string;
+  outcome: string;
+  completion_condition: string;
+  safely_unfinished: string;
+  production_risk: string;
+  personal_guidance: string;
+  independent_guidance: string;
+  commercial_guidance: string;
+};
+
+export type StudioProgrammeEnrolment = {
+  project_id: string;
+  starts_on: string;
+  created_at: string;
+};
+
+export type StudioProgrammeProgress = {
+  project_id: string;
+  week_number: number;
+  status: StudioProgrammeStatus;
+  current_task: string;
+  notes: string;
+  completed_at: string | null;
   updated_at: string;
 };
 

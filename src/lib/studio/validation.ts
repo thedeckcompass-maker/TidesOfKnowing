@@ -6,6 +6,7 @@ import {
   STUDIO_JOURNAL_KINDS,
   STUDIO_JOURNAL_TAGS,
   STUDIO_PATHWAYS,
+  STUDIO_PROGRAMME_STATUSES,
   STUDIO_PROJECT_STATUSES,
   type StudioDeckType,
   type StudioExcerptPurpose,
@@ -14,6 +15,7 @@ import {
   type StudioJournalKind,
   type StudioJournalTag,
   type StudioPathway,
+  type StudioProgrammeStatus,
   type StudioProjectStatus,
 } from "./types";
 
@@ -269,6 +271,23 @@ export function parseStudioJournalEntry(form: FormData): ValidationResult<{
       linked_card_id: linkedCardId,
       linked_section_id: linkedSectionId,
       selected_for_process: form.get("selected_for_process") === "on",
+    },
+  };
+}
+
+export function parseStudioProgrammeProgress(form: FormData): ValidationResult<{
+  status: StudioProgrammeStatus;
+  current_task: string;
+  notes: string;
+}> {
+  const status = choice(text(form, "status", 20), STUDIO_PROGRAMME_STATUSES);
+  if (!status) return { ok: false, error: "Choose a valid programme status." };
+  return {
+    ok: true,
+    value: {
+      status,
+      current_task: text(form, "current_task", 2000),
+      notes: text(form, "notes", 10000),
     },
   };
 }

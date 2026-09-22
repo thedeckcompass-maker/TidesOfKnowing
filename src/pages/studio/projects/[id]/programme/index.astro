@@ -1,0 +1,160 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioProgramme, getStudioProject } from "../../../../../lib/studio/queries";
+import type { StudioProgrammeModule } from "../../../../../lib/studio/types";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const access = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId ? `/studio/projects/${projectId}/programme/` : "/studio/",
+  Astro.locals.studioEntitlement,
+);
+if (access) return access;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const [project, programme] = await Promise.all([
+  getStudioProject(Astro.locals.supabase, projectId),
+  getStudioProgramme(Astro.locals.supabase, projectId),
+]);
+if (!project) return new Response(null, { status: 404 });
+
+const { modules, enrolment, progress } = programme;
+const progressByWeek = new Map(progress.map((item) => [item.week_number, item]));
+const completedCount = progress.filter((item) => item.status === "complete").length;
+const readOnly = Astro.locals.studioEntitlement?.access_mode === "read_only";
+const started = Astro.url.searchParams.get("started") === "1";
+const savedWeek = Astro.url.searchParams.get("saved");
+const error = Astro.url.searchParams.get("error");
+
+const today = new Date();
+today.setUTCHours(0, 0, 0, 0);
+const startDate = enrolment ? new Date(`${enrolment.starts_on}T00:00:00Z`) : null;
+const currentWeek = startDate
+  ? Math.min(12, Math.max(1, Math.floor((today.getTime() - startDate.getTime()) / 604800000) + 1))
+  : null;
+
+function moduleUnlockDate(week: number): Date | null {
+  if (!startDate) return null;
+  const date = new Date(startDate);
+  date.setUTCDate(date.getUTCDate() + ((week - 1) * 7));
+  return date;
+}
+
+function pathwayGuidance(module: StudioProgrammeModule): string {
+  if (project.pathway === "personal") return module.personal_guidance;
+  if (project.pathway === "independent") return module.independent_guidance;
+  return module.commercial_guidance;
+}
+
+function statusLabel(status: string): string {
+  return status.replaceAll("_", " ");
+}
+---
+
+<BaseLayout
+  title={`Twelve-week programme | ${project.name}`}
+  description="Private, paced Deck Creator Studio programme."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-page page-inner">
+    <StudioHeader
+      eyebrow={`${project.name} · Guided pathway`}
+      title="Twelve-week programme"
+      lede="Move from the deck’s purpose and internal logic through writing, evidence, artwork, production and a pathway-appropriate release. Each week identifies what must be decided now and what can safely remain open."
+      projectId={projectId}
+    />
+
+    {started ? <p class="studio-notice" role="status">Week one is open. Later modules unlock every seven days from this project’s programme start date.</p> : null}
+    {savedWeek ? <p class="studio-notice" role="status">Week {savedWeek} progress saved.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {readOnly ? <p class="studio-notice" role="status">Programme progress is read-only. Your existing module records remain available.</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="programme-overview-heading">
+        <p class="studio-kicker">Structured progress</p>
+        <h2 id="programme-overview-heading">Your programme</h2>
+        <div class="studio-stats">
+          <div class="studio-stat"><strong>{completedCount}/12</strong> modules complete</div>
+          <div class="studio-stat"><strong>{currentWeek ?? "–"}</strong> current week</div>
+          <div class="studio-stat"><strong>{project.pathway === "personal" ? "Personal" : project.pathway === "independent" ? "Independent" : "Commercial"}</strong> pathway</div>
+        </div>
+        {enrolment ? (
+          <p class="studio-panel__intro">Started {startDate?.toLocaleDateString("en-NZ", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" })}. Your pathway changes the emphasis, not the standard of the work.</p>
+        ) : (
+          <p class="studio-panel__intro">Start when you are ready to work in sequence. Week one opens immediately, then one module unlocks every seven days.</p>
+        )}
+      </section>
+
+      <aside class="studio-panel studio-panel--side" aria-labelledby="programme-start-heading">
+        <p class="studio-kicker">Paced access</p>
+        <h2 id="programme-start-heading">{enrolment ? "Programme active" : "Begin the pathway"}</h2>
+        {enrolment ? (
+          <p>The start date is fixed so the twelve modules retain a clear working rhythm. Completing a module does not force unfinished creative decisions.</p>
+        ) : readOnly ? (
+          <p class="studio-empty">The programme cannot be started while Studio access is read-only.</p>
+        ) : (
+          <form method="post" action={`/api/studio/projects/${projectId}/programme`}>
+            <button class="studio-button" type="submit">Start the twelve-week programme</button>
+          </form>
+        )}
+      </aside>
+
+      <section class="studio-panel" aria-labelledby="programme-modules-heading">
+        <p class="studio-kicker">Twelve modules</p>
+        <h2 id="programme-modules-heading">Creation to publication</h2>
+        <ol class="studio-programme-list">
+          {modules.map((module) => {
+            const moduleProgress = progressByWeek.get(module.week_number);
+            const unlockDate = moduleUnlockDate(module.week_number);
+            const unlocked = Boolean(unlockDate && today >= unlockDate);
+            const status = moduleProgress?.status ?? "not_started";
+            return (
+              <li class:list={["studio-module", { "studio-module--locked": !unlocked }]} id={`week-${module.week_number}`}>
+                <div class="studio-module__header">
+                  <div>
+                    <p class="studio-meta">Week {module.week_number}{currentWeek === module.week_number ? " · current" : ""}</p>
+                    <h3>{module.title}</h3>
+                  </div>
+                  <span class="studio-status">{unlocked ? statusLabel(status) : enrolment ? "locked" : "preview"}</span>
+                </div>
+                <p>{module.outcome}</p>
+                <dl class="studio-module__details">
+                  <div><dt>Complete when</dt><dd>{module.completion_condition}</dd></div>
+                  <div><dt>Safe to leave open</dt><dd>{module.safely_unfinished}</dd></div>
+                  <div><dt>Next production risk</dt><dd>{module.production_risk}</dd></div>
+                  <div><dt>Your {project.pathway === "personal" ? "personal" : project.pathway} pathway</dt><dd>{pathwayGuidance(module)}</dd></div>
+                </dl>
+                {!enrolment ? (
+                  <p class="studio-privacy-note">Start the programme to record tasks and progress.</p>
+                ) : !unlocked ? (
+                  <p class="studio-privacy-note">Available {unlockDate?.toLocaleDateString("en-NZ", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" })}.</p>
+                ) : readOnly ? (
+                  moduleProgress ? <div class="studio-module__record"><p><strong>Current deck task:</strong> {moduleProgress.current_task || "No task recorded."}</p><p><strong>Private notes:</strong> {moduleProgress.notes || "No notes recorded."}</p></div> : <p class="studio-empty">No progress has been recorded.</p>
+                ) : (
+                  <details class="studio-module__form" open={currentWeek === module.week_number || status === "in_progress"}>
+                    <summary>Record this module</summary>
+                    <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/programme/${module.week_number}`}>
+                      <label class="studio-field"><span>Status</span><select name="status"><option value="not_started" selected={status === "not_started"}>Not started</option><option value="in_progress" selected={status === "in_progress"}>In progress</option><option value="complete" selected={status === "complete"}>Complete</option></select></label>
+                      <label class="studio-field"><span>Current deck task</span><textarea name="current_task" maxlength="2000">{moduleProgress?.current_task ?? ""}</textarea></label>
+                      <label class="studio-field"><span>Private working notes</span><textarea name="notes" maxlength="10000">{moduleProgress?.notes ?? ""}</textarea></label>
+                      <button class="studio-button" type="submit">Save week {module.week_number}</button>
+                    </form>
+                  </details>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

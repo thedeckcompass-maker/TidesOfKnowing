@@ -7,6 +7,9 @@ import type {
   StudioJournalExcerpt,
   StudioJournalPhoto,
   StudioProject,
+  StudioProgrammeEnrolment,
+  StudioProgrammeModule,
+  StudioProgrammeProgress,
   StudioVersion,
 } from "./types";
 
@@ -157,4 +160,26 @@ export async function getStudioJournalEntry(
     .maybeSingle();
   if (error) throw error;
   return (data as StudioJournalEntry | null) ?? null;
+}
+
+export async function getStudioProgramme(supabase: SupabaseClient, projectId: string): Promise<{
+  modules: StudioProgrammeModule[];
+  enrolment: StudioProgrammeEnrolment | null;
+  progress: StudioProgrammeProgress[];
+}> {
+  const [modulesResult, enrolmentResult, progressResult] = await Promise.all([
+    supabase.from("studio_programme_modules").select("*").order("week_number"),
+    supabase.from("studio_programme_enrolments").select("*").eq("project_id", projectId).maybeSingle(),
+    supabase.from("studio_programme_progress").select("*").eq("project_id", projectId).order("week_number"),
+  ]);
+
+  if (modulesResult.error) throw modulesResult.error;
+  if (enrolmentResult.error) throw enrolmentResult.error;
+  if (progressResult.error) throw progressResult.error;
+
+  return {
+    modules: (modulesResult.data ?? []) as StudioProgrammeModule[],
+    enrolment: (enrolmentResult.data as StudioProgrammeEnrolment | null) ?? null,
+    progress: (progressResult.data ?? []) as StudioProgrammeProgress[],
+  };
 }
