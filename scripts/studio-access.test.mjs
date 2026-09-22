@@ -8,9 +8,11 @@ const baseLayout = readFileSync(join(repoRoot, "src/layouts/BaseLayout.astro"), 
 const sitemap = readFileSync(join(repoRoot, "src/pages/sitemap.xml.ts"), "utf8");
 
 assert.match(studioPage, /export const prerender = false/);
-assert.match(studioPage, /requireAdmin\(\{/);
-assert.match(studioPage, /user: Astro\.locals\.user/);
-assert.match(studioPage, /profile: Astro\.locals\.profile/);
+assert.match(studioPage, /if \(!Astro\.locals\.user\)/);
+assert.match(studioPage, /return Astro\.redirect\("\/auth\/register\/", 303\)/);
+assert.match(studioPage, /if \(!isAdminProfile\(Astro\.locals\.profile\)\)/);
+assert.match(studioPage, /return new Response\(null, \{ status: 404, statusText: "Not Found" \}\)/);
+assert.doesNotMatch(studioPage, /throw new Response/);
 assert.match(studioPage, /metaRobots="noindex, nofollow"/);
 
 assert.doesNotMatch(baseLayout, /href=["'{`]\/studio\//);

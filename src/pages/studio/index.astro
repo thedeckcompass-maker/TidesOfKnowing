@@ -1,13 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { requireAdmin } from "../../lib/community/auth";
+import { isAdminProfile } from "../../lib/community/auth";
 
 export const prerender = false;
 
-requireAdmin({
-  user: Astro.locals.user,
-  profile: Astro.locals.profile,
-});
+if (!Astro.locals.user) {
+  return Astro.redirect("/auth/register/", 303);
+}
+
+if (!isAdminProfile(Astro.locals.profile)) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
 ---
 
 <BaseLayout
