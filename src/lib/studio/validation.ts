@@ -28,6 +28,13 @@ function orderValue(value: string): number | null {
   return Number.isSafeInteger(number) && number >= 0 && number <= 999 ? number : null;
 }
 
+function optionalUuid(value: string): string | null | undefined {
+  if (!value) return null;
+  return /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value)
+    ? value
+    : undefined;
+}
+
 export function parseStudioProjectCreate(form: FormData): ValidationResult<{
   name: string;
   deck_type: StudioDeckType;
@@ -164,20 +171,24 @@ export function parseStudioGuidebookCreate(form: FormData): ValidationResult<{
   title: string;
   section_type: StudioGuidebookType;
   sort_order: number;
+  card_id: string | null;
 }> {
   const title = text(form, "title", 160);
   const sectionType = choice(text(form, "section_type", 30), STUDIO_GUIDEBOOK_TYPES);
   const sortOrder = orderValue(text(form, "sort_order", 3));
+  const cardId = optionalUuid(text(form, "card_id", 50));
   if (!title) return { ok: false, error: "Give the guidebook section a title." };
   if (!sectionType) return { ok: false, error: "Choose a valid guidebook section type." };
   if (sortOrder === null) return { ok: false, error: "Section order must be between 0 and 999." };
-  return { ok: true, value: { title, section_type: sectionType, sort_order: sortOrder } };
+  if (cardId === undefined) return { ok: false, error: "Choose a valid card to link." };
+  return { ok: true, value: { title, section_type: sectionType, sort_order: sortOrder, card_id: cardId } };
 }
 
 export function parseStudioGuidebookUpdate(form: FormData): ValidationResult<{
   title: string;
   section_type: StudioGuidebookType;
   sort_order: number;
+  card_id: string | null;
   status: StudioItemStatus;
   body_markdown: string;
 }> {

@@ -25,6 +25,11 @@ const project = workspace.project;
 const linkedCard = section.card_id
   ? workspace.cards.find((card) => card.id === section.card_id) ?? null
   : null;
+const cardFamilies = workspace.families.map((family) => ({
+  family,
+  cards: workspace.cards.filter((card) => card.family_id === family.id),
+}));
+const unassignedCards = workspace.cards.filter((card) => !card.family_id || !workspace.families.some((family) => family.id === card.family_id));
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
@@ -50,6 +55,7 @@ const error = Astro.url.searchParams.get("error");
         <label class="studio-field"><span>Type</span><select name="section_type"><option value="front_matter" selected={section.section_type === "front_matter"}>Front matter</option><option value="card_entry" selected={section.section_type === "card_entry"}>Card entry</option><option value="instructions" selected={section.section_type === "instructions"}>Instructions</option><option value="chapter" selected={section.section_type === "chapter"}>Chapter</option><option value="closing" selected={section.section_type === "closing"}>Closing material</option><option value="other" selected={section.section_type === "other"}>Other</option></select></label>
         <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={section.sort_order} required /></label>
         <label class="studio-field"><span>Status</span><select name="status"><option value="outline" selected={section.status === "outline"}>Outline</option><option value="draft" selected={section.status === "draft"}>Draft</option><option value="review" selected={section.status === "review"}>Review</option><option value="complete" selected={section.status === "complete"}>Complete</option></select></label>
+        <label class="studio-field studio-field--full"><span>Linked card</span><select name="card_id"><option value="">No linked card</option>{cardFamilies.map(({ family, cards }) => cards.length ? <optgroup label={family.name}>{cards.map((card) => <option value={card.id} selected={section.card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null)}{unassignedCards.length ? <optgroup label="Unassigned">{unassignedCards.map((card) => <option value={card.id} selected={section.card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null}</select></label>
         <label class="studio-field studio-field--full"><span>Markdown manuscript</span><textarea class="studio-editor" name="body_markdown">{section.body_markdown}</textarea></label>
         <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
       </form>

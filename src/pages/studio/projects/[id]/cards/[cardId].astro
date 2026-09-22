@@ -23,6 +23,7 @@ const [workspace, card, versions] = await Promise.all([
 if (!workspace.project || !card) return new Response(null, { status: 404 });
 const content = card.content ?? {};
 const contentText = (key: string) => typeof content[key] === "string" ? content[key] as string : "";
+const linkedGuidebookSections = workspace.guidebook.filter((section) => section.card_id === card.id);
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
@@ -60,6 +61,22 @@ const error = Astro.url.searchParams.get("error");
         <label class="studio-field"><span>Production notes</span><textarea name="production_notes">{contentText("production_notes")}</textarea></label>
         <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
       </form>
+    </section>
+    <section class="studio-panel" aria-labelledby="card-guidebook-heading">
+      <p class="studio-kicker">Connected manuscript</p>
+      <h2 id="card-guidebook-heading">Guidebook sections</h2>
+      {linkedGuidebookSections.length ? (
+        <ul class="studio-list">
+          {linkedGuidebookSections.map((section) => (
+            <li class="studio-card">
+              <div class="studio-card__row">
+                <div><p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p><h3>{section.title}</h3></div>
+                <a class="studio-link-button" href={`/studio/projects/${projectId}/guidebook/${section.id}/`}>Edit section</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : <p class="studio-empty">No guidebook sections are linked to this card yet.</p>}
     </section>
     <section class="studio-panel" aria-labelledby="card-history-heading">
       <p class="studio-kicker">Recoverable history</p>

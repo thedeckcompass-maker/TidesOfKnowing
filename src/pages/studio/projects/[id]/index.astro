@@ -195,6 +195,7 @@ const unassignedCards = cards.filter((card) => !card.family_id || !families.some
         <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/guidebook`}>
           <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" /></label>
           <label class="studio-field"><span>Section type</span><select name="section_type"><option value="front_matter">Front matter</option><option value="card_entry">Card entry</option><option value="instructions">Instructions</option><option value="chapter">Chapter</option><option value="closing">Closing material</option><option value="other">Other</option></select></label>
+          <label class="studio-field"><span>Linked card</span><select name="card_id"><option value="">No linked card</option>{familySections.map(({ family, cards: familyCards }) => familyCards.length ? <optgroup label={family.name}>{familyCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null)}{unassignedCards.length ? <optgroup label="Unassigned">{unassignedCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null}</select></label>
           <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={guidebook.length} required /></label>
           <button class="studio-button" type="submit">Create section</button>
         </form>
