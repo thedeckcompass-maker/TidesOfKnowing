@@ -6,7 +6,7 @@ import { getStudioProject } from "../../../../../lib/studio/queries";
 import "../../../../../styles/studio.css";
 export const prerender = false;
 const projectId = Astro.params.id;
-const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile, projectId ? `/studio/projects/${projectId}/pulse/` : "/studio/");
+const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile, projectId ? `/studio/projects/${projectId}/pulse/` : "/studio/", Astro.locals.studioEntitlement);
 if (access) return access;
 if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 const project = await getStudioProject(Astro.locals.supabase, projectId);

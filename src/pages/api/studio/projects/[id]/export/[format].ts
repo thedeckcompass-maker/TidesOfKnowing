@@ -3,7 +3,7 @@ import { studioAccessResponse } from "../../../../../../lib/studio/access";
 import { getStudioJournalEntries, getStudioProjectWorkspace } from "../../../../../../lib/studio/queries";
 export const prerender = false;
 export const GET: APIRoute = async ({ locals, params }) => {
-  const access = studioAccessResponse(locals.user, locals.profile);
+  const access = studioAccessResponse(locals.user, locals.profile, "/studio/", locals.studioEntitlement);
   if (access) return access;
   if (!locals.supabase || !params.id || !["md","json"].includes(params.format ?? "")) return new Response("Not found", { status: 404 });
   const [workspace, journal] = await Promise.all([getStudioProjectWorkspace(locals.supabase, params.id), getStudioJournalEntries(locals.supabase, params.id)]);

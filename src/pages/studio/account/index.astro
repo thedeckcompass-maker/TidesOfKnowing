@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../lib/studio/access";
+import { STUDIO_PLANS } from "../../../lib/studio/billing";
+import "../../../styles/studio.css";
+export const prerender = false;
+const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile, "/studio/account/", Astro.locals.studioEntitlement);
+if (access) return access;
+const entitlement = Astro.locals.studioEntitlement;
+const error = Astro.url.searchParams.get("error");
+---
+<BaseLayout title="Studio account | Deck Creator Studio" description="Private Deck Creator Studio plan and access status." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner"><StudioHeader title="Studio account" lede="Review the plan and access state that governs this private workspace." />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <section class="studio-panel studio-panel--wide"><p class="studio-kicker">Entitlement</p><h2>{entitlement ? STUDIO_PLANS[entitlement.plan_code].name : "Administrative preview access"}</h2>
+      {entitlement ? <><p>Status: <strong>{entitlement.status}</strong> · Access: <strong>{entitlement.access_mode.replace("_", " ")}</strong></p><p>Payments recorded: {entitlement.paid_invoice_count} of {entitlement.minimum_payments} minimum for this plan.</p>{entitlement.current_period_end ? <p>Current paid period ends {new Date(entitlement.current_period_end).toLocaleDateString("en-NZ")}.</p> : null}{entitlement.read_only_until ? <p>Read-only and export access is recorded until {new Date(entitlement.read_only_until).toLocaleDateString("en-NZ")}.</p> : null}<form method="post" action="/api/studio/billing/portal"><button class="studio-button" type="submit">Manage test subscription</button></form></> : <p>Administrator access is active for representative staging validation. No paid entitlement is attached.</p>}
+    </section>
+    <section class="studio-panel studio-panel--wide"><p class="studio-kicker">Ownership and cancellation</p><h2>Your project remains yours</h2><p>Cancellation never transfers ownership of manuscripts, artwork, research or project records. When editing access ends, the entitlement record controls the stated read-only period and project exports remain available within that period.</p></section>
+  </main>
+</BaseLayout>

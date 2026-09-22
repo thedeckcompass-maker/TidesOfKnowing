@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../components/studio/StudioHeader.astro";
+import { isAdminProfile } from "../../../../lib/community/auth";
+import { createCommunityServiceClient } from "../../../../lib/community/supabaseServer";
+import "../../../../styles/studio.css";
+export const prerender = false;
+if (!Astro.locals.user) return new Response(null, { status: 303, headers: { Location: "/auth/register/?redirectTo=%2Fstudio%2Fadmin%2Faccess%2F" } });
+if (!isAdminProfile(Astro.locals.profile)) return new Response(null, { status: 404 });
+const service = createCommunityServiceClient(Astro.locals);
+const { data: entitlements } = await service.from("studio_entitlements").select("user_id,plan_code,status,access_mode,paid_invoice_count,minimum_payments,manual_grant,updated_at").order("updated_at", { ascending: false });
+const { data: capacities } = await service.from("studio_plan_capacity").select("plan_code,capacity_limit").order("plan_code");
+const error = Astro.url.searchParams.get("error");
+---
+<BaseLayout title="Studio access administration" description="Private Studio entitlement administration." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner"><StudioHeader title="Studio access administration" lede="Create audited staging grants and inspect webhook-managed entitlement state." />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <div class="studio-grid"><section class="studio-panel studio-panel--side"><h2>Manual grant</h2><form class="studio-form" method="post" action="/api/studio/billing/grants"><label class="studio-field"><span>User UUID</span><input name="user_id" required /></label><label class="studio-field"><span>Plan</span><select name="plan_code"><option value="studio">Deck Creator Studio</option><option value="circle">Guided Deck Circle</option><option value="private">Private Deck Partnership</option></select></label><label class="studio-field"><span>Access</span><select name="access_mode"><option value="write">Write</option><option value="read_only">Read-only</option><option value="none">None</option></select></label><label class="studio-field"><span>Read-only until, if applicable</span><input name="read_only_until" type="datetime-local" /></label><button class="studio-button" type="submit">Save audited grant</button></form>
+        <h2>Plan capacity</h2><p class="studio-meta">A blank limit means uncapped. Guided Deck Circle launches at ten places.</p>{capacities?.map((item) => <form class="studio-form" method="post" action="/api/studio/billing/capacity"><input type="hidden" name="plan_code" value={item.plan_code} /><label class="studio-field"><span>{item.plan_code}</span><input name="capacity_limit" type="number" min="0" step="1" value={item.capacity_limit ?? ""} placeholder="Uncapped" /></label><button class="studio-button studio-button--secondary" type="submit">Save capacity</button></form>)}</section>
+      <section class="studio-panel studio-panel--wide"><h2>Entitlements</h2>{entitlements?.length ? <ul class="studio-list">{entitlements.map((item) => <li class="studio-card"><p class="studio-meta">{item.plan_code} · {item.status} · {item.access_mode}</p><p><code>{item.user_id}</code></p><p>{item.paid_invoice_count}/{item.minimum_payments} payments · {item.manual_grant ? "manual" : "Stripe test webhook"}</p></li>)}</ul> : <p class="studio-empty">No Studio entitlements yet.</p>}</section></div>
+  </main>
+</BaseLayout>

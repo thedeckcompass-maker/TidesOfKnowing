@@ -15,6 +15,7 @@ const accessResponse = studioAccessResponse(
   Astro.locals.user,
   Astro.locals.profile,
   projectId && entryId ? `/studio/projects/${projectId}/journal/${entryId}/` : "/studio/",
+  Astro.locals.studioEntitlement,
 );
 if (accessResponse) return accessResponse;
 if (!projectId || !entryId || !Astro.locals.supabase) return new Response(null, { status: 404 });

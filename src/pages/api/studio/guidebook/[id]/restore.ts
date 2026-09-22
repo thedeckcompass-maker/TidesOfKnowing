@@ -1,10 +1,10 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { studioWriteAccessResponse } from "../../../../../lib/studio/access";
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
-  const accessResponse = studioAccessResponse(locals.user, locals.profile);
+  const accessResponse = studioWriteAccessResponse(locals.user, locals.profile, locals.studioEntitlement);
   if (accessResponse) return accessResponse;
   const sectionId = params.id;
   if (!sectionId || !locals.supabase) return new Response("Not found", { status: 404 });

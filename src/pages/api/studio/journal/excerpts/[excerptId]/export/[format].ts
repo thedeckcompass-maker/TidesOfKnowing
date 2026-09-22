@@ -3,7 +3,7 @@ import { studioAccessResponse } from "../../../../../../../lib/studio/access";
 
 export const prerender = false;
 export const GET: APIRoute = async ({ locals, params }) => {
-  const access = studioAccessResponse(locals.user, locals.profile);
+  const access = studioAccessResponse(locals.user, locals.profile, "/studio/", locals.studioEntitlement);
   if (access) return access;
   if (!locals.supabase || !params.excerptId || !["md", "json"].includes(params.format ?? "")) return new Response("Not found", { status: 404 });
   const { data } = await locals.supabase.from("studio_journal_excerpts").select("title,purpose,excerpt_text,created_at").eq("id", params.excerptId).maybeSingle();

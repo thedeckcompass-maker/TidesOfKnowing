@@ -30,6 +30,7 @@
     "test:studio-journal": "node scripts/studio-journal-foundation.test.mjs",
     "test:studio-journal-media": "node scripts/studio-journal-media.test.mjs",
     "test:studio-pulse": "node scripts/studio-pulse-exports.test.mjs",
+    "test:studio-commercial": "node scripts/studio-commercial-access.test.mjs",
     "test:bird-oracle-import": "node scripts/bird-oracle-import.test.mjs",
     "studio:import-bird-oracle": "node scripts/import-aotearoa-bird-oracle.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",

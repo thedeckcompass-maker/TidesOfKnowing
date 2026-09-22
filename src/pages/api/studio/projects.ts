@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../lib/studio/access";
+import { studioWriteAccessResponse } from "../../../lib/studio/access";
 import { parseStudioProjectCreate } from "../../../lib/studio/validation";
 
 export const prerender = false;
@@ -12,7 +12,7 @@ function dashboardError(message: string): Response {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  const accessResponse = studioAccessResponse(locals.user, locals.profile);
+  const accessResponse = studioWriteAccessResponse(locals.user, locals.profile, locals.studioEntitlement);
   if (accessResponse) return accessResponse;
   if (!locals.supabase || !locals.user) return dashboardError("The Studio database is not available.");
 

@@ -8,7 +8,7 @@ import "../../styles/studio.css";
 
 export const prerender = false;
 
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile, "/studio/");
+const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile, "/studio/", Astro.locals.studioEntitlement);
 if (accessResponse) return accessResponse;
 
 let projects: Awaited<ReturnType<typeof getStudioProjects>> = [];
@@ -23,6 +23,7 @@ if (Astro.locals.supabase) {
 }
 const created = Astro.url.searchParams.get("created") === "1";
 const error = Astro.url.searchParams.get("error");
+const readOnly = Astro.locals.studioEntitlement?.access_mode === "read_only";
 ---
 
 <BaseLayout
@@ -41,6 +42,7 @@ const error = Astro.url.searchParams.get("error");
 
     {created ? <p class="studio-notice" role="status">Your project workspace is ready.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {readOnly ? <p class="studio-notice" role="status">Your Studio is read-only. Project viewing and exports remain available, but editing is paused.</p> : null}
     {!databaseReady ? <p class="studio-notice" role="status">The private project workspace is being prepared. No project data has been changed.</p> : null}
 
     <div class="studio-grid">
@@ -76,7 +78,7 @@ const error = Astro.url.searchParams.get("error");
         <p class="studio-kicker">Start here</p>
         <h2 id="create-project-heading">Create a project</h2>
         <p class="studio-panel__intro">Choose the structure that fits the deck. You can change these settings later.</p>
-        {databaseReady ? <form class="studio-form" method="post" action="/api/studio/projects">
+        {databaseReady && !readOnly ? <form class="studio-form" method="post" action="/api/studio/projects">
           <label class="studio-field">
             <span>Project name</span>
             <input name="name" required maxlength="120" autocomplete="off" />
@@ -106,7 +108,7 @@ const error = Astro.url.searchParams.get("error");
             <textarea name="purpose" maxlength="1200"></textarea>
           </label>
           <button class="studio-button" type="submit">Create project</button>
-        </form> : <p class="studio-empty">Project creation will appear when the private Studio schema is ready.</p>}
+        </form> : <p class="studio-empty">{readOnly ? "Project creation is unavailable while access is read-only." : "Project creation will appear when the private Studio schema is ready."}</p>}
       </section>
     </div>
   </main>

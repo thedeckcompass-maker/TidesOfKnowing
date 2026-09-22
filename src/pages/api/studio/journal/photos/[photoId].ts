@@ -1,10 +1,10 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { removeStudioJournalPhotoObject } from "../../../../../lib/studio/journalMedia";
 
 export const prerender = false;
 export const POST: APIRoute = async ({ request, locals, params }) => {
-  const access = studioAccessResponse(locals.user, locals.profile);
+  const access = studioWriteAccessResponse(locals.user, locals.profile, locals.studioEntitlement);
   if (access) return access;
   if (!locals.supabase || !params.photoId) return new Response("Not found", { status: 404 });
   const form = await request.formData();
