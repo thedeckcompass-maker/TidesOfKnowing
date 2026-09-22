@@ -8,7 +8,7 @@ import "../../styles/studio.css";
 
 export const prerender = false;
 
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
+const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile, "/studio/");
 if (accessResponse) return accessResponse;
 
 let projects: Awaited<ReturnType<typeof getStudioProjects>> = [];

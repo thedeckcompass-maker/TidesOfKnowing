@@ -39,6 +39,9 @@ for (const source of [dashboard, cardEditor, guidebookEditor]) {
 }
 
 assert.match(dashboard, /Whole-deck view/);
+assert.match(dashboard, /aria-label="Card families"/);
+assert.match(dashboard, /familySections\.map/);
+assert.match(dashboard, /Linked card:/);
 assert.match(dashboard, /Oracle/);
 assert.match(dashboard, /Tarot/);
 assert.match(dashboard, /Hybrid/);
@@ -46,6 +49,8 @@ assert.match(cardEditor, /Private research notes/);
 assert.match(cardEditor, /Cultural context/);
 assert.match(cardEditor, /Artwork rights status/);
 assert.match(guidebookEditor, /Markdown manuscript/);
+assert.match(guidebookEditor, /Linked card:/);
+assert.match(guidebookEditor, /getStudioProjectWorkspace/);
 assert.match(cardRestore, /studio_card_versions/);
 assert.match(guidebookRestore, /studio_guidebook_versions/);
 
