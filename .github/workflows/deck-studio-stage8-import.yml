@@ -1,0 +1,228 @@
+name: Deck Studio Stage 8 full staging import
+
+on:
+  push:
+    branches:
+      - feature/deck-creator-studio-live
+    paths:
+      - .github/workflows/deck-studio-stage8-import.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deck-studio-stage8-import
+  cancel-in-progress: false
+
+jobs:
+  import-and-reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_ID: 56976396-c97b-4a24-a097-e9331a5504a1
+      STUDIO_PROJECT_REF: utzcmbidotxgmulguzxo
+      SOURCE_ARCHIVE_CHECKSUM: f7f8dc465a85bbcb92032f206cbc6ee5c8838a8edeaf7fef62077bb27421b62f
+      BRANCH_NAME: feature/deck-creator-studio-live
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Confirm isolated Studio staging target
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" || "$STUDIO_STAGING_DATABASE_URL" != *"$STUDIO_PROJECT_REF"* ]]; then
+            echo "::error::The authorised isolated Studio staging database is unavailable."
+            exit 1
+          fi
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Verify Stage 8 importer contracts
+        run: npm run test:bird-oracle-import
+
+      - name: Create one-use encrypted transfer key
+        shell: bash
+        run: |
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out /tmp/stage8-private.pem 2>/dev/null
+          openssl pkey -in /tmp/stage8-private.pem -pubout -out /tmp/stage8-public.pem
+          mkdir -p .stage8-exchange
+          cp /tmp/stage8-public.pem .stage8-exchange/public.pem
+          git config user.name "deck-studio-staging"
+          git config user.email "deck-studio-staging@users.noreply.github.com"
+          git add .stage8-exchange/public.pem
+          git commit -m "Publish one-use Stage 8 transfer key [skip ci]"
+          git push origin "HEAD:$BRANCH_NAME"
+
+      - name: Receive and decrypt the controlled source subset
+        shell: bash
+        run: |
+          received=false
+          for attempt in $(seq 1 180); do
+            git fetch origin "$BRANCH_NAME" --quiet
+            if git cat-file -e "origin/$BRANCH_NAME:.stage8-exchange/payload.cms" 2>/dev/null; then
+              git show "origin/$BRANCH_NAME:.stage8-exchange/payload.cms" > /tmp/stage8-payload.cms
+              received=true
+              break
+            fi
+            sleep 5
+          done
+          if [[ "$received" != "true" ]]; then
+            echo "::error::The encrypted Stage 8 source payload was not received."
+            exit 1
+          fi
+          openssl cms -decrypt -binary -inform DER \
+            -in /tmp/stage8-payload.cms \
+            -recip /tmp/stage8-public.pem \
+            -inkey /tmp/stage8-private.pem \
+            -out /tmp/stage8-source.tar.gz
+
+      - name: Verify immutable source manifest
+        shell: bash
+        run: |
+          if tar -tzf /tmp/stage8-source.tar.gz | grep -Ev '^(aotearoa_bird_oracle/|aotearoa_bird_oracle/src/|aotearoa_bird_oracle/src/content/|aotearoa_bird_oracle/src/content/(birds|tarot|chapters)/|aotearoa_bird_oracle/src/config/|aotearoa_bird_oracle/src/content/[^/]+/[^/]+\.md|aotearoa_bird_oracle/src/config/groups\.json|STAGE8_MANIFEST\.sha256|STAGE8_ARCHIVE_SHA256)$' | grep -q .; then
+            echo "::error::The encrypted payload contains an unauthorised path."
+            exit 1
+          fi
+          mkdir -p /tmp/stage8-source
+          tar -xzf /tmp/stage8-source.tar.gz -C /tmp/stage8-source
+          if [[ "$(tr -d '\r\n' < /tmp/stage8-source/STAGE8_ARCHIVE_SHA256)" != "$SOURCE_ARCHIVE_CHECKSUM" ]]; then
+            echo "::error::The immutable archive checksum does not match the authorised snapshot."
+            exit 1
+          fi
+          cd /tmp/stage8-source
+          sha256sum --check STAGE8_MANIFEST.sha256
+
+      - name: Run full no-write reconciliation
+        shell: bash
+        run: |
+          node scripts/import-aotearoa-bird-oracle.mjs \
+            --source /tmp/stage8-source/aotearoa_bird_oracle \
+            --source-archive-checksum "$SOURCE_ARCHIVE_CHECKSUM" \
+            --sample all \
+            --report /tmp/stage8-dry-run.json > /dev/null
+          jq -e '
+            .sourceArchiveChecksum == env.SOURCE_ARCHIVE_CHECKSUM and
+            .inventory.sourceBirds == 78 and
+            .inventory.sourceTarot == 78 and
+            .inventory.sourceChapters == 6 and
+            .inventory.excludedSourceFiles == ["src/content/chapters/_collection-seed.md"] and
+            .targets.families == 8 and
+            .targets.cards == 78 and
+            .targets.guidebookSections == 162 and
+            .exceptions.blocking == 0 and
+            .reconciliation.duplicateSourceKeys == 0 and
+            .reconciliation.unresolvedRelationships == 0 and
+            .reconciliation.unmappedSourceFiles == 0 and
+            .reconciliation.silentDrops == 0 and
+            .reconciliation.reconciled == true and
+            .apply.databaseWrites == 0
+          ' /tmp/stage8-dry-run.json > /dev/null
+          jq '{inventory, targets, exceptions: {total: .exceptions.total, blocking: .exceptions.blocking, warnings: .exceptions.warnings, byCode: .exceptions.byCode}, reconciliation, apply}' /tmp/stage8-dry-run.json
+
+      - name: Import full project into isolated staging
+        shell: bash
+        env:
+          STUDIO_IMPORT_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+          STUDIO_IMPORT_EXPECTED_PROJECT_REF: utzcmbidotxgmulguzxo
+        run: |
+          node scripts/import-aotearoa-bird-oracle.mjs \
+            --source /tmp/stage8-source/aotearoa_bird_oracle \
+            --source-archive-checksum "$SOURCE_ARCHIVE_CHECKSUM" \
+            --sample all \
+            --apply \
+            --environment staging \
+            --project-id "$STUDIO_PROJECT_ID" \
+            --report /tmp/stage8-first-import.json > /dev/null
+          jq -e '
+            .apply.inserted == 213 and
+            .apply.updated == 0 and
+            .apply.skipped == 35 and
+            .apply.records == 248
+          ' /tmp/stage8-first-import.json > /dev/null
+          jq '{targets, reconciliation, apply}' /tmp/stage8-first-import.json
+
+      - name: Verify idempotent replay
+        shell: bash
+        env:
+          STUDIO_IMPORT_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+          STUDIO_IMPORT_EXPECTED_PROJECT_REF: utzcmbidotxgmulguzxo
+        run: |
+          node scripts/import-aotearoa-bird-oracle.mjs \
+            --source /tmp/stage8-source/aotearoa_bird_oracle \
+            --source-archive-checksum "$SOURCE_ARCHIVE_CHECKSUM" \
+            --sample all \
+            --apply \
+            --environment staging \
+            --project-id "$STUDIO_PROJECT_ID" \
+            --report /tmp/stage8-replay.json > /dev/null
+          jq -e '
+            .apply.inserted == 0 and
+            .apply.updated == 0 and
+            .apply.skipped == 248 and
+            .apply.records == 248
+          ' /tmp/stage8-replay.json > /dev/null
+          jq '{targets, reconciliation, apply}' /tmp/stage8-replay.json
+
+      - name: Verify final staging state
+        shell: bash
+        run: |
+          verification=$(psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --quiet --tuples-only --no-align <<SQL
+          select json_build_object(
+            'families', (select count(*) from public.studio_card_families where project_id = '$STUDIO_PROJECT_ID'),
+            'cards', (select count(*) from public.studio_cards where project_id = '$STUDIO_PROJECT_ID'),
+            'guidebook_sections', (select count(*) from public.studio_guidebook_sections where project_id = '$STUDIO_PROJECT_ID'),
+            'import_records', (select count(*) from public.studio_import_records where project_id = '$STUDIO_PROJECT_ID' and source_system = 'aotearoa-bird-oracle-markdown-v1'),
+            'linked_card_sections', (
+              select count(*)
+              from public.studio_import_records record
+              join public.studio_guidebook_sections section on section.id = record.target_id
+              where record.project_id = '$STUDIO_PROJECT_ID'
+                and record.source_system = 'aotearoa-bird-oracle-markdown-v1'
+                and record.target_type = 'guidebook_section'
+                and (record.source_key like 'bird-guidebook:%' or record.source_key like 'tarot:%')
+                and section.card_id is not null
+            ),
+            'missing_card_versions', (
+              select count(*) from public.studio_cards card
+              where card.project_id = '$STUDIO_PROJECT_ID'
+                and not exists (select 1 from public.studio_card_versions version where version.card_id = card.id)
+            ),
+            'missing_section_versions', (
+              select count(*) from public.studio_guidebook_sections section
+              where section.project_id = '$STUDIO_PROJECT_ID'
+                and not exists (select 1 from public.studio_guidebook_versions version where version.section_id = section.id)
+            ),
+            'archive_checksum', (
+              select min(source_archive_checksum) from public.studio_import_records
+              where project_id = '$STUDIO_PROJECT_ID' and source_system = 'aotearoa-bird-oracle-markdown-v1'
+            ),
+            'distinct_archive_checksums', (
+              select count(distinct source_archive_checksum) from public.studio_import_records
+              where project_id = '$STUDIO_PROJECT_ID' and source_system = 'aotearoa-bird-oracle-markdown-v1'
+            )
+          );
+          SQL
+          )
+          echo "$verification" | jq -e '
+            .families == 8 and
+            .cards == 78 and
+            .guidebook_sections == 162 and
+            .import_records == 248 and
+            .linked_card_sections == 156 and
+            .missing_card_versions == 0 and
+            .missing_section_versions == 0 and
+            .archive_checksum == env.SOURCE_ARCHIVE_CHECKSUM and
+            .distinct_archive_checksums == 1
+          ' > /dev/null
+          echo "$verification" | jq .
+
+      - name: Destroy transfer material
+        if: always()
+        shell: bash
+        run: |
+          shred -u /tmp/stage8-private.pem /tmp/stage8-payload.cms /tmp/stage8-source.tar.gz 2>/dev/null || true
+          rm -rf /tmp/stage8-source
