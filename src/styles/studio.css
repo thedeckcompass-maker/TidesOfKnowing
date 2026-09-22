@@ -132,6 +132,25 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.studio-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.studio-form--inline {
+  grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr) auto;
+  align-items: end;
+  margin: 1rem 0 1.5rem;
+}
+
+.studio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 .studio-field {
   display: grid;
   gap: 0.42rem;
@@ -487,6 +506,8 @@
   }
 
   .studio-form--two,
+  .studio-form-grid,
+  .studio-form--inline,
   .studio-check-grid,
   .studio-photo-grid,
   .studio-stats,

@@ -44,6 +44,7 @@ const accessRequired = Astro.url.searchParams.get("access") === "required";
       <p class="studio-kicker">Scope and trust</p><h2>Creator-owned work with explicit boundaries</h2>
       <p>You retain authorship, creative control and ownership of your manuscripts, images, research and exports. Projects are private by default. Human review requires purpose-specific consent. Cancellation ends editing access according to the paid entitlement state while the stated read-only and export period remains available.</p>
       <p>The standard subscription does not include unlimited manuscript rewriting, artwork creation or artist management, printer procurement, full Kickstarter management, escrow or marketplace dispute resolution, or legal, tax and jurisdiction-specific advice.</p>
+      <p>Artists may apply separately to the curated collaboration directory. <a href="/artists/collaborate/">Open the artist application</a>.</p>
     </section>
   </main>
   <script is:inline>fetch('/api/studio/analytics', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({event:'offer_view'}), keepalive:true}).catch(()=>{});</script>

@@ -6,6 +6,7 @@ import {
   STUDIO_JOURNAL_KINDS,
   STUDIO_JOURNAL_TAGS,
   STUDIO_PATHWAYS,
+  STUDIO_ARTIST_PROCESS_DISCLOSURES,
   STUDIO_PROGRAMME_STATUSES,
   STUDIO_PROJECT_STATUSES,
   type StudioDeckType,
@@ -15,6 +16,8 @@ import {
   type StudioJournalKind,
   type StudioJournalTag,
   type StudioPathway,
+  type StudioArtistPortfolioExample,
+  type StudioArtistProcessDisclosure,
   type StudioProgrammeStatus,
   type StudioProjectStatus,
 } from "./types";
@@ -61,6 +64,123 @@ function optionalUuid(value: string): string | null | undefined {
   return /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(value)
     ? value
     : undefined;
+}
+
+function commaList(form: FormData, key: string, maxItems: number): string[] {
+  return [...new Set(text(form, key, 1200).split(",").map((item) => item.trim()).filter(Boolean))].slice(0, maxItems);
+}
+
+function publicHttpUrl(value: string): string | null {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+export function parseStudioArtistApplication(form: FormData): ValidationResult<{
+  professional_name: string;
+  location: string;
+  time_zone: string;
+  languages: string[];
+  biography: string;
+  artistic_statement: string;
+  mediums: string[];
+  techniques: string[];
+  styles: string[];
+  subjects: string[];
+  publishing_experience: string;
+  availability: string;
+  budget_approach: string;
+  licensing_preferences: string;
+  collaboration_models: string[];
+  process_disclosure: StudioArtistProcessDisclosure;
+  portfolio_examples: StudioArtistPortfolioExample[];
+  contact_email: string;
+  website_url: string;
+}> {
+  const professionalName = text(form, "professional_name", 120);
+  const biography = text(form, "biography", 3000);
+  const artisticStatement = text(form, "artistic_statement", 3000);
+  const availability = text(form, "availability", 1200);
+  const budgetApproach = text(form, "budget_approach", 1200);
+  const licensingPreferences = text(form, "licensing_preferences", 1200);
+  const languages = commaList(form, "languages", 12);
+  const mediums = commaList(form, "mediums", 16);
+  const techniques = commaList(form, "techniques", 16);
+  const styles = commaList(form, "styles", 16);
+  const subjects = commaList(form, "subjects", 16);
+  const collaborationModels = commaList(form, "collaboration_models", 8);
+  const processDisclosure = choice(text(form, "process_disclosure", 40), STUDIO_ARTIST_PROCESS_DISCLOSURES);
+  const contactEmail = text(form, "contact_email", 254).toLowerCase();
+  const websiteValue = text(form, "website_url", 500);
+  const websiteUrl = websiteValue ? publicHttpUrl(websiteValue) : "";
+  const portfolioExamples: StudioArtistPortfolioExample[] = [];
+
+  for (let index = 1; index <= 8; index += 1) {
+    const rawUrl = text(form, `portfolio_url_${index}`, 500);
+    const title = text(form, `portfolio_title_${index}`, 160);
+    const description = text(form, `portfolio_description_${index}`, 500);
+    if (!rawUrl && !title && !description) continue;
+    const url = publicHttpUrl(rawUrl);
+    if (!url || !title) return { ok: false, error: `Check portfolio example ${index}. Add a public web link and title.` };
+    portfolioExamples.push({ url, title, description });
+  }
+
+  if (professionalName.length < 2) return { ok: false, error: "Add your professional name." };
+  if (biography.length < 40 || artisticStatement.length < 40) return { ok: false, error: "Add a biography and artistic statement of at least 40 characters each." };
+  if (!languages.length || !mediums.length || !styles.length || !collaborationModels.length) return { ok: false, error: "Add languages, mediums, styles and collaboration models." };
+  if (availability.length < 10 || budgetApproach.length < 10 || licensingPreferences.length < 10) return { ok: false, error: "Explain your availability, budget approach and licensing preferences." };
+  if (!processDisclosure) return { ok: false, error: "Choose the disclosure that accurately describes your creative process." };
+  if (portfolioExamples.length < 6 || portfolioExamples.length > 8) return { ok: false, error: "Provide between six and eight portfolio examples." };
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contactEmail)) return { ok: false, error: "Add a valid private contact email." };
+  if (websiteValue && !websiteUrl) return { ok: false, error: "Check the website address." };
+  if (form.get("display_rights_confirmed") !== "on") return { ok: false, error: "Confirm that Tides of Knowing may display the submitted portfolio examples while your profile is approved." };
+
+  return { ok: true, value: {
+    professional_name: professionalName,
+    location: text(form, "location", 160),
+    time_zone: text(form, "time_zone", 80),
+    languages,
+    biography,
+    artistic_statement: artisticStatement,
+    mediums,
+    techniques,
+    styles,
+    subjects,
+    publishing_experience: text(form, "publishing_experience", 2000),
+    availability: availability,
+    budget_approach: budgetApproach,
+    licensing_preferences: licensingPreferences,
+    collaboration_models: collaborationModels,
+    process_disclosure: processDisclosure,
+    portfolio_examples: portfolioExamples,
+    contact_email: contactEmail,
+    website_url: websiteUrl ?? "",
+  } };
+}
+
+export function parseStudioArtistIntroduction(form: FormData): ValidationResult<{
+  project_id: string;
+  artist_profile_id: string;
+  brief: string;
+  timeline: string;
+  budget_context: string;
+}> {
+  const projectId = optionalUuid(text(form, "project_id", 50));
+  const artistProfileId = optionalUuid(text(form, "artist_profile_id", 50));
+  const brief = text(form, "brief", 5000);
+  if (!projectId || !artistProfileId) return { ok: false, error: "Choose a valid project and artist." };
+  if (brief.length < 50) return { ok: false, error: "Give the artist a clear brief of at least 50 characters." };
+  if (form.get("direct_contract_confirmed") !== "on") return { ok: false, error: "Confirm that contracts and payments remain directly between creator and artist." };
+  return { ok: true, value: {
+    project_id: projectId,
+    artist_profile_id: artistProfileId,
+    brief,
+    timeline: text(form, "timeline", 800),
+    budget_context: text(form, "budget_context", 800),
+  } };
 }
 
 export function parseStudioProjectCreate(form: FormData): ValidationResult<{

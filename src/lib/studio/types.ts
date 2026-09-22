@@ -35,6 +35,19 @@ export const STUDIO_EXCERPT_PURPOSES = [
   "private_record",
 ] as const;
 export const STUDIO_PROGRAMME_STATUSES = ["not_started", "in_progress", "complete"] as const;
+export const STUDIO_ARTIST_PROCESS_DISCLOSURES = [
+  "human_created",
+  "digital_non_generative",
+  "ai_assisted",
+  "generative_ai",
+] as const;
+export const STUDIO_ARTIST_INTRODUCTION_STATUSES = [
+  "requested",
+  "accepted",
+  "declined",
+  "more_information",
+  "withdrawn",
+] as const;
 
 export type StudioDeckType = (typeof STUDIO_DECK_TYPES)[number];
 export type StudioPathway = (typeof STUDIO_PATHWAYS)[number];
@@ -45,6 +58,8 @@ export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
 export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
 export type StudioExcerptPurpose = (typeof STUDIO_EXCERPT_PURPOSES)[number];
 export type StudioProgrammeStatus = (typeof STUDIO_PROGRAMME_STATUSES)[number];
+export type StudioArtistProcessDisclosure = (typeof STUDIO_ARTIST_PROCESS_DISCLOSURES)[number];
+export type StudioArtistIntroductionStatus = (typeof STUDIO_ARTIST_INTRODUCTION_STATUSES)[number];
 
 export type StudioProject = {
   id: string;
@@ -195,6 +210,60 @@ export type StudioSupportRequest = {
   completed_at: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type StudioArtistPortfolioExample = {
+  url: string;
+  title: string;
+  description: string;
+};
+
+export type StudioArtistProfile = {
+  id: string;
+  user_id: string;
+  professional_name: string;
+  location: string;
+  time_zone: string;
+  languages: string[];
+  biography: string;
+  artistic_statement: string;
+  mediums: string[];
+  techniques: string[];
+  styles: string[];
+  subjects: string[];
+  publishing_experience: string;
+  availability: string;
+  budget_approach: string;
+  licensing_preferences: string;
+  collaboration_models: string[];
+  process_disclosure: StudioArtistProcessDisclosure;
+  portfolio_examples: StudioArtistPortfolioExample[];
+  status: "submitted" | "approved" | "declined" | "withdrawn";
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioArtistIntroduction = {
+  id: string;
+  creator_id: string;
+  project_id: string;
+  artist_profile_id: string;
+  brief: string;
+  timeline: string;
+  budget_context: string;
+  status: StudioArtistIntroductionStatus;
+  artist_message: string;
+  creator_reply: string;
+  responded_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const studioArtistProcessLabel: Record<StudioArtistProcessDisclosure, string> = {
+  human_created: "Human-created physical practice",
+  digital_non_generative: "Digital, without generative AI",
+  ai_assisted: "AI-assisted process",
+  generative_ai: "Generative-AI process",
 };
 
 export const studioDeckTypeLabel: Record<StudioDeckType, string> = {
