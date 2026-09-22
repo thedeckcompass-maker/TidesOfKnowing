@@ -18,6 +18,7 @@ const [workspace, card, versions] = await Promise.all([
 ]);
 if (!workspace.project || !card) return new Response(null, { status: 404 });
 const content = card.content ?? {};
+const contentText = (key: string) => typeof content[key] === "string" ? content[key] as string : "";
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
@@ -39,20 +40,20 @@ const error = Astro.url.searchParams.get("error");
         <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={card.sort_order} required /></label>
         <label class="studio-field"><span>Status</span><select name="status"><option value="outline" selected={card.status === "outline"}>Outline</option><option value="draft" selected={card.status === "draft"}>Draft</option><option value="review" selected={card.status === "review"}>Review</option><option value="complete" selected={card.status === "complete"}>Complete</option></select></label>
         <label class="studio-field studio-field--full"><span>Family</span><select name="family_id"><option value="">No family</option>{workspace.families.map((family) => <option value={family.id} selected={card.family_id === family.id}>{family.name}</option>)}</select></label>
-        <label class="studio-field studio-field--full"><span>Core meaning</span><textarea name="meaning">{content.meaning ?? ""}</textarea></label>
-        <label class="studio-field studio-field--full"><span>Shadow or cautionary meaning</span><textarea name="shadow_meaning">{content.shadow_meaning ?? ""}</textarea></label>
-        <label class="studio-field"><span>Keywords</span><textarea name="keywords">{content.keywords ?? ""}</textarea></label>
-        <label class="studio-field"><span>Cautions</span><textarea name="cautions">{content.cautions ?? ""}</textarea></label>
-        <label class="studio-field"><span>Symbolism</span><textarea name="symbolism">{content.symbolism ?? ""}</textarea></label>
-        <label class="studio-field"><span>Correspondences</span><textarea name="correspondences">{content.correspondences ?? ""}</textarea></label>
-        <label class="studio-field studio-field--full"><span>Prompts or questions</span><textarea name="prompts">{content.prompts ?? ""}</textarea></label>
-        <label class="studio-field studio-field--full"><span>Private research notes</span><textarea name="research_notes">{content.research_notes ?? ""}</textarea></label>
-        <label class="studio-field"><span>Sources and attribution</span><textarea name="sources">{content.sources ?? ""}</textarea></label>
-        <label class="studio-field"><span>Cultural context</span><textarea name="cultural_context">{content.cultural_context ?? ""}</textarea></label>
-        <label class="studio-field studio-field--full"><span>Permissions and unresolved rights</span><textarea name="permissions">{content.permissions ?? ""}</textarea></label>
-        <label class="studio-field studio-field--full"><span>Artwork brief</span><textarea name="artwork_brief">{content.artwork_brief ?? ""}</textarea></label>
-        <label class="studio-field"><span>Artwork rights status</span><textarea name="rights_status">{content.rights_status ?? ""}</textarea></label>
-        <label class="studio-field"><span>Production notes</span><textarea name="production_notes">{content.production_notes ?? ""}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Core meaning</span><textarea name="meaning">{contentText("meaning")}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Shadow or cautionary meaning</span><textarea name="shadow_meaning">{contentText("shadow_meaning")}</textarea></label>
+        <label class="studio-field"><span>Keywords</span><textarea name="keywords">{contentText("keywords")}</textarea></label>
+        <label class="studio-field"><span>Cautions</span><textarea name="cautions">{contentText("cautions")}</textarea></label>
+        <label class="studio-field"><span>Symbolism</span><textarea name="symbolism">{contentText("symbolism")}</textarea></label>
+        <label class="studio-field"><span>Correspondences</span><textarea name="correspondences">{contentText("correspondences")}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Prompts or questions</span><textarea name="prompts">{contentText("prompts")}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Private research notes</span><textarea name="research_notes">{contentText("research_notes")}</textarea></label>
+        <label class="studio-field"><span>Sources and attribution</span><textarea name="sources">{contentText("sources")}</textarea></label>
+        <label class="studio-field"><span>Cultural context</span><textarea name="cultural_context">{contentText("cultural_context")}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Permissions and unresolved rights</span><textarea name="permissions">{contentText("permissions")}</textarea></label>
+        <label class="studio-field studio-field--full"><span>Artwork brief</span><textarea name="artwork_brief">{contentText("artwork_brief")}</textarea></label>
+        <label class="studio-field"><span>Artwork rights status</span><textarea name="rights_status">{contentText("rights_status")}</textarea></label>
+        <label class="studio-field"><span>Production notes</span><textarea name="production_notes">{contentText("production_notes")}</textarea></label>
         <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
       </form>
     </section>

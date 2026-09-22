@@ -59,7 +59,7 @@ export type StudioCard = {
   card_number: string;
   sort_order: number;
   status: StudioItemStatus;
-  content: Record<string, string>;
+  content: Record<string, unknown>;
   version_number: number;
   updated_at: string;
 };
@@ -72,6 +72,8 @@ export type StudioGuidebookSection = {
   sort_order: number;
   status: StudioItemStatus;
   body_markdown: string;
+  card_id?: string | null;
+  metadata?: Record<string, unknown>;
   version_number: number;
   updated_at: string;
 };

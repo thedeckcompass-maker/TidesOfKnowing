@@ -1,0 +1,60 @@
+{
+  "manifestVersion": 1,
+  "sourceSystem": "aotearoa-bird-oracle-markdown-v1",
+  "governingRule": "The generic Studio schema remains authoritative. Bird Oracle fields are mapped into generic fields and retained losslessly under a namespaced custom payload.",
+  "sourceCollections": {
+    "birds": {
+      "glob": "src/content/birds/*.md",
+      "target": ["studio_cards", "studio_guidebook_sections"],
+      "identity": "card_id",
+      "expectedCount": 78
+    },
+    "tarot": {
+      "glob": "src/content/tarot/*.md",
+      "target": ["studio_guidebook_sections"],
+      "identity": "filename slug",
+      "cardLink": "bird_slug",
+      "expectedCount": 78
+    },
+    "chapters": {
+      "glob": "src/content/chapters/*.md",
+      "target": ["studio_guidebook_sections"],
+      "identity": "filename slug",
+      "excluded": ["_collection-seed.md"],
+      "expectedCount": 6
+    },
+    "groups": {
+      "path": "src/config/groups.json",
+      "target": ["studio_card_families"],
+      "identity": "name"
+    }
+  },
+  "genericCardMapping": {
+    "title": "title",
+    "card_number": "card_number",
+    "sort_order": "card_number",
+    "family": "group",
+    "status": "status mapped to outline, draft, review or complete",
+    "content.meaning": "oracle_meaning",
+    "content.shadow_meaning": "shadow_expression",
+    "content.keywords": "keywords joined with newlines",
+    "content.symbolism": "spiritual_key and realm fields",
+    "content.correspondences": "tarot_primary, tarot_second and tarot_third fields",
+    "content.research_notes": "author_notes_private",
+    "content.cultural_context": "whakataukī and realm fields",
+    "content.rights_status": "image status, source, rights, credit and type"
+  },
+  "losslessPayload": "content.custom.aotearoa_bird_oracle stores parsed front matter, exact body Markdown, exact raw Markdown, source path and SHA-256 checksum.",
+  "duplicateProtection": "studio_import_records has one row per project, source system and source key. Matching checksums are skipped; changed checksums update the existing target and create a normal Studio version.",
+  "dryRun": "Every source file is counted, checksummed, mapped or reported as an exception before any database write.",
+  "representativeSample": [
+    "g1-n01.md",
+    "g1-h01.md",
+    "g1-b01.md",
+    "g2-b14.md",
+    "g4-b07.md",
+    "g6-b08.md",
+    "g8-b03.md",
+    "g8-n01.md"
+  ]
+}
