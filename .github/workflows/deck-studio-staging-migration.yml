@@ -1,0 +1,196 @@
+name: Deck Studio staging migration
+
+on:
+  push:
+    branches:
+      - feature/deck-creator-studio-live
+    paths:
+      - .github/workflows/deck-studio-staging-migration.yml
+
+permissions:
+  contents: read
+
+jobs:
+  migrate-and-verify:
+    name: Apply and verify staging migration
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_ID: 56976396-c97b-4a24-a097-e9331a5504a1
+
+    steps:
+      - name: Check out authorised feature branch
+        uses: actions/checkout@v4
+
+      - name: Confirm staging target
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" ]]; then
+            echo "::error::The staging database secret is unavailable."
+            exit 1
+          fi
+          if [[ "$STUDIO_STAGING_DATABASE_URL" != *"utzcmbidotxgmulguzxo"* ]]; then
+            echo "::error::The database URL does not identify the authorised Studio staging project."
+            exit 1
+          fi
+
+      - name: Apply support workflow migration
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" \
+            --no-psqlrc \
+            --set ON_ERROR_STOP=1 \
+            --single-transaction \
+            --file supabase/migrations/20260923023000_deck_studio_support_workflows.sql
+
+      - name: Verify representative project and persistence
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" \
+            --no-psqlrc \
+            --set ON_ERROR_STOP=1 \
+            --set project_id="$STUDIO_PROJECT_ID" <<'SQL'
+          select set_config('app.studio_project_id', :'project_id', false);
+
+          do $verify$
+          declare
+            target_project uuid := current_setting('app.studio_project_id')::uuid;
+            project_total integer;
+            family_total integer;
+            card_total integer;
+            section_total integer;
+            linked_section_total integer;
+            linked_card_total integer;
+            provenance_total integer;
+            support_policy_total integer;
+          begin
+            if to_regclass('public.studio_support_requests') is null then
+              raise exception 'studio_support_requests was not created';
+            end if;
+
+            select count(*) into project_total
+            from public.studio_projects where id = target_project;
+            select count(*) into family_total
+            from public.studio_card_families where project_id = target_project;
+            select count(*) into card_total
+            from public.studio_cards where project_id = target_project;
+            select count(*) into section_total
+            from public.studio_guidebook_sections where project_id = target_project;
+            select count(*) into linked_section_total
+            from public.studio_guidebook_sections
+            where project_id = target_project and card_id is not null;
+            select count(distinct card_id) into linked_card_total
+            from public.studio_guidebook_sections
+            where project_id = target_project and card_id is not null;
+            select count(*) into provenance_total
+            from public.studio_import_records where project_id = target_project;
+            select count(*) into support_policy_total
+            from pg_policies
+            where schemaname = 'public' and tablename = 'studio_support_requests';
+
+            if project_total <> 1 then
+              raise exception 'Expected the completed staging project';
+            end if;
+            if family_total <> 5 then
+              raise exception 'Expected 5 card families, found %', family_total;
+            end if;
+            if card_total <> 8 then
+              raise exception 'Expected 8 imported cards, found %', card_total;
+            end if;
+            if section_total <> 22 then
+              raise exception 'Expected 22 guidebook sections, found %', section_total;
+            end if;
+            if linked_section_total <> 16 or linked_card_total <> 8 then
+              raise exception 'Expected 16 guidebook links across all 8 cards, found % links across % cards', linked_section_total, linked_card_total;
+            end if;
+            if provenance_total <> 35 then
+              raise exception 'Expected 35 provenance records, found %', provenance_total;
+            end if;
+            if exists (
+              select 1
+              from public.studio_guidebook_sections section
+              left join public.studio_cards card
+                on card.id = section.card_id and card.project_id = section.project_id
+              where section.project_id = target_project
+                and section.card_id is not null
+                and card.id is null
+            ) then
+              raise exception 'A guidebook relationship points outside its project';
+            end if;
+            if support_policy_total <> 4 then
+              raise exception 'Expected 4 support request policies, found %', support_policy_total;
+            end if;
+            if to_regprocedure('public.studio_support_scope_allows(uuid,text)') is null then
+              raise exception 'The scoped support access function is unavailable';
+            end if;
+          end
+          $verify$;
+
+          begin;
+          do $persistence$
+          declare
+            target_project uuid := current_setting('app.studio_project_id')::uuid;
+            target_card uuid;
+            target_section uuid;
+            card_version_before integer;
+            card_version_after integer;
+            section_version_before integer;
+            section_version_after integer;
+          begin
+            select id, version_number into target_card, card_version_before
+            from public.studio_cards
+            where project_id = target_project
+            order by sort_order, id
+            limit 1;
+
+            update public.studio_cards
+            set content = content || jsonb_build_object('__staging_validation', 'saved')
+            where id = target_card;
+
+            select version_number into card_version_after
+            from public.studio_cards where id = target_card;
+
+            if card_version_after <> card_version_before + 1 then
+              raise exception 'Card save did not increment its version';
+            end if;
+            if not exists (
+              select 1 from public.studio_card_versions
+              where card_id = target_card
+                and version_number = card_version_after
+                and snapshot -> 'content' ->> '__staging_validation' = 'saved'
+            ) then
+              raise exception 'Card save was not reloadable from version history';
+            end if;
+
+            select id, version_number into target_section, section_version_before
+            from public.studio_guidebook_sections
+            where project_id = target_project
+            order by sort_order, id
+            limit 1;
+
+            update public.studio_guidebook_sections
+            set metadata = metadata || jsonb_build_object('__staging_validation', 'saved')
+            where id = target_section;
+
+            select version_number into section_version_after
+            from public.studio_guidebook_sections where id = target_section;
+
+            if section_version_after <> section_version_before + 1 then
+              raise exception 'Guidebook save did not increment its version';
+            end if;
+            if not exists (
+              select 1 from public.studio_guidebook_versions
+              where section_id = target_section
+                and version_number = section_version_after
+                and snapshot -> 'metadata' ->> '__staging_validation' = 'saved'
+            ) then
+              raise exception 'Guidebook save was not reloadable from version history';
+            end if;
+          end
+          $persistence$;
+          rollback;
+
+          select 'Studio staging migration and representative project verification passed.' as result;
+          SQL
