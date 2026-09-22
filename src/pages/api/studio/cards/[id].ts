@@ -21,9 +21,25 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
     });
   }
 
+  const { data: current, error: currentError } = await locals.supabase
+    .from("studio_cards")
+    .select("content")
+    .eq("id", cardId)
+    .eq("project_id", projectId)
+    .maybeSingle();
+  if (currentError || !current) return new Response("Not found", { status: 404 });
+
+  const nextValue = {
+    ...parsed.value,
+    content: {
+      ...((current.content as Record<string, unknown> | null) ?? {}),
+      ...parsed.value.content,
+    },
+  };
+
   const { error } = await locals.supabase
     .from("studio_cards")
-    .update(parsed.value)
+    .update(nextValue)
     .eq("id", cardId)
     .eq("project_id", projectId);
 

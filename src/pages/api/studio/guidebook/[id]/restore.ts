@@ -31,6 +31,8 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
       sort_order: snapshot.sort_order,
       status: snapshot.status,
       body_markdown: snapshot.body_markdown,
+      card_id: snapshot.card_id,
+      metadata: snapshot.metadata,
     })
     .eq("id", sectionId)
     .eq("project_id", projectId);
