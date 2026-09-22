@@ -4,6 +4,8 @@ import type {
   StudioCardFamily,
   StudioGuidebookSection,
   StudioJournalEntry,
+  StudioJournalExcerpt,
+  StudioJournalPhoto,
   StudioProject,
   StudioVersion,
 } from "./types";
@@ -16,6 +18,23 @@ export async function getStudioProjects(supabase: SupabaseClient): Promise<Studi
     .order("updated_at", { ascending: false });
   if (error) throw error;
   return (data ?? []) as StudioProject[];
+}
+
+export async function getStudioJournalMedia(
+  supabase: SupabaseClient,
+  projectId: string,
+  entryId: string,
+): Promise<{ photos: StudioJournalPhoto[]; excerpts: StudioJournalExcerpt[] }> {
+  const [photosResult, excerptsResult] = await Promise.all([
+    supabase.from("studio_journal_photos").select("*").eq("project_id", projectId).eq("journal_entry_id", entryId).order("sort_order"),
+    supabase.from("studio_journal_excerpts").select("*").eq("project_id", projectId).eq("journal_entry_id", entryId).order("updated_at", { ascending: false }),
+  ]);
+  if (photosResult.error) throw photosResult.error;
+  if (excerptsResult.error) throw excerptsResult.error;
+  return {
+    photos: (photosResult.data ?? []) as StudioJournalPhoto[],
+    excerpts: (excerptsResult.data ?? []) as StudioJournalExcerpt[],
+  };
 }
 
 export async function getStudioProject(

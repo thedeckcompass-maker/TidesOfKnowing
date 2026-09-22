@@ -1,5 +1,6 @@
 import {
   STUDIO_DECK_TYPES,
+  STUDIO_EXCERPT_PURPOSES,
   STUDIO_GUIDEBOOK_TYPES,
   STUDIO_ITEM_STATUSES,
   STUDIO_JOURNAL_KINDS,
@@ -7,6 +8,7 @@ import {
   STUDIO_PATHWAYS,
   STUDIO_PROJECT_STATUSES,
   type StudioDeckType,
+  type StudioExcerptPurpose,
   type StudioGuidebookType,
   type StudioItemStatus,
   type StudioJournalKind,
@@ -20,6 +22,26 @@ type ValidationResult<T> = { ok: true; value: T } | { ok: false; error: string }
 function text(form: FormData, key: string, max: number): string {
   const value = form.get(key);
   return typeof value === "string" ? value.trim().replace(/\r\n/g, "\n").slice(0, max) : "";
+}
+
+export function parseStudioJournalExcerpt(form: FormData): ValidationResult<{
+  purpose: StudioExcerptPurpose;
+  title: string;
+  excerpt_text: string;
+  photo_id: string | null;
+}> {
+  const purpose = choice(text(form, "purpose", 30), STUDIO_EXCERPT_PURPOSES);
+  const title = text(form, "excerpt_title", 160);
+  const excerptText = text(form, "excerpt_text", 5000);
+  const photoId = optionalUuid(text(form, "photo_id", 50));
+  if (!purpose) return { ok: false, error: "Choose a valid excerpt purpose." };
+  if (!title) return { ok: false, error: "Give the controlled excerpt a title." };
+  if (!excerptText) return { ok: false, error: "Add the text you intend to export." };
+  if (photoId === undefined) return { ok: false, error: "Choose a valid journal photograph." };
+  if (form.get("confirm_controlled_copy") !== "on") {
+    return { ok: false, error: "Confirm that this is a separate controlled copy." };
+  }
+  return { ok: true, value: { purpose, title, excerpt_text: excerptText, photo_id: photoId } };
 }
 
 function choice<T extends string>(value: string, allowed: readonly T[]): T | null {

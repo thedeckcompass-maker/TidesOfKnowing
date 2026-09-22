@@ -2,8 +2,9 @@
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
 import { studioAccessResponse } from "../../../../../lib/studio/access";
-import { getStudioJournalEntry, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
-import { STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import { getStudioJournalEntry, getStudioJournalMedia, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
+import { STUDIO_EXCERPT_PURPOSES, STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import { STUDIO_JOURNAL_PHOTO_BUCKET, STUDIO_JOURNAL_PHOTO_LIMIT } from "../../../../../lib/studio/journalMedia";
 import "../../../../../styles/studio.css";
 
 export const prerender = false;
@@ -18,15 +19,25 @@ const accessResponse = studioAccessResponse(
 if (accessResponse) return accessResponse;
 if (!projectId || !entryId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 
-const [workspace, entry] = await Promise.all([
+const [workspace, entry, media] = await Promise.all([
   getStudioProjectWorkspace(Astro.locals.supabase, projectId),
   getStudioJournalEntry(Astro.locals.supabase, projectId, entryId),
+  getStudioJournalMedia(Astro.locals.supabase, projectId, entryId),
 ]);
 if (!workspace.project || !entry) return new Response(null, { status: 404 });
+
+const photos = await Promise.all(media.photos.map(async (photo) => {
+  const { data } = await Astro.locals.supabase!.storage.from(STUDIO_JOURNAL_PHOTO_BUCKET).createSignedUrl(photo.storage_path, 600);
+  return { ...photo, signedUrl: data?.signedUrl ?? null };
+}));
 
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const error = Astro.url.searchParams.get("error");
+const photosSaved = Astro.url.searchParams.get("photos") === "1";
+const photoRemoved = Astro.url.searchParams.get("photoRemoved") === "1";
+const excerptSaved = Astro.url.searchParams.get("excerpt") === "1";
+const purposeLabel = (value: string) => value.replaceAll("_", " ");
 ---
 
 <BaseLayout title={`${entry.title} | Creator Journal`} description="Private Deck Creator Studio journal entry." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
@@ -34,6 +45,9 @@ const error = Astro.url.searchParams.get("error");
     <StudioHeader eyebrow={`${workspace.project.name} · Private journal`} title={entry.title} lede="This source entry remains private. Process-board selection does not publish or share it." projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Journal entry created.</p> : null}
     {saved ? <p class="studio-notice" role="status">Journal entry saved.</p> : null}
+    {photosSaved ? <p class="studio-notice" role="status">Private journal photographs saved.</p> : null}
+    {photoRemoved ? <p class="studio-notice" role="status">Journal photograph removed.</p> : null}
+    {excerptSaved ? <p class="studio-notice" role="status">Controlled excerpt created.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
 
     <section class="studio-panel">
@@ -50,5 +64,73 @@ const error = Astro.url.searchParams.get("error");
         <div class="studio-field--full"><button class="studio-button" type="submit">Save journal entry</button></div>
       </form>
     </section>
+
+    <div class="studio-grid studio-journal-tools">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="photo-heading">
+        <p class="studio-kicker">Private evidence</p>
+        <h2 id="photo-heading">Journal photographs</h2>
+        <p class="studio-panel__intro">Add up to five photographs. Your browser creates new JPEG copies before upload, removing embedded location and descriptive metadata. Originals are not uploaded.</p>
+        {photos.length ? <ul class="studio-photo-grid">{photos.map((photo) => <li class="studio-photo-card">{photo.signedUrl ? <img src={photo.signedUrl} alt={photo.caption || "Private journal photograph"} loading="lazy" /> : null}<p>{photo.caption || "No caption"}</p><form method="post" action={`/api/studio/journal/photos/${photo.id}`}><input type="hidden" name="project_id" value={projectId} /><input type="hidden" name="entry_id" value={entryId} /><button class="studio-text-button" type="submit">Remove photograph</button></form></li>)}</ul> : <p class="studio-empty">No photographs have been added.</p>}
+        {photos.length < STUDIO_JOURNAL_PHOTO_LIMIT ? <form class="studio-form studio-photo-form" method="post" action={`/api/studio/journal/${entryId}/photos`} enctype="multipart/form-data" data-journal-photo-form>
+          <input type="hidden" name="project_id" value={projectId} />
+          <label class="studio-field"><span>Photographs</span><input type="file" accept="image/jpeg,image/png,image/webp" multiple required data-journal-photo-input /><small>{STUDIO_JOURNAL_PHOTO_LIMIT - photos.length} remaining. Each prepared copy must be under 6 MB.</small></label>
+          <label class="studio-field"><span>Caption for this upload</span><input name="caption" maxlength="240" /></label>
+          <p class="studio-privacy-note" data-journal-photo-status>Files are prepared on this device before they are sent.</p>
+          <button class="studio-button" type="submit">Prepare and upload privately</button>
+        </form> : <p class="studio-privacy-note">This entry has reached the five-photograph limit.</p>}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="excerpt-heading">
+        <p class="studio-kicker">Deliberate copy</p>
+        <h2 id="excerpt-heading">Create a controlled excerpt</h2>
+        <p class="studio-panel__intro">An excerpt is a separate export copy. It never publishes the source entry or changes its privacy.</p>
+        <form class="studio-form" method="post" action={`/api/studio/journal/${entryId}/excerpts`}>
+          <input type="hidden" name="project_id" value={projectId} />
+          <label class="studio-field"><span>Purpose</span><select name="purpose">{STUDIO_EXCERPT_PURPOSES.map((purpose) => <option value={purpose}>{purposeLabel(purpose)}</option>)}</select></label>
+          <label class="studio-field"><span>Excerpt title</span><input name="excerpt_title" required maxlength="160" /></label>
+          <label class="studio-field"><span>Controlled text</span><textarea name="excerpt_text" required maxlength="5000"></textarea></label>
+          <label class="studio-field"><span>Optional photograph</span><select name="photo_id"><option value="">No photograph</option>{photos.map((photo, index) => <option value={photo.id}>{photo.caption || `Photograph ${index + 1}`}</option>)}</select></label>
+          <label class="studio-check studio-check--standalone"><input type="checkbox" name="confirm_controlled_copy" required /> <span>I understand this creates a separate private export copy.</span></label>
+          <button class="studio-button" type="submit">Create controlled excerpt</button>
+        </form>
+      </section>
+
+      <section class="studio-panel studio-panel--wide" aria-labelledby="exports-heading">
+        <p class="studio-kicker">Private exports</p>
+        <h2 id="exports-heading">Controlled excerpt register</h2>
+        {media.excerpts.length ? <ul class="studio-list">{media.excerpts.map((excerpt) => <li class="studio-card"><div class="studio-card__row"><div><p class="studio-meta">{purposeLabel(excerpt.purpose)} · {new Date(excerpt.created_at).toLocaleDateString("en-NZ", { dateStyle: "medium" })}</p><h3>{excerpt.title}</h3><p>{excerpt.excerpt_text}</p></div><div class="studio-export-links"><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/md`}>Markdown</a><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/json`}>JSON</a></div></div></li>)}</ul> : <p class="studio-empty">No controlled excerpts have been created.</p>}
+      </section>
+    </div>
   </main>
 </BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-journal-photo-form]");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const input = form.querySelector<HTMLInputElement>("[data-journal-photo-input]");
+    const status = form.querySelector<HTMLElement>("[data-journal-photo-status]");
+    if (!input?.files?.length) return;
+    const body = new FormData(form);
+    body.delete("photos");
+    try {
+      if (status) status.textContent = "Removing embedded metadata and preparing private copies…";
+      for (const file of Array.from(input.files)) {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, 2200 / Math.max(bitmap.width, bitmap.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        bitmap.close();
+        const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
+        if (!blob) throw new Error("Image preparation failed");
+        body.append("photos", new File([blob], "journal-photo.jpg", { type: "image/jpeg" }));
+      }
+      const response = await fetch(form.action, { method: "POST", body, redirect: "follow" });
+      window.location.assign(response.url);
+    } catch {
+      if (status) status.textContent = "The photographs could not be prepared. Try a JPG, PNG or WebP file.";
+    }
+  });
+</script>

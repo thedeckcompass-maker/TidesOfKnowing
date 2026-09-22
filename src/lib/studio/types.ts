@@ -27,6 +27,13 @@ export const STUDIO_JOURNAL_TAGS = [
   "production",
   "launch",
 ] as const;
+export const STUDIO_EXCERPT_PURPOSES = [
+  "kickstarter",
+  "newsletter",
+  "social",
+  "case_study",
+  "private_record",
+] as const;
 
 export type StudioDeckType = (typeof STUDIO_DECK_TYPES)[number];
 export type StudioPathway = (typeof STUDIO_PATHWAYS)[number];
@@ -35,6 +42,7 @@ export type StudioItemStatus = (typeof STUDIO_ITEM_STATUSES)[number];
 export type StudioGuidebookType = (typeof STUDIO_GUIDEBOOK_TYPES)[number];
 export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
 export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
+export type StudioExcerptPurpose = (typeof STUDIO_EXCERPT_PURPOSES)[number];
 
 export type StudioProject = {
   id: string;
@@ -107,6 +115,28 @@ export type StudioJournalEntry = {
   linked_card_id: string | null;
   linked_section_id: string | null;
   selected_for_process: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioJournalPhoto = {
+  id: string;
+  project_id: string;
+  journal_entry_id: string;
+  storage_path: string;
+  caption: string;
+  sort_order: number;
+  created_at: string;
+};
+
+export type StudioJournalExcerpt = {
+  id: string;
+  project_id: string;
+  journal_entry_id: string;
+  purpose: StudioExcerptPurpose;
+  title: string;
+  excerpt_text: string;
+  photo_id: string | null;
   created_at: string;
   updated_at: string;
 };
