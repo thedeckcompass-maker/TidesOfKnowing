@@ -20,6 +20,9 @@ export const POST: APIRoute = async ({ request, locals, redirect }) => {
     title: payload.title,
     body: payload.body,
     postType: payload.postType,
+    audience: payload.audience,
+    deckCreationTopic: payload.deckCreationTopic,
+    confirmPublic: payload.confirmPublic,
     fieldNoteConsideration: payload.fieldNoteConsideration,
   });
 

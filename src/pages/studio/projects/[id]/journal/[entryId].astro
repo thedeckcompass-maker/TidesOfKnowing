@@ -3,7 +3,7 @@ import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
 import { studioAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioJournalEntry, getStudioJournalMedia, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
-import { STUDIO_EXCERPT_PURPOSES, STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import { STUDIO_COMMUNITY_TOPICS, STUDIO_EXCERPT_PURPOSES, STUDIO_JOURNAL_TAGS, studioCommunityTopicLabel } from "../../../../../lib/studio/types";
 import { STUDIO_JOURNAL_PHOTO_BUCKET, STUDIO_JOURNAL_PHOTO_LIMIT } from "../../../../../lib/studio/journalMedia";
 import "../../../../../styles/studio.css";
 
@@ -38,7 +38,12 @@ const error = Astro.url.searchParams.get("error");
 const photosSaved = Astro.url.searchParams.get("photos") === "1";
 const photoRemoved = Astro.url.searchParams.get("photoRemoved") === "1";
 const excerptSaved = Astro.url.searchParams.get("excerpt") === "1";
+const shared = Astro.url.searchParams.get("shared") === "1";
+const shareWithdrawn = Astro.url.searchParams.get("shareWithdrawn") === "1";
 const purposeLabel = (value: string) => value.replaceAll("_", " ");
+const activeShareByExcerpt = new Map(
+  media.shares.filter((share) => !share.withdrawn_at && share.journal_excerpt_id).map((share) => [share.journal_excerpt_id, share]),
+);
 ---
 
 <BaseLayout title={`${entry.title} | Creator Journal`} description="Private Deck Creator Studio journal entry." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
@@ -49,6 +54,8 @@ const purposeLabel = (value: string) => value.replaceAll("_", " ");
     {photosSaved ? <p class="studio-notice" role="status">Private journal photographs saved.</p> : null}
     {photoRemoved ? <p class="studio-notice" role="status">Journal photograph removed.</p> : null}
     {excerptSaved ? <p class="studio-notice" role="status">Controlled excerpt created.</p> : null}
+    {shared ? <p class="studio-notice" role="status">A separate community copy was published. The source journal remains private.</p> : null}
+    {shareWithdrawn ? <p class="studio-notice" role="status">The community copy was withdrawn. The private controlled excerpt remains unchanged.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
 
     <section class="studio-panel">
@@ -84,7 +91,7 @@ const purposeLabel = (value: string) => value.replaceAll("_", " ");
       <section class="studio-panel studio-panel--side" aria-labelledby="excerpt-heading">
         <p class="studio-kicker">Deliberate copy</p>
         <h2 id="excerpt-heading">Create a controlled excerpt</h2>
-        <p class="studio-panel__intro">An excerpt is a separate export copy. It never publishes the source entry or changes its privacy.</p>
+        <p class="studio-panel__intro">An excerpt is a separate export copy under your control. It never publishes the source entry or changes its privacy. Community sharing requires another deliberate action after the excerpt is saved.</p>
         <form class="studio-form" method="post" action={`/api/studio/journal/${entryId}/excerpts`}>
           <input type="hidden" name="project_id" value={projectId} />
           <label class="studio-field"><span>Purpose</span><select name="purpose">{STUDIO_EXCERPT_PURPOSES.map((purpose) => <option value={purpose}>{purposeLabel(purpose)}</option>)}</select></label>
@@ -99,7 +106,46 @@ const purposeLabel = (value: string) => value.replaceAll("_", " ");
       <section class="studio-panel studio-panel--wide" aria-labelledby="exports-heading">
         <p class="studio-kicker">Private exports</p>
         <h2 id="exports-heading">Controlled excerpt register</h2>
-        {media.excerpts.length ? <ul class="studio-list">{media.excerpts.map((excerpt) => <li class="studio-card"><div class="studio-card__row"><div><p class="studio-meta">{purposeLabel(excerpt.purpose)} · {new Date(excerpt.created_at).toLocaleDateString("en-NZ", { dateStyle: "medium" })}</p><h3>{excerpt.title}</h3><p>{excerpt.excerpt_text}</p></div><div class="studio-export-links"><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/md`}>Markdown</a><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/json`}>JSON</a></div></div></li>)}</ul> : <p class="studio-empty">No controlled excerpts have been created.</p>}
+        {media.excerpts.length ? <ul class="studio-list">{media.excerpts.map((excerpt) => {
+          const share = activeShareByExcerpt.get(excerpt.id);
+          return <li class="studio-card studio-community-share-card">
+            <div class="studio-card__row">
+              <div>
+                <p class="studio-meta">{purposeLabel(excerpt.purpose)} · {new Date(excerpt.created_at).toLocaleDateString("en-NZ", { dateStyle: "medium" })}</p>
+                <h3>{excerpt.title}</h3>
+                <p>{excerpt.excerpt_text}</p>
+              </div>
+              <div class="studio-export-links"><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/md`}>Markdown</a><a class="studio-link-button" href={`/api/studio/journal/excerpts/${excerpt.id}/export/json`}>JSON</a></div>
+            </div>
+            {share ? (
+              <div class="studio-community-share-status">
+                <p class="studio-meta">Community copy · {share.audience === "public" ? "public and search-visible" : "members only"} · {studioCommunityTopicLabel[share.topic]}</p>
+                <div class="studio-export-links">
+                  <a class="studio-link-button" href={`/community/${share.community_slug}/`}>View discussion</a>
+                  <form method="post" action={`/api/studio/community-shares/${share.id}/withdraw`}>
+                    <input type="hidden" name="project_id" value={projectId} />
+                    <input type="hidden" name="entry_id" value={entryId} />
+                    <button class="studio-text-button" type="submit">Withdraw community copy</button>
+                  </form>
+                </div>
+              </div>
+            ) : (
+              <form class="studio-form studio-community-share-form" method="post" action={`/api/studio/journal/excerpts/${excerpt.id}/community`}>
+                <input type="hidden" name="project_id" value={projectId} />
+                <input type="hidden" name="entry_id" value={entryId} />
+                <p class="studio-kicker">Optional community copy</p>
+                <label class="studio-field"><span>Deck Creation topic</span><select name="topic" required>{STUDIO_COMMUNITY_TOPICS.map((topic) => <option value={topic}>{studioCommunityTopicLabel[topic]}</option>)}</select></label>
+                <fieldset class="studio-fieldset"><legend>Visibility</legend>
+                  <label class="studio-check"><input type="radio" name="audience" value="members" checked /> <span>Community members only</span></label>
+                  <label class="studio-check"><input type="radio" name="audience" value="public" /> <span>Public and eligible for search indexing</span></label>
+                </fieldset>
+                <label class="studio-check studio-check--standalone"><input type="checkbox" name="confirm_deliberate_share" required /> <span>I deliberately choose to create a separate community copy. My source journal, project and photographs remain private.</span></label>
+                <label class="studio-check studio-check--standalone"><input type="checkbox" name="confirm_public_visibility" /> <span>If I choose public visibility, I understand this copy can be read without signing in and indexed by search engines.</span></label>
+                <button class="studio-button" type="submit">Share separate copy</button>
+              </form>
+            )}
+          </li>;
+        })}</ul> : <p class="studio-empty">No controlled excerpts have been created.</p>}
       </section>
     </div>
   </main>

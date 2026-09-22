@@ -1,6 +1,8 @@
 import {
   STUDIO_DECK_TYPES,
   STUDIO_EXCERPT_PURPOSES,
+  STUDIO_COMMUNITY_AUDIENCES,
+  STUDIO_COMMUNITY_TOPICS,
   STUDIO_GUIDEBOOK_TYPES,
   STUDIO_ITEM_STATUSES,
   STUDIO_JOURNAL_KINDS,
@@ -11,6 +13,8 @@ import {
   STUDIO_PROJECT_STATUSES,
   type StudioDeckType,
   type StudioExcerptPurpose,
+  type StudioCommunityAudience,
+  type StudioCommunityTopic,
   type StudioGuidebookType,
   type StudioItemStatus,
   type StudioJournalKind,
@@ -27,6 +31,34 @@ type ValidationResult<T> = { ok: true; value: T } | { ok: false; error: string }
 function text(form: FormData, key: string, max: number): string {
   const value = form.get(key);
   return typeof value === "string" ? value.trim().replace(/\r\n/g, "\n").slice(0, max) : "";
+}
+
+export function parseStudioCommunityShare(form: FormData): ValidationResult<{
+  audience: StudioCommunityAudience;
+  topic: StudioCommunityTopic;
+  deliberateShareConfirmed: boolean;
+  publicVisibilityConfirmed: boolean;
+}> {
+  const audience = choice(text(form, "audience", 20), STUDIO_COMMUNITY_AUDIENCES);
+  const topic = choice(text(form, "topic", 40), STUDIO_COMMUNITY_TOPICS);
+  if (!audience) return { ok: false, error: "Choose who may read the community copy." };
+  if (!topic) return { ok: false, error: "Choose a Deck Creation topic." };
+  if (form.get("confirm_deliberate_share") !== "on") {
+    return { ok: false, error: "Confirm that you are deliberately creating a separate community copy." };
+  }
+  const publicVisibilityConfirmed = form.get("confirm_public_visibility") === "on";
+  if (audience === "public" && !publicVisibilityConfirmed) {
+    return { ok: false, error: "Confirm that the public copy may be indexed by search engines." };
+  }
+  return {
+    ok: true,
+    value: {
+      audience,
+      topic,
+      deliberateShareConfirmed: true,
+      publicVisibilityConfirmed,
+    },
+  };
 }
 
 export function parseStudioJournalExcerpt(form: FormData): ValidationResult<{

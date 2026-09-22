@@ -267,6 +267,16 @@
 .studio-photo-card p, .studio-photo-card form { margin: 0.7rem; }
 .studio-text-button { border: 0; padding: 0; background: transparent; color: var(--tok-water); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
 .studio-export-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.studio-community-share-card { display: grid; gap: 1rem; }
+.studio-community-share-status,
+.studio-community-share-form { padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent); }
+.studio-community-share-status { display: grid; gap: 0.65rem; }
+.studio-community-share-status p { margin: 0; }
+.studio-community-share-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.studio-community-share-form > .studio-kicker,
+.studio-community-share-form > .studio-fieldset,
+.studio-community-share-form > .studio-check,
+.studio-community-share-form > .studio-button { grid-column: 1 / -1; }
 
 .studio-programme-list {
   display: grid;
@@ -488,6 +498,7 @@
 }
 
 @media (max-width: 760px) {
+  .studio-community-share-form { grid-template-columns: 1fr; }
   .studio-header,
   .studio-family__heading,
   .studio-card__row,

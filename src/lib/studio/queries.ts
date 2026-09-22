@@ -6,6 +6,7 @@ import type {
   StudioJournalEntry,
   StudioJournalExcerpt,
   StudioJournalPhoto,
+  StudioCommunityShare,
   StudioProject,
   StudioProgrammeEnrolment,
   StudioProgrammeModule,
@@ -27,16 +28,26 @@ export async function getStudioJournalMedia(
   supabase: SupabaseClient,
   projectId: string,
   entryId: string,
-): Promise<{ photos: StudioJournalPhoto[]; excerpts: StudioJournalExcerpt[] }> {
+): Promise<{ photos: StudioJournalPhoto[]; excerpts: StudioJournalExcerpt[]; shares: StudioCommunityShare[] }> {
   const [photosResult, excerptsResult] = await Promise.all([
     supabase.from("studio_journal_photos").select("*").eq("project_id", projectId).eq("journal_entry_id", entryId).order("sort_order"),
     supabase.from("studio_journal_excerpts").select("*").eq("project_id", projectId).eq("journal_entry_id", entryId).order("updated_at", { ascending: false }),
   ]);
   if (photosResult.error) throw photosResult.error;
   if (excerptsResult.error) throw excerptsResult.error;
+  const excerpts = (excerptsResult.data ?? []) as StudioJournalExcerpt[];
+  const sharesResult = excerpts.length
+    ? await supabase
+        .from("studio_community_shares")
+        .select("*")
+        .in("journal_excerpt_id", excerpts.map((excerpt) => excerpt.id))
+        .order("created_at", { ascending: false })
+    : { data: [], error: null };
+  if (sharesResult.error) throw sharesResult.error;
   return {
     photos: (photosResult.data ?? []) as StudioJournalPhoto[],
-    excerpts: (excerptsResult.data ?? []) as StudioJournalExcerpt[],
+    excerpts,
+    shares: (sharesResult.data ?? []) as StudioCommunityShare[],
   };
 }
 

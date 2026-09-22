@@ -32,7 +32,20 @@ export const STUDIO_EXCERPT_PURPOSES = [
   "newsletter",
   "social",
   "case_study",
+  "community",
   "private_record",
+] as const;
+export const STUDIO_COMMUNITY_AUDIENCES = ["members", "public"] as const;
+export const STUDIO_COMMUNITY_TOPICS = [
+  "introduction",
+  "concept_symbolism",
+  "cards_guidebook",
+  "artwork_collaboration",
+  "testing_refinement",
+  "production_publishing",
+  "crowdfunding_launch",
+  "workshop_question",
+  "progress_reflection",
 ] as const;
 export const STUDIO_PROGRAMME_STATUSES = ["not_started", "in_progress", "complete"] as const;
 export const STUDIO_ARTIST_PROCESS_DISCLOSURES = [
@@ -57,6 +70,8 @@ export type StudioGuidebookType = (typeof STUDIO_GUIDEBOOK_TYPES)[number];
 export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
 export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
 export type StudioExcerptPurpose = (typeof STUDIO_EXCERPT_PURPOSES)[number];
+export type StudioCommunityAudience = (typeof STUDIO_COMMUNITY_AUDIENCES)[number];
+export type StudioCommunityTopic = (typeof STUDIO_COMMUNITY_TOPICS)[number];
 export type StudioProgrammeStatus = (typeof STUDIO_PROGRAMME_STATUSES)[number];
 export type StudioArtistProcessDisclosure = (typeof STUDIO_ARTIST_PROCESS_DISCLOSURES)[number];
 export type StudioArtistIntroductionStatus = (typeof STUDIO_ARTIST_INTRODUCTION_STATUSES)[number];
@@ -156,6 +171,35 @@ export type StudioJournalExcerpt = {
   photo_id: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type StudioCommunityShare = {
+  id: string;
+  project_id: string | null;
+  journal_excerpt_id: string | null;
+  community_post_id: string;
+  owner_id: string;
+  audience: StudioCommunityAudience;
+  topic: StudioCommunityTopic;
+  community_slug: string;
+  title_snapshot: string;
+  excerpt_snapshot: string;
+  shared_at: string;
+  withdrawn_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const studioCommunityTopicLabel: Record<StudioCommunityTopic, string> = {
+  introduction: "Introduction and deck intention",
+  concept_symbolism: "Concept, structure and symbolism",
+  cards_guidebook: "Cards and guidebook writing",
+  artwork_collaboration: "Artwork and creative collaboration",
+  testing_refinement: "Testing and refinement",
+  production_publishing: "Printing, production and self-publishing",
+  crowdfunding_launch: "Crowdfunding and commercial launch",
+  workshop_question: "Workshop question",
+  progress_reflection: "Progress reflection or celebration",
 };
 
 export type StudioProgrammeModule = {
