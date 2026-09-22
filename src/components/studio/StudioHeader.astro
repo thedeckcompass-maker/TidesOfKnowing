@@ -18,6 +18,7 @@ const { eyebrow = "Deck Creator Studio", title, lede, projectId } = Astro.props;
   <nav class="studio-nav" aria-label="Deck Creator Studio">
     <a href="/studio/">Projects</a>
     {projectId ? <a href={`/studio/projects/${projectId}/`}>Project dashboard</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/journal/`}>Journal</a> : null}
     <a href="/community/account/">Account</a>
   </nav>
 </header>

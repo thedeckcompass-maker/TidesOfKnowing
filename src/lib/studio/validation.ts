@@ -2,11 +2,15 @@ import {
   STUDIO_DECK_TYPES,
   STUDIO_GUIDEBOOK_TYPES,
   STUDIO_ITEM_STATUSES,
+  STUDIO_JOURNAL_KINDS,
+  STUDIO_JOURNAL_TAGS,
   STUDIO_PATHWAYS,
   STUDIO_PROJECT_STATUSES,
   type StudioDeckType,
   type StudioGuidebookType,
   type StudioItemStatus,
+  type StudioJournalKind,
+  type StudioJournalTag,
   type StudioPathway,
   type StudioProjectStatus,
 } from "./types";
@@ -202,6 +206,47 @@ export function parseStudioGuidebookUpdate(form: FormData): ValidationResult<{
       ...created.value,
       status,
       body_markdown: text(form, "body_markdown", 200000),
+    },
+  };
+}
+
+export function parseStudioJournalEntry(form: FormData): ValidationResult<{
+  entry_kind: StudioJournalKind;
+  title: string;
+  body_markdown: string;
+  tags: StudioJournalTag[];
+  linked_card_id: string | null;
+  linked_section_id: string | null;
+  selected_for_process: boolean;
+}> {
+  const entryKind = choice(text(form, "entry_kind", 20), STUDIO_JOURNAL_KINDS);
+  const title = text(form, "title", 160);
+  const linkedCardId = optionalUuid(text(form, "linked_card_id", 50));
+  const linkedSectionId = optionalUuid(text(form, "linked_section_id", 50));
+  const rawTags = form.getAll("tags")
+    .filter((value): value is string => typeof value === "string")
+    .map((value) => value.trim());
+  const invalidTag = rawTags.find((value) => !STUDIO_JOURNAL_TAGS.includes(value as StudioJournalTag));
+  const tags = [...new Set(
+    rawTags.filter((value): value is StudioJournalTag => STUDIO_JOURNAL_TAGS.includes(value as StudioJournalTag)),
+  )];
+
+  if (!entryKind) return { ok: false, error: "Choose a valid journal entry type." };
+  if (!title) return { ok: false, error: "Give the journal entry a title." };
+  if (invalidTag) return { ok: false, error: "Choose valid journal tags." };
+  if (linkedCardId === undefined) return { ok: false, error: "Choose a valid linked card." };
+  if (linkedSectionId === undefined) return { ok: false, error: "Choose a valid linked guidebook section." };
+
+  return {
+    ok: true,
+    value: {
+      entry_kind: entryKind,
+      title,
+      body_markdown: text(form, "body_markdown", 50000),
+      tags,
+      linked_card_id: linkedCardId,
+      linked_section_id: linkedSectionId,
+      selected_for_process: form.get("selected_for_process") === "on",
     },
   };
 }

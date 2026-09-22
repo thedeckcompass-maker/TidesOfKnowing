@@ -17,12 +17,24 @@ export const STUDIO_GUIDEBOOK_TYPES = [
   "closing",
   "other",
 ] as const;
+export const STUDIO_JOURNAL_KINDS = ["reflection", "decision", "milestone"] as const;
+export const STUDIO_JOURNAL_TAGS = [
+  "research",
+  "artwork",
+  "resistance",
+  "breakthrough",
+  "testing",
+  "production",
+  "launch",
+] as const;
 
 export type StudioDeckType = (typeof STUDIO_DECK_TYPES)[number];
 export type StudioPathway = (typeof STUDIO_PATHWAYS)[number];
 export type StudioProjectStatus = (typeof STUDIO_PROJECT_STATUSES)[number];
 export type StudioItemStatus = (typeof STUDIO_ITEM_STATUSES)[number];
 export type StudioGuidebookType = (typeof STUDIO_GUIDEBOOK_TYPES)[number];
+export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
+export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
 
 export type StudioProject = {
   id: string;
@@ -83,6 +95,20 @@ export type StudioVersion = {
   version_number: number;
   snapshot: Record<string, unknown>;
   created_at: string;
+};
+
+export type StudioJournalEntry = {
+  id: string;
+  project_id: string;
+  entry_kind: StudioJournalKind;
+  title: string;
+  body_markdown: string;
+  tags: StudioJournalTag[];
+  linked_card_id: string | null;
+  linked_section_id: string | null;
+  selected_for_process: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 export const studioDeckTypeLabel: Record<StudioDeckType, string> = {

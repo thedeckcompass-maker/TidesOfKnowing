@@ -27,6 +27,7 @@
     "test:member-workspace-nav": "node scripts/member-workspace-nav.test.mjs",
     "test:studio-access": "node scripts/studio-access.test.mjs",
     "test:studio-foundation": "node scripts/studio-project-foundation.test.mjs",
+    "test:studio-journal": "node scripts/studio-journal-foundation.test.mjs",
     "test:bird-oracle-import": "node scripts/bird-oracle-import.test.mjs",
     "studio:import-bird-oracle": "node scripts/import-aotearoa-bird-oracle.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",

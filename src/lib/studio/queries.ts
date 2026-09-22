@@ -3,6 +3,7 @@ import type {
   StudioCard,
   StudioCardFamily,
   StudioGuidebookSection,
+  StudioJournalEntry,
   StudioProject,
   StudioVersion,
 } from "./types";
@@ -109,4 +110,32 @@ export async function getStudioGuidebookVersions(
     .order("version_number", { ascending: false });
   if (error) throw error;
   return (data ?? []) as StudioVersion[];
+}
+
+export async function getStudioJournalEntries(
+  supabase: SupabaseClient,
+  projectId: string,
+): Promise<StudioJournalEntry[]> {
+  const { data, error } = await supabase
+    .from("studio_journal_entries")
+    .select("*")
+    .eq("project_id", projectId)
+    .order("updated_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as StudioJournalEntry[];
+}
+
+export async function getStudioJournalEntry(
+  supabase: SupabaseClient,
+  projectId: string,
+  entryId: string,
+): Promise<StudioJournalEntry | null> {
+  const { data, error } = await supabase
+    .from("studio_journal_entries")
+    .select("*")
+    .eq("project_id", projectId)
+    .eq("id", entryId)
+    .maybeSingle();
+  if (error) throw error;
+  return (data as StudioJournalEntry | null) ?? null;
 }

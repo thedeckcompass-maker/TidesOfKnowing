@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioJournalEntry, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
+import { STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const entryId = Astro.params.entryId;
+const accessResponse = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId && entryId ? `/studio/projects/${projectId}/journal/${entryId}/` : "/studio/",
+);
+if (accessResponse) return accessResponse;
+if (!projectId || !entryId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const [workspace, entry] = await Promise.all([
+  getStudioProjectWorkspace(Astro.locals.supabase, projectId),
+  getStudioJournalEntry(Astro.locals.supabase, projectId, entryId),
+]);
+if (!workspace.project || !entry) return new Response(null, { status: 404 });
+
+const saved = Astro.url.searchParams.get("saved") === "1";
+const created = Astro.url.searchParams.get("created") === "1";
+const error = Astro.url.searchParams.get("error");
+---
+
+<BaseLayout title={`${entry.title} | Creator Journal`} description="Private Deck Creator Studio journal entry." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow={`${workspace.project.name} · Private journal`} title={entry.title} lede="This source entry remains private. Process-board selection does not publish or share it." projectId={projectId} />
+    {created ? <p class="studio-notice" role="status">Journal entry created.</p> : null}
+    {saved ? <p class="studio-notice" role="status">Journal entry saved.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+
+    <section class="studio-panel">
+      <form class="studio-form studio-form--two" method="post" action={`/api/studio/journal/${entry.id}`}>
+        <input type="hidden" name="project_id" value={projectId} />
+        <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" value={entry.title} /></label>
+        <label class="studio-field"><span>Entry type</span><select name="entry_kind"><option value="reflection" selected={entry.entry_kind === "reflection"}>Reflection</option><option value="decision" selected={entry.entry_kind === "decision"}>Decision</option><option value="milestone" selected={entry.entry_kind === "milestone"}>Milestone</option></select></label>
+        <label class="studio-field"><span>Linked card</span><select name="linked_card_id"><option value="">No linked card</option>{workspace.cards.map((card) => <option value={card.id} selected={entry.linked_card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</select></label>
+        <label class="studio-field"><span>Linked guidebook section</span><select name="linked_section_id"><option value="">No linked section</option>{workspace.guidebook.map((section) => <option value={section.id} selected={entry.linked_section_id === section.id}>{section.title}</option>)}</select></label>
+        <fieldset class="studio-field studio-field--full studio-fieldset"><legend>Tags</legend><div class="studio-check-grid">{STUDIO_JOURNAL_TAGS.map((tag) => <label class="studio-check"><input type="checkbox" name="tags" value={tag} checked={entry.tags.includes(tag)} /> <span>{tag}</span></label>)}</div></fieldset>
+        <label class="studio-field studio-field--full"><span>Journal entry</span><textarea class="studio-editor" name="body_markdown" maxlength="50000">{entry.body_markdown}</textarea></label>
+        <label class="studio-check studio-check--standalone studio-field--full"><input type="checkbox" name="selected_for_process" checked={entry.selected_for_process} /> <span>Add to the private process board</span></label>
+        <p class="studio-privacy-note studio-field--full">This selection is internal to your private Studio project. It does not create a public excerpt or community post.</p>
+        <div class="studio-field--full"><button class="studio-button" type="submit">Save journal entry</button></div>
+      </form>
+    </section>
+  </main>
+</BaseLayout>
