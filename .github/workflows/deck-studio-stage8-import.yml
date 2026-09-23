@@ -1,5 +1,5 @@
 name: Deck Studio Stage 8 full staging import
-# Transfer retry: renew the one-use key after the previous run timed out.
+# Transfer retry 2: renew the one-use key after correcting the staging SQL ambiguity.
 
 on:
   push:

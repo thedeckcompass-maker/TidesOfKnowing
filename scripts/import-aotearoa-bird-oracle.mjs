@@ -201,7 +201,7 @@ declare
   source_system_name text := plan->>'sourceSystem';
   archive_checksum text := plan->>'sourceArchiveChecksum';
   item jsonb;
-  value jsonb;
+  target_value jsonb;
   previous_checksum text;
   previous_target uuid;
   target uuid;
@@ -266,7 +266,7 @@ begin
   end loop;
 
   for item in select value from jsonb_array_elements(plan->'cards') loop
-    value := item->'value';
+    target_value := item->'value';
     select target_id into family_target
     from public.studio_import_records
     where project_id = target_project and source_system = source_system_name
@@ -290,11 +290,11 @@ begin
     ) then
       update public.studio_cards set
         family_id = family_target,
-        title = value->>'title',
-        card_number = coalesce(value->>'card_number', ''),
-        sort_order = (value->>'sort_order')::integer,
-        status = value->>'status',
-        content = value->'content'
+        title = target_value->>'title',
+        card_number = coalesce(target_value->>'card_number', ''),
+        sort_order = (target_value->>'sort_order')::integer,
+        status = target_value->>'status',
+        content = target_value->'content'
       where id = previous_target and project_id = target_project
       returning id into target;
       updated_count := updated_count + 1;
@@ -302,9 +302,9 @@ begin
       insert into public.studio_cards (
         id, project_id, family_id, title, card_number, sort_order, status, content
       ) values (
-        (item->>'targetId')::uuid, target_project, family_target, value->>'title',
-        coalesce(value->>'card_number', ''), (value->>'sort_order')::integer,
-        value->>'status', value->'content'
+        (item->>'targetId')::uuid, target_project, family_target, target_value->>'title',
+        coalesce(target_value->>'card_number', ''), (target_value->>'sort_order')::integer,
+        target_value->>'status', target_value->'content'
       ) on conflict (id) do update set
         family_id = excluded.family_id,
         title = excluded.title,
@@ -334,7 +334,7 @@ begin
   end loop;
 
   for item in select value from jsonb_array_elements(plan->'guidebookSections') loop
-    value := item->'value';
+    target_value := item->'value';
     card_target := null;
     if item->>'cardSourceKey' is not null then
       select target_id into card_target
@@ -361,12 +361,12 @@ begin
     ) then
       update public.studio_guidebook_sections set
         card_id = card_target,
-        section_type = value->>'section_type',
-        title = value->>'title',
-        sort_order = (value->>'sort_order')::integer,
-        status = value->>'status',
-        body_markdown = coalesce(value->>'body_markdown', ''),
-        metadata = value->'metadata'
+        section_type = target_value->>'section_type',
+        title = target_value->>'title',
+        sort_order = (target_value->>'sort_order')::integer,
+        status = target_value->>'status',
+        body_markdown = coalesce(target_value->>'body_markdown', ''),
+        metadata = target_value->'metadata'
       where id = previous_target and project_id = target_project
       returning id into target;
       updated_count := updated_count + 1;
@@ -374,9 +374,9 @@ begin
       insert into public.studio_guidebook_sections (
         id, project_id, card_id, section_type, title, sort_order, status, body_markdown, metadata
       ) values (
-        (item->>'targetId')::uuid, target_project, card_target, value->>'section_type',
-        value->>'title', (value->>'sort_order')::integer, value->>'status',
-        coalesce(value->>'body_markdown', ''), value->'metadata'
+        (item->>'targetId')::uuid, target_project, card_target, target_value->>'section_type',
+        target_value->>'title', (target_value->>'sort_order')::integer, target_value->>'status',
+        coalesce(target_value->>'body_markdown', ''), target_value->'metadata'
       ) on conflict (id) do update set
         card_id = excluded.card_id,
         section_type = excluded.section_type,

@@ -77,6 +77,8 @@ try {
   assert.match(cardTargetId, /^[a-f0-9]{8}-[a-f0-9]{4}-8[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
   const postgresSql = buildPostgresImportSql(plan, "11111111-1111-4111-8111-111111111111");
   assert.match(postgresSql, /begin;/);
+  assert.match(postgresSql, /target_value jsonb;/);
+  assert.doesNotMatch(postgresSql, /\n\s+value jsonb;/);
   assert.match(postgresSql, /on conflict \(project_id, source_system, source_key\) do update/);
   assert.match(postgresSql, /card-to-guidebook relationships are missing/);
   assert.match(postgresSql, /source_archive_checksum is distinct from archive_checksum/);
