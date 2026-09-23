@@ -38,6 +38,18 @@
   --tok-slate:               #D6DCE5;
   --tok-slate-mid:           #8E9BAD;
 
+  /* Deck Creator Studio: fixed editorial paper values in either device colour scheme.
+     These reuse the Tides reading/identity palette, with no new brand colours. */
+  --tok-studio-paper:         #F2EFE9;
+  --tok-studio-paper-soft:    #E8E3DB;
+  --tok-studio-card:          #FFFFFF;
+  --tok-studio-copy:          #1A1A1A;
+  --tok-studio-muted:         #4B5563;
+  --tok-studio-rule:          #CEC9C1;
+  --tok-studio-gold:          #C6A85A;
+  --tok-studio-gold-ink:      #8A6A1F;
+  --tok-studio-teal:          #065e73;
+
   /* ── Typography ── */
   --font-heading:  'Playfair Display', Georgia, serif;
   --font-body:     'Inter', system-ui, sans-serif;

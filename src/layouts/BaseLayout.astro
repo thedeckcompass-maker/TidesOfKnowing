@@ -109,6 +109,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
  */
 const pathname = Astro.url.pathname;
 const isToolsRoute = pathname.startsWith("/tools");
+const isStudioOfferRoute = pathname.startsWith("/tools/deck-creator-studio");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
   pathname.startsWith("/compass") && !isCompassApplyRoute;
@@ -124,7 +125,7 @@ const isAuthenticated = Boolean(Astro.locals.user);
 const isFieldNotesSection =
   pathname === "/blog" || pathname.startsWith("/blog/");
 const baseBodySurface =
-  isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
+  (isToolsRoute && !isStudioOfferRoute) || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
 const isMemberWorkspace =
   memberWorkspace === true ||
   (memberWorkspace !== false && isMemberWorkspaceRoute(pathname, isAuthenticated));

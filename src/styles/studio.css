@@ -1,7 +1,17 @@
 .tok-body--studio {
-  background:
-    radial-gradient(circle at 92% 4%, color-mix(in srgb, var(--tok-gold) 13%, transparent), transparent 28rem),
-    var(--tok-cream);
+  /* The creator workspace is a fixed paper surface in both device colour schemes. */
+  --tok-surface-reading: var(--tok-studio-paper);
+  --tok-surface-reading-soft: var(--tok-studio-paper-soft);
+  --tok-text-dark: var(--tok-studio-copy);
+  --tok-text-muted: var(--tok-studio-muted);
+  --tok-border-light: var(--tok-studio-rule);
+  --tok-teal: var(--tok-studio-teal);
+  --tok-teal-dim: var(--tok-studio-teal);
+  --tok-on-reading: var(--tok-deep-ocean);
+  --tok-on-reading-muted: var(--tok-deep-ocean);
+  color-scheme: light;
+  background: var(--tok-studio-paper);
+  color: var(--tok-studio-copy);
 }
 .studio-page {
   max-width: 76rem;
@@ -10,37 +20,43 @@
 
 .studio-header {
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
   gap: 2rem;
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--tok-studio-rule);
 }
 
 .studio-eyebrow,
 .studio-kicker,
 .studio-meta {
   margin: 0 0 0.55rem;
-  color: var(--tok-text-muted);
+  color: var(--tok-studio-gold-ink);
   font-size: var(--tok-type-meta);
   font-weight: 700;
   letter-spacing: var(--tok-letter-upper);
   text-transform: uppercase;
 }
 
+.studio-eyebrow {
+  color: var(--tok-deep-ocean);
+}
+
 .studio-header h1,
 .studio-panel h2,
 .studio-card h2,
 .studio-card h3 {
-  color: var(--tok-water);
-  font-family: var(--font-accent);
+  color: var(--tok-deep-ocean);
+  font-family: var(--font-heading);
   font-weight: 400;
 }
 
 .studio-header h1 {
   max-width: 48rem;
   margin: 0;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: 1;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  line-height: 1.13;
 }
 
 .studio-lede {
@@ -66,18 +82,36 @@
   align-items: center;
   justify-content: center;
   padding: 0.65rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--tok-water) 35%, transparent);
-  border-radius: 999px;
-  color: var(--tok-water);
+  border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 35%, transparent);
+  border-radius: var(--radius-md);
+  color: var(--tok-deep-ocean);
   font-weight: 700;
   text-decoration: none;
 }
 
 .studio-button {
-  border-color: var(--tok-water);
-  background: var(--tok-water);
-  color: white;
+  border-color: var(--tok-studio-gold);
+  background: var(--tok-studio-gold);
+  color: var(--tok-deep-ocean);
   cursor: pointer;
+}
+
+.studio-button:hover {
+  background: var(--tok-gold-light);
+}
+
+.studio-nav a:hover,
+.studio-link-button:hover {
+  background: var(--tok-studio-paper-soft);
+  color: var(--tok-deep-ocean);
+}
+
+.studio-nav a:focus-visible,
+.studio-button:focus-visible,
+.studio-link-button:focus-visible,
+.studio-field :is(input, select, textarea):focus-visible {
+  outline: 3px solid var(--tok-studio-gold-ink);
+  outline-offset: 3px;
 }
 
 .studio-grid {
@@ -88,10 +122,10 @@
 
 .studio-panel,
 .studio-card {
-  border: 1px solid color-mix(in srgb, var(--tok-water) 16%, transparent);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, white 91%, var(--tok-cream));
-  box-shadow: 0 1rem 2.8rem color-mix(in srgb, var(--tok-water) 8%, transparent);
+  border: 1px solid var(--tok-studio-rule);
+  border-radius: var(--radius-md);
+  background: var(--tok-studio-card);
+  box-shadow: var(--shadow-sm);
 }
 
 .studio-panel {
@@ -161,7 +195,7 @@
 }
 
 .studio-field span {
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -172,11 +206,21 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0.78rem 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--tok-water) 26%, transparent);
-  border-radius: 0.65rem;
-  background: white;
-  color: var(--tok-text-dark);
+  border: 1px solid var(--tok-studio-rule);
+  border-radius: var(--radius-md);
+  background: var(--tok-studio-card);
+  color: var(--tok-studio-copy);
   font: inherit;
+}
+
+.studio-field :is(input, select, textarea)::placeholder {
+  color: var(--tok-studio-muted);
+  opacity: 1;
+}
+
+.studio-field select option {
+  color: var(--tok-studio-copy);
+  background: var(--tok-studio-card);
 }
 
 .studio-field textarea {
@@ -199,7 +243,7 @@
 
 .studio-fieldset legend {
   margin-bottom: 0.55rem;
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-size: 0.92rem;
   font-weight: 700;
 }
@@ -233,7 +277,7 @@
   align-items: flex-start;
   padding: 0.85rem;
   border-radius: 0.65rem;
-  background: color-mix(in srgb, var(--tok-water) 6%, white);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 6%, white);
 }
 
 .studio-tags {
@@ -246,8 +290,8 @@
 .studio-tags span {
   padding: 0.25rem 0.55rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--tok-water) 8%, white);
-  color: var(--tok-water);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 8%, white);
+  color: var(--tok-deep-ocean);
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: capitalize;
@@ -262,14 +306,14 @@
 .studio-journal-tools { margin-top: 1.2rem; }
 .studio-photo-form { margin-top: 1.2rem; }
 .studio-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; padding: 0; list-style: none; }
-.studio-photo-card { overflow: hidden; border: 1px solid color-mix(in srgb, var(--tok-water) 18%, white); border-radius: 0.8rem; background: white; }
+.studio-photo-card { overflow: hidden; border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 18%, white); border-radius: 0.8rem; background: white; }
 .studio-photo-card img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .studio-photo-card p, .studio-photo-card form { margin: 0.7rem; }
-.studio-text-button { border: 0; padding: 0; background: transparent; color: var(--tok-water); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.studio-text-button { border: 0; padding: 0; background: transparent; color: var(--tok-deep-ocean); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer; }
 .studio-export-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .studio-community-share-card { display: grid; gap: 1rem; }
 .studio-community-share-status,
-.studio-community-share-form { padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent); }
+.studio-community-share-form { padding-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 18%, transparent); }
 .studio-community-share-status { display: grid; gap: 0.65rem; }
 .studio-community-share-status p { margin: 0; }
 .studio-community-share-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -288,13 +332,13 @@
 
 .studio-module {
   padding: clamp(1rem, 2.4vw, 1.5rem);
-  border: 1px solid color-mix(in srgb, var(--tok-water) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 18%, transparent);
   border-radius: 0.9rem;
   background: white;
 }
 
 .studio-module--locked {
-  background: color-mix(in srgb, var(--tok-water) 3%, white);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 3%, white);
 }
 
 .studio-module__header {
@@ -306,7 +350,7 @@
 
 .studio-module__header h3 {
   margin: 0;
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-family: var(--font-accent);
   font-size: clamp(1.3rem, 2.5vw, 1.8rem);
   font-weight: 400;
@@ -322,11 +366,11 @@
 .studio-module__details > div {
   padding: 0.85rem;
   border-radius: 0.7rem;
-  background: color-mix(in srgb, var(--tok-water) 5%, white);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 5%, white);
 }
 
 .studio-module__details dt {
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -343,7 +387,7 @@
 }
 
 .studio-module__form summary {
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   cursor: pointer;
   font-weight: 700;
 }
@@ -376,9 +420,9 @@
   align-items: center;
   gap: 0.45rem;
   padding: 0.55rem 0.78rem;
-  border: 1px solid color-mix(in srgb, var(--tok-water) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 22%, transparent);
   border-radius: 999px;
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-weight: 700;
   text-decoration: none;
 }
@@ -389,7 +433,7 @@
   min-height: 1.45rem;
   place-items: center;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--tok-water) 9%, white);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 9%, white);
   font-size: 0.78rem;
 }
 
@@ -408,7 +452,7 @@
   justify-content: space-between;
   gap: 1.25rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--tok-water) 16%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 16%, transparent);
 }
 
 .studio-family__heading > p {
@@ -429,19 +473,19 @@
 }
 
 .studio-relationship a {
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-weight: 700;
 }
 
 .studio-lesson {
   margin: 1rem 0;
   padding: 1rem 1.2rem;
-  border: 1px solid color-mix(in srgb, var(--tok-water) 20%, white);
+  border: 1px solid color-mix(in srgb, var(--tok-deep-ocean) 20%, white);
   border-radius: 0.8rem;
 }
 
 .studio-lesson summary {
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   cursor: pointer;
   font-weight: 700;
 }
@@ -475,7 +519,7 @@
   padding: 0.28rem 0.62rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--tok-gold) 22%, white);
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: capitalize;
@@ -491,12 +535,12 @@
 .studio-stat {
   padding: 1rem;
   border-radius: 0.8rem;
-  background: color-mix(in srgb, var(--tok-water) 6%, white);
+  background: color-mix(in srgb, var(--tok-deep-ocean) 6%, white);
 }
 
 .studio-stat strong {
   display: block;
-  color: var(--tok-water);
+  color: var(--tok-deep-ocean);
   font-family: var(--font-accent);
   font-size: 2rem;
   font-weight: 400;
