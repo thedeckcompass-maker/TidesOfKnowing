@@ -32,6 +32,7 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
       client_reference_id: reservation.reservation_id,
       customer_email: locals.user.email,
       line_items: [{ price, quantity: 1 }],
+      allow_promotion_codes: true,
       metadata: { studio_user_id: locals.user.id, studio_plan_code: planCode, studio_reservation_id: reservation.reservation_id },
       subscription_data: { metadata: { studio_user_id: locals.user.id, studio_plan_code: planCode, minimum_payments: String(STUDIO_PLANS[planCode].minimumPayments) } },
       success_url: `${origin}/studio/onboarding/?checkout=success`,
