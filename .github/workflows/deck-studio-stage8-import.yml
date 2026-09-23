@@ -1,4 +1,5 @@
 name: Deck Studio Stage 8 full staging import
+# Transfer retry: renew the one-use key after the previous run timed out.
 
 on:
   push:
