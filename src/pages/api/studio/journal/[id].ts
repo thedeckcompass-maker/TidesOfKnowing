@@ -22,14 +22,16 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
     });
   }
 
-  const { error } = await locals.supabase
+  const { data: savedEntry, error } = await locals.supabase
     .from("studio_journal_entries")
     .update(parsed.value)
     .eq("id", entryId)
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .select("id")
+    .maybeSingle();
 
-  if (error) console.error("Unable to update Studio journal entry:", error);
-  const suffix = error ? `error=${encodeURIComponent("The journal entry could not be saved.")}` : "saved=1";
+  if (error || !savedEntry) console.error("Unable to update Studio journal entry:", error ?? "No matching writable entry.");
+  const suffix = error || !savedEntry ? `error=${encodeURIComponent("The journal entry could not be saved.")}` : "saved=1";
   return new Response(null, {
     status: 303,
     headers: { Location: `/studio/projects/${projectId}/journal/${entryId}/?${suffix}` },

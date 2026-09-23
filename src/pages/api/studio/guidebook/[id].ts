@@ -21,15 +21,17 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
     });
   }
 
-  const { error } = await locals.supabase
+  const { data: savedSection, error } = await locals.supabase
     .from("studio_guidebook_sections")
     .update(parsed.value)
     .eq("id", sectionId)
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .select("id")
+    .maybeSingle();
 
-  const location = error
+  const location = error || !savedSection
     ? `/studio/projects/${projectId}/guidebook/${sectionId}/?error=${encodeURIComponent("The section could not be saved.")}`
     : `/studio/projects/${projectId}/guidebook/${sectionId}/?saved=1`;
-  if (error) console.error("Unable to update guidebook section:", error);
+  if (error || !savedSection) console.error("Unable to update guidebook section:", error ?? "No matching writable section.");
   return new Response(null, { status: 303, headers: { Location: location } });
 };

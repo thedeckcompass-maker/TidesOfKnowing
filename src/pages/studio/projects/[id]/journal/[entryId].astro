@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import { studioAccessResponse, studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioJournalEntry, getStudioJournalMedia, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
 import { STUDIO_COMMUNITY_TOPICS, STUDIO_EXCERPT_PURPOSES, STUDIO_JOURNAL_TAGS, studioCommunityTopicLabel } from "../../../../../lib/studio/types";
 import { STUDIO_JOURNAL_PHOTO_BUCKET, STUDIO_JOURNAL_PHOTO_LIMIT } from "../../../../../lib/studio/journalMedia";
@@ -18,6 +19,7 @@ const accessResponse = studioAccessResponse(
   Astro.locals.studioEntitlement,
 );
 if (accessResponse) return accessResponse;
+const canWrite = !studioWriteAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.studioEntitlement);
 if (!projectId || !entryId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 
 const [workspace, entry, media] = await Promise.all([
@@ -47,7 +49,7 @@ const activeShareByExcerpt = new Map(
 ---
 
 <BaseLayout title={`${entry.title} | Creator Journal`} description="Private Deck Creator Studio journal entry." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
-  <main class="studio-page page-inner">
+  <main class:list={["studio-page", "page-inner", { "studio-page--editing": canWrite }]}>
     <StudioHeader eyebrow={`${workspace.project.name} · Private journal`} title={entry.title} lede="This source entry remains private. Process-board selection does not publish or share it." projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Journal entry created.</p> : null}
     {saved ? <p class="studio-notice" role="status">Journal entry saved.</p> : null}
@@ -57,9 +59,10 @@ const activeShareByExcerpt = new Map(
     {shared ? <p class="studio-notice" role="status">A separate community copy was published. The source journal remains private.</p> : null}
     {shareWithdrawn ? <p class="studio-notice" role="status">The community copy was withdrawn. The private controlled excerpt remains unchanged.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!canWrite ? <p class="studio-notice" role="status">This journal entry is available to read. Editing is paused while Studio access is read-only.</p> : null}
 
     <section class="studio-panel">
-      <form class="studio-form studio-form--two" method="post" action={`/api/studio/journal/${entry.id}`}>
+      <form id="studio-journal-editor" class="studio-form studio-form--two" method="post" action={`/api/studio/journal/${entry.id}`}>
         <input type="hidden" name="project_id" value={projectId} />
         <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" value={entry.title} /></label>
         <label class="studio-field"><span>Entry type</span><select name="entry_kind"><option value="reflection" selected={entry.entry_kind === "reflection"}>Reflection</option><option value="decision" selected={entry.entry_kind === "decision"}>Decision</option><option value="milestone" selected={entry.entry_kind === "milestone"}>Milestone</option></select></label>
@@ -69,7 +72,7 @@ const activeShareByExcerpt = new Map(
         <label class="studio-field studio-field--full"><span>Journal entry</span><textarea class="studio-editor" name="body_markdown" maxlength="50000">{entry.body_markdown}</textarea></label>
         <label class="studio-check studio-check--standalone studio-field--full"><input type="checkbox" name="selected_for_process" checked={entry.selected_for_process} /> <span>Add to the private process board</span></label>
         <p class="studio-privacy-note studio-field--full">This selection is internal to your private Studio project. It does not create a public excerpt or community post.</p>
-        <div class="studio-field--full"><button class="studio-button" type="submit">Save journal entry</button></div>
+        <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save journal entry</button></div>
       </form>
     </section>
 
@@ -148,6 +151,7 @@ const activeShareByExcerpt = new Map(
         })}</ul> : <p class="studio-empty">No controlled excerpts have been created.</p>}
       </section>
     </div>
+    {canWrite ? <StudioEditorialSaveBar formId="studio-journal-editor" savedLabel="Journal entry saved" saveLabel="Save journal entry" error={Boolean(error)} /> : null}
   </main>
 </BaseLayout>
 

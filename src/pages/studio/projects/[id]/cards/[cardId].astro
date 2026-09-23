@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import { studioAccessResponse, studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioCard, getStudioCardVersions, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
 import "../../../../../styles/studio.css";
 
@@ -15,6 +16,7 @@ const accessResponse = studioAccessResponse(
   Astro.locals.studioEntitlement,
 );
 if (accessResponse) return accessResponse;
+const canWrite = !studioWriteAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.studioEntitlement);
 if (!projectId || !cardId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 const [workspace, card, versions] = await Promise.all([
   getStudioProjectWorkspace(Astro.locals.supabase, projectId),
@@ -32,14 +34,15 @@ const error = Astro.url.searchParams.get("error");
 ---
 
 <BaseLayout title={`${card.title} | Deck Creator Studio`} description="Private card-writing workspace." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
-  <main class="studio-page page-inner">
+  <main class:list={["studio-page", "page-inner", { "studio-page--editing": canWrite }]}>
     <StudioHeader eyebrow={`${workspace.project.name} · Card ${card.sort_order}`} title={card.title} lede={`Structured card writing · version ${card.version_number}`} projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Card created. Its first version has been recorded.</p> : null}
     {saved ? <p class="studio-notice" role="status">Card saved as a new version.</p> : null}
     {restored ? <p class="studio-notice" role="status">Earlier content restored as a new current version.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!canWrite ? <p class="studio-notice" role="status">This card is available to read. Editing is paused while Studio access is read-only.</p> : null}
     <section class="studio-panel">
-      <form class="studio-form studio-form--two" method="post" action={`/api/studio/cards/${card.id}`}>
+      <form id="studio-card-editor" class="studio-form studio-form--two" method="post" action={`/api/studio/cards/${card.id}`}>
         <input type="hidden" name="project_id" value={projectId} />
         <label class="studio-field"><span>Card title</span><input name="title" required maxlength="120" value={card.title} /></label>
         <label class="studio-field"><span>Card number or label</span><input name="card_number" maxlength="30" value={card.card_number} /></label>
@@ -60,7 +63,7 @@ const error = Astro.url.searchParams.get("error");
         <label class="studio-field studio-field--full"><span>Artwork brief</span><textarea name="artwork_brief">{contentText("artwork_brief")}</textarea></label>
         <label class="studio-field"><span>Artwork rights status</span><textarea name="rights_status">{contentText("rights_status")}</textarea></label>
         <label class="studio-field"><span>Production notes</span><textarea name="production_notes">{contentText("production_notes")}</textarea></label>
-        <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
+        <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save new version</button></div>
       </form>
     </section>
     <section class="studio-panel" aria-labelledby="card-guidebook-heading">
@@ -99,5 +102,6 @@ const error = Astro.url.searchParams.get("error");
         ))}
       </ul>
     </section>
+    {canWrite ? <StudioEditorialSaveBar formId="studio-card-editor" savedLabel={`Saved as version ${card.version_number}`} saveLabel="Save new version" error={Boolean(error)} /> : null}
   </main>
 </BaseLayout>
