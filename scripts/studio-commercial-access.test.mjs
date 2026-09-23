@@ -6,6 +6,7 @@ const read = (path) => readFileSync(join(root, path), "utf8");
 const billing = read("src/lib/studio/billing.ts");
 const access = read("src/lib/studio/access.ts");
 const migration = read("supabase/migrations/20260922224500_deck_studio_commercial_access.sql");
+const atomicBilling = read("supabase/migrations/20260923200000_deck_studio_billing_atomic_events.sql");
 const offer = read("src/pages/tools/deck-creator-studio/index.astro");
 const checkout = read("src/pages/api/studio/billing/checkout.ts");
 const webhook = read("src/pages/api/studio/billing/webhook.ts");
@@ -39,7 +40,12 @@ assert.match(webhook, /customer\.subscription\.deleted/);
 assert.match(webhook, /invoice\.payment_failed/);
 assert.match(webhook, /invoice\.paid/);
 assert.match(webhook, /cancel_at_period_end: true/);
-assert.match(webhook, /idempotent:\s*true/);
+assert.match(webhook, /studio_apply_test_billing_event/);
+assert.match(webhook, /idempotent:\s*data\.duplicate === true/);
+assert.match(atomicBilling, /on conflict \(stripe_event_id\) do nothing/);
+assert.match(atomicBilling, /Legacy failed Studio billing event requires reconciliation/);
+assert.match(atomicBilling, /on conflict \(stripe_invoice_id\) do nothing/);
+assert.match(atomicBilling, /revoke all on function public\.studio_apply_test_billing_event\(jsonb\) from public, anon, authenticated/);
 assert.match(portal, /billingPortal\.sessions\.create/);
 assert.match(onboarding, /onboarding_complete/);
 assert.match(grants, /studio_entitlement_audit/);
@@ -47,7 +53,7 @@ assert.match(grants, /toISOString\(\)/);
 assert.match(capacity, /capacity_limit/);
 assert.match(analytics, /Analytics must never interrupt/);
 assert.match(access, /read-only\. Exports remain available/);
-for (const source of [billing, access, migration, offer, checkout, webhook, portal, onboarding, grants, capacity, analytics]) {
+for (const source of [billing, access, migration, atomicBilling, offer, checkout, webhook, portal, onboarding, grants, capacity, analytics]) {
   assert.doesNotMatch(source, /sk_live_|STRIPE_SECRET_KEY(?!_)/);
   assert.doesNotMatch(source, /repeating-card-meanings|community_posts/i);
 }
