@@ -43,5 +43,14 @@ jobs:
           where created_at > now() - interval '4 hours'
           group by plan_code, status
           order by plan_code, status;
+          select 'privilege', t.table_name,
+            has_table_privilege('service_role', 'public.' || t.table_name, 'SELECT'),
+            has_table_privilege('service_role', 'public.' || t.table_name, 'INSERT'),
+            has_table_privilege('service_role', 'public.' || t.table_name, 'UPDATE')
+          from (values
+            ('studio_billing_events'), ('studio_entitlements'),
+            ('studio_checkout_reservations'), ('studio_entitlement_audit'),
+            ('studio_analytics_events')
+          ) as t(table_name);
           commit;
           SQL
