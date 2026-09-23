@@ -1,0 +1,47 @@
+name: Deck Studio staging billing diagnostic
+
+on:
+  push:
+    branches: [feature/deck-creator-studio-live]
+    paths: [.github/workflows/studio-billing-diagnostic.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_REF: utzcmbidotxgmulguzxo
+    steps:
+      - name: Require the isolated Studio staging database
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" || "$STUDIO_STAGING_DATABASE_URL" != *"$STUDIO_PROJECT_REF"* ]]; then
+            echo "::error::Isolated Studio staging connection is unavailable."
+            exit 1
+          fi
+      - name: Inspect recent billing states without personal data
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --quiet --tuples-only --no-align <<'SQL'
+          begin read only;
+          select 'billing', event_type, outcome, count(*)
+          from public.studio_billing_events
+          where created_at > now() - interval '4 hours'
+          group by event_type, outcome
+          order by event_type, outcome;
+          select 'entitlement', plan_code, status, access_mode, count(*)
+          from public.studio_entitlements
+          group by plan_code, status, access_mode
+          order by plan_code, status, access_mode;
+          select 'reservation', plan_code, status, count(*)
+          from public.studio_checkout_reservations
+          where created_at > now() - interval '4 hours'
+          group by plan_code, status
+          order by plan_code, status;
+          commit;
+          SQL
