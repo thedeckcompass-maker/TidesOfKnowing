@@ -53,11 +53,25 @@ jobs:
           then 1 else 0 end);
           select owner_id as owner from public.studio_projects where id=:'project'::uuid \gset
           begin;
+          -- The import owner is a staging fixture. Grant access only inside this rollback-only transaction.
+          insert into public.studio_entitlements (user_id, plan_code, status, access_mode, manual_grant)
+          values (:'owner'::uuid, 'studio', 'manual', 'write', true)
+          on conflict (user_id) do update set status='manual', access_mode='write';
           set local role authenticated;
           select set_config('request.jwt.claim.sub', :'owner', true) is not null;
           select 1 / (case when
-            (select count(*) from public.studio_cards where project_id=:'project'::uuid) = 78
+            public.studio_has_read_access()
+            and public.studio_has_write_access()
+            and (select count(*) from public.studio_cards where project_id=:'project'::uuid) = 78
             and (select count(*) from public.studio_guidebook_sections where project_id=:'project'::uuid) = 162
+          then 1 else 0 end);
+          insert into public.studio_production_plans (project_id, next_action)
+          values (:'project'::uuid, 'Check the proof');
+          update public.studio_production_plans set next_action='Compare quotations'
+          where project_id=:'project'::uuid and version_number=1;
+          select 1 / (case when
+            (select version_number from public.studio_production_plans where project_id=:'project'::uuid) = 2
+            and (select count(*) from public.studio_production_plan_versions where project_id=:'project'::uuid) = 2
           then 1 else 0 end);
           select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true) is not null;
           select 1 / (case when
