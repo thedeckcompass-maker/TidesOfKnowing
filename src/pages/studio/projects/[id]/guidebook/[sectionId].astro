@@ -2,6 +2,7 @@
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
 import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import StudioVersionHistory from "../../../../../components/studio/StudioVersionHistory.astro";
 import { studioAccessResponse, studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioGuidebookSection, getStudioGuidebookVersions, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
 import "../../../../../styles/studio.css";
@@ -36,6 +37,8 @@ const unassignedCards = workspace.cards.filter((card) => !card.family_id || !wor
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
+const restoredFrom = Astro.url.searchParams.get("restoredFrom");
+const restoredVersion = Astro.url.searchParams.get("version");
 const error = Astro.url.searchParams.get("error");
 ---
 
@@ -44,7 +47,9 @@ const error = Astro.url.searchParams.get("error");
     <StudioHeader eyebrow={`${project.name} · Guidebook`} title={section.title} lede={`Markdown manuscript editor · version ${section.version_number}`} projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Section created. Its first version has been recorded.</p> : null}
     {saved ? <p class="studio-notice" role="status">Section saved as a new version.</p> : null}
-    {restored ? <p class="studio-notice" role="status">Earlier manuscript restored as a new current version.</p> : null}
+    {restoredFrom && restoredVersion && /^\d+$/.test(restoredFrom) && /^\d+$/.test(restoredVersion)
+      ? <p class="studio-notice" role="status">Restored Version {restoredFrom} as Version {restoredVersion}. The previous version remains in history.</p>
+      : restored ? <p class="studio-notice" role="status">Earlier manuscript restored as a new current version.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
     {!canWrite ? <p class="studio-notice" role="status">This section is available to read. Editing is paused while Studio access is read-only.</p> : null}
     {linkedCard ? (
@@ -64,26 +69,7 @@ const error = Astro.url.searchParams.get("error");
         <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save new version</button></div>
       </form>
     </section>
-    <section class="studio-panel" aria-labelledby="guidebook-history-heading">
-      <p class="studio-kicker">Recoverable history</p>
-      <h2 id="guidebook-history-heading">Section versions</h2>
-      <ul class="studio-list">
-        {versions.map((version, index) => (
-          <li class="studio-card">
-            <div class="studio-card__row">
-              <div><h3>Version {version.version_number}</h3><p>{new Date(version.created_at).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</p></div>
-              {index > 0 ? (
-                <form method="post" action={`/api/studio/guidebook/${section.id}/restore`}>
-                  <input type="hidden" name="project_id" value={projectId} />
-                  <input type="hidden" name="version_id" value={version.id} />
-                  <button class="studio-link-button" type="submit">Restore this version</button>
-                </form>
-              ) : <span class="studio-status">Current</span>}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <StudioVersionHistory kind="guidebook" versions={versions} projectId={projectId} resourceId={section.id} canWrite={canWrite} references={{ cards: Object.fromEntries(workspace.cards.map((card) => [card.id, card.title])) }} />
     {canWrite ? <StudioEditorialSaveBar formId="studio-guidebook-editor" savedLabel={`Saved as version ${section.version_number}`} saveLabel="Save new version" error={Boolean(error)} /> : null}
   </main>
 </BaseLayout>

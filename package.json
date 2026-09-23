@@ -27,6 +27,7 @@
     "test:member-workspace-nav": "node scripts/member-workspace-nav.test.mjs",
     "test:studio-access": "node scripts/studio-access.test.mjs",
     "test:studio-foundation": "node scripts/studio-project-foundation.test.mjs",
+    "test:studio-history": "node scripts/studio-version-history.test.mjs",
     "test:studio-journal": "node scripts/studio-journal-foundation.test.mjs",
     "test:studio-journal-media": "node scripts/studio-journal-media.test.mjs",
     "test:studio-pulse": "node scripts/studio-pulse-exports.test.mjs",

@@ -135,6 +135,7 @@ export type StudioVersion = {
   version_number: number;
   snapshot: Record<string, unknown>;
   created_at: string;
+  restored_from_version_id?: string | null;
 };
 
 export type StudioJournalEntry = {

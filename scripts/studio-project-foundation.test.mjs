@@ -69,7 +69,8 @@ assert.match(guidebookCreate, /insert\(\{ project_id: projectId, \.\.\.parsed\.v
 assert.match(guidebookUpdate, /update\(parsed\.value\)/);
 assert.match(cardRestore, /studio_card_versions/);
 assert.match(guidebookRestore, /studio_guidebook_versions/);
-assert.match(guidebookRestore, /card_id: snapshot\.card_id/);
+assert.match(guidebookRestore, /studio_restore_guidebook_version/);
+assert.match(guidebookRestore, /confirm_restore/);
 
 const repeatingCardChanges = [dashboard, cardEditor, guidebookEditor, migration]
   .filter((source) => source.includes("repeating-card-meanings"));

@@ -11,33 +11,31 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
   const form = await request.formData();
   const projectId = typeof form.get("project_id") === "string" ? String(form.get("project_id")) : "";
   const versionId = typeof form.get("version_id") === "string" ? String(form.get("version_id")) : "";
-  if (!projectId || !versionId) return new Response("Not found", { status: 404 });
+  const currentVersion = Number(form.get("expected_current_version"));
+  if (!projectId || !versionId || form.get("confirm_restore") !== "on"
+    || !Number.isSafeInteger(currentVersion) || currentVersion < 2) {
+    return new Response("Review the earlier version and confirm before restoring.", { status: 400 });
+  }
 
   const { data: version, error: versionError } = await locals.supabase
     .from("studio_guidebook_versions")
-    .select("snapshot")
+    .select("version_number")
     .eq("id", versionId)
     .eq("section_id", sectionId)
     .eq("project_id", projectId)
     .maybeSingle();
-  if (versionError || !version?.snapshot) return new Response("Not found", { status: 404 });
+  if (versionError || !version || version.version_number >= currentVersion) return new Response("Not found", { status: 404 });
 
-  const snapshot = version.snapshot as Record<string, unknown>;
-  const { error } = await locals.supabase
-    .from("studio_guidebook_sections")
-    .update({
-      title: snapshot.title,
-      section_type: snapshot.section_type,
-      sort_order: snapshot.sort_order,
-      status: snapshot.status,
-      body_markdown: snapshot.body_markdown,
-      card_id: snapshot.card_id,
-      metadata: snapshot.metadata,
-    })
-    .eq("id", sectionId)
-    .eq("project_id", projectId);
+  const { data: restoredVersion, error } = await locals.supabase.rpc("studio_restore_guidebook_version", {
+    target_project_id: projectId,
+    target_section_id: sectionId,
+    source_version_id: versionId,
+    expected_current_version: currentVersion,
+  });
   if (error) console.error("Unable to restore guidebook version:", error);
-  const suffix = error ? `error=${encodeURIComponent("The version could not be restored.")}` : "restored=1";
+  const suffix = error || !Number.isSafeInteger(restoredVersion)
+    ? `error=${encodeURIComponent(error?.code === "40001" ? "This section changed since you reviewed it. Review the versions again before restoring." : "The version could not be restored.")}`
+    : `restoredFrom=${version.version_number}&version=${restoredVersion}`;
   return new Response(null, {
     status: 303,
     headers: { Location: `/studio/projects/${projectId}/guidebook/${sectionId}/?${suffix}` },

@@ -123,7 +123,7 @@ export async function getStudioCardVersions(
 ): Promise<StudioVersion[]> {
   const { data, error } = await supabase
     .from("studio_card_versions")
-    .select("id, version_number, snapshot, created_at")
+    .select("*")
     .eq("project_id", projectId)
     .eq("card_id", cardId)
     .order("version_number", { ascending: false });
@@ -153,7 +153,7 @@ export async function getStudioGuidebookVersions(
 ): Promise<StudioVersion[]> {
   const { data, error } = await supabase
     .from("studio_guidebook_versions")
-    .select("id, version_number, snapshot, created_at")
+    .select("*")
     .eq("project_id", projectId)
     .eq("section_id", sectionId)
     .order("version_number", { ascending: false });
