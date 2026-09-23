@@ -4,6 +4,7 @@ import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
 import { studioAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioProgramme, getStudioProject } from "../../../../../lib/studio/queries";
 import type { StudioProgrammeModule } from "../../../../../lib/studio/types";
+import { STUDIO_LESSONS } from "../../../../../lib/studio/lessons";
 import "../../../../../styles/studio.css";
 
 export const prerender = false;
@@ -133,6 +134,17 @@ function statusLabel(status: string): string {
                   <div><dt>Next production risk</dt><dd>{module.production_risk}</dd></div>
                   <div><dt>Your {project.pathway === "personal" ? "personal" : project.pathway} pathway</dt><dd>{pathwayGuidance(module)}</dd></div>
                 </dl>
+                {unlocked && STUDIO_LESSONS[module.week_number] ? (
+                  <details class="studio-lesson" open={currentWeek === module.week_number}>
+                    <summary>Work through week {module.week_number}</summary>
+                    <div class="studio-lesson__content">
+                      <h4>The editorial decision</h4><p>{STUDIO_LESSONS[module.week_number].focus}</p>
+                      <h4>Make it in your deck</h4><ol>{STUDIO_LESSONS[module.week_number].method.map((step) => <li>{step}</li>)}</ol>
+                      <h4>Applied example</h4><p>{STUDIO_LESSONS[module.week_number].workingExample}</p>
+                      <h4>Review before you continue</h4><p>{STUDIO_LESSONS[module.week_number].review}</p>
+                    </div>
+                  </details>
+                ) : null}
                 {!enrolment ? (
                   <p class="studio-privacy-note">Start the programme to record tasks and progress.</p>
                 ) : !unlocked ? (

@@ -11,8 +11,24 @@ import type {
   StudioProgrammeEnrolment,
   StudioProgrammeModule,
   StudioProgrammeProgress,
+  StudioProductionPlan,
   StudioVersion,
 } from "./types";
+
+export async function getStudioProductionPlan(supabase: SupabaseClient, projectId: string): Promise<StudioProductionPlan | null> {
+  const { data, error } = await supabase.from("studio_production_plans")
+    .select("*").eq("project_id", projectId).maybeSingle();
+  if (error) throw error;
+  return (data as StudioProductionPlan | null) ?? null;
+}
+
+export async function getStudioProductionPlanVersions(supabase: SupabaseClient, projectId: string) {
+  const { data, error } = await supabase.from("studio_production_plan_versions")
+    .select("version_number, created_at").eq("project_id", projectId)
+    .order("version_number", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as Array<{ version_number: number; created_at: string }>;
+}
 
 export async function getStudioProjects(supabase: SupabaseClient): Promise<StudioProject[]> {
   const { data, error } = await supabase

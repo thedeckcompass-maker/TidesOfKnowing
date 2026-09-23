@@ -35,6 +35,7 @@
     "test:studio-support": "node scripts/studio-support-workflows.test.mjs",
     "test:studio-artists": "node scripts/studio-artist-collaboration.test.mjs",
     "test:studio-community": "node scripts/studio-community.test.mjs",
+    "test:studio-release": "node scripts/studio-release-readiness.test.mjs",
     "test:bird-oracle-import": "node scripts/bird-oracle-import.test.mjs",
     "studio:import-bird-oracle": "node scripts/import-aotearoa-bird-oracle.mjs",
     "test:reading-library": "node scripts/reading-library.test.mjs",

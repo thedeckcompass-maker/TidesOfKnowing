@@ -33,6 +33,55 @@ function text(form: FormData, key: string, max: number): string {
   return typeof value === "string" ? value.trim().replace(/\r\n/g, "\n").slice(0, max) : "";
 }
 
+export function parseStudioProductionPlan(form: FormData): ValidationResult<{
+  status: "draft" | "review" | "ready";
+  planned_quantity: number | null;
+  target_release_date: string | null;
+  component_specifications: string;
+  artwork_delivery_specifications: string;
+  rights_and_permissions: string;
+  prototype_results: string;
+  supplier_quotes: string;
+  costing_and_pricing: string;
+  fulfilment_plan: string;
+  publication_assets: string;
+  launch_decision: string;
+  next_action: string;
+}> {
+  const longFields = ["component_specifications", "artwork_delivery_specifications", "rights_and_permissions",
+    "prototype_results", "supplier_quotes", "costing_and_pricing", "fulfilment_plan",
+    "publication_assets", "launch_decision"];
+  if (longFields.some((key) => typeof form.get(key) === "string" && String(form.get(key)).length > 10000)
+    || typeof form.get("next_action") === "string" && String(form.get("next_action")).length > 2000) {
+    return { ok: false, error: "One production field is too long. Shorten it before saving." };
+  }
+  const status = choice(text(form, "status", 10), ["draft", "review", "ready"] as const);
+  const quantityRaw = text(form, "planned_quantity", 8);
+  const plannedQuantity = quantityRaw ? Number(quantityRaw) : null;
+  const date = text(form, "target_release_date", 10);
+  if (!status) return { ok: false, error: "Choose a valid production status." };
+  if (plannedQuantity !== null && (!Number.isSafeInteger(plannedQuantity) || plannedQuantity < 1 || plannedQuantity > 100000)) {
+    return { ok: false, error: "Planned quantity must be between 1 and 100,000." };
+  }
+  if (date && (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))
+    || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date)) {
+    return { ok: false, error: "Choose a valid release date." };
+  }
+  return { ok: true, value: {
+    status, planned_quantity: plannedQuantity, target_release_date: date || null,
+    component_specifications: text(form, "component_specifications", 10000),
+    artwork_delivery_specifications: text(form, "artwork_delivery_specifications", 10000),
+    rights_and_permissions: text(form, "rights_and_permissions", 10000),
+    prototype_results: text(form, "prototype_results", 10000),
+    supplier_quotes: text(form, "supplier_quotes", 10000),
+    costing_and_pricing: text(form, "costing_and_pricing", 10000),
+    fulfilment_plan: text(form, "fulfilment_plan", 10000),
+    publication_assets: text(form, "publication_assets", 10000),
+    launch_decision: text(form, "launch_decision", 10000),
+    next_action: text(form, "next_action", 2000),
+  } };
+}
+
 export function parseStudioCommunityShare(form: FormData): ValidationResult<{
   audience: StudioCommunityAudience;
   topic: StudioCommunityTopic;

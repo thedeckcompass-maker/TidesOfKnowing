@@ -20,6 +20,7 @@ const { eyebrow = "Deck Creator Studio", title, lede, projectId } = Astro.props;
     {projectId ? <a href={`/studio/projects/${projectId}/`}>Project dashboard</a> : null}
     {projectId ? <a href={`/studio/projects/${projectId}/journal/`}>Journal</a> : null}
     {projectId ? <a href={`/studio/projects/${projectId}/programme/`}>Programme</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/production/`}>Production</a> : null}
     {projectId ? <a href={`/studio/projects/${projectId}/support/`}>Support</a> : null}
     {projectId ? <a href={`/studio/projects/${projectId}/pulse/`}>Project Pulse</a> : null}
     <a href="/studio/artists/">Artists</a>

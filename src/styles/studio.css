@@ -433,6 +433,28 @@
   font-weight: 700;
 }
 
+.studio-lesson {
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--tok-water) 20%, white);
+  border-radius: 0.8rem;
+}
+
+.studio-lesson summary {
+  color: var(--tok-water);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.studio-lesson__content h4 {
+  margin: 1.4rem 0 0.45rem;
+}
+
+.studio-lesson__content li {
+  margin: 0.65rem 0;
+  padding-left: 0.25rem;
+}
+
 .studio-card {
   padding: 1.15rem 1.25rem;
 }

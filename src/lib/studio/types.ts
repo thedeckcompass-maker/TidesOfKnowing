@@ -231,6 +231,26 @@ export type StudioProgrammeProgress = {
   updated_at: string;
 };
 
+export type StudioProductionPlan = {
+  project_id: string;
+  status: "draft" | "review" | "ready";
+  planned_quantity: number | null;
+  target_release_date: string | null;
+  component_specifications: string;
+  artwork_delivery_specifications: string;
+  rights_and_permissions: string;
+  prototype_results: string;
+  supplier_quotes: string;
+  costing_and_pricing: string;
+  fulfilment_plan: string;
+  publication_assets: string;
+  launch_decision: string;
+  next_action: string;
+  version_number: number;
+  created_at: string;
+  updated_at: string;
+};
+
 export type StudioSupportRequest = {
   id: string;
   project_id: string;
