@@ -1,0 +1,66 @@
+name: Deck Studio Stage 9 staging schema and full-deck acceptance
+
+on:
+  push:
+    branches: [feature/deck-creator-studio-live]
+    paths: [.github/workflows/studio-stage9-staging.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_REF: utzcmbidotxgmulguzxo
+      STUDIO_PROJECT_ID: 56976396-c97b-4a24-a097-e9331a5504a1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require isolated staging target
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" || "$STUDIO_STAGING_DATABASE_URL" != *"$STUDIO_PROJECT_REF"* ]]; then
+            echo "::error::Authorised Studio staging connection is unavailable."
+            exit 1
+          fi
+      - name: Apply production-planning schema to staging only
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 \
+            --file supabase/migrations/20260923070000_deck_studio_production_plan.sql \
+            > /tmp/stage9-schema.log
+      - name: Verify full migrated deck, versioning and private access
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 \
+            --quiet --tuples-only --no-align -v project="$STUDIO_PROJECT_ID" <<'SQL'
+          select 1 / (case when
+            (select count(*) from public.studio_card_families where project_id=:'project'::uuid) = 8
+            and (select count(*) from public.studio_cards where project_id=:'project'::uuid) = 78
+            and (select count(*) from public.studio_guidebook_sections where project_id=:'project'::uuid) = 162
+            and (select count(*) from public.studio_import_records where project_id=:'project'::uuid and source_system='aotearoa-bird-oracle-markdown-v1') = 248
+            and (select count(*) from public.studio_cards c where project_id=:'project'::uuid and not exists (select 1 from public.studio_card_versions v where v.card_id=c.id)) = 0
+            and (select count(*) from public.studio_guidebook_sections s where project_id=:'project'::uuid and not exists (select 1 from public.studio_guidebook_versions v where v.section_id=s.id)) = 0
+            and (select count(*) from public.studio_guidebook_sections s where project_id=:'project'::uuid and s.card_id is not null) = 156
+            and (select count(*) from public.studio_guidebook_sections s where project_id=:'project'::uuid and s.card_id is not null and not exists (select 1 from public.studio_cards c where c.id=s.card_id and c.project_id=:'project'::uuid)) = 0
+            and (select count(*) from public.studio_programme_modules) = 12
+          then 1 else 0 end);
+          select owner_id as owner from public.studio_projects where id=:'project'::uuid \gset
+          begin;
+          set local role authenticated;
+          select set_config('request.jwt.claim.sub', :'owner', true) is not null;
+          select 1 / (case when
+            (select count(*) from public.studio_cards where project_id=:'project'::uuid) = 78
+            and (select count(*) from public.studio_guidebook_sections where project_id=:'project'::uuid) = 162
+          then 1 else 0 end);
+          select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000001', true) is not null;
+          select 1 / (case when
+            (select count(*) from public.studio_cards where project_id=:'project'::uuid) = 0
+            and (select count(*) from public.studio_production_plans where project_id=:'project'::uuid) = 0
+          then 1 else 0 end);
+          rollback;
+          select 'Full-deck counts and creator privacy passed';
+          SQL
