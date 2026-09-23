@@ -26,12 +26,15 @@ jobs:
             echo "::error::Authorised Studio staging connection is unavailable."
             exit 1
           fi
-      - name: Apply production-planning schema to staging only
+      - name: Apply Stage 9 schema and API privileges to staging only
         shell: bash
         run: |
           psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 \
             --file supabase/migrations/20260923070000_deck_studio_production_plan.sql \
             > /tmp/stage9-schema.log
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 \
+            --file supabase/migrations/20260923080000_deck_studio_role_privileges.sql \
+            > /tmp/stage9-privileges.log
       - name: Verify full migrated deck, versioning and private access
         shell: bash
         run: |
