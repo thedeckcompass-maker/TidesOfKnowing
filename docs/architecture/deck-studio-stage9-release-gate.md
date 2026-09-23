@@ -14,6 +14,16 @@ The owner created these products and monthly USD prices in the live Stripe catal
 
 Stripe Checkout now presents a promotion-code field for Studio subscriptions. This does not switch the preview to live billing. A 100% promotion cannot verify failed payments or genuine charges, so the test-mode lifecycle gate remains required.
 
+## Stripe test-mode catalogue for the isolated preview
+
+The owner created these products and monthly USD prices in the Tides of Knowing **Test mode** sandbox on 23 September 2026. Use these price IDs only with this sandbox's test secret key and the preview's `STUDIO_STRIPE_TEST_PRICE_*` variables.
+
+| Plan | Monthly price | Test product ID | Test price ID | Preview variable |
+| --- | ---: | --- | --- | --- |
+| Deck Creator Studio | US$197 | `prod_VJI1FBZjyCpYYz` | `price_1UIfQzA1ktB58WIRtfP76M3O` | `STUDIO_STRIPE_TEST_PRICE_STUDIO` |
+| Guided Deck Circle | US$597 | `prod_VJI2zuM0KJvyM9` | `price_1UIfSAA1ktB58WIRj8VhgLr2` | `STUDIO_STRIPE_TEST_PRICE_CIRCLE` |
+| Private Deck Partnership | US$1,495 | `prod_VJI3r9zNro1Vse` | `price_1UIfTCA1ktB58WIRg4Hraiwi` | `STUDIO_STRIPE_TEST_PRICE_PRIVATE` |
+
 ## Scope and sequence
 
 1. Verify the exact candidate commit on the feature branch and its Cloudflare Pages preview. The preview uses the isolated Studio staging database.
@@ -34,7 +44,7 @@ Stripe Checkout now presents a promotion-code field for Studio subscriptions. Th
 | Feature preview | Pending | Confirm the Pages check on the final candidate commit and inspect the deployed route responses. |
 | Independent Workers Builds check | Failing | The check on application commit `2c024bb` failed, as it has on earlier feature and main commits. The GitHub check has no error annotations; inspect its Cloudflare build log and decide whether it is a required deployment gate before merge. |
 | Complete creator journey | Pending | Run the browser/API acceptance steps above against the deployed staging preview. |
-| Stripe test-mode lifecycle | Blocked | The Pages preview returned HTTP 503 with `Studio test webhook is not configured.` for an empty POST to `/api/studio/billing/webhook` on 23 September 2026. Create three matching monthly USD prices in a Stripe sandbox, configure the preview's `STUDIO_STRIPE_TEST_SECRET_KEY`, `STUDIO_STRIPE_TEST_PRICE_STUDIO`, `STUDIO_STRIPE_TEST_PRICE_CIRCLE`, `STUDIO_STRIPE_TEST_PRICE_PRIVATE`, and `STUDIO_STRIPE_TEST_WEBHOOK_SECRET`, then exercise the real event lifecycle. Keep API keys and webhook signing secrets out of Git and chat. |
+| Stripe test-mode lifecycle | Blocked | All three sandbox prices exist. The Pages preview previously returned HTTP 503 with `Studio test webhook is not configured.` for an empty POST to `/api/studio/billing/webhook` on 23 September 2026. Configure the preview's three test price variables, `STUDIO_STRIPE_TEST_SECRET_KEY`, and `STUDIO_STRIPE_TEST_WEBHOOK_SECRET`, then exercise the real event lifecycle. Keep API keys and webhook signing secrets out of Git and chat. |
 | Production migration, merge, navigation and enrolment | Not started | Requires the preceding gates and an approved launch checklist. Existing production stays on `main` until then. |
 
 ## Recovery
