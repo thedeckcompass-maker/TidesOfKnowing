@@ -22,7 +22,7 @@ Status: **hold production launch**. This document records what has been verified
 | Feature preview | Pending | Confirm the Pages check on the final candidate commit and inspect the deployed route responses. |
 | Independent Workers Builds check | Failing | The check on application commit `2c024bb` failed, as it has on earlier feature and main commits. The GitHub check has no error annotations; inspect its Cloudflare build log and decide whether it is a required deployment gate before merge. |
 | Complete creator journey | Pending | Run the browser/API acceptance steps above against the deployed staging preview. |
-| Stripe test-mode lifecycle | Pending | Use configured test-mode credentials and events; do not infer this from local contract tests. |
+| Stripe test-mode lifecycle | Blocked | The Pages preview returned HTTP 503 with `Studio test webhook is not configured.` for an empty POST to `/api/studio/billing/webhook` on 23 September 2026. Configure the preview's Stripe test webhook secret and related test-mode values, then exercise the real event lifecycle. |
 | Production migration, merge, navigation and enrolment | Not started | Requires the preceding gates and an approved launch checklist. Existing production stays on `main` until then. |
 
 ## Recovery
