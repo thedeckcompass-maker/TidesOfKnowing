@@ -1,6 +1,10 @@
 ---
 import {
+  COMMUNITY_AUDIENCES,
+  DECK_CREATION_TOPICS,
   READING_PRACTICE_POST_TYPES,
+  type CommunityAudience,
+  type DeckCreationTopic,
   type CommunitySection,
   type ReadingPracticePostType,
 } from "../../lib/community/types";
@@ -14,6 +18,9 @@ interface Props {
     body: string;
     section_id: string;
     post_type?: ReadingPracticePostType | null;
+    audience?: CommunityAudience;
+    source_kind?: string;
+    deck_creation_topic?: DeckCreationTopic | null;
     field_note_consideration?: boolean | null;
   };
 }
@@ -25,6 +32,7 @@ const selectedSection =
   sections[0];
 const action = post ? `/api/community/posts/${post.id}` : "/api/community/posts";
 const isReadingPractice = selectedSection?.key === "reading-practice";
+const isDeckCreation = selectedSection?.key === "deck-creation";
 const existingBody = post?.body ?? "";
 const discussionHelpDialogId = "reading-practice-discussion-type-help";
 ---
@@ -63,6 +71,13 @@ const discussionHelpDialogId = "reading-practice-discussion-type-help";
           ))}
         </select>
       </fieldset>
+    ) : isDeckCreation ? (
+      <aside class="community-form__prompts community-form__prompts--creation">
+        <p>
+          Share the part of deck creation you are actively working through. Keep private manuscript,
+          research and production details inside your Studio unless you deliberately choose a controlled excerpt.
+        </p>
+      </aside>
     ) : (
       <aside class="community-form__prompts community-form__prompts--development">
         <p>
@@ -70,6 +85,19 @@ const discussionHelpDialogId = "reading-practice-discussion-type-help";
         </p>
       </aside>
     )
+  }
+  {
+    isDeckCreation ? (
+      <label>
+        Deck Creation topic
+        <select name="deckCreationTopic" required>
+          <option value="">Choose a topic...</option>
+          {DECK_CREATION_TOPICS.map((topic) => (
+            <option value={topic.value} selected={post?.deck_creation_topic === topic.value}>{topic.label}</option>
+          ))}
+        </select>
+      </label>
+    ) : null
   }
   {
     isReadingPractice && !post ? (
@@ -96,6 +124,25 @@ const discussionHelpDialogId = "reading-practice-discussion-type-help";
       </div>
     ) : null
   }
+  <fieldset class="community-form__audience">
+    <legend>Who can read this?</legend>
+    <p class="community-form__help">New discussions stay inside the member community unless you deliberately make them public.</p>
+    {COMMUNITY_AUDIENCES.map((audience) => (
+      <label class="community-form__radio">
+        <input
+          type="radio"
+          name="audience"
+          value={audience.value}
+          checked={(post?.audience ?? "members") === audience.value}
+        />
+        <span><strong>{audience.label}</strong><small>{audience.description}</small></span>
+      </label>
+    ))}
+    <label class="community-form__checkbox community-form__public-confirmation">
+      <input type="checkbox" name="confirmPublic" value="true" />
+      <span>I understand that choosing public visibility makes this separate post readable without signing in and eligible for search indexing.</span>
+    </label>
+  </fieldset>
   <label>
     Your question or reflection
     <input
@@ -414,6 +461,10 @@ const discussionHelpDialogId = "reading-practice-discussion-type-help";
     border-color: color-mix(in srgb, var(--tok-teal) 30%, transparent);
   }
 
+  .community-form__prompts--creation {
+    border-color: color-mix(in srgb, var(--tok-gold) 38%, transparent);
+  }
+
   .community-form__prompts p {
     margin: 0 0 0.65rem;
   }
@@ -444,6 +495,53 @@ const discussionHelpDialogId = "reading-practice-discussion-type-help";
     border: 1px solid color-mix(in srgb, var(--tok-teal) 22%, transparent);
     border-radius: var(--radius-control);
     background: color-mix(in srgb, var(--tok-surface-reading-soft) 38%, transparent);
+  }
+
+  .community-form__audience {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--tok-teal) 25%, transparent);
+    border-radius: var(--radius-control);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 38%, transparent);
+  }
+
+  .community-form__audience legend {
+    padding: 0;
+    font-size: var(--tok-type-label);
+    font-weight: 700;
+    color: var(--tok-text-dark);
+  }
+
+  .community-form .community-form__radio {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0.65rem;
+    font-weight: 500;
+  }
+
+  .community-form .community-form__radio input,
+  .community-form .community-form__public-confirmation input {
+    width: auto;
+    margin-top: 0.2rem;
+  }
+
+  .community-form__radio span,
+  .community-form__radio small {
+    display: block;
+  }
+
+  .community-form__radio strong {
+    color: var(--tok-text-dark);
+  }
+
+  .community-form__radio small {
+    margin-top: 0.15rem;
+    color: var(--tok-text-muted);
+    font-size: var(--tok-type-meta);
+    line-height: 1.5;
   }
 
   .community-form__field-note legend {

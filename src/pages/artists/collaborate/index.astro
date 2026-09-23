@@ -1,0 +1,123 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
+import type { StudioArtistIntroduction, StudioArtistProfile } from "../../../lib/studio/types";
+import "../../../styles/studio.css";
+
+export const prerender = false;
+
+let profile: StudioArtistProfile | null = null;
+let contact: { contact_email: string; website_url: string } | null = null;
+let introductions: StudioArtistIntroduction[] = [];
+const projectNames = new Map<string, string>();
+const acceptedCreatorEmails = new Map<string, string>();
+
+if (Astro.locals.user && Astro.locals.supabase) {
+  const { data } = await Astro.locals.supabase.from("studio_artist_profiles").select("*").eq("user_id", Astro.locals.user.id).maybeSingle();
+  profile = (data as StudioArtistProfile | null) ?? null;
+  if (profile) {
+    const [{ data: contactData }, { data: introData }] = await Promise.all([
+      Astro.locals.supabase.from("studio_artist_contacts").select("contact_email,website_url").eq("artist_profile_id", profile.id).maybeSingle(),
+      Astro.locals.supabase.from("studio_artist_introductions").select("*").eq("artist_profile_id", profile.id).order("created_at", { ascending: false }),
+    ]);
+    contact = contactData ?? null;
+    introductions = (introData ?? []) as StudioArtistIntroduction[];
+    if (introductions.length) {
+      const service = createCommunityServiceClient(Astro.locals);
+      const { data: projects } = await service.from("studio_projects").select("id,name").in("id", introductions.map((item) => item.project_id));
+      (projects ?? []).forEach((project) => projectNames.set(project.id, project.name));
+      for (const item of introductions.filter((entry) => entry.status === "accepted")) {
+        const { data: creator } = await service.auth.admin.getUserById(item.creator_id);
+        if (creator.user.email) acceptedCreatorEmails.set(item.id, creator.user.email);
+      }
+    }
+  }
+}
+
+const submitted = Astro.url.searchParams.get("submitted") === "1";
+const saved = Astro.url.searchParams.get("saved") === "1";
+const error = Astro.url.searchParams.get("error");
+const examples = profile?.portfolio_examples ?? [];
+const signInPath = "/auth/register/?redirectTo=%2Fartists%2Fcollaborate%2F";
+---
+
+<BaseLayout title="For artists | Deck Creator Studio" description="Apply to the curated Deck Creator Studio artist collaboration directory." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <header class="studio-header"><div><p class="studio-eyebrow">Deck Creator Studio</p><h1>For artists</h1><p class="studio-lede">Apply to a curated collaboration directory for oracle, tarot and hybrid deck creators.</p></div></header>
+    {submitted ? <p class="studio-notice" role="status">Your application has been submitted for curation.</p> : null}
+    {saved ? <p class="studio-notice" role="status">Your introduction response has been saved.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="artist-application-heading">
+        <p class="studio-kicker">Curated directory</p>
+        <h2 id="artist-application-heading">Artist application</h2>
+        <p>The launch directory supports discovery and consent-based introductions. Artists retain ownership and grant only limited display rights to approved portfolio examples. Tides of Knowing does not manage artists, process payments, hold escrow or resolve contract disputes.</p>
+        {!Astro.locals.user ? <p><a class="studio-link-button" href={signInPath}>Sign in to apply</a></p> : <>
+          {profile ? <p class="studio-status">Application status: {profile.status}</p> : null}
+          <form class="studio-form" method="post" action="/api/artists/collaborate">
+            <label class="studio-field"><span>Professional name</span><input name="professional_name" required maxlength="120" value={profile?.professional_name ?? ""} /></label>
+            <div class="studio-form-grid">
+              <label class="studio-field"><span>Location</span><input name="location" maxlength="160" value={profile?.location ?? ""} /></label>
+              <label class="studio-field"><span>Time zone</span><input name="time_zone" maxlength="80" value={profile?.time_zone ?? ""} /></label>
+            </div>
+            <label class="studio-field"><span>Languages, separated by commas</span><input name="languages" required value={profile?.languages.join(", ") ?? ""} /></label>
+            <label class="studio-field"><span>Biography</span><textarea name="biography" required minlength="40" maxlength="3000">{profile?.biography ?? ""}</textarea></label>
+            <label class="studio-field"><span>Artistic statement</span><textarea name="artistic_statement" required minlength="40" maxlength="3000">{profile?.artistic_statement ?? ""}</textarea></label>
+            <div class="studio-form-grid">
+              <label class="studio-field"><span>Mediums</span><input name="mediums" required value={profile?.mediums.join(", ") ?? ""} /></label>
+              <label class="studio-field"><span>Techniques</span><input name="techniques" value={profile?.techniques.join(", ") ?? ""} /></label>
+              <label class="studio-field"><span>Styles</span><input name="styles" required value={profile?.styles.join(", ") ?? ""} /></label>
+              <label class="studio-field"><span>Subjects</span><input name="subjects" value={profile?.subjects.join(", ") ?? ""} /></label>
+            </div>
+            <label class="studio-field"><span>Card, guidebook, packaging or campaign experience</span><textarea name="publishing_experience" maxlength="2000">{profile?.publishing_experience ?? ""}</textarea></label>
+            <label class="studio-field"><span>Availability</span><textarea name="availability" required minlength="10" maxlength="1200">{profile?.availability ?? ""}</textarea></label>
+            <label class="studio-field"><span>Budget approach</span><textarea name="budget_approach" required minlength="10" maxlength="1200">{profile?.budget_approach ?? ""}</textarea></label>
+            <label class="studio-field"><span>Licensing preferences</span><textarea name="licensing_preferences" required minlength="10" maxlength="1200">{profile?.licensing_preferences ?? ""}</textarea></label>
+            <label class="studio-field"><span>Collaboration models, separated by commas</span><input name="collaboration_models" required value={profile?.collaboration_models.join(", ") ?? ""} /></label>
+            <label class="studio-field"><span>Creative-process disclosure</span><select name="process_disclosure" required>
+              <option value="human_created" selected={profile?.process_disclosure === "human_created"}>Human-created physical practice</option>
+              <option value="digital_non_generative" selected={profile?.process_disclosure === "digital_non_generative"}>Digital, without generative AI</option>
+              <option value="ai_assisted" selected={profile?.process_disclosure === "ai_assisted"}>AI-assisted process</option>
+              <option value="generative_ai" selected={profile?.process_disclosure === "generative_ai"}>Generative-AI process</option>
+            </select></label>
+            <fieldset class="studio-fieldset"><legend>Six to eight portfolio examples</legend>
+              {Array.from({ length: 8 }, (_, index) => {
+                const example = examples[index];
+                const number = index + 1;
+                return <div class="studio-card">
+                  <label class="studio-field"><span>Example {number} public URL</span><input type="url" name={`portfolio_url_${number}`} required={number <= 6} value={example?.url ?? ""} /></label>
+                  <label class="studio-field"><span>Example {number} title</span><input name={`portfolio_title_${number}`} required={number <= 6} maxlength="160" value={example?.title ?? ""} /></label>
+                  <label class="studio-field"><span>Short description</span><input name={`portfolio_description_${number}`} maxlength="500" value={example?.description ?? ""} /></label>
+                </div>;
+              })}
+            </fieldset>
+            <label class="studio-field"><span>Private contact email</span><input type="email" name="contact_email" required value={contact?.contact_email ?? Astro.locals.user.email ?? ""} /></label>
+            <label class="studio-field"><span>Website, optional</span><input type="url" name="website_url" value={contact?.website_url ?? ""} /></label>
+            <label class="studio-check studio-check--standalone"><input type="checkbox" name="display_rights_confirmed" required /><span>I own or control the submitted portfolio examples and grant Tides of Knowing limited permission to display them while my profile is approved.</span></label>
+            <button class="studio-button" type="submit">{profile ? "Resubmit for review" : "Submit artist application"}</button>
+          </form>
+        </>}
+      </section>
+
+      <aside class="studio-panel studio-panel--side"><p class="studio-kicker">Contact privacy</p><h2>Acceptance first</h2><p>Your private contact email is not published in the directory. It is shared with a creator only after you accept that creator’s structured introduction request.</p></aside>
+
+      {profile ? <section class="studio-panel" aria-labelledby="artist-introductions-heading">
+        <p class="studio-kicker">Controlled introductions</p><h2 id="artist-introductions-heading">Creator briefs</h2>
+        {introductions.length ? <ul class="studio-list">{introductions.map((item) => <li class="studio-card">
+          <p class="studio-meta">{projectNames.get(item.project_id) ?? "Deck project"} · {item.status.replaceAll("_", " ")}</p>
+          <p>{item.brief}</p>
+          {item.timeline ? <p><strong>Timeline:</strong> {item.timeline}</p> : null}
+          {item.budget_context ? <p><strong>Budget context:</strong> {item.budget_context}</p> : null}
+          {item.creator_reply ? <p><strong>Creator reply:</strong> {item.creator_reply}</p> : null}
+          {item.status === "requested" ? <form class="studio-form" method="post" action={`/api/artists/introductions/${item.id}`}>
+            <label class="studio-field"><span>Response or information request</span><textarea name="artist_message" maxlength="2000"></textarea></label>
+            <div class="studio-actions"><button class="studio-button" name="action" value="accepted" type="submit">Accept introduction</button><button class="studio-text-button" name="action" value="more_information" type="submit">Request more information</button><button class="studio-text-button" name="action" value="declined" type="submit">Decline</button></div>
+          </form> : null}
+          {item.artist_message ? <p><strong>Your response:</strong> {item.artist_message}</p> : null}
+          {item.status === "accepted" && acceptedCreatorEmails.get(item.id) ? <p class="studio-privacy-note"><strong>Creator contact:</strong> <a href={`mailto:${acceptedCreatorEmails.get(item.id)}`}>{acceptedCreatorEmails.get(item.id)}</a>. Agree terms and payments directly in writing.</p> : null}
+        </li>)}</ul> : <p class="studio-empty">No creator introduction requests yet.</p>}
+      </section> : null}
+    </div>
+  </main>
+</BaseLayout>

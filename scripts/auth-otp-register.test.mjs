@@ -330,7 +330,7 @@ await run("deliberate resend uses a new UUID", async () => {
   assert.match(formSrc, /resendCooldownMs/);
   const checkEmail = readFileSync(join(REPO_ROOT, "src/pages/auth/check-email.astro"), "utf8");
   assert.match(checkEmail, /name="submissionId"/);
-  assert.match(checkEmail, /authMode" value="resend"/);
+  assert.match(checkEmail, /authMode" value=\{isStudioRedirect \? "sign-in" : "resend"\}/);
 });
 
 await run("no-JavaScript forms contain a valid UUID", async () => {

@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../components/studio/StudioHeader.astro";
+import { studioSignInResponse } from "../../../lib/studio/access";
+import { isStudioPlanCode, STUDIO_PLANS } from "../../../lib/studio/billing";
+import "../../../styles/studio.css";
+export const prerender = false;
+const requestedPlan = Astro.url.searchParams.get("plan");
+const planCode = isStudioPlanCode(requestedPlan) ? requestedPlan : "circle";
+const access = studioSignInResponse(Astro.locals.user, `/studio/enrol/?plan=${planCode}`);
+if (access) return access;
+const plan = STUDIO_PLANS[planCode];
+const error = Astro.url.searchParams.get("error");
+---
+<BaseLayout title={`Enrol in ${plan.name} | Deck Creator Studio`} description="Secure Deck Creator Studio test enrolment." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader title="Confirm your Studio plan" lede="Checkout remains in Stripe test mode during this controlled build stage." />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <section class="studio-panel studio-panel--wide">
+      <p class="studio-kicker">Selected plan</p><h2>{plan.name}</h2><p><strong>US${plan.amountUsd.toLocaleString("en-US")} per month</strong></p><p>{plan.relationship}</p>
+      {plan.minimumPayments > 1 ? <p>This guided pathway is a twelve-week commitment recorded as three monthly payments.</p> : null}
+      <p>Your work remains yours. The subscription provides the workspace, programme and support defined for this plan. It does not transfer rights in your project or include the excluded services stated on the offer page.</p>
+      <form method="post" action="/api/studio/billing/checkout"><input type="hidden" name="plan" value={planCode} /><button class="studio-button" type="submit">Continue to secure test checkout</button></form>
+    </section>
+  </main>
+</BaseLayout>

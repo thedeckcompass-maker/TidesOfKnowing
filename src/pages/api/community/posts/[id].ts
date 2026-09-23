@@ -64,6 +64,9 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     title: payload.title,
     body: payload.body,
     postType: payload.postType,
+    audience: payload.audience,
+    deckCreationTopic: payload.deckCreationTopic,
+    confirmPublic: payload.confirmPublic,
     fieldNoteConsideration: payload.fieldNoteConsideration,
   });
 
@@ -78,6 +81,8 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
     title: validation.value.title,
     body: validation.value.body,
     postType: validation.value.postType,
+    audience: validation.value.audience,
+    deckCreationTopic: validation.value.deckCreationTopic,
     fieldNoteConsideration: validation.value.fieldNoteConsideration,
   });
 

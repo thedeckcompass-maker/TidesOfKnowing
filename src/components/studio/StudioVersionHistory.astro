@@ -1,0 +1,75 @@
+---
+import StudioVersionChanges from "./StudioVersionChanges.astro";
+import { matchingEarlierVersion, versionChanges, versionFields, type VersionKind, type VersionReferences } from "../../lib/studio/versionHistory";
+import type { StudioVersion } from "../../lib/studio/types";
+
+interface Props {
+  kind: VersionKind;
+  versions: StudioVersion[];
+  projectId: string;
+  resourceId: string;
+  canWrite: boolean;
+  references?: VersionReferences;
+}
+const { kind, versions, projectId, resourceId, canWrite, references = {} } = Astro.props;
+const ordered = [...versions].sort((a, b) => b.version_number - a.version_number);
+const current = ordered[0];
+const byNumber = new Map(ordered.map((version) => [version.version_number, version]));
+const byId = new Map(ordered.map((version) => [version.id, version]));
+const history = ordered.map((version) => {
+  const previous = byNumber.get(version.version_number - 1);
+  const explicitSource = version.restored_from_version_id ? byId.get(version.restored_from_version_id) : null;
+  return {
+    version,
+    current: version.id === current?.id,
+    explicitSource,
+    matchingEarlier: !explicitSource ? matchingEarlierVersion(version, ordered) : null,
+    savedChanges: versionChanges(previous?.snapshot ?? null, version.snapshot, kind, references),
+    restoreChanges: current ? versionChanges(current.snapshot, version.snapshot, kind, references) : [],
+    fields: versionFields(version.snapshot, kind, references),
+  };
+});
+const resourceName = kind === "card" ? "card" : "section";
+const restoreUrl = kind === "card" ? `/api/studio/cards/${resourceId}/restore` : `/api/studio/guidebook/${resourceId}/restore`;
+---
+
+<section class="studio-panel" aria-labelledby="studio-history-heading">
+  <p class="studio-kicker">Recoverable history</p>
+  <h2 id="studio-history-heading">{kind === "card" ? "Card versions" : "Section versions"}</h2>
+  <p class="studio-panel__intro">Open a version to read its saved content, see what changed and compare it with the current {resourceName} before restoring.</p>
+  <div class="studio-version-list">
+    {history.map(({ version, current: isCurrent, explicitSource, matchingEarlier, savedChanges, restoreChanges, fields }) =>
+      <details class="studio-version-review">
+        <summary>
+          <span><strong>Version {version.version_number}</strong> · {new Date(version.created_at).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}
+            {explicitSource ? <span class="studio-version-review__origin">Restored from Version {explicitSource.version_number}</span>
+              : matchingEarlier ? <span class="studio-version-review__origin">Content matches Version {matchingEarlier}; source was not recorded</span> : null}
+            <span class="studio-version-review__summary">{version.version_number === 1 ? "Initial version" : savedChanges.length ? `Changed: ${savedChanges.map((change) => change.label).join(", ")}` : "No content changes"}</span>
+          </span>
+          <span class="studio-status">{isCurrent ? "Current" : "Review version"}</span>
+        </summary>
+        <div class="studio-version-review__body">
+          <h3>{version.version_number === 1 ? "Initial saved content" : `Changes from Version ${version.version_number - 1}`}</h3>
+          <StudioVersionChanges changes={savedChanges} emptyMessage="No content changes were recorded." />
+          <details class="studio-version-preview">
+            <summary>Read the complete saved version</summary>
+            <div class="studio-version-preview__fields">
+              {fields.map((field) => <section><h4>{field.label}</h4><pre>{field.value}</pre></section>)}
+            </div>
+          </details>
+          {!isCurrent ? <>
+            <h3>If you restore Version {version.version_number} now</h3>
+            <p>The following fields in the current Version {current.version_number} will be replaced. The current version remains in history.</p>
+            <StudioVersionChanges changes={restoreChanges} emptyMessage="The saved content is identical to the current version." />
+            {canWrite ? <form class="studio-version-restore" method="post" action={restoreUrl}>
+              <input type="hidden" name="project_id" value={projectId} />
+              <input type="hidden" name="version_id" value={version.id} />
+              <input type="hidden" name="expected_current_version" value={current.version_number} />
+              <label class="studio-check"><input type="checkbox" name="confirm_restore" required /> <span>I have reviewed Version {version.version_number}. Restore it as a new Version {current.version_number + 1}.</span></label>
+              <button class="studio-link-button" type="submit">Restore Version {version.version_number}</button>
+            </form> : <p>Restoring is unavailable while this Studio is read-only.</p>}
+          </> : null}
+        </div>
+      </details>)}
+  </div>
+</section>

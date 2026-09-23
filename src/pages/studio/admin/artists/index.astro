@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../components/studio/StudioHeader.astro";
+import { isAdminProfile } from "../../../../lib/community/auth";
+import { createCommunityServiceClient } from "../../../../lib/community/supabaseServer";
+import type { StudioArtistProfile } from "../../../../lib/studio/types";
+import "../../../../styles/studio.css";
+
+export const prerender = false;
+
+if (!Astro.locals.user) return new Response(null, { status: 303, headers: { Location: "/auth/register/?redirectTo=%2Fstudio%2Fadmin%2Fartists%2F" } });
+if (!isAdminProfile(Astro.locals.profile)) return new Response(null, { status: 404 });
+const service = createCommunityServiceClient(Astro.locals);
+const { data, error: queryError } = await service.from("studio_artist_profiles").select("*").eq("status", "submitted").order("created_at");
+if (queryError) throw queryError;
+const applications = (data ?? []) as StudioArtistProfile[];
+const saved = Astro.url.searchParams.get("saved") === "1";
+const error = Astro.url.searchParams.get("error");
+---
+
+<BaseLayout title="Artist application queue" description="Private Studio artist curation." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow="Administration" title="Artist application queue" lede="Approve only portfolio material the artist has expressly authorised for limited directory display." />
+    {saved ? <p class="studio-notice" role="status">The artist application has been reviewed.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <p><a class="studio-link-button" href="/studio/admin/access/">Back to access administration</a></p>
+    <section class="studio-panel" aria-labelledby="artist-queue-heading">
+      <p class="studio-kicker">Curated publication</p>
+      <h2 id="artist-queue-heading">Submitted profiles</h2>
+      <p>Private contact details are excluded from this review view. Approval publishes only the professional profile and submitted portfolio examples.</p>
+      {applications.length ? <ul class="studio-list">
+        {applications.map((artist) => <li class="studio-card">
+          <p class="studio-meta">{artist.location || "Location not supplied"} · {artist.time_zone || "Time zone not supplied"}</p>
+          <h3>{artist.professional_name}</h3>
+          <p>{artist.biography}</p>
+          <p><strong>Practice:</strong> {artist.mediums.join(", ")} · {artist.styles.join(", ")}</p>
+          <p><strong>Process disclosure:</strong> {artist.process_disclosure.replaceAll("_", " ")}</p>
+          <ul class="studio-list">{artist.portfolio_examples.map((example) => <li><a href={example.url} rel="nofollow noopener" target="_blank">{example.title}</a>{example.description ? ` · ${example.description}` : ""}</li>)}</ul>
+          <div class="studio-actions">
+            <form method="post" action={`/api/studio/admin/artists/${artist.id}`}><input type="hidden" name="action" value="approve" /><button class="studio-button" type="submit">Approve profile</button></form>
+            <form method="post" action={`/api/studio/admin/artists/${artist.id}`}><input type="hidden" name="action" value="decline" /><button class="studio-text-button" type="submit">Decline profile</button></form>
+          </div>
+        </li>)}
+      </ul> : <p class="studio-empty">No artist applications are waiting for review.</p>}
+    </section>
+  </main>
+</BaseLayout>

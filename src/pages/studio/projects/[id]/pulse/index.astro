@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioProject } from "../../../../../lib/studio/queries";
+import "../../../../../styles/studio.css";
+export const prerender = false;
+const projectId = Astro.params.id;
+const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile, projectId ? `/studio/projects/${projectId}/pulse/` : "/studio/", Astro.locals.studioEntitlement);
+if (access) return access;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+const project = await getStudioProject(Astro.locals.supabase, projectId);
+if (!project) return new Response(null, { status: 404 });
+const { data: requests } = await Astro.locals.supabase.from("studio_pulse_requests").select("*").eq("project_id", projectId).order("created_at", { ascending: false });
+const currentMonth = new Date().toISOString().slice(0, 7) + "-01";
+const usedThisMonth = (requests ?? []).some((item) => item.billing_month === currentMonth);
+const error = Astro.url.searchParams.get("error");
+---
+<BaseLayout title={`Project Pulse | ${project.name}`} description="Private, consented Deck Creator Studio project review." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow={`${project.name} · Private review`} title="Project Pulse" lede="Ask one priority question per billing month. Review access begins only after assignment acceptance and ends on completion, withdrawal or after 14 days." projectId={projectId} />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide"><p class="studio-kicker">Bounded review</p><h2>Request a Project Pulse</h2><p>Review covers project structure and current direction. It returns up to three observations, what is strongest, what is missing and the next useful step. It does not include detailed manuscript editing, production verification or automatic rewriting.</p>
+        {usedThisMonth ? <p class="studio-empty">This month’s request has already been used.</p> : <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/pulse`}><label class="studio-field"><span>One priority question</span><textarea name="priority_question" required minlength="10" maxlength="1200"></textarea></label><label class="studio-check studio-check--standalone"><input type="checkbox" name="consent" required /><span>I grant purpose-specific, time-limited access for this Project Pulse review.</span></label><button class="studio-button" type="submit">Submit private request</button></form>}
+      </section>
+      <section class="studio-panel studio-panel--side"><p class="studio-kicker">Read-only continuity</p><h2>Project exports</h2><p>Download a private snapshot without changing the project.</p><div class="studio-export-links"><a class="studio-link-button" href={`/api/studio/projects/${projectId}/export/md`}>Markdown</a><a class="studio-link-button" href={`/api/studio/projects/${projectId}/export/json`}>JSON</a></div></section>
+      <section class="studio-panel studio-panel--wide"><p class="studio-kicker">Consent register</p><h2>Requests</h2>{requests?.length ? <ul class="studio-list">{requests.map((item) => <li class="studio-card"><p class="studio-meta">{item.billing_month} · {item.status}</p><h3>{item.priority_question}</h3>{item.observations?.length ? <div><p class="studio-meta">Observations</p><ul>{item.observations.map((observation) => <li>{observation}</li>)}</ul></div> : null}{item.response_summary ? <p><strong>Strongest and missing:</strong> {item.response_summary}</p> : null}{item.next_step ? <p><strong>Next useful step:</strong> {item.next_step}</p> : null}{item.access_expires_at && item.status === "accepted" ? <p class="studio-meta">Review access ends {new Date(item.access_expires_at).toLocaleDateString("en-NZ")}</p> : null}{["requested","accepted"].includes(item.status) ? <form method="post" action={`/api/studio/pulse/${item.id}`}><input type="hidden" name="project_id" value={projectId} /><button class="studio-text-button" type="submit">Withdraw consent</button></form> : null}</li>)}</ul> : <p class="studio-empty">No Project Pulse requests yet.</p>}</section>
+    </div>
+  </main>
+</BaseLayout>

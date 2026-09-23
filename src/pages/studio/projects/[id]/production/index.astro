@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioProductionPlan, getStudioProductionPlanVersions, getStudioProject } from "../../../../../lib/studio/queries";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile,
+  projectId ? `/studio/projects/${projectId}/production/` : "/studio/", Astro.locals.studioEntitlement);
+if (access) return access;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+const project = await getStudioProject(Astro.locals.supabase, projectId);
+if (!project) return new Response(null, { status: 404 });
+const [plan, versions] = await Promise.all([
+  getStudioProductionPlan(Astro.locals.supabase, projectId),
+  getStudioProductionPlanVersions(Astro.locals.supabase, projectId),
+]);
+const readOnly = Astro.locals.studioEntitlement?.access_mode === "read_only";
+const saved = Astro.url.searchParams.get("saved");
+const error = Astro.url.searchParams.get("error");
+const fields = [
+  { key: "component_specifications", label: "Edition and component specifications", help: "Record card dimensions, quantity, stock, finish, box, guidebook format and the file specifications each supplier needs." },
+  { key: "artwork_delivery_specifications", label: "Artwork delivery", help: "Record dimensions, resolution, bleed, colour profile, filenames, proofing responsibility and the artist handoff." },
+  { key: "rights_and_permissions", label: "Rights and permissions", help: "List image licences, cultural permissions, attribution, unresolved questions and evidence required before printing." },
+  { key: "prototype_results", label: "Prototype and testing", help: "State what was tested, with whom, what changed and which physical or digital questions remain open." },
+  { key: "supplier_quotes", label: "Supplier and quotation comparison", help: "Record quote date, supplier, currency, quantity, components, tooling, freight and validity period so offers are comparable." },
+  { key: "costing_and_pricing", label: "Costing and price logic", help: "Separate fixed from per-unit costs. Record fees, tax assumptions, contingency, intended price and the evidence behind each figure." },
+  { key: "fulfilment_plan", label: "Fulfilment and distribution", help: "Record storage, packaging, shipping zones, delivery assumptions, sales channels and who owns each task." },
+  { key: "publication_assets", label: "Publication and campaign assets", help: "List metadata, product images, story evidence, demonstrations, email or campaign copy and their approval status." },
+  { key: "launch_decision", label: "Release decision", help: "State whether the edition is ready, the chosen pathway, open risks and the evidence needed for a go or no-go decision." },
+  { key: "next_action", label: "Next production action", help: "Name one concrete action, owner and due date." },
+] as const;
+---
+
+<BaseLayout title={`Production and publication | ${project.name}`} description="Private production plan for a creator-owned deck."
+  metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow={`${project.name} · Production`} title="Production and publication"
+      lede="Turn the deck manuscript into an edition you can make, cost, test and release. Keep assumptions visible until you have evidence for them."
+      projectId={projectId} />
+    {saved ? <p class="studio-notice" role="status">Production plan saved as version {saved}.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {readOnly ? <p class="studio-notice" role="status">This plan is read-only. It remains available in your project exports.</p> : null}
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide">
+        <p class="studio-kicker">Pathway-specific decision</p><h2>Define the edition you are making</h2>
+        <p>{project.pathway === "personal" ? "For a personal or gift edition, test a complete usable copy and set a budget and quantity you are comfortable making." : project.pathway === "independent" ? "For an independent edition, compare suppliers, the landed unit cost and the distribution route before settling the print run." : "For a commercial or crowdfunded edition, connect the public promise to a tested prototype, reliable costs, fulfilment assumptions and evidence for every claim."}</p>
+        <p>Keep quotations and rights evidence in your own records. This plan is private and is never shared with artists, a group or the community automatically.</p>
+      </section>
+      <section class="studio-panel studio-panel--side">
+        <p class="studio-kicker">Decision record</p><h2>Plan status</h2>
+        <p><strong>{plan?.status ?? "Not started"}</strong>{plan ? ` · version ${plan.version_number}` : ""}</p>
+        <p>{versions.length} saved {versions.length === 1 ? "version" : "versions"}. Your current plan is included in Markdown and JSON project exports.</p>
+      </section>
+      <section class="studio-panel studio-panel--wide">
+        <h2>Specifications, costing and release</h2>
+        {readOnly ? (
+          fields.map((field) => <section><h3>{field.label}</h3><p class="studio-meta">{field.help}</p><p>{plan?.[field.key] || "No record yet."}</p></section>)
+        ) : (
+          <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/production`}>
+            <input type="hidden" name="version_number" value={plan?.version_number ?? 0} />
+            <div class="studio-form-grid">
+              <label class="studio-field"><span>Status</span><select name="status">
+                <option value="draft" selected={!plan || plan.status === "draft"}>Draft</option>
+                <option value="review" selected={plan?.status === "review"}>Review</option>
+                <option value="ready" selected={plan?.status === "ready"}>Ready for a release decision</option>
+              </select></label>
+              <label class="studio-field"><span>Planned number of decks</span><input name="planned_quantity" type="number" min="1" max="100000" value={plan?.planned_quantity ?? ""} /></label>
+              <label class="studio-field"><span>Target release date, if known</span><input name="target_release_date" type="date" value={plan?.target_release_date ?? ""} /></label>
+            </div>
+            {fields.map((field) => <label class="studio-field"><span>{field.label}</span><small>{field.help}</small><textarea name={field.key} maxlength={field.key === "next_action" ? 2000 : 10000} rows={field.key === "next_action" ? 3 : 6}>{plan?.[field.key] ?? ""}</textarea></label>)}
+            <button class="studio-button" type="submit">Save production plan</button>
+          </form>
+        )}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../components/studio/StudioHeader.astro";
+import { isAdminProfile } from "../../../../lib/community/auth";
+import { createCommunityServiceClient } from "../../../../lib/community/supabaseServer";
+import type { StudioSupportRequest } from "../../../../lib/studio/types";
+import "../../../../styles/studio.css";
+
+export const prerender = false;
+
+if (!Astro.locals.user) {
+  return new Response(null, {
+    status: 303,
+    headers: { Location: "/auth/register/?redirectTo=%2Fstudio%2Fadmin%2Fsupport%2F" },
+  });
+}
+if (!isAdminProfile(Astro.locals.profile)) return new Response(null, { status: 404 });
+
+const service = createCommunityServiceClient(Astro.locals);
+const { data, error: queryError } = await service
+  .from("studio_support_requests")
+  .select("*")
+  .in("status", ["requested", "accepted"])
+  .order("created_at", { ascending: true });
+if (queryError) throw queryError;
+
+const requests = (data ?? []) as StudioSupportRequest[];
+const projectIds = [...new Set(requests.map((item) => item.project_id))];
+const { data: projects } = projectIds.length
+  ? await service.from("studio_projects").select("id,name").in("id", projectIds)
+  : { data: [] as Array<{ id: string; name: string }> };
+const projectNames = new Map((projects ?? []).map((project) => [project.id, project.name]));
+const saved = Astro.url.searchParams.get("saved") === "1";
+const error = Astro.url.searchParams.get("error");
+---
+
+<BaseLayout
+  title="Studio support queue"
+  description="Private Studio support administration."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-page page-inner">
+    <StudioHeader
+      eyebrow="Administration"
+      title="Support queue"
+      lede="Accept one weekly focus at a time, honour the creator’s consent boundary and close access when the response is complete."
+    />
+
+    {saved ? <p class="studio-notice" role="status">The support record has been updated.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <p><a class="studio-link-button" href="/studio/admin/access/">Back to access administration</a></p>
+
+    <section class="studio-panel" aria-labelledby="queue-heading">
+      <p class="studio-kicker">Deliberately submitted material only</p>
+      <h2 id="queue-heading">Open weekly requests</h2>
+      <p>Circle requests contain only group-safe submitted text. Private requests list the exact project scopes the creator has consented to. Journal entries, photographs and controlled excerpts are never included.</p>
+
+      {requests.length ? (
+        <ul class="studio-list">
+          {requests.map((item) => {
+            const assignedHere = item.facilitator_id === Astro.locals.user?.id;
+            return (
+              <li class="studio-card">
+                <p class="studio-meta">
+                  {item.plan_code === "circle" ? "Guided Deck Circle" : "Private Deck Partnership"}
+                  {" · "}week of {new Date(`${item.support_week}T00:00:00Z`).toLocaleDateString("en-NZ", { timeZone: "UTC" })}
+                  {" · "}{projectNames.get(item.project_id) ?? item.project_id}
+                </p>
+                <h3>{item.focus_question}</h3>
+                {item.context_excerpt ? <p>{item.context_excerpt}</p> : null}
+                <p class="studio-relationship">
+                  {item.plan_code === "circle"
+                    ? "No workspace access. Group sharing was explicitly confirmed."
+                    : `Consented scope: ${item.review_scopes.join(", ")}. Access is limited to 14 days and ends sooner on completion or withdrawal.`}
+                </p>
+
+                {item.status === "requested" ? (
+                  <form class="studio-form" method="post" action={`/api/studio/admin/support/${item.id}`}>
+                    <input type="hidden" name="action" value="accept" />
+                    <label class="studio-field"><span>Optional session time</span><input type="datetime-local" name="session_scheduled_for" /></label>
+                    <button class="studio-button" type="submit">Accept request</button>
+                  </form>
+                ) : assignedHere ? (
+                  <form class="studio-form" method="post" action={`/api/studio/admin/support/${item.id}`}>
+                    <input type="hidden" name="action" value="complete" />
+                    <label class="studio-field"><span>Facilitator response</span><textarea name="facilitator_response" required minlength="10" maxlength="5000"></textarea></label>
+                    <label class="studio-field"><span>Next useful step</span><textarea name="next_step" maxlength="1200"></textarea></label>
+                    <button class="studio-button" type="submit">Complete and close access</button>
+                  </form>
+                ) : (
+                  <p class="studio-empty">Accepted by another facilitator.</p>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      ) : <p class="studio-empty">No open weekly support requests.</p>}
+    </section>
+  </main>
+</BaseLayout>

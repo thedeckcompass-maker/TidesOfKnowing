@@ -8,9 +8,14 @@ import "../../../../styles/studio.css";
 
 export const prerender = false;
 
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
-if (accessResponse) return accessResponse;
 const projectId = Astro.params.id;
+const accessResponse = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId ? `/studio/projects/${projectId}/` : "/studio/",
+  Astro.locals.studioEntitlement,
+);
+if (accessResponse) return accessResponse;
 if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 
 const workspace = await getStudioProjectWorkspace(Astro.locals.supabase, projectId);
@@ -21,6 +26,12 @@ const created = Astro.url.searchParams.get("created") === "1";
 const error = Astro.url.searchParams.get("error");
 const completedCards = cards.filter((card) => card.status === "complete").length;
 const completedSections = guidebook.filter((section) => section.status === "complete").length;
+const cardById = new Map(cards.map((card) => [card.id, card]));
+const familySections = families.map((family) => ({
+  family,
+  cards: cards.filter((card) => card.family_id === family.id),
+}));
+const unassignedCards = cards.filter((card) => !card.family_id || !families.some((family) => family.id === card.family_id));
 ---
 
 <BaseLayout
@@ -54,6 +65,7 @@ const completedSections = guidebook.filter((section) => section.status === "comp
         </div>
         <p class="studio-panel__intro"><strong>Next action:</strong> {project.next_action || "Choose the next concrete piece of work."}</p>
         {project.current_risk ? <p><strong>Current risk:</strong> {project.current_risk}</p> : null}
+        <div class="studio-export-links"><a class="studio-link-button" href={`/studio/projects/${project.id}/programme/`}>Open twelve-week programme</a><a class="studio-link-button" href={`/studio/projects/${project.id}/production/`}>Plan production</a><a class="studio-link-button" href={`/studio/projects/${project.id}/support/`}>Open plan support</a><a class="studio-link-button" href={`/studio/projects/${project.id}/pulse/`}>Open Project Pulse</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/md`}>Export Markdown</a><a class="studio-link-button" href={`/api/studio/projects/${project.id}/export/json`}>Export JSON</a></div>
       </section>
 
       <section class="studio-panel studio-panel--side" aria-labelledby="settings-heading">
@@ -83,16 +95,54 @@ const completedSections = guidebook.filter((section) => section.status === "comp
         <h2 id="cards-heading">Cards</h2>
         <p class="studio-panel__intro">Order the whole deck, track progress and open a card for structured writing, research and artwork notes.</p>
         {cards.length ? (
-          <ul class="studio-list">
-            {cards.map((card) => (
-              <li class="studio-card">
-                <div class="studio-card__row">
-                  <div><p class="studio-meta">{card.card_number || `Position ${card.sort_order}`} · version {card.version_number}</p><h3>{card.title}</h3></div>
-                  <div><span class="studio-status">{card.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/cards/${card.id}/`}>Write card</a></div>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <>
+            <nav class="studio-family-nav" aria-label="Card families">
+              {familySections.map(({ family, cards: familyCards }) => (
+                <a href={`#family-${family.id}`}>{family.name} <span>{familyCards.length}</span></a>
+              ))}
+              {unassignedCards.length ? <a href="#family-unassigned">Unassigned <span>{unassignedCards.length}</span></a> : null}
+            </nav>
+            <div class="studio-family-sections">
+              {familySections.map(({ family, cards: familyCards }) => (
+                <section id={`family-${family.id}`} class="studio-family" aria-labelledby={`family-${family.id}-heading`}>
+                  <div class="studio-family__heading">
+                    <div>
+                      <p class="studio-meta">{familyCards.length} {familyCards.length === 1 ? "card" : "cards"}</p>
+                      <h3 id={`family-${family.id}-heading`}>{family.name}</h3>
+                    </div>
+                    {family.description ? <p>{family.description}</p> : null}
+                  </div>
+                  {familyCards.length ? (
+                    <ul class="studio-list studio-list--compact">
+                      {familyCards.map((card) => (
+                        <li class="studio-card">
+                          <div class="studio-card__row">
+                            <div><p class="studio-meta">{card.card_number || `Position ${card.sort_order}`} · version {card.version_number}</p><h3>{card.title}</h3></div>
+                            <div><span class="studio-status">{card.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/cards/${card.id}/`}>Write card</a></div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : <p class="studio-empty">No cards in this family yet.</p>}
+                </section>
+              ))}
+              {unassignedCards.length ? (
+                <section id="family-unassigned" class="studio-family" aria-labelledby="family-unassigned-heading">
+                  <div class="studio-family__heading"><div><p class="studio-meta">{unassignedCards.length} cards</p><h3 id="family-unassigned-heading">Unassigned</h3></div></div>
+                  <ul class="studio-list studio-list--compact">
+                    {unassignedCards.map((card) => (
+                      <li class="studio-card">
+                        <div class="studio-card__row">
+                          <div><p class="studio-meta">{card.card_number || `Position ${card.sort_order}`} · version {card.version_number}</p><h3>{card.title}</h3></div>
+                          <div><span class="studio-status">{card.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/cards/${card.id}/`}>Write card</a></div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+            </div>
+          </>
         ) : <p class="studio-empty">No cards have been scaffolded yet.</p>}
       </section>
 
@@ -126,7 +176,13 @@ const completedSections = guidebook.filter((section) => section.status === "comp
             {guidebook.map((section) => (
               <li class="studio-card">
                 <div class="studio-card__row">
-                  <div><p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p><h3>{section.title}</h3></div>
+                  <div>
+                    <p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p>
+                    <h3>{section.title}</h3>
+                    {section.card_id && cardById.get(section.card_id) ? (
+                      <p class="studio-relationship">Linked card: <a href={`/studio/projects/${project.id}/cards/${section.card_id}/`}>{cardById.get(section.card_id)?.title}</a></p>
+                    ) : null}
+                  </div>
                   <div><span class="studio-status">{section.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/guidebook/${section.id}/`}>Edit section</a></div>
                 </div>
               </li>
@@ -141,6 +197,7 @@ const completedSections = guidebook.filter((section) => section.status === "comp
         <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/guidebook`}>
           <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" /></label>
           <label class="studio-field"><span>Section type</span><select name="section_type"><option value="front_matter">Front matter</option><option value="card_entry">Card entry</option><option value="instructions">Instructions</option><option value="chapter">Chapter</option><option value="closing">Closing material</option><option value="other">Other</option></select></label>
+          <label class="studio-field"><span>Linked card</span><select name="card_id"><option value="">No linked card</option>{familySections.map(({ family, cards: familyCards }) => familyCards.length ? <optgroup label={family.name}>{familyCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null)}{unassignedCards.length ? <optgroup label="Unassigned">{unassignedCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null}</select></label>
           <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={guidebook.length} required /></label>
           <button class="studio-button" type="submit">Create section</button>
         </form>

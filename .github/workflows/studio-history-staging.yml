@@ -1,0 +1,63 @@
+name: Deck Studio staging version provenance
+
+on:
+  push:
+    branches: [feature/deck-creator-studio-live]
+    paths:
+      - .github/workflows/studio-history-staging.yml
+      - supabase/migrations/20260923183000_deck_studio_restore_provenance.sql
+
+permissions:
+  contents: read
+
+jobs:
+  migrate-and-verify-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment: deck-studio-staging
+    env:
+      STUDIO_STAGING_DATABASE_URL: ${{ secrets.STUDIO_STAGING_DATABASE_URL }}
+      STUDIO_PROJECT_REF: utzcmbidotxgmulguzxo
+      STUDIO_TEST_PROJECT: 2b55720e-1bfa-4cab-bf66-9bbe6c8f4d43
+      STUDIO_TEST_CARD: fae21908-1a7c-4217-9147-cca1a408062c
+    steps:
+      - name: Require isolated Studio staging database
+        shell: bash
+        run: |
+          if [[ -z "$STUDIO_STAGING_DATABASE_URL" || "$STUDIO_STAGING_DATABASE_URL" != *"$STUDIO_PROJECT_REF"* ]]; then
+            echo "::error::Isolated Studio staging connection is unavailable."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - name: Apply restore provenance migration to staging only
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --quiet \
+            --file supabase/migrations/20260923183000_deck_studio_restore_provenance.sql
+      - name: Verify privileges and rollback-only restore
+        shell: bash
+        run: |
+          psql "$STUDIO_STAGING_DATABASE_URL" --no-psqlrc --set ON_ERROR_STOP=1 --quiet \
+            --set project="$STUDIO_TEST_PROJECT" --set card="$STUDIO_TEST_CARD" <<'SQL'
+          select 1 / (case when
+            has_function_privilege('authenticated', 'public.studio_restore_card_version(uuid,uuid,uuid,integer)', 'EXECUTE')
+            and has_function_privilege('authenticated', 'public.studio_restore_guidebook_version(uuid,uuid,uuid,integer)', 'EXECUTE')
+            and not has_function_privilege('anon', 'public.studio_restore_card_version(uuid,uuid,uuid,integer)', 'EXECUTE')
+          then 1 else 0 end);
+          select owner_id as creator from public.studio_projects where id = :'project'::uuid \gset
+          begin;
+          select set_config('request.jwt.claim.sub', :'creator', true);
+          set local role authenticated;
+          select public.studio_restore_card_version(
+            :'project'::uuid, :'card'::uuid,
+            (select id from public.studio_card_versions where card_id = :'card'::uuid and version_number = 1),
+            (select version_number from public.studio_cards where id = :'card'::uuid)
+          ) as restored_version \gset
+          select 1 / (case when exists (
+            select 1 from public.studio_card_versions v
+            join public.studio_card_versions source on source.id = v.restored_from_version_id
+            where v.card_id = :'card'::uuid and v.version_number = :'restored_version'::integer
+              and source.version_number = 1 and source.card_id = v.card_id
+          ) then 1 else 0 end);
+          rollback;
+          SQL

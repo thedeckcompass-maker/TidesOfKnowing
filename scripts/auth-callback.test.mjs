@@ -37,6 +37,8 @@ const ALLOWED_REDIRECTS = new Set([
   "/community/",
   "/community/account",
   "/community/account/",
+  "/studio",
+  "/studio/",
 ]);
 
 const PLANNED_CONFIRM_SIGNUP_TOKEN_HASH_HREF =
@@ -91,11 +93,14 @@ function safeAuthCallbackRedirect(value) {
   if (!decoded.startsWith("/")) return "/community/";
   const pathOnly = decoded.split("?")[0]?.split("#")[0] ?? "";
   if (!pathOnly.startsWith("/") || pathOnly.startsWith("//")) return "/community/";
-  if (!ALLOWED_REDIRECTS.has(pathOnly)) return "/community/";
+  const isStudioPath = pathOnly.startsWith("/studio/");
+  if (!ALLOWED_REDIRECTS.has(pathOnly) && !isStudioPath) return "/community/";
   if (pathOnly === "/community" || pathOnly === "/community/") return "/community/";
   if (pathOnly === "/community/account" || pathOnly === "/community/account/") {
     return "/community/account/";
   }
+  if (pathOnly === "/studio") return "/studio/";
+  if (isStudioPath) return pathOnly;
   return "/community/";
 }
 
@@ -195,6 +200,15 @@ run("valid /community/account/ redirect", () => {
   );
 });
 
+run("valid Studio redirect", () => {
+  assert.equal(safeAuthCallbackRedirect("/studio"), "/studio/");
+  assert.equal(safeAuthCallbackRedirect("/studio/"), "/studio/");
+  assert.equal(
+    safeAuthCallbackRedirect("%2Fstudio%2Fprojects%2F56976396-c97b-4a24-a097-e9331a5504a1%2F"),
+    "/studio/projects/56976396-c97b-4a24-a097-e9331a5504a1/",
+  );
+});
+
 run("external redirect rejection", () => {
   assert.equal(safeAuthCallbackRedirect("https://evil.example/phish"), "/community/");
   assert.equal(safeAuthCallbackRedirect("http://evil.example"), "/community/");
@@ -281,7 +295,9 @@ run("emailRedirectTo destinations for current flows", () => {
     join(REPO_ROOT, "src/pages/api/community/account/sign-in-link.ts"),
     "utf8",
   );
-  assert.match(registerSrc, /const next = "\/community\/"/);
+  assert.match(registerSrc, /safeAuthCallbackRedirect\(String\(form\.get\("redirectTo"\)/);
+  assert.match(registerSrc, /safeAuthCallbackRedirect\(Astro\.url\.searchParams\.get\("redirectTo"\)\)/);
+  assert.match(registerSrc, /isStudioRedirect \? "sign-in" : "join"/);
   assert.match(accountSrc, /const redirectTo = "\/community\/account\/"/);
 });
 
