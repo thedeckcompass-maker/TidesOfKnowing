@@ -53,7 +53,7 @@ export const ASK_LEILIA_DELIVERABLES = {
   ],
   "personal-guidance": [
     "Written PDF with photographs of the spread",
-    "Private video recording of the interpretation",
+    "No audio or video",
     "Delivered within 48 hours",
   ],
 } as const;
@@ -109,13 +109,13 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
     keyPoints: [
       "Includes Leilia’s signature fourteen-card Waka Spread",
       "Tarot, channelled insight, and ancestral guidance",
-      "Written PDF, spread images, and private recorded interpretation",
+      "Detailed written PDF with photographs of the Waka Spread",
     ],
     moreInfoLabel: "More information about the Personal Guidance Reading",
     moreInfo: [
       "Bring the questions or concerns that matter most, but the reading is not confined to them. This Personal Guidance Reading is designed to illuminate the wider path, including patterns, influences, and information you may not yet have realised you needed to ask about.",
       "At its centre is my signature fourteen-card Waka Spread. Nine cards explore the structure of the person's journey, including foundation, capacity, purpose, momentum, agency, what is being left behind, and what is emerging ahead. Five further cards reveal the conditions acting on that journey.",
-      "I read the cards individually and in relationship, working with tarot, intuitive perception, channelled insight, and connection with my ancestors. You receive a professionally presented written PDF, photographs of the spread, and a private video recording of me laying out and interpreting the reading.",
+      "I read the cards individually and in relationship, working with tarot, intuitive perception, channelled insight, and connection with my ancestors. You receive a detailed written PDF with photographs of the Waka Spread. This reading does not include audio or video.",
     ],
     price: "US$150",
     requestHref: "/ask-leilia/request/personal-guidance/",
@@ -126,7 +126,7 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
 export const ASK_LEILIA_PUBLIC_TRUST_POINTS = [
   "Every reading is interpreted personally by Leilia",
   "Every reading includes a written PDF and spread imagery",
-  "The Personal Guidance Reading also includes a private recorded interpretation",
+  "Personal Guidance centres on Leilia’s signature fourteen-card Waka Spread",
   "No automated or AI-generated interpretation",
   "Delivered within 48 hours",
 ];
@@ -136,7 +136,7 @@ export const ASK_LEILIA_PURCHASE_REASSURANCE = [
   "Personally interpreted by Leilia",
   "Written PDF and spread imagery with every reading",
   "Delivered within 48 hours",
-  "Private recorded interpretation included only with Personal Guidance",
+  "Signature Waka Spread included with Personal Guidance",
 ] as const;
 
 /** Concise closing-offer summaries for the final purchase invitation (sales page). */
