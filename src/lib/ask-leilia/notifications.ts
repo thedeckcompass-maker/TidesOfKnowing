@@ -159,7 +159,7 @@ const SUPPORT_EMAIL = "hello@tidesofknowing.com";
 
 function paymentConfirmationDeliveryLine(readingType: AskLeiliaDbReadingType): string {
   if (readingType === "personal-guidance") {
-    return "Your completed reading will be delivered as a professionally written PDF within 48 hours. Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread.";
+    return "Your Personal Guidance Reading includes my signature Waka Spread. Your detailed written PDF with photographs of the spread will be delivered within 48 hours. No audio or video is included.";
   }
 
   return "Your completed reading will be delivered as a professionally written PDF within 48 hours.";
@@ -419,7 +419,6 @@ export async function sendAskLeiliaCustomerDelivery(
     readingType?: AskLeiliaDbReadingType;
     pdfContentBase64: string;
     pdfFilename?: string;
-    audioContentBase64?: string;
     isResend?: boolean;
   },
   locals?: unknown,
@@ -447,13 +446,6 @@ export async function sendAskLeiliaCustomerDelivery(
     "Your completed reading is attached as a PDF.",
   ];
 
-  if (input.audioContentBase64 && input.readingType === "personal-guidance") {
-    bodyLines.push(
-      "",
-      "Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread. The recording is attached alongside your written reading.",
-    );
-  }
-
   bodyLines.push(
     "",
     "Thank you for placing your trust in Ask Leilia.",
@@ -473,13 +465,6 @@ export async function sendAskLeiliaCustomerDelivery(
     },
   ];
 
-  if (input.audioContentBase64) {
-    attachments.push({
-      filename: "Ask-Leilia-Audio-Reflection.mp3",
-      content: input.audioContentBase64,
-    });
-  }
-
   const htmlParts = [
     `<p>Hello ${escapeEmailText(input.name)},</p>`,
     `<p>${
@@ -490,12 +475,6 @@ export async function sendAskLeiliaCustomerDelivery(
     `<p>Reading: <strong>${escapeEmailText(readingLabel)}</strong></p>`,
     "<p>Your completed reading is attached as a PDF.</p>",
   ];
-
-  if (input.audioContentBase64 && input.readingType === "personal-guidance") {
-    htmlParts.push(
-      "<p>Your Personal Guidance Reading includes a private video recording of Leilia laying out and interpreting your spread. The recording is attached alongside your written reading.</p>",
-    );
-  }
 
   htmlParts.push(
     "<p>Thank you for placing your trust in Ask Leilia.</p>",
