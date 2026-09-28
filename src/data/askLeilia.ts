@@ -43,17 +43,14 @@ export type AskLeiliaReading = {
 export const ASK_LEILIA_DELIVERABLES = {
   "one-question": [
     "Written PDF with a photograph of the spread",
-    "No audio or video",
     "Delivered within 48 hours",
   ],
   "in-depth": [
     "Substantial written PDF with photographs of the spreads",
-    "No audio or video",
     "Delivered within 48 hours",
   ],
   "personal-guidance": [
     "Written PDF with photographs of the spread",
-    "No audio or video",
     "Delivered within 48 hours",
   ],
 } as const;
@@ -77,7 +74,7 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
     ],
     moreInfoLabel: "More information about the One Question Reading",
     moreInfo: [
-      "Bring one clearly defined question. I choose the spread most appropriate to what you are asking and draw as many cards as needed to answer it properly. There is no arbitrary card limit and no automated interpretation. You receive a professionally presented written PDF with a photograph of your spread. This reading does not include audio or video.",
+      "Bring one clearly defined question. I choose the spread most appropriate to what you are asking and draw as many cards as needed to answer it properly. There is no arbitrary card limit and no automated interpretation. You receive a professionally presented written PDF with a photograph of your spread.",
     ],
     price: "US$45",
     requestHref: "/ask-leilia/request/",
@@ -94,7 +91,7 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
     ],
     moreInfoLabel: "More information about the In-Depth Reading",
     moreInfo: [
-      "Choose this reading when the issue cannot be reduced to one contained question. You may bring one complex situation, several connected concerns, a decision with competing options, or a pattern affecting different parts of your life. I choose the spread or combination of spreads that best fits what you bring, follow the relationships between the cards, and examine the pressures, choices, underlying dynamics, and likely direction involved. You receive a substantial written PDF with photographs of the spreads. This reading does not include audio or video.",
+      "Choose this reading when the issue cannot be reduced to one contained question. You may bring one complex situation, several connected concerns, a decision with competing options, or a pattern affecting different parts of your life. I choose the spread or combination of spreads that best fits what you bring, follow the relationships between the cards, and examine the pressures, choices, underlying dynamics, and likely direction involved. You receive a substantial written PDF with photographs of the spreads.",
     ],
     price: "US$75",
     requestHref: "/ask-leilia/request/in-depth/",
@@ -115,7 +112,7 @@ export const ASK_LEILIA_READINGS: AskLeiliaReading[] = [
     moreInfo: [
       "Bring the questions or concerns that matter most, but the reading is not confined to them. This Personal Guidance Reading is designed to illuminate the wider path, including patterns, influences, and information you may not yet have realised you needed to ask about.",
       "At its centre is my signature fourteen-card Waka Spread. Nine cards explore the structure of the person's journey, including foundation, capacity, purpose, momentum, agency, what is being left behind, and what is emerging ahead. Five further cards reveal the conditions acting on that journey.",
-      "I read the cards individually and in relationship, working with tarot, intuitive perception, channelled insight, and connection with my ancestors. You receive a detailed written PDF with photographs of the Waka Spread. This reading does not include audio or video.",
+      "I read the cards individually and in relationship, working with tarot, intuitive perception, channelled insight, and connection with my ancestors. You receive a detailed written PDF with photographs of the Waka Spread.",
     ],
     price: "US$150",
     requestHref: "/ask-leilia/request/personal-guidance/",

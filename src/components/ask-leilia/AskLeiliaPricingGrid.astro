@@ -229,13 +229,11 @@ const readingPayload = readings.map((reading) => {
         moreEl.appendChild(p);
       });
       listEl.replaceChildren();
-      (reading.deliverables || [])
-        .filter((item) => !/^no audio or video$/i.test(String(item)))
-        .forEach((item) => {
-          const li = document.createElement("li");
-          li.textContent = item;
-          listEl.appendChild(li);
-        });
+      (reading.deliverables || []).forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        listEl.appendChild(li);
+      });
       ctaEl.href = reading.requestHref;
       ctaEl.textContent = reading.ctaLabel || "Request this reading";
       lastTrigger = trigger;
