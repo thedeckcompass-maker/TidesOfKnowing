@@ -47,7 +47,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 };
 ---
 
-<form class="ask-request-form" method="post" action={action} enctype="multipart/form-data">
+<form class="ask-request-form" method="post" action={action} enctype="multipart/form-data" data-ask-leilia-checkout>
   <input type="hidden" name="readingType" value={readingType} />
 
   {
@@ -97,12 +97,12 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
     <label>
       Name
-      <input name="name" type="text" autocomplete="name" required />
+      <input name="name" type="text" autocomplete="name" minlength="2" maxlength="120" required />
     </label>
 
     <label>
       Email
-      <input name="email" type="email" autocomplete="email" required />
+      <input name="email" type="email" autocomplete="email" maxlength="320" required />
     </label>
   </fieldset>
 
@@ -118,6 +118,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="question"
               rows="6"
               maxlength="2000"
+              minlength="10"
               required
               placeholder={questionPlaceholder}
             />
@@ -171,6 +172,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="primaryQuestion"
               rows="6"
               maxlength="2000"
+              minlength="10"
               required
               placeholder="Share the primary question you would like explored through the cards."
             />
@@ -192,6 +194,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="outcome"
               rows="5"
               maxlength="2000"
+              minlength="10"
               required
               placeholder="Describe what you hope this reading will clarify or help you move toward."
             />
@@ -269,6 +272,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="questions"
               rows="6"
               maxlength="2000"
+              minlength="10"
               required
               placeholder="Share the questions, themes, or tensions you would like this reading to address."
             />
@@ -285,6 +289,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="circumstances"
               rows="6"
               maxlength="5000"
+              minlength="10"
               required
               placeholder="Describe what is unfolding in your life right now and why it matters to this reading."
             />
@@ -301,6 +306,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               name="lookingAhead"
               rows="5"
               maxlength="2000"
+              minlength="10"
               required
               placeholder="Describe any decision, transition, or opportunity you would like guidance on."
             />
@@ -333,10 +339,82 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
     ) : null
   }
 
+  <div class="ask-request-form__error" role="alert" tabindex="-1" hidden data-checkout-error>
+    <p data-checkout-error-message></p>
+    <p>If the problem continues, email <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> and I will help you book.</p>
+  </div>
   <button type="submit">{submitLabel}</button>
 </form>
 
 <script>
+  function initAskLeiliaCheckout() {
+    document.querySelectorAll<HTMLFormElement>("[data-ask-leilia-checkout]").forEach((form) => {
+      if (form.dataset.checkoutBound === "true") return;
+      form.dataset.checkoutBound = "true";
+
+      const errorBox = form.querySelector<HTMLElement>("[data-checkout-error]");
+      const errorMessage = form.querySelector<HTMLElement>("[data-checkout-error-message]");
+      const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (!errorBox || !errorMessage || !submitButton) return;
+
+      const originalLabel = submitButton.textContent ?? "Continue to Payment";
+      const showError = (message: string) => {
+        errorMessage.textContent = message;
+        errorBox.hidden = false;
+        errorBox.focus();
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (submitButton.disabled) return;
+        errorBox.hidden = true;
+
+        const readingType = form.querySelector<HTMLInputElement>('input[name="readingType"]')?.value;
+        if (readingType === "personal-guidance" && !form.querySelector('input[name="lifeAreas"]:checked')) {
+          showError("Please select at least one life area.");
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Saving your request…";
+        let redirecting = false;
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            headers: { Accept: "application/json" },
+          });
+          const result = await response.json() as {
+            ok?: boolean;
+            error?: string;
+            paymentUrl?: string;
+          };
+
+          if (!response.ok || !result.ok) {
+            showError(result.error || "Your request could not be saved. Please try again.");
+            return;
+          }
+
+          const paymentUrl = new URL(result.paymentUrl ?? "");
+          if (paymentUrl.protocol !== "https:" || paymentUrl.hostname !== "buy.stripe.com") {
+            throw new Error("Unexpected payment destination");
+          }
+          redirecting = true;
+          submitButton.textContent = "Opening secure payment…";
+          window.location.assign(paymentUrl.href);
+        } catch {
+          showError("We could not connect to the booking service. Your answers are still here. Please try again.");
+        } finally {
+          if (!redirecting) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalLabel;
+          }
+        }
+      });
+    });
+  }
+
   function initPersonalGuidanceLifeAreas() {
     const toggle = document.querySelector("[data-life-area-other-toggle]");
     const field = document.querySelector("[data-life-area-other-field]");
@@ -380,5 +458,9 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
   }
 
   initPersonalGuidanceLifeAreas();
-  document.addEventListener("astro:page-load", initPersonalGuidanceLifeAreas);
+  initAskLeiliaCheckout();
+  document.addEventListener("astro:page-load", () => {
+    initPersonalGuidanceLifeAreas();
+    initAskLeiliaCheckout();
+  });
 </script>

@@ -1699,6 +1699,27 @@
   cursor: pointer;
 }
 
+.ask-request-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.ask-request-form__error {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--tok-gold-deep);
+  border-radius: var(--radius-control);
+  background: var(--tok-surface-reading);
+  color: var(--tok-text-dark);
+}
+
+.ask-request-form__error[hidden] {
+  display: none;
+}
+
+.ask-request-form__error p + p {
+  margin-top: 0.5rem;
+}
+
 @media (min-width: 760px) {
   .ask-leilia-pricing__grid,
   .ask-leilia-features__grid,
