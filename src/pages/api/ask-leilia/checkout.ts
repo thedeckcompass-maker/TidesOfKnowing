@@ -18,6 +18,7 @@ import {
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals }) => {
+  const wantsJson = request.headers.get("accept")?.includes("application/json") ?? false;
   const form = await request.formData();
   const readingTypeRaw = form.get("readingType");
   const readingType = isAskLeiliaReadingType(readingTypeRaw) ? readingTypeRaw : "one-question";
@@ -146,6 +147,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     readingType,
     requestStatus: "Pending Payment",
   });
+
+  // The enhanced form keeps the client's answers in place if an earlier step fails.
+  // Native form submissions retain the existing 303 payment handoff.
+  if (wantsJson) {
+    return json({ ok: true, paymentUrl });
+  }
 
   return Response.redirect(paymentUrl, 303);
 };
