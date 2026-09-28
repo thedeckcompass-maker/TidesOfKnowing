@@ -159,7 +159,7 @@ const SUPPORT_EMAIL = "hello@tidesofknowing.com";
 
 function paymentConfirmationDeliveryLine(readingType: AskLeiliaDbReadingType): string {
   if (readingType === "personal-guidance") {
-    return "Your Personal Guidance Reading includes my signature Waka Spread. Your detailed written PDF with photographs of the spread will be delivered within 48 hours. No audio or video is included.";
+    return "Your Personal Guidance Reading includes my signature Waka Spread. Your detailed written PDF with photographs of the spread will be delivered within 48 hours.";
   }
 
   return "Your completed reading will be delivered as a professionally written PDF within 48 hours.";
