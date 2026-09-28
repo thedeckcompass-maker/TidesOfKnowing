@@ -405,6 +405,7 @@ export function validatePersonalGuidanceRequest(input: {
   name: unknown;
   email: unknown;
   questions: unknown;
+  openGuidance?: unknown;
   circumstances: unknown;
   lookingAhead: unknown;
   important?: unknown;
@@ -420,6 +421,7 @@ export function validatePersonalGuidanceRequest(input: {
   if (!identity.ok) return identity;
 
   const questions = cleanText(input.questions);
+  const openGuidance = input.openGuidance === "yes";
   const circumstances = cleanText(input.circumstances);
   const lookingAhead = cleanText(input.lookingAhead);
   const important = cleanText(input.important);
@@ -451,26 +453,25 @@ export function validatePersonalGuidanceRequest(input: {
     ? formatPersonalGuidanceLifeAreas(lifeAreas, lifeAreaOther)
     : lifeAreas;
 
-  if (questions.length < 10 || questions.length > 2000) {
+  if (((!openGuidance || questions.length > 0) && questions.length < 10) || questions.length > 2000) {
     return {
       ok: false,
       error:
-        "Please share your questions or life areas, between 10 and 2,000 characters.",
+        "Please write at least 10 characters about your questions or choose an open reading.",
     };
   }
 
-  if (circumstances.length < 10 || circumstances.length > 5000) {
+  if (circumstances.length > 5000) {
     return {
       ok: false,
-      error: "Please describe your current circumstances, between 10 and 5,000 characters.",
+      error: "Please keep your current circumstances under 5,000 characters.",
     };
   }
 
-  if (lookingAhead.length < 10 || lookingAhead.length > 2000) {
+  if (lookingAhead.length > 2000) {
     return {
       ok: false,
-      error:
-        "Please describe what you are looking ahead to, between 10 and 2,000 characters.",
+      error: "Please keep what you are looking ahead to under 2,000 characters.",
     };
   }
 
@@ -480,8 +481,8 @@ export function validatePersonalGuidanceRequest(input: {
 
   const contextParts = [
     `Life areas:\n${formattedLifeAreas.join(", ")}`,
-    `Current circumstances:\n${circumstances}`,
-    `Looking ahead:\n${lookingAhead}`,
+    circumstances ? `Current circumstances:\n${circumstances}` : "",
+    lookingAhead ? `Looking ahead:\n${lookingAhead}` : "",
     important ? `Anything else to address:\n${important}` : "",
   ].filter(Boolean);
 
@@ -490,7 +491,7 @@ export function validatePersonalGuidanceRequest(input: {
     value: {
       name: identity.name,
       email: identity.email,
-      question: questions,
+      question: questions || "Please focus on the life area or areas I have selected for this Personal Guidance reading.",
       context: contextParts.join("\n\n"),
     },
   };

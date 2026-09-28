@@ -87,6 +87,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       name: form.get("name"),
       email: form.get("email"),
       questions: form.get("questions"),
+      openGuidance: form.get("openGuidance"),
       circumstances: form.get("circumstances"),
       lookingAhead: form.get("lookingAhead"),
       important: form.get("important"),

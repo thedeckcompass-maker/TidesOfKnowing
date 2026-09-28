@@ -97,12 +97,12 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
     <legend>Your details</legend>
 
     <label>
-      Name
+      Name (Required)
       <input name="name" type="text" autocomplete="name" minlength="2" maxlength="120" required />
     </label>
 
     <label>
-      Email
+      Email (Required)
       <input name="email" type="email" autocomplete="email" maxlength="320" required />
     </label>
   </fieldset>
@@ -114,7 +114,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           <legend>Your question</legend>
 
           <label>
-            Your Question
+            Your Question (Required, at least 10 characters)
             <textarea
               name="question"
               rows="6"
@@ -136,7 +136,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
         </fieldset>
 
         <fieldset class="ask-request-form__fieldset--compact">
-          <legend>Card preference</legend>
+          <legend>Card preference (Required)</legend>
 
           <label class="ask-request-form__radio">
             <input type="radio" name="cardPreference" value="pull_for_me" required />
@@ -168,7 +168,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           <legend>Your reading request</legend>
 
           <label>
-            Primary Question
+            Primary Question (Required, at least 10 characters)
             <textarea
               name="primaryQuestion"
               rows="6"
@@ -190,7 +190,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           </label>
 
           <label>
-            What outcome or understanding are you hoping this reading will help you reach?
+            What outcome or understanding are you hoping this reading will help you reach? (Required, at least 10 characters)
             <textarea
               name="outcome"
               rows="5"
@@ -222,9 +222,8 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           <legend class="ask-request-form__section-legend">Life areas</legend>
 
           <p class="ask-request-form__section-note">
-            Select the areas of life that matter most for this Personal Guidance Reading. These help
-            me understand the ground of your situation; the reading is not limited to the boxes you
-            tick.
+            Select at least one area of life to focus on for this Personal Guidance Reading. I may
+            also follow other themes that emerge through the reading.
           </p>
 
           <div class="ask-request-form__life-areas">
@@ -250,15 +249,18 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
                 <span class="ask-request-form__checkbox-label">Other</span>
               </label>
               <div class="ask-request-form__other-field" data-life-area-other-field hidden>
-                <input
-                  type="text"
-                  name="lifeAreaOther"
-                  maxlength="100"
-                  placeholder="Please specify..."
-                  autocomplete="off"
-                  disabled
-                  data-life-area-other-input
-                />
+                <label>
+                  Name the other life area (Required if Other is selected)
+                  <input
+                    type="text"
+                    name="lifeAreaOther"
+                    maxlength="100"
+                    placeholder="Please specify..."
+                    autocomplete="off"
+                    disabled
+                    data-life-area-other-input
+                  />
+                </label>
               </div>
             </div>
           </div>
@@ -268,7 +270,7 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
           <legend class="ask-request-form__section-legend">Questions</legend>
 
           <label>
-            What are the questions or themes you'd like me to explore?
+            Questions or themes (Required unless you choose the option below; at least 10 characters if you write here)
             <textarea
               name="questions"
               rows="6"
@@ -278,6 +280,16 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
               placeholder="Share the questions, themes, or tensions you would like this reading to address."
             />
           </label>
+          <label class="ask-request-form__checkbox ask-request-form__open-reading">
+            <input type="checkbox" name="openGuidance" value="yes" data-open-guidance-toggle />
+            <span class="ask-request-form__checkbox-label">
+              I don't have a specific question. Please focus on the life area or areas I've selected.
+            </span>
+          </label>
+          <p class="ask-request-form__section-note">
+            Choose this if you would like the selected life area or areas to guide the reading.
+            You can leave the questions box blank.
+          </p>
         </fieldset>
 
         <fieldset>
@@ -285,13 +297,11 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
           <label>
             What is happening in your life at the moment that provides important context for this
-            reading?
+            reading? (Optional)
             <textarea
               name="circumstances"
               rows="6"
               maxlength="5000"
-              minlength="10"
-              required
               placeholder="Describe what is unfolding in your life right now and why it matters to this reading."
             />
           </label>
@@ -302,13 +312,11 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
           <label>
             Is there a particular decision, opportunity or change approaching that you'd like this
-            reading to help illuminate?
+            reading to help illuminate? (Optional)
             <textarea
               name="lookingAhead"
               rows="5"
               maxlength="2000"
-              minlength="10"
-              required
               placeholder="Describe any decision, transition, or opportunity you would like guidance on."
             />
           </label>
@@ -342,12 +350,14 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
   <div class="ask-request-form__error" role="alert" tabindex="-1" hidden data-checkout-error>
     <p data-checkout-error-message></p>
-    <p>If the problem continues, email <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> and I will help you book.</p>
+    <p data-checkout-support>If the problem continues, email <a href="mailto:hello@tidesofknowing.com">hello@tidesofknowing.com</a> and I will help you book.</p>
   </div>
   <button type="submit">{submitLabel}</button>
 </form>
 
 <script>
+  let fieldErrorId = 0;
+
   function initAskLeiliaCheckout() {
     document.querySelectorAll<HTMLFormElement>("[data-ask-leilia-checkout]").forEach((form) => {
       if (form.dataset.checkoutBound === "true") return;
@@ -355,26 +365,160 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
 
       const errorBox = form.querySelector<HTMLElement>("[data-checkout-error]");
       const errorMessage = form.querySelector<HTMLElement>("[data-checkout-error-message]");
+      const supportMessage = form.querySelector<HTMLElement>("[data-checkout-support]");
       const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      if (!errorBox || !errorMessage || !submitButton) return;
+      if (!errorBox || !errorMessage || !supportMessage || !submitButton) return;
+
+      // Once the handler is ready, show our actionable messages instead of a browser tooltip.
+      form.noValidate = true;
 
       const originalLabel = submitButton.textContent ?? "Continue to Payment";
       const showError = (message: string) => {
         errorMessage.textContent = message;
+        supportMessage.hidden = false;
         errorBox.hidden = false;
         errorBox.focus();
       };
+
+      const fieldContainer = (control: HTMLInputElement | HTMLTextAreaElement) =>
+        control.name === "lifeAreas" || control.name === "cardPreference"
+          ? control.closest("fieldset")
+          : control.closest("label");
+
+      const clearFieldError = (control: HTMLInputElement | HTMLTextAreaElement) => {
+        const container = fieldContainer(control);
+        container?.querySelector(":scope > .ask-request-form__field-error")?.remove();
+        if (container?.getAttribute("aria-describedby")?.startsWith("ask-field-error-")) {
+          container.removeAttribute("aria-describedby");
+        }
+        if (control.getAttribute("aria-describedby")?.startsWith("ask-field-error-")) {
+          control.removeAttribute("aria-describedby");
+        }
+        control.removeAttribute("aria-invalid");
+        if (control.name === "lifeAreas" || control.name === "cardPreference") {
+          form.querySelectorAll<HTMLInputElement>(`input[name="${control.name}"]`).forEach((input) => {
+            input.removeAttribute("aria-invalid");
+            if (input.getAttribute("aria-describedby")?.startsWith("ask-field-error-")) {
+              input.removeAttribute("aria-describedby");
+            }
+          });
+        }
+      };
+
+      const markField = (control: HTMLInputElement | HTMLTextAreaElement, message: string) => {
+        const container = fieldContainer(control);
+        if (!container) return;
+        clearFieldError(control);
+        const error = document.createElement("span");
+        error.className = "ask-request-form__field-error";
+        error.id = `ask-field-error-${++fieldErrorId}`;
+        error.textContent = message;
+        if (control.name === "cardPreference") {
+          const radios = container.querySelectorAll(".ask-request-form__radio");
+          radios[radios.length - 1]?.after(error);
+        } else if (control.name === "lifeAreas") {
+          container.querySelector(".ask-request-form__section-note")?.after(error);
+        } else {
+          container.append(error);
+        }
+        control.setAttribute("aria-invalid", "true");
+        control.setAttribute("aria-describedby", error.id);
+        if (control.name === "lifeAreas" || control.name === "cardPreference") {
+          container.setAttribute("aria-describedby", error.id);
+        }
+      };
+
+      const validateFields = () => {
+        form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[aria-invalid="true"]').forEach(clearFieldError);
+        const invalid: Array<HTMLInputElement | HTMLTextAreaElement> = [];
+        const field = (name: string) =>
+          form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+        const requireText = (name: string, label: string, minimum: number) => {
+          const control = field(name);
+          if (!control) return;
+          const length = control.value.trim().length;
+          if (length < minimum) {
+            const message = length === 0
+              ? `Please enter ${label}. Use at least ${minimum} characters.`
+              : `Please add more to ${label}: at least ${minimum} characters are needed.`;
+            markField(control, message);
+            invalid.push(control);
+          }
+        };
+
+        requireText("name", "your name", 2);
+        const email = field("email");
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+          markField(email, "Please enter a valid email address.");
+          invalid.push(email);
+        }
+
+        const readingType = field("readingType")?.value;
+        if (readingType === "one-question") {
+          requireText("question", "your question", 10);
+          if (!form.querySelector('input[name="cardPreference"]:checked')) {
+            const cardPreference = form.querySelector<HTMLInputElement>('input[name="cardPreference"]');
+            if (cardPreference) {
+              markField(cardPreference, "Please choose a card preference.");
+              invalid.push(cardPreference);
+            }
+          }
+        } else if (readingType === "in-depth") {
+          requireText("primaryQuestion", "your primary question", 10);
+          requireText("outcome", "the outcome or understanding you are hoping for", 10);
+        } else if (readingType === "personal-guidance") {
+          if (!form.querySelector('input[name="lifeAreas"]:checked')) {
+            const lifeArea = form.querySelector<HTMLInputElement>('input[name="lifeAreas"]');
+            if (lifeArea) {
+              markField(lifeArea, "Please select at least one life area.");
+              invalid.push(lifeArea);
+            }
+          }
+          const other = form.querySelector<HTMLInputElement>('[data-life-area-other-input]');
+          if (form.querySelector<HTMLInputElement>('[data-life-area-other-toggle]')?.checked && other && !other.value.trim()) {
+            markField(other, "Please name the other life area you selected.");
+            invalid.push(other);
+          }
+          const questions = field("questions");
+          const openGuidance = form.querySelector<HTMLInputElement>('[data-open-guidance-toggle]')?.checked;
+          if (questions && (!openGuidance || questions.value.trim().length > 0)) {
+            if (!openGuidance && !questions.value.trim()) {
+              markField(questions, "Please write at least 10 characters about your questions or choose the focus option below.");
+              invalid.push(questions);
+            } else {
+              requireText("questions", "your questions or themes", 10);
+            }
+          }
+        }
+
+        if (invalid.length > 0) {
+          errorMessage.textContent = "Please correct the highlighted fields before continuing to payment.";
+          supportMessage.hidden = true;
+          errorBox.hidden = false;
+          invalid[0].focus();
+          return false;
+        }
+        return true;
+      };
+
+      form.addEventListener("input", (event) => {
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+          clearFieldError(event.target);
+          errorBox.hidden = true;
+        }
+      });
+      form.addEventListener("change", (event) => {
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+          clearFieldError(event.target);
+          errorBox.hidden = true;
+        }
+      });
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         if (submitButton.disabled) return;
         errorBox.hidden = true;
-
-        const readingType = form.querySelector<HTMLInputElement>('input[name="readingType"]')?.value;
-        if (readingType === "personal-guidance" && !form.querySelector('input[name="lifeAreas"]:checked')) {
-          showError("Please select at least one life area.");
-          return;
-        }
+        if (!validateFields()) return;
 
         submitButton.disabled = true;
         submitButton.textContent = "Saving your request…";
@@ -458,10 +602,25 @@ const tierGuidance: Record<AskLeiliaReadingType, string> = {
     syncOtherField();
   }
 
+  function initOpenGuidanceChoice() {
+    document.querySelectorAll<HTMLInputElement>("[data-open-guidance-toggle]").forEach((toggle) => {
+      const questions = toggle.closest("fieldset")?.querySelector<HTMLTextAreaElement>('textarea[name="questions"]');
+      if (!questions) return;
+      const syncChoice = () => { questions.required = !toggle.checked; };
+      if (toggle.dataset.bound !== "true") {
+        toggle.dataset.bound = "true";
+        toggle.addEventListener("change", syncChoice);
+      }
+      syncChoice();
+    });
+  }
+
   initPersonalGuidanceLifeAreas();
+  initOpenGuidanceChoice();
   initAskLeiliaCheckout();
   document.addEventListener("astro:page-load", () => {
     initPersonalGuidanceLifeAreas();
+    initOpenGuidanceChoice();
     initAskLeiliaCheckout();
   });
 </script>

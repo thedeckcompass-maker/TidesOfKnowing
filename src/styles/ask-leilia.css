@@ -1688,6 +1688,21 @@
   resize: vertical;
 }
 
+.ask-request-form .ask-request-form__field-error {
+  display: block;
+  margin: 0.15rem 0 0.35rem;
+  color: #a12d30;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ask-request-form [aria-invalid="true"] {
+  border-color: #a12d30;
+  outline: 2px solid #a12d30;
+  outline-offset: 2px;
+}
+
 .ask-request-form button {
   justify-self: start;
   padding: var(--tok-ui-btn-pad-y) var(--tok-ui-btn-pad-x);
