@@ -1,0 +1,42 @@
+# Explicit, card-specific restoration exception. The shared prose-only validator is unchanged.
+collection_id: pentacles/king-of-pentacles
+extracted_baseline: editorial/repeating-card-library/extracted/pentacles/king-of-pentacles-before-restoration-2026-10-03.md
+production_target: src/content/repeating-card-meanings/pentacles/king-of-pentacles.md
+allowed_frontmatter_edits: # Exact approved values; all other raw fields and key order remain fixed
+  - summary
+  - featuredSnippetAnswer
+  - answerEngineSummary
+
+validation_mode: independently_approved_map_restoration
+restoration_validator: scripts/validate-king-of-pentacles-restoration.mjs
+approved_map: editorial/repeating-card-library/approved-maps/pentacles/king-of-pentacles-2026-10-03.json
+approved_map_sha256: f4bd367b19c43a671294f8da71dfb4ed9faae5f8f6938b78d8991b18957687c5
+approved_source: editorial/repeating-card-library/accepted/pentacles/king-of-pentacles/2026-10-03.md
+approved_source_sha256: dadca6e5f16c1e57187083841119ba3bf724fb039acee9a48c227af366827262
+previous_production_sha256: e4aee3a60911da37fdb6cad6694d7302e9e943151de59a49a82addade0b1cbb8
+source_base_commit: fa90b6e5cd83eb089c81f147c61d259f14c04394
+
+approved_structure:
+  h1_count: 3
+  h2_count: 19
+  separator_count: 18
+  metadata_key_count: 14
+  introduction_units: 2
+  core_paragraphs: 24
+  reflective_questions: 10
+  integration_actions: 7
+  prose_units: 165
+  responsibility_list_items: 3
+
+approved_restoration_deltas:
+  introduction_units: [1, 2]
+  core_paragraphs: [7, 24]
+  integration_actions: [5, 7]
+  reflective_questions: [10, 10]
+  description: Faithfully restore every independently captured source-order map unit, including the ten replacement questions and three-item responsibility list. Do not compress the full approved wording to match the abbreviated historical production topology.
+
+reinsertion_date: 2026-10-03
+approved_by: Owner authorised faithful restoration on 2026-10-03 at 17:22 UTC and card-by-card publication at 17:44 UTC
+notes: The pre-restoration snapshot is the actual abbreviated production source, not an invented historical full file. It protects headings, separators, identities, routing, images, keywords and the other eleven frontmatter fields. The independently captured approval map is the authority for restored prose units and their order. The final candidate is never used as its own baseline. Exact source hashes, per-unit comparison and negative tests are required. Authoritative card-chat file placement was verified before import. Private conversation references are retained separately from this public repository.
+
+publication_status: Owner approved public repository publication and website deployment after preview checks on 2026-10-03 at 19:30 UTC

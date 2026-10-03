@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-magician",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "fa90b6e5cd83eb089c81f147c61d259f14c04394",
+  "publication_status": "Owner-approved publication to the public thedeckcompass-maker/TidesOfKnowing repository and tidesofknowing.com after preview checks; release receipt recorded after deployment",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-magician/2026-10-03.md",
+    "accepted_sha256": "737c76f7d874c46ec5e138bcac5bcd4507bdbf3d07c191807491e6939e36c664",
+    "production_sha256": "daeac03d3632c24f7d41d8f70c652d93774777c39616a73b7e7c6d8fce43741c",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-magician/v3-editorial.md",
+    "previous_production_sha256": "e0a570ce7c84d01bc13a9ecb9dc8b39a8b378e12cbf58c0b099cd8469499b4df",
+    "historical_validation_baseline": "editorial/repeating-card-library/archive/majors/the-magician/v1-original.md",
+    "historical_baseline_sha256": "47f031fdb922d5c05a18f55a1a829fd665d22889db125b8f2a875db39d27a735",
+    "original_library_sha256": "b603dd26e7fa1db40182d02fdca31fb5a3a9256b892d363c44c9071b5aa75acd",
+    "original_library_difference": "Library original has one additional terminal LF compared with previous production; preceding bytes match",
+    "deployment_transformation": "Existing EOF normalisation removes one terminal LF from exact accepted source to match the retained two-LF historical baseline; no preceding byte changes",
+    "pre_clarification_reviewed_source_sha256": "f8129cd20a98c78a044ef50dc7be0b464fb29a3f515efcffaef2a1f1748adac6",
+    "pre_clarification_history": "Exact pre-clarification accepted bytes remain preserved in the source version history and private release archive"
+  },
+  "review": "Whole-card semantic and mechanical/scope checks passed. Owner approved the single Core sentence clarification after the original whole-card review; every other accepted-source byte is unchanged.",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T19:36:00Z",
+  "private_source_receipt": "Exact Library identities, versions and private conversation references retained separately",
+  "approved_frontmatter_values": [
+    "featuredSnippetAnswer"
+  ],
+  "protected_metadata_note": "summary and answerEngineSummary remain byte-identical; all other unapproved metadata is protected",
+  "contract": "editorial/repeating-card-library/contracts/majors/the-magician.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-magician.md",
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-magician/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-magician/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-magician/",
+    "tool_robots": "noindex, follow"
+  },
+  "validation": {
+    "individual_production_contract": "passed",
+    "pre_and_post_integrity": "passed; 78 unique cards/IDs/slugs/canonicals",
+    "aggregate_validation": "Local aggregate checks passed; owner batch approval received; preview and live release checks required before completion",
+    "aggregate_four_card_build": "passed again on final owner-approved Magician clarification and the other three exact sources",
+    "aggregate_metadata_integrity_related_links_tool_links": "passed; all 78 cards retain unique identities/canonicals and protected routing",
+    "eight_route_rendered_verification": "passed; every prepared source block appears in order, with headings/links/images/IDs/canonicals/robots preserved",
+    "checked_at": "2026-10-03T19:39:00Z"
+  },
+  "preservation": {
+    "h1": 3,
+    "h2": 19,
+    "questions": 10,
+    "action_labels": 9,
+    "paragraph_topology": "unchanged",
+    "routing_links_images_rendering": "unchanged",
+    "original_historical_baseline": "unchanged"
+  },
+  "batch_publication_approved_at": "2026-10-03T19:30:00Z",
+  "approved_core_sentence_clarification": {
+    "approved_at": "2026-10-03T19:30:00Z",
+    "section": "Core Repeating Message",
+    "before": "For this Seeker, the impostor experience is not occasional; it is structural, a low background conviction that closer scrutiny would not survive contact with what is actually there.",
+    "after": "For this Seeker, the impostor experience is not occasional; it is structural, a low background conviction that the competence they project would not survive closer scrutiny.",
+    "scope": "One full sentence only; all other bytes match the previously reviewed source"
+  }
+}
