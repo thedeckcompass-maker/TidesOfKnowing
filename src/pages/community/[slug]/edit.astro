@@ -15,6 +15,7 @@ if (!post) return Astro.redirect("/community/", 302);
 
 const canEdit = Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile);
 if (!canEdit) return Astro.redirect(communityPostPath(post.slug), 302);
+if (post.source_kind === "studio_excerpt") return Astro.redirect(communityPostPath(post.slug), 302);
 
 const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
 ---

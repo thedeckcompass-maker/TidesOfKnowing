@@ -27,12 +27,14 @@ const ACCEPTED_OTP_TYPES = new Set<AuthCallbackOtpType>([
   AUTH_CALLBACK_TOKEN_HASH_TYPE,
 ]);
 
-/** Post-auth destinations used by current Practice Commons email flows. */
+/** Fixed post-auth destinations, plus private Studio paths checked below. */
 const ALLOWED_REDIRECTS = new Set([
   "/community",
   "/community/",
   "/community/account",
   "/community/account/",
+  "/studio",
+  "/studio/",
 ]);
 
 export function parseAuthCallbackOtpType(
@@ -75,7 +77,7 @@ function decodeRedirectCandidate(value: string): string | null {
 }
 
 /**
- * Allow only known internal Practice Commons destinations.
+ * Allow only known internal Practice Commons destinations and private Studio paths.
  * Invalid / external / protocol-relative / malformed values fall back to /community/.
  */
 export function safeAuthCallbackRedirect(
@@ -100,12 +102,15 @@ export function safeAuthCallbackRedirect(
   const pathOnly = decoded.split("?")[0]?.split("#")[0] ?? "";
   if (!pathOnly.startsWith("/") || pathOnly.startsWith("//")) return "/community/";
 
-  if (!ALLOWED_REDIRECTS.has(pathOnly)) return "/community/";
+  const isStudioPath = pathOnly.startsWith("/studio/");
+  if (!ALLOWED_REDIRECTS.has(pathOnly) && !isStudioPath) return "/community/";
 
   if (pathOnly === "/community" || pathOnly === "/community/") return "/community/";
   if (pathOnly === "/community/account" || pathOnly === "/community/account/") {
     return "/community/account/";
   }
+  if (pathOnly === "/studio") return "/studio/";
+  if (isStudioPath) return pathOnly;
 
   return "/community/";
 }

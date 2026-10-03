@@ -1,6 +1,7 @@
 ---
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
 import {
+  deckCreationTopicLabel,
   readingPracticePostTypeLabel,
   type CommunityPostSummary,
 } from "../../lib/community/types";
@@ -45,6 +46,13 @@ function formatDate(value: string): string {
                   {readingPracticePostTypeLabel(post.post_type)}
                 </span>
               ) : null}
+              {deckCreationTopicLabel(post.deck_creation_topic) ? (
+                <span class="community-post-card__type">
+                  {deckCreationTopicLabel(post.deck_creation_topic)}
+                </span>
+              ) : null}
+              {post.source_kind === "studio_excerpt" ? <span class="community-post-card__source">Creator journal excerpt</span> : null}
+              {post.audience === "members" ? <span class="community-post-card__audience">Members</span> : null}
               {post.is_pinned ? <span class="community-post-card__pin">Pinned</span> : null}
             </p>
             <h2>
@@ -93,9 +101,15 @@ function formatDate(value: string): string {
   }
 
   .community-post-card__pin,
-  .community-post-card__type {
+  .community-post-card__type,
+  .community-post-card__source,
+  .community-post-card__audience {
     color: var(--tok-gold-deep);
     font-weight: 700;
+  }
+
+  .community-post-card__audience {
+    color: var(--tok-teal);
   }
 
   .community-post-card h2 {

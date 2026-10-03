@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { buildAotearoaBirdOraclePlan } from "./lib/aotearoa-bird-oracle-importer.mjs";
+import {
+  buildAotearoaBirdOraclePlan,
+  deterministicImportTargetId,
+} from "./lib/aotearoa-bird-oracle-importer.mjs";
+import { buildPostgresImportSql } from "./import-aotearoa-bird-oracle.mjs";
 
 const root = mkdtempSync(join(tmpdir(), "bird-import-test-"));
 const content = join(root, "src", "content");
@@ -59,11 +63,70 @@ try {
   assert.equal(plan.cards.length, 1);
   assert.equal(plan.guidebookSections.length, 3);
   assert.equal(plan.reconciliation.silentDrops, 0);
+  assert.equal(plan.reconciliation.blockingIssues, 0);
+  assert.equal(plan.reconciliation.reconciled, true);
+  assert.deepEqual(plan.inventory.excludedSourceFiles, []);
   assert.equal(plan.cards[0].value.content.custom.aotearoa_bird_oracle.source_body_markdown.trim(), "Exact bird wording.");
   assert.equal(plan.guidebookSections.some((section) => section.value.body_markdown.trim() === "Exact tarot wording."), true);
   assert.equal(plan.exceptions.filter((item) => item.code === "UNASSIGNED_TOC_POSITION").length, 3);
   assert.deepEqual(repeated.cards.map((card) => card.sourceKey), plan.cards.map((card) => card.sourceKey));
   assert.deepEqual(repeated.guidebookSections.map((section) => section.sourceKey), plan.guidebookSections.map((section) => section.sourceKey));
+  const cardTargetId = deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "card", "bird:G1-N01");
+  assert.equal(cardTargetId, deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "card", "bird:G1-N01"));
+  assert.notEqual(cardTargetId, deterministicImportTargetId("11111111-1111-4111-8111-111111111111", "guidebook_section", "bird:G1-N01"));
+  assert.match(cardTargetId, /^[a-f0-9]{8}-[a-f0-9]{4}-8[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
+  const postgresSql = buildPostgresImportSql(plan, "11111111-1111-4111-8111-111111111111");
+  assert.match(postgresSql, /begin;/);
+  assert.match(postgresSql, /target_value jsonb;/);
+  assert.doesNotMatch(postgresSql, /\n\s+value jsonb;/);
+  assert.match(postgresSql, /on conflict \(project_id, source_system, source_key\) do update/);
+  assert.match(postgresSql, /card-to-guidebook relationships are missing/);
+  assert.match(postgresSql, /source_archive_checksum is distinct from archive_checksum/);
+  assert.match(postgresSql, /imported cards do not match the reconciled plan/);
+  assert.match(postgresSql, /guidebook sections do not match the reconciled plan/);
+  assert.match(postgresSql, /commit;/);
+
+  const suppliedChecksum = "a".repeat(64);
+  const directoryPlan = buildAotearoaBirdOraclePlan(root, {
+    sample: "representative",
+    sourceArchiveChecksum: suppliedChecksum,
+  });
+  assert.equal(directoryPlan.sourceArchiveChecksum, suppliedChecksum);
+  assert.throws(() => buildAotearoaBirdOraclePlan(root, {
+    sample: "representative",
+    sourceArchiveChecksum: "not-a-checksum",
+  }), /checksum is invalid/);
+
+  writeFileSync(join(content, "birds", "duplicate-id.md"), `---
+title: Duplicate navigator
+card_id: G1-N01
+card_number: 2
+group: Test Group
+group_number: 1
+status: draft
+---
+Duplicate source identity.
+`);
+  writeFileSync(join(content, "tarot", "unlinked.md"), `---
+title: Unlinked correspondence
+card_number: 2
+bird_slug: missing-bird
+status: draft
+---
+Unlinked source.
+`);
+  const blocked = buildAotearoaBirdOraclePlan(root, { sample: "all" });
+  assert.equal(blocked.reconciliation.reconciled, false);
+  assert.equal(blocked.reconciliation.duplicateSourceKeys, 2);
+  assert.equal(blocked.reconciliation.unresolvedRelationships, 1);
+  assert.ok(blocked.reconciliation.blockingIssues >= 3);
+  assert.equal(blocked.exceptions.some((item) => item.code === "EXPECTED_COUNT_MISMATCH"), true);
+  assert.equal(blocked.exceptions.some((item) => item.code === "DUPLICATE_SOURCE_KEY"), true);
+  assert.equal(blocked.exceptions.some((item) => item.code === "UNRESOLVED_TAROT_CARD_LINK"), true);
+  const importer = readFileSync(new URL("./import-aotearoa-bird-oracle.mjs", import.meta.url), "utf8");
+  assert.match(importer, /deterministicImportTargetId\(projectId, targetType, item\.sourceKey\)/);
+  assert.match(importer, /\.upsert\(\{ id: targetId, project_id: projectId/);
+  assert.doesNotMatch(importer, /\.insert\(\{ project_id: projectId, \.\.\.value \}\)/);
   const migration = readFileSync(new URL("../supabase/migrations/20260922050000_deck_studio_import_provenance.sql", import.meta.url), "utf8");
   assert.match(migration, /unique \(project_id, source_system, source_key\)/);
   assert.match(migration, /Creators can read own Studio import records/);

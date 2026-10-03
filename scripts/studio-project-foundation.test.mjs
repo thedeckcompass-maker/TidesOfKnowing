@@ -5,9 +5,13 @@ import { join } from "node:path";
 const repoRoot = new URL("../", import.meta.url).pathname;
 const read = (path) => readFileSync(join(repoRoot, path), "utf8");
 const migration = read("supabase/migrations/20260922043000_deck_studio_project_foundation.sql");
+const importMigration = read("supabase/migrations/20260922050000_deck_studio_import_provenance.sql");
 const dashboard = read("src/pages/studio/projects/[id]/index.astro");
 const cardEditor = read("src/pages/studio/projects/[id]/cards/[cardId].astro");
 const guidebookEditor = read("src/pages/studio/projects/[id]/guidebook/[sectionId].astro");
+const validation = read("src/lib/studio/validation.ts");
+const guidebookCreate = read("src/pages/api/studio/projects/[id]/guidebook.ts");
+const guidebookUpdate = read("src/pages/api/studio/guidebook/[id].ts");
 const cardRestore = read("src/pages/api/studio/cards/[id]/restore.ts");
 const guidebookRestore = read("src/pages/api/studio/guidebook/[id]/restore.ts");
 
@@ -32,6 +36,9 @@ assert.match(migration, /Creators can read own guidebook versions/);
 assert.doesNotMatch(migration, /for all[\s\S]{0,140}studio_(card|guidebook)_versions/i);
 assert.match(migration, /studio_capture_card_version/);
 assert.match(migration, /studio_capture_guidebook_version/);
+assert.match(importMigration, /studio_validate_guidebook_card_link/);
+assert.match(importMigration, /project_id = new\.project_id/);
+assert.match(importMigration, /'card_id', new\.card_id/);
 
 for (const source of [dashboard, cardEditor, guidebookEditor]) {
   assert.match(source, /studioAccessResponse/);
@@ -39,15 +46,31 @@ for (const source of [dashboard, cardEditor, guidebookEditor]) {
 }
 
 assert.match(dashboard, /Whole-deck view/);
+assert.match(dashboard, /aria-label="Card families"/);
+assert.match(dashboard, /familySections\.map/);
+assert.match(dashboard, /Linked card:/);
 assert.match(dashboard, /Oracle/);
 assert.match(dashboard, /Tarot/);
 assert.match(dashboard, /Hybrid/);
 assert.match(cardEditor, /Private research notes/);
 assert.match(cardEditor, /Cultural context/);
 assert.match(cardEditor, /Artwork rights status/);
+assert.match(cardEditor, /linkedGuidebookSections/);
+assert.match(cardEditor, /Connected manuscript/);
 assert.match(guidebookEditor, /Markdown manuscript/);
+assert.match(guidebookEditor, /Linked card:/);
+assert.match(guidebookEditor, /getStudioProjectWorkspace/);
+assert.match(guidebookEditor, /select name="card_id"/);
+assert.match(guidebookEditor, /selected=\{section\.card_id === card\.id\}/);
+assert.match(dashboard, /select name="card_id"/);
+assert.match(validation, /card_id: string \| null/);
+assert.match(validation, /Choose a valid card to link/);
+assert.match(guidebookCreate, /insert\(\{ project_id: projectId, \.\.\.parsed\.value \}\)/);
+assert.match(guidebookUpdate, /update\(parsed\.value\)/);
 assert.match(cardRestore, /studio_card_versions/);
 assert.match(guidebookRestore, /studio_guidebook_versions/);
+assert.match(guidebookRestore, /studio_restore_guidebook_version/);
+assert.match(guidebookRestore, /confirm_restore/);
 
 const repeatingCardChanges = [dashboard, cardEditor, guidebookEditor, migration]
   .filter((source) => source.includes("repeating-card-meanings"));

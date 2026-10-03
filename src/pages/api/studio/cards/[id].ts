@@ -1,11 +1,11 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../../lib/studio/access";
+import { studioWriteAccessResponse } from "../../../../lib/studio/access";
 import { parseStudioCardUpdate } from "../../../../lib/studio/validation";
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
-  const accessResponse = studioAccessResponse(locals.user, locals.profile);
+  const accessResponse = studioWriteAccessResponse(locals.user, locals.profile, locals.studioEntitlement);
   if (accessResponse) return accessResponse;
   const cardId = params.id;
   if (!cardId || !locals.supabase) return new Response("Not found", { status: 404 });
@@ -37,15 +37,17 @@ export const POST: APIRoute = async ({ request, locals, params }) => {
     },
   };
 
-  const { error } = await locals.supabase
+  const { data: savedCard, error } = await locals.supabase
     .from("studio_cards")
     .update(nextValue)
     .eq("id", cardId)
-    .eq("project_id", projectId);
+    .eq("project_id", projectId)
+    .select("id")
+    .maybeSingle();
 
-  const location = error
+  const location = error || !savedCard
     ? `/studio/projects/${projectId}/cards/${cardId}/?error=${encodeURIComponent("The card could not be saved.")}`
     : `/studio/projects/${projectId}/cards/${cardId}/?saved=1`;
-  if (error) console.error("Unable to update Studio card:", error);
+  if (error || !savedCard) console.error("Unable to update Studio card:", error ?? "No matching writable card.");
   return new Response(null, { status: 303, headers: { Location: location } });
 };

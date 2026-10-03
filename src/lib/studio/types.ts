@@ -17,12 +17,64 @@ export const STUDIO_GUIDEBOOK_TYPES = [
   "closing",
   "other",
 ] as const;
+export const STUDIO_JOURNAL_KINDS = ["reflection", "decision", "milestone"] as const;
+export const STUDIO_JOURNAL_TAGS = [
+  "research",
+  "artwork",
+  "resistance",
+  "breakthrough",
+  "testing",
+  "production",
+  "launch",
+] as const;
+export const STUDIO_EXCERPT_PURPOSES = [
+  "kickstarter",
+  "newsletter",
+  "social",
+  "case_study",
+  "community",
+  "private_record",
+] as const;
+export const STUDIO_COMMUNITY_AUDIENCES = ["members", "public"] as const;
+export const STUDIO_COMMUNITY_TOPICS = [
+  "introduction",
+  "concept_symbolism",
+  "cards_guidebook",
+  "artwork_collaboration",
+  "testing_refinement",
+  "production_publishing",
+  "crowdfunding_launch",
+  "workshop_question",
+  "progress_reflection",
+] as const;
+export const STUDIO_PROGRAMME_STATUSES = ["not_started", "in_progress", "complete"] as const;
+export const STUDIO_ARTIST_PROCESS_DISCLOSURES = [
+  "human_created",
+  "digital_non_generative",
+  "ai_assisted",
+  "generative_ai",
+] as const;
+export const STUDIO_ARTIST_INTRODUCTION_STATUSES = [
+  "requested",
+  "accepted",
+  "declined",
+  "more_information",
+  "withdrawn",
+] as const;
 
 export type StudioDeckType = (typeof STUDIO_DECK_TYPES)[number];
 export type StudioPathway = (typeof STUDIO_PATHWAYS)[number];
 export type StudioProjectStatus = (typeof STUDIO_PROJECT_STATUSES)[number];
 export type StudioItemStatus = (typeof STUDIO_ITEM_STATUSES)[number];
 export type StudioGuidebookType = (typeof STUDIO_GUIDEBOOK_TYPES)[number];
+export type StudioJournalKind = (typeof STUDIO_JOURNAL_KINDS)[number];
+export type StudioJournalTag = (typeof STUDIO_JOURNAL_TAGS)[number];
+export type StudioExcerptPurpose = (typeof STUDIO_EXCERPT_PURPOSES)[number];
+export type StudioCommunityAudience = (typeof STUDIO_COMMUNITY_AUDIENCES)[number];
+export type StudioCommunityTopic = (typeof STUDIO_COMMUNITY_TOPICS)[number];
+export type StudioProgrammeStatus = (typeof STUDIO_PROGRAMME_STATUSES)[number];
+export type StudioArtistProcessDisclosure = (typeof STUDIO_ARTIST_PROCESS_DISCLOSURES)[number];
+export type StudioArtistIntroductionStatus = (typeof STUDIO_ARTIST_INTRODUCTION_STATUSES)[number];
 
 export type StudioProject = {
   id: string;
@@ -83,6 +135,200 @@ export type StudioVersion = {
   version_number: number;
   snapshot: Record<string, unknown>;
   created_at: string;
+  restored_from_version_id?: string | null;
+};
+
+export type StudioJournalEntry = {
+  id: string;
+  project_id: string;
+  entry_kind: StudioJournalKind;
+  title: string;
+  body_markdown: string;
+  tags: StudioJournalTag[];
+  linked_card_id: string | null;
+  linked_section_id: string | null;
+  selected_for_process: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioJournalPhoto = {
+  id: string;
+  project_id: string;
+  journal_entry_id: string;
+  storage_path: string;
+  caption: string;
+  sort_order: number;
+  created_at: string;
+};
+
+export type StudioJournalExcerpt = {
+  id: string;
+  project_id: string;
+  journal_entry_id: string;
+  purpose: StudioExcerptPurpose;
+  title: string;
+  excerpt_text: string;
+  photo_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioCommunityShare = {
+  id: string;
+  project_id: string | null;
+  journal_excerpt_id: string | null;
+  community_post_id: string;
+  owner_id: string;
+  audience: StudioCommunityAudience;
+  topic: StudioCommunityTopic;
+  community_slug: string;
+  title_snapshot: string;
+  excerpt_snapshot: string;
+  shared_at: string;
+  withdrawn_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const studioCommunityTopicLabel: Record<StudioCommunityTopic, string> = {
+  introduction: "Introduction and deck intention",
+  concept_symbolism: "Concept, structure and symbolism",
+  cards_guidebook: "Cards and guidebook writing",
+  artwork_collaboration: "Artwork and creative collaboration",
+  testing_refinement: "Testing and refinement",
+  production_publishing: "Printing, production and self-publishing",
+  crowdfunding_launch: "Crowdfunding and commercial launch",
+  workshop_question: "Workshop question",
+  progress_reflection: "Progress reflection or celebration",
+};
+
+export type StudioProgrammeModule = {
+  week_number: number;
+  slug: string;
+  title: string;
+  outcome: string;
+  completion_condition: string;
+  safely_unfinished: string;
+  production_risk: string;
+  personal_guidance: string;
+  independent_guidance: string;
+  commercial_guidance: string;
+};
+
+export type StudioProgrammeEnrolment = {
+  project_id: string;
+  starts_on: string;
+  created_at: string;
+};
+
+export type StudioProgrammeProgress = {
+  project_id: string;
+  week_number: number;
+  status: StudioProgrammeStatus;
+  current_task: string;
+  notes: string;
+  completed_at: string | null;
+  updated_at: string;
+};
+
+export type StudioProductionPlan = {
+  project_id: string;
+  status: "draft" | "review" | "ready";
+  planned_quantity: number | null;
+  target_release_date: string | null;
+  component_specifications: string;
+  artwork_delivery_specifications: string;
+  rights_and_permissions: string;
+  prototype_results: string;
+  supplier_quotes: string;
+  costing_and_pricing: string;
+  fulfilment_plan: string;
+  publication_assets: string;
+  launch_decision: string;
+  next_action: string;
+  version_number: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioSupportRequest = {
+  id: string;
+  project_id: string;
+  owner_id: string;
+  plan_code: "circle" | "private";
+  support_kind: "circle_weekly" | "private_weekly";
+  support_week: string;
+  focus_question: string;
+  context_excerpt: string;
+  review_scopes: Array<"project" | "cards" | "guidebook">;
+  group_share_confirmed: boolean;
+  consent_granted_at: string;
+  consent_withdrawn_at: string | null;
+  facilitator_id: string | null;
+  status: "requested" | "accepted" | "completed" | "withdrawn" | "expired";
+  accepted_at: string | null;
+  access_expires_at: string | null;
+  session_scheduled_for: string | null;
+  facilitator_response: string;
+  next_step: string;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioArtistPortfolioExample = {
+  url: string;
+  title: string;
+  description: string;
+};
+
+export type StudioArtistProfile = {
+  id: string;
+  user_id: string;
+  professional_name: string;
+  location: string;
+  time_zone: string;
+  languages: string[];
+  biography: string;
+  artistic_statement: string;
+  mediums: string[];
+  techniques: string[];
+  styles: string[];
+  subjects: string[];
+  publishing_experience: string;
+  availability: string;
+  budget_approach: string;
+  licensing_preferences: string;
+  collaboration_models: string[];
+  process_disclosure: StudioArtistProcessDisclosure;
+  portfolio_examples: StudioArtistPortfolioExample[];
+  status: "submitted" | "approved" | "declined" | "withdrawn";
+  created_at: string;
+  updated_at: string;
+};
+
+export type StudioArtistIntroduction = {
+  id: string;
+  creator_id: string;
+  project_id: string;
+  artist_profile_id: string;
+  brief: string;
+  timeline: string;
+  budget_context: string;
+  status: StudioArtistIntroductionStatus;
+  artist_message: string;
+  creator_reply: string;
+  responded_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export const studioArtistProcessLabel: Record<StudioArtistProcessDisclosure, string> = {
+  human_created: "Human-created physical practice",
+  digital_non_generative: "Digital, without generative AI",
+  ai_assisted: "AI-assisted process",
+  generative_ai: "Generative-AI process",
 };
 
 export const studioDeckTypeLabel: Record<StudioDeckType, string> = {

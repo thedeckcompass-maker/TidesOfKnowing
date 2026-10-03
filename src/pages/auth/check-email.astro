@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { safeAuthCallbackRedirect } from "../../lib/community/authCallback";
 import { createAuthOtpSubmissionId } from "../../lib/community/otpIdempotency";
 
 export const prerender = false;
@@ -9,7 +10,8 @@ const description = "Check your email for a secure Practice Commons sign-in link
 
 const email = Astro.url.searchParams.get("email")?.trim().toLowerCase() ?? "";
 const displayName = Astro.url.searchParams.get("displayName")?.trim() ?? "";
-const redirectTo = "/community/";
+const redirectTo = safeAuthCallbackRedirect(Astro.url.searchParams.get("redirectTo"));
+const isStudioRedirect = redirectTo.startsWith("/studio/");
 const resendSubmissionId = createAuthOtpSubmissionId();
 ---
 
@@ -24,7 +26,7 @@ const resendSubmissionId = createAuthOtpSubmissionId();
       <ol class="auth-steps">
         <li>Open your email.</li>
         <li>Click the link.</li>
-        <li>You'll return to the Practice Commons automatically.</li>
+        <li>You'll return to your requested workspace automatically.</li>
       </ol>
       <p>
         If you do not see the email within a few minutes, check your Spam, Junk,
@@ -32,10 +34,10 @@ const resendSubmissionId = createAuthOtpSubmissionId();
       </p>
 
       {
-        email && displayName ? (
+        email ? (
           <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
-            <input type="hidden" name="authMode" value="resend" />
-            <input type="hidden" name="displayName" value={displayName} />
+            <input type="hidden" name="authMode" value={isStudioRedirect ? "sign-in" : "resend"} />
+            {displayName ? <input type="hidden" name="displayName" value={displayName} /> : null}
             <input type="hidden" name="email" value={email} />
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <input type="hidden" name="submissionId" value={resendSubmissionId} />
@@ -51,7 +53,7 @@ const resendSubmissionId = createAuthOtpSubmissionId();
           </form>
         ) : (
           <p class="auth-alt">
-            Need a new link? <a href="/auth/register/">Return to the Practice Commons sign-in form</a>.
+            Need a new link? <a href={`/auth/register/?redirectTo=${encodeURIComponent(redirectTo)}`}>Return to the sign-in form</a>.
           </p>
         )
       }
