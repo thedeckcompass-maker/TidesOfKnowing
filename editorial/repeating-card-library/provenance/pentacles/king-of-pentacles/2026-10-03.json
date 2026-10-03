@@ -1,0 +1,750 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/king-of-pentacles",
+  "rollout_date": "2026-10-03",
+  "source_base_commit": "fa90b6e5cd83eb089c81f147c61d259f14c04394",
+  "approval": {
+    "faithful_restoration_authorised_at": "2026-10-03T17:22:00Z",
+    "card_by_card_publication_authorised_at": "2026-10-03T17:44:00Z",
+    "authoritative_card_chat_file_placement_verified_at": "2026-10-03T17:56:00Z",
+    "private_source_receipt": "Private source identity, conversation and approval receipts retained separately"
+  },
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "independent_approved_map": "editorial/repeating-card-library/approved-maps/pentacles/king-of-pentacles-2026-10-03.json",
+    "independent_approved_map_sha256": "f4bd367b19c43a671294f8da71dfb4ed9faae5f8f6938b78d8991b18957687c5",
+    "authority_note": "The complete source-order map was captured and verified before candidate generation. No historical full-file baseline was invented.",
+    "previous_production_sha256": "e4aee3a60911da37fdb6cad6694d7302e9e943151de59a49a82addade0b1cbb8",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/king-of-pentacles/v2-editorial.md",
+    "protected_shell_baseline": "editorial/repeating-card-library/extracted/pentacles/king-of-pentacles-before-restoration-2026-10-03.md",
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/king-of-pentacles/2026-10-03.md",
+    "accepted_sha256": "dadca6e5f16c1e57187083841119ba3bf724fb039acee9a48c227af366827262",
+    "production_sha256": "dadca6e5f16c1e57187083841119ba3bf724fb039acee9a48c227af366827262",
+    "deployment_transformation": "None; exact accepted bytes already share the previous production final-LF pattern"
+  },
+  "contract": "editorial/repeating-card-library/contracts/pentacles/king-of-pentacles.yaml",
+  "validation_exception": {
+    "scope": "King of Pentacles faithful restoration only",
+    "reason": "The abbreviated historical production contains seven Core paragraphs and five integration actions; the owner explicitly approved restoring the full source-order map, including 24 Core paragraphs and seven actions.",
+    "shared_validator": "scripts/validate-rcm-editorial-reinsertion.mjs remains unchanged",
+    "strict_replacement_gate": "scripts/validate-king-of-pentacles-restoration.mjs",
+    "independent_authority": "Every one of 165 prose units is compared in source order to the separately captured map, alongside its pinned hash, exact accepted-file hash and protected production shell. The candidate is not its own baseline.",
+    "negative_fixtures": "scripts/king-of-pentacles-restoration.test.mjs; one positive and eleven negative cases passed; wrong words, missing/reordered units, wrong counts, protected fields/headings, question/list numbering, map tampering, broadened permissions and wrong target rejected"
+  },
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "approved_structure": {
+    "h1": 3,
+    "h2": 19,
+    "horizontal_rules": 18,
+    "metadata_keys": 14,
+    "unchanged_raw_metadata_fields": 11,
+    "introduction_units": 2,
+    "core_paragraphs": 24,
+    "reflective_questions": 10,
+    "integration_actions": 7,
+    "responsibility_list_items": 3,
+    "prose_units": 165
+  },
+  "production_target": "src/content/repeating-card-meanings/pentacles/king-of-pentacles.md",
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/king-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/king-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/king-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  },
+  "validation": {
+    "full_astro_cloudflare_build": "passed",
+    "pre_and_post_integrity": "78 cards; 78 unique IDs, slugs and canonical URLs",
+    "metadata_related_map_tool_links": "passed",
+    "generic_eof_tests": "6 passed",
+    "king_specific_gate_tests": "12 passed",
+    "rendered_surfaces": "All 165 prose units appear in order on both routes; all seven action labels present. Headings, anchors, links, images, canonical and robots values preserved.",
+    "publication_receipt": "Git commit, pull request and exact deployment identity are recorded after publication",
+    "whitespace": "Default git diff --check reports the seven deliberate two-space Markdown hard-break lines copied from the exact accepted source. A strict changed-file scan permits only those exact lines in the accepted, working and production King files; all other trailing whitespace is rejected.",
+    "aggregate_four_card_batch_build": "Local aggregate checks passed; owner batch approval received; preview and live release checks required before completion",
+    "aggregate_four_card_build": "passed again on final owner-approved Magician clarification and the other three exact sources",
+    "aggregate_metadata_integrity_related_links_tool_links": "passed; all 78 cards retain unique identities/canonicals and protected routing",
+    "eight_route_rendered_verification": "passed; every prepared source block appears in order, with headings/links/images/IDs/canonicals/robots preserved",
+    "checked_at": "2026-10-03T19:39:00Z"
+  },
+  "approved_unit_fingerprints": [
+    {
+      "unit": "image.0",
+      "sha256": "50e95d0d977d8b016b06ecdc0a7dee08f9fdd08b0acf003a8bbceb45d13de684"
+    },
+    {
+      "unit": "image.1",
+      "sha256": "217616eaeb80078929204e0d6feb6263458b7ac0c894fed03dfed3ae9f912136"
+    },
+    {
+      "unit": "sections.Core Repeating Message.0",
+      "sha256": "e4191e22332a6b8d520a56e3914e6ae38f52455b8e2d154b6d99237bf2f9af44"
+    },
+    {
+      "unit": "sections.Core Repeating Message.1",
+      "sha256": "7e49e28accb589eae9fb79d84dfc6eb3c342bcc2fc0d6e9d8338d186d55c01ae"
+    },
+    {
+      "unit": "sections.Core Repeating Message.2",
+      "sha256": "49efd1876c4a5519bdad660c52d51f3b5aad01a70dc4f16d202b357033db0168"
+    },
+    {
+      "unit": "sections.Core Repeating Message.3",
+      "sha256": "18848e5b5cc979cad37158d5502d469edb4db616447a32ba96ecb43de79b2bcb"
+    },
+    {
+      "unit": "sections.Core Repeating Message.4",
+      "sha256": "cd410dba1d0e65f866885c10b1740ea1bfc191812005d631c292f2ed5ceca563"
+    },
+    {
+      "unit": "sections.Core Repeating Message.5",
+      "sha256": "405fd21eeeb0b9c92ec94afa27e024b8a8a855115adf4813c78dd74879bf50ec"
+    },
+    {
+      "unit": "sections.Core Repeating Message.6",
+      "sha256": "eec958fa3bb151ae1ac86ec996a181d7ace55a9071b4540785c69ae208e71084"
+    },
+    {
+      "unit": "sections.Core Repeating Message.7",
+      "sha256": "5331816f4e10509576560594140d230868fdb9d181a276e1b51a75834c49ab09"
+    },
+    {
+      "unit": "sections.Core Repeating Message.8",
+      "sha256": "e9f8c7446b815657e40daed6cc6b16b898df7e94bb7a0910832598bd02d52ffd"
+    },
+    {
+      "unit": "sections.Core Repeating Message.9",
+      "sha256": "131af426bb14416a345eb109bdb8e3ae5d9b9e234a46ffd19b03807cedd0c02e"
+    },
+    {
+      "unit": "sections.Core Repeating Message.10",
+      "sha256": "6217b67b8fbd351997f62491343f1eb2eefd6822e532cde30c9b5143ac3a8565"
+    },
+    {
+      "unit": "sections.Core Repeating Message.11",
+      "sha256": "026e7b8918a336bbeefd0942afbff6fb017af545ddbf30f7f40e3d4784cf1df3"
+    },
+    {
+      "unit": "sections.Core Repeating Message.12",
+      "sha256": "b8730a2e08ca5ba00bb2c34d570f6584dae29305bdd5039716e2cbbb351d1e64"
+    },
+    {
+      "unit": "sections.Core Repeating Message.13",
+      "sha256": "5b68a088484f146db12cb46d71b143c8b65f9d24bb8f3046a7b2a381b5720aed"
+    },
+    {
+      "unit": "sections.Core Repeating Message.14",
+      "sha256": "b4f8f5090ddb43548b5bd26f67d4b85f3dbd762dc928eb336472914b3108f064"
+    },
+    {
+      "unit": "sections.Core Repeating Message.15",
+      "sha256": "9cb270904aafa17d7e20be8bbb607bbcff508e446a6b35875e25b16a61d0a1ba"
+    },
+    {
+      "unit": "sections.Core Repeating Message.16",
+      "sha256": "45f2c745363f15166cfa24fbba53421eef9c22d810b9eaa359517d3719aa47b9"
+    },
+    {
+      "unit": "sections.Core Repeating Message.17",
+      "sha256": "fc6775250769eaad493cf73d3f53db2ffb68041efffcccce35fa97fed803baf8"
+    },
+    {
+      "unit": "sections.Core Repeating Message.18",
+      "sha256": "46378869f68f3880c8eec7f854f2775b2fd5d20754f2a8abe19a57aad935dd43"
+    },
+    {
+      "unit": "sections.Core Repeating Message.19",
+      "sha256": "402588d6f6e8090b82b0671e6299a9d0bb12ccf126fa7c784c7e7e3c23d7bdde"
+    },
+    {
+      "unit": "sections.Core Repeating Message.20",
+      "sha256": "7704591bee6287e605dff71f3a258de75e7de4804d2ecfd6c37d066e616e1aa7"
+    },
+    {
+      "unit": "sections.Core Repeating Message.21",
+      "sha256": "588bd50c09ec9a0b6b8eec579aeb8babd3930590e5524d54eebf6b5cb69c138a"
+    },
+    {
+      "unit": "sections.Core Repeating Message.22",
+      "sha256": "81029710e45433238e6420026e3aa961acbc73ed1adfb22b20cc2b558913d0ad"
+    },
+    {
+      "unit": "sections.Core Repeating Message.23",
+      "sha256": "60796918c6d6061ee97ea0a7de76cfbba6e8aa5b7152e5362c9cd0525aff62d3"
+    },
+    {
+      "unit": "sections.When This Card Repeats Weekly.0",
+      "sha256": "e45148fc871a57920e6c5c3ab90200df3f4b921b2b6d66a91c7c76232dd12590"
+    },
+    {
+      "unit": "sections.When This Card Repeats Weekly.1",
+      "sha256": "5ffb1b600ee833637d7a0e844b4ce051d58d2d8de8098431583eb082b67e1206"
+    },
+    {
+      "unit": "sections.When This Card Repeats Weekly.2",
+      "sha256": "2fb125c396813332e5e0d1b21334d077a1bcba133b967574073939f6170bd04f"
+    },
+    {
+      "unit": "sections.When This Card Repeats Weekly.3",
+      "sha256": "f64ce038aad7d10b961a76473ee1812acb0ff1ee08262ae3e4cb534cbf13803b"
+    },
+    {
+      "unit": "sections.When This Card Repeats Monthly.0",
+      "sha256": "f11693ab9f46c8a494ac0be74a7fe975810981cb9921300075cb3b04f8d81fd2"
+    },
+    {
+      "unit": "sections.When This Card Repeats Monthly.1",
+      "sha256": "47927794bc77115e518a096982fcf1d151f005b96109fe2beba691e34d7b753f"
+    },
+    {
+      "unit": "sections.When This Card Repeats Monthly.2",
+      "sha256": "8818f803da158aa2bf028f5fb943a62d88b29cc9d5a47ad376a5d615f9167d21"
+    },
+    {
+      "unit": "sections.When This Card Repeats Monthly.3",
+      "sha256": "334e9cae7652496a7465f0ce921eba40cf8e1e4bc94afc4fd65d4a7d0566407c"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.0",
+      "sha256": "d4fafd6371038db171ece651a62d4d5cd9bfbf6f9bdf32d479ac73a0e769f2f7"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.1",
+      "sha256": "bbf97033cff482992cbcf778b4c2c682053faabcc3e1b8a2b78d0beb37425ad5"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.2",
+      "sha256": "eec25b69d7734fa6380808ba87d48ac15ac818a0e84d4c9e0223a41d7fc16801"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.3",
+      "sha256": "26722001edd7c3f681530d04cce790691833e077ae322c37b3d0033577eebaf9"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.4",
+      "sha256": "b818ad9d5ba92b079fac334886bec46f87e9e4912dfae22b07c221bc6062fb67"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.5",
+      "sha256": "2305202ae9497e8265e82945043032766e00e98b405e8cde9fc9aeb8d3db69fe"
+    },
+    {
+      "unit": "sections.When This Card Repeats Seasonally.6",
+      "sha256": "fc48c5dfc31c258b698a80a58232edb8befb5925c09923c9ef9059bd6f5259f3"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.0",
+      "sha256": "9e3825fd6ba4141981b858a1e253c15dfbc4c52e6ef3cb74715ff5d3ccfc405d"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.1",
+      "sha256": "7de8d590e2b9d1e51b5c6eec2f02ec946cee5fbf8c29083593e482fc03d205bf"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.2",
+      "sha256": "9f705ae1fb3977455b5306a7e254f1810d3fffacaac615e96b6c0746a1579c88"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.3",
+      "sha256": "e5df47481f95eb99db69409a40de99e4db132cbb534214f37a43111cecb04b7c"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.4",
+      "sha256": "7101b9b979d695696ce7056dff31447f50effe6bc2b0f3b10d4a03585ccf1e31"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.5",
+      "sha256": "41c97b66a74a82ffb507b2eba440e689f1c89370ef7e46b6e9939e27a25061e8"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.6",
+      "sha256": "d2da3dedfb1a5af8510e08907b5e933068296ef54d345d0985f54ec3f492b7d2"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.7",
+      "sha256": "0cb09656a5306a1fe4a2c1aaf6ae77234bc3ea602c10af4727d71b99f6d88b52"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.8",
+      "sha256": "3c462cb0554580a6f86faefb3f2946ce2a210aaabe68c53ccfbb8303b228097d"
+    },
+    {
+      "unit": "sections.When This Card Repeats Across Years.9",
+      "sha256": "a68840f80b90ce8a188329948e371f55ec9776216a89d6a83b98c0c682d5cd3b"
+    },
+    {
+      "unit": "sections.Love & Relationships.0",
+      "sha256": "7609f6f579cce1e3d6e7322f6a6bafdadb4b161362ea2c627815ee91be385fac"
+    },
+    {
+      "unit": "sections.Love & Relationships.1",
+      "sha256": "8dc7be1ca355d63c84031f1b6bcb87ecf04caf2e52d63229f90a0f1a29436972"
+    },
+    {
+      "unit": "sections.Love & Relationships.2",
+      "sha256": "bdf2ac9020a2c1766a78082951f59e8b2fe41170ea2c13425c9dd8dd931326b7"
+    },
+    {
+      "unit": "sections.Love & Relationships.3",
+      "sha256": "27e08f4a852d06d9201515de342989078ff4c36c8315a20d3acc4cb4e4a5bf88"
+    },
+    {
+      "unit": "sections.Love & Relationships.4",
+      "sha256": "8ff28e28f4012d52fc22f60c0da248ce2297170b4d980f67fef8084dd27757b6"
+    },
+    {
+      "unit": "sections.Love & Relationships.5",
+      "sha256": "e8bc1bf10fce6dd8624682016eafb3240c4d6cc153a135220e8aa321da221890"
+    },
+    {
+      "unit": "sections.Career & Purpose.0",
+      "sha256": "af26462544e377d1c56e08a96cd3c30c2cba75c3447b891e725db1496120e4a5"
+    },
+    {
+      "unit": "sections.Career & Purpose.1",
+      "sha256": "2572463fad87fac0708e4733b40cf8e7d0151639ea7c08275efd37928cab7329"
+    },
+    {
+      "unit": "sections.Career & Purpose.2",
+      "sha256": "f70c29ef114ec38d984f5272dfb9692ce19f356899cadabed3a6431a90d624cd"
+    },
+    {
+      "unit": "sections.Career & Purpose.3",
+      "sha256": "766b88d6867640e1bb5e7c6c98f57753c35915d13ef2366233586e2fe24eed82"
+    },
+    {
+      "unit": "sections.Career & Purpose.4",
+      "sha256": "53f9064d4a3181ad2178723ebdb58693a0213fbb49ffeab4bf75d51289bb3b48"
+    },
+    {
+      "unit": "sections.Career & Purpose.5",
+      "sha256": "2ede8d7515ce2e422cb21b10c611f75f2b3bedb3967d2f17a7e93bab4c7cbe56"
+    },
+    {
+      "unit": "sections.Money & Stability.0",
+      "sha256": "c366fdd30c7d4bfa0d7a372dc3359b0bfeec6acb4a125ed79567fe0d65e20e72"
+    },
+    {
+      "unit": "sections.Money & Stability.1",
+      "sha256": "3fe9fce8ff9e813fd1113eca59cfd269a363dab4c0c69259f9c90a7f667dbfae"
+    },
+    {
+      "unit": "sections.Money & Stability.2",
+      "sha256": "65115036002642d7a275ca1f779e858f73381493383dd8fd73a389f335f26716"
+    },
+    {
+      "unit": "sections.Money & Stability.3",
+      "sha256": "4700e2bed213a9d99137bd386f4ca1601bcc04e59937d41c9c75de4c719a5978"
+    },
+    {
+      "unit": "sections.Money & Stability.4",
+      "sha256": "91dc4889c07970f310a59591fc22789d3e34d26341a0d7ab48ae44ae32465937"
+    },
+    {
+      "unit": "sections.Money & Stability.5",
+      "sha256": "3beba20102d0116214e9d3cee8b515d4541a0c6e065d92640cfb040ecb7899d6"
+    },
+    {
+      "unit": "sections.Spiritual Growth.0",
+      "sha256": "ff53eb72f915aaaa280e5c04f9081c81dae773bc6d42bfab1f0b10b216caff7b"
+    },
+    {
+      "unit": "sections.Spiritual Growth.1",
+      "sha256": "8484c3d1f3f1be51fb02065a794a5030f8273929e8a0f866696ab8b748f76fba"
+    },
+    {
+      "unit": "sections.Spiritual Growth.2",
+      "sha256": "bc2ed91668256903bf53a19b58f8120220f62c6df4a35127e4057b6924701e87"
+    },
+    {
+      "unit": "sections.Spiritual Growth.3",
+      "sha256": "56d865aa12e8b7094e720b8919df1cdb1a1d890b9c57e6974cf4046960784aeb"
+    },
+    {
+      "unit": "sections.Spiritual Growth.4",
+      "sha256": "495d6b17e6e51e5a5e03bf946018bad15289f6cf88b06c72a01684f09b3acfa4"
+    },
+    {
+      "unit": "sections.Spiritual Growth.5",
+      "sha256": "cca8e0ffeb2c5bfc0e935c822119e7e3920fd47d3938a5569ce4e7ee81b42e8b"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.0",
+      "sha256": "f6335379fbafe4fc08fc3297b533c6818c23b5924238cab1c15444d20a12cfd7"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.1",
+      "sha256": "81354f43e74d8639f78860400cc1733d4641029623e990bf2fedd0642e96061a"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.2",
+      "sha256": "98aed9c2dcc54de443074b29ae59e66f6afe10434f21183d22636dd4de58d41d"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.3",
+      "sha256": "5f4e33e40abe5fcb2132e567b5917b3619690fce6c86e0c2f27cabb2f1ae6b52"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.4",
+      "sha256": "22ae19e9aea2e764e2200de709172c451805a6565726aa5f08fd723fd1098066"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.5",
+      "sha256": "7a771844751b6eab85fa8d43732fafe05ce9f793c45d4d5c8d8cf5a1517464b5"
+    },
+    {
+      "unit": "sections.Emotional & Mental Patterns.6",
+      "sha256": "faa883735ca32b5fb6d437eac29fb0f2ca91208b5529b7811989fc050d61df87"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.0",
+      "sha256": "e27a9267ee15d7885ee47845b4d7db111a616b7ab90d0c8dc03ad766e45154bc"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.1",
+      "sha256": "c896a78e827b1b52a22a8d3d0eb53857e67ab656bc002480234d394c04904735"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.2",
+      "sha256": "bfea59ed9bb3fa6e837af594ff40648f623d488c67ac954fe446490d95b61031"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.3",
+      "sha256": "3d85bfe85113f72a44e7c2af730cf2e797d33bb4a93e04edcd43558a8a0e110b"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.4",
+      "sha256": "7fbb2a728cc246cc848a4ee03d182147b746338c8a4b2ce80759b76b3bf732d4"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.5",
+      "sha256": "6a26e5d12478e612882b510500a7ee483a55a33065684427151258f7d958b330"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.6",
+      "sha256": "e5fdb8cfe24cb30b5cb9a61bf014547dc26ef5ce56908c299f6b9dd6cf817708"
+    },
+    {
+      "unit": "sections.Family & Generational Dynamics.7",
+      "sha256": "58536046baf0c1b48d5c0c48f2213a939f2163162fec495aeb3b6fe21a8161c8"
+    },
+    {
+      "unit": "sections.Health & Energy.0",
+      "sha256": "e4a522a13ae57bec251c8e1494afd010d68cb355b780ee387d89255d6ab2bd41"
+    },
+    {
+      "unit": "sections.Health & Energy.1",
+      "sha256": "ad0b7aea907eb326ab59d6acb2ed5fd31682719e10d06366268a85aac61cd4b1"
+    },
+    {
+      "unit": "sections.Health & Energy.2",
+      "sha256": "c46d9378c0edab8d81863d00419abab7b5753cefa4fe05819cdd5138075db02f"
+    },
+    {
+      "unit": "sections.Health & Energy.3",
+      "sha256": "1272fb8693941ae216144643f75bcfa6e6a2c84a34e1029d1eed22ff1453fe31"
+    },
+    {
+      "unit": "sections.Health & Energy.4",
+      "sha256": "0e20c562a0616a97565a1c2ba3cba8005388075eeb98dfcf071f43bff12a6e65"
+    },
+    {
+      "unit": "sections.The Shadow Expression.0",
+      "sha256": "b7fff28a9364d219e2c2f8af4bbd83771b9629aae7e3f79c6235b554c53ae71f"
+    },
+    {
+      "unit": "sections.The Shadow Expression.1",
+      "sha256": "5c37659a7e135ad7239b68fc2cec52c53b8336188b59786876766bff8189a5ec"
+    },
+    {
+      "unit": "sections.The Shadow Expression.2",
+      "sha256": "bb09baf74eec585468a8d0c4b27532628e41e8d17b79c3c1ab081fcd591744bd"
+    },
+    {
+      "unit": "sections.The Shadow Expression.3",
+      "sha256": "a9c490fa6757cfa4bc568d78851a1699ed68df7269879dfb2eb420e1ab2aa3f7"
+    },
+    {
+      "unit": "sections.The Shadow Expression.4",
+      "sha256": "6216bbf32bfb4fa638aaa61e18fd2a8834a462df3f2e207e1edbd654e24f4c1d"
+    },
+    {
+      "unit": "sections.The Shadow Expression.5",
+      "sha256": "89bb476147408317dac7f445dde648c2c395d2eecc1bae1c718d3af9b85e6c90"
+    },
+    {
+      "unit": "sections.The Integrated Expression.0",
+      "sha256": "bc83fbf65607e757f8dc0f62128b1053424677977df63524935fc6eaa134764b"
+    },
+    {
+      "unit": "sections.The Integrated Expression.1",
+      "sha256": "4fcccdb378f43cc3608a8c707c22b9866afee4c7cef39c61db41c9c2b5646930"
+    },
+    {
+      "unit": "sections.The Integrated Expression.2",
+      "sha256": "7238775a6301512dc3f1770a7587599643eedc1c8caa07a824b0abf8c11e56db"
+    },
+    {
+      "unit": "sections.The Integrated Expression.3",
+      "sha256": "679e1c3cc830a1f39409a085c41c8337c1d60dbb349ce49807d92e7884db166a"
+    },
+    {
+      "unit": "sections.The Integrated Expression.4",
+      "sha256": "ec06780cbc9323673d734e789c1472c5b8f500d158fa7bb08747cff454bdad7a"
+    },
+    {
+      "unit": "sections.The Integrated Expression.5",
+      "sha256": "0dc573ca83d8a8374653b4ec420f86db310e8e871a6ffff31f50161ff433f44f"
+    },
+    {
+      "unit": "sections.The Integrated Expression.6",
+      "sha256": "c0e0ad0138fbd8e43616efd63bfd1a7218da35f04376a8acc49ee9f98854e875"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.0",
+      "sha256": "fe6028e73e3396e78e2b71fe39c9bb92004284dcfc1d2efabe1b3c9dfd8a28f7"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.1",
+      "sha256": "fbf93d8e481cf7f6ad4ee2d54f49f5c983bd47a578c5c4683b15e0fd30d95f9d"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.2",
+      "sha256": "5b3bb3c1e4b35208160faaac3a2c53fd0cad600e00d583844ed26f36c36d5d6d"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.3",
+      "sha256": "44043862a67aee4449916470c282d1ebd5c4e42d11dd7194aafbb7b302584f5c"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.4",
+      "sha256": "8d585f4b1e209dd4a20be9eb6cd0439cb8c0053256f8fa78ae6c985701953fc9"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.5",
+      "sha256": "8a0b4571eaba5f927919b1e8e35c199cb74915edcc6cee6141977baa73aa06f9"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.6",
+      "sha256": "cf8c227da9c52fde3fed90719235fb44a83c154f1108b43e4ae54b3ee546b717"
+    },
+    {
+      "unit": "sections.Why This Energy Has Not Released Yet.7",
+      "sha256": "5a4e9a8978ef4af62be2f21fe1c32bf239c9c3b42468b2b0cab01d622e595b79"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.0",
+      "sha256": "2f3f98e0c4ec05b8a585316f132c90309c5ff8023520eeab195edf241d476668"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.1",
+      "sha256": "14242344db305a394864eee38f8548d99fc9944fb350485b81263fd81798faac"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.2",
+      "sha256": "0de2e3bf18221650367bad2c26fbb68b1dd8fa98311b939b44d225409e056f37"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.3",
+      "sha256": "c03fd009e70bad433425d67f02148831ca0af406dc346eb7cc35f3576de0cda9"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.4",
+      "sha256": "9ad0bd8053a14fa1809dbcc456d83d4613a7ac271da1ecf968562b7e0d2f966f"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.5",
+      "sha256": "e8b8e76cb559acb03500de399b4fc3ea08433c3312499dd39ec8353c11c56408"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.6",
+      "sha256": "e984d191238ab3f5a67aa9825ad9a52e5757e947ccec3876a50695852b872663"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.7",
+      "sha256": "0ab5f22069ce0c70448a80ca57810383d2406554a21df0b3198bb74bf6292513"
+    },
+    {
+      "unit": "sections.What This Card Wants the Seeker to Understand.8",
+      "sha256": "8a3a01ef10c64c37bb62e3614fe0c1555d5045801953bcaf0683430168093b6a"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.0",
+      "sha256": "eb3b5ef7f05642399c987c74ac5931dd04bed0491be47e1ccc4dc2dfdb0b4d87"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.1",
+      "sha256": "1615c380e26a07fae7bbdcb5451e72f2fefe714933d49d2708a9deae0249376f"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.2",
+      "sha256": "8cfc78a1d5ad8e40fe751eda923fb13bbe3b59434221f9895541e3f4fa5debd7"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.3",
+      "sha256": "cd7abf18ab21dba4f8304c0931335d220d6f500dc4f757b01e9e4ab1191eacdf"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.4",
+      "sha256": "6312ea5d2027f4f69b400a9a677579c7561b8585bc62f2165b7680f454eda2b3"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.5",
+      "sha256": "7ab19437ad1795797c8a19ccd0641461644751489b99e9135bcb68e6472f9152"
+    },
+    {
+      "unit": "sections.Signs the Pattern Is Beginning to Resolve.6",
+      "sha256": "f19c738bc4d90727b377be25b753764c5885a423e293f63584eb390544f7a12b"
+    },
+    {
+      "unit": "sections.Reflective Questions.0",
+      "sha256": "f9f543208de49856b2b91c4db3775c4eab53da91ae445899883db43852a54349"
+    },
+    {
+      "unit": "sections.Reflective Questions.1",
+      "sha256": "b51532d6b0d2ad73f2ea62f600128cbc191629d7ec909afa906bc06bd7ee7aeb"
+    },
+    {
+      "unit": "sections.Reflective Questions.2",
+      "sha256": "7630ba9c3246aedb51ce64193679eb00fceb0e25183f9bee5fb81dc86e7ff6ca"
+    },
+    {
+      "unit": "sections.Reflective Questions.3",
+      "sha256": "068673caf6d367b3f8bfa2937eb3ec8f1dda1588fc1f7ac3debfe0c794fecb0a"
+    },
+    {
+      "unit": "sections.Reflective Questions.4",
+      "sha256": "5feda213a1e55840d2e2e656824a4e0c4421e3f4c1044bae15309a5c08a8c2f6"
+    },
+    {
+      "unit": "sections.Reflective Questions.5",
+      "sha256": "6376af61bee4c7ff7d080fec2fb8bbf36944d424ee58d06a15a995f8645dd40b"
+    },
+    {
+      "unit": "sections.Reflective Questions.6",
+      "sha256": "4d2c6f3a01c17f81b1eb4ff7906cc7e13b51b3da051e3e5163151a51f2e2de90"
+    },
+    {
+      "unit": "sections.Reflective Questions.7",
+      "sha256": "0c9cf5ce3a10b069220994c80a403b488dc34701251baabf4dc14bf336a6b4e9"
+    },
+    {
+      "unit": "sections.Reflective Questions.8",
+      "sha256": "fca44349934c7cfca2db3214ea7d34414447e4d6ed80eaef4368a54a0b682923"
+    },
+    {
+      "unit": "sections.Reflective Questions.9",
+      "sha256": "776cf9ca98a80da56af721065af44c937c0707d844ede30583cd2812049f383f"
+    },
+    {
+      "unit": "actions.0.paragraphs.0",
+      "sha256": "1a9302b506a482082eb649191fa9fbe625fc16ca6da706b927913336ff04cc96"
+    },
+    {
+      "unit": "actions.0.paragraphs.1",
+      "sha256": "6d637df38bb3bd812d4276f323517289fb811c7687e3c2e82686b73b11250f87"
+    },
+    {
+      "unit": "actions.0.paragraphs.2",
+      "sha256": "2958bfdfaa0fa40d50d15c9f59ae0fe876ceec3bc95c9eaa04fe7d7c3ab5e581"
+    },
+    {
+      "unit": "actions.1.paragraphs.0",
+      "sha256": "ebdeb033423e436082fb6f4b570c833a12aaddd8b3f77b7dffac39dd0310a2e1"
+    },
+    {
+      "unit": "actions.1.paragraphs.1",
+      "sha256": "bba4947e16b2e383fe16a4519819fdf7cd6204a41abc14f9eb88fecb5fdae22e"
+    },
+    {
+      "unit": "actions.1.paragraphs.2",
+      "sha256": "2484b0059115e3b328ddfd7797459f8caecf84215cf349742d8eca2c6e30d1b6"
+    },
+    {
+      "unit": "actions.1.paragraphs.3",
+      "sha256": "cd09c364290532e18e15dd695d9ba3fee16dc7eccf2612428a84dfb47bccf646"
+    },
+    {
+      "unit": "actions.2.paragraphs.0",
+      "sha256": "b99b251e901d978c9d2577f93faff9101b8a8a71b8e4275ed214009ebcfc116a"
+    },
+    {
+      "unit": "actions.2.paragraphs.1",
+      "sha256": "d45c8b49f085acaba2a8eff92f6440e40e0f2e79e638bb9b644624088808af10"
+    },
+    {
+      "unit": "actions.2.paragraphs.2",
+      "sha256": "83d7f466bf7e03587ad484ab507c0c56495f6e10a4e2a328d9481f048e07efdb"
+    },
+    {
+      "unit": "actions.2.paragraphs.3",
+      "sha256": "214a79c6d97e87c4d117c60d1ba25968a94b8d057f726a4f66f694a761bff655"
+    },
+    {
+      "unit": "actions.3.paragraphs.0",
+      "sha256": "229ea59dc574bf58a591289699a43ef05861ccdd8ac05d076168a62929436072"
+    },
+    {
+      "unit": "actions.3.paragraphs.1",
+      "sha256": "c135d7d538f8be34ce599ea376f4154969a8d584a4b6cacc2aef76e6d174d332"
+    },
+    {
+      "unit": "actions.3.paragraphs.2",
+      "sha256": "c89ae9fa9f270eaec2f6778491ea09b231efbf3df229f34e1352d08e43d0abe1"
+    },
+    {
+      "unit": "actions.4.paragraphs.0",
+      "sha256": "448d04a0ab72cc770d7de16e63d8645a019784da9992f3e0b0db920e18640f7c"
+    },
+    {
+      "unit": "actions.4.paragraphs.1",
+      "sha256": "1a3c2eba7092ccf874ed1af33de3be93f9060532f4ee18e2e8c50a525ff240bc"
+    },
+    {
+      "unit": "actions.4.paragraphs.2",
+      "sha256": "06d34565cc94c42280afee7ad690db4f36ffa437fdb76218a7fcda053611f06f"
+    },
+    {
+      "unit": "actions.5.paragraphs.0",
+      "sha256": "ebe05d29d9c46f891151fc0c54c97a3eb314acc4189acf70fc698f0dbe563684"
+    },
+    {
+      "unit": "actions.5.paragraphs.1",
+      "sha256": "4c06cd213516365a9df6ad54bb72e969f7133bedc19caf2a27db642ddf071318"
+    },
+    {
+      "unit": "actions.5.paragraphs.2",
+      "sha256": "47d7aa123690c06b827baaf7375b45f9a75f3ba063458b6f6a920a8b6adae222"
+    },
+    {
+      "unit": "actions.5.paragraphs.3",
+      "sha256": "574d999928824c62f94186fbbf6b6d35a197c52f99dac6e718c02f892ebf7853"
+    },
+    {
+      "unit": "actions.6.paragraphs.0",
+      "sha256": "b9df2fb7a372bf41bfb99a2aed48b31065f853438fac863bc710e15e6869c05e"
+    },
+    {
+      "unit": "actions.6.paragraphs.1",
+      "sha256": "d78f73c3c1893bdcf104a169c075e3b44eb85fd9ffd9d2daff190712f14c9242"
+    }
+  ],
+  "preservation": {
+    "other_card_sources": "unchanged",
+    "site_architecture": "unchanged",
+    "studio_files_and_branch": "unchanged",
+    "previous_archives": "unchanged",
+    "shared_validator": "unchanged",
+    "accepted_source_bytes": "preserved exactly"
+  },
+  "publication_status": "Owner-approved publication to the public thedeckcompass-maker/TidesOfKnowing repository and tidesofknowing.com after preview checks; release receipt recorded after deployment",
+  "latest_batch_instruction_at": "2026-10-03T18:20:00Z",
+  "batch_publication_approved_at": "2026-10-03T19:30:00Z"
+}

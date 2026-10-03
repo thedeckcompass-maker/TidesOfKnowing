@@ -1,0 +1,7 @@
+collection_id: majors/the-hierophant
+extracted_baseline: editorial/repeating-card-library/extracted/majors/the-hierophant.md
+production_target: src/content/repeating-card-meanings/majors/the-hierophant.md
+allowed_frontmatter_edits: []
+reinsertion_date: 2026-10-03
+approved_by: Owner-authorised verified card rollout; terminal corruption removal only
+notes: All 21 previously approved prose replacements are already in production. The accepted file removes only the literal terminal 45678, with no new prose or metadata edits. Preserve exact accepted bytes in accepted/majors/the-hierophant/2026-10-03.md. Existing baseline-driven EOF normalisation removes the accepted copy's final LF so deployment differs from previous production by exactly the five terminal digits. Authoritative card-chat file placement verified before local import. Owner approved public repository publication and website deployment after preview checks on 2026-10-03 at 19:30 UTC.

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-hierophant",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "fa90b6e5cd83eb089c81f147c61d259f14c04394",
+  "publication_status": "Owner-approved publication to the public thedeckcompass-maker/TidesOfKnowing repository and tidesofknowing.com after preview checks; release receipt recorded after deployment",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-hierophant/2026-10-03.md",
+    "accepted_sha256": "9133d50e4a4b5ef8a4b82e959e91ede7007fc12ce0de60ef6f2b26398d95e983",
+    "production_sha256": "45f20600d89ae1a289b0bcf9cd1a4333875f2caf2e549edb50182816b60f2820",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-hierophant/v2-editorial.md",
+    "previous_production_sha256": "82b0b718753025570f41623a976a554d4699c48054ade66ebd919f1450367841",
+    "extracted_baseline": "editorial/repeating-card-library/extracted/majors/the-hierophant.md",
+    "deployment_transformation": "Remove one terminal LF from the accepted file with existing EOF normalisation; resulting deployment is previous production minus exactly the five terminal digits 45678."
+  },
+  "review": "All 21 earlier approved replacements already exist in production. This batch removes only the literal terminal 45678; no prose or metadata is rewritten.",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T18:05:00Z",
+  "private_source_receipt": "Exact Library identities, versions and private conversation references retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-hierophant.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-hierophant.md",
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-hierophant/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-hierophant/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-hierophant/",
+    "tool_robots": "noindex, follow"
+  },
+  "validation": {
+    "individual_contract": "passed",
+    "pre_and_post_integrity": "passed; 78 unique cards/IDs/slugs/canonicals",
+    "aggregate_build_and_live_release": "Local aggregate checks passed; owner batch approval received; preview and live release checks required before completion",
+    "aggregate_four_card_build": "passed again on final owner-approved Magician clarification and the other three exact sources",
+    "aggregate_metadata_integrity_related_links_tool_links": "passed; all 78 cards retain unique identities/canonicals and protected routing",
+    "eight_route_rendered_verification": "passed; every prepared source block appears in order, with headings/links/images/IDs/canonicals/robots preserved",
+    "checked_at": "2026-10-03T19:39:00Z"
+  },
+  "preservation": {
+    "heading_and_paragraph_topology": "unchanged",
+    "unapproved_frontmatter": "byte-identical",
+    "routing_links_images_rendering": "unchanged",
+    "other_cards": "unchanged except the separately documented approved batch members"
+  },
+  "batch_publication_approved_at": "2026-10-03T19:30:00Z"
+}

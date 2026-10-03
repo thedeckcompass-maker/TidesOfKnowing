@@ -1,0 +1,8 @@
+collection_id: majors/the-empress
+extracted_baseline: editorial/repeating-card-library/extracted/majors/the-empress.md
+production_target: src/content/repeating-card-meanings/majors/the-empress.md
+allowed_frontmatter_edits: # Exact reviewed summary value only; all other raw metadata remains fixed
+  - summary
+reinsertion_date: 2026-10-03
+approved_by: Owner-authorised reconciliation and whole-card brief verification under the approved card rollout
+notes: Use the final whole-card reviewed version, not the earlier partial reconciliation. It preserves heading and paragraph topology, ten questions, nine action labels, keywords, links, routes and images. Only summary is approved for frontmatter editing. Exact reviewed source preserved in accepted/majors/the-empress/2026-10-03.md. Authoritative card-chat file placement verified before local import. Owner approved public repository publication and website deployment after preview checks on 2026-10-03 at 19:30 UTC.

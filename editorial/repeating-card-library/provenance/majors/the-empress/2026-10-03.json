@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-empress",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "fa90b6e5cd83eb089c81f147c61d259f14c04394",
+  "publication_status": "Owner-approved publication to the public thedeckcompass-maker/TidesOfKnowing repository and tidesofknowing.com after preview checks; release receipt recorded after deployment",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-empress/2026-10-03.md",
+    "accepted_sha256": "31fd5fbdb96a7ed83aee8e2dd605bb9bd9ba67d656856ac97130c6d097f9e397",
+    "production_sha256": "31fd5fbdb96a7ed83aee8e2dd605bb9bd9ba67d656856ac97130c6d097f9e397",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-empress/v2-editorial.md",
+    "previous_production_sha256": "fc29443824d3cf93c8aa9b3d4d9593f4b6e28b3c9dbf6c0f648bedaa8434f90c",
+    "extracted_baseline": "editorial/repeating-card-library/extracted/majors/the-empress.md",
+    "deployment_transformation": "None; accepted and deployment bytes are identical, including the two trailing LF characters."
+  },
+  "review": "Final whole-card brief review preserves sound wording, meaning, depth and structure. It reconciles the three historical revisions, eleven earlier improved spans and contextual language corrections; final source-order and saved-byte verification passed.",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T18:18:00Z",
+  "private_source_receipt": "Exact Library identities, versions and private conversation references retained separately",
+  "approved_frontmatter_values": [
+    "summary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-empress.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-empress.md",
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-empress/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-empress/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-empress/",
+    "tool_robots": "noindex, follow"
+  },
+  "validation": {
+    "individual_contract": "passed",
+    "pre_and_post_integrity": "passed; 78 unique cards/IDs/slugs/canonicals",
+    "aggregate_build_and_live_release": "Local aggregate checks passed; owner batch approval received; preview and live release checks required before completion",
+    "aggregate_four_card_build": "passed again on final owner-approved Magician clarification and the other three exact sources",
+    "aggregate_metadata_integrity_related_links_tool_links": "passed; all 78 cards retain unique identities/canonicals and protected routing",
+    "eight_route_rendered_verification": "passed; every prepared source block appears in order, with headings/links/images/IDs/canonicals/robots preserved",
+    "checked_at": "2026-10-03T19:39:00Z"
+  },
+  "preservation": {
+    "heading_and_paragraph_topology": "unchanged",
+    "unapproved_frontmatter": "byte-identical",
+    "routing_links_images_rendering": "unchanged",
+    "other_cards": "unchanged except the separately documented approved batch members"
+  },
+  "batch_publication_approved_at": "2026-10-03T19:30:00Z"
+}
