@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-fool",
+  "rollout_date": "2026-10-03",
+  "source_base_commit": "992f131232bc7f3e4f8c3a665d3ea09be863a321",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821",
+    "scope": "Language-only whole-card audit; preserve meaning, depth, natural New Zealand English, structure and search equity"
+  },
+  "approval": {
+    "candidate_accepted_at": "2026-10-03T16:54:00Z",
+    "card_by_card_publication_authorised_at": "2026-10-03T17:44:00Z",
+    "authoritative_card_chat_file_placement_verified_at": "2026-10-03T17:51:00Z",
+    "private_source_receipt": "Private source identity and conversation receipt retained separately; not published in this public repository"
+  },
+  "source_lineage": {
+    "library_original_sha256": "dc3a5c4b9cce1a7fe370d168e48058663a11d1353754f8b6d474b9c51209d753",
+    "previous_production_sha256": "72a000cd7f72bf35a2528a45f4d1d9307b136c41cfde64551708964b6e328f66",
+    "original_difference": "The Library original adds one terminal LF to previous production; every preceding byte is identical",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-fool/v3-editorial.md",
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-fool/2026-10-03.md",
+    "accepted_sha256": "3fb7d4063279b22ca7f28291c955ea683a8a9342a3e4b3cc400f80e3e00f2afc",
+    "production_sha256": "7d9617c36c8f8c0ca043897899456273893e4162cf59613f1134d6d6a9d0b572",
+    "deployment_transformation": "Existing normalise-rcm-eof.mjs removes exactly one terminal LF to match the unchanged extracted baseline; all preceding bytes are identical to the accepted source"
+  },
+  "contract": "editorial/repeating-card-library/contracts/majors/the-fool.yaml",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "frontmatter_mapping": {
+    "summary": "Approved opening interpretation",
+    "featuredSnippetAnswer": "Approved short answer and FAQ 1",
+    "answerEngineSummary": "Approved deeper-pattern answer and FAQ 2"
+  },
+  "production_target": "src/content/repeating-card-meanings/majors/the-fool.md",
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-fool/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-fool/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-fool/",
+    "tool_robots": "noindex, follow"
+  },
+  "validation": {
+    "contract": "passed with only the three approved frontmatter values and documented EOF-only normalisation",
+    "publication_receipt": "Commit, PR and deployment identity are supplied by Git history and the release receipt after publication",
+    "full_astro_cloudflare_build": "passed",
+    "pre_and_post_integrity_audit": "78 cards; 78 unique collection IDs, slugs and canonical URLs",
+    "metadata_validation": "passed",
+    "related_card_map_validation": "passed",
+    "tool_link_validation": "passed",
+    "eof_normalisation_tests": "6 passed, 0 failed",
+    "source_structure": "headings, horizontal rules, numbered question labels and nine action labels unchanged; ten questions preserved",
+    "rendered_structure": "entity and tool headings, anchors, links and image references unchanged; canonical and robots values verified",
+    "other_tracked_files": "unchanged outside Fool files and editorial progress record"
+  },
+  "preservation": {
+    "other_card_sources": "unchanged",
+    "site_architecture": "unchanged",
+    "studio_branch_and_files": "unchanged",
+    "earlier_card_archives": "unchanged",
+    "accepted_source_bytes": "preserved exactly"
+  }
+}

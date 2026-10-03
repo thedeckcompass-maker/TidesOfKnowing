@@ -6,10 +6,14 @@ collection_id: majors/the-fool
 extracted_baseline: editorial/repeating-card-library/extracted/majors/the-fool.md
 production_target: src/content/repeating-card-meanings/majors/the-fool.md
 
-# Owner-declared editable frontmatter fields. Empty = byte-identical frontmatter required.
-allowed_frontmatter_edits: []
+# Owner-accepted metadata values, mapped to the approved editorial dossier.
+# The inline comment keeps this valid YAML compatible with the existing line-based validator.
+allowed_frontmatter_edits: # Approved value fields only; keys/order remain immutable
+  - summary
+  - featuredSnippetAnswer
+  - answerEngineSummary
 
-reinsertion_date: null
-approved_by: null
+reinsertion_date: 2026-10-03
+approved_by: "Owner accepted exact candidate on 2026-10-03 at 16:54 UTC; authorised card-by-card publication at 17:44 UTC"
 
-notes: "Pilot card. No reinsertion until rewritten body copy is ready and contract is signed off."
+notes: "First accepted card in the October rollout. Whole-card brief review and authoritative card-chat file placement verified before import. Preserve accepted source bytes in accepted/majors/the-fool/2026-10-03.md. Only its terminal newline is removed in the deployment working copy to match the unchanged extracted baseline. See provenance/majors/the-fool/2026-10-03.json. No other frontmatter, structure, routing, links, rendering or card is approved for change."

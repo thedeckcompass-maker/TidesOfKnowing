@@ -2,7 +2,7 @@
 
 Permanent production tracker for the Symbolic Reference Library (Repeating Card Meanings) editorial reconstruction.
 
-**Last updated:** 2026-07-06
+**Last updated:** 2026-10-03
 
 ## Immutable architecture (binding)
 
@@ -47,7 +47,7 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 
 | Card | Collection ID | Status | Date | Notes |
 |------|---------------|--------|------|-------|
-| ☐ Fool | `majors/the-fool` | REINSERTED | 2026-07-06 | Editorial rewrite complete. v2-editorial archived. Build passed. |
+| ☐ Fool | `majors/the-fool` | QA COMPLETE | 2026-10-03 | Accepted whole-card language audit imported after authoritative chat-file placement. Previous production preserved as v3-editorial; exact accepted source and per-card provenance retained. Three approved metadata fields only; EOF-only deployment normalisation documented. |
 | ☐ Magician | `majors/the-magician` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ High Priestess | `majors/the-high-priestess` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
 | ☐ Empress | `majors/the-empress` | NOT STARTED | | |
@@ -165,3 +165,5 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 | 2026-07-07 | The High Priestess | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | Five of Swords | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
 | 2026-07-07 | Five of Pentacles | REINSERTED | Editorial rewrite. Contract passed. v2-editorial archived. Build clean. |
+
+| 2026-10-03 | The Fool | QA COMPLETE | Owner accepted exact candidate at 16:54 UTC and authorised card-by-card publication at 17:44 UTC. Source-file placement verified at 17:51 UTC before import. Contract and integrity checks passed; v3-editorial preserves previous production. Exact accepted source and EOF-normalised deployment hashes are recorded in `editorial/repeating-card-library/provenance/majors/the-fool/2026-10-03.json`. Publication evidence is recorded in the corresponding Git commit, pull request and deployment receipt. |
