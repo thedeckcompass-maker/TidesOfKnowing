@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-hanged-man",
+  "group": 3,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-05",
+  "source_base_commit": "7be7f534e4e0175e4e5ca2ede32ca77ad78c5282",
+  "base_dependency": "Includes first and second published groups; no older progress overlay used",
+  "publication_status": "Owner authorised fresh build and preview checks, followed by publication if they pass, on 2026-10-05 at 23:05 UTC",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-hanged-man/2026-10-05.md",
+    "accepted_sha256": "ef59e00ddde784a3a22ff3596f09aeb1ee05a3af38a4c2ddb74718f13191670d",
+    "original_canonical_sha256": "81abb2602eadbc0c3e8dfa661e149f31d03f3cffb8161505380850ec934a5d91",
+    "current_main_sha256": "b39d8462a89ad1cd22683a806773c7a0d1af562f20ccb48c4e6793219cce620e",
+    "production_sha256": "ef59e00ddde784a3a22ff3596f09aeb1ee05a3af38a4c2ddb74718f13191670d",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-hanged-man/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-hanged-man-before-review-2026-10-05.md",
+    "terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "c0232686741796526aac56bbab165417ea90e9625e870b59d6adec226c966459",
+  "source_order_map_sha256": "e1caef3ed416397642cae0a5c0de31cdb92ca9a9df4adfcedf241ab5887c782b",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T22:56:00Z",
+  "private_source_receipt": "Versioned full sources, verification records and individual archival receipts are retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-hanged-man.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-hanged-man.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 8,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS against exact owner-approved label set",
+    "aggregate_build_and_routes": "PASS: fresh baseline and candidate builds, all five contracts, pre/post 78-card integrity, metadata, related-map and tool-link checks, six EOF tests, independent complete source/scope and all-ten-route body/SEO/structure checks; exact-commit hosted preview and live checks remain required"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-hanged-man/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-hanged-man/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-hanged-man/",
+    "tool_robots": "noindex, follow"
+  }
+}

@@ -1,0 +1,11 @@
+collection_id: majors/the-hermit
+extracted_baseline: editorial/repeating-card-library/extracted/majors/the-hermit-before-review-2026-10-05.md
+production_target: src/content/repeating-card-meanings/majors/the-hermit.md
+allowed_frontmatter_edits: # Exact reviewed values only
+  - summary
+  - featuredSnippetAnswer
+  - answerEngineSummary
+
+reinsertion_date: 2026-10-05
+approved_by: Owner authorised fresh build, preview checks and publication once they pass on 2026-10-05 at 23:05 UTC
+notes: "Exact reviewed source authorised for this five-card release after fresh build and preview checks. Source bytes, EOF, headings, topology, identity, keywords, links, routing and images remain fixed. Main baseline includes both earlier published groups. Separate exact label extraction supplements the shared validator inline-label blind spot."
