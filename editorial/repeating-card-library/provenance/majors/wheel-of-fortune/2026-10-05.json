@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/wheel-of-fortune",
+  "group": 3,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-05",
+  "source_base_commit": "7be7f534e4e0175e4e5ca2ede32ca77ad78c5282",
+  "base_dependency": "Includes first and second published groups; no older progress overlay used",
+  "publication_status": "Owner authorised fresh build and preview checks, followed by publication if they pass, on 2026-10-05 at 23:05 UTC",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/wheel-of-fortune/2026-10-05.md",
+    "accepted_sha256": "aeee2cf4135b70b2809c678aa1197f7b4b0feb05666460ef279801938432df23",
+    "original_canonical_sha256": "b45b618374ae83d103f5d15ae743a29ec68b88c693d87486762eb091730c46df",
+    "current_main_sha256": "512c568ad5e472bcfaa0fdb25653071fb8d60f6e2ef6f43f20dbd0a8089af8d1",
+    "production_sha256": "aeee2cf4135b70b2809c678aa1197f7b4b0feb05666460ef279801938432df23",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/wheel-of-fortune/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/wheel-of-fortune-before-review-2026-10-05.md",
+    "terminal_LF_count": 0,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "408c2a7e465eb994416d308ecfee1fec4d869fc10c6d3001dc94209985772500",
+  "source_order_map_sha256": "039952f74b22276e1cfa31091be27b6a9d5e991ba7b9562a577adc75562b3f5e",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T22:34:00Z",
+  "private_source_receipt": "Versioned full sources, verification records and individual archival receipts are retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/majors/wheel-of-fortune.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/wheel-of-fortune.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 8,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS against exact owner-approved label set",
+    "aggregate_build_and_routes": "PASS: fresh baseline and candidate builds, all five contracts, pre/post 78-card integrity, metadata, related-map and tool-link checks, six EOF tests, independent complete source/scope and all-ten-route body/SEO/structure checks; exact-commit hosted preview and live checks remain required"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/wheel-of-fortune/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/wheel-of-fortune/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/wheel-of-fortune/",
+    "tool_robots": "noindex, follow"
+  }
+}

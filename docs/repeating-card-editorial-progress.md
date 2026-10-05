@@ -34,14 +34,14 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 
 | Suit | Total | Not started | Extracted | In review | Ready for import | Local QA complete | Historical reinserted | Deployed |
 |------|-------|-------------|-----------|-----------|------------------|-------------------|-----------------------|----------|
-| Major Arcana | 22 | 13 | 0 | 0 | 0 | 5 | 0 | 4 |
+| Major Arcana | 22 | 8 | 0 | 0 | 0 | 5 | 0 | 9 |
 | Cups | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Swords | 14 | 13 | 0 | 0 | 0 | 0 | 1 | 0 |
 | Wands | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Pentacles | 14 | 12 | 0 | 0 | 0 | 0 | 1 | 1 |
-| **Total** | **78** | **66** | **0** | **0** | **0** | **5** | **2** | **5** |
+| **Total** | **78** | **61** | **0** | **0** | **0** | **5** | **2** | **10** |
 
-The first group of five is deployed and live-verified. The owner authorised publication of the second five-card group on 2026-10-05 at 20:27 UTC after fresh checks. All three Chariot reader-context wording choices are accepted and applied. Preview and live verification remain required. Lovers requires no production prose change. Historical reinserted rows remain earlier implementation records and do not establish review against the current governing brief.
+The first two five-card groups are deployed and live-verified. The second group merged through PR #14 as 7be7f534 on 2026-10-05; Cloudflare Pages deployment c64a4f22 succeeded and all ten routes were verified. The third group (Hermit, Wheel of Fortune, Justice, Hanged Man and Death) is authorised for publication after fresh build and preview checks. Death's exact action-2 wording and retained action-7 label are owner-approved; no third-group editorial decision remains pending. The local candidate and preview/live gates are tracked separately. Historical reinserted rows remain earlier implementation records and do not establish review against the current governing brief.
 
 ---
 
@@ -51,18 +51,18 @@ The first group of five is deployed and live-verified. The owner authorised publ
 |------|---------------|--------|------|-------|
 | ☐ Fool | `majors/the-fool` | DEPLOYED | 2026-10-03 | Accepted whole-card language audit imported after authoritative chat-file placement. Previous production preserved as v3-editorial; exact accepted source and per-card provenance retained. Three approved metadata fields only; EOF-only deployment normalisation documented. |
 | ☐ Magician | `majors/the-magician` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
-| ☐ High Priestess | `majors/the-high-priestess` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline, v3 archive and EOF-only derivative retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
+| ☐ High Priestess | `majors/the-high-priestess` | DEPLOYED | 2026-10-05 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline, v3 archive and EOF-only derivative retained. Deployed via PR #14 at merge 7be7f534; Cloudflare Pages c64a4f22 and both live routes verified. |
 | ☐ Empress | `majors/the-empress` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
-| ☐ Emperor | `majors/the-emperor` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline and v2 archive retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
+| ☐ Emperor | `majors/the-emperor` | DEPLOYED | 2026-10-05 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline and v2 archive retained. Deployed via PR #14 at merge 7be7f534; Cloudflare Pages c64a4f22 and both live routes verified. |
 | ☐ Hierophant | `majors/the-hierophant` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
-| ☐ Lovers | `majors/the-lovers` | QA COMPLETE | 2026-10-03 | Whole-card review confirmed existing production prose and metadata. Accepted source has one additional terminal LF; normalised deployment remains byte-identical to main. Exact source, baseline, v2 archive and review provenance retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
-| ☐ Chariot | `majors/the-chariot` | QA COMPLETE | 2026-10-03 | Exact reviewed map restoration prepared with unchanged topology and metadata. All three reader-context wording decisions approved and applied on 2026-10-05; previous reviewed bytes retained separately. Baseline, v2 archive, accepted source and EOF derivative retained. Fresh final build, contracts and all ten local routes passed; owner authorised publication after preview checks on 2026-10-05. |
-| ☐ Strength | `majors/strength` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed; no metadata changes. Exact source, current-production baseline and v2 archive retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
-| ☐ Hermit | `majors/the-hermit` | NOT STARTED | | |
-| ☐ Wheel of Fortune | `majors/wheel-of-fortune` | NOT STARTED | | |
-| ☐ Justice | `majors/justice` | NOT STARTED | | |
-| ☐ Hanged Man | `majors/the-hanged-man` | NOT STARTED | | |
-| ☐ Death | `majors/death` | NOT STARTED | | |
+| ☐ Lovers | `majors/the-lovers` | DEPLOYED | 2026-10-05 | Whole-card review confirmed existing production prose and metadata. Accepted source has one additional terminal LF; normalised deployment remains byte-identical to main. Exact source, baseline, v2 archive and review provenance retained. Deployed via PR #14 at merge 7be7f534; Cloudflare Pages c64a4f22 and both live routes verified. |
+| ☐ Chariot | `majors/the-chariot` | DEPLOYED | 2026-10-05 | Exact reviewed map restoration prepared with unchanged topology and metadata. All three reader-context wording decisions approved and applied on 2026-10-05; previous reviewed bytes retained separately. Baseline, v2 archive, accepted source and EOF derivative retained. Fresh final build, contracts and all ten local routes passed. Deployed via PR #14 at merge 7be7f534; Cloudflare Pages c64a4f22 and both live routes verified. |
+| ☐ Strength | `majors/strength` | DEPLOYED | 2026-10-05 | Second-group whole-card review and local build passed; no metadata changes. Exact source, current-production baseline and v2 archive retained. Deployed via PR #14 at merge 7be7f534; Cloudflare Pages c64a4f22 and both live routes verified. |
+| ☐ Hermit | `majors/the-hermit` | QA COMPLETE | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; exact-commit preview and live checks remain required. |
+| ☐ Wheel of Fortune | `majors/wheel-of-fortune` | QA COMPLETE | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; exact-commit preview and live checks remain required. |
+| ☐ Justice | `majors/justice` | QA COMPLETE | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; exact-commit preview and live checks remain required. |
+| ☐ Hanged Man | `majors/the-hanged-man` | QA COMPLETE | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; exact-commit preview and live checks remain required. |
+| ☐ Death | `majors/death` | QA COMPLETE | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; exact-commit preview and live checks remain required. Action 2 is Allow the grief its own time.; action 7 remains Trust the dark., as expressly approved. |
 | ☐ Temperance | `majors/temperance` | NOT STARTED | | |
 | ☐ Devil | `majors/the-devil` | NOT STARTED | | |
 | ☐ Tower | `majors/the-tower` | NOT STARTED | | |
@@ -174,3 +174,6 @@ The first group of five is deployed and live-verified. The owner authorised publ
 | 2026-10-03 | King, Hierophant, Empress and Magician | QA COMPLETE | Individual source gates, strict King restoration negatives, aggregate build, 78-card integrity/metadata/link checks and all eight rendered routes passed. Exact accepted files, pre-change archives and per-card provenance retained. Hold all repository writes and deployment until the owner approves this named four-card batch and public source/provenance destination. |
 
 | 2026-10-05 | High Priestess, Emperor, Lovers, Chariot and Strength | AUTHORISED RELEASE | Owner accepted all three exact Chariot reader-context changes and authorised this five-card batch plus its technical/archive files after fresh checks. Exact reviewed sources and baseline-only EOF derivatives are preserved. Lovers production remains byte-identical. Fresh final build, 78-card checks and all ten complete local routes passed. Exact-commit preview and live evidence govern completion. |
+
+| 2026-10-05 | High Priestess, Emperor, Lovers, Chariot and Strength | DEPLOYED | PR #14 merged as 7be7f534 at 20:42 UTC. Exact merged-commit Cloudflare Pages c64a4f22 succeeded at 20:44 UTC; all ten public routes were verified by 20:46 UTC. Source and archive bindings are retained. |
+| 2026-10-05 | Hermit, Wheel of Fortune, Justice, Hanged Man and Death | AUTHORISED RELEASE | Owner authorised fresh build/preview checks and publication once they pass at 23:05 UTC. Exact accepted sources are imported with no EOF transformation. Death own-time and Trust-the-dark decisions are resolved; technical/archive files remain scoped to this release. Fresh candidate build, all five contracts, 78-card checks and all ten complete local routes passed. Exact-commit preview and live checks still govern publication. |

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/justice",
+  "group": 3,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-05",
+  "source_base_commit": "7be7f534e4e0175e4e5ca2ede32ca77ad78c5282",
+  "base_dependency": "Includes first and second published groups; no older progress overlay used",
+  "publication_status": "Owner authorised fresh build and preview checks, followed by publication if they pass, on 2026-10-05 at 23:05 UTC",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/justice/2026-10-05.md",
+    "accepted_sha256": "5887ba45436acbcf07991f4aab9bfe288264a3d39206eb38d624d8d9f04f973a",
+    "original_canonical_sha256": "fed37a87fcdc416350abc20dc31a453cf051dfbea45f49b4e8bac82eae9010da",
+    "current_main_sha256": "310ff7561b658ccca9e9f1628d90700f058eefc86267d07e7aa0dd5323a380e6",
+    "production_sha256": "5887ba45436acbcf07991f4aab9bfe288264a3d39206eb38d624d8d9f04f973a",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/justice/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/justice-before-review-2026-10-05.md",
+    "terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "904eb6219eff63c25e6ffb1f714b30d5dbf0e57b7834a50f5852a84085b01dd7",
+  "source_order_map_sha256": "b65b5b070a0834e07f7038b42c92238385ceccb31122f781150fe777df29c893",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T22:56:00Z",
+  "private_source_receipt": "Versioned full sources, verification records and individual archival receipts are retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/majors/justice.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/justice.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 8,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS against exact owner-approved label set",
+    "aggregate_build_and_routes": "PASS: fresh baseline and candidate builds, all five contracts, pre/post 78-card integrity, metadata, related-map and tool-link checks, six EOF tests, independent complete source/scope and all-ten-route body/SEO/structure checks; exact-commit hosted preview and live checks remain required"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/justice/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/justice/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/justice/",
+    "tool_robots": "noindex, follow"
+  }
+}

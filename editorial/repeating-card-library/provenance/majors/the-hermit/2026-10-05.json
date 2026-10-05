@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-hermit",
+  "group": 3,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-05",
+  "source_base_commit": "7be7f534e4e0175e4e5ca2ede32ca77ad78c5282",
+  "base_dependency": "Includes first and second published groups; no older progress overlay used",
+  "publication_status": "Owner authorised fresh build and preview checks, followed by publication if they pass, on 2026-10-05 at 23:05 UTC",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-hermit/2026-10-05.md",
+    "accepted_sha256": "973f428eeaf2a15caaf74270934a358223b08b16a04e77d7a43c859facf86dd5",
+    "original_canonical_sha256": "f21f0b2acac820546610139e931c5ffb4aece986ac23e336ec1d182344812fac",
+    "current_main_sha256": "8dbf022bd505d8894aea66fd38f7eca20ad3f545d11cd05ebaa5550ab1707e0a",
+    "production_sha256": "973f428eeaf2a15caaf74270934a358223b08b16a04e77d7a43c859facf86dd5",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-hermit/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-hermit-before-review-2026-10-05.md",
+    "terminal_LF_count": 0,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "74e6a177ad1b3781d7510d1038b5c62facbbdb9af08621ccfc7afc93956295f7",
+  "source_order_map_sha256": "1026bbd958c22a03ff54178d0e7b8842b54df71d21ce5a30e196dcdd4441fd2e",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T22:34:00Z",
+  "private_source_receipt": "Versioned full sources, verification records and individual archival receipts are retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-hermit.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-hermit.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 8,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS against exact owner-approved label set",
+    "aggregate_build_and_routes": "PASS: fresh baseline and candidate builds, all five contracts, pre/post 78-card integrity, metadata, related-map and tool-link checks, six EOF tests, independent complete source/scope and all-ten-route body/SEO/structure checks; exact-commit hosted preview and live checks remain required"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-hermit/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-hermit/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-hermit/",
+    "tool_robots": "noindex, follow"
+  }
+}
