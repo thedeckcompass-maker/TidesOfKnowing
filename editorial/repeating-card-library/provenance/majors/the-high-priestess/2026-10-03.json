@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-high-priestess",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "400db99a94ae7b42bf2d2fe205ecdbc0d4387e52",
+  "publication_status": "Owner authorised this five-card batch and its technical/archive files for repository publication and website deployment after fresh preview checks, 2026-10-05T20:27:29Z",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-high-priestess/2026-10-03.md",
+    "accepted_sha256": "6efb9c49e1c80205be7a637f67c3dd3709dcb3f54d72129c1dcea862ef2c7ccc",
+    "production_sha256": "6310bb4b1c0beb92369150dbfe64a6352889007f33ea0b6d04e4b48bcd3c48ad",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-high-priestess/v3-editorial.md",
+    "previous_production_sha256": "38847f866edbac3a285cf00aae51bb209fb32cfbb116689499b2b8b51f3305cb",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-high-priestess-before-review-2026-10-03.md",
+    "original_library_sha256": "e2d473773b7a3f19bacc7926135dc9ae07e0643c5592c80c1b94512f2b1c8f0d",
+    "accepted_terminal_LF_count": 3,
+    "production_terminal_LF_count": 2,
+    "deployment_transformation": "Remove 1 terminal LF only to match the immediate production baseline; no preceding byte changes"
+  },
+  "review": "Completed contextual/editorial audit, independent QA, exact saved-byte and source-order verification passed before engineering preparation. No repeat editorial rewrite.",
+  "verification_record_sha256": "2be9549a64dd132e3f185143b0e3fd04ab533f709cccdc4acae0743b65b52866",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T21:32:00Z",
+  "private_source_receipt": "Exact Library identities, versions, private conversation references and detailed editorial evidence are retained separately",
+  "approved_frontmatter_values": [
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-high-priestess.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-high-priestess.md",
+  "production_changes": true,
+  "preservation": {
+    "headings_paragraphs_lists": "same topology and heading order as current production",
+    "questions": 10,
+    "integration_actions": 8,
+    "unapproved_metadata": "byte-identical",
+    "other_cards_and_implementation": "unchanged"
+  },
+  "validation": {
+    "individual_contract": "All five final contracts passed; baseline-only EOF normalisation",
+    "independent_input_preservation": "passed before workspace reset; recovered inputs match the same pinned hashes",
+    "aggregate_build_and_routes": "Fresh exact-source final build and all ten complete entity/tool routes passed on 2026-10-05",
+    "aggregate_build": "Passed fresh final Astro/Cloudflare build and postbuild on 2026-10-05",
+    "integrity_metadata_related_map_tool_links": "Passed fresh pre/post 78-card integrity, metadata/schema/canonicals, related map and tool links",
+    "eof_normalisation_tests": "6 passed",
+    "rendered_route_preservation": "All ten complete ordered article bodies match exact reviewed sources; headings, links, images, IDs, canonical and robots preserved",
+    "checked_at": "2026-10-05T20:34:52Z",
+    "historical_preparation_checked_at": "2026-10-03T21:50:00Z"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-high-priestess/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-high-priestess/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-high-priestess/",
+    "tool_robots": "noindex, follow"
+  },
+  "release_preparation_date": "2026-10-05"
+}
