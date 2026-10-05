@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-chariot",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "400db99a94ae7b42bf2d2fe205ecdbc0d4387e52",
+  "publication_status": "Local second-group preparation only; new owner batch approval required for repository publication and deployment",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-chariot/2026-10-03.md",
+    "accepted_sha256": "0a307a0f31238e4d640d167bad8946a5467b1a4dc6a867239b1761c57ad8d409",
+    "production_sha256": "0d2f78f557ab6ba304f4ef0fa98bd544ac4756d1d9ae3f821f4f1ce268e16abc",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-chariot/v2-editorial.md",
+    "previous_production_sha256": "996a94ec968f667eaadd94c3714b86ddd3b2495acf6738a535c30f168a413afd",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-chariot-before-review-2026-10-03.md",
+    "original_library_sha256": "1479528eec175b5dac8a9dcc962856e42d0b19ec9630d56ca3febf8c98851595",
+    "accepted_terminal_LF_count": 2,
+    "production_terminal_LF_count": 1,
+    "deployment_transformation": "Remove 1 terminal LF only to match the immediate production baseline; no preceding byte changes"
+  },
+  "review": "Completed contextual/editorial audit, independent QA, exact saved-byte and source-order verification passed before engineering preparation. No repeat editorial rewrite.",
+  "verification_record_sha256": "bbf9546a5678e4b4fc3c7b05f84eba9a4112e0fa46b64e446efe7a0f794e7b27",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T21:32:00Z",
+  "private_source_receipt": "Exact Library identities, versions, private conversation references and detailed editorial evidence are retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-chariot.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-chariot.md",
+  "production_changes": true,
+  "preservation": {
+    "headings_paragraphs_lists": "same topology and heading order as current production",
+    "questions": 10,
+    "integration_actions": 8,
+    "unapproved_metadata": "byte-identical",
+    "other_cards_and_implementation": "unchanged"
+  },
+  "validation": {
+    "individual_contract": "passed after baseline-only EOF normalisation",
+    "independent_input_preservation": "passed before workspace reset; recovered inputs match the same pinned hashes",
+    "aggregate_build_and_routes": "Recovered full build and all ten entity/tool routes passed",
+    "aggregate_build": "passed after recovery at 2026-10-03T21:48:50Z",
+    "integrity_metadata_related_map_tool_links": "passed after recovery",
+    "eof_normalisation_tests": "6 passed",
+    "rendered_route_preservation": "Complete ordered article paragraph/list blocks equal exact reviewed source; article topology, page headings, links/images/IDs, canonical and robots preserved",
+    "checked_at": "2026-10-03T21:50:00Z"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-chariot/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-chariot/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-chariot/",
+    "tool_robots": "noindex, follow"
+  },
+  "pending_owner_decision": "Three reader-context phrasing options remain unapplied; exact accepted restoration retained pending the owner decision bundled with batch publication approval."
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-chariot",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "400db99a94ae7b42bf2d2fe205ecdbc0d4387e52",
+  "publication_status": "Owner authorised this five-card batch and its technical/archive files for repository publication and website deployment after fresh preview checks, 2026-10-05T20:27:29Z",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-chariot/2026-10-05.md",
+    "accepted_sha256": "ee371d296b22b351af7359888785199aff6bfcf44a5c9b3de7c6add82f6fe3b9",
+    "production_sha256": "f1234348d225a0ee3216be7209ed35a2516399b40ce5c9eb2a9a382acfba315c",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-chariot/v2-editorial.md",
+    "previous_production_sha256": "996a94ec968f667eaadd94c3714b86ddd3b2495acf6738a535c30f168a413afd",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-chariot-before-review-2026-10-03.md",
+    "original_library_sha256": "1479528eec175b5dac8a9dcc962856e42d0b19ec9630d56ca3febf8c98851595",
+    "accepted_terminal_LF_count": 2,
+    "production_terminal_LF_count": 1,
+    "deployment_transformation": "Remove 1 terminal LF only to match the immediate production baseline; no preceding byte changes",
+    "prior_reviewed_source": "editorial/repeating-card-library/accepted/majors/the-chariot/2026-10-03.md",
+    "prior_reviewed_sha256": "0a307a0f31238e4d640d167bad8946a5467b1a4dc6a867239b1761c57ad8d409"
+  },
+  "review": "Completed contextual/editorial audit, independent QA, exact saved-byte and source-order verification passed before engineering preparation. No repeat editorial rewrite.",
+  "verification_record_sha256": "bea686f75f17c0eda04193b8ef04447eec8461c410b56edf20755adffb0d050a",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-05T20:26:00Z",
+  "private_source_receipt": "Exact Library identities, versions, private conversation references and detailed editorial evidence are retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-chariot.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-chariot.md",
+  "production_changes": true,
+  "preservation": {
+    "headings_paragraphs_lists": "same topology and heading order as current production",
+    "questions": 10,
+    "integration_actions": 8,
+    "unapproved_metadata": "byte-identical",
+    "other_cards_and_implementation": "unchanged"
+  },
+  "validation": {
+    "individual_contract": "All five final contracts passed; baseline-only EOF normalisation",
+    "independent_input_preservation": "passed before workspace reset; recovered inputs match the same pinned hashes",
+    "aggregate_build_and_routes": "Fresh exact-source final build and all ten complete entity/tool routes passed on 2026-10-05",
+    "aggregate_build": "Passed fresh final Astro/Cloudflare build and postbuild on 2026-10-05",
+    "integrity_metadata_related_map_tool_links": "Passed fresh pre/post 78-card integrity, metadata/schema/canonicals, related map and tool links",
+    "eof_normalisation_tests": "6 passed",
+    "rendered_route_preservation": "All ten complete ordered article bodies match exact reviewed sources; headings, links, images, IDs, canonical and robots preserved",
+    "checked_at": "2026-10-05T20:34:52Z",
+    "historical_preparation_checked_at": "2026-10-03T21:50:00Z"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-chariot/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-chariot/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-chariot/",
+    "tool_robots": "noindex, follow"
+  },
+  "accepted_reader_context_changes": {
+    "approved_at": "2026-10-05T20:19:46Z",
+    "scope": "Exactly three approved sentence edits in Health, Shadow and Signs of Integration. All other reviewed bytes preserved."
+  },
+  "release_preparation_date": "2026-10-05"
+}

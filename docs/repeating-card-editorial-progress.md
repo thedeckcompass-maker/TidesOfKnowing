@@ -2,7 +2,7 @@
 
 Permanent production tracker for the Symbolic Reference Library (Repeating Card Meanings) editorial reconstruction.
 
-**Last updated:** 2026-10-03
+**Last updated:** 2026-10-05
 
 ## Immutable architecture (binding)
 
@@ -34,14 +34,14 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 
 | Suit | Total | Not started | Extracted | In review | Ready for import | Local QA complete | Historical reinserted | Deployed |
 |------|-------|-------------|-----------|-----------|------------------|-------------------|-----------------------|----------|
-| Major Arcana | 22 | 17 | 0 | 0 | 0 | 3 | 1 | 1 |
+| Major Arcana | 22 | 13 | 0 | 0 | 0 | 5 | 0 | 4 |
 | Cups | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Swords | 14 | 13 | 0 | 0 | 0 | 0 | 1 | 0 |
 | Wands | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Pentacles | 14 | 12 | 0 | 0 | 0 | 1 | 1 | 0 |
-| **Total** | **78** | **70** | **0** | **0** | **0** | **4** | **3** | **1** |
+| Pentacles | 14 | 12 | 0 | 0 | 0 | 0 | 1 | 1 |
+| **Total** | **78** | **66** | **0** | **0** | **0** | **5** | **2** | **5** |
 
-Counts reflect the card rows in this repository tracker. The four local QA-complete cards received the owner's public repository and website publication approval at 19:30 UTC; preview and live checks remain required. Historical reinserted rows are retained as earlier implementation records and do not establish review against the current governing brief.
+The first group of five is deployed and live-verified. The owner authorised publication of the second five-card group on 2026-10-05 at 20:27 UTC after fresh checks. All three Chariot reader-context wording choices are accepted and applied. Preview and live verification remain required. Lovers requires no production prose change. Historical reinserted rows remain earlier implementation records and do not establish review against the current governing brief.
 
 ---
 
@@ -50,14 +50,14 @@ Counts reflect the card rows in this repository tracker. The four local QA-compl
 | Card | Collection ID | Status | Date | Notes |
 |------|---------------|--------|------|-------|
 | ☐ Fool | `majors/the-fool` | DEPLOYED | 2026-10-03 | Accepted whole-card language audit imported after authoritative chat-file placement. Previous production preserved as v3-editorial; exact accepted source and per-card provenance retained. Three approved metadata fields only; EOF-only deployment normalisation documented. |
-| ☐ Magician | `majors/the-magician` | QA COMPLETE | 2026-10-03 | Final whole-card reviewed source preserved; only featuredSnippetAnswer metadata allowed. v3 archive and exact EOF derivative recorded. Owner-approved Core sentence clarification applied; exact prior reviewed hash retained. Final batch build and preview/live checks govern release. |
-| ☐ High Priestess | `majors/the-high-priestess` | REINSERTED | 2026-07-07 | Editorial rewrite complete. v2-editorial archived. Build passed. |
-| ☐ Empress | `majors/the-empress` | QA COMPLETE | 2026-10-03 | Final whole-card reviewed version prepared; only summary metadata allowed. Exact source and v2 archive preserved; individual contract passed. Aggregate four-card build and both rendered routes passed. Owner approved public repository and website publication after preview checks at 19:30 UTC. |
-| ☐ Emperor | `majors/the-emperor` | NOT STARTED | | |
-| ☐ Hierophant | `majors/the-hierophant` | QA COMPLETE | 2026-10-03 | Only terminal 45678 removed; earlier approved prose and metadata unchanged. Exact source, EOF derivative and v2 archive preserved; individual contract passed. Aggregate four-card build and both rendered routes passed. Owner approved public repository and website publication after preview checks at 19:30 UTC. |
-| ☐ Lovers | `majors/the-lovers` | NOT STARTED | | |
-| ☐ Chariot | `majors/the-chariot` | NOT STARTED | | |
-| ☐ Strength | `majors/strength` | NOT STARTED | | |
+| ☐ Magician | `majors/the-magician` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
+| ☐ High Priestess | `majors/the-high-priestess` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline, v3 archive and EOF-only derivative retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
+| ☐ Empress | `majors/the-empress` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
+| ☐ Emperor | `majors/the-emperor` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed. Two approved answer metadata values only; exact source, current-production baseline and v2 archive retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
+| ☐ Hierophant | `majors/the-hierophant` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
+| ☐ Lovers | `majors/the-lovers` | QA COMPLETE | 2026-10-03 | Whole-card review confirmed existing production prose and metadata. Accepted source has one additional terminal LF; normalised deployment remains byte-identical to main. Exact source, baseline, v2 archive and review provenance retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
+| ☐ Chariot | `majors/the-chariot` | QA COMPLETE | 2026-10-03 | Exact reviewed map restoration prepared with unchanged topology and metadata. All three reader-context wording decisions approved and applied on 2026-10-05; previous reviewed bytes retained separately. Baseline, v2 archive, accepted source and EOF derivative retained. Fresh final build, contracts and all ten local routes passed; owner authorised publication after preview checks on 2026-10-05. |
+| ☐ Strength | `majors/strength` | QA COMPLETE | 2026-10-03 | Second-group whole-card review and local build passed; no metadata changes. Exact source, current-production baseline and v2 archive retained. Owner authorised publication on 2026-10-05; fresh preview/live checks required. |
 | ☐ Hermit | `majors/the-hermit` | NOT STARTED | | |
 | ☐ Wheel of Fortune | `majors/wheel-of-fortune` | NOT STARTED | | |
 | ☐ Justice | `majors/justice` | NOT STARTED | | |
@@ -154,7 +154,7 @@ Counts reflect the card rows in this repository tracker. The four local QA-compl
 | ☐ Page | `pentacles/page-of-pentacles` | NOT STARTED | | |
 | ☐ Knight | `pentacles/knight-of-pentacles` | NOT STARTED | | |
 | ☐ Queen | `pentacles/queen-of-pentacles` | NOT STARTED | | |
-| ☐ King | `pentacles/king-of-pentacles` | QA COMPLETE | 2026-10-03 | Exact approved full source-order map restored: 24 Core paragraphs, ten questions, seven actions. King-specific strict map gate and negative tests passed; original abbreviated production preserved as v2-editorial. |
+| ☐ King | `pentacles/king-of-pentacles` | DEPLOYED | 2026-10-03 | First-group reviewed source deployed via PR #13 at merge 400db99 on 2026-10-03. Exact Pages deployment and both live routes verified; source/archive/provenance preserved. |
 
 ---
 
@@ -172,3 +172,5 @@ Counts reflect the card rows in this repository tracker. The four local QA-compl
 | 2026-10-03 | King of Pentacles | QA COMPLETE | Owner-authorised faithful restoration verified against the independent approved source-order map. Exact accepted bytes preserved; custom one-card gate validates all 165 units without changing the shared validator. Full build, integrity, metadata and link checks passed. Publication evidence is recorded in the corresponding Git commit, pull request and deployment receipt. |
 | 2026-10-03 | Batch containing King, Hierophant, Empress and Magician | PREPARATION | Owner changed rollout to groups of five at 18:20 UTC. The Fool is already deployed as the first card. Prepare the remaining four locally, then obtain explicit repository-publication and deployment approval for the batch. No additional card is authorised for deployment before that approval. |
 | 2026-10-03 | King, Hierophant, Empress and Magician | QA COMPLETE | Individual source gates, strict King restoration negatives, aggregate build, 78-card integrity/metadata/link checks and all eight rendered routes passed. Exact accepted files, pre-change archives and per-card provenance retained. Hold all repository writes and deployment until the owner approves this named four-card batch and public source/provenance destination. |
+
+| 2026-10-05 | High Priestess, Emperor, Lovers, Chariot and Strength | AUTHORISED RELEASE | Owner accepted all three exact Chariot reader-context changes and authorised this five-card batch plus its technical/archive files after fresh checks. Exact reviewed sources and baseline-only EOF derivatives are preserved. Lovers production remains byte-identical. Fresh final build, 78-card checks and all ten complete local routes passed. Exact-commit preview and live evidence govern completion. |

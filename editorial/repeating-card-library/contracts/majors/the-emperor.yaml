@@ -1,0 +1,10 @@
+collection_id: majors/the-emperor
+extracted_baseline: editorial/repeating-card-library/extracted/majors/the-emperor-before-review-2026-10-03.md
+production_target: src/content/repeating-card-meanings/majors/the-emperor.md
+allowed_frontmatter_edits: # Explicit verified values only; all other fields and key order fixed
+  - featuredSnippetAnswer
+  - answerEngineSummary
+
+reinsertion_date: 2026-10-05
+approved_by: Owner authorised five-card preparation and publication on 2026-10-05 at 20:27 UTC
+notes: "Exact source passed whole-card contextual review, source-order verification, saved-byte verification and individual chat archival. Preserve all headings, paragraph/list topology, links, images, routing and unapproved metadata. The baseline is the immediate pre-batch production snapshot; prior historical archives remain untouched. EOF normalisation is baseline-driven only. Owner authorised this exact batch and technical/archive files for publication after fresh preview checks on 2026-10-05."

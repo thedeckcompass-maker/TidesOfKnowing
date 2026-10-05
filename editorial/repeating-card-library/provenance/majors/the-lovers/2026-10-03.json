@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "card_id": "majors/the-lovers",
+  "preparation_date": "2026-10-03",
+  "source_base_commit": "400db99a94ae7b42bf2d2fe205ecdbc0d4387e52",
+  "publication_status": "Owner authorised this five-card batch and its technical/archive files for repository publication and website deployment after fresh preview checks, 2026-10-05T20:27:29Z",
+  "governing_brief": {
+    "title": "Repeating Card Meanings Editorial Audit Ledger",
+    "sha256": "e34629c2398d5aae2ab47aaa4acf86e2d80f3f2badbfc3e46f2916ecef9f7821"
+  },
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/majors/the-lovers/2026-10-03.md",
+    "accepted_sha256": "2cf2cef9509cc44d9d87e94e19131ada7b52266f6ac422720bb2346a3bec0fef",
+    "production_sha256": "1a73bad55197145461ac19e43de55bc8ac51e2db2b41e0c6250c6b795c1582c0",
+    "previous_production_archive": "editorial/repeating-card-library/archive/majors/the-lovers/v2-editorial.md",
+    "previous_production_sha256": "1a73bad55197145461ac19e43de55bc8ac51e2db2b41e0c6250c6b795c1582c0",
+    "validation_baseline": "editorial/repeating-card-library/extracted/majors/the-lovers-before-review-2026-10-03.md",
+    "original_library_sha256": "2cf2cef9509cc44d9d87e94e19131ada7b52266f6ac422720bb2346a3bec0fef",
+    "accepted_terminal_LF_count": 2,
+    "production_terminal_LF_count": 1,
+    "deployment_transformation": "Remove 1 terminal LF only to match the immediate production baseline; no preceding byte changes"
+  },
+  "review": "Completed contextual/editorial audit, independent QA, exact saved-byte and source-order verification passed before engineering preparation. No repeat editorial rewrite. No production content changes are needed; exact normalized accepted bytes equal the current production source.",
+  "verification_record_sha256": "cd2b95d8c8c739df9102fdb8a185a09922e09f6d8345531b45b18f4af8b6e4af",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-03T21:32:00Z",
+  "private_source_receipt": "Exact Library identities, versions, private conversation references and detailed editorial evidence are retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/majors/the-lovers.yaml",
+  "production_target": "src/content/repeating-card-meanings/majors/the-lovers.md",
+  "production_changes": false,
+  "preservation": {
+    "headings_paragraphs_lists": "same topology and heading order as current production",
+    "questions": 10,
+    "integration_actions": 9,
+    "unapproved_metadata": "byte-identical",
+    "other_cards_and_implementation": "unchanged"
+  },
+  "validation": {
+    "individual_contract": "All five final contracts passed; baseline-only EOF normalisation",
+    "independent_input_preservation": "passed before workspace reset; recovered inputs match the same pinned hashes",
+    "aggregate_build_and_routes": "Fresh exact-source final build and all ten complete entity/tool routes passed on 2026-10-05",
+    "aggregate_build": "Passed fresh final Astro/Cloudflare build and postbuild on 2026-10-05",
+    "integrity_metadata_related_map_tool_links": "Passed fresh pre/post 78-card integrity, metadata/schema/canonicals, related map and tool links",
+    "eof_normalisation_tests": "6 passed",
+    "rendered_route_preservation": "All ten complete ordered article bodies match exact reviewed sources; headings, links, images, IDs, canonical and robots preserved",
+    "checked_at": "2026-10-05T20:34:52Z",
+    "historical_preparation_checked_at": "2026-10-03T21:50:00Z"
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/the-lovers/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/majors/the-lovers/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/the-lovers/",
+    "tool_robots": "noindex, follow"
+  },
+  "release_preparation_date": "2026-10-05"
+}
