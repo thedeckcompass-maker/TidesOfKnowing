@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "card_id": "swords/three-of-swords",
+  "release_batch": 8,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "0fc00bf91ad64a499f43284395031ea28b64aeba",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/swords/three-of-swords/2026-10-06.md",
+    "accepted_sha256": "f4e5dfac8e1c75620d75c4f5a4f62283dcfa6264fb5696d841ef76b6b63029cd",
+    "production_sha256": "f4e5dfac8e1c75620d75c4f5a4f62283dcfa6264fb5696d841ef76b6b63029cd",
+    "original_canonical_sha256": "f882729827008ef46c2f6133ede05fdb205485eec7cd579434cadb332803eb51",
+    "current_main_sha256": "7f5aca058feff3e8267753dd9278045887971c342a4cabbfa3ac6210baa21f59",
+    "previous_production_archive": "editorial/repeating-card-library/archive/swords/three-of-swords/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/swords/three-of-swords-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "6dedf61e7bc287f3f039d997ce100bd766540321808d3e84bd4f3acd4ac24574",
+  "source_order_map_sha256": "e8e0ffc9e123406e27c54a3c2085c7102cb82b0d88fc9fac3f5363cfce2ebd2c",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-06T07:10:10.682Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/swords/three-of-swords.yaml",
+  "production_target": "src/content/repeating-card-meanings/swords/three-of-swords.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/three-of-swords/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/swords/three-of-swords/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/three-of-swords/",
+    "tool_robots": "noindex, follow"
+  },
+  "preservation_restoration": {
+    "date": "2026-10-06",
+    "current_reviewed_version": 1,
+    "prior_reviewed_sha256": "ab3640536294cea73aff5f63ed3a5d220a743fab45fd9ae7c7fbf6f4d008ee16",
+    "prior_verification_sha256": "4aeced755370ea29073ab8a7a13f510aece3e205308d47a47237a0e975443082",
+    "historical_whole_card_map_sha256": "70c458fbb8dc64c69d399aabc31a7f4aa8185dd2fcc9da360ea6d6069658db2e",
+    "current_four_state_map_sha256": "e8e0ffc9e123406e27c54a3c2085c7102cb82b0d88fc9fac3f5363cfce2ebd2c",
+    "exact_restoration_operations_sha256": "7b11e356cc97752acd38eb3345f089c987e2c594ab218bdd197c8cd30cc16c91",
+    "scope": "Original protected wording restored under existing preservation rules; current reviewed body safeguards retained. Complete prior review and restoration evidence preserved privately. No alternative wording inferred owner-approved.",
+    "unresolved_owner_choices": []
+  }
+}

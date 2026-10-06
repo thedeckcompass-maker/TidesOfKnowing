@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "card_id": "cups/page-of-cups",
+  "release_batch": 8,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "0fc00bf91ad64a499f43284395031ea28b64aeba",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/cups/page-of-cups/2026-10-06.md",
+    "accepted_sha256": "dd7c6488c1d22b8aaf146c1698be2dfb448ff8f6e7e5ad3252438b913edee455",
+    "production_sha256": "dd7c6488c1d22b8aaf146c1698be2dfb448ff8f6e7e5ad3252438b913edee455",
+    "original_canonical_sha256": "85c59bd5fb9903e5ba1b9355127c5356d9312b76f5804c6ddbbdfcf4efaba54b",
+    "current_main_sha256": "d372a9cb6fc40dde882d804ffaac5dc57b983c62dfce88147069b38aa7c48905",
+    "previous_production_archive": "editorial/repeating-card-library/archive/cups/page-of-cups/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/cups/page-of-cups-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "b06010b04ce5524a79704f58c7d330c5ef1d5db6e53a7ba2b77f3d39dda4752a",
+  "source_order_map_sha256": "66bfdf33acba7458228916b88c5a3c5fe27d7af19fecbe3e7cd7b19874443150",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-06T07:17:01.705Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [],
+  "contract": "editorial/repeating-card-library/contracts/cups/page-of-cups.yaml",
+  "production_target": "src/content/repeating-card-meanings/cups/page-of-cups.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/page-of-cups/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/cups/page-of-cups/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/page-of-cups/",
+    "tool_robots": "noindex, follow"
+  },
+  "preservation_restoration": {
+    "date": "2026-10-06",
+    "current_reviewed_version": 1,
+    "prior_reviewed_sha256": "c0ebe121724dfe395873ead8df1663553192c8339c4d91a8b6067a3d34ac6fbb",
+    "prior_verification_sha256": "fccbe198610790daec6fd65b64b91a352e92e58b7c71dfae1dcf9d89ae6f4f6c",
+    "historical_whole_card_map_sha256": "56e1c1c9091432e5774b141d948c6628e0c254def3fb773218374cd8588e9cae",
+    "current_four_state_map_sha256": "66bfdf33acba7458228916b88c5a3c5fe27d7af19fecbe3e7cd7b19874443150",
+    "exact_restoration_operations_sha256": "63e760b8ddc1296fac285134b286cc0538a64a7b8a4acbd6f471d7675267b724",
+    "scope": "Original protected wording restored under existing preservation rules; current reviewed body safeguards retained. Complete prior review and restoration evidence preserved privately. No alternative wording inferred owner-approved.",
+    "unresolved_owner_choices": []
+  }
+}

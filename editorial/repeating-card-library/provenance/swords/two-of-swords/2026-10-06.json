@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "card_id": "swords/two-of-swords",
+  "release_batch": 8,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "0fc00bf91ad64a499f43284395031ea28b64aeba",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/swords/two-of-swords/2026-10-06.md",
+    "accepted_sha256": "79cb6770ec8e1aa2f7b03c7e70a02784d1382c1cb250640af726c9de54a303ea",
+    "production_sha256": "79cb6770ec8e1aa2f7b03c7e70a02784d1382c1cb250640af726c9de54a303ea",
+    "original_canonical_sha256": "ba57e834dea0422f28faa8f38f96b1a91f224949ebd2d89224d2c821109d9a1b",
+    "current_main_sha256": "1c2cf7841f7b7193a3f1aade95d2c96132cebf95b3f2dd0f49028b39bb638505",
+    "previous_production_archive": "editorial/repeating-card-library/archive/swords/two-of-swords/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/swords/two-of-swords-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "3c060ea9e208fe29391f667c00a65e3124355e4242adf13f6c890eeb12c817c1",
+  "source_order_map_sha256": "110cc2a9d589bdf8dac8e4c1c9a1f03c30cbbc3e3190d92385f6e35fa3b1f5d3",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-06T07:08:53.089Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/swords/two-of-swords.yaml",
+  "production_target": "src/content/repeating-card-meanings/swords/two-of-swords.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/two-of-swords/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/swords/two-of-swords/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/two-of-swords/",
+    "tool_robots": "noindex, follow"
+  },
+  "preservation_restoration": {
+    "date": "2026-10-06",
+    "current_reviewed_version": 1,
+    "prior_reviewed_sha256": "f6dacf141d545c2a5bdbb381c5fcc484130d44de44de0ce67d96ded100632179",
+    "prior_verification_sha256": "209b3e66a296219311e06591d80c615ab8569a537a209077e3191884522b3d37",
+    "historical_whole_card_map_sha256": "73339e152e3261ebc7c0f4ecdbdb5e58f451493a9c958117bee7cc89871530c4",
+    "current_four_state_map_sha256": "110cc2a9d589bdf8dac8e4c1c9a1f03c30cbbc3e3190d92385f6e35fa3b1f5d3",
+    "exact_restoration_operations_sha256": "1aeed8057878dfb0a6b96767c7a14c7861b0dd25c8c1ff2232964cfda82e5f15",
+    "scope": "Original protected wording restored under existing preservation rules; current reviewed body safeguards retained. Complete prior review and restoration evidence preserved privately. No alternative wording inferred owner-approved.",
+    "unresolved_owner_choices": []
+  }
+}
