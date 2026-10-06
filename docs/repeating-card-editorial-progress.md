@@ -36,12 +36,12 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 |------|-------|-------------|-----------|-----------|------------------|-------------------|-----------------------|----------|
 | Major Arcana | 22 | 0 | 0 | 0 | 0 | 0 | 0 | 22 |
 | Cups | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 14 |
-| Swords | 14 | 0 | 0 | 0 | 0 | 1 | 0 | 13 |
-| Wands | 14 | 10 | 0 | 0 | 0 | 4 | 0 | 0 |
+| Swords | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 14 |
+| Wands | 14 | 5 | 0 | 0 | 0 | 5 | 0 | 4 |
 | Pentacles | 14 | 12 | 0 | 0 | 0 | 0 | 1 | 1 |
-| **Total** | **78** | **22** | **0** | **0** | **0** | **5** | **1** | **50** |
+| **Total** | **78** | **17** | **0** | **0** | **0** | **5** | **1** | **55** |
 
-Verified deployed cards before this candidate: 50. The owner authorised continued batched publication on 2026-10-06. This candidate contains King of Swords, Ace of Wands, Two of Wands, Three of Wands, Four of Wands. Cards with unresolved protected wording choices remain separately held. Exact sources and immediate production archives are preserved; fresh local, preview and live gates govern this release. Historical reinserted rows remain earlier implementation records, not current whole-card review claims.
+Verified deployed cards before this candidate: 55. The owner authorised continued batched publication on 2026-10-06. This candidate contains Five of Wands, Six of Wands, Seven of Wands, Eight of Wands, Nine of Wands. Cards with unresolved protected wording choices remain separately held. Exact sources and immediate production archives are preserved; fresh local, preview and live gates govern this release. Historical reinserted rows remain earlier implementation records, not current whole-card review claims.
 
 ---
 
@@ -112,7 +112,7 @@ Verified deployed cards before this candidate: 50. The owner authorised continue
 | ☐ Page | `swords/page-of-swords` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #22 merged as 529c5054; exact Pages e3129cd9 and both live routes verified at 2026-10-06T19:30:33.443829+00:00. |
 | ☐ Knight | `swords/knight-of-swords` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #22 merged as 529c5054; exact Pages e3129cd9 and both live routes verified at 2026-10-06T19:30:33.443829+00:00. |
 | ☐ Queen | `swords/queen-of-swords` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #22 merged as 529c5054; exact Pages e3129cd9 and both live routes verified at 2026-10-06T19:30:33.443829+00:00. |
-| ☐ King | `swords/king-of-swords` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ King | `swords/king-of-swords` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #23 merged as f124f8e5; exact Pages 1a1873e1 and both live routes verified at 2026-10-06T19:56:21.936249+00:00. |
 
 ---
 
@@ -120,15 +120,15 @@ Verified deployed cards before this candidate: 50. The owner authorised continue
 
 | Card | Collection ID | Status | Date | Notes |
 |------|---------------|--------|------|-------|
-| ☐ Ace | `wands/ace-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Two | `wands/two-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Three | `wands/three-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Four | `wands/four-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Five | `wands/five-of-wands` | NOT STARTED | | |
-| ☐ Six | `wands/six-of-wands` | NOT STARTED | | |
-| ☐ Seven | `wands/seven-of-wands` | NOT STARTED | | |
-| ☐ Eight | `wands/eight-of-wands` | NOT STARTED | | |
-| ☐ Nine | `wands/nine-of-wands` | NOT STARTED | | |
+| ☐ Ace | `wands/ace-of-wands` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #23 merged as f124f8e5; exact Pages 1a1873e1 and both live routes verified at 2026-10-06T19:56:21.936249+00:00. |
+| ☐ Two | `wands/two-of-wands` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #23 merged as f124f8e5; exact Pages 1a1873e1 and both live routes verified at 2026-10-06T19:56:21.936249+00:00. |
+| ☐ Three | `wands/three-of-wands` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #23 merged as f124f8e5; exact Pages 1a1873e1 and both live routes verified at 2026-10-06T19:56:21.936249+00:00. |
+| ☐ Four | `wands/four-of-wands` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #23 merged as f124f8e5; exact Pages 1a1873e1 and both live routes verified at 2026-10-06T19:56:21.936249+00:00. |
+| ☐ Five | `wands/five-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ Six | `wands/six-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ Seven | `wands/seven-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ Eight | `wands/eight-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ Nine | `wands/nine-of-wands` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
 | ☐ Ten | `wands/ten-of-wands` | NOT STARTED | | |
 | ☐ Page | `wands/page-of-wands` | NOT STARTED | | |
 | ☐ Knight | `wands/knight-of-wands` | NOT STARTED | | |
@@ -193,3 +193,5 @@ Verified deployed cards before this candidate: 50. The owner authorised continue
 | 2026-10-06 | Nine of Swords, Ten of Swords, Page of Swords, Knight of Swords, Queen of Swords | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
 
 | 2026-10-06 | King of Swords, Ace of Wands, Two of Wands, Three of Wands, Four of Wands | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
+
+| 2026-10-06 | Five of Wands, Six of Wands, Seven of Wands, Eight of Wands, Nine of Wands | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
