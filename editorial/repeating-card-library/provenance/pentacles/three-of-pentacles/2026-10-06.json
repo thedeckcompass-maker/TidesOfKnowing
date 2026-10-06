@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/three-of-pentacles",
+  "release_batch": 14,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "035d1f9e3ef17ec786a853c2f26f859ba95a66ae",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/three-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "8c934840216a89d3392411444eabfb16ad446335461cb58d4a3b1d19bf81b67a",
+    "production_sha256": "8c934840216a89d3392411444eabfb16ad446335461cb58d4a3b1d19bf81b67a",
+    "original_canonical_sha256": "5daa9a4a32cdbbbed940f58c1dd70afdf6850518775201e4b3df9acd5e69614c",
+    "current_main_sha256": "dcf38a49327a924a7be6bdfb5c7f4b93bab6215a7ea4f54fe7dd93006baaf3ad",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/three-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/three-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "c45a9b8aa686ffc12fbe9502b95870c5208081abd8b862347ec5360fe640a64b",
+  "source_order_map_sha256": "dc5db958fd5f7809f8517b5df31f56fd844ae11d7c18ce63cc49209507bec0f6",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/three-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/three-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/three-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/three-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/three-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}
