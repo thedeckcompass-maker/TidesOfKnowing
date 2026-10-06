@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "card_id": "cups/two-of-cups",
+  "release_batch": 5,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "450afbb44277bde7d380c167a4e7bf44591a9123",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/cups/two-of-cups/2026-10-06.md",
+    "accepted_sha256": "0c3ba175e71cd643d7ed56ede32136c955076134554438e5857b0d5f0a4e5582",
+    "production_sha256": "0c3ba175e71cd643d7ed56ede32136c955076134554438e5857b0d5f0a4e5582",
+    "original_canonical_sha256": "dcdfad3a6b83c40f862461ab02688ea35dd29ae4784bf6b5d455438f0f8d444d",
+    "current_main_sha256": "4a1afe72747b5663778815e6b342d5b2db73853e8071c4046cf49d340378be80",
+    "previous_production_archive": "editorial/repeating-card-library/archive/cups/two-of-cups/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/cups/two-of-cups-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "646b21f4922bef7e54b4a75d5487ff97df4c97536a7480e4a4bfd33ee0e5d147",
+  "source_order_map_sha256": "66c4b7738cf6095c7d1591eaf0e137428c0cd9828255c80909b992568a9affae",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-04T01:06:47Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/cups/two-of-cups.yaml",
+  "production_target": "src/content/repeating-card-meanings/cups/two-of-cups.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/two-of-cups/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/cups/two-of-cups/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/two-of-cups/",
+    "tool_robots": "noindex, follow"
+  }
+}
