@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/queen-of-pentacles",
+  "release_batch": 16,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "8a7b12007bc815610b54fdf57b946403a306c620",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/queen-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "fb4d1c24a48a1ff072e434b4bcf8e25a076b95cd5c67d598fe8467cac965a670",
+    "production_sha256": "fb4d1c24a48a1ff072e434b4bcf8e25a076b95cd5c67d598fe8467cac965a670",
+    "original_canonical_sha256": "f50b8def60831890161e993e0b3cc8ca16f9e391e0a4d8148f030d853529b3a5",
+    "current_main_sha256": "e3011ab2d4a611a67837a693e3fb8c533d671ffa5a0f641e346cd39d3dab4520",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/queen-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/queen-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "406e11c7b7847b36a58660dc2170230232ddbe3f7e28ade14c90724fd1e11edd",
+  "source_order_map_sha256": "5c2c5d88b81c6bf5538f8378e8bad194290b6050446feca3c41156565539527a",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/queen-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/queen-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/queen-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/queen-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/queen-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}
