@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/nine-of-pentacles",
+  "release_batch": 15,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "d0d1b38be0fd8c3e379de20b4c68e005d64a502c",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/nine-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "3ee9b1972605fb4e1eda583e6cc43b8b39d83decc7bef31dbc390b52781c47fe",
+    "production_sha256": "3ee9b1972605fb4e1eda583e6cc43b8b39d83decc7bef31dbc390b52781c47fe",
+    "original_canonical_sha256": "401aa7b4df4b1dadbc7ead2a88fe963f9180e56e70375b1dfcd7f4012bc03361",
+    "current_main_sha256": "42e899b31735602461dedb3ea01c35e04b0e956ce11b67eb68265f90a699c8f0",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/nine-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/nine-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "6620398006b7086af0939c76954f4f9e9a18ef27ddc61e1393c10f56b24321b6",
+  "source_order_map_sha256": "bd9a1f8e751d3a24e2536803221559712e25394610723d6c86a6ca5b153ff156",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/nine-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/nine-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/nine-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/nine-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/nine-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}

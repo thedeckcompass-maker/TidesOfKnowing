@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/ten-of-pentacles",
+  "release_batch": 15,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "d0d1b38be0fd8c3e379de20b4c68e005d64a502c",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/ten-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "6cdfdd425253d065fd1e4982a5711a28a1e036f9308d7626bc76d48a1d38d7f3",
+    "production_sha256": "6cdfdd425253d065fd1e4982a5711a28a1e036f9308d7626bc76d48a1d38d7f3",
+    "original_canonical_sha256": "b399a9167e02b9a219ca30ec631b8d1b125bfc2bb62ac93e2bf595a6bbecbdda",
+    "current_main_sha256": "8345b4ced09ed6534a1ff6dbd7e2dc5494fbb94fea25160c9c5fd9d1d401ffe3",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/ten-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/ten-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "abe34a17721cc1183aa3c291880888751d87450658a0a15f092dc43c8ff9ad47",
+  "source_order_map_sha256": "02b1a8b66351a9df799bc157e31958ef0ef91d9ee16e1f731d4d6271e0327b5c",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/ten-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/ten-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/ten-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}
