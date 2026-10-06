@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/seven-of-pentacles",
+  "release_batch": 15,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "d0d1b38be0fd8c3e379de20b4c68e005d64a502c",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/seven-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "4d5a02a2d5ba27a76de106b2e766d0d84205c7d4c3be4c9c3dfc12cc908ce277",
+    "production_sha256": "4d5a02a2d5ba27a76de106b2e766d0d84205c7d4c3be4c9c3dfc12cc908ce277",
+    "original_canonical_sha256": "0860842f498ccc262906ecc1bd779b33a74243db0b9c3adf40c6335aca3647f5",
+    "current_main_sha256": "89d9621e6684b42b9f77a50b0159919fdff61cbe59b7ed25891bad27a4f1c083",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/seven-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/seven-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "21b139e96e199abba564b9c01d12406ad12ada90d36a29a8e15071076dea8699",
+  "source_order_map_sha256": "47796d653339ee748b2a92397fcfe692b5da60cd2b2d5fe75ee0968329e234d3",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/seven-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/seven-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/seven-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/seven-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/seven-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}

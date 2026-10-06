@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "pentacles/eight-of-pentacles",
+  "release_batch": 15,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "d0d1b38be0fd8c3e379de20b4c68e005d64a502c",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/pentacles/eight-of-pentacles/2026-10-06.md",
+    "accepted_sha256": "2de708ecfba57eb27bdb6cd4a22164da332e8dbfcdd112526095f37d9bc1502c",
+    "production_sha256": "2de708ecfba57eb27bdb6cd4a22164da332e8dbfcdd112526095f37d9bc1502c",
+    "original_canonical_sha256": "30b0c8a22e11ba76ce4985f8358fed16874cc303020cfadd49ae8b3c72758d7f",
+    "current_main_sha256": "4280d3cb34889185870e90890da5bfa54ca4fd192836243f15c4c0b97c08ce03",
+    "previous_production_archive": "editorial/repeating-card-library/archive/pentacles/eight-of-pentacles/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/pentacles/eight-of-pentacles-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "f3400e55cfa19f3b90c1eec143d409e7117e904f9b6f804bce17a03f6ae0a444",
+  "source_order_map_sha256": "47d141d5855236fc5ccfbf6c6b66d3378c5af380eafa6f82bc6299625d6ef570",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/pentacles/eight-of-pentacles.yaml",
+  "production_target": "src/content/repeating-card-meanings/pentacles/eight-of-pentacles.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/eight-of-pentacles/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/pentacles/eight-of-pentacles/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/eight-of-pentacles/",
+    "tool_robots": "noindex, follow"
+  }
+}
