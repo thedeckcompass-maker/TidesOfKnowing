@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "card_id": "wands/ten-of-wands",
+  "release_batch": 13,
+  "editorial_review_date": "2026-10-06",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "df79ba3b98604d9e5b4882c7edf69c16769457bb",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/wands/ten-of-wands/2026-10-06.md",
+    "accepted_sha256": "64251757be3a16bc46e0e6e4b814e100a2da650370ba00ca886dafe51b203893",
+    "production_sha256": "64251757be3a16bc46e0e6e4b814e100a2da650370ba00ca886dafe51b203893",
+    "original_canonical_sha256": "05a50f035042912b6a91c97f816c1c79b11b23e0b4d01cf30dc11146d0311443",
+    "current_main_sha256": "757704c613fa8160522069dea3b50dc5ed2dfdd369d0cd8fa9ba89c381bb7daf",
+    "previous_production_archive": "editorial/repeating-card-library/archive/wands/ten-of-wands/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/wands/ten-of-wands-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "f95185d83a4ef5519dd5c4584ad4d7be7589e0333925daea8136b530e9c1709f",
+  "source_order_map_sha256": "482f080fe057bfff3be37612d32435fa81f350578a1d94f5b82f4abbc23abe22",
+  "authoritative_card_chat_file_placement_verified_at": null,
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/wands/ten-of-wands.yaml",
+  "production_target": "src/content/repeating-card-meanings/wands/ten-of-wands.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-wands/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/wands/ten-of-wands/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-wands/",
+    "tool_robots": "noindex, follow"
+  }
+}
