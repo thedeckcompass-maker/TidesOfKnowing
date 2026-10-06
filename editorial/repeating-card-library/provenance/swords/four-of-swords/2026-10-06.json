@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "card_id": "swords/four-of-swords",
+  "release_batch": 9,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "9cfe9e17118b556eff77dc0734989517043e3b76",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/swords/four-of-swords/2026-10-06.md",
+    "accepted_sha256": "627cb7547aa7390158e4e37faf106e9ab46a0498f998bee973f41ce1e3423e20",
+    "production_sha256": "627cb7547aa7390158e4e37faf106e9ab46a0498f998bee973f41ce1e3423e20",
+    "original_canonical_sha256": "7dc45219d3618d906c9b5c3c4c7c39947e2ecbf6df47a5ff812c672f1de2a30a",
+    "current_main_sha256": "b998d58727a5f2157d539e517a59ac8c401a80adb7003cd30fffd635189e22eb",
+    "previous_production_archive": "editorial/repeating-card-library/archive/swords/four-of-swords/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/swords/four-of-swords-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "c664e757df1abbff84527b112a34ad5e66256676c9be3b557132164a09f25161",
+  "source_order_map_sha256": "d5343d618579c84ce1dab5756c9b80b3c4843b988a2f18fa4e81c2cbdd08a2f1",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-06T07:12:59.955Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "summary",
+    "featuredSnippetAnswer",
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/swords/four-of-swords.yaml",
+  "production_target": "src/content/repeating-card-meanings/swords/four-of-swords.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/four-of-swords/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/swords/four-of-swords/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/four-of-swords/",
+    "tool_robots": "noindex, follow"
+  },
+  "preservation_restoration": {
+    "date": "2026-10-06",
+    "current_reviewed_version": 1,
+    "prior_reviewed_sha256": "9e22451e3577de2900af6103dee630357445bf590fce86dfe0893152904188c0",
+    "prior_verification_sha256": "79dfa93fa327cb82108a7893be8c2d57eb158b0e3a247656a9eb863d74e8021a",
+    "historical_whole_card_map_sha256": "e373028e09a96d1e11674172325f775edf90b72798c4dd1e4b0e34ea445218ba",
+    "current_four_state_map_sha256": "d5343d618579c84ce1dab5756c9b80b3c4843b988a2f18fa4e81c2cbdd08a2f1",
+    "exact_restoration_operations_sha256": "4e14b8384be823a0993e3353be29751314ae98ba764eef5a552d67d2a62cbdaa",
+    "scope": "Original protected wording restored under existing preservation rules; current reviewed body safeguards retained. Complete prior review and restoration evidence preserved privately. No alternative wording inferred owner-approved.",
+    "unresolved_owner_choices": []
+  }
+}

@@ -21,7 +21,7 @@ openGraphImage: /images/tarot/rws/five-of-swords.jpg
 
 # Five of Swords Repeating Meaning
 
-> One figure collects the fallen swords while two others walk away across a flat grey sea. The card is not asking whether the seeker won. It is asking what the winning cost, and whether the fight was ever the right way to meet what actually needed addressing.
+> One figure collects the fallen swords while two others walk away beside a flat grey sea. The card is not asking whether the seeker won. It is asking what the winning cost, and whether the fight was ever the right way to meet what actually needed addressing.
 
 ## Core Repeating Message
 
@@ -129,9 +129,9 @@ The seeker may also be carrying a long-running family conflict, one kept alive f
 
 ## Health & Energy
 
-Physically, this card points to the real cost of sustained conflict on the body. Conflict activates the nervous system in specific, measurable ways, and a person whose default mode is adversarial is living in a state of ongoing physiological readiness that wears something down over time. The sharpness has a price, and the body pays it.
+Physically, this card draws attention to the strain that can accompany sustained conflict. A seeker who is often bracing for the next exchange might notice tension, tiredness or difficulty settling afterwards. These experiences are worth attending to, without assuming that conflict is their only possible cause.
 
-This is not an argument for avoiding necessary conflict. It is a case for being honest about how much of the seeker's conflict is actually necessary. A fight taken up for a real reason, at the right moment, leaves the body in a different state than one taken up from habit, from self-protection, or from momentum that has never been questioned. The body tends to know the difference before the mind catches up.
+This is not an argument for avoiding necessary conflict. It is a case for being honest about how much of the seeker's conflict is actually necessary. The question is what the fight serves: a present need, or a habit of self-protection whose momentum has never been questioned. How the body feels is worth noticing, but it cannot settle that question on its own.
 
 ---
 
@@ -165,7 +165,7 @@ The pattern also holds while the seeker lacks confidence in any mode of engageme
 
 This card wants the seeker to see clearly what the sword cannot do. It can win an argument. It cannot produce understanding. It can establish who was technically correct. It cannot repair a relationship. It can hold a position. It cannot manufacture agreement.
 
-The figures walking away are carrying something the seeker also needs and will never find on the battlefield: another person's willingness to stay in real contact despite being repeatedly cut by that person's sharpness. Where that willingness exists, it is worth a great deal, and it does not survive indefinitely under repeated exposure to this pattern.
+The figures walking away are carrying something the seeker also needs and will never find on the battlefield: another person's willingness to stay in real contact despite being repeatedly cut by the seeker's sharpness. Where that willingness exists, it is worth a great deal, and it does not survive indefinitely under repeated exposure to this pattern.
 
 ---
 
@@ -185,7 +185,7 @@ It also loosens when the seeker gets curious about what sits underneath the patt
 
 3. In your most important current relationship, how often does disagreement turn adversarial? What does the relationship feel like after a stretch of sustained conflict?
 
-4. What was it about your family of origin that made sharpness, argument or winning a useful skill to develop? How has that history shaped the way you engage with people now?
+4. If sharpness, argument or winning became useful skills in your family of origin, what made them useful? How has that history shaped the way you engage with people now?
 
 5. Can you recall a conflict where you genuinely did not try to win, where you stayed with uncertainty and curiosity about the other person instead? What did that feel like, and what happened afterwards?
 
