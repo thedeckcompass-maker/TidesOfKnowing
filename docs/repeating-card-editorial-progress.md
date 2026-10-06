@@ -34,14 +34,14 @@ Before every reinsertion: run `scripts/validate-rcm-editorial-reinsertion.mjs --
 
 | Suit | Total | Not started | Extracted | In review | Ready for import | Local QA complete | Historical reinserted | Deployed |
 |------|-------|-------------|-----------|-----------|------------------|-------------------|-----------------------|----------|
-| Major Arcana | 22 | 3 | 0 | 0 | 0 | 0 | 0 | 19 |
-| Cups | 14 | 9 | 0 | 0 | 0 | 5 | 0 | 0 |
+| Major Arcana | 22 | 1 | 0 | 0 | 0 | 2 | 0 | 19 |
+| Cups | 14 | 6 | 0 | 0 | 0 | 3 | 0 | 5 |
 | Swords | 14 | 13 | 0 | 0 | 0 | 0 | 1 | 0 |
 | Wands | 14 | 14 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Pentacles | 14 | 12 | 0 | 0 | 0 | 0 | 1 | 1 |
-| **Total** | **78** | **51** | **0** | **0** | **0** | **5** | **2** | **20** |
+| **Total** | **78** | **46** | **0** | **0** | **0** | **5** | **2** | **25** |
 
-Verified deployed cards before this candidate: 20. The owner authorised continued batched publication on 2026-10-06. This candidate contains Ace of Cups, Two of Cups, Three of Cups, Four of Cups, Five of Cups. Cards with unresolved protected wording choices remain separately held. Exact sources and immediate production archives are preserved; fresh local, preview and live gates govern this release. Historical reinserted rows remain earlier implementation records, not current whole-card review claims.
+Verified deployed cards before this candidate: 25. The owner authorised continued batched publication on 2026-10-06. This candidate contains The Devil, The World, Nine of Cups, Queen of Cups, King of Cups. Cards with unresolved protected wording choices remain separately held. Exact sources and immediate production archives are preserved; fresh local, preview and live gates govern this release. Historical reinserted rows remain earlier implementation records, not current whole-card review claims.
 
 ---
 
@@ -64,13 +64,13 @@ Verified deployed cards before this candidate: 20. The owner authorised continue
 | ☐ Hanged Man | `majors/the-hanged-man` | DEPLOYED | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; PR #15 merged as 74dd527; exact-commit Pages 63159609 and both live routes verified on 2026-10-05. |
 | ☐ Death | `majors/death` | DEPLOYED | 2026-10-05 | Exact reviewed source and immediate production archive retained; contract and exact-label gates passed. Fresh candidate build, 78-card checks and all ten complete local routes passed; PR #15 merged as 74dd527; exact-commit Pages 63159609 and both live routes verified on 2026-10-05. Action 2 is Allow the grief its own time.; action 7 remains Trust the dark., as expressly approved. |
 | ☐ Temperance | `majors/temperance` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #16 merged as 450afbb4; exact Pages 332b3f6a and both live routes verified at 2026-10-06T06:57:44.130Z. |
-| ☐ Devil | `majors/the-devil` | NOT STARTED | | |
+| ☐ Devil | `majors/the-devil` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
 | ☐ Tower | `majors/the-tower` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #16 merged as 450afbb4; exact Pages 332b3f6a and both live routes verified at 2026-10-06T06:57:44.130Z. |
 | ☐ Star | `majors/the-star` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #16 merged as 450afbb4; exact Pages 332b3f6a and both live routes verified at 2026-10-06T06:57:44.130Z. |
 | ☐ Moon | `majors/the-moon` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #16 merged as 450afbb4; exact Pages 332b3f6a and both live routes verified at 2026-10-06T06:57:44.130Z. |
 | ☐ Sun | `majors/the-sun` | NOT STARTED | | |
 | ☐ Judgement | `majors/judgement` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #16 merged as 450afbb4; exact Pages 332b3f6a and both live routes verified at 2026-10-06T06:57:44.130Z. |
-| ☐ World | `majors/the-world` | NOT STARTED | | |
+| ☐ World | `majors/the-world` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
 
 ---
 
@@ -78,20 +78,20 @@ Verified deployed cards before this candidate: 20. The owner authorised continue
 
 | Card | Collection ID | Status | Date | Notes |
 |------|---------------|--------|------|-------|
-| ☐ Ace | `cups/ace-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Two | `cups/two-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Three | `cups/three-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Four | `cups/four-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
-| ☐ Five | `cups/five-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ Ace | `cups/ace-of-cups` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #17 merged as 30c7e5fa; exact Pages c849c868 and both live routes verified at 2026-10-06T07:24:18.957Z. |
+| ☐ Two | `cups/two-of-cups` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #17 merged as 30c7e5fa; exact Pages c849c868 and both live routes verified at 2026-10-06T07:24:18.957Z. |
+| ☐ Three | `cups/three-of-cups` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #17 merged as 30c7e5fa; exact Pages c849c868 and both live routes verified at 2026-10-06T07:24:18.957Z. |
+| ☐ Four | `cups/four-of-cups` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #17 merged as 30c7e5fa; exact Pages c849c868 and both live routes verified at 2026-10-06T07:24:18.957Z. |
+| ☐ Five | `cups/five-of-cups` | DEPLOYED | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. PR #17 merged as 30c7e5fa; exact Pages c849c868 and both live routes verified at 2026-10-06T07:24:18.957Z. |
 | ☐ Six | `cups/six-of-cups` | NOT STARTED | | |
 | ☐ Seven | `cups/seven-of-cups` | NOT STARTED | | |
 | ☐ Eight | `cups/eight-of-cups` | NOT STARTED | | |
-| ☐ Nine | `cups/nine-of-cups` | NOT STARTED | | |
+| ☐ Nine | `cups/nine-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
 | ☐ Ten | `cups/ten-of-cups` | NOT STARTED | | |
 | ☐ Page | `cups/page-of-cups` | NOT STARTED | | |
 | ☐ Knight | `cups/knight-of-cups` | NOT STARTED | | |
-| ☐ Queen | `cups/queen-of-cups` | NOT STARTED | | |
-| ☐ King | `cups/king-of-cups` | NOT STARTED | | |
+| ☐ Queen | `cups/queen-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
+| ☐ King | `cups/king-of-cups` | QA COMPLETE | 2026-10-06 | Exact full reviewed source imported after contract and strict action-label checks; accepted source, immediate baseline and version archive retained. Fresh candidate build, 78-card validators, independent source/import/scope and all complete local routes passed. Exact-commit preview and live checks remain required. |
 
 ---
 
@@ -181,3 +181,5 @@ Verified deployed cards before this candidate: 20. The owner authorised continue
 | 2026-10-06 | Temperance, The Tower, The Star, The Moon, Judgement | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
 
 | 2026-10-06 | Ace of Cups, Two of Cups, Three of Cups, Four of Cups, Five of Cups | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
+
+| 2026-10-06 | The Devil, The World, Nine of Cups, Queen of Cups, King of Cups | AUTHORISED RELEASE | Owner resumed continued publication of unblocked reviewed cards in five-card batches. Exact accepted sources, strict label gates, current-main archives and independent source evidence bind this release. Fresh candidate build, source/import/whole-route QA and 78-card checks passed. Exact-commit preview and live verification remains required. |
