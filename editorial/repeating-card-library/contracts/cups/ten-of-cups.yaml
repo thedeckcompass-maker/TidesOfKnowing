@@ -1,0 +1,9 @@
+collection_id: cups/ten-of-cups
+extracted_baseline: editorial/repeating-card-library/extracted/cups/ten-of-cups-before-review-2026-10-06.md
+production_target: src/content/repeating-card-meanings/cups/ten-of-cups.md
+allowed_frontmatter_edits: # Exact reviewed values only
+  - answerEngineSummary
+
+reinsertion_date: 2026-10-06
+approved_by: Owner-authorised continuing batched publication of unblocked reviewed cards on 2026-10-06
+notes: "Exact independently reviewed and individually archived source. Owner authorised continued batched publication of cards requiring no further input on 2026-10-06. All protected structure, identity, keywords, links, routes, images and exact action labels remain fixed. Only baseline-driven EOF adjustment, if any, is permitted and recorded; all other reviewed bytes stay exact. Fresh aggregate, hosted preview and live verification are required."
