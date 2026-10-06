@@ -97,6 +97,46 @@ const SECTION_ROOM_COPY = {
       "It is about becoming more honest, more precise, and more trustworthy in the way you read.",
     ],
   },
+  "deck-creation": {
+    intro: [
+      "Deck Creation is the conversational space for people developing oracle, tarot and hybrid decks.",
+      "Bring questions about concept, structure, symbolism, writing, artwork, testing, production, self-publishing and launch decisions.",
+      "The Studio holds private project work. This room holds only the questions, reflections and controlled excerpts that creators deliberately choose to discuss.",
+    ],
+    purpose: [
+      { icon: "cards", label: "Deck concepts, structure and symbolism" },
+      { icon: "pencil", label: "Card and guidebook writing" },
+      { icon: "heart", label: "Artwork and creative collaboration" },
+      { icon: "magnifier", label: "Testing, refinement and production choices" },
+      { icon: "question", label: "Publishing, crowdfunding and launch questions" },
+      { icon: "journal", label: "Deliberately shared progress reflections" },
+    ],
+    participate: [
+      "Share a focused question, a decision you are weighing, or a reflection that may help another creator.",
+      "Keep manuscripts, research files, artwork and private production records in your Studio. A controlled journal excerpt can be copied here only through a separate sharing action.",
+      "Leilia contributes selected teaching and process observations where they clarify the craft, editorial structure or practical path of making a deck.",
+    ],
+    postingGuide: {
+      title: "Writing a useful creation post",
+      items: [
+        "Name the stage of deck creation you are working through.",
+        "Explain the decision, tension or question clearly enough for others to respond.",
+        "Share only the material you have deliberately chosen for community discussion.",
+        "Choose member-only or public visibility before posting.",
+      ],
+      examples: [
+        { label: "Vague", text: "How do I make an oracle deck?" },
+        {
+          label: "Useful",
+          text: "My 44-card oracle has four families, but one family carries twice as many concepts as the others. What tests would show whether that imbalance is structural or intentional?",
+        },
+      ],
+    },
+    tone: [
+      "This is a collaborative creation space, not a marketplace or a place to copy another creator's work.",
+      "Protect intellectual property, discuss process with care, and offer practical feedback without claiming authority over another creator's vision.",
+    ],
+  },
 } as const;
 
 const sectionKey = Astro.params.section;
@@ -135,7 +175,9 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
       <p>
         {
           Astro.locals.user
-            ? "Continue your practice, share a reading, or join an existing discussion."
+            ? section.key === "deck-creation"
+              ? "Continue your project, ask a focused question, or join another creator's discussion."
+              : "Continue your practice, share a reading, or join an existing discussion."
             : room.intro[0]
         }
       </p>
@@ -170,7 +212,7 @@ const canonical = new URL(communitySectionPath(sectionKey), base).href;
 
     <section class="community-section__posts" aria-labelledby="posts-heading">
       <h2 id="posts-heading">Current conversations</h2>
-      <CommunityPostList posts={posts} emptyMessage="No discussions yet. Be the first to share a reading and begin the conversation." />
+      <CommunityPostList posts={posts} emptyMessage={section.key === "deck-creation" ? "No Deck Creation discussions yet. Start with a focused question or reflection." : "No discussions yet. Be the first to share a reading and begin the conversation."} />
       <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
     </section>
 

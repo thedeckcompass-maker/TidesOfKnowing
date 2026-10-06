@@ -1,0 +1,23 @@
+---
+import { diffLines, type VersionChange } from "../../lib/studio/versionHistory";
+interface Props { changes: VersionChange[]; emptyMessage: string; }
+const { changes, emptyMessage } = Astro.props;
+---
+
+{changes.length ? <div class="studio-version-changes">
+  {changes.map((change) => <section class="studio-version-change">
+    <h4>{change.label}</h4>
+    {change.before.includes("\n") || change.after.includes("\n")
+      ? <div class="studio-version-diff" aria-label={`Changes to ${change.label}`}>
+          {diffLines(change.before, change.after).map((line) =>
+            <div class:list={["studio-version-diff__line", `studio-version-diff__line--${line.kind}`]}>
+              <span aria-hidden="true">{line.kind === "added" ? "+" : line.kind === "removed" ? "−" : " "}</span>
+              <span>{line.text || " "}</span>
+            </div>)}
+        </div>
+      : <div class="studio-version-change__sides">
+          <div><p>Before</p><pre>{change.before}</pre></div>
+          <div><p>After</p><pre>{change.after}</pre></div>
+        </div>}
+  </section>)}
+</div> : <p>{emptyMessage}</p>}

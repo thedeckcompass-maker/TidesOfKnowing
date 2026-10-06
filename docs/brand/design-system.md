@@ -14,6 +14,7 @@ Packaged brand reference: `docs/brand/tok-brand-system-v1.4.html` (read-only art
 
 - **Reading (Surface A):** warm paper backgrounds, dark text. Default for long-form, articles, most marketing pages, `/compass/apply`.
 - **System (Surface B):** deep blue containment for tools and COMPASS training routes. Body class `tok-body--system` on `/tools/*` and `/compass/*` except apply.
+- **Deck Creator Studio:** fixed warm-paper editorial workspace within the Tides family. `tok-body--studio` retains dark ink on light controls in both device colour schemes; Playfair titles, fine rules and restrained gold distinguish it from the main site's system surfaces. Values are fixed aliases of the existing palette in `tokens.css`.
 
 Rule: article main column stays on reading surfaces; blue appears as bands, panels, footer, or CTAs.
 

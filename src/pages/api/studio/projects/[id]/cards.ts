@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { parseStudioCardCreate } from "../../../../../lib/studio/validation";
 
 export const prerender = false;
@@ -12,7 +12,7 @@ function projectRedirect(projectId: string, key: "saved" | "error", value: strin
 }
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
-  const accessResponse = studioAccessResponse(locals.user, locals.profile);
+  const accessResponse = studioWriteAccessResponse(locals.user, locals.profile, locals.studioEntitlement);
   if (accessResponse) return accessResponse;
   const projectId = params.id;
   if (!projectId || !locals.supabase) return new Response("Not found", { status: 404 });

@@ -9,12 +9,15 @@ const baseLayout = readFileSync(join(repoRoot, "src/layouts/BaseLayout.astro"), 
 const sitemap = readFileSync(join(repoRoot, "src/pages/sitemap.xml.ts"), "utf8");
 
 assert.match(studioPage, /export const prerender = false/);
-assert.match(studioPage, /studioAccessResponse\(Astro\.locals\.user, Astro\.locals\.profile\)/);
-assert.match(studioAccess, /if \(!user\)/);
+assert.match(studioPage, /studioAccessResponse\(Astro\.locals\.user, Astro\.locals\.profile, "\/studio\/", Astro\.locals\.studioEntitlement\)/);
+assert.match(studioAccess, /if \(user\) return null/);
 assert.match(studioAccess, /status: 303/);
-assert.match(studioAccess, /Location: "\/auth\/register\/"/);
-assert.match(studioAccess, /if \(!isAdminProfile\(profile\)\)/);
-assert.match(studioAccess, /status: 404, statusText: "Not Found"/);
+assert.match(studioAccess, /\/auth\/register\/\?redirectTo=/);
+assert.match(studioAccess, /encodeURIComponent\(safeReturnTo\)/);
+assert.match(studioAccess, /!isAdminProfile\(profile\) && !entitlementAllowsRead\(entitlement\)/);
+assert.match(studioAccess, /Location: "\/tools\/deck-creator-studio\/\?access=required"/);
+assert.match(studioAccess, /!isAdminProfile\(profile\) && !entitlementAllowsWrite\(entitlement\)/);
+assert.match(studioAccess, /status: 403/);
 assert.doesNotMatch(studioAccess, /throw new Response/);
 assert.match(studioPage, /metaRobots="noindex, nofollow"/);
 

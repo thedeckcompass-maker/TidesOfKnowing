@@ -4,6 +4,8 @@ import type {
   CommunityProfileStatus,
   CommunityReportReason,
   CommunitySectionKey,
+  CommunityAudience,
+  DeckCreationTopic,
   ReadingPracticePostType,
 } from "./types";
 
@@ -14,7 +16,7 @@ type MutationResult<T> =
 async function loadPost(service: SupabaseClient, postId: string) {
   const { data, error } = await service
     .from("community_posts")
-    .select("id, author_id, title, slug, status, is_pinned")
+    .select("id, author_id, title, slug, status, is_pinned, source_kind")
     .eq("id", postId)
     .maybeSingle();
 
@@ -31,6 +33,7 @@ async function loadPost(service: SupabaseClient, postId: string) {
         slug: string;
         status: string;
         is_pinned: boolean;
+        source_kind: string;
       }
     | null;
 }
@@ -108,6 +111,8 @@ export async function createCommunityPost(
     title: string;
     body: string;
     postType: ReadingPracticePostType | null;
+    audience: CommunityAudience;
+    deckCreationTopic: DeckCreationTopic | null;
     imageUrl?: string | null;
     fieldNoteConsideration: boolean;
   },
@@ -132,6 +137,8 @@ export async function createCommunityPost(
       title: input.title,
       body: input.body,
       post_type: input.postType,
+      audience: input.audience,
+      deck_creation_topic: input.deckCreationTopic,
       image_url: input.imageUrl ?? null,
       field_note_consideration: input.fieldNoteConsideration,
       slug,
@@ -156,6 +163,8 @@ export async function updateCommunityPost(
     title: string;
     body: string;
     postType: ReadingPracticePostType | null;
+    audience: CommunityAudience;
+    deckCreationTopic: DeckCreationTopic | null;
     fieldNoteConsideration: boolean;
   },
 ): Promise<MutationResult<{ slug: string }>> {
@@ -172,12 +181,18 @@ export async function updateCommunityPost(
     return { ok: false, error: "This post cannot be edited.", status: 403 };
   }
 
+  if (post.source_kind === "studio_excerpt") {
+    return { ok: false, error: "Studio excerpts are managed from the private journal sharing register.", status: 403 };
+  }
+
   const { error } = await service
     .from("community_posts")
     .update({
       title: input.title,
       body: input.body,
       post_type: input.postType,
+      audience: input.audience,
+      deck_creation_topic: input.deckCreationTopic,
       field_note_consideration: input.fieldNoteConsideration,
     })
     .eq("id", input.postId);

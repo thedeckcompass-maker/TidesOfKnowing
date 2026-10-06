@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { json } from "../../lib/community/api";
 import { cleanDisplayName } from "../../lib/community/auth";
+import { safeAuthCallbackRedirect } from "../../lib/community/authCallback";
 import { runAuthOtpRegisterFlow } from "../../lib/community/authOtpRegister";
 import {
   createAuthOtpSubmissionId,
@@ -12,13 +13,18 @@ import { validateDisplayName } from "../../lib/community/validation";
 
 export const prerender = false;
 
-const title = "Join the Practice Commons | Tides of Knowing";
-const description = "Join the Practice Commons at Tides of Knowing with a simple email sign-in link.";
 const GENERIC_SEND_ERROR = "Unable to send a sign-in link right now. Please try again.";
 
 let error = "";
 let errorReference = "";
-const redirectTo = "/community/";
+const redirectTo = safeAuthCallbackRedirect(Astro.url.searchParams.get("redirectTo"));
+const isStudioRedirect = redirectTo.startsWith("/studio/");
+const title = isStudioRedirect
+  ? "Sign in to Deck Creator Studio | Tides of Knowing"
+  : "Join the Practice Commons | Tides of Knowing";
+const description = isStudioRedirect
+  ? "Sign in to the private Deck Creator Studio with a secure email link."
+  : "Join the Practice Commons at Tides of Knowing with a simple email sign-in link.";
 const joinSubmissionId = createAuthOtpSubmissionId();
 
 function prefersJsonResponse(request: Request): boolean {
@@ -94,7 +100,7 @@ if (Astro.request.method === "POST") {
   const displayNameValidation = claimMode === "join"
     ? validateDisplayName(form.get("displayName"))
     : ({ ok: true, value: { displayName: "" } } as const);
-  const next = "/community/";
+  const next = safeAuthCallbackRedirect(String(form.get("redirectTo") ?? ""));
   const submissionId = String(form.get("submissionId") ?? "").trim();
   const headerSubmissionId = Astro.request.headers.get("x-auth-submission-id")?.trim() ?? "";
 
@@ -188,10 +194,12 @@ if (Astro.request.method === "POST") {
   <main class="auth-page page-inner">
     <section class="auth-card" aria-labelledby="auth-heading">
       <div data-auth-entry>
-        <p class="auth-kicker">Practice Commons</p>
-        <h1 id="auth-heading">Join the Practice Commons</h1>
+        <p class="auth-kicker">{isStudioRedirect ? "Deck Creator Studio" : "Practice Commons"}</p>
+        <h1 id="auth-heading">{isStudioRedirect ? "Sign in to Deck Creator Studio" : "Join the Practice Commons"}</h1>
         <p class="auth-lede">
-          Enter your name and email address and we'll email you a secure sign-in link.
+          {isStudioRedirect
+            ? "Enter your email address and we'll email you a secure sign-in link."
+            : "Enter your name and email address and we'll email you a secure sign-in link."}
         </p>
 
         {
@@ -204,11 +212,15 @@ if (Astro.request.method === "POST") {
         }
 
         <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
-          <input type="hidden" name="authMode" value="join" />
+          <input type="hidden" name="authMode" value={isStudioRedirect ? "sign-in" : "join"} />
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <input type="hidden" name="submissionId" value={joinSubmissionId} />
-          <label for="displayName">Your name</label>
-          <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
+          {!isStudioRedirect ? (
+            <>
+              <label for="displayName">Your name</label>
+              <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
+            </>
+          ) : null}
           <label for="email">Email address</label>
           <input id="email" name="email" type="email" autocomplete="email" required />
           <button
