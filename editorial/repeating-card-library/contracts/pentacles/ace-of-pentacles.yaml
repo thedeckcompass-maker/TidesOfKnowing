@@ -1,6 +1,6 @@
-collection_id: pentacles/five-of-pentacles
-extracted_baseline: editorial/repeating-card-library/extracted/pentacles/five-of-pentacles-before-review-2026-10-06.md
-production_target: src/content/repeating-card-meanings/pentacles/five-of-pentacles.md
+collection_id: pentacles/ace-of-pentacles
+extracted_baseline: editorial/repeating-card-library/extracted/pentacles/ace-of-pentacles-before-review-2026-10-06.md
+production_target: src/content/repeating-card-meanings/pentacles/ace-of-pentacles.md
 allowed_frontmatter_edits: # Exact reviewed values only
   - summary
   - featuredSnippetAnswer
