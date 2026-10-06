@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "card_id": "cups/ten-of-cups",
+  "release_batch": 7,
+  "editorial_review_date": "2026-10-03",
+  "release_preparation_date": "2026-10-06",
+  "source_base_commit": "48d2fa9a069a5aed79042b3692199156b9e2ea54",
+  "publication_status": "Owner authorised continued batched publication of independently reviewed cards requiring no further input on 2026-10-06; fresh preview and live gates remain required",
+  "source_lineage": {
+    "accepted_source": "editorial/repeating-card-library/accepted/cups/ten-of-cups/2026-10-06.md",
+    "accepted_sha256": "57e5584ef90daafee653ad79359ae76d85e87e73221547893473778e9935bd8a",
+    "production_sha256": "57e5584ef90daafee653ad79359ae76d85e87e73221547893473778e9935bd8a",
+    "original_canonical_sha256": "257e9cbaadb282310be92d7ff00232d02a9af5cfd6c2718a2bb8b02d25cf0f70",
+    "current_main_sha256": "ece1954ac15bfc18dd6582e2ed7d25e21ca0173cc83ae3b63c1d97cd01af8211",
+    "previous_production_archive": "editorial/repeating-card-library/archive/cups/ten-of-cups/v2-editorial.md",
+    "validation_baseline": "editorial/repeating-card-library/extracted/cups/ten-of-cups-before-review-2026-10-06.md",
+    "reviewed_terminal_LF_count": 1,
+    "production_terminal_LF_count": 1,
+    "transformation": "None; exact reviewed bytes already match baseline EOF"
+  },
+  "verification_record_sha256": "8ba2f642ffcb4d7619ab18cf4a60c70091b14a5ecfd8758c4ce957e9118e8005",
+  "source_order_map_sha256": "feb614a0277c2a18037d7538c869c1d03988a30f40f85e69fee97ac60e93828f",
+  "authoritative_card_chat_file_placement_verified_at": "2026-10-06T07:23:09.462Z",
+  "private_source_receipt": "Versioned complete source, editorial verification and individual archival receipt retained separately",
+  "approved_frontmatter_values": [
+    "answerEngineSummary"
+  ],
+  "contract": "editorial/repeating-card-library/contracts/cups/ten-of-cups.yaml",
+  "production_target": "src/content/repeating-card-meanings/cups/ten-of-cups.md",
+  "preservation": {
+    "headings_paragraphs_lists": "Exact topology and heading order preserved",
+    "reflective_prompts": 10,
+    "actions": 5,
+    "action_labels": "All exact to current main",
+    "routing_links_images": "Unchanged"
+  },
+  "validation": {
+    "shared_contract": "PASS",
+    "exact_action_label_gate": "PASS; zero differences",
+    "aggregate_build_and_routes": "PASS: fresh isolated baseline/candidate builds, all import contracts and strict labels, pre/post 78-card integrity, metadata/related-map/tool-link validators, six EOF tests, independent full source/map/import/scope and every complete local article/DOM-shell/SEO check. Exact-commit hosted preview and live gates remain required."
+  },
+  "public_surfaces": {
+    "entity": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-cups/",
+    "tool": "https://www.tidesofknowing.com/tools/repeating-card-meanings/cups/ten-of-cups/",
+    "canonical": "https://www.tidesofknowing.com/repeating-card-meanings/ten-of-cups/",
+    "tool_robots": "noindex, follow"
+  },
+  "preservation_restoration": {
+    "date": "2026-10-06",
+    "current_reviewed_version": 1,
+    "prior_reviewed_sha256": "bc071bdb163003de43bb5a64a59777bd3b7df00d9de2b1c018fd02381144eaed",
+    "prior_verification_sha256": "925be257f1055c3251c1829b241eacea4e0cba3cbcf195fe345de8c904f93bae",
+    "historical_whole_card_map_sha256": "89f49388a5738d6f787d868beab1486d7fb55c675b6d5e323340603812581ec3",
+    "current_four_state_map_sha256": "feb614a0277c2a18037d7538c869c1d03988a30f40f85e69fee97ac60e93828f",
+    "exact_restoration_operations_sha256": "ee2a36e6b5860b3347ff8aa4205e840eeb8229d1d6da877bb411fe218cf50fbf",
+    "scope": "Original protected wording restored under existing preservation rules; current reviewed body safeguards retained. Complete prior review and restoration evidence preserved privately. No alternative wording inferred owner-approved.",
+    "unresolved_owner_choices": []
+  }
+}
