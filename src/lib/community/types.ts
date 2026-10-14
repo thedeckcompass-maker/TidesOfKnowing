@@ -1,11 +1,23 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 
-export type CommunitySectionKey = "reading-practice" | "reader-development";
+export type CommunitySectionKey = "reading-practice" | "reader-development" | "deck-creation";
 
 export type CommunityRole = "member" | "admin";
 export type CommunityProfileStatus = "active" | "restricted" | "blocked";
 export type CommunityPostStatus = "published" | "hidden" | "deleted" | "locked";
 export type CommunityReplyStatus = "published" | "hidden" | "deleted";
+export type CommunityAudience = "public" | "members";
+export type CommunityPostSource = "member_post" | "studio_excerpt" | "teaching";
+export type DeckCreationTopic =
+  | "introduction"
+  | "concept_symbolism"
+  | "cards_guidebook"
+  | "artwork_collaboration"
+  | "testing_refinement"
+  | "production_publishing"
+  | "crowdfunding_launch"
+  | "workshop_question"
+  | "progress_reflection";
 export type NotificationEventType = "reply_to_post" | "announcement";
 export type CommunityReportReason =
   | "spam"
@@ -52,6 +64,9 @@ export type CommunityPost = {
   slug: string;
   body: string;
   post_type: ReadingPracticePostType | null;
+  audience: CommunityAudience;
+  source_kind: CommunityPostSource;
+  deck_creation_topic: DeckCreationTopic | null;
   image_url: string | null;
   field_note_consideration: boolean;
   status: CommunityPostStatus;
@@ -143,6 +158,44 @@ export const COMMUNITY_SECTIONS: {
     description:
       "Grow as a reader through intuition, ethics, confidence, journaling, boundaries, symbolic literacy, reflective practice, and trust in yourself.",
   },
+  {
+    key: "deck-creation",
+    name: "Deck Creation",
+    description:
+      "Discuss deck concepts, symbolism, card and guidebook writing, artwork, testing, production, publishing, and launch decisions.",
+  },
+];
+
+export const COMMUNITY_AUDIENCES: {
+  value: CommunityAudience;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "members",
+    label: "Community members",
+    description: "Visible only to signed-in members of the Tides of Knowing community.",
+  },
+  {
+    value: "public",
+    label: "Public teaching and discovery",
+    description: "Visible without signing in and eligible to appear in search results.",
+  },
+];
+
+export const DECK_CREATION_TOPICS: {
+  value: DeckCreationTopic;
+  label: string;
+}[] = [
+  { value: "introduction", label: "Introduction and deck intention" },
+  { value: "concept_symbolism", label: "Concept, structure and symbolism" },
+  { value: "cards_guidebook", label: "Cards and guidebook writing" },
+  { value: "artwork_collaboration", label: "Artwork and creative collaboration" },
+  { value: "testing_refinement", label: "Testing and refinement" },
+  { value: "production_publishing", label: "Printing, production and self-publishing" },
+  { value: "crowdfunding_launch", label: "Crowdfunding and commercial launch" },
+  { value: "workshop_question", label: "Workshop question" },
+  { value: "progress_reflection", label: "Progress reflection or celebration" },
 ];
 
 export const READING_PRACTICE_POST_TYPES: {
@@ -216,6 +269,12 @@ export function readingPracticePostTypeLabel(
   value: ReadingPracticePostType | null | undefined,
 ): string | null {
   return READING_PRACTICE_POST_TYPES.find((type) => type.value === value)?.label ?? null;
+}
+
+export function deckCreationTopicLabel(
+  value: DeckCreationTopic | null | undefined,
+): string | null {
+  return DECK_CREATION_TOPICS.find((topic) => topic.value === value)?.label ?? null;
 }
 
 export const COMMUNITY_SECTION_FALLBACKS: CommunitySection[] = COMMUNITY_SECTIONS.map(

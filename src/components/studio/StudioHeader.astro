@@ -6,7 +6,7 @@ interface Props {
   projectId?: string;
 }
 
-const { eyebrow = "Deck Creator Studio", title, lede, projectId } = Astro.props;
+const { eyebrow = "Tides of Knowing / Deck Creator Studio", title, lede, projectId } = Astro.props;
 ---
 
 <header class="studio-header">
@@ -18,6 +18,13 @@ const { eyebrow = "Deck Creator Studio", title, lede, projectId } = Astro.props;
   <nav class="studio-nav" aria-label="Deck Creator Studio">
     <a href="/studio/">Projects</a>
     {projectId ? <a href={`/studio/projects/${projectId}/`}>Project dashboard</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/journal/`}>Journal</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/programme/`}>Programme</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/production/`}>Production</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/support/`}>Support</a> : null}
+    {projectId ? <a href={`/studio/projects/${projectId}/pulse/`}>Project Pulse</a> : null}
+    <a href="/studio/artists/">Artists</a>
+    <a href="/studio/account/">Plan and access</a>
     <a href="/community/account/">Account</a>
   </nav>
 </header>

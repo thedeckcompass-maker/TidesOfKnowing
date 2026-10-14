@@ -4,15 +4,21 @@ import {
   normalizeDisplayName,
 } from "./displayNames";
 import {
+  COMMUNITY_AUDIENCES,
   COMMUNITY_REPORT_REASONS,
+  DECK_CREATION_TOPICS,
   READING_PRACTICE_POST_TYPES,
+  type CommunityAudience,
   type CommunitySectionKey,
   type CommunityReportReason,
+  type DeckCreationTopic,
   type ReadingPracticePostType,
 } from "./types";
 
-const SECTION_KEYS: CommunitySectionKey[] = ["reading-practice", "reader-development"];
+const SECTION_KEYS: CommunitySectionKey[] = ["reading-practice", "reader-development", "deck-creation"];
 const READING_PRACTICE_POST_TYPE_VALUES = READING_PRACTICE_POST_TYPES.map((type) => type.value);
+const COMMUNITY_AUDIENCE_VALUES = COMMUNITY_AUDIENCES.map((audience) => audience.value);
+const DECK_CREATION_TOPIC_VALUES = DECK_CREATION_TOPICS.map((topic) => topic.value);
 const COMMUNITY_REPORT_REASON_VALUES = COMMUNITY_REPORT_REASONS.map((reason) => reason.value);
 
 export type ValidationResult<T> =
@@ -35,6 +41,14 @@ export function isReadingPracticePostType(value: unknown): value is ReadingPract
   );
 }
 
+export function isCommunityAudience(value: unknown): value is CommunityAudience {
+  return typeof value === "string" && COMMUNITY_AUDIENCE_VALUES.includes(value as CommunityAudience);
+}
+
+export function isDeckCreationTopic(value: unknown): value is DeckCreationTopic {
+  return typeof value === "string" && DECK_CREATION_TOPIC_VALUES.includes(value as DeckCreationTopic);
+}
+
 export function isCommunityReportReason(value: unknown): value is CommunityReportReason {
   return (
     typeof value === "string" &&
@@ -47,19 +61,25 @@ export function validatePostInput(input: {
   title: unknown;
   body: unknown;
   postType?: unknown;
+  audience?: unknown;
+  deckCreationTopic?: unknown;
+  confirmPublic?: unknown;
   fieldNoteConsideration?: unknown;
 }): ValidationResult<{
   sectionKey: CommunitySectionKey;
   title: string;
   body: string;
   postType: ReadingPracticePostType | null;
+  audience: CommunityAudience;
+  deckCreationTopic: DeckCreationTopic | null;
   fieldNoteConsideration: boolean;
 }> {
   const title = cleanText(input.title).replace(/\s+/g, " ");
   const body = cleanText(input.body);
+  const audience = isCommunityAudience(input.audience) ? input.audience : "members";
 
   if (!isCommunitySectionKey(input.sectionKey)) {
-    return { ok: false, error: "Choose Reading Practice or Reader Development." };
+    return { ok: false, error: "Choose Reading Practice, Reader Development, or Deck Creation." };
   }
 
   if (title.length < 8 || title.length > 140) {
@@ -68,6 +88,10 @@ export function validatePostInput(input: {
 
   if (body.length < 20 || body.length > 12000) {
     return { ok: false, error: "Posts should be 20 to 12,000 characters." };
+  }
+
+  if (audience === "public" && input.confirmPublic !== true && input.confirmPublic !== "true" && input.confirmPublic !== "on") {
+    return { ok: false, error: "Confirm that this post may be visible publicly and indexed by search engines." };
   }
 
   if (input.sectionKey === "reading-practice") {
@@ -87,7 +111,27 @@ export function validatePostInput(input: {
         title,
         body,
         postType: postType || null,
+        audience,
+        deckCreationTopic: null,
         fieldNoteConsideration,
+      },
+    };
+  }
+
+  if (input.sectionKey === "deck-creation") {
+    if (!isDeckCreationTopic(input.deckCreationTopic)) {
+      return { ok: false, error: "Choose a Deck Creation topic." };
+    }
+    return {
+      ok: true,
+      value: {
+        sectionKey: input.sectionKey,
+        title,
+        body,
+        postType: null,
+        audience,
+        deckCreationTopic: input.deckCreationTopic,
+        fieldNoteConsideration: false,
       },
     };
   }
@@ -99,6 +143,8 @@ export function validatePostInput(input: {
       title,
       body,
       postType: null,
+      audience,
+      deckCreationTopic: null,
       fieldNoteConsideration: false,
     },
   };

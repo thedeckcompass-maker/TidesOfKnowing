@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../components/studio/StudioHeader.astro";
+import { studioWriteAccessResponse } from "../../../lib/studio/access";
+import "../../../styles/studio.css";
+export const prerender = false;
+const access = studioWriteAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.studioEntitlement);
+if (access) return access;
+const error = Astro.url.searchParams.get("error");
+---
+<BaseLayout title="Studio onboarding | Deck Creator Studio" description="Private Deck Creator Studio onboarding." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner"><StudioHeader title="Set your creator pathway" lede="Tell the Studio where the deck is now and what a useful first outcome looks like." />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    <section class="studio-panel studio-panel--wide"><form class="studio-form" method="post" action="/api/studio/onboarding">
+      <label class="studio-field"><span>Creator pathway</span><select name="pathway" required><option value="personal">Personal or gift edition</option><option value="independent">Independent publication</option><option value="commercial">Commercial or crowdfunded launch</option></select></label>
+      <label class="studio-field"><span>Current deck stage</span><select name="deck_stage" required><option value="idea">Initial idea</option><option value="structure">Deck structure</option><option value="writing">Card or guidebook writing</option><option value="artwork">Artwork system</option><option value="production">Production preparation</option><option value="launch">Launch preparation</option></select></label>
+      <label class="studio-field"><span>Primary goal</span><textarea name="primary_goal" minlength="10" maxlength="1000" required></textarea></label>
+      <button class="studio-button" type="submit">Complete onboarding</button>
+    </form></section>
+  </main>
+</BaseLayout>

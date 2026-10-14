@@ -1,0 +1,163 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { STUDIO_PLANS } from "../../../../../lib/studio/billing";
+import { getStudioProject } from "../../../../../lib/studio/queries";
+import type { StudioSupportRequest } from "../../../../../lib/studio/types";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const access = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId ? `/studio/projects/${projectId}/support/` : "/studio/",
+  Astro.locals.studioEntitlement,
+);
+if (access) return access;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const project = await getStudioProject(Astro.locals.supabase, projectId);
+if (!project) return new Response(null, { status: 404 });
+
+const { data, error: queryError } = await Astro.locals.supabase
+  .from("studio_support_requests")
+  .select("*")
+  .eq("project_id", projectId)
+  .order("support_week", { ascending: false });
+if (queryError) throw queryError;
+
+const requests = (data ?? []) as StudioSupportRequest[];
+const entitlement = Astro.locals.studioEntitlement;
+const planCode = entitlement?.plan_code;
+const readOnly = entitlement?.access_mode === "read_only";
+const today = new Date();
+today.setUTCHours(0, 0, 0, 0);
+const daysSinceMonday = (today.getUTCDay() + 6) % 7;
+const monday = new Date(today);
+monday.setUTCDate(monday.getUTCDate() - daysSinceMonday);
+const currentSupportWeek = monday.toISOString().slice(0, 10);
+const usedThisWeek = requests.some((item) => item.support_week === currentSupportWeek && item.status !== "withdrawn");
+const created = Astro.url.searchParams.get("created") === "1";
+const withdrawn = Astro.url.searchParams.get("withdrawn") === "1";
+const error = Astro.url.searchParams.get("error");
+
+function supportName(request: StudioSupportRequest): string {
+  return request.support_kind === "circle_weekly" ? "Guided Deck Circle" : "Private Deck Partnership";
+}
+---
+
+<BaseLayout
+  title={`Plan support | ${project.name}`}
+  description="Private weekly Deck Creator Studio support workflow."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-page page-inner">
+    <StudioHeader
+      eyebrow={`${project.name} · Human support`}
+      title="Plan support"
+      lede="Bring one clear weekly focus into the support relationship included with your plan. The Studio records what you deliberately submit, the access you grant and the response you receive."
+      projectId={projectId}
+    />
+
+    {created ? <p class="studio-notice" role="status">This week’s support focus has been submitted.</p> : null}
+    {withdrawn ? <p class="studio-notice" role="status">The request and any active review access have been withdrawn.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {readOnly ? <p class="studio-notice" role="status">Support records remain visible, but new requests are unavailable while Studio access is read-only.</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="support-heading">
+        <p class="studio-kicker">Included relationship</p>
+        <h2 id="support-heading">{planCode ? STUDIO_PLANS[planCode].name : "Administrative preview"}</h2>
+
+        {planCode === "studio" ? (
+          <>
+            <p>Your plan includes one requested Project Pulse per billing month. Weekly Circle and Private workflows activate only with the corresponding plan.</p>
+            <p><a class="studio-link-button" href={`/studio/projects/${projectId}/pulse/`}>Open Project Pulse</a></p>
+          </>
+        ) : planCode === "circle" ? (
+          <>
+            <p>Submit one question and only the context you want brought into this week’s small-group session. This does not grant access to your cards, guidebook, journal or private project files.</p>
+            {!readOnly && !usedThisWeek ? (
+              <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/support`}>
+                <label class="studio-field"><span>One weekly focus question</span><textarea name="focus_question" required minlength="10" maxlength="1200"></textarea></label>
+                <label class="studio-field"><span>Optional group-safe context excerpt</span><textarea name="context_excerpt" maxlength="5000"></textarea></label>
+                <label class="studio-check studio-check--standalone"><input type="checkbox" name="group_share_confirmed" required /><span>I confirm that the question and excerpt I submit may be discussed in my Guided Deck Circle session. No other project material is included.</span></label>
+                <button class="studio-button" type="submit">Submit this week’s Circle focus</button>
+              </form>
+            ) : usedThisWeek ? <p class="studio-empty">This week’s included Circle focus has already been submitted.</p> : null}
+          </>
+        ) : planCode === "private" ? (
+          <>
+            <p>Submit one weekly focus and choose exactly which parts of this project the assigned facilitator may inspect. Access starts only when the facilitator accepts and ends on completion, withdrawal or after 14 days.</p>
+            {!readOnly && !usedThisWeek ? (
+              <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/support`}>
+                <label class="studio-field"><span>One weekly focus question</span><textarea name="focus_question" required minlength="10" maxlength="1200"></textarea></label>
+                <label class="studio-field"><span>Optional private context excerpt</span><textarea name="context_excerpt" maxlength="5000"></textarea></label>
+                <fieldset class="studio-fieldset">
+                  <legend>Time-limited review scope</legend>
+                  <input type="hidden" name="review_scopes" value="project" />
+                  <div class="studio-check-grid">
+                    <label class="studio-check"><input type="checkbox" checked disabled /><span>Project structure and direction</span></label>
+                    <label class="studio-check"><input type="checkbox" name="review_scopes" value="cards" /><span>Card workspace and version history</span></label>
+                    <label class="studio-check"><input type="checkbox" name="review_scopes" value="guidebook" /><span>Guidebook workspace and version history</span></label>
+                  </div>
+                </fieldset>
+                <p class="studio-privacy-note">Creator Journal entries, photographs and controlled excerpts are excluded from this workflow.</p>
+                <label class="studio-check studio-check--standalone"><input type="checkbox" name="private_consent" required /><span>I grant purpose-specific access to the selected project areas for this weekly focus only.</span></label>
+                <button class="studio-button" type="submit">Submit this week’s private focus</button>
+              </form>
+            ) : usedThisWeek ? <p class="studio-empty">This week’s included private focus has already been submitted.</p> : null}
+          </>
+        ) : (
+          <p>Administrator access can inspect the workflow configuration, but submitting weekly support requires a Circle or Private entitlement.</p>
+        )}
+      </section>
+
+      <aside class="studio-panel studio-panel--side" aria-labelledby="support-boundaries-heading">
+        <p class="studio-kicker">Privacy boundary</p>
+        <h2 id="support-boundaries-heading">Deliberate access only</h2>
+        <p>Circle support receives only the text you submit for group discussion. Private support may inspect only the project areas you select. Neither workflow publishes material or grants journal access.</p>
+      </aside>
+
+      <section class="studio-panel" aria-labelledby="support-history-heading">
+        <p class="studio-kicker">Support record</p>
+        <h2 id="support-history-heading">Weekly requests</h2>
+        {requests.length ? (
+          <ul class="studio-list">
+            {requests.map((item) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div>
+                    <p class="studio-meta">Week of {new Date(`${item.support_week}T00:00:00Z`).toLocaleDateString("en-NZ", { timeZone: "UTC" })} · {supportName(item)}</p>
+                    <h3>{item.focus_question}</h3>
+                    {item.context_excerpt ? <p>{item.context_excerpt}</p> : null}
+                    {item.review_scopes.length ? <p class="studio-relationship">Consented scope: {item.review_scopes.join(", ")}</p> : null}
+                    {item.session_scheduled_for ? <p><strong>Scheduled:</strong> {new Date(item.session_scheduled_for).toLocaleString("en-NZ")}</p> : null}
+                    {item.facilitator_response ? <p><strong>Response:</strong> {item.facilitator_response}</p> : null}
+                    {item.next_step ? <p><strong>Next useful step:</strong> {item.next_step}</p> : null}
+                    {item.status === "accepted" && item.access_expires_at ? <p class="studio-meta">Private access ends {new Date(item.access_expires_at).toLocaleDateString("en-NZ")} unless completed or withdrawn sooner.</p> : null}
+                  </div>
+                  <div>
+                    <span class="studio-status">{item.status}</span>
+                    {["requested", "accepted"].includes(item.status) && !readOnly ? (
+                      <form method="post" action={`/api/studio/support/${item.id}`}>
+                        <input type="hidden" name="project_id" value={projectId} />
+                        <button class="studio-text-button" type="submit">Withdraw request</button>
+                      </form>
+                    ) : null}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : <p class="studio-empty">No weekly support requests yet.</p>}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

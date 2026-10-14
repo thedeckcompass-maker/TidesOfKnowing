@@ -1,0 +1,111 @@
+---
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioJournalEntries, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
+import { STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const accessResponse = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId ? `/studio/projects/${projectId}/journal/` : "/studio/",
+  Astro.locals.studioEntitlement,
+);
+if (accessResponse) return accessResponse;
+if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const [workspace, entries] = await Promise.all([
+  getStudioProjectWorkspace(Astro.locals.supabase, projectId),
+  getStudioJournalEntries(Astro.locals.supabase, projectId),
+]);
+if (!workspace.project) return new Response(null, { status: 404 });
+
+const { project, cards, guidebook } = workspace;
+const processEntries = entries.filter((entry) => entry.selected_for_process);
+const cardById = new Map(cards.map((card) => [card.id, card]));
+const sectionById = new Map(guidebook.map((section) => [section.id, section]));
+const error = Astro.url.searchParams.get("error");
+const label = (value: string) => value.replaceAll("_", " ");
+---
+
+<BaseLayout title={`Creator Journal | ${project.name}`} description="Private Deck Creator Studio journal and process board." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader eyebrow={`${project.name} · Private workspace`} title="Creator Journal" lede="Record decisions, discoveries and the lived process of making the deck. Journal entries remain private unless a later, separate sharing action is deliberately completed." projectId={projectId} />
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="process-heading">
+        <p class="studio-kicker">Private selection</p>
+        <h2 id="process-heading">Process board</h2>
+        <p class="studio-panel__intro">Select entries that explain the project’s development. Selection keeps the entry private and does not publish or share it.</p>
+        {processEntries.length ? (
+          <ul class="studio-list">
+            {processEntries.map((entry) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div>
+                    <p class="studio-meta">{label(entry.entry_kind)} · {new Date(entry.updated_at).toLocaleDateString("en-NZ", { dateStyle: "medium" })}</p>
+                    <h3>{entry.title}</h3>
+                    {entry.tags.length ? <div class="studio-tags" aria-label="Journal tags">{entry.tags.map((tag) => <span>{tag}</span>)}</div> : null}
+                  </div>
+                  <a class="studio-link-button" href={`/studio/projects/${projectId}/journal/${entry.id}/`}>Open entry</a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : <p class="studio-empty">No entries have been selected for the private process board.</p>}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="journal-stats-heading">
+        <p class="studio-kicker">Project record</p>
+        <h2 id="journal-stats-heading">Journal pulse</h2>
+        <div class="studio-stats studio-stats--stacked">
+          <div class="studio-stat"><strong>{entries.length}</strong> entries</div>
+          <div class="studio-stat"><strong>{processEntries.length}</strong> process selections</div>
+        </div>
+      </section>
+
+      <section class="studio-panel studio-panel--wide" aria-labelledby="entries-heading">
+        <p class="studio-kicker">Private record</p>
+        <h2 id="entries-heading">All journal entries</h2>
+        {entries.length ? (
+          <ul class="studio-list">
+            {entries.map((entry) => (
+              <li class="studio-card">
+                <div class="studio-card__row">
+                  <div>
+                    <p class="studio-meta">{label(entry.entry_kind)} · updated {new Date(entry.updated_at).toLocaleDateString("en-NZ", { dateStyle: "medium" })}</p>
+                    <h3>{entry.title}</h3>
+                    {entry.linked_card_id && cardById.get(entry.linked_card_id) ? <p class="studio-relationship">Card: {cardById.get(entry.linked_card_id)?.title}</p> : null}
+                    {entry.linked_section_id && sectionById.get(entry.linked_section_id) ? <p class="studio-relationship">Guidebook: {sectionById.get(entry.linked_section_id)?.title}</p> : null}
+                    {entry.tags.length ? <div class="studio-tags" aria-label="Journal tags">{entry.tags.map((tag) => <span>{tag}</span>)}</div> : null}
+                  </div>
+                  <a class="studio-link-button" href={`/studio/projects/${projectId}/journal/${entry.id}/`}>Edit entry</a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : <p class="studio-empty">No journal entries yet.</p>}
+      </section>
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="new-entry-heading">
+        <p class="studio-kicker">New reflection</p>
+        <h2 id="new-entry-heading">Add an entry</h2>
+        <form class="studio-form" method="post" action={`/api/studio/projects/${projectId}/journal`}>
+          <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" /></label>
+          <label class="studio-field"><span>Entry type</span><select name="entry_kind"><option value="reflection">Reflection</option><option value="decision">Decision</option><option value="milestone">Milestone</option></select></label>
+          <label class="studio-field"><span>Linked card</span><select name="linked_card_id"><option value="">No linked card</option>{cards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</select></label>
+          <label class="studio-field"><span>Linked guidebook section</span><select name="linked_section_id"><option value="">No linked section</option>{guidebook.map((section) => <option value={section.id}>{section.title}</option>)}</select></label>
+          <fieldset class="studio-field studio-fieldset"><legend>Tags</legend><div class="studio-check-grid">{STUDIO_JOURNAL_TAGS.map((tag) => <label class="studio-check"><input type="checkbox" name="tags" value={tag} /> <span>{tag}</span></label>)}</div></fieldset>
+          <label class="studio-field"><span>Journal entry</span><textarea name="body_markdown" maxlength="50000"></textarea></label>
+          <label class="studio-check studio-check--standalone"><input type="checkbox" name="selected_for_process" /> <span>Add to the private process board</span></label>
+          <button class="studio-button" type="submit">Create entry</button>
+        </form>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

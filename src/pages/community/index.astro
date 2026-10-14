@@ -17,9 +17,9 @@ export const prerender = false;
 
 const base = siteBase(Astro);
 const canonical = new URL("/community/", base).href;
-const title = "Practice Commons | Tides of Knowing";
+const title = "Practice Commons for Readers and Deck Creators | Tides of Knowing";
 const description =
-  "A quiet Practice Commons for tarot readers developing interpretation, intuition, confidence, and symbolic literacy.";
+  "A reflective community for tarot and oracle readers, deck creators, symbolic practitioners, and people developing intuitive literacy.";
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
   { label: "Practice Commons", url: null },
@@ -55,11 +55,11 @@ const jsonLd = [
 
     <header class="community-hero">
       <p class="community-kicker">Practice Commons</p>
-      <h1>{isAuthenticated ? `Welcome back, ${displayName}.` : "A quiet place for readers to become better readers."}</h1>
+      <h1>{isAuthenticated ? `Welcome back, ${displayName}.` : "A quiet place to deepen practice and create meaningful decks."}</h1>
       {
         isAuthenticated ? (
           <p class="community-hero__summary">
-            Continue your practice, join a discussion, or explore another room.
+            Continue your practice or project, join a discussion, or explore another room.
           </p>
         ) : null
       }
@@ -117,12 +117,12 @@ const jsonLd = [
           <section class="community-philosophy community-philosophy--dashboard" aria-labelledby="philosophy-heading">
             <h2 id="philosophy-heading">How this space works</h2>
             <p>
-              The Practice Commons is a space for thoughtful practice, careful observation,
-              and learning together.
+              The Practice Commons is a space for thoughtful practice, deliberate creation,
+              careful observation, and learning together.
             </p>
             <p>
-              Bring real questions from your reading life, respond generously to other
-              readers, and let the room stay focused on practice rather than performance.
+              Bring real questions from your reading or deck-making life, respond generously,
+              and keep private Studio work private unless its creator deliberately shares a separate copy.
             </p>
           </section>
         </>
@@ -203,8 +203,8 @@ const jsonLd = [
             <p>
               Every tarot reader reaches a point where knowing what the cards mean is no
               longer enough. Practice Commons is a reflective learning community for tarot
-              readers and intuitive practitioners who want to develop deeper discernment
-              through thoughtful discussion, shared interpretation and practical experience.
+              readers, deck creators and intuitive practitioners who want to develop deeper
+              discernment through thoughtful discussion, shared interpretation and practical experience.
             </p>
             <p>
               Members bring real readings, symbols, questions and uncertainties into
@@ -757,7 +757,7 @@ const jsonLd = [
     }
 
     .community-section-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 

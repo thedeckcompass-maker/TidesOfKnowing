@@ -10,7 +10,7 @@ import { canContribute, isAdminProfile } from "../../lib/community/auth";
 import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
 import { getSpreadImagePublicUrl } from "../../lib/community/spreadImages";
-import { readingPracticePostTypeLabel } from "../../lib/community/types";
+import { deckCreationTopicLabel, readingPracticePostTypeLabel } from "../../lib/community/types";
 import { breadcrumbJsonLd, type BreadcrumbItem } from "../../lib/breadcrumbs";
 import { siteBase } from "../../lib/site";
 
@@ -37,10 +37,11 @@ const crumbs: BreadcrumbItem[] = [
 ];
 const canEdit = Boolean(
   Astro.locals.user &&
-    (Astro.locals.user.id === post.author_id || isAdmin),
+    (Astro.locals.user.id === post.author_id || isAdmin) && post.source_kind !== "studio_excerpt",
 );
 const canReport = canContribute(Astro.locals.profile);
 const postTypeLabel = readingPracticePostTypeLabel(post.post_type);
+const deckTopicLabel = deckCreationTopicLabel(post.deck_creation_topic);
 const reportSent = Astro.url.searchParams.get("report") === "sent";
 const isLocked = post.status === "locked";
 const spreadImageUrl = Astro.locals.supabase
@@ -76,6 +77,7 @@ function formatDate(value: string): string {
   description={post.body.replace(/\s+/g, " ").slice(0, 155)}
   ogUrl={canonical}
   jsonLd={jsonLd}
+  metaRobots={post.audience === "members" ? "noindex, nofollow" : undefined}
 >
   <main class="community-post page-inner">
     <Breadcrumbs items={crumbs} />
@@ -98,9 +100,16 @@ function formatDate(value: string): string {
         <span aria-hidden="true"> · </span>
         <time datetime={post.created_at}>{formatDate(post.created_at)}</time>
         {postTypeLabel ? <span class="community-post__type">{postTypeLabel}</span> : null}
+        {deckTopicLabel ? <span class="community-post__type">{deckTopicLabel}</span> : null}
+        {post.audience === "members" ? <span class="community-post__type">Members only</span> : null}
       </p>
       <h1>{post.title}</h1>
       <p class="community-post__byline">By {post.author?.display_name ?? "Reader"}</p>
+      {
+        post.source_kind === "studio_excerpt" ? (
+          <p class="community-post__origin">This is a separate controlled excerpt deliberately shared from a private creator journal. The source journal and project remain private.</p>
+        ) : null
+      }
       {
         spreadImageUrl ? (
           <figure class="community-post__spread">
@@ -233,6 +242,14 @@ function formatDate(value: string): string {
   .community-post__edit {
     color: var(--tok-text-muted);
     line-height: 1.7;
+  }
+
+  .community-post__origin {
+    padding: 0.8rem 0.95rem;
+    border-left: 3px solid var(--tok-gold);
+    background: color-mix(in srgb, var(--tok-surface-reading-soft) 58%, transparent);
+    color: var(--tok-text-muted);
+    line-height: 1.65;
   }
 
   .community-post__meta {

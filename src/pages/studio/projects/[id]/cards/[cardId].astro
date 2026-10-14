@@ -1,15 +1,23 @@
 ---
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import StudioVersionHistory from "../../../../../components/studio/StudioVersionHistory.astro";
+import { studioAccessResponse, studioWriteAccessResponse } from "../../../../../lib/studio/access";
 import { getStudioCard, getStudioCardVersions, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
 import "../../../../../styles/studio.css";
 
 export const prerender = false;
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
-if (accessResponse) return accessResponse;
 const projectId = Astro.params.id;
 const cardId = Astro.params.cardId;
+const accessResponse = studioAccessResponse(
+  Astro.locals.user,
+  Astro.locals.profile,
+  projectId && cardId ? `/studio/projects/${projectId}/cards/${cardId}/` : "/studio/",
+  Astro.locals.studioEntitlement,
+);
+if (accessResponse) return accessResponse;
+const canWrite = !studioWriteAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.studioEntitlement);
 if (!projectId || !cardId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 const [workspace, card, versions] = await Promise.all([
   getStudioProjectWorkspace(Astro.locals.supabase, projectId),
@@ -19,21 +27,27 @@ const [workspace, card, versions] = await Promise.all([
 if (!workspace.project || !card) return new Response(null, { status: 404 });
 const content = card.content ?? {};
 const contentText = (key: string) => typeof content[key] === "string" ? content[key] as string : "";
+const linkedGuidebookSections = workspace.guidebook.filter((section) => section.card_id === card.id);
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
+const restoredFrom = Astro.url.searchParams.get("restoredFrom");
+const restoredVersion = Astro.url.searchParams.get("version");
 const error = Astro.url.searchParams.get("error");
 ---
 
 <BaseLayout title={`${card.title} | Deck Creator Studio`} description="Private card-writing workspace." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
-  <main class="studio-page page-inner">
+  <main class:list={["studio-page", "page-inner", { "studio-page--editing": canWrite }]}>
     <StudioHeader eyebrow={`${workspace.project.name} · Card ${card.sort_order}`} title={card.title} lede={`Structured card writing · version ${card.version_number}`} projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Card created. Its first version has been recorded.</p> : null}
     {saved ? <p class="studio-notice" role="status">Card saved as a new version.</p> : null}
-    {restored ? <p class="studio-notice" role="status">Earlier content restored as a new current version.</p> : null}
+    {restoredFrom && restoredVersion && /^\d+$/.test(restoredFrom) && /^\d+$/.test(restoredVersion)
+      ? <p class="studio-notice" role="status">Restored Version {restoredFrom} as Version {restoredVersion}. The previous version remains in history.</p>
+      : restored ? <p class="studio-notice" role="status">Earlier content restored as a new current version.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!canWrite ? <p class="studio-notice" role="status">This card is available to read. Editing is paused while Studio access is read-only.</p> : null}
     <section class="studio-panel">
-      <form class="studio-form studio-form--two" method="post" action={`/api/studio/cards/${card.id}`}>
+      <form id="studio-card-editor" class="studio-form studio-form--two" method="post" action={`/api/studio/cards/${card.id}`}>
         <input type="hidden" name="project_id" value={projectId} />
         <label class="studio-field"><span>Card title</span><input name="title" required maxlength="120" value={card.title} /></label>
         <label class="studio-field"><span>Card number or label</span><input name="card_number" maxlength="30" value={card.card_number} /></label>
@@ -54,28 +68,26 @@ const error = Astro.url.searchParams.get("error");
         <label class="studio-field studio-field--full"><span>Artwork brief</span><textarea name="artwork_brief">{contentText("artwork_brief")}</textarea></label>
         <label class="studio-field"><span>Artwork rights status</span><textarea name="rights_status">{contentText("rights_status")}</textarea></label>
         <label class="studio-field"><span>Production notes</span><textarea name="production_notes">{contentText("production_notes")}</textarea></label>
-        <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
+        <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save new version</button></div>
       </form>
     </section>
-    <section class="studio-panel" aria-labelledby="card-history-heading">
-      <p class="studio-kicker">Recoverable history</p>
-      <h2 id="card-history-heading">Card versions</h2>
-      <ul class="studio-list">
-        {versions.map((version, index) => (
-          <li class="studio-card">
-            <div class="studio-card__row">
-              <div><h3>Version {version.version_number}</h3><p>{new Date(version.created_at).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</p></div>
-              {index > 0 ? (
-                <form method="post" action={`/api/studio/cards/${card.id}/restore`}>
-                  <input type="hidden" name="project_id" value={projectId} />
-                  <input type="hidden" name="version_id" value={version.id} />
-                  <button class="studio-link-button" type="submit">Restore this version</button>
-                </form>
-              ) : <span class="studio-status">Current</span>}
-            </div>
-          </li>
-        ))}
-      </ul>
+    <section class="studio-panel" aria-labelledby="card-guidebook-heading">
+      <p class="studio-kicker">Connected manuscript</p>
+      <h2 id="card-guidebook-heading">Guidebook sections</h2>
+      {linkedGuidebookSections.length ? (
+        <ul class="studio-list">
+          {linkedGuidebookSections.map((section) => (
+            <li class="studio-card">
+              <div class="studio-card__row">
+                <div><p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p><h3>{section.title}</h3></div>
+                <a class="studio-link-button" href={`/studio/projects/${projectId}/guidebook/${section.id}/`}>Edit section</a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : <p class="studio-empty">No guidebook sections are linked to this card yet.</p>}
     </section>
+    <StudioVersionHistory kind="card" versions={versions} projectId={projectId} resourceId={card.id} canWrite={canWrite} references={{ families: Object.fromEntries(workspace.families.map((family) => [family.id, family.name])) }} />
+    {canWrite ? <StudioEditorialSaveBar formId="studio-card-editor" savedLabel={`Saved as version ${card.version_number}`} saveLabel="Save new version" error={Boolean(error)} /> : null}
   </main>
 </BaseLayout>

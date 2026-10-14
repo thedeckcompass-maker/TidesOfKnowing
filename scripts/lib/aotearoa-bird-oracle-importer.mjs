@@ -6,6 +6,11 @@ import { basename, join, resolve } from "node:path";
 import matter from "gray-matter";
 
 export const SOURCE_SYSTEM = "aotearoa-bird-oracle-markdown-v1";
+export const EXPECTED_FULL_INVENTORY = Object.freeze({
+  birds: 78,
+  tarot: 78,
+  chapters: 6,
+});
 export const REPRESENTATIVE_BIRD_FILES = [
   "g1-n01.md",
   "g1-h01.md",
@@ -29,6 +34,17 @@ const statusMap = {
 
 function checksum(value) {
   return createHash("sha256").update(value).digest("hex");
+}
+
+export function deterministicImportTargetId(projectId, targetType, sourceKey) {
+  const digest = createHash("sha256")
+    .update([SOURCE_SYSTEM, projectId, targetType, sourceKey].join("\0"))
+    .digest();
+  const bytes = Buffer.from(digest.subarray(0, 16));
+  bytes[6] = (bytes[6] & 0x0f) | 0x80;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const value = bytes.toString("hex");
+  return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
 }
 
 function sourceWorkspace(sourcePath) {
@@ -78,6 +94,19 @@ function readCollection(root, collection) {
         body: parsed.content,
       };
     });
+}
+
+function markdownInventory(root, collection) {
+  const directory = join(root, "src", "content", collection);
+  const files = readdirSync(directory)
+    .filter((name) => name.endsWith(".md") && !name.startsWith("."))
+    .sort();
+  const excluded = files.filter((name) => name === "_collection-seed.md");
+  return {
+    files,
+    excluded,
+    included: files.filter((name) => !excluded.includes(name)),
+  };
 }
 
 function mappedStatus(value) {
@@ -130,9 +159,46 @@ function guidebookOrder(entry, fallback) {
   return Number.isInteger(entry.data.toc_position) ? entry.data.toc_position : fallback;
 }
 
-export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representative" } = {}) {
+function duplicateValues(values) {
+  const counts = new Map();
+  for (const value of values) counts.set(value, (counts.get(value) ?? 0) + 1);
+  return [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([value, count]) => ({ value, count }));
+}
+
+function validateRequiredFields(entries, fields, exceptions) {
+  for (const entry of entries) {
+    for (const field of fields) {
+      const value = entry.data[field];
+      if (value === undefined || value === null || value === "") {
+        exceptions.push({
+          code: "MISSING_REQUIRED_FIELD",
+          severity: "blocking",
+          sourcePath: entry.sourcePath,
+          value: { field },
+          resolution: "Add the required source value before import.",
+        });
+      }
+    }
+  }
+}
+
+export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representative", sourceArchiveChecksum = null } = {}) {
   const workspace = sourceWorkspace(sourcePath);
   try {
+    if (sourceArchiveChecksum !== null && !/^[a-f0-9]{64}$/.test(sourceArchiveChecksum)) {
+      throw new Error("The supplied source archive checksum is invalid.");
+    }
+    if (workspace.archiveChecksum && sourceArchiveChecksum && workspace.archiveChecksum !== sourceArchiveChecksum) {
+      throw new Error("The supplied source archive checksum does not match the immutable ZIP.");
+    }
+    const resolvedArchiveChecksum = workspace.archiveChecksum ?? sourceArchiveChecksum;
+    const sourceInventory = {
+      birds: markdownInventory(workspace.root, "birds"),
+      tarot: markdownInventory(workspace.root, "tarot"),
+      chapters: markdownInventory(workspace.root, "chapters"),
+    };
     const allBirds = readCollection(workspace.root, "birds");
     const allTarot = readCollection(workspace.root, "tarot");
     const chapters = readCollection(workspace.root, "chapters");
@@ -143,9 +209,28 @@ export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representati
     const groupConfig = JSON.parse(readFileSync(join(workspace.root, "src", "config", "groups.json"), "utf8"));
     const exceptions = [];
 
+    validateRequiredFields(birds, ["title", "card_id", "card_number", "group", "group_number", "status"], exceptions);
+    validateRequiredFields(tarot, ["title", "bird_slug", "status"], exceptions);
+    validateRequiredFields(chapters, ["title", "chapter_type", "status"], exceptions);
+
+    if (sample === "all") {
+      for (const [collection, expected] of Object.entries(EXPECTED_FULL_INVENTORY)) {
+        const actual = sourceInventory[collection].included.length;
+        if (actual !== expected) {
+          exceptions.push({
+            code: "EXPECTED_COUNT_MISMATCH",
+            severity: "blocking",
+            sourcePath: `src/content/${collection}`,
+            value: { expected, actual },
+            resolution: "Reconcile the immutable source inventory before import.",
+          });
+        }
+      }
+    }
+
     for (const entry of [...birds, ...tarot, ...chapters]) {
       if (!Number.isInteger(entry.data.toc_position)) {
-        exceptions.push({ code: "UNASSIGNED_TOC_POSITION", sourcePath: entry.sourcePath, resolution: "Fallback order recorded; editorial ordering remains required." });
+        exceptions.push({ code: "UNASSIGNED_TOC_POSITION", severity: "warning", sourcePath: entry.sourcePath, resolution: "Fallback order recorded; editorial ordering remains required." });
       }
     }
 
@@ -156,6 +241,7 @@ export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representati
         if (configured && configured.sortOrder !== bird.data.group_number) {
           exceptions.push({
             code: "GROUP_ORDER_MISMATCH",
+            severity: "warning",
             sourcePath: "src/config/groups.json",
             value: { group: bird.data.group, cardGroupNumber: bird.data.group_number, configSortOrder: configured.sortOrder },
             resolution: "Card front matter controls import order; groups.json is preserved in project configuration for review.",
@@ -220,25 +306,35 @@ export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representati
       payload: { source_frontmatter: entry.data },
     }));
 
-    const tarotSections = tarot.map((entry) => ({
-      sourceKey: `tarot:${entry.slug}`,
-      cardSourceKey: `bird:${entry.data.bird_slug?.toUpperCase().replace(/^G(\d+)-([BNH])(\d+)$/, "G$1-$2$3")}`,
-      birdSlug: entry.data.bird_slug,
-      sourcePath: entry.sourcePath,
-      sourceChecksum: entry.sourceChecksum,
-      value: {
-        section_type: "card_entry",
-        title: `${entry.data.title} correspondence`,
-        sort_order: guidebookOrder(entry, Number(entry.data.card_number) * 10 + 1),
-        status: mappedStatus(entry.data.status),
-        body_markdown: entry.body,
-        metadata: { custom: { aotearoa_bird_oracle: customPayload(entry, "tarot_correspondence") } },
-      },
-      payload: { source_frontmatter: entry.data },
-    }));
-
     const cardKeyBySlug = new Map(birds.map((entry) => [entry.slug, `bird:${entry.data.card_id}`]));
-    tarotSections.forEach((section) => { section.cardSourceKey = cardKeyBySlug.get(section.birdSlug) ?? null; });
+    const tarotSections = tarot.map((entry) => {
+      const cardSourceKey = cardKeyBySlug.get(entry.data.bird_slug) ?? null;
+      if (!cardSourceKey) {
+        exceptions.push({
+          code: "UNRESOLVED_TAROT_CARD_LINK",
+          severity: "blocking",
+          sourcePath: entry.sourcePath,
+          value: { bird_slug: entry.data.bird_slug },
+          resolution: "Link the tarot record to an existing bird source slug before import.",
+        });
+      }
+      return {
+        sourceKey: `tarot:${entry.slug}`,
+        cardSourceKey,
+        birdSlug: entry.data.bird_slug,
+        sourcePath: entry.sourcePath,
+        sourceChecksum: entry.sourceChecksum,
+        value: {
+          section_type: "card_entry",
+          title: `${entry.data.title} correspondence`,
+          sort_order: guidebookOrder(entry, Number(entry.data.card_number) * 10 + 1),
+          status: mappedStatus(entry.data.status),
+          body_markdown: entry.body,
+          metadata: { custom: { aotearoa_bird_oracle: customPayload(entry, "tarot_correspondence") } },
+        },
+        payload: { source_frontmatter: entry.data },
+      };
+    });
 
     const chapterSections = chapters.map((entry, index) => ({
       sourceKey: `chapter:${entry.slug}`,
@@ -256,28 +352,51 @@ export function buildAotearoaBirdOraclePlan(sourcePath, { sample = "representati
       payload: { source_frontmatter: entry.data },
     }));
 
+    const guidebookSections = [...chapterSections, ...birdSections, ...tarotSections];
+    const allTargets = [...familyMap.values(), ...cards, ...guidebookSections];
+    const duplicateSourceKeys = duplicateValues(allTargets.map((item) => item.sourceKey));
+    for (const duplicate of duplicateSourceKeys) {
+      exceptions.push({
+        code: "DUPLICATE_SOURCE_KEY",
+        severity: "blocking",
+        sourcePath: "multiple source records",
+        value: duplicate,
+        resolution: "Make every imported source identity unique before import.",
+      });
+    }
+
+    const blockingIssues = exceptions.filter((item) => item.severity === "blocking").length;
+    const excludedSourceFiles = Object.entries(sourceInventory).flatMap(([collection, inventory]) =>
+      inventory.excluded.map((name) => `src/content/${collection}/${name}`));
+
     return {
       sourceSystem: SOURCE_SYSTEM,
-      sourceArchiveChecksum: workspace.archiveChecksum,
+      sourceArchiveChecksum: resolvedArchiveChecksum,
       sample,
       inventory: {
         sourceBirds: allBirds.length,
         sourceTarot: allTarot.length,
         sourceChapters: chapters.length,
+        sourceMarkdownFiles: Object.values(sourceInventory).reduce((total, inventory) => total + inventory.files.length, 0),
+        excludedSourceFiles,
         selectedBirds: birds.length,
         selectedTarot: tarot.length,
         selectedChapters: chapters.length,
       },
-      projectSettings: { custom: { aotearoa_bird_oracle: { groups: groupConfig.groups, source_archive_checksum: workspace.archiveChecksum } } },
+      projectSettings: { custom: { aotearoa_bird_oracle: { groups: groupConfig.groups, source_archive_checksum: resolvedArchiveChecksum } } },
       families: [...familyMap.values()].sort((a, b) => a.sort_order - b.sort_order),
       cards,
-      guidebookSections: [...chapterSections, ...birdSections, ...tarotSections],
+      guidebookSections,
       exceptions,
       reconciliation: {
         mappedSourceFiles: birds.length + tarot.length + chapters.length,
-        duplicateSourceKeys: 0,
+        excludedSourceFiles: excludedSourceFiles.length,
+        duplicateSourceKeys: duplicateSourceKeys.length,
+        unresolvedRelationships: exceptions.filter((item) => item.code === "UNRESOLVED_TAROT_CARD_LINK").length,
         unmappedSourceFiles: 0,
         silentDrops: 0,
+        blockingIssues,
+        reconciled: blockingIssues === 0,
       },
     };
   } finally {
@@ -298,6 +417,8 @@ export function summariseAotearoaBirdOraclePlan(plan) {
     },
     exceptions: {
       total: plan.exceptions.length,
+      blocking: plan.exceptions.filter((item) => item.severity === "blocking").length,
+      warnings: plan.exceptions.filter((item) => item.severity !== "blocking").length,
       byCode: Object.fromEntries([...new Set(plan.exceptions.map((item) => item.code))].map((code) => [code, plan.exceptions.filter((item) => item.code === code).length])),
       items: plan.exceptions,
     },

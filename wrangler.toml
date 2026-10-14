@@ -4,3 +4,11 @@ name = "tidesofknowing"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
+
+# Public Stripe price identifiers for the isolated Pages preview only.
+# The matching secret API key and webhook signing secret stay encrypted in
+# Cloudflare's Preview environment; live prices are recorded in the release gate.
+[env.preview.vars]
+STUDIO_STRIPE_TEST_PRICE_STUDIO = "price_1UIfQzA1ktB58WIRtfP76M3O"
+STUDIO_STRIPE_TEST_PRICE_CIRCLE = "price_1UIfSAA1ktB58WIRj8VhgLr2"
+STUDIO_STRIPE_TEST_PRICE_PRIVATE = "price_1UIfTCA1ktB58WIRg4Hraiwi"

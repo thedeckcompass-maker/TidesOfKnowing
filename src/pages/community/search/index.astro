@@ -22,7 +22,7 @@ const canonical = new URL(`/community/search/?q=${encodeURIComponent(query)}${pa
 
 <BaseLayout
   title="Search Practice Commons | Tides of Knowing"
-  description="Search the Practice Commons for tarot interpretation, reader development, and symbolic practice."
+  description="Search the Practice Commons for tarot interpretation, reader development, deck creation, publishing, and symbolic practice."
   ogUrl={canonical}
   metaRobots={query ? undefined : "noindex, follow"}
 >
@@ -48,7 +48,7 @@ const canonical = new URL(`/community/search/?q=${encodeURIComponent(query)}${pa
           <LibraryPagination prevHref={pager.prevHref} nextHref={pager.nextHref} pages={pager.pages} />
         </section>
       ) : (
-        <p class="community-search-page__empty">Enter a term such as clarifiers, confidence, ethics, or intuition.</p>
+        <p class="community-search-page__empty">Enter a term such as clarifiers, symbolism, deck structure, artwork, publishing, ethics, or intuition.</p>
       )
     }
   </main>

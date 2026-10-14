@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { STUDIO_PLAN_CODES, STUDIO_PLANS } from "../../../lib/studio/billing";
+import "../../../styles/studio.css";
+
+const accessRequired = Astro.url.searchParams.get("access") === "required";
+---
+<BaseLayout
+  title="Deck Creator Studio for Oracle and Tarot Creators | Tides of Knowing"
+  description="Create an oracle, tarot or hybrid deck through a private editorial, production and publishing workspace with structured human guidance."
+  tdcPlacement="none"
+  memberWorkspace={false}
+  bodyClass="tok-body--studio"
+>
+  <main class="studio-page page-inner">
+    <header class="studio-header">
+      <div>
+        <p class="studio-eyebrow">Tides of Knowing</p>
+        <h1>Deck Creator Studio</h1>
+        <p class="studio-lede">Create your oracle or tarot deck through a complete editorial, production and publishing system. Work independently when you can, and access experienced human support when you need it.</p>
+      </div>
+      <nav class="studio-nav" aria-label="Deck Creator Studio offer"><a href="#plans">Plans</a><a href="#included">What is included</a><a href="/studio/">Sign in</a></nav>
+    </header>
+    {accessRequired ? <p class="studio-notice" role="status">Choose a Studio plan to open the private creator workspace.</p> : null}
+    <section class="studio-panel studio-panel--wide" aria-labelledby="purpose-heading">
+      <p class="studio-kicker">A working creation environment</p>
+      <h2 id="purpose-heading">Move from initial concept to a coherent deck and publication plan</h2>
+      <p>The Studio combines private project architecture, card and guidebook writing, research records, a creator journal, production preparation, exports and bounded professional support. It is designed for oracle, tarot and hybrid decks across personal, independent publishing and commercial pathways.</p>
+    </section>
+    <section id="plans" class="studio-grid" aria-labelledby="plans-heading">
+      <div class="studio-panel"><p class="studio-kicker">Commercial access</p><h2 id="plans-heading">Choose the level of guidance your deck needs</h2><p>All plans protect creator ownership and private project data. Guided Deck Circle is the principal twelve-week pathway.</p></div>
+      {STUDIO_PLAN_CODES.map((code) => {
+        const plan = STUDIO_PLANS[code];
+        return <article class="studio-panel studio-panel--side">
+          <p class="studio-kicker">{code === "circle" ? "Principal guided route" : "Monthly access"}</p>
+          <h3>{plan.name}</h3>
+          <p><strong>US${plan.amountUsd.toLocaleString("en-US")}</strong> per month</p>
+          <p>{plan.relationship}</p>
+          <a class="studio-link-button" href={`/studio/enrol/?plan=${code}`}>Choose {plan.name}</a>
+        </article>;
+      })}
+    </section>
+    <section id="included" class="studio-panel studio-panel--wide">
+      <p class="studio-kicker">Scope and trust</p><h2>Creator-owned work with explicit boundaries</h2>
+      <p>You retain authorship, creative control and ownership of your manuscripts, images, research and exports. Projects are private by default. Human review requires purpose-specific consent. Cancellation ends editing access according to the paid entitlement state while the stated read-only and export period remains available.</p>
+      <p>The standard subscription does not include unlimited manuscript rewriting, artwork creation or artist management, printer procurement, full Kickstarter management, escrow or marketplace dispute resolution, or legal, tax and jurisdiction-specific advice.</p>
+      <p>Artists may apply separately to the curated collaboration directory. <a href="/artists/collaborate/">Open the artist application</a>.</p>
+    </section>
+  </main>
+  <script is:inline>fetch('/api/studio/analytics', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({event:'offer_view'}), keepalive:true}).catch(()=>{});</script>
+</BaseLayout>

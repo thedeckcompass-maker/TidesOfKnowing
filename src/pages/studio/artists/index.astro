@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../components/studio/StudioHeader.astro";
+import { createCommunityServiceClient } from "../../../lib/community/supabaseServer";
+import { studioAccessResponse } from "../../../lib/studio/access";
+import { getStudioProjects } from "../../../lib/studio/queries";
+import { studioArtistProcessLabel, type StudioArtistIntroduction, type StudioArtistProfile } from "../../../lib/studio/types";
+import "../../../styles/studio.css";
+
+export const prerender = false;
+
+const access = studioAccessResponse(Astro.locals.user, Astro.locals.profile, "/studio/artists/", Astro.locals.studioEntitlement);
+if (access) return access;
+if (!Astro.locals.user || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const safeColumns = "id,user_id,professional_name,location,time_zone,languages,biography,artistic_statement,mediums,techniques,styles,subjects,publishing_experience,availability,budget_approach,licensing_preferences,collaboration_models,process_disclosure,portfolio_examples,status,created_at,updated_at";
+const [artistsResult, projects, shortlistsResult, introductionsResult] = await Promise.all([
+  Astro.locals.supabase.from("studio_artist_profiles").select(safeColumns).eq("status", "approved").order("professional_name"),
+  getStudioProjects(Astro.locals.supabase),
+  Astro.locals.supabase.from("studio_artist_shortlists").select("*").eq("creator_id", Astro.locals.user.id),
+  Astro.locals.supabase.from("studio_artist_introductions").select("*").eq("creator_id", Astro.locals.user.id).order("created_at", { ascending: false }),
+]);
+if (artistsResult.error) throw artistsResult.error;
+if (shortlistsResult.error) throw shortlistsResult.error;
+if (introductionsResult.error) throw introductionsResult.error;
+
+const search = (Astro.url.searchParams.get("q") ?? "").trim().toLowerCase();
+const process = Astro.url.searchParams.get("process") ?? "";
+const allArtists = (artistsResult.data ?? []) as unknown as StudioArtistProfile[];
+const artists = allArtists.filter((artist) => {
+  const haystack = [artist.professional_name, artist.location, artist.biography, ...artist.mediums, ...artist.styles, ...artist.subjects].join(" ").toLowerCase();
+  return (!search || haystack.includes(search)) && (!process || artist.process_disclosure === process);
+});
+const shortlists = shortlistsResult.data ?? [];
+const introductions = (introductionsResult.data ?? []) as StudioArtistIntroduction[];
+const accepted = introductions.filter((item) => item.status === "accepted");
+const artistContacts = new Map<string, { contact_email: string; website_url: string }>();
+if (accepted.length) {
+  const service = createCommunityServiceClient(Astro.locals);
+  const { data: contacts } = await service.from("studio_artist_contacts").select("artist_profile_id,contact_email,website_url").in("artist_profile_id", accepted.map((item) => item.artist_profile_id));
+  (contacts ?? []).forEach((contact) => artistContacts.set(contact.artist_profile_id, contact));
+}
+const saved = Astro.url.searchParams.get("saved") === "1";
+const requested = Astro.url.searchParams.get("requested") === "1";
+const error = Astro.url.searchParams.get("error");
+const readOnly = Astro.locals.studioEntitlement?.access_mode === "read_only";
+---
+
+<BaseLayout title="Artist collaborators | Deck Creator Studio" description="Private curated artist discovery and introduction workspace." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class="studio-page page-inner">
+    <StudioHeader title="Artist collaborators" lede="Discover curated creative practices, build a private shortlist and request a consent-based introduction." />
+    {saved ? <p class="studio-notice" role="status">The private collaboration record has been updated.</p> : null}
+    {requested ? <p class="studio-notice" role="status">The artist has received your structured introduction request.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {readOnly ? <p class="studio-notice" role="status">The directory remains available, but shortlists and new introductions are read-only.</p> : null}
+
+    <div class="studio-grid">
+      <section class="studio-panel studio-panel--wide" aria-labelledby="artist-directory-heading">
+        <p class="studio-kicker">Curated discovery</p><h2 id="artist-directory-heading">Artist directory</h2>
+        <form class="studio-form studio-form--inline" method="get">
+          <label class="studio-field"><span>Search practice, medium, style or subject</span><input type="search" name="q" value={search} /></label>
+          <label class="studio-field"><span>Creative process</span><select name="process">
+            <option value="">All disclosed processes</option>
+            {Object.entries(studioArtistProcessLabel).map(([value, label]) => <option value={value} selected={process === value}>{label}</option>)}
+          </select></label>
+          <button class="studio-button" type="submit">Filter artists</button>
+        </form>
+        {artists.length ? <ul class="studio-list">{artists.map((artist) => {
+          const artistIntroductions = introductions.filter((item) => item.artist_profile_id === artist.id);
+          const acceptedIntroduction = artistIntroductions.find((item) => item.status === "accepted");
+          const contact = acceptedIntroduction ? artistContacts.get(artist.id) : null;
+          return <li class="studio-card">
+            <p class="studio-meta">{artist.location || "Location by conversation"} · {artist.time_zone || "Time zone by conversation"}</p>
+            <h3>{artist.professional_name}</h3>
+            <p>{artist.artistic_statement}</p>
+            <p><strong>Mediums:</strong> {artist.mediums.join(", ")}<br /><strong>Styles:</strong> {artist.styles.join(", ")}<br /><strong>Languages:</strong> {artist.languages.join(", ")}</p>
+            <p><strong>Creative process:</strong> {studioArtistProcessLabel[artist.process_disclosure]}</p>
+            <p><strong>Availability:</strong> {artist.availability}</p>
+            <p><strong>Budget approach:</strong> {artist.budget_approach}</p>
+            <p><strong>Licensing:</strong> {artist.licensing_preferences}</p>
+            <details><summary>View portfolio examples</summary><ul class="studio-list">{artist.portfolio_examples.map((example) => <li><a href={example.url} target="_blank" rel="nofollow noopener">{example.title}</a>{example.description ? ` · ${example.description}` : ""}</li>)}</ul></details>
+
+            {!readOnly && projects.length ? <div class="studio-form-grid">
+              <form class="studio-form" method="post" action="/api/studio/artists/shortlist">
+                <input type="hidden" name="artist_profile_id" value={artist.id} />
+                <label class="studio-field"><span>Private project shortlist</span><select name="project_id" required>{projects.map((project) => <option value={project.id}>{project.name}</option>)}</select></label>
+                <label class="studio-field"><span>Private note, optional</span><input name="note" maxlength="1200" /></label>
+                <button class="studio-text-button" type="submit">Save to shortlist</button>
+              </form>
+              {!artistIntroductions.some((item) => item.status !== "withdrawn" && item.status !== "declined") ? <form class="studio-form" method="post" action="/api/studio/artists/introductions">
+                <input type="hidden" name="artist_profile_id" value={artist.id} />
+                <label class="studio-field"><span>Project</span><select name="project_id" required>{projects.map((project) => <option value={project.id}>{project.name}</option>)}</select></label>
+                <label class="studio-field"><span>Structured collaboration brief</span><textarea name="brief" required minlength="50" maxlength="5000"></textarea></label>
+                <label class="studio-field"><span>Timeline</span><input name="timeline" maxlength="800" /></label>
+                <label class="studio-field"><span>Budget context</span><input name="budget_context" maxlength="800" /></label>
+                <label class="studio-check studio-check--standalone"><input type="checkbox" name="direct_contract_confirmed" required /><span>I understand that contracts and payments are agreed directly with the artist after acceptance.</span></label>
+                <button class="studio-button" type="submit">Request an introduction</button>
+              </form> : null}
+            </div> : null}
+            {contact ? <p class="studio-privacy-note"><strong>Accepted contact:</strong> <a href={`mailto:${contact.contact_email}`}>{contact.contact_email}</a>{contact.website_url ? <> · <a href={contact.website_url} target="_blank" rel="nofollow noopener">Artist website</a></> : null}. Agree scope, rights, payment and delivery directly in writing.</p> : null}
+          </li>;
+        })}</ul> : <p class="studio-empty">No approved artist profiles match these filters yet.</p>}
+      </section>
+
+      <aside class="studio-panel studio-panel--side"><p class="studio-kicker">Collaboration boundary</p><h2>Introductions, not management</h2><p>Contact details remain private until the artist accepts. Tides of Knowing does not hold payments, guarantee performance or resolve disputes. Creators and artists use their own written agreement.</p><p><a class="studio-link-button" href="/artists/collaborate/">Artist application</a></p></aside>
+
+      <section class="studio-panel" aria-labelledby="shortlist-heading"><p class="studio-kicker">Private records</p><h2 id="shortlist-heading">Your shortlists and introductions</h2>
+        {shortlists.length ? <ul class="studio-list">{shortlists.map((item) => <li class="studio-card"><p>{allArtists.find((artist) => artist.id === item.artist_profile_id)?.professional_name ?? "Artist"} · {projects.find((project) => project.id === item.project_id)?.name ?? "Project"}</p>{item.note ? <p>{item.note}</p> : null}{!readOnly ? <form method="post" action="/api/studio/artists/shortlist"><input type="hidden" name="action" value="remove" /><input type="hidden" name="project_id" value={item.project_id} /><input type="hidden" name="artist_profile_id" value={item.artist_profile_id} /><button class="studio-text-button" type="submit">Remove from shortlist</button></form> : null}</li>)}</ul> : <p class="studio-empty">No private artist shortlists yet.</p>}
+        {introductions.length ? <ul class="studio-list">{introductions.map((item) => <li class="studio-card"><p class="studio-meta">{allArtists.find((artist) => artist.id === item.artist_profile_id)?.professional_name ?? "Artist"} · {item.status.replaceAll("_", " ")}</p><p>{item.brief}</p>{item.artist_message ? <p><strong>Artist response:</strong> {item.artist_message}</p> : null}{item.status === "more_information" && !readOnly ? <form class="studio-form" method="post" action={`/api/studio/artists/introductions/${item.id}`}><input type="hidden" name="action" value="reply" /><label class="studio-field"><span>Your additional information</span><textarea name="creator_reply" required minlength="10" maxlength="2000"></textarea></label><button class="studio-button" type="submit">Return to artist</button></form> : null}{["requested", "more_information"].includes(item.status) && !readOnly ? <form method="post" action={`/api/studio/artists/introductions/${item.id}`}><input type="hidden" name="action" value="withdraw" /><button class="studio-text-button" type="submit">Withdraw request</button></form> : null}</li>)}</ul> : <p class="studio-empty">No controlled introductions yet.</p>}
+      </section>
+    </div>
+  </main>
+</BaseLayout>

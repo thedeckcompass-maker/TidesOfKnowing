@@ -86,6 +86,10 @@ Base rules and utilities: `src/styles/typography.css`.
 
 See `/.cursor/rules/tok-brand-rules.md`.
 
+## Deck Creator Studio editorial expression
+
+The private Deck Creator Studio belongs to Tides of Knowing and uses its existing warm paper, deep ocean ink, restrained gold and teal. Its distinction comes from a more editorial layout: Playfair titles, fine rules, quieter rectangular panels and compact navigation. Form labels and entered values use dark ink on white controls. Studio pages retain the light paper surface even when the device requests dark mode, because remapped light text on fixed white inputs made the creator workspace unreadable. This exception is limited to `.tok-body--studio`; it does not change the parent site's reading and system modes. The fixed Studio aliases in `tokens.css` repeat existing brand values and introduce no new colours.
+
 ---
 
 ## 9. Transcript note (audio)
