@@ -1,0 +1,27 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),Module=require('node:module'),path=require('node:path'),{buildSync}=require('esbuild');
+const{parseHTML}=require('../.build-temp/dcs-community-admin-layout-20261118/dom-tooling/node_modules/linkedom');
+const dir=process.env.DCS_TEST_PACKET??'.build-temp/dcs-group-allowances-20261119-v2',baseline='.build-temp/dcs-sales-desk-20261119/build';fs.mkdirSync(dir,{recursive:true});
+const load=file=>{const code=buildSync({entryPoints:[file],bundle:true,format:'cjs',platform:'node',write:false}).outputFiles[0].text,m=new Module(path.resolve(file));m._compile(code,path.resolve(file));return m.exports;};
+const offers=load('src/lib/studio/serviceOffers.ts'),old=load(baseline+'/src/lib/studio/serviceOffers.ts'),{createServiceRecordStore}=load('src/lib/studio/serviceRecords.ts');
+assert.equal(offers.STANDARD_OFFERS.collaborate.groups,6);assert.equal(offers.STANDARD_OFFERS.develop.groups,8);assert.equal(offers.LEGACY_OFFERS.collaborate.groups,8);
+for(const key of ['create','explore'])assert.deepEqual(offers.STANDARD_OFFERS[key],old.STANDARD_OFFERS[key]);
+for(const key of ['collaborate','develop'])for(const field of ['price','instalment','payments','total','programmeMonths','createMonths','consultations','assessments'])assert.equal(offers.STANDARD_OFFERS[key][field],old.STANDARD_OFFERS[key][field]);
+const owner='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',admin='bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',now=()=>new Date('2026-11-20T12:00:00Z');
+const make=(promise,id)=>({id,ownerId:owner,name:'Synthetic preserved programme',promise,revision:0,nextGroupRequested:false,consultations:[],reviews:[]});
+const preserved=make(old.standardPromise('collaborate','2026-11-01'),'historical-test'),groups=Array.from({length:6},(_,i)=>({id:'past-'+i,title:'Synthetic attended session',at:'2026-11-10T12:00:00Z',invitations:[{enrolmentId:preserved.id,rsvp:'yes',attended:true}]}));
+const saved={entries:[preserved],groups,quotes:[],receipts:[]},before=JSON.stringify(saved),store=createServiceRecordStore(admin,[],now,saved);
+assert.equal(store.read(owner).entries[0].promise.benefits.groups,8);assert.equal(store.read(owner).entries[0].groupsRemaining,2);assert.equal(JSON.stringify(saved),before);assert.deepEqual(store.snapshot().entries,saved.entries);assert.deepEqual(store.snapshot().groups,saved.groups);
+const fresh=createServiceRecordStore(admin,[{id:'new-collaborate',person:{id:owner,name:'Synthetic'},programme:'collaborate',start:'2026-11-01'}],now);assert.equal(fresh.read(owner).entries[0].promise.benefits.groups,6);
+const exhausted=structuredClone(saved);exhausted.entries[0].promise=offers.standardPromise('collaborate','2026-11-01');const limited=createServiceRecordStore(admin,[],now,exhausted);assert.equal(limited.read(owner).entries[0].groupsRemaining,0);assert.throws(()=>limited.act(owner,{action:'request-group',enrolmentId:preserved.id,revision:0,key:'synthetic-exhausted'}),/No group sessions remain/);
+const p=JSON.parse(fs.readFileSync('src/data/studio/approved-public/presentation.json')),prior=JSON.parse(fs.readFileSync(baseline+'/src/data/studio/approved-public/presentation.json')),dom=html=>parseHTML('<html><body>'+html+'</body></html>').document;
+for(const key of ['html','pricingHtml']){const d=dom(p.landing[key]),was=dom(prior.landing[key]);assert.equal(d.querySelector('#collaborate .plan-benefits li').textContent,'✓6 group sessions');assert.equal(d.querySelector('#develop .plan-benefits li').textContent,'✓2 more group sessions (8 in total)');
+ const row=[...d.querySelectorAll('.feature-matrix tbody tr')].find(x=>x.querySelector('th')?.textContent==='Group sessions');assert.deepEqual([...row.querySelectorAll('td')].map(x=>x.textContent),['·Not included','·Not included','6','8']);
+ for(const plan of ['explore','create'])assert.equal(d.querySelector('#'+plan).outerHTML,was.querySelector('#'+plan).outerHTML);
+ for(const plan of ['collaborate','develop'])for(const selector of ['.price','.payment-note','.plan-cta'])assert.equal(d.querySelector('#'+plan+' '+selector).outerHTML,was.querySelector('#'+plan+' '+selector).outerHTML);
+ assert.equal(d.querySelector('#realise').outerHTML,was.querySelector('#realise').outerHTML);
+}
+assert(p.landing.html.includes('(6 group sessions, 1 consultation, 1 written review).'));assert(!p.landing.dialogs.includes('<li>8 group sessions</li><li>1 private consultation</li>'));assert(p.landing.dialogs.includes('<li>6 group sessions</li>'));
+assert(!/8 group sessions, 1 private consultation/.test(JSON.stringify(p.faq)));assert(/6 group sessions, 1 private consultation/.test(JSON.stringify(p.faq)));assert(/8 group sessions, 4 private consultations/.test(JSON.stringify(p.faq)));
+for(const page of ['checkout','consultation','realise'])for(const key of Object.keys(p[page]))if(key!=='header')assert.deepEqual(p[page][key],prior[page][key]);
+const result={passed:true,newCollaborateGroups:6,developGroups:8,savedEightSessionRecordPreserved:true,attendanceAndRemainingPreserved:true,sixSessionLimitEnforced:true,pricesAndPeriodsUnchanged:true,productionWrites:0};fs.writeFileSync(dir+'/allowance-tests.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {build} from 'esbuild';
+const require=createRequire(import.meta.url);
+const result=await build({entryPoints:['src/lib/studio/access.ts'],bundle:true,platform:'node',format:'cjs',write:false});
+const mod={exports:{}};new Function('module','exports','require',result.outputFiles[0].text)(mod,mod.exports,require);
+const {studioWorkspaceAccessResponse,studioAccessResponse}=mod.exports;
+const user={id:'owner'},profile={id:'owner',status:'active',role:'member'};
+const client=allow=>({from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null,error:null})})})}),rpc:async name=>({data:name==='studio_complimentary_develop_workspace_active_v1'&&allow,error:null})});
+assert.equal(await studioWorkspaceAccessResponse(user,profile,client(true)),null);
+assert.equal((await studioAccessResponse(user,profile,client(true))).status,403,'workspace grant must not admit service/community gates');
+assert.equal((await studioWorkspaceAccessResponse(user,profile,client(false))).status,403);
+assert.equal((await studioWorkspaceAccessResponse(user,{...profile,status:'inactive'},client(true))).status,403);
+assert.equal((await studioWorkspaceAccessResponse({id:'other'},profile,client(true))).status,403);
+assert.equal((await studioWorkspaceAccessResponse(null,profile,client(true))).status,303);
+console.log('PASS complimentary creator-workspace check: owner active, fail-closed, service gate unchanged');

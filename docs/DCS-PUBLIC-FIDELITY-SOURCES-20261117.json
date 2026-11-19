@@ -1,0 +1,172 @@
+{
+  "package": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z",
+  "sources": [
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/landing.html",
+      "sha256": "0d157328d0575fc7dba6200930a2e1110e9f7aaedc97c234c9dab486f8840b53"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/leilia-white-top.png",
+      "sha256": "d6e4699c3b781551ff44d18b2645eace910a852786c0437a3417aaa74e6d2f88"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/tides-of-knowing-mark.svg",
+      "sha256": "7cc24ea338f1c6f5bc1b8ddf382e45cf2bb5aed363b7198db3a7464f6af74976"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/tokens.css",
+      "sha256": "77484b82b68bc0d4f8fec4d58acbd840818ebc4bdfdd85548fbcd6c24c05ae3f"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/typography.css",
+      "sha256": "8eaac8f71ed3b01b5b0ee4fdb35b98841f449b730e3db23ddc83e4d513b8d521"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/studio-brand.css",
+      "sha256": "3d201fb79fab3028c5be7722653a9ba82af61604af7b90b268ec123a8ee879e3"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/site.css",
+      "sha256": "596b6175003be8f7a8e4e1625ca5bcaf77fc8c62434560eb9b5ea4ae5847e8e7"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/tok-landscape-bluff-hill-narrow.svg",
+      "sha256": "0119ef80e488f6f3b7bfc963201db00b229f6a21e06399fe6b5b8cfaa4393da1"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/landing-family.css",
+      "sha256": "fe74d9b06d9ca03c3b11aa900877e3b4420ae493a063250dbaf0591031d4f5b9"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/comparison.css",
+      "sha256": "30cc466dfa00c4047db05fbc2b4e9794a1b6b72fae1abd572972de85abbb7f32"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/sister-cards.css",
+      "sha256": "be1b1eb428700587a9170ee77b305a8240219c9618a530bb3b7cc3ff0ea8daee"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/inside-studio.css",
+      "sha256": "e9f5b3fceefbe766b28962ac6bfc3b4163979405c1f726a98ea8300f22bf7b10"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/invitation.css",
+      "sha256": "13175874f34b2e3c893edd71a04dff321241419076d1716fbf332dd83335b49a"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/addendum5.css",
+      "sha256": "ab9f5bc527634331a004fbb3ccf3442440a36ad143e559f39c828b7f5953479a"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/addendum6.css",
+      "sha256": "c34abda68612dc75c3f8b639cca4e318816d9e64f1a96ae21510e9107bac0751"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/addendum7.css",
+      "sha256": "37334f9f177cd24a7f88bec34b96bf770b4120973099e2ba1810c7f17cf77786"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/faq-dcs.html",
+      "sha256": "4e6d1ad4947eae81016553d2c6b26ce12771e09ebf216f55c256484bd8baf664"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/consultation.html",
+      "sha256": "bd0d581eec9703541974f0627181bbd3ced78f65732ac3beb81e0575df38f3aa"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/time-summary.css",
+      "sha256": "0c706c3dbf59989823090dd59b467a42d3ac2340c8db8713a2a4937b4f34beba"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/realise.html",
+      "sha256": "c4d55e086ee134e8b3760b9e8f826e5f1ad82aa7b03c1da68cbdbc8333f3dc29"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/checkout-create.html",
+      "sha256": "0c390f51f318a4873eed7acb7f4688c7ce3d7df039eeb055ff0900c571be328e"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/dcs-pricing-card-correction-20261114T091500Z/assets/commercial.css",
+      "sha256": "37fb0c412e8b2548f9c29850a7792a784aa8f143564fba8e65b6916b08f18cc7"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/dcs-pricing-card-correction-20261114T091500Z/assets/tokens.css",
+      "sha256": "77484b82b68bc0d4f8fec4d58acbd840818ebc4bdfdd85548fbcd6c24c05ae3f"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/dcs-pricing-card-correction-20261114T091500Z/assets/typography.css",
+      "sha256": "8eaac8f71ed3b01b5b0ee4fdb35b98841f449b730e3db23ddc83e4d513b8d521"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/dcs-pricing-card-correction-20261114T091500Z/assets/studio-brand.css",
+      "sha256": "3d201fb79fab3028c5be7722653a9ba82af61604af7b90b268ec123a8ee879e3"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/checkout-family.css",
+      "sha256": "a281b73e9921eebdb86723351c71f0c63239b0d5ad1e496b94b18ca285b44fa7"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/navigation.js",
+      "sha256": "ae900e1c0830b2cc13fc5ffcf1d78719af67a122a4e4fece98d4bb5e67b0924f"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/plan-details.js",
+      "sha256": "204255e271a7d3ebd3738a8e0780210ec26a793aa88ba9b825ffbbcfbd0b97f4"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/summary-core.js",
+      "sha256": "c23695d1b3667a356485a4b8423419c77f11f4505fa5331b981afc42f1c5623c"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/faq-index-layout-20261114T053944Z/assets/time-utils.js",
+      "sha256": "c5eedaf93132a639717864a979ec929b169692cd444cdee0ab801b2817dec915"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/consultation-core.js",
+      "sha256": "0718a0c7a89547a5edd06fce28c1bb7521c89d18bf77acad0439f7867795456a"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/time-summary.js",
+      "sha256": "b7f36d5eb44c9355cf258cfbd6b3be8821821b71bce6292b5eba3fbcd91229f6"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/assets/consultation.js",
+      "sha256": "2f3e6af04701decb4ed3b8c843e11f7cef512f3be68e6c387ea27dfdceed0873"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/dcs-pricing-card-correction-20261114T091500Z/assets/checkout.js",
+      "sha256": "0e39b288ea03677f2865d164936ca7127a16cfdf26e4f8eece272952230b7b5d"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/checkout-collaborate.html",
+      "sha256": "ffdd420e8a1e70230a0624acdce798c08d8eb75a51752029d123fee5da3df7cb"
+    },
+    {
+      "file": "B:/DCS-Parallel-Development-20261113/landing-consistency-polish-20261114T193415Z/client/checkout-develop.html",
+      "sha256": "667c00065a2769cdc5b2420f7b5ac8ffbeb5ecf31feeabe3428075274ac3ee89"
+    }
+  ],
+  "exceptions": [
+    "Owner correction: remove royalties wording from general public presentation; historical legal source remains preserved separately.",
+    "Do not publish proposed Collaborate allowance changes: retain current D: 8 group sessions, 1 consultation, 1 written assessment; historical grants unchanged.",
+    "Omit pending service-continuation bullet; current six-month support contract remains unchanged.",
+    "Realise price, fixed duration, staff/fair-use commitments and introductory-call duration are withheld pending owner reconciliation.",
+    "Founding Develop code claims withheld: native promotion implementation and eligibility remain unresolved.",
+    "Explore capacity follows final owner instruction: one active project and ten active cards; no lifetime limit.",
+    "Checkout remains gated by existing application billing/account checks; consultation is a local proposal, not a booking or email.",
+    "Generic first-payment service-release copy is withheld where it would publish the unresolved Collaborate implementation; new Develop checkout retains its existing versioned promise.",
+    "Reference mobile table overflow is contained in its existing keyboard-focusable scroll region.",
+    "Scoped root-token adaptation updates masthead height on body to preserve the original measured header offset.",
+    "Consultation time proposal completion is disabled pending confirmation of Realise duration; no booking or email dispatch exists."
+  ],
+  "scripts": {
+    "navigation": "/dcs-approved/navigation.js",
+    "plan": "/dcs-approved/plan.js",
+    "summary": "/dcs-approved/summary.js",
+    "time": "/dcs-approved/time.js",
+    "consultationCore": "/dcs-approved/consultationCore.js",
+    "timeSummary": "/dcs-approved/timeSummary.js",
+    "consultation": "/dcs-approved/consultation.js",
+    "checkout": "/dcs-approved/checkout.js"
+  }
+}

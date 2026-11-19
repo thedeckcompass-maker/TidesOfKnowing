@@ -1,0 +1,809 @@
+# Tides of Knowing
+# Deck Creator Studio: Refund, Cancellation and Automated Payment Reconciliation
+
+**Date:** 31 October 2026  
+**For:** Persephone  
+**Status:** Consolidated implementation specification with clearly identified financial approval requirements  
+**Purpose:** Install the public-facing refund policy, implement the supporting automated cancellation and refund process, and update the permanent commercial and technical build documentation.
+
+## 1. Executive instruction to Persephone
+
+Implement a simple, transparent and predominantly automated cancellation and refund system for Deck Creator Studio.
+
+The system must protect the value of editorial expertise, minimise cancellation administration, preserve creator-owned intellectual property and make every ordinary refund calculation understandable from the website's published terms.
+
+This document supersedes earlier, more complicated refund proposals. It does not supersede approved program prices, inclusions, existing deployment safeguards or the terms accepted by existing customers.
+
+**Do not implement undisclosed deductions, arbitrary penalties or a refund calculation that differs from the public policy.**
+
+The policy must be legally reviewed before publication. The remaining proposed financial values are identified in Section 7 and must not be silently treated as approved.
+
+---
+
+# Part One: Client-Facing Website Policy
+
+The following is the proposed complete public policy text, for publication after the approval and compliance checks.
+
+## 2. Website placement and branding
+
+Create or update the dedicated page at:
+
+`/deck-creator-studio/refunds/`
+
+Page title:
+
+**Deck Creator Studio Refund & Cancellation Policy | Tides of Knowing**
+
+H1:
+
+**Deck Creator Studio: Refunds and Cancellations**
+
+Meta description:
+
+Learn how Create, Collaborate and Develop cancellations work, including editorial sessions, missed appointments, installment payments and refunds for unused services.
+
+Include a clear, permanent **Refunds & Cancellations** link in the main Tides of Knowing footer, alongside Privacy Policy and Terms of Use.
+
+Add contextual links from the Deck Creator Studio pricing page, Collaborate and Develop descriptions, account billing page and relevant checkout screens.
+
+Use existing website branding, typography, design tokens, spacing, responsive layouts and accessibility standards. Do not redesign the footer or introduce a competing visual style.
+
+---
+
+## 3. Public policy text
+
+# Deck Creator Studio: Refunds and Cancellations
+
+**Tides of Knowing**
+
+We want you to feel confident about your investment in Deck Creator Studio and understand what happens if you decide not to continue.
+
+Our cancellation policy distinguishes between independent Studio access and programs that include professional editorial development.
+
+### Explore
+
+Explore is permanently free. There are no subscription charges or cancellation fees.
+
+### Create
+
+Create is available for US$12 per month or US$120 per year.
+
+You can cancel your Create subscription at any time through your account.
+
+If you pay monthly, your subscription remains active until the end of your current paid monthly period. You will not be charged for another month.
+
+If you pay annually, cancelling stops your next annual renewal. Your access continues until the end of your existing paid annual term.
+
+We do not ordinarily refund unused time from a standalone Create subscription following a voluntary change of mind, unless your purchase terms or applicable law provide otherwise.
+
+Your original creative work remains yours.
+
+### Collaborate and Develop
+
+Collaborate and Develop are six-month editorial development programs with twelve months of Create access included.
+
+Collaborate includes eight group sessions, one private editorial consultation and one written editorial review.
+
+Develop includes eight group sessions, four private editorial consultations and two written editorial reviews.
+
+You may pay in full or choose the available installment arrangement.
+
+Because these programs include professional editorial expertise, their cancellation arrangements differ from those of an ordinary software subscription.
+
+### How we calculate your refund
+
+Your program fee covers two components:
+
+- Twelve months of Create access, valued at US$120.
+- The editorial services included in your selected program.
+
+If you decide to withdraw, we calculate the value of editorial services already used and the Create access used up to the effective cancellation date.
+
+The unused balance is normally refundable, subject to the payments we have received, the agreed installment terms and your statutory rights.
+
+Your cancellation normally takes effect at the end of your current monthly access period. We do not calculate daily refunds for part of a month under our ordinary voluntary-cancellation policy.
+
+### Editorial services and their allocated values
+
+These are the values used to calculate the editorial portion of a voluntary-cancellation refund.
+
+| Editorial service | Collaborate | Develop |
+|---|---:|---:|
+| Group session | $20 each | $20 each |
+| Private consultation | $180 | $220 each |
+| Written editorial review | $130 | $165 each |
+| Twelve months of Create access | $120 | $120 |
+
+These are allocations within the price of your program, not additional fees.
+
+We use the applicable values to calculate the editorial services you have received and those that remain unused.
+
+### Booked sessions and non-attendance
+
+When you book a group session or private consultation, we reserve time and resources for you. Your booking may also occupy a place that could otherwise be offered to another creator.
+
+You may cancel or request to reschedule a confirmed booking up to 24 hours before its scheduled start, using the available booking process.
+
+If you attend your session, it counts as used.
+
+If you do not attend and have not cancelled or requested to reschedule at least 24 hours beforehand, the reserved session also normally counts as used for refund purposes.
+
+This applies to group sessions and private consultations.
+
+A session cancelled in time remains available within your unused entitlement allocation. Rescheduling is subject to available places and the remaining program term.
+
+We will not count a session as used if Tides of Knowing cancels it, cannot provide it as agreed, or an applicable legal right requires another outcome.
+
+Where exceptional circumstances prevent timely cancellation, you may contact us to request a review.
+
+### Written editorial reviews
+
+A written editorial review counts as used when the completed review has been delivered to you.
+
+Merely requesting a review does not automatically mean it has been delivered.
+
+Any substantial preparation undertaken before cancellation will be addressed in accordance with the disclosed terms and applicable law. We will not introduce an undisclosed preparation fee.
+
+### Cancelling within your first three months
+
+If you withdraw during your first three months, you may ask us to review your experience and the support you have received.
+
+Your ordinary refund will still be calculated using the published service values, your confirmed session records and your used Create access.
+
+You do not need to provide a reason for cancelling.
+
+Where an issue requires individual consideration, including a disputed service, missed-session exception or non-delivery concern, we will review it separately.
+
+### Paying by installments
+
+Collaborate costs US$590 when paid in full, or two payments of US$310, totalling US$620.
+
+Develop costs US$1,490 when paid in full, or three payments of US$525, totalling US$1,575.
+
+The first installment is payable at enrollment. The remaining installments are payable at monthly intervals.
+
+Installments are a payment arrangement for a fixed-price program, not separate monthly purchases of editorial services.
+
+If you withdraw before completing your payments, we reconcile the money already received against the value of your used services, used Create access and the applicable portion of the installment pricing difference.
+
+If your payments exceed the amount due for the value already received, the eligible balance is ordinarily refundable.
+
+If the value of services received exceeds the amount already paid, any remaining contractual obligation will be explained and reviewed before collection.
+
+We do not automatically charge an additional amount solely because you submit a cancellation request.
+
+Any approved refund will be itemised.
+
+### If you have received all your editorial services
+
+Once you have received all your included editorial services, that portion of your program has been fulfilled.
+
+If you then withdraw before completing the included twelve months of Create access, the unused Create portion is ordinarily refundable at US$10 per complete remaining month.
+
+For example, eight unused months of Create access have an allocated value of US$80.
+
+### How cancellation works
+
+You may initiate cancellation through your Deck Creator Studio account.
+
+The system will confirm your cancellation request and the proposed effective date.
+
+We will calculate your ordinary refund using your payment record, Create access and recorded editorial services.
+
+Where no exception requires review, your refund will be processed automatically once the required cancellation and refund conditions have been satisfied.
+
+If an exception applies, we will review the circumstances and notify you of the outcome.
+
+Any eligible refund will be returned to the original payment method where supported.
+
+### What happens to your work
+
+Cancelling a program does not transfer ownership of your original deck, artwork, writing, research or other creator-owned intellectual property to Tides of Knowing.
+
+When your paid access ends, your account will move to the applicable free-access status.
+
+Your creative work will be retained and made available for retrieval in accordance with our published ownership, access and retention terms.
+
+### If we cannot deliver a service
+
+If we cancel a scheduled service, are unable to provide it as agreed, or fail to meet applicable service guarantees, your rights and remedies will be assessed separately.
+
+Our standard voluntary-cancellation calculation does not limit your statutory rights.
+
+### Questions or disputes
+
+If you believe a session has been incorrectly recorded or your refund calculation is incorrect, contact us through the Tides of Knowing Contact page.
+
+We will provide an itemised breakdown and review the relevant records.
+
+**Your statutory consumer rights are not excluded or limited by this policy.**
+
+---
+
+# Part Two: Commercial and Financial Rules
+
+## 4. Approved program structure
+
+| Program | Full payment | Installments | Create access |
+|---|---:|---|---|
+| Explore | Free | None | Free-tier features |
+| Create monthly | $12 | Monthly renewal | Paid month |
+| Create annual | $120 | Annual renewal | Paid year |
+| Collaborate | $590 | 2 × $310 | 12 months |
+| Develop | $1,490 | 3 × $525 | 12 months |
+
+All amounts are USD.
+
+Collaborate and Develop each retain their approved six-month editorial duration.
+
+## 5. Annual Create allocation
+
+Use US$120 as the value of Create access included within each editorial program.
+
+This is consistent with the existing annual subscription rate.
+
+The twelve-month allocation equates to US$10 per month.
+
+For ordinary voluntary cancellation:
+
+- Count complete months of Create access used through the effective cancellation date.
+- Do not use daily prorating.
+- Calculate unused Create value as $10 multiplied by remaining complete months.
+- Never refund more than the original unused Create allocation.
+- Preserve any more favourable refund rights required by law.
+
+The monthly access boundary should use the original enrollment anniversary, with a documented rule for months lacking the corresponding calendar day.
+
+## 6. Standard editorial allocation
+
+Recommended allocations:
+
+### Collaborate
+
+| Component | Value |
+|---|---:|
+| Eight group sessions, $20 each | $160 |
+| One private consultation | $180 |
+| One written review | $130 |
+| Create, twelve months | $120 |
+| **Total** | **$590** |
+
+### Develop
+
+| Component | Value |
+|---|---:|
+| Eight group sessions, $20 each | $160 |
+| Four consultations, $220 each | $880 |
+| Two written reviews, $165 each | $330 |
+| Create, twelve months | $120 |
+| **Total** | **$1,490** |
+
+These allocation values are proposed and require final commercial approval before publication.
+
+They replace the previous proposed allocation that valued Create at $144.
+
+They are selected to reconcile exactly with approved pay-in-full pricing and to provide a transparent basis for determining the value of used and unused professional services.
+
+The editorial value allocations are for contractual refund accounting. Differences between Collaborate and Develop should correspond to documented differences in the nature or depth of editorial work.
+
+## 7. Installment premium allocation
+
+The higher installment totals are already approved:
+
+- Collaborate: $30 more than pay in full.
+- Develop: $85 more than pay in full.
+
+**Proposed final calculation rule:**
+
+The installment premium is recognised in proportion to the editorial value already used, rather than being forfeited automatically on the first payment.
+
+For Collaborate:
+
+Earned premium = $30 × (used editorial value ÷ $470).
+
+For Develop:
+
+Earned premium = $85 × (used editorial value ÷ $1,370).
+
+The premium calculation is capped at the applicable total premium.
+
+This rule must be published or clearly referenced in the customer terms and approved before it is applied automatically.
+
+There must be no hidden non-refundable installment charge.
+
+## 8. Refund formula
+
+For a standard voluntary withdrawal:
+
+**Earned program value =**
+
+Used Create months × $10
+
+plus
+
+Total value of delivered or validly utilised editorial services
+
+plus
+
+Earned installment premium, where applicable.
+
+**Provisional refund =**
+
+Net eligible program payments received
+
+minus
+
+Earned program value
+
+minus
+
+Previous refunds and adjustments not already reflected in the net payment figure.
+
+If the result is negative, set the automatic refund to zero and flag the difference for contractual review.
+
+Never automatically collect a negative refund.
+
+Never refund more than the remaining refundable balance of successful payments.
+
+The calculation must be performed in integer currency units to avoid floating-point discrepancies.
+
+Use one consistent cents-rounding policy, recorded in the technical specification.
+
+## 9. Booking and no-show rules
+
+This is a required contractual and software behaviour.
+
+### Booking confirmed
+
+The session must have a confirmed booking tied to an individual creator and editorial entitlement.
+
+A waiting-list request or unconfirmed booking is not a confirmed reservation.
+
+### Attended
+
+Mark the entitlement as utilised.
+
+### Cancelled with at least 24 hours' notice
+
+Release or restore the entitlement, where appropriate.
+
+Make the place available again.
+
+### Rescheduled with at least 24 hours' notice
+
+Transfer the reservation without consuming an additional entitlement.
+
+### Unattended without timely cancellation
+
+Mark the confirmed session as utilised after the scheduled session has concluded and the attendance record is reconciled.
+
+Record it as a no-show.
+
+Do not count the same entitlement twice.
+
+### Cancelled by Tides of Knowing
+
+Do not consume the entitlement.
+
+Offer a replacement or applicable remedy.
+
+### Exceptional circumstances
+
+Flag for review rather than automatically rejecting the creator's request.
+
+This policy protects genuinely reserved capacity. It must not be used to impose charges for bookings that were not confirmed, services that could not be provided or circumstances where the term is legally unenforceable.
+
+---
+
+# Part Three: Automated Stripe Process
+
+## 10. Scope of automation
+
+Persephone must use the existing payment and account architecture.
+
+Do not create a parallel billing platform or replace working checkout integrations.
+
+Stripe is the payment processor, while Deck Creator Studio maintains the authoritative editorial entitlement and delivery records.
+
+The refund calculation must occur server-side using verified data.
+
+No browser-only calculation may authorise a Stripe refund.
+
+## 11. Cancellation workflow
+
+### Step 1: Creator initiates cancellation
+
+Provide a clearly labelled cancellation function within Studio account or billing settings.
+
+For Create subscriptions, provide an ordinary cancel-renewal pathway.
+
+For Collaborate and Develop, provide a Withdraw from Program pathway.
+
+Do not require the creator to complete a questionnaire, attend an interview or email the business before submitting a request.
+
+An optional cancellation-reason field may be provided.
+
+### Step 2: Authenticate and identify
+
+Verify the account and enrollment.
+
+Identify:
+
+- Product and plan.
+- Contract and policy version.
+- Payment schedule.
+- Original enrollment date.
+- Create access expiry date.
+- Editorial program end date.
+- Stripe customer and payment references.
+
+### Step 3: Determine effective date
+
+For ordinary Create cancellation, end access at the applicable paid subscription expiry date.
+
+For Collaborate and Develop, schedule the ordinary cancellation at the end of the current enrollment-based monthly access period, unless the creator has a different statutory entitlement or agreed arrangement.
+
+Do not confuse an installment due date with a recurring software subscription renewal.
+
+### Step 4: Establish editorial services used
+
+Retrieve the authoritative records for:
+
+- Group bookings and attendance.
+- Group confirmed no-shows.
+- Private consultation completion.
+- Private consultation confirmed no-shows.
+- Delivered written reviews.
+- Eligible cancellations and reschedules.
+- Provider cancellations and disputed records.
+
+Each editorial entitlement must be evaluated once.
+
+### Step 5: Calculate refund
+
+Calculate used Create value and earned editorial value.
+
+For installment purchases, calculate the earned proportion of the installment premium.
+
+Reconcile against successful payments, previous refunds and credits.
+
+Generate the provisional amount and the itemised explanation.
+
+### Step 6: Identify exceptions
+
+Route the case for manual review if:
+
+- It falls within an applicable statutory cancellation period requiring special handling.
+- There is a service-delivery complaint.
+- A no-show is disputed.
+- A payment is outstanding.
+- The calculated earned value exceeds payments received.
+- There is an active payment dispute or chargeback.
+- A partial refund was previously issued and cannot be reconciled automatically.
+- The accepted terms differ from the current policy.
+- The record of sessions or reviews is incomplete.
+- An exceptional cancellation arrangement has been granted.
+- The payment method or Stripe transaction does not support the expected automatic refund.
+
+For a standard, undisputed cancellation with sufficient payment and entitlement records, no manual intervention should be necessary.
+
+### Step 7: Confirm creator request
+
+Display the effective cancellation date and itemised provisional refund.
+
+For an eligible automatic case, disclose that refund processing will follow the scheduled effective date.
+
+For a review case, explain that the request is recorded and an assessment will follow.
+
+Do not suggest that a refund has been completed until Stripe confirms the relevant outcome.
+
+### Step 8: Final reconciliation
+
+At the effective cancellation date, lock further editorial reservations and prevent new use of the entitlements being refunded.
+
+Recheck payments, attendance, bookings and completed reviews.
+
+Do not silently reduce a previously displayed refund if new activities are recorded. Any material change must be shown to the creator with an opportunity to review it.
+
+### Step 9: Process Stripe refund
+
+Use the existing authorised Stripe integration.
+
+Refund the eligible amount against one or more successful original payments.
+
+For multiple installments, allocate the refund across refundable charges using a documented, deterministic rule.
+
+Use Stripe idempotency keys to protect against duplicate refund requests.
+
+Never refund a payment more than the remaining refundable amount.
+
+Track the Stripe refund state, including pending, succeeded and failed outcomes.
+
+### Step 10: Update access and records
+
+Following the effective cancellation and the appropriate payment reconciliation:
+
+- Stop future renewal or installment collection as permitted under the agreement and required by law.
+- End unused editorial entitlements included in the cancellation.
+- End the refunded Create entitlement.
+- Preserve account identity and creative content.
+- Restore Explore access where applicable.
+- Preserve the transaction and service audit trail.
+
+### Step 11: Confirm to creator
+
+Send an automated confirmation describing:
+
+- Program cancelled.
+- Effective date.
+- Create access end date.
+- Editorial services counted as used.
+- Amount refunded, where applicable.
+- Refund status.
+- Link to the published policy.
+- How to dispute an error.
+
+If no refund is payable, explain the calculation.
+
+---
+
+# Part Four: Data and Technical Architecture
+
+## 12. Required records
+
+Use existing structures wherever possible.
+
+The system must accurately identify:
+
+**Enrollment**
+- Creator ID.
+- Program.
+- Enrollment timestamp.
+- Price and policy version.
+- Full-price or installment option.
+- Editorial end date.
+- Included Create expiry.
+
+**Payment**
+- Stripe customer reference.
+- Checkout or subscription reference.
+- PaymentIntent and charge identifiers.
+- Successful payments.
+- Failed and pending payments.
+- Credits and adjustments.
+- Prior refunds.
+- Outstanding balance.
+
+**Editorial entitlement**
+- Entitlement ID.
+- Type and allocated value.
+- Booking reference.
+- Booking confirmation time.
+- Scheduled start and end.
+- Cancellation deadline.
+- Attendance or no-show status.
+- Delivery timestamp.
+- Cancellation or reschedule history.
+- Applicable exceptions.
+
+**Refund**
+- Request ID.
+- Request timestamp.
+- Effective date.
+- Calculation snapshot.
+- Service-value breakdown.
+- Payment reconciliation.
+- Manual-review status.
+- Stripe refund reference and status.
+- Final creator notification.
+- Version of terms used.
+
+Do not create additional tables merely for convenience when existing structures can safely support these fields.
+
+## 13. State management
+
+Maintain distinct states for:
+
+- Active enrollment.
+- Cancellation scheduled.
+- Awaiting editorial reconciliation.
+- Automatic refund eligible.
+- Manual review required.
+- Refund submitted.
+- Refund pending.
+- Refund succeeded.
+- Refund failed.
+- Cancellation complete.
+
+A cancellation request must be idempotent.
+
+Repeated clicks must not create additional cancellations or duplicate Stripe refunds.
+
+Webhook delivery order and duplication must not cause an entitlement or refund to be processed twice.
+
+## 14. Session records
+
+A booking is not automatically a consumed service.
+
+A confirmed reservation becomes consumed when:
+
+1. The creator attends or the service is delivered; or
+2. The creator does not attend and the permitted cancellation or rescheduling deadline has passed, with the no-show established.
+
+Record both the booking and the attendance result.
+
+Do not assume non-attendance solely because an attendance integration did not return information.
+
+The system must distinguish a creator no-show from a provider failure or technical error.
+
+## 15. Stripe-specific safeguards
+
+Before implementing:
+
+- Inspect existing Stripe products, prices and payment flows.
+- Identify whether installment payments are represented by subscriptions, invoices or separate payment transactions.
+- Confirm existing webhook handlers and transaction reconciliation.
+- Preserve existing live checkout functionality.
+- Do not change production Stripe settings without separate authorisation.
+
+Use documented Stripe refund operations and the existing payment architecture.
+
+Refunds can be partial and must be tied to refundable original transactions. Subscription cancellation and financial refunds are separate operations.
+
+If automatic processing cannot safely complete, keep the cancellation request valid and route only the financial exception for review.
+
+## 16. Auditability
+
+Every refund must be reproducible from the accepted contract, the public valuation schedule and recorded activity.
+
+The administrator must be able to inspect:
+
+- What the creator paid.
+- What they used.
+- What remains unused.
+- Which booked sessions counted.
+- How the amount was calculated.
+- Which original Stripe payments were refunded.
+- Whether any manual exception occurred.
+
+Never rely on a manually edited unexplained refund total.
+
+---
+
+# Part Five: Documentation Updates for Persephone
+
+## 17. Update permanent build documentation
+
+Persephone must update the relevant existing project documents, rather than creating competing sources of truth.
+
+Required records:
+
+### Commercial decision register
+
+Include the approved prices, two-installment Collaborate arrangement, three-installment Develop arrangement, and the $120 annual Create allocation.
+
+Identify the financial allocation values that still require approval.
+
+### Refund policy architecture
+
+Record the distinction between software subscription cancellation and fixed-price editorial withdrawal.
+
+Document the rationale for allocating value to professional services and reserved session capacity.
+
+### Editorial entitlement specification
+
+Document booking, attendance, no-show, cancellation, rescheduling and delivery status.
+
+### Stripe payment and refund specification
+
+Document payment reconciliation, installment handling, refund calculation, webhook safety and Stripe refund execution.
+
+### Website content register
+
+Record the policy URL, metadata, footer link, program-page references and checkout disclosures.
+
+### Consumer and contract compliance record
+
+Preserve the legal review findings, jurisdiction-specific requirements and approved policy version.
+
+### Testing and deployment record
+
+Record reconciliation results, implementation changes, relevant tests and separately authorised production actions.
+
+## 18. Required acceptance tests
+
+Test at minimum:
+
+1. Create monthly cancellation.
+2. Create annual cancellation.
+3. Collaborate fully paid with no sessions used.
+4. Collaborate fully paid with all sessions used.
+5. Collaborate with one installment paid.
+6. Collaborate with both installments paid.
+7. Develop with one, two and three installments paid.
+8. Group session attended.
+9. Group session booked but unattended.
+10. Group session cancelled more than 24 hours before start.
+11. Private consultation no-show.
+12. Private consultation rescheduled within permitted notice.
+13. Provider-cancelled session.
+14. Written review delivered.
+15. Written review requested but not delivered.
+16. Withdrawal during the first three months.
+17. Withdrawal after editorial services are complete.
+18. Cancellation during a partially used Create month.
+19. Creator with an existing prepaid Create subscription.
+20. Existing founding-creator agreement.
+21. Prior refund or credit.
+22. Failed installment.
+23. Duplicate webhook.
+24. Duplicate cancellation request.
+25. Stripe refund failure.
+26. Refund completed without deletion of creator content.
+27. Statutory-rights or service-failure exception.
+
+Use isolated test environments and test payments.
+
+Do not issue live refunds during testing.
+
+## 19. Release and approval safeguards
+
+Do not independently:
+
+- Modify live Stripe products or prices.
+- Apply unapproved database migrations.
+- Merge unrelated branches.
+- Deploy to production.
+- Change existing creator contracts.
+- Delete creator content.
+- Execute live test refunds.
+- Replace established checkout flows.
+
+The implementation must follow the existing Deck Creator Studio build, reconciliation and deployment approval process.
+
+## 20. Completion requirements
+
+The work is complete only when:
+
+1. The public policy is legally reviewed and commercially approved.
+2. Its allocation values exactly match the approved calculations.
+3. Cancellation can be initiated through the creator account.
+4. Standard refund eligibility is determined without manual calculation.
+5. Confirmed no-shows are recognised correctly.
+6. Stripe refunds are issued only against verified refundable payments.
+7. Exceptional cases are handled safely.
+8. Original creative work is preserved.
+9. All documentation and tests are complete.
+10. Production release receives separate authorisation.
+
+---
+
+# Part Six: Outstanding Financial Approvals
+
+The following are proposed decisions and must be explicitly approved before publication and live automation.
+
+**A. Editorial allocations**
+
+Collaborate: $20 per group session, $180 per private consultation, $130 per written review.
+
+Develop: $20 per group session, $220 per private consultation, $165 per written review.
+
+**B. Booking notice**
+
+A minimum of 24 hours' notice to cancel or reschedule a confirmed session without ordinarily consuming that entitlement.
+
+**C. Installment premium**
+
+Allocate the additional $30 or $85 proportionately to editorial services used.
+
+**D. Cancellation date**
+
+Ordinary voluntary editorial cancellation takes effect at the end of the current enrollment-based monthly access period, with statutory exceptions.
+
+**E. Automated refunds**
+
+Allow automatic Stripe refunds only when the calculation is complete, undisputed and legally eligible. Other cases enter manual review.
+
+Once these decisions receive approval, implement them consistently across the website, accepted checkout terms, entitlement records, billing logic and refund processing.
+
+# End of handover specification

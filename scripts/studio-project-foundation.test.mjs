@@ -1,8 +1,9 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-const repoRoot = new URL("../", import.meta.url).pathname;
+const repoRoot = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFileSync(join(repoRoot, path), "utf8");
 const migration = read("supabase/migrations/20260922043000_deck_studio_project_foundation.sql");
 const dashboard = read("src/pages/studio/projects/[id]/index.astro");
@@ -33,18 +34,24 @@ assert.doesNotMatch(migration, /for all[\s\S]{0,140}studio_(card|guidebook)_vers
 assert.match(migration, /studio_capture_card_version/);
 assert.match(migration, /studio_capture_guidebook_version/);
 
+assert.match(dashboard, /studioAccountAccessResponse/);
+for (const source of [cardEditor, guidebookEditor]) {
+  assert.match(source, /studioReadAccessResponse/);
+  assert.match(source, /studioProjectWriteAccessResponse/);
+}
 for (const source of [dashboard, cardEditor, guidebookEditor]) {
-  assert.match(source, /studioAccessResponse/);
   assert.match(source, /metaRobots="noindex, nofollow"/);
 }
 
-assert.match(dashboard, /Whole-deck view/);
+assert.match(dashboard, /Astro.redirect.*my-deck/);
 assert.match(dashboard, /Oracle/);
 assert.match(dashboard, /Tarot/);
-assert.match(dashboard, /Hybrid/);
-assert.match(cardEditor, /Private research notes/);
-assert.match(cardEditor, /Cultural context/);
-assert.match(cardEditor, /Artwork rights status/);
+assert.match(dashboard, /value="hybrid"/);
+assert.match(cardEditor, /<CardWritingDesk/);
+const writingDesk = read("src/components/studio/CardWritingDesk.astro");
+assert.match(writingDesk, /name="research_notes"/);
+assert.match(writingDesk, /name="cultural_context"/);
+assert.match(writingDesk, /name="rights_status"/);
 assert.match(guidebookEditor, /Markdown manuscript/);
 assert.match(cardRestore, /studio_card_versions/);
 assert.match(guidebookRestore, /studio_guidebook_versions/);
@@ -54,3 +61,5 @@ const repeatingCardChanges = [dashboard, cardEditor, guidebookEditor, migration]
 assert.equal(repeatingCardChanges.length, 0);
 
 console.log("Deck Creator Studio project foundation contracts: passed");
+
+

@@ -1,0 +1,782 @@
+{
+  "provenance": {
+    "source": "B:/DCS-Parallel-Development-20261113/lexicon-refinement-20261114T031857Z/assets/seed.js",
+    "sourceSha256": "02a952628fcf0f3660233e51d9e2c414ff64a14599f506824144a842d1c970ae",
+    "sourceKind": "filesystem seed; browser-only edits are not included",
+    "use": "isolated demonstration fixture; not approved for public publication or production import"
+  },
+  "seed": {
+    "schema": "dcs-lexicon-fidelity-v1",
+    "revision": 1,
+    "project": {
+      "name": "The Lexicon Deck",
+      "purpose": "A reflective vocabulary of 22 images and phrases, inviting a reader to notice a situation and choose a thoughtful response.",
+      "audience": "Adults interested in reflective and creative practice.",
+      "description": "An image-led deck exploring beginning, recognition, choice and perspective.",
+      "next_action": "Review the card entries and read the manuscript as a whole.",
+      "voice": "Clear, spacious and invitational.",
+      "families": [
+        "Beginnings and recognition",
+        "Direction and discernment",
+        "Change and perspective"
+      ]
+    },
+    "cards": [
+      {
+        "id": "LEX-01",
+        "number": "0",
+        "title": "THE THRESHOLD",
+        "aphorism": "Step into the unknown,\nreadiness will follow.",
+        "meaning": "Use The Threshold as an invitation to consider beginning, rather than as a prediction. The card says: “Step into the unknown, readiness will follow.” Here, the image of a star above a doorway and ascending orange steps offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a star above a doorway and ascending orange steps",
+        "reflection": "What small beginning could I make before I feel ready?",
+        "practice": "Choose one reversible step and write what you will learn from it.",
+        "keywords": "beginning",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-02",
+        "number": "1",
+        "title": "THE KEY",
+        "aphorism": "Declare what is unseen\ninto form.",
+        "meaning": "Use The Key as an invitation to consider expression, rather than as a prediction. The card says: “Declare what is unseen into form.” Here, the image of an infinity-shaped golden key offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "an infinity-shaped golden key",
+        "reflection": "What needs to move from private thought into clear language?",
+        "practice": "Write a two-sentence statement of your intention and read it aloud.",
+        "keywords": "expression",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-03",
+        "number": "2",
+        "title": "THE DREAMING SELF",
+        "aphorism": "Trust what emerges\nin the silence.",
+        "meaning": "Use The Dreaming Self as an invitation to consider listening, rather than as a prediction. The card says: “Trust what emerges in the silence.” Here, the image of a crescent above a pale oval and dark waves offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a crescent above a pale oval and dark waves",
+        "reflection": "What becomes noticeable when I stop filling the silence?",
+        "practice": "Spend five quiet minutes observing; record three impressions without treating them as instructions.",
+        "keywords": "listening",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-04",
+        "number": "3",
+        "title": "THE VESSEL",
+        "aphorism": "You are the body through\nwhich life creates",
+        "meaning": "Use The Vessel as an invitation to consider capacity, rather than as a prediction. The card says: “You are the body through which life creates” Here, the image of a teal vessel framed by rays and a plant offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a teal vessel framed by rays and a plant",
+        "reflection": "What conditions help me sustain creative work?",
+        "practice": "Name one practical need and reserve time or space to meet it.",
+        "keywords": "capacity",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-05",
+        "number": "4",
+        "title": "THE GATEKEEPER",
+        "aphorism": "You’re the one you’ve\nbeen waiting for.",
+        "meaning": "Use The Gatekeeper as an invitation to consider agency, rather than as a prediction. The card says: “You’re the one you’ve been waiting for.” Here, the image of a lit arch beneath an orange triangular form offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a lit arch beneath an orange triangular form",
+        "reflection": "Where am I waiting for permission I can responsibly give myself?",
+        "practice": "Separate a decision you own from a decision that requires someone else’s consent.",
+        "keywords": "agency",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-06",
+        "number": "5",
+        "title": "THE CODE",
+        "aphorism": "Ancestral memory\nlives within you.",
+        "meaning": "Use The Code as an invitation to consider inheritance, rather than as a prediction. The card says: “Ancestral memory lives within you.” Here, the image of a dark obelisk marked with binary digits offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a dark obelisk marked with binary digits",
+        "reflection": "Which inherited story would I like to examine?",
+        "practice": "Record a remembered influence and distinguish what is known from what is assumed.",
+        "keywords": "inheritance",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-07",
+        "number": "6",
+        "title": "THE MIRROR",
+        "aphorism": "What you reject\nmay hold your medicine.",
+        "meaning": "Use The Mirror as an invitation to consider recognition, rather than as a prediction. The card says: “What you reject may hold your medicine.” Here, the image of a circular mirror against radiating colour offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a circular mirror against radiating colour",
+        "reflection": "What response in me deserves a closer look?",
+        "practice": "Describe a reaction without judgement; consider one alternative explanation without excusing harm.",
+        "keywords": "recognition",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 0
+      },
+      {
+        "id": "LEX-08",
+        "number": "7",
+        "title": "THE THREAD",
+        "aphorism": "Something larger\nis pulling you forward.",
+        "meaning": "Use The Thread as an invitation to consider direction, rather than as a prediction. The card says: “Something larger is pulling you forward.” Here, the image of a glowing cord above an arch offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a glowing cord above an arch",
+        "reflection": "What connects the choices I keep returning to?",
+        "practice": "List three recurring interests and identify one modest connection to explore.",
+        "keywords": "direction",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-09",
+        "number": "8",
+        "title": "THE FLAMEKEEPER",
+        "aphorism": "Tend your purpose.\nIt is eternal",
+        "meaning": "Use The Flamekeeper as an invitation to consider sustaining, rather than as a prediction. The card says: “Tend your purpose. It is eternal” Here, the image of a spiral flame beneath an infinity sign offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a spiral flame beneath an infinity sign",
+        "reflection": "What makes my purpose feel worth tending today?",
+        "practice": "Choose a repeatable ten-minute practice and a realistic review date.",
+        "keywords": "sustaining",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-10",
+        "number": "9",
+        "title": "THE ECHO",
+        "aphorism": "A pattern is repeating\nfor your attention.",
+        "meaning": "Use The Echo as an invitation to consider patterns, rather than as a prediction. The card says: “A pattern is repeating for your attention.” Here, the image of a layered glowing shape and winding path offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a layered glowing shape and winding path",
+        "reflection": "Which repetition is useful and which needs to change?",
+        "practice": "Compare two examples using observable facts; propose one different response.",
+        "keywords": "patterns",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-11",
+        "number": "10",
+        "title": "THE WEAVE",
+        "aphorism": "Divine timing\nis at play.",
+        "meaning": "Use The Weave as an invitation to consider interdependence, rather than as a prediction. The card says: “Divine timing is at play.” Here, the image of an interlaced gold circle offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "an interlaced gold circle",
+        "reflection": "What relationships or conditions affect this next step?",
+        "practice": "Draw three connections and mark what is within your influence.",
+        "keywords": "interdependence",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-12",
+        "number": "11",
+        "title": "THE SCALE",
+        "aphorism": "Balance is the\nconsequence of clarity.",
+        "meaning": "Use The Scale as an invitation to consider discernment, rather than as a prediction. The card says: “Balance is the consequence of clarity.” Here, the image of gold scales and a winged central staff offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "gold scales and a winged central staff",
+        "reflection": "What becomes clearer when I name my priorities?",
+        "practice": "Write two competing needs and a fair next action that acknowledges both.",
+        "keywords": "discernment",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-13",
+        "number": "12",
+        "title": "THE OFFERING",
+        "aphorism": "What you give away\nbecomes sacred.",
+        "meaning": "Use The Offering as an invitation to consider giving, rather than as a prediction. The card says: “What you give away becomes sacred.” Here, the image of an inverted figure against golden rays offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "an inverted figure against golden rays",
+        "reflection": "What can I offer freely without abandoning my limits?",
+        "practice": "Name an offer, its recipient and one boundary; do not promise what you cannot sustain.",
+        "keywords": "giving",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-14",
+        "number": "13",
+        "title": "THE SHEDDING",
+        "aphorism": "What falls away was never\nyours to carry.",
+        "meaning": "Use The Shedding as an invitation to consider release, rather than as a prediction. The card says: “What falls away was never yours to carry.” Here, the image of a pale rose above red waves offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a pale rose above red waves",
+        "reflection": "What responsibility needs to be reconsidered?",
+        "practice": "Sort one burden into mine, shared or not mine; ask for clarification before changing commitments.",
+        "keywords": "release",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-15",
+        "number": "14",
+        "title": "THE CURRENT",
+        "aphorism": "Your alignment shapes\nyour flow.",
+        "meaning": "Use The Current as an invitation to consider alignment, rather than as a prediction. The card says: “Your alignment shapes your flow.” Here, the image of two golden cups beside a winding current offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "two golden cups beside a winding current",
+        "reflection": "Where do my actions and stated values meet or diverge?",
+        "practice": "Choose one adjustment to your week and decide how you will notice its effect.",
+        "keywords": "alignment",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 1
+      },
+      {
+        "id": "LEX-16",
+        "number": "15",
+        "title": "THE KNOT",
+        "aphorism": "Untangle the ties\nthat bind your becoming.",
+        "meaning": "Use The Knot as an invitation to consider entanglement, rather than as a prediction. The card says: “Untangle the ties that bind your becoming.” Here, the image of an interlaced pale knot and smaller coloured knots offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "an interlaced pale knot and smaller coloured knots",
+        "reflection": "Which part of this situation can be untangled first?",
+        "practice": "Describe one tie as an agreement, assumption or feeling; identify a conversation that may clarify it.",
+        "keywords": "entanglement",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-17",
+        "number": "16",
+        "title": "THE SPLIT",
+        "aphorism": "From fracture, truth\nfinds form.",
+        "meaning": "Use The Split as an invitation to consider change, rather than as a prediction. The card says: “From fracture, truth finds form.” Here, the image of a bright lightning-shaped division offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a bright lightning-shaped division",
+        "reflection": "What difference can I acknowledge without forcing a resolution?",
+        "practice": "Write the facts on each side of a disagreement and one question you still need answered.",
+        "keywords": "change",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-18",
+        "number": "17",
+        "title": "THE SONG",
+        "aphorism": "What only you can sing\nmust be sung.",
+        "meaning": "Use The Song as an invitation to consider voice, rather than as a prediction. The card says: “What only you can sing must be sung.” Here, the image of a golden star with flowing lines offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a golden star with flowing lines",
+        "reflection": "Which part of my voice have I been leaving out?",
+        "practice": "Draft a short paragraph in your own words before seeking feedback.",
+        "keywords": "voice",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-19",
+        "number": "18",
+        "title": "THE VEIL",
+        "aphorism": "What you cannot see\nstill shapes you.",
+        "meaning": "Use The Veil as an invitation to consider uncertainty, rather than as a prediction. The card says: “What you cannot see still shapes you.” Here, the image of a crescent above layered shadowed waves offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a crescent above layered shadowed waves",
+        "reflection": "What is unknown, and how can I remain curious about it?",
+        "practice": "Make two lists: evidence and open questions. Do not fill the second with certainty.",
+        "keywords": "uncertainty",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-20",
+        "number": "19",
+        "title": "THE RADIANCE",
+        "aphorism": "Joy reveals what\neffort cannot.",
+        "meaning": "Use The Radiance as an invitation to consider joy, rather than as a prediction. The card says: “Joy reveals what effort cannot.” Here, the image of a radiant sun beneath a crescent offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a radiant sun beneath a crescent",
+        "reflection": "What brings a sense of openness without requiring an outcome?",
+        "practice": "Record an ordinary moment of enjoyment and what conditions made room for it.",
+        "keywords": "joy",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-21",
+        "number": "20",
+        "title": "THE LABYRINTH",
+        "aphorism": "Not all paths are clear.\nNot all need to be direct.",
+        "meaning": "Use The Labyrinth as an invitation to consider exploration, rather than as a prediction. The card says: “Not all paths are clear. Not all need to be direct.” Here, the image of a lit lantern and winding path offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "a lit lantern and winding path",
+        "reflection": "What can this indirect route teach me?",
+        "practice": "Draw your current route and mark a pause, a resource and a possible next step.",
+        "keywords": "exploration",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      },
+      {
+        "id": "LEX-22",
+        "number": "21",
+        "title": "THE WITNESS",
+        "aphorism": "Observe without\nattachment.",
+        "meaning": "Use The Witness as an invitation to consider perspective, rather than as a prediction. The card says: “Observe without attachment.” Here, the image of an abstract hooded form and oval face offers a starting point for noticing your own associations. Your own associations are part of the reading. Describe what you notice before deciding what it means for you. Keep the interpretation provisional and grounded in your circumstances.",
+        "symbolism": "an abstract hooded form and oval face",
+        "reflection": "What changes when I describe before I interpret?",
+        "practice": "Write three observations and then a separate interpretation; notice the distinction.",
+        "keywords": "perspective",
+        "cautions": "Reflection can support a choice; it does not establish facts about other people or replace appropriate professional support. You may skip any exercise.",
+        "status": "draft",
+        "version": 1,
+        "family": 2
+      }
+    ],
+    "sections": [
+      {
+        "id": "section-01",
+        "title": "Welcome to The Lexicon Deck",
+        "body": "This deck invites you to pause, notice and respond. Its 22 images offer a vocabulary for beginning, recognising patterns, making choices and observing change. Start with an image or a phrase that draws your attention. You do not need to arrive with a finished question.",
+        "kind": "front_matter",
+        "version": 1
+      },
+      {
+        "id": "section-02",
+        "title": "A note to the reader",
+        "body": "Your interpretation belongs to you. Let each card begin a conversation rather than close it. You can work with one card for several days or return to a familiar image when your circumstances change. Keep what helps and set aside what does not.",
+        "kind": "front_matter",
+        "version": 1
+      },
+      {
+        "id": "section-03",
+        "title": "How to use this deck",
+        "body": "Choose a question about your own experience or a decision within your influence. Look at the image before reading the interpretation. Write down what you notice, then consider the reflection and practice. Return to your notes later to see what changed.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-04",
+        "title": "Preparing your space",
+        "body": "Find a moment when you can attend to your question. Put the card where you can see it and keep a notebook nearby. A short pause may be enough. There is no need to force insight or complete every exercise.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-05",
+        "title": "Reading an image",
+        "body": "Describe colour, shape, light and movement before assigning meaning. Notice where your eye goes first. An observation such as “the steps lead into darkness” can coexist with several interpretations. Record your association as a possibility, not a fact.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-06",
+        "title": "Working with one card",
+        "body": "Read its title and short phrase. Let the reflection question open your own response. Choose a small practical action if one feels useful, and give yourself permission to stop or return another day.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-07",
+        "title": "Working with three cards",
+        "body": "Try three positions: what I notice, what I need to consider, and a possible next step. Read each card on its own before connecting them. Different combinations may suggest different questions; they do not guarantee an outcome.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-08",
+        "title": "Keeping a reflection journal",
+        "body": "Date your notes and include the card title, your question, an observation and a possible action. Keep private details in your own journal. When returning to a reading, note what you learned rather than judging whether you interpreted it correctly.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-09",
+        "title": "A vocabulary for reflection",
+        "body": "Observation describes what you notice. Association records a personal connection. Interpretation proposes a meaning. Practice is an action you choose. Review means returning to what you wrote and considering what changed.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-10",
+        "title": "Care and boundaries",
+        "body": "These exercises support reflection and creative attention. They do not establish facts about another person or replace appropriate professional advice. You may skip a prompt, change its wording or take a break.",
+        "kind": "instructions",
+        "version": 1
+      },
+      {
+        "id": "section-11",
+        "title": "Closing reflection",
+        "body": "Return to the image that first drew you in. What do you notice now? Choose one thought to carry forward and one question to leave open. You do not need a final answer for the encounter to be useful.",
+        "kind": "instructions",
+        "version": 1
+      }
+    ],
+    "worksheets": [
+      {
+        "id": "worksheet-01",
+        "title": "Set an intention",
+        "body": "Write a question that gives you room to explore. Keep it connected to your experience and choices.\n\n## Reflection prompts\n\nWhat do I know? What am I assuming? What would a useful next step look like?\n\n## A response to consider\n\nI want to begin the guidebook without deciding its final length. I can test one short entry and see what it makes possible.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-02",
+        "title": "A card response",
+        "body": "Choose one card and describe the image before reading further. Separate observation, association and interpretation.\n\n## Reflection prompts\n\nWhat catches my attention? What does it remind me of? Which interpretation is useful today?\n\n## A response to consider\n\nWith The Threshold, I notice ascending steps and an open doorway. I associate them with beginning before everything is known.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-03",
+        "title": "A three-card conversation",
+        "body": "Use three cards for context, a question and a possible action. Connect them in your own words.\n\n## Reflection prompts\n\nWhere do the images agree? Where do they challenge each other? What remains uncertain?\n\n## A response to consider\n\nThe Threshold, The Mirror and The Witness invite me to begin, notice my reaction to feedback and describe it before drawing conclusions.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-04",
+        "title": "Build a personal vocabulary",
+        "body": "Choose a word from an encounter with a card. Write a working meaning and allow it to change.\n\n## Reflection prompts\n\nWhere did I first meet this word? What does it mean in this situation? How might I use it differently later?\n\n## A response to consider\n\nReadiness: enough clarity to try a reversible step. I do not need to know the whole path to begin.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-05",
+        "title": "Make a creative decision",
+        "body": "Name a decision and the alternatives you can reasonably try. Choose a small experiment.\n\n## Reflection prompts\n\nWhat is the decision? Which assumptions can I test? When will I review the result?\n\n## A response to consider\n\nI will compare a short reflection with a longer essay. My test is whether either leaves room for the reader’s own response.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-06",
+        "title": "Return and notice change",
+        "body": "Revisit a previous card response. Compare what you wrote then with what is present now.\n\n## Reflection prompts\n\nWhat changed? What stayed? What do I now see more clearly?\n\n## A response to consider\n\nThe original question still matters, but I can now name the next action more precisely. I will return after trying it.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-07",
+        "title": "Read with another person",
+        "body": "Agree what you are comfortable sharing. Listen without telling the other person what their experience must mean.\n\n## Reflection prompts\n\nWhat is ours to discuss? What should stay private? What support or boundary would help?\n\n## A response to consider\n\nWe agreed to discuss a creative decision and leave personal identifying details out of our shared notes.",
+        "version": 1
+      },
+      {
+        "id": "worksheet-08",
+        "title": "Bring the session to a close",
+        "body": "Review your notes. Choose one useful action, one open question and a realistic time to return.\n\n## Reflection prompts\n\nWhat will I do? What can remain unanswered? When will I check in?\n\n## A response to consider\n\nI will draft one paragraph this week and then reconsider the question. The unfinished parts can stay open.",
+        "version": 1
+      }
+    ],
+    "chapters": [
+      {
+        "id": "spark",
+        "name": "The Spark",
+        "output": "Creative North Star",
+        "label": "Purpose of this deck",
+        "body": "A reflective vocabulary of 22 images and phrases, inviting a reader to notice a situation and choose a thoughtful response.",
+        "version": 1
+      },
+      {
+        "id": "foundation",
+        "name": "The Foundation",
+        "output": "Creative Brief",
+        "label": "Audience and experience",
+        "body": "Adults who enjoy image-led reflection and want a gentle structure for creative attention. The voice should be clear, spacious and invitational.",
+        "version": 1
+      },
+      {
+        "id": "architecture",
+        "name": "The Architecture",
+        "output": "Deck Blueprint",
+        "label": "Structure and relationships",
+        "body": "Twenty-two cards, numbered 0–21. The sequence is preserved. Three working families organise beginnings and recognition, direction and discernment, and change and perspective.",
+        "version": 1
+      },
+      {
+        "id": "expression",
+        "name": "The Expression",
+        "output": "Living Deck Manuscript",
+        "label": "Card writing",
+        "body": "Each card has a title, a source phrase, core meaning, symbolism, a reflection question and a practice. The recurring structure connects the card editor to the manuscript.",
+        "version": 1
+      },
+      {
+        "id": "visual-world",
+        "name": "The Visual World",
+        "output": "Visual Design Book",
+        "label": "Visual direction",
+        "body": "Geometric images, saturated teal, deep shadows and warm gold/orange light create continuity. Preserve the original aspect ratio and lettering while reviewing text separately.",
+        "version": 1
+      },
+      {
+        "id": "companion",
+        "name": "The Companion",
+        "output": "Companion Manuscript",
+        "label": "Reader-facing writing",
+        "body": "Welcome pages lead into the 22 card entries. Reflection worksheets follow the card sequence and offer space for the reader’s own response.",
+        "version": 1
+      },
+      {
+        "id": "making",
+        "name": "The Making",
+        "output": "Production Book",
+        "label": "Cards, guidebook and packaging",
+        "body": "Planned card count: 22. Consider a printed guidebook and a digital reading copy. Card dimensions, stock, packaging and supplier proofs remain production decisions; preserve original image files throughout.",
+        "version": 1
+      },
+      {
+        "id": "into-the-world",
+        "name": "Into the World",
+        "output": "Publication and Launch Book",
+        "label": "Audience and release",
+        "body": "Begin with a small demonstration and gather feedback on clarity and reading order. Prepare a coherent manuscript before choosing a publishing route. The creator contracts with and pays any suppliers directly.",
+        "version": 1
+      }
+    ],
+    "journal": [
+      {
+        "id": "journal-01",
+        "date": "2026-11-01",
+        "title": "What this deck could make possible",
+        "body": "I want the demonstration to show a coherent relationship between a card, a reflection and an exercise. I will refine this purpose as I work."
+      },
+      {
+        "id": "journal-02",
+        "date": "2026-11-04",
+        "title": "What still needs definition",
+        "body": "The images provide titles and aphorisms. I will develop the guidebook and the exercises with care, keeping a record of my decisions."
+      },
+      {
+        "id": "journal-03",
+        "date": "2026-11-08",
+        "title": "Connecting the workbook",
+        "body": "I tested The Threshold with a small action prompt. I will ask the reviewer whether the prompt opens reflection without promising an outcome."
+      }
+    ],
+    "guidance": {
+      "programme": "Develop",
+      "groups": {
+        "included": 8,
+        "completed": 1,
+        "pending": 0,
+        "available": 7
+      },
+      "consultations": {
+        "included": 4,
+        "completed": 1,
+        "pending": 1,
+        "available": 2
+      },
+      "reviews": {
+        "included": 2,
+        "completed": 0,
+        "pending": 1,
+        "available": 1
+      },
+      "consultation_note": "Discuss the recurring guidebook structure and how each card entry connects with a reflection practice.",
+      "review_note": "Review The Threshold, The Mirror and The Witness for a consistent voice and a clear distinction between observation and interpretation.",
+      "feedback": "Keep the source phrase intact, then let the reflection invite the reader’s own response. Separate what can be observed from the meaning you propose. A focused question can do more than a definite conclusion.",
+      "revision": "Replaced a predictive statement with an open question and added separate observation and interpretation fields."
+    },
+    "community": [
+      {
+        "title": "Keeping The Lexicon Deck’s purpose focused",
+        "author": "Lexicon Creator",
+        "body": "The Threshold says “Step into the unknown, readiness will follow.” The Witness says “Observe without attachment.” I want the Creative North Star to make room for both beginning and observing. Is “pause, notice and choose a thoughtful next step” a clear enough purpose, without promising an answer?",
+        "reply_author": "Fellow creator",
+        "reply": "The useful decision is what the deck invites a reader to do. “Notice and choose” gives the introduction a focus without telling the reader what must happen. What would make you feel that the deck had helped?"
+      }
+    ],
+    "outline": [
+      {
+        "key": "meaning",
+        "label": "Core meaning"
+      },
+      {
+        "key": "reflection",
+        "label": "Reflection question"
+      },
+      {
+        "key": "practice",
+        "label": "Practice"
+      },
+      {
+        "key": "symbolism",
+        "label": "Symbolism"
+      },
+      {
+        "key": "keywords",
+        "label": "Keywords"
+      },
+      {
+        "key": "cautions",
+        "label": "Cautions"
+      }
+    ],
+    "inspiration": [],
+    "pillar_work": {
+      "spark": {
+        "fields": {
+          "startingPlace": "notes",
+          "background": "creative",
+          "backgroundNotes": "The 22 images and short card phrases are already present. I am clarifying the intention that will connect their guidebook entries.",
+          "heart": "A vocabulary of 22 images for pausing, noticing what matters and choosing a thoughtful next step.",
+          "inspiration": "The contrast between The Threshold and The Witness: one invites a beginning, the other a pause. I want the same purpose to make room for both.",
+          "why": "I want the reader to feel that a card can open a useful question without deciding the answer for them.",
+          "experience": "Enough clarity to name what they notice and choose one small action within their own influence.",
+          "perspective": "A strong image can begin a conversation without needing to explain everything.",
+          "connection": "A creative interest in the relationship between an image, a short phrase and the reader’s own language.",
+          "expression": "Curious and accompanied, with room to disagree or leave a question open.",
+          "principles": "Clarity, room for interpretation, respect for the reader’s agency and continuity with the original images and phrases.",
+          "out_idea": "A vocabulary of 22 images for pausing, noticing what matters and choosing a thoughtful next step.",
+          "out_why": "To offer useful questions without taking the reader’s choices away.",
+          "out_contribution": "An image-led approach, connected through clear language and open reflection.",
+          "out_experience": "A moment of recognition and one practical possibility to consider.",
+          "out_principles": "Preserve the original sequence and card phrases. Keep interpretations invitational rather than predictive."
+        },
+        "history": [],
+        "revision": 1
+      },
+      "foundation": {
+        "fields": {
+          "intention": "A manageable pause for reflection, followed by a reader-chosen response.",
+          "essential": "The space for a reader to find their own meaning.",
+          "people": "An adult who enjoys images and wants a reflective practice without needing an established card-reading system.",
+          "context": "Independently, with one card and a notebook; the guidebook offers a gentle starting point.",
+          "encounter": "The image draws attention; the phrase opens a question; the practice offers a small, optional action.",
+          "promise": "An invitation to reflect, not certainty about another person or a guaranteed outcome.",
+          "voice": "Clear, spacious and invitational.",
+          "conventions": "Distinguish observation, association, interpretation and practice.",
+          "principles": "Respect the reader’s agency and avoid presenting personal associations as facts.",
+          "heart": "The 22 source images, their phrases and a coherent reflective guidebook.",
+          "exploring": "The length of card entries and the role of the eight reflection exercises.",
+          "deferred": "Additional cards, expanded editions or a facilitated course.",
+          "responsibility": "Confirm artwork and text credits before publication.",
+          "questions": "Does each entry leave enough room for the reader?",
+          "out_intention": "A gentle image-led reflective practice.",
+          "out_people": "Adults interested in images, reflection and creative attention.",
+          "out_experience": "Observe, consider and choose a small next step.",
+          "out_voice": "Clear, spacious and invitational.",
+          "out_principles": "Agency, clarity and respect for uncertainty.",
+          "out_scope": "22 cards, a guidebook and reflection exercises.",
+          "out_questions": "Test whether the reading order and entry lengths support the reader."
+        },
+        "history": [],
+        "revision": 1
+      },
+      "architecture": {
+        "fields": {
+          "form": "A 22-card reflective deck, preserving the printed sequence 0–21 without claiming a full traditional tarot system.",
+          "structure": "Beginnings and recognition; direction and discernment; change and perspective. These are working families, not a change to the original sequence.",
+          "contribution": "The Threshold invites a beginning, while The Witness invites observation. Their difference helps define the range of the deck.",
+          "balance": "The Threshold and The Witness frame action and observation. The Mirror introduces a question about the response between them.",
+          "use": "Begin with one image, describe what is visible, then consider the phrase, reflection and practice.",
+          "questions": "Can every card stand alone while still contributing to the sequence?",
+          "out_form": "22-card reflective deck.",
+          "out_structure": "Three working families; original sequence unchanged.",
+          "out_contribution": "22 distinct original images and phrases.",
+          "out_balance": "Beginning, recognition, choice and observation offer contrasting invitations.",
+          "out_use": "Image → phrase → reflection → chosen practice.",
+          "out_questions": "Test entry lengths and the reading order with the intended audience."
+        },
+        "history": [],
+        "revision": 1
+      },
+      "visual-world": {
+        "fields": {
+          "vision": "A coherent geometric world of deep teal, warm orange and points of gold light.",
+          "colour": "Use the contrasts already present in the 22 source images.",
+          "composition": "Keep the central form visible and preserve the original portrait proportions.",
+          "symbols": "Doorways, paths, circles, stars and reflected light connect different invitations.",
+          "treatment": "Preserve the original images while reviewing their relationship to the writing.",
+          "approach": "Work with the existing 22 originals.",
+          "exceptions": "Allow the image for each card to carry its own emphasis.",
+          "rights": "Confirm creator credits and publication permissions before release."
+        },
+        "history": [],
+        "revision": 1
+      },
+      "making": {
+        "fields": {
+          "name": "The Lexicon Deck — first edition",
+          "finished": "22 consistent card entries, an ordered guidebook and a clear set of reflection exercises.",
+          "quantity": "Begin by reviewing a digital reading copy before deciding on a print run.",
+          "materials": "Compare legibility, card handling and contrast in a physical proof.",
+          "companion": "A readable digital guidebook; printed format to be considered after proofing.",
+          "packaging": "Keep cards and guidebook easy to identify as one edition.",
+          "values": "Readable type, clear contrast and manageable handling.",
+          "plannedCardCount": "22",
+          "guidebookDelivery": "",
+          "packagingType": "",
+          "bookPlacement": "",
+          "bookThickness": "",
+          "fitNotes": "Confirm card count, stock, book dimensions and box clearance together.",
+          "partners": "Ask suppliers about a 22-card edition and the guidebook/packaging combination.",
+          "costs": "Record like-for-like delivered costs after specifications are settled.",
+          "delivery": "Inspect a physical sample before approving a full run.",
+          "rights": "Confirm image and phrase authorship, licences and credit wording.",
+          "outstanding": "Final physical dimensions, stock, booklet thickness and packaging fit remain to be chosen.",
+          "proofNotes": "No physical proof has been reviewed. Use the reading copy to prepare a checklist for the eventual physical sample."
+        },
+        "history": [],
+        "revision": 1
+      },
+      "into-the-world": {
+        "fields": {
+          "success": "A reader can follow the guidebook, find their own response and use one practice without feeling directed.",
+          "audience": "Adults who enjoy reflective, image-led creative practice.",
+          "shortDescription": "22 images for pausing, noticing and choosing a thoughtful next step.",
+          "story": "The Lexicon Deck brings geometric images and short phrases into conversation with the reader. Its guidebook opens questions and offers optional practices, leaving interpretation and choice with the reader.",
+          "paths": "",
+          "crowdfunding": "First test the reading copy and clarify edition specifications. Consider crowdfunding only if the costs, obligations and audience fit the project.",
+          "leadWeeks": "",
+          "releaseBefore": "Review the full manuscript and invite feedback on clarity, navigation and legibility.",
+          "rights": "Confirm permissions and delivered costs. The creator pays third-party suppliers directly.",
+          "releaseDuring": "Present the images, the purpose and a short reading example without promising outcomes.",
+          "releaseAfter": "Provide clear access instructions and a way to report corrections.",
+          "learning": "Keep useful feedback with the edition records, then decide whether any revision is needed."
+        },
+        "history": [],
+        "revision": 1
+      }
+    },
+    "publication": {
+      "version": 1,
+      "bookTitle": "The Lexicon Deck",
+      "subtitle": "Words, images and a practice of reflection",
+      "author": "",
+      "artist": "",
+      "imprint": "",
+      "textHolder": "",
+      "textYear": "",
+      "artHolder": "",
+      "artYear": "",
+      "edition": "",
+      "publisher": "",
+      "credits": "",
+      "permissions": "",
+      "isbn": "",
+      "opening": "Begin with an image, a word and the situation you bring. This guidebook holds the twenty-two cards in their original sequence, alongside questions and small practices for returning attention to your own experience.\n\nYou can read a single entry, follow a chapter or use the reflection pages to keep a conversation with the deck over time. There is no requirement to find one final meaning. Let your observations remain specific, tentative and your own.",
+      "framework": "The three chapters offer a way to move through the deck without turning its images into fixed answers. Begin by noticing what draws your attention, consider the choices available to you, then return to what has changed.\n\nRead the card phrase beside the image before you read the interpretation. Distinguish what is visible from what you associate with it. A useful reading makes room for uncertainty and leads towards a small, thoughtful response.",
+      "chapter1": "A threshold, a key, a vessel: beginnings ask us to notice the conditions of arrival. In these first seven cards, attend to what is opening, what needs care and what you recognise without yet having words for it.\n\nChoose one image. Describe three things you can see, then name the question you would like to carry into the next chapter.",
+      "chapter2": "The next eight cards invite discernment through connection, exchange and movement. Read the recurring thread between images while keeping their differences in view. What asks for tending, weighing, offering or releasing?\n\nWrite two possible responses to a situation. Ask what each one protects and what it might make possible. Choose a reversible experiment rather than a final verdict.",
+      "chapter3": "The final seven cards bring attention to complexity, expression and perspective. A knot need not be forced open; a labyrinth can be walked one turn at a time. Notice what becomes clearer when you allow more than one viewpoint.\n\nReturn to your opening question. Record what changed, what remains unresolved and one action that fits the understanding you have now.",
+      "exerciseIntroduction": "These pages are for your own words. Begin with a card, a situation and a question you can explore through experience. Write only what you want to keep; leave space for uncertainty and return later if a response changes.\n\nThe exercises move from intention and observation towards conversation, decision and closure. You can use them in order or choose the practice that fits your situation. A short, specific response is enough."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "lexicon-develop-activity-v1",
+  "offerVersion": "2026-10-31-standard-v2",
+  "ownerId": "55d385ed-f56b-48e7-a31d-9571e781b7d7",
+  "projectId": "04427ded-107d-4f08-8bcf-889770b1526a",
+  "accessEndsAt": "2026-12-17T13:08:47.546Z",
+  "enrolmentId": "DEMO-LEXICON-DEVELOP-20261117",
+  "programmeStart": "2026-11-01",
+  "consultations": [
+    {
+      "id": "DEMO-LEXICON-CONSULTATION-01",
+      "status": "completed",
+      "date": "2026-11-10T16:00:00Z",
+      "demonstrationNotes": "Illustrative notes only: clarify the intended reader, review the three card families and distinguish a card's meaning from its reflection prompt. A possible next step is to compare two draft card entries with the Guidebook structure. No consultation took place and these notes are not a record of advice delivered by a staff member."
+    }
+  ],
+  "groups": [
+    {
+      "id": "DEMO-LEXICON-GROUP-01",
+      "title": "Demonstration — exploring card prompts and reader experience",
+      "at": "2026-11-12T17:00:00Z",
+      "rsvp": "yes",
+      "attended": true
+    },
+    {
+      "id": "DEMO-LEXICON-GROUP-02",
+      "title": "Demonstration — upcoming Guidebook structure workshop (not a booking)",
+      "at": "2026-11-24T17:00:00Z",
+      "rsvp": "yes",
+      "attended": false
+    }
+  ],
+  "milestones": [
+    "Illustrative concept milestone: discuss the intended reader and the deck's reflective purpose.",
+    "Illustrative writing milestone: compare draft card entries across the three Lexicon families.",
+    "Illustrative next step: prepare a short selection of saved Guidebook writing for one of the available written reviews. No review has been requested or delivered."
+  ],
+  "provenance": "Synthetic owner-authorised private demonstration, derived from the existing Develop service contract. Not a purchase, service delivery, invitation, staff note, recording or commercial entitlement."
+}
