@@ -26,9 +26,9 @@ The approved wording correction says a request was submitted and that this does 
 
 ## Release and Git evidence
 
-Final identifiers, source association, commit IDs and read-only live verification are recorded in the companion close-out release receipt and source manifest. The private local packet is `.build-temp/dcs-authorised-closeout-20261119`.
+Accepted-live source commit: `8db6df8`; wording-only commit: `90ba385`; release/evidence/cache-tracking commit: `1bb58ff`. All three were pushed normally to `origin/codex/dcs-authorised-closeout-20261119`. Draft PR #30: https://github.com/thedeckcompass-maker/TidesOfKnowing/pull/30. Main remains unchanged. Final deployment identifiers, source association and read-only verification are recorded in the companion close-out release receipt and source manifest. The private local packet is `.build-temp/dcs-authorised-closeout-20261119`.
 
-The full per-path initial status and disposition ledger is retained privately there, including all temporary outputs. A sanitized project-file register is version controlled. Generated Wrangler/cache artifacts are removed from Git tracking only; no local files are deleted. Build outputs, private references, raw account/test evidence and historical operators outside the accepted release remain local, with explicit inventory/exclusion entries. Historical material being retained does not authorise executing it.
+The full per-path initial status and disposition ledger is retained privately there, including all temporary outputs. Coverage verification found zero initial paths without a disposition: all 85,762 entries in the first snapshot are covered by the later 87,481-entry ledger, which also includes the new isolated build. A sanitized project-file register is version controlled. Generated Wrangler/cache artifacts are removed from Git tracking only; no local files are deleted. Build outputs, private references, raw account/test evidence and historical operators outside the accepted release remain local, with explicit inventory/exclusion entries. Historical material being retained does not authorise executing it.
 
 The established remote workflow uses a branch and pull request. Production Pages still has automatic main-branch deployment enabled and a machine-specific output directory. Do not merge this reconciliation into main or run a generic publish command without resolving that deployment-path safeguard. Pushing a review branch may trigger an automatic Pages preview build; it does not authorise changing the protected Preview Supabase database. Configuration is not changed to conceal or bypass that dependency.
 
@@ -36,7 +36,7 @@ The established remote workflow uses a branch and pull request. Production Pages
 
 | Item | Status and next action |
 | --- | --- |
-| Recorded source integration | Push the scoped close-out commits on the review branch; open the established PR. Main integration requires a safe Pages Git-build/output procedure before merge. Do not force-push or bypass it. |
+| Recorded source integration | Scoped commits are pushed and draft PR #30 is open. Main integration remains held until its machine-specific Pages Git-build/output procedure is made safe. No accepted application change is awaiting deployment. Do not force-push or bypass the merge safeguard. |
 | Owner authentication | Immediate reset/sign-in resolved by owner report. Retain the unexplained earlier failure; investigate only if it recurs with specific non-secret event evidence. Owner verification of cross-device/remember-me and email-template signature remains. |
 | Genuine Develop demonstration | Grant is already active until revoked. Owner can use the ordinary interface. Full create/edit/save/reopen, journal/private artwork, version restoration and exports need owner acceptance; no synthetic Production writes are authorised. |
 | UI acceptance | Real-phone Report menus/nested replies/Scribes, keyboard/zoom/screen reader, current public/pricing/editorial presentation, admin filters/actions and save/navigation behavior still need owner visual acceptance. Local DOM tests and HTTP checks do not replace it. |
