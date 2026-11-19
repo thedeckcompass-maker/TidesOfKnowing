@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import EditorialHelp from '../../../../../components/studio/EditorialHelp.astro';
+import EditorialWorkspace from '../../../../../components/studio/EditorialWorkspace.astro';
+import {supportStore} from '../../../../../lib/studio/supportProvider';
+import {editorialSources} from '../../../../../lib/studio/editorialSnapshots';
+import {validateEditorialArchive} from '../../../../../lib/studio/editorialArchive';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+const user=Astro.locals.user,store=supportStore(Astro.locals),id=Astro.params.id;
+if(!user||Astro.locals.profile?.id!==user.id||Astro.locals.profile.status!=='active')return new Response('Sign in with your existing account.',{status:401});
+if(!Astro.locals.supabase)return new Response('Project access could not be verified. Support information remains available in your Studio account.',{status:503,headers:{'Cache-Control':'private, no-store'}});
+const {data:owned,error:ownershipError}=await Astro.locals.supabase.from('studio_projects').select('id,name,owner_id,settings').eq('id',id!).eq('owner_id',user.id).maybeSingle();
+if(ownershipError||!owned)return new Response('Project not found.',{status:404});
+let archive;try{archive=await validateEditorialArchive(owned.settings?.editorial_history_v1,user.id,id!);}catch{return new Response('Private history failed validation. Nothing was changed.',{status:409});}
+let canSubmit=false,unavailable=!store;
+if(store)try{canSubmit=await store.allowed(user.id,'editorial');}catch{unavailable=true;}
+let sources:Awaited<ReturnType<typeof editorialSources>>['sources']=[];
+if(canSubmit)try{sources=(await editorialSources(Astro.locals.supabase,user.id,id!)).sources;}catch{canSubmit=false;unavailable=true;}
+---
+<BaseLayout title="Private editorial feedback | Deck Creator Studio" description="Explicit selected-version confidential feedback." studioWorkspace={true} tdcPlacement="none"><main class="studio-page page-inner"><StudioHeader title="Private editorial feedback" projectId={id} eyebrow={owned.name}/><p><a href="/studio/editorial-support/">Editorial Support — programme balances and previous requests</a></p><details><summary>About confidential project feedback</summary><EditorialHelp/></details>
+{!canSubmit&&<p role="status">{unavailable?'The confidential editorial connection is unavailable. The explanation remains available, but new submissions cannot be sent. Please try again later.':'Your current recorded access does not permit a new confidential editorial submission. You can review support options and use the additional-work enquiry in your account; this does not change your entitlement.'}</p>}
+{(canSubmit||archive?.records.length)&&<EditorialWorkspace projectId={id} sources={sources} canSubmit={canSubmit} canReadHistory={canSubmit} archive={archive} revisionOf={Astro.url.searchParams.get('revision')??''}/>}
+</main></BaseLayout>

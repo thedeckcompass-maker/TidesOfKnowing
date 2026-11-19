@@ -1,65 +1,75 @@
 ---
+import BookMatterFields from '../../../../../components/studio/BookMatterFields.astro';
+import StudioReadableText from '../../../../../components/studio/StudioReadableText.astro';
+import { isLegacyBirdManuscript } from '../../../../../lib/studio/readingText';
 import BaseLayout from "../../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
-import { getStudioGuidebookSection, getStudioGuidebookVersions, getStudioProject } from "../../../../../lib/studio/queries";
+import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import StudioVersionHistory from "../../../../../components/studio/StudioVersionHistory.astro";
+import { studioReadAccessResponse, studioProjectWriteAccessResponse as studioWriteAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioGuidebookSection, getStudioGuidebookVersions, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
 import "../../../../../styles/studio.css";
 
 export const prerender = false;
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
-if (accessResponse) return accessResponse;
 const projectId = Astro.params.id;
 const sectionId = Astro.params.sectionId;
+const accessResponse = await studioReadAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.supabase);
+if (accessResponse) return accessResponse;
+const canWrite = !await studioWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id);
 if (!projectId || !sectionId || !Astro.locals.supabase) return new Response(null, { status: 404 });
-const [project, section, versions] = await Promise.all([
-  getStudioProject(Astro.locals.supabase, projectId),
+const [workspace, section, versions] = await Promise.all([
+  getStudioProjectWorkspace(Astro.locals.supabase, projectId),
   getStudioGuidebookSection(Astro.locals.supabase, projectId, sectionId),
   getStudioGuidebookVersions(Astro.locals.supabase, projectId, sectionId),
 ]);
-if (!project || !section) return new Response(null, { status: 404 });
+if (!workspace.project || workspace.project.owner_id !== Astro.locals.user?.id || !section) return new Response(null, { status: 404 });
+const project = workspace.project;
+const linkedCard = section.card_id
+  ? workspace.cards.find((card) => card.id === section.card_id) ?? null
+  : null;
+const cardFamilies = workspace.families.map((family) => ({
+  family,
+  cards: workspace.cards.filter((card) => card.family_id === family.id),
+}));
+const unassignedCards = workspace.cards.filter((card) => !card.family_id || !workspace.families.some((family) => family.id === card.family_id));
 const saved = Astro.url.searchParams.get("saved") === "1";
 const created = Astro.url.searchParams.get("created") === "1";
 const restored = Astro.url.searchParams.get("restored") === "1";
+const restoredFrom = Astro.url.searchParams.get("restoredFrom");
+const restoredVersion = Astro.url.searchParams.get("version");
 const error = Astro.url.searchParams.get("error");
 ---
 
 <BaseLayout title={`${section.title} | Deck Creator Studio`} description="Private guidebook workspace." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
-  <main class="studio-page page-inner">
+  <main class:list={["studio-page", "page-inner", { "studio-page--editing": canWrite }]}>
     <StudioHeader eyebrow={`${project.name} · Guidebook`} title={section.title} lede={`Markdown manuscript editor · version ${section.version_number}`} projectId={projectId} />
     {created ? <p class="studio-notice" role="status">Section created. Its first version has been recorded.</p> : null}
+    {Astro.url.searchParams.get("unchanged") === "1" ? <p class="studio-notice" role="status">No changes to save. Your existing version is unchanged.</p> : null}
     {saved ? <p class="studio-notice" role="status">Section saved as a new version.</p> : null}
-    {restored ? <p class="studio-notice" role="status">Earlier manuscript restored as a new current version.</p> : null}
+    {restoredFrom && restoredVersion && /^\d+$/.test(restoredFrom) && /^\d+$/.test(restoredVersion)
+      ? <p class="studio-notice" role="status">Restored Version {restoredFrom} as Version {restoredVersion}. The previous version remains in history.</p>
+      : restored ? <p class="studio-notice" role="status">Earlier manuscript restored as a new current version.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!canWrite ? <p class="studio-notice" role="status">This section is available to read. Editing is paused while Studio access is read-only.</p> : null}
+    {linkedCard ? (
+      <p class="studio-relationship">
+        Card this section belongs to: <a href={`/studio/projects/${projectId}/cards/${linkedCard.id}/`}>{linkedCard.title}</a>
+      </p>
+    ) : null}
+    <section class="studio-panel"><details><summary>Read manuscript</summary><StudioReadableText value={section.body_markdown} legacyProse={isLegacyBirdManuscript(section)} /></details></section>
     <section class="studio-panel">
-      <form class="studio-form studio-form--two" method="post" action={`/api/studio/guidebook/${section.id}`}>
-        <input type="hidden" name="project_id" value={projectId} />
+      <form data-studio-read-only={!canWrite ? "true" : undefined} id="studio-guidebook-editor" class="studio-form studio-form--two" method="post" action={`/api/studio/guidebook/${section.id}`}>
+        <fieldset disabled={!canWrite} style="display:contents"><input type="hidden" name="project_id" value={projectId} /><input type="hidden" name="return_to_project" value="on" /><input type="hidden" name="expected_current_version" value={section.version_number} />
         <label class="studio-field"><span>Section title</span><input name="title" required maxlength="160" value={section.title} /></label>
         <label class="studio-field"><span>Type</span><select name="section_type"><option value="front_matter" selected={section.section_type === "front_matter"}>Front matter</option><option value="card_entry" selected={section.section_type === "card_entry"}>Card entry</option><option value="instructions" selected={section.section_type === "instructions"}>Instructions</option><option value="chapter" selected={section.section_type === "chapter"}>Chapter</option><option value="closing" selected={section.section_type === "closing"}>Closing material</option><option value="other" selected={section.section_type === "other"}>Other</option></select></label>
-        <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={section.sort_order} required /></label>
+        <label class="studio-field"><span>Manuscript sort position</span><small>Controls section order, not card number. Gaps leave room for other sections.</small><input name="sort_order" type="number" min="0" max="999" value={section.sort_order} required /></label>
         <label class="studio-field"><span>Status</span><select name="status"><option value="outline" selected={section.status === "outline"}>Outline</option><option value="draft" selected={section.status === "draft"}>Draft</option><option value="review" selected={section.status === "review"}>Review</option><option value="complete" selected={section.status === "complete"}>Complete</option></select></label>
-        <label class="studio-field studio-field--full"><span>Markdown manuscript</span><textarea class="studio-editor" name="body_markdown">{section.body_markdown}</textarea></label>
-        <div class="studio-field--full"><button class="studio-button" type="submit">Save new version</button></div>
-      </form>
+        <label class="studio-field studio-field--full"><span>Card this section belongs to (optional)</span><select name="card_id"><option value="">General section - no card</option>{cardFamilies.map(({ family, cards }) => cards.length ? <optgroup label={family.name}>{cards.map((card) => <option value={card.id} selected={section.card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null)}{unassignedCards.length ? <optgroup label="Unassigned">{unassignedCards.map((card) => <option value={card.id} selected={section.card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null}</select></label>
+        <BookMatterFields section={section} sections={workspace.guidebook}/><label class="studio-field studio-field--full"><span>Manuscript source (Markdown)</span><small>Use Read manuscript above for a formatted reading view. Pasting from Word adds plain text; saving creates a recoverable version.</small><textarea class="studio-editor" name="body_markdown">{section.body_markdown}</textarea></label>
+        <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save and return to project</button></div>
+      </fieldset></form>
+    {canWrite ? <StudioEditorialSaveBar returnToProject={`/studio/projects/${projectId}/`} formId="studio-guidebook-editor" savedLabel={`Saved as version ${section.version_number}`} saveLabel="Save and return to project" error={Boolean(error)} /> : null}
     </section>
-    <section class="studio-panel" aria-labelledby="guidebook-history-heading">
-      <p class="studio-kicker">Recoverable history</p>
-      <h2 id="guidebook-history-heading">Section versions</h2>
-      <ul class="studio-list">
-        {versions.map((version, index) => (
-          <li class="studio-card">
-            <div class="studio-card__row">
-              <div><h3>Version {version.version_number}</h3><p>{new Date(version.created_at).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</p></div>
-              {index > 0 ? (
-                <form method="post" action={`/api/studio/guidebook/${section.id}/restore`}>
-                  <input type="hidden" name="project_id" value={projectId} />
-                  <input type="hidden" name="version_id" value={version.id} />
-                  <button class="studio-link-button" type="submit">Restore this version</button>
-                </form>
-              ) : <span class="studio-status">Current</span>}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <StudioVersionHistory kind="guidebook" versions={versions} projectId={projectId} resourceId={section.id} canWrite={canWrite} references={{ cards: Object.fromEntries(workspace.cards.map((card) => [card.id, card.title])) }} />
   </main>
 </BaseLayout>

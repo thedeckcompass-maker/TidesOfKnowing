@@ -1,0 +1,36 @@
+---
+import type {Enquiry} from '../../lib/studio/quotationEvidence';
+interface Props {quote:Enquiry}
+const {quote}=Astro.props;const x=quote.quotationEvidence??{revision:0,versions:[],imports:[],events:[]};const key=()=>crypto.randomUUID();
+---
+<section class="studio-panel" data-quotation-record data-enquiry={quote.id} data-revision={x.revision}>
+ <h3>Quotation evidence — {quote.project}</h3><p>Original enquiry: {quote.id}</p><p>{quote.outcome}</p>
+ <p>Prepare and send quotations manually through Thunderbird. Import original Sent and received .eml files. Recording evidence does not send email, authorise payment, allocate services or share a project.</p>
+ <details><summary>Record a quotation version</summary><form method="post" action="/api/studio/service-records" data-service-form>
+  <input type="hidden" name="action" value="quote-version-record"/><input type="hidden" name="key" value={key()}/><input type="hidden" name="enquiryId" value={quote.id}/><input type="hidden" name="expectedRevision" value={x.revision}/>
+  <label>Exact scope<textarea name="scope" required/></label><label>Exact price<input name="priceDecimal" inputmode="decimal" required/></label><label>Currency<input name="currency" minlength="3" maxlength="3" pattern="[A-Z]{3}" required/></label><label>Applicable conditions<textarea name="conditions" required/></label>
+  <p>The creator's verified account address is recorded by the server. Earlier versions are retained. Version limit: 8,000 UTF-8 bytes; form limit: 12,000 bytes.</p><button>Record version</button><p data-result role="status"></p>
+ </form></details>
+ {x.versions.map(v=><article><h4>Version {v.versionNumber}</h4><p>{v.scope}</p><p>{v.priceDecimal} {v.currency}</p><p>{v.conditions}</p><p>Recipient at preparation: {v.recipientEmailAtPreparation}</p><p>Version hash: <code>{v.canonicalSHA256}</code></p>
+  <form data-quotation-import data-version={v.versionId} data-hash={v.canonicalSHA256} data-key={key()}>
+   <label>Original mailbox folder<select name="direction"><option value="sent">Sent</option><option value="received">Inbox / received</option></select></label><label>Original .eml (maximum 20,000,000 bytes)<input type="file" name="original" accept=".eml,message/rfc822" required/></label><button>Retain original</button><p data-result role="status"></p>
+  </form>
+  <ul>{x.imports.filter(e=>e.quotationVersionId===v.versionId).map(e=><li>{e.direction}: {e.originalFilename} — {e.captureState} — {e.byteCount} bytes <code>{e.sha256}</code>{e.captureState==='verified'&&<a href={'/api/studio/quotation-evidence/'+encodeURIComponent(quote.id)+'?evidenceId='+encodeURIComponent(e.evidenceId)}>Download original</a>}</li>)}</ul>
+  <details><summary>Verify written acceptance</summary><form method="post" action="/api/studio/service-records" data-service-form>
+   <input type="hidden" name="action" value="quote-acceptance-verify"/><input type="hidden" name="key" value={key()}/><input type="hidden" name="enquiryId" value={quote.id}/><input type="hidden" name="expectedRevision" value={x.revision}/><input type="hidden" name="versionId" value={v.versionId}/><input type="hidden" name="versionHash" value={v.canonicalSHA256}/>
+   <label>Verified outgoing original<select name="outgoingEvidenceId" required><option value="">Choose original</option>{x.imports.filter(e=>e.quotationVersionId===v.versionId&&e.direction==='sent'&&e.captureState==='verified').map(e=><option value={e.evidenceId}>{e.originalFilename} — {e.sha256}</option>)}</select></label>
+   <label>Verified received acceptance<select name="responseEvidenceId" required><option value="">Choose response</option>{x.imports.filter(e=>e.quotationVersionId===v.versionId&&e.direction==='received'&&e.captureState==='verified').map(e=><option value={e.evidenceId}>{e.originalFilename} — {e.sha256}</option>)}</select></label>
+   <label>Exact written acceptance transcription (maximum 700 characters; longer text is rejected, not truncated)<textarea name="creatorWrittenAcceptance" required/></label><label>How the creator's identity was verified (maximum 300 characters)<textarea name="identityVerification" required/></label><label><input type="checkbox" name="verified" value="true" required/>I reviewed both originals and verified the creator's explicit acceptance of this exact scope, price and conditions.</label><p>Ambiguous replies must remain unverified. This records manual verification, not payment authority or proof of email delivery.</p><button>Record verification</button><p data-result role="status"></p>
+  </form></details>
+  <details><summary>Record correspondence or a separate decision</summary><form method="post" action="/api/studio/service-records" data-service-form>
+   <input type="hidden" name="key" value={key()}/><input type="hidden" name="enquiryId" value={quote.id}/><input type="hidden" name="expectedRevision" value={x.revision}/><input type="hidden" name="versionId" value={v.versionId}/><input type="hidden" name="versionHash" value={v.canonicalSHA256}/>
+   <label>Record type<select name="action"><option value="quote-dispatch-evidence-record">Outgoing original retained (not delivery proof)</option><option value="quote-response-evidence-record">Received response retained</option><option value="quote-version-supersede">Superseded by a newer version</option><option value="quote-withdrawal-record">Withdrawal</option><option value="quote-work-authorisation-record">Separately authorised work</option><option value="quote-payment-reference-record">External payment arrangement reference</option></select></label>
+   <label>Correspondence reference<select name="evidenceId"><option value="">Not applicable</option>{x.imports.filter(e=>e.quotationVersionId===v.versionId&&e.captureState==='verified').map(e=><option value={e.evidenceId}>{e.direction} — {e.originalFilename}</option>)}</select></label>
+   <label>Replacement version<select name="replacementVersionId"><option value="">Not applicable</option>{x.versions.filter(n=>n.versionNumber>v.versionNumber).map(n=><option value={n.versionId}>Version {n.versionNumber}</option>)}</select></label><label>Separate authorisation or external reference (maximum 1,000 characters)<textarea name="note"/></label><button>Record decision</button><p data-result role="status"></p>
+  </form></details>
+ </article>)}
+ <h4>Recorded history</h4>{x.events.map(e=><article><p>{e.at} — {e.kind}</p><pre>{JSON.stringify(e,null,2)}</pre></article>)}
+ <p>Originals remain in Thunderbird. Failed or pending capture is not acceptance. Earlier evidence is never automatically deleted.</p>
+</section>
+<script>import '../../scripts/quotationEvidence';</script>
+<style>[data-quotation-record]{min-width:0;max-width:100%;overflow-wrap:anywhere}[data-quotation-record] :is(pre,code){white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}[data-quotation-record] :is(select,input,textarea){max-width:100%;min-width:0;box-sizing:border-box}[data-quotation-record] textarea{width:100%}[data-quotation-record] article{min-width:0}</style>

@@ -65,6 +65,8 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
     if (!(node instanceof HTMLFormElement) || node.dataset.submitBound === "true") return;
 
     const form = node;
+    const sendingMessage=form.dataset.authPurpose==='signup'?'Please wait while we create your account.':AUTH_OTP_SENDING_STATUS_MESSAGE;
+    const requestErrorMessage=form.dataset.authPurpose==='signup'?'Unable to complete registration right now. Please try again or sign in to your existing account.':AUTH_OTP_ERROR_MESSAGE;
     form.dataset.submitBound = "true";
     ensureAuthOtpSubmissionField(form);
 
@@ -171,7 +173,7 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
       activeSubmissionId = correlationId;
 
       setSending(true);
-      setStatus(AUTH_OTP_SENDING_STATUS_MESSAGE, true);
+      setStatus(sendingMessage, true);
 
       const formData = new FormData(form);
       formData.set("submissionId", correlationId);
@@ -198,41 +200,31 @@ export function bindAuthRegisterForms(options: AuthRegisterFormOptions) {
         }
 
         if (response.ok && payload.ok === true) {
+          for(const input of form.querySelectorAll<HTMLInputElement>('input[type="password"]'))input.value='';
           showConfirmation(email);
           setStatus("", false);
           return;
         }
 
-        lastSuccessAt = Date.now();
+        // A readable validation rejection did not initiate an email request.
+        // Keep its error visible and allow correction without a false send state.
+        lastSuccessAt = response.status === 400 ? 0 : Date.now();
         setStatus(
           typeof payload.error === "string" && payload.error.trim()
             ? payload.error
-            : AUTH_OTP_ERROR_MESSAGE,
+            : requestErrorMessage,
           true,
         );
       } catch (_error) {
         lastSuccessAt = Date.now();
-        setStatus(AUTH_OTP_ERROR_MESSAGE, true);
+        setStatus(requestErrorMessage, true);
       } finally {
-        if (card?.classList.contains(options.confirmedClass)) {
-          activeSubmissionId = null;
-        } else if (!submitted) {
-          // Inline confirmation already unlocked.
-        } else {
-          setSending(true);
-          window.setTimeout(() => {
-            if (activeSubmissionId === correlationId) {
-              submitted = false;
-              activeSubmissionId = null;
-              rotateAuthOtpSubmissionField(form);
-              setSending(false);
-              setStatus(
-                "If no email arrives, you can request another link. Please wait a full minute between requests.",
-                true,
-              );
-            }
-          }, resendCooldownMs);
-        }
+        // A completed request is no longer sending. Do not turn an error into
+        // success-like instructions on a timer. Keep the submission key after
+        // an uncertain failure; a deliberate retry must not bypass idempotency.
+        activeSubmissionId = null;
+        submitted = false;
+        setSending(false);
       }
     });
   });

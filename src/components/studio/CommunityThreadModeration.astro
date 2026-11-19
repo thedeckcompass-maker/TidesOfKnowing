@@ -1,0 +1,4 @@
+---
+const {postId,replyId='',record}=Astro.props;
+---
+<details data-thread-moderation data-post={postId} data-reply={replyId} data-expected={record.updated_at}><summary>Moderation actions</summary><div>{record.status==='hidden'?<button type="button" data-thread-action="restore">Restore content</button>:<button type="button" data-thread-action="hide">Hide {replyId?'comment':'discussion'}</button>}{!replyId&&['published','locked'].includes(record.status)&&<button type="button" data-thread-action={record.status==='locked'?'unlock':'lock'}>{record.status==='locked'?'Unlock':'Lock'} discussion</button>}<p role="status" data-thread-moderation-status></p></div></details>

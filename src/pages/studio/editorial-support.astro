@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {ownedCommunityContext} from '../../lib/studio/communityNavigation';
+import ServiceRecords from '../../components/studio/ServiceRecords.astro';
+import VideoSupportGuide from '../../components/studio/VideoSupportGuide.astro';
+import {prepareLexiconEditorialDemo} from '../../lib/studio/lexiconEditorialDemo';
+import '../../styles/studio.css';
+export const prerender=false;
+if(!Astro.locals.user)return Astro.redirect('/auth/login/?redirectTo=%2Fstudio%2Feditorial-support%2F',303);
+if(Astro.locals.profile?.id!==Astro.locals.user.id||Astro.locals.profile.status!=='active')return new Response('Your account is unavailable.',{status:403});
+Astro.response.headers.set('Cache-Control','private, no-store');Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+const context=await ownedCommunityContext(Astro.locals,Astro.url.searchParams.get('from'));
+const demonstration=await prepareLexiconEditorialDemo(Astro.locals,Astro.url.origin);
+if(demonstration){
+ (Astro.locals as any).studioServiceRecords=demonstration.provider;
+ (Astro.locals as any).studioEditorialDemonstration=demonstration.marker;
+}
+
+---
+<BaseLayout title="Editorial Support | Deck Creator Studio" description="Your editorial partnership, included services and professional editorial enquiries." studioWorkspace={true} tdcPlacement="none"><main class="studio-page page-inner editorial-partnership-page"><ServiceRecords editorial={true} editorialContext={context}/><VideoSupportGuide/></main></BaseLayout>
+<style>.editorial-partnership-page{max-width:76rem;margin-inline:auto;padding-block:0}.editorial-partnership-page :global(.service-records){max-width:none}</style>

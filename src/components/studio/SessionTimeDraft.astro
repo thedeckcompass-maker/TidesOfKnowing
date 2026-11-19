@@ -1,0 +1,27 @@
+<details class="session-draft" data-session-draft>
+  <summary>Prepare a preferred session time</summary>
+  <p>Review a time in your own time zone before discussing it with Leilia. This draft stays on this page and does not reserve a session.</p>
+  <label>Preferred date and time <input type="datetime-local" data-session-wall /></label>
+  <label>Your city time zone <input type="text" data-session-zone placeholder="Europe/London" autocomplete="off" maxlength="100" /></label>
+  <button type="button" data-session-preview disabled>Review preferred time</button>
+  <button type="button" data-session-clear disabled>Clear draft</button>
+  <p data-session-result role="status" aria-live="polite"></p>
+  <noscript><p>Enable JavaScript to review a time here, or discuss your preferred date, time and time zone directly.</p></noscript>
+</details>
+<script>
+  import {sessionTimeDraft} from '../../lib/studio/sessionTimeDraft';
+  for(const root of document.querySelectorAll<HTMLElement>('[data-session-draft]')) {
+    const wall=root.querySelector<HTMLInputElement>('[data-session-wall]')!;
+    const zone=root.querySelector<HTMLInputElement>('[data-session-zone]')!;
+    const preview=root.querySelector<HTMLButtonElement>('[data-session-preview]')!;
+    const clear=root.querySelector<HTMLButtonElement>('[data-session-clear]')!;
+    const result=root.querySelector<HTMLElement>('[data-session-result]')!;
+    zone.value=Intl.DateTimeFormat().resolvedOptions().timeZone;
+    preview.disabled=false;clear.disabled=false;
+    const invalidate=()=>{result.textContent='';};
+    wall.addEventListener('input',invalidate);zone.addEventListener('input',invalidate);
+    preview.addEventListener('click',()=>{try{result.textContent=sessionTimeDraft(wall.value,zone.value);}catch(error){result.textContent=(error as Error).message;}});
+    clear.addEventListener('click',()=>{wall.value='';zone.value='';invalidate();wall.focus();});
+  }
+</script>
+<style>.session-draft{margin-block:1.5rem}.session-draft label{display:grid;gap:.3rem;margin-block:.8rem}.session-draft input{max-width:100%;width:24rem;box-sizing:border-box;padding:.6rem;font:inherit}.session-draft button{font:inherit;margin:.4rem .5rem .4rem 0;padding:.6rem}.session-draft :is(button,input,summary):focus-visible{outline:3px solid #a47623;outline-offset:3px}</style>

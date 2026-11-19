@@ -1,0 +1,38 @@
+---
+interface Props {
+  enabled?: boolean;
+}
+
+const {enabled=false}=Astro.props;
+---
+
+{enabled&&
+  <section
+    class="community-notifications"
+    aria-label="Community notifications"
+    data-community-notifications
+  >
+    <div class="community-notification-heading">
+      <h2>Community activity</h2>
+      <span data-community-unread-count hidden aria-live="polite"></span>
+    </div>
+
+    <p data-community-activity-status role="status">
+      Checking your Community conversations.
+    </p>
+
+    <ul data-community-activity-list></ul>
+  </section>
+}
+
+<script>import '../../scripts/studioCommunityNotifications';</script>
+<style>
+.community-notifications{margin:1.2rem 0;padding:1rem;background:#fffdf9;border:1px solid #c8c3b6;border-radius:.6rem}
+.community-notification-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.community-notification-heading h2{font-size:1.2rem;margin:0}
+.community-notification-heading span{padding:.2rem .6rem;border-radius:1rem;background:#294d43;color:#fff;font-weight:700}
+.community-notifications ul{list-style:none;padding:0;margin:.8rem 0 0}
+.community-notifications li{padding:.7rem 0;border-top:1px solid #dde4dd}
+.community-notifications li[data-unread="true"]{font-weight:600}
+</style>
+

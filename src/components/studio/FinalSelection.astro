@@ -1,0 +1,15 @@
+---
+import {finalSelection} from '../../lib/studio/finalSelection';
+const {project,cards=[],deletedCardIds=[],canWrite=true}=Astro.props;
+const selection=finalSelection(project.settings,cards,deletedCardIds);
+---
+<section data-final-selection data-project={project.id} data-owner={project.owner_id} data-write={String(canWrite)}>
+<script type="application/json" data-selection-initial set:html={JSON.stringify({selection,cards:cards.map((c:any)=>({id:c.id,title:c.title,number:c.card_number})),updatedAt:project.updated_at}).replace(/</g,'\u003c')}/>
+<h2>Choose the deck as it now stands</h2><p>Make these decisions when the work is ready. Set-aside cards keep their writing, artwork and history. You can include them again or add missing cards later.</p>
+<details><summary>Sequence and printed numbers</summary><p>Drag cards or use Move up and Move down. The final position is separate from the printed number or label; nothing here renumbers your cards. Late additions need an explicit decision before final export. Early Architecture planning remains optional.</p></details>
+<div data-selection-fields></div><button type="button" data-selection-save disabled={!canWrite}>Save selection and sequence</button><details><summary>Draft recovery</summary><button type="button" data-selection-download>Download selection recovery copy</button></details>
+<h3>Selected sequence preview</h3><ol data-selection-preview></ol><p data-selection-status role="status" aria-live="polite"></p>
+<p><a href={`/studio/projects/${project.id}/exports/`}>Open manuscript exports</a></p><p>Final export requires a decision for every card and current creator approval for the included writing. A complete project ZIP keeps all cards, including set-aside work.</p>
+</section>
+<script>import {initFinalSelection} from '../../scripts/finalSelection';document.querySelectorAll<HTMLElement>('[data-final-selection]').forEach(initFinalSelection);</script>
+<style>section{max-width:65rem;padding:1.2rem;background:#faf8f2;border:1px solid #cec9c1;margin:1.5rem 0}h2,h3{font-family:Georgia,serif}p{line-height:1.65}section :global(article){padding:1rem 0;border-bottom:1px solid #cec9c1}section :global(label){display:grid;gap:.4rem}section :global(button),section :global(select){font:inherit;min-height:44px;padding:.5rem;margin:.3rem;max-width:100%}section :global(:focus-visible){outline:3px solid #315e67}section :global(small){display:block;margin:.4rem 0}</style>

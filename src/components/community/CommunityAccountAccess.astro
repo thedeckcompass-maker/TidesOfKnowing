@@ -138,6 +138,7 @@ const lastSignedIn = formatLastSignedIn(lastSignedInAt);
     }
 
     function setSending(isSending: boolean) {
+      if (!(button instanceof HTMLButtonElement)) return;
       button.disabled = isSending;
       button.textContent = isSending ? AUTH_OTP_SENDING_BUTTON_TEXT : defaultText;
     }

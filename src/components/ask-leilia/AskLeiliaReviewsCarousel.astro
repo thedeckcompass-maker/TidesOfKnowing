@@ -214,13 +214,16 @@ function reviewBodyParagraphs(body: string): string[] {
         askReviewsWrapPage,
       } from "../../lib/ask-leilia/reviews/carouselGeometry";
 
-      function initAskReviewsDialog(root) {
-        if (!(root instanceof HTMLElement) || root.dataset.dialogBound === "true") return;
+      function initAskReviewsDialog(candidate: Element) {
+        if (!(candidate instanceof HTMLElement)) return;
+        const root = candidate;
+        if (root.dataset.dialogBound === "true") return;
         root.dataset.dialogBound = "true";
         root.dataset.enhanced = "true";
 
-        const dialog = root.querySelector("[data-ask-reviews-dialog]");
-        if (!(dialog instanceof HTMLDialogElement)) return;
+        const dialogCandidate = root.querySelector("[data-ask-reviews-dialog]");
+        if (!(dialogCandidate instanceof HTMLDialogElement)) return;
+        const dialog = dialogCandidate;
 
         const titleEl = dialog.querySelector("[data-ask-reviews-dialog-title]");
         const bodyEl = dialog.querySelector("[data-ask-reviews-dialog-body]");
@@ -229,11 +232,11 @@ function reviewBodyParagraphs(body: string): string[] {
         const verifiedEl = dialog.querySelector("[data-ask-reviews-dialog-verified]");
         const dateEl = dialog.querySelector("[data-ask-reviews-dialog-date]");
         const closeBtn = dialog.querySelector("[data-ask-reviews-dialog-close]");
-        let lastTrigger = null;
+        let lastTrigger: Element | null = null;
 
         const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
 
-        function syncCard(card) {
+        function syncCard(card: Element) {
           if (!(card instanceof HTMLElement)) return;
           const body = card.querySelector("[data-ask-reviews-quote]");
           const button = card.querySelector("[data-ask-reviews-more]");
@@ -246,7 +249,7 @@ function reviewBodyParagraphs(body: string): string[] {
           cards.forEach(syncCard);
         }
 
-        function openDialog(card, trigger) {
+        function openDialog(card: Element, trigger: Element) {
           if (!(card instanceof HTMLElement)) return;
           const template = card.querySelector("[data-ask-reviews-full-template]");
           if (
@@ -318,25 +321,28 @@ function reviewBodyParagraphs(body: string): string[] {
         }
       }
 
-      function initAskReviewsCarousel(root) {
-        if (!(root instanceof HTMLElement) || root.dataset.bound === "true") return;
+      function initAskReviewsCarousel(candidate: Element) {
+        if (!(candidate instanceof HTMLElement)) return;
+        const root = candidate;
+        if (root.dataset.bound === "true") return;
         root.dataset.bound = "true";
 
-        const viewport = root.querySelector("[data-ask-reviews-viewport]");
-        const track = root.querySelector("[data-ask-reviews-track]");
+        const viewportCandidate = root.querySelector("[data-ask-reviews-viewport]");
+        const trackCandidate = root.querySelector("[data-ask-reviews-track]");
         const prev = root.querySelector("[data-ask-reviews-prev]");
         const next = root.querySelector("[data-ask-reviews-next]");
         const controls = root.querySelector("[data-ask-reviews-controls]");
         const dotsHost = root.querySelector("[data-ask-reviews-dots]");
         const live = root.querySelector("[data-ask-reviews-live]");
         const cards = Array.from(root.querySelectorAll("[data-ask-reviews-card]"));
-        if (!(viewport instanceof HTMLElement) || !(track instanceof HTMLElement) || cards.length < 1) {
+        if (!(viewportCandidate instanceof HTMLElement) || !(trackCandidate instanceof HTMLElement) || cards.length < 1) {
           return;
         }
 
+        const viewport = viewportCandidate, track = trackCandidate;
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let page = 0;
-        let dots = [];
+        let dots: HTMLButtonElement[] = [];
         let layout = { perPage: 1, pageCount: 1, viewportWidth: 0, gap: 0, cardWidth: 0 };
 
         function readGap() {
@@ -452,12 +458,12 @@ function reviewBodyParagraphs(body: string): string[] {
           updateUi();
         }
 
-        function goToPage(nextPage) {
+        function goToPage(nextPage: number) {
           page = askReviewsClampPage(nextPage, layout.pageCount);
           updateUi();
         }
 
-        function step(delta) {
+        function step(delta: number) {
           if (layout.pageCount <= 1) return;
           page = askReviewsWrapPage(page, delta, layout.pageCount);
           updateUi();

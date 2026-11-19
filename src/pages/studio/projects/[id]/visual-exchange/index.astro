@@ -1,0 +1,18 @@
+---
+import {validateExchangeArchive} from '../../../../../lib/studio/visualExchangeArchive';
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import VisualExchangeWorkspace from '../../../../../components/studio/VisualExchangeWorkspace.astro';
+import {exchangeStore} from '../../../../../lib/studio/artistDirectory';
+import {exchangeSource} from '../../../../../lib/studio/visualExchange';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+const user=Astro.locals.user,store=exchangeStore(Astro.locals);
+if(!user||Astro.locals.profile?.id!==user.id||Astro.locals.profile.status!=='active')return new Response('Sign in with your existing account.',{status:401});
+if(!store)return new Response('Hosted Visual Design Exchange is not connected.',{status:503});
+let source;try{source=await exchangeSource(Astro.locals.supabase!,user.id,Astro.params.id!);}catch{return new Response('Project not found.',{status:404});}
+const archived=await validateExchangeArchive(source.project.settings?.visual_exchange_history_v1,user.id,source.project.id);
+---
+<BaseLayout title="Visual Design Exchange | Deck Creator Studio" description="Prepare a private visual brief and choose what to share with artists." studioWorkspace={true} studioProjectId={source.project.id} tdcPlacement="none"><main class="studio-page page-inner exchange-page"><StudioHeader title="Visual Design Exchange" projectId={source.project.id} eyebrow={source.project.name}/>{(archived?.records?.length??0)>0&&<section class="studio-panel" data-archived-exchange><h2>Private archived Exchange history</h2><p>Imported history only. Nothing here is shared with artists; no enquiry or introduction is active. Original participants and dates are unverified archive provenance.</p>{archived?.records.map(r=><details><summary>{r.evidence.title} · version {r.evidence.version} · originally {r.evidence.status}</summary><p style="white-space:pre-wrap">{r.evidence.selected_text}</p>{r.evidence.status==='draft'&&<p>This was your private draft. You may copy its words into a new draft below; review the current source and images before sharing.</p>}{r.evidence.images.map(i=><figure><img src={i.image} alt="Archived selected example" width="180"/><figcaption>{i.note}</figcaption></figure>)}{r.evidence.enquiries.map(e=><section><h3>Recorded enquiry from {e.artist_name}</h3><p style="white-space:pre-wrap">{e.message}</p></section>)}</details>)}</section>}<VisualExchangeWorkspace source={source} canPost={await store.canExchange(user.id)} priorId={Astro.url.searchParams.get('revision')??''}/></main></BaseLayout>
+
+<style>.exchange-page :global(.studio-header){margin-bottom:1rem;padding-bottom:.8rem}.exchange-page :global(.studio-header h1){font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.15}.exchange-page :global(.exchange-intro){margin-top:0}</style>

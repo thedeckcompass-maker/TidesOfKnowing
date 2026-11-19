@@ -1,0 +1,44 @@
+---
+import {billingConfigurationEnabled} from '../../lib/studio/billingEnvironment';
+import DcsPublicLayout from '../../layouts/DcsPublicLayout.astro';
+import {servicePurchase} from '../../lib/studio/servicePurchase';
+import {STANDARD_OFFERS} from '../../lib/studio/serviceOffers';
+import CheckoutSummary from '../../components/studio/CheckoutSummary.astro';
+export const prerender=false;
+const offer=Astro.url.searchParams.get('offer');
+const choice=servicePurchase(offer,Astro.url.searchParams.get('billing')??(offer==='create'?'monthly':'once'));
+if(!choice)Astro.response.status=400;
+const item=choice?STANDARD_OFFERS[choice.offer as 'create'|'collaborate'|'develop']:null;
+const billingEnabled=billingConfigurationEnabled(Astro.locals.serverRuntime?.env);
+const enabled=billingEnabled&&!!Astro.locals.user&&Astro.locals.user.id===Astro.locals.profile?.id&&Astro.locals.profile?.status==='active';
+const continuation=choice?'/deck-creator-studio/checkout/?offer='+choice.offer+'&billing='+choice.billing:'';
+const signInHref='/auth/login/?redirectTo='+encodeURIComponent(continuation);
+const joinHref='/auth/register/?mode=join&redirectTo='+encodeURIComponent(continuation);
+const retryKey=crypto.randomUUID();
+Astro.response.headers.set('Cache-Control','no-store');
+---
+<DcsPublicLayout page="checkout" title="Your Studio choice | Tides of Knowing" description="Review your selected Deck Creator Studio pathway and payment arrangement.">
+{choice&&item?<>
+<p class="purchase-steps">Choose a pathway → Payment → Secure checkout → Confirmation</p>
+<div class="intro"><p class="eyebrow">{choice.name}</p><h1>Choose your payment arrangement.</h1><p>Your pathway is selected. Review the schedule and total before continuing.</p></div>
+<form id="payment-selection" data-offer={choice.offer} data-enabled={enabled?'true':'false'} method={enabled?'post':'get'} action={enabled?'/api/studio/checkout/':'/deck-creator-studio/checkout/'}>
+<input type="hidden" name="offer" value={choice.offer}/><input type="hidden" name="retryKey" value={retryKey}/>
+<div class="purchase-grid"><section class="card"><fieldset class="arrangements"><legend>Payment arrangement</legend>
+{choice.offer==='create'?<>
+<label class="choice-row" for="billing-monthly"><input id="billing-monthly" type="radio" name="billing" value="monthly" checked={choice.billing==='monthly'} aria-describedby="note-monthly"/><span><strong>US$12 monthly</strong><small id="note-monthly">Pay monthly.</small></span></label>
+<label class="choice-row" for="billing-annual"><input id="billing-annual" type="radio" name="billing" value="annual" checked={choice.billing==='annual'} aria-describedby="note-annual"/><span><strong>US$120 annually</strong><small id="note-annual">Save US$24 compared with 12 monthly payments.</small></span></label>
+</>:<>
+<label class="choice-row" for="billing-once"><input id="billing-once" type="radio" name="billing" value="once" checked={choice.billing==='once'}/><span><strong>Pay once</strong><small>US${'price' in item?item.price.toLocaleString('en-US'):''} at enrollment.</small></span></label>
+<label class="choice-row" for="billing-instalments"><input id="billing-instalments" type="radio" name="billing" value="instalments" checked={choice.billing==='instalments'}/><span><strong>{'payments' in item?item.payments:0} monthly payments of US${'instalment' in item?item.instalment:0}</strong><small>US${'total' in item?item.total.toLocaleString('en-US'):''} total.</small></span></label>
+</>}</fieldset>
+{choice.offer==='create'?<p class="compact-note">Stopping renewal preserves your current paid period. Your account and work remain yours.</p>:<p class="compact-note">These are fixed pathway payments, not a cancel-anytime subscription. Existing purchases retain their recorded terms.</p>}
+</section><CheckoutSummary choice={choice}/></div>
+<p id="selection-announcement" class="compact-note" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="card"><label><input type="checkbox" name="termsAccepted" value="yes" required/> I've reviewed my payment schedule and total.</label>
+{enabled&&<label>Name for your enrollment <input name="name" required maxlength="200" autocomplete="name"/></label>}
+<div class="form-actions"><button type="submit" disabled={!enabled}>Continue to secure payment</button></div>
+{!billingEnabled?<p class="compact-note">Online purchasing is not open yet. No payment has been taken and no program has started.</p>:!Astro.locals.user?<p><a data-studio-checkout-auth href={signInHref}>Sign in</a> · <a data-studio-checkout-auth href={joinHref}>Create an account</a> to continue with your selected pathway.</p>:!enabled?<p>Purchasing requires an active account. No payment has been taken.</p>:Astro.locals.serverRuntime?.env.STUDIO_BILLING_TEST_ENABLED==='true'&&<p>Test checkout. No live payment will be taken.</p>}
+</div></form>
+</>:<p>Choose a pathway before continuing. <a href="/deck-creator-studio/pricing/">Compare the pathways</a>.</p>}
+<script slot="scripts" is:inline src="/dcs-approved/summary.js" defer></script><script slot="scripts" is:inline src="/dcs-approved/checkout.js" defer></script>
+</DcsPublicLayout>

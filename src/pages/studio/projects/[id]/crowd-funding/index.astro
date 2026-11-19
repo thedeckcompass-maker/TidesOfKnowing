@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import StudioReadableText from '../../../../../components/studio/StudioReadableText.astro';
+import StudioFormFeedback from '../../../../../components/studio/StudioFormFeedback.astro';
+import {studioAccountAccessResponse as studioAccessResponse,studioProjectWriteAccessResponse as studioWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProject,getStudioJournalEntry,getStudioJournalMedia} from '../../../../../lib/studio/queries';
+import {STUDIO_EXCERPT_PURPOSES} from '../../../../../lib/studio/types';
+export const prerender=false;
+const denied=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);if(denied)return denied;
+const projectId=Astro.params.id,client=Astro.locals.supabase;
+const project=projectId&&client?await getStudioProject(client,projectId):null;if(!project||!client)return new Response('Not found',{status:404});
+const canWrite=!await studioWriteAccessResponse(Astro.locals.user,Astro.locals.profile,client,Astro.params.id);
+const [choicesResult,updatesResult]=await Promise.all([client.from('studio_journal_entries').select('id,title,updated_at').eq('project_id',project.id).order('updated_at',{ascending:false}),client.from('studio_journal_excerpts').select('*').eq('project_id',project.id).order('created_at',{ascending:false})]);
+if(choicesResult.error||updatesResult.error)return new Response('Journey updates could not be loaded. No writing has been changed.',{status:503});
+const entries=choicesResult.data??[],updates=updatesResult.data??[];
+const selectedId=Astro.url.searchParams.get('entry');
+const selected=selectedId&&entries.some(row=>row.id===selectedId)?await getStudioJournalEntry(client,project.id,selectedId):null;
+const media=selected?await getStudioJournalMedia(client,project.id,selected.id):null;
+const label=(value:string)=>value.replaceAll('_',' ');
+---
+<BaseLayout title={`Crowd Funding | ${project.name}`} description="Prepare private journey updates from your project journal." metaRobots="noindex, nofollow" tdcPlacement="none">
+<main class="studio-page studio-release-page page-inner"><StudioHeader title="Crowd Funding" eyebrow={project.name} lede="Prepare updates about this deck's progress. Nothing here publishes to Kickstarter or another service." projectId={project.id}/>
+{Astro.url.searchParams.get('excerpt')==='1'?<p class="studio-notice" role="status">Your private journey update was prepared.</p>:null}
+{Astro.url.searchParams.get('error')?<p class="studio-notice" role="alert">{Astro.url.searchParams.get('error')}</p>:null}
+<section class="studio-panel"><h2>Prepare a journey update</h2><p>Choose a journal entry, then select the text you want to use in a Kickstarter update or when sharing your deck's progress elsewhere. You can associate one photograph from that entry. The original journal and the prepared copy stay private; publishing elsewhere is a separate action you control.</p>
+{entries.length?<form class="studio-form" method="get"><label class="studio-field"><span>Choose a journal entry from {project.name}</span><select name="entry" required><option value="">Choose an entry</option>{entries.map(entry=><option value={entry.id} selected={entry.id===selected?.id}>{entry.title}</option>)}</select></label><button class="studio-button" type="submit">Open selected entry</button></form>:<p>No journal entries yet. <a href={`/studio/projects/${project.id}/journal/#new-entry-heading`}>Write a journal entry</a> before preparing an update.</p>}
+{selectedId&&!selected?<p role="alert">Choose an entry belonging to this project.</p>:null}
+</section>
+{selected?<section class="studio-panel"><h2>From: {selected.title}</h2><details class="studio-reading-source"><summary>Read this private source entry</summary><StudioReadableText value={selected.body_markdown}/></details><p><a href={`/studio/projects/${project.id}/journal/${selected.id}/#journal-photographs`}>View this entry's photographs</a></p>
+{canWrite?<><form id="studio-journey-update" class="studio-form" method="post" action={`/api/studio/journal/${selected.id}/excerpts`}><input type="hidden" name="project_id" value={project.id}/><input type="hidden" name="return_to" value="crowd-funding"/>
+<label class="studio-field"><span>Update purpose</span><select name="purpose">{STUDIO_EXCERPT_PURPOSES.map(purpose=><option value={purpose}>{label(purpose)}</option>)}</select></label><label class="studio-field"><span>Update title</span><input name="excerpt_title" maxlength="160" required/></label><label class="studio-field"><span>Text to include</span><small>Copy only the parts you want to use from the source entry above. Review and remove private details before downloading or posting elsewhere.</small><textarea name="excerpt_text" maxlength="5000" required/></label><label class="studio-field"><span>Optional photograph from this entry</span><select name="photo_id"><option value="">No photograph</option>{media?.photos.map(photo=><option value={photo.id}>{photo.caption||'Journal photograph'}</option>)}</select></label><p>Downloads currently contain the update text only. A selected photograph is associated with the update but is not included in that file. Open the source entry's photographs and save the image separately if you want to use it.</p><label class="studio-check"><input type="checkbox" name="confirm_controlled_copy" required/><span>I understand this makes a separate private copy and does not publish anything.</span></label><button class="studio-button" type="submit">Prepare private journey update</button></form><StudioFormFeedback formId="studio-journey-update" targetPath={`/studio/projects/${project.id}/crowd-funding/`} successParam="excerpt"/></>:<p>This project is currently read-only.</p>}
+</section>:null}
+<section class="studio-panel" id="journey-updates"><h2>Prepared journey updates</h2>{updates.length?<ul class="studio-list">{updates.map(update=><li class="studio-card"><h3>{update.title}</h3><p>Purpose: {label(update.purpose)} · Source: {entries.find(entry=>entry.id===update.journal_entry_id)?.title??'Journal entry'}</p><StudioReadableText value={update.excerpt_text}/><a class="studio-link-button" href={`/studio/projects/${project.id}/exports/#private-exports`}>Open prepared update exports</a>{update.photo_id?<p>A photograph is associated with this update. <a href={`/studio/projects/${project.id}/journal/${update.journal_entry_id}/#journal-photographs`}>View source photographs</a>; save your chosen image separately.</p>:null}</li>)}</ul>:<p>No journey updates prepared yet.</p>}</section>
+<section class="studio-panel"><h2>To be developed</h2><p>Additional Crowd Funding guidance and resources will be added here. This is not a complete crowdfunding service.</p></section></main>
+</BaseLayout>

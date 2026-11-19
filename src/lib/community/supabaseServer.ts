@@ -1,3 +1,4 @@
+import {authCookieOptions} from './authPersistence';
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { createServerClient, parseCookieHeader, type CookieOptionsWithName } from "@supabase/ssr";
 import type { AstroCookies } from "astro";
@@ -62,14 +63,15 @@ export function createCommunityServerClient(
   return createServerClient(env.supabaseUrl, env.supabaseAnonKey, {
     cookies: {
       getAll() {
-        return parseCookieHeader(request.headers.get("Cookie") ?? "");
+        return parseCookieHeader(request.headers.get("Cookie") ?? "")
+          .filter((cookie): cookie is { name: string; value: string } => typeof cookie.value === "string");
       },
       setAll(cookiesToSet, headers) {
         const store = cookies as AstroCookieStoreWithSet;
         if (typeof store.set !== "function") return;
 
         cookiesToSet.forEach(({ name, value, options }) => {
-          store.set(name, value, toAstroCookieOptions(options));
+          store.set(name, value, authCookieOptions(toAstroCookieOptions(options),cookies));
         });
 
         if (responseHeaders) {

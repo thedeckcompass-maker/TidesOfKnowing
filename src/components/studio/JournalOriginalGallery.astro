@@ -1,0 +1,36 @@
+---
+const {project,entry,photos}=Astro.props;
+---
+<div data-journal-original-gallery data-project={project.id} data-entry={entry.id} data-stamp={entry.updated_at}>
+ <p>Keep up to five current photographs, with earlier originals retained privately. Originals may contain camera or location metadata. Nothing here is published or automatically added to a journey update.</p>
+ <ul class="studio-photo-grid" data-photo-list></ul>
+ <details><summary>Earlier photographs retained privately</summary><ul data-photo-history></ul></details>
+ <form class="studio-form" data-original-photo-form>
+  <label class="studio-field"><span>Photograph</span><input type="file" accept="image/jpeg,image/png,image/webp" required data-original-file/><small>Static JPEG, PNG or WebP up to 20 MiB; working preview stored separately.</small></label>
+  <label class="studio-field"><span>Replace a current photograph</span><select data-journal-replace data-help-key="journal.replacePhoto"><option value="">Add a new photograph</option></select></label>
+  <label class="studio-field"><span>Caption</span><input name="caption" maxlength="240"/></label>
+  <button type="submit" class="studio-button">Save photograph privately</button>
+  <button type="button" class="studio-text-button" data-download-pending hidden>Download unsaved original</button>
+ </form>
+ <p role="status" aria-live="polite" data-original-photo-status></p>
+ <script type="application/json" data-photo-data set:html={JSON.stringify({photos,registry:project.settings.original_artwork_v1??{assets:[]}}).replaceAll('<','\\u003c')}/>
+</div>
+<style is:global>
+ [data-journal-original-gallery] ul{list-style:none;padding:0;display:grid;gap:1.25rem;margin:1rem 0}
+ [data-journal-original-gallery] li{display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;min-width:0;overflow-wrap:anywhere}
+ [data-journal-original-gallery] img{display:block;width:100%;height:auto;object-fit:contain}
+ [data-journal-original-gallery] details{margin:1rem 0}
+ [data-journal-original-gallery] form{margin-top:1rem}
+</style>
+<script>
+ import {prepareArtworkPreview} from '../../lib/studio/originalArtworkClient';
+ for(const root of document.querySelectorAll<HTMLElement>('[data-journal-original-gallery]')){
+ const form=root.querySelector<HTMLFormElement>('form')!,file=form.querySelector<HTMLInputElement>('[data-original-file]')!,caption=form.querySelector<HTMLInputElement>('[name=caption]')!,select=form.querySelector<HTMLSelectElement>('select')!,status=root.querySelector<HTMLElement>('[role=status]')!,download=form.querySelector<HTMLButtonElement>('[data-download-pending]')!;let data=JSON.parse(root.querySelector('[data-photo-data]')!.textContent!),pending:any=null,busy=false;
+ const endpoint=`/api/local-journal/${root.dataset.project}/${root.dataset.entry}`;
+ const send=async(details:any,source?:File,preview?:Blob)=>{const body=new FormData();body.set('details',JSON.stringify({...details,expectedEntryUpdatedAt:root.dataset.stamp}));if(source){body.set('original',source);body.set('preview',preview!,'preview.jpg')}const r=await fetch(endpoint,{method:'POST',body});const result=await r.json();if(!r.ok)throw Error(result.error);return result};
+ const render=()=>{const current=data.photos.filter((p:any)=>!p.retired_at);select.replaceChildren(new Option('Add a new photograph',''));for(const p of current)select.add(new Option(p.caption||'Photograph',p.id));for(const [query,items]of [['[data-photo-list]',current],['[data-photo-history]',data.photos.filter((p:any)=>p.retired_at)]] as const){const list=root.querySelector(query)!;list.replaceChildren();for(const p of items){const li=document.createElement('li'),asset=data.registry?.assets?.find((a:any)=>a.journalPhotoId===p.id),img=document.createElement('img');img.src=`/api/local-assets/${p.id}`;img.alt=p.caption||'Private journal photograph';img.style.maxWidth='220px';li.append(img,document.createTextNode(p.caption||'No caption'));if(asset){const a=document.createElement('a');a.href=`/api/local-artwork/${root.dataset.project}/${asset.id}`;a.textContent='Download retained original';li.append(a)}if(!p.retired_at){const b=document.createElement('button');b.type='button';b.className='studio-text-button';b.textContent='Remove from current entry';b.onclick=async()=>{if(busy)return;busy=true;try{data=await send({action:'detach',photoId:p.id});render();status.textContent=data.message}catch(e){status.textContent=(e as Error).message}finally{busy=false}};li.append(b)}list.append(li)}}};render();
+ file.addEventListener('change',()=>{pending=null;download.hidden=true});caption.addEventListener('input',()=>pending=null);select.addEventListener('change',()=>pending=null);
+ download.onclick=()=>{if(!pending)return;const a=document.createElement('a'),url=URL.createObjectURL(pending.source);a.href=url;a.download=pending.source.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+ form.addEventListener('submit',async e=>{e.preventDefault();if(busy)return;busy=true;const submit=form.querySelector<HTMLButtonElement>('[type=submit]')!;submit.disabled=true;try{if(!pending){const source=file.files?.[0];if(!source)throw Error('Choose a photograph.');pending={source,preview:(await prepareArtworkPreview(source)).preview,details:{requestId:crypto.randomUUID(),caption:caption.value,replacesPhotoId:select.value||null}}}download.hidden=false;status.textContent='Saving photograph privately…';data=await send(pending.details,pending.source,pending.preview);render();status.textContent=data.message;pending=null;download.hidden=true;form.reset()}catch(e){status.textContent='Could not confirm the save. '+(e as Error).message+' Your writing and selected original remain on this page.'}finally{busy=false;submit.disabled=false}});
+ }
+</script>

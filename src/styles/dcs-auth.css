@@ -1,0 +1,26 @@
+/* Account surfaces only; preserve the approved broader DCS presentation. */
+.dcs-fidelity .dcs-auth{font-family:Inter,Arial,sans-serif;color:#17334d;padding:2rem 1rem 4rem}
+.dcs-fidelity .dcs-auth::before,.dcs-fidelity .dcs-auth::after{display:none}
+#main .dcs-auth.dcs-auth .auth-card,#main .dcs-auth.dcs-auth .password-card{max-width:36rem;margin:1rem auto;padding:clamp(1.25rem,4vw,2.5rem);background:#F2EFE9;color:#17334d;border:1px solid #065e73;border-radius:.75rem;box-shadow:none}
+#main .dcs-auth.dcs-auth h1,#main .dcs-auth.dcs-auth h2,#main .dcs-auth.dcs-auth h3{font-family:'Playfair Display',Georgia,serif;color:#065e73;line-height:1.2}
+#main .dcs-auth.dcs-auth h1{font-size:clamp(1.9rem,5vw,2.75rem)}
+#main .dcs-auth.dcs-auth p,#main .dcs-auth.dcs-auth label,#main .dcs-auth.dcs-auth legend{color:#17334d;line-height:1.65}
+#main .dcs-auth.dcs-auth .auth-kicker{color:#065e73;font-weight:600}
+#main .dcs-auth.dcs-auth a{color:#065e73;text-decoration:underline;text-underline-offset:.2em}
+#main .dcs-auth.dcs-auth form{display:grid;gap:.85rem}
+#main .dcs-auth.dcs-auth input{font:inherit;box-sizing:border-box;background:#fff;color:#17334d;border:1px solid #065e73;border-radius:.3rem;min-height:2.75rem;padding:.7rem;width:100%;opacity:1}
+#main .dcs-auth.dcs-auth input::placeholder{color:#526269;opacity:1}
+#main .dcs-auth.dcs-auth button{font:inherit;font-weight:600;min-height:2.75rem;padding:.7rem 1rem;background:#C6A85A;color:#17334d;border:1px solid #065e73;border-radius:.3rem;cursor:pointer;opacity:1}
+#main .dcs-auth.dcs-auth button:hover{background:#dac386;color:#17334d}
+#main .dcs-auth.dcs-auth button:disabled{background:#e2ddd2;color:#45545b;border-color:#526269;opacity:1;cursor:wait}
+#main .dcs-auth.dcs-auth .password-toggle,#main .dcs-auth.dcs-auth [data-register-password]{background:#F2EFE9;color:#065e73;border-color:#065e73}
+#main .dcs-auth.dcs-auth :is(a,input,button):focus-visible{outline:3px solid #065e73;outline-offset:3px}
+#main .dcs-auth.dcs-auth .auth-notice,#main .dcs-auth.dcs-auth .password-notice{background:#fff;color:#17334d;border:2px solid #065e73;padding:1rem;margin:1rem 0}
+#main .dcs-auth.dcs-auth :is(.auth-notice--error,.password-notice--error){border-color:#8a2727;color:#8a2727}
+#main .dcs-auth.dcs-auth :is(.auth-notice--error,.password-notice--error) :is(p,strong){color:#8a2727}
+#main .dcs-auth.dcs-auth [role=status]{color:#17334d}
+#main .dcs-auth.dcs-auth .register-name{border:0;padding:0;margin:0}#main .dcs-auth.dcs-auth .register-name>div{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+#main .dcs-auth.dcs-auth .register-password>div{display:flex;gap:.5rem;align-items:center}#main .dcs-auth.dcs-auth .register-password input{flex:1;min-width:0}
+#main .dcs-auth.dcs-auth .remember-choice{display:flex;gap:.6rem;align-items:center}#main .dcs-auth.dcs-auth .remember-choice input{width:1.2rem;min-height:1.2rem;accent-color:#065e73}
+#main .dcs-auth.dcs-auth [hidden]{display:none!important}
+@media(max-width:480px){#main .dcs-auth.dcs-auth .register-name>div{grid-template-columns:1fr}#main .dcs-auth.dcs-auth .register-password>div{flex-wrap:wrap}}

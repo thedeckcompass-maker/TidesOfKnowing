@@ -1,0 +1,16 @@
+---
+import { legacyReadingMarkdown } from '../../lib/studio/readingText';
+import MarkdownIt from 'markdown-it';
+interface Props { value: string; legacyProse?: boolean; }
+const { value, legacyProse = false } = Astro.props;
+const markdown = new MarkdownIt({ html: false, linkify: false, typographer: false });
+// Reading a private manuscript must not fetch external images or execute author HTML.
+markdown.renderer.rules.image = (tokens, index) => {
+  const token = tokens[index];
+  const label = markdown.utils.escapeHtml(token.content || 'Image reference');
+  const source = token.attrGet('src') || '';
+  return source && markdown.validateLink(source)
+    ? `<a href="${markdown.utils.escapeHtml(source)}">${label} (image reference)</a>` : label;
+};
+---
+{value ? <div class="studio-readable-prose" set:html={markdown.render(legacyProse ? legacyReadingMarkdown(value) : value)} /> : <p class="studio-readable-empty">No writing recorded in this field.</p>}

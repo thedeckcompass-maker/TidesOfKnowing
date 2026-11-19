@@ -1,0 +1,5 @@
+import type {APIRoute} from 'astro';
+import {studioReadAccessResponse} from '../../../../../../lib/studio/access';
+import {exportJournal} from '../../../../../../lib/studio/journalExport';
+export const prerender=false;
+export const GET:APIRoute=async({locals,params,url})=>{const denied=await studioReadAccessResponse(locals.user,locals.profile,locals.supabase);if(denied)return denied;if(!locals.user||!locals.supabase||!params.id)return new Response('Not found',{status:404});const headers={'Cache-Control':'private,no-store','X-Content-Type-Options':'nosniff'};try{const mode=url.searchParams.get('scope');if(!['all','selected'].includes(mode??''))return new Response('Choose all or selected entries.',{status:400,headers});const bytes=await exportJournal(locals.supabase,locals.user.id,params.id,mode==='all'?null:url.searchParams.getAll('entry'));return new Response(new Uint8Array(bytes).buffer,{headers:{...headers,'Content-Type':'application/zip','Content-Disposition':'attachment; filename="my-private-journal.zip"'}});}catch(e){return new Response((e as Error).message,{status:(e as Error).message==='Project not found.'?404:409,headers});}};

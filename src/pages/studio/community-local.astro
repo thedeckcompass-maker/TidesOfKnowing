@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/studio.css';
+export const prerender = false;
+
+const host = Astro.url.hostname.toLowerCase();
+if (host !== 'localhost' && host !== '127.0.0.1') {
+  return new Response('Not found', { status: 404 });
+}
+Astro.response.headers.set('Cache-Control', 'private, no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+
+const threads = [
+  {
+    author: 'Maya R. · Example member',
+    date: '2 November 2026',
+    question: 'How do I know whether my deck has a distinctive central idea?',
+    replies: [
+      { name: 'Leilia · Example response', text: 'Begin with what the deck enables someone to recognise, practise or understand. The distinctive proposition often emerges from that purpose rather than from the imagery alone.' },
+      { name: 'Thomas · Example member', text: 'That distinction helped me. I was describing my artwork rather than what someone could actually do with the cards.' }
+    ]
+  },
+  {
+    author: 'Amara · Example member',
+    date: '1 November 2026',
+    question: 'Should I decide on the number of cards before I develop the framework?',
+    replies: [
+      { name: 'Sophie · Example member', text: 'I started with twelve themes and realised several needed more than one card.' },
+      { name: 'Leilia · Example response', text: 'A provisional structure is useful, but it need not become a constraint. Let the relationship between the ideas help determine the final collection.' },
+      { name: 'Amara · Example member', text: 'I think I will map the themes first and leave the final count open.' }
+    ]
+  },
+  {
+    author: 'Daniel · Example member',
+    date: '31 October 2026',
+    question: 'Can a coaching deck work without traditional tarot or oracle symbolism?',
+    replies: [
+      { name: 'Leilia · Example response', text: 'Certainly. A deck can be organised around exercises, decisions, questions or a professional methodology. Its coherence matters more than whether it follows an established symbolic system.' }
+    ]
+  },
+  {
+    author: 'Priya · Example member',
+    date: '30 October 2026',
+    question: 'How do other creators distinguish their private research from writing intended for readers?',
+    replies: []
+  }
+];
+---
+
+<BaseLayout
+  title="Community demonstration | Deck Creator Studio"
+  description="Local demonstration of fictional Deck Creator Studio community conversations."
+  metaRobots="noindex, nofollow"
+  tdcPlacement="none"
+  studioWorkspace={true}
+>
+  <main class="studio-page page-inner demo">
+    <p class="studio-eyebrow">Private interface demonstration</p>
+    <h1>Community conversations</h1>
+    <p class="notice"><strong>Fictional demonstration.</strong> These people, questions and replies are examples only. Nothing here is published to the Community database.</p>
+    <p>Previewing how several conversations could appear within The Spark.</p>
+
+    <section aria-label="Example Community discussions" class="threads">
+      {threads.map((thread, i) => (
+        <article class="thread">
+          <div class="thread-meta">
+            <span>{thread.author}</span>
+            <span>{thread.date}</span>
+          </div>
+          <h2>{thread.question}</h2>
+          <details open={i < 2}>
+            <summary>{thread.replies.length === 0 ? 'No replies yet' : `${thread.replies.length} ${thread.replies.length === 1 ? 'reply' : 'replies'}`}</summary>
+            {thread.replies.map(reply => (
+              <div class="reply">
+                <strong>{reply.name}</strong>
+                <p>{reply.text}</p>
+              </div>
+            ))}
+            {thread.replies.length === 0 && <p>This conversation is awaiting its first response.</p>}
+          </details>
+        </article>
+      ))}
+    </section>
+
+    <p><a href="/studio/community/">Return to the actual Community</a></p>
+  </main>
+</BaseLayout>
+
+<style>
+  .demo { max-width: 62rem; }
+  .demo h1 { font-family: var(--font-heading); }
+  .notice { padding: 1rem; background: #f3ecdf; border-left: 3px solid #a47b28; }
+  .threads { display: grid; gap: 1rem; margin: 2rem 0; }
+  .thread { background: #fffdf7; border: 1px solid #c8c3b6; border-radius: .6rem; padding: 1.5rem; }
+  .thread-meta { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .85rem; color: #58656a; }
+  .thread h2 { font-family: var(--font-heading); font-size: clamp(1.2rem, 2vw, 1.6rem); margin: .75rem 0 1rem; }
+  .thread summary { cursor: pointer; color: #07546a; font-weight: 600; padding: .5rem 0; }
+  .reply { margin: .8rem 0 0 1rem; padding: .8rem 1rem; background: #eef3ef; border-left: 3px solid #58705b; }
+  .reply p { margin: .35rem 0 0; line-height: 1.6; }
+  .demo :focus-visible { outline: 3px solid #b88b37; outline-offset: 3px; }
+  @media(max-width:600px) { .thread { padding: 1rem; } .reply { margin-left: .25rem; } }
+</style>
+

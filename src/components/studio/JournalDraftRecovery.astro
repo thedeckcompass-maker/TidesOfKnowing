@@ -1,0 +1,9 @@
+---
+const {formId,ownerId,projectId,entryId='new'}=Astro.props;
+---
+<div data-journal-recovery data-form-id={formId} data-owner={ownerId} data-project={projectId} data-entry={entryId}>
+ <p data-journal-recovery-status role="status" aria-live="polite"></p>
+ <details><summary>Recover unsaved writing</summary><button type="button" class="studio-link-button" data-download-journal-draft>Download this journal draft</button>
+ <p>Save a text copy if a connection problem prevents saving. For saved entries and photographs, use Export journal entries on the journal page.</p></details>
+</div>
+<script>import {initJournalDraftRecovery} from '../../scripts/journalDraftRecovery';document.querySelectorAll<HTMLElement>('[data-journal-recovery]').forEach(initJournalDraftRecovery);</script>

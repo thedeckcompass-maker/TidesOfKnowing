@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../components/studio/StudioHeader.astro';
+import EditorialWorkspace from '../../../components/studio/EditorialWorkspace.astro';
+import {supportStore} from '../../../lib/studio/supportProvider';
+import {isAdminProfile} from '../../../lib/community/auth';
+import '../../../styles/studio.css';
+export const prerender=false;
+const store=supportStore(Astro.locals);
+if(!store)return new Response('Hosted editorial queue is not connected.',{status:503});
+if(!Astro.locals.user||!isAdminProfile(Astro.locals.profile)||!await store.isStaff(Astro.locals.user.id,true))return new Response('Not found.',{status:404});
+---
+<BaseLayout title="Private editorial review | Deck Creator Studio" description="Private editorial requests and replies." studioWorkspace={true} tdcPlacement="none"><main class="studio-page page-inner"><StudioHeader title="Private editorial review" lede="Each request is reviewed as it comes in."/><EditorialWorkspace staff={true}/></main></BaseLayout>

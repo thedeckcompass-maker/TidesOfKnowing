@@ -1,0 +1,12 @@
+<section class="studio-panel" data-local-project-restore>
+ <p class="studio-kicker">Local recovery acceptance</p><h1>Restore a project copy</h1>
+ <p>Inspect an unchanged Studio complete-project ZIP, then choose whether to create a new private project on this PC. This cannot replace an existing project or restore to the live website.</p>
+ <label class="studio-field"><span>Complete project backup</span><input type="file" accept=".zip,application/zip" data-restore-file/><small>Complete Studio project ZIP, up to 100 MB. Keep your original ZIP. This local prototype accepts unchanged Studio exports only; other ZIP formats are not supported.</small></label>
+ <button type="button" class="studio-button" data-inspect-restore>Inspect backup</button>
+ <p role="status" aria-live="polite" data-restore-status></p>
+ <section data-restore-summary hidden><h2 data-restore-name></h2><p>Saved records to copy</p><dl data-restore-counts></dl><ul data-restore-warnings></ul><h3>Omissions reported by the original export</h3><ul data-restore-omissions></ul><label class="studio-check"><input type="checkbox" data-confirm-restore/><span>I have reviewed this summary. Create a new local project and keep all existing projects unchanged.</span></label><button type="button" class="studio-button" data-create-restored disabled>Create new project from this backup</button></section>
+ <p data-restore-result hidden><a data-open-restored>Open the restored copy</a></p>
+</section>
+<script>import {initProjectRestorePreview} from '../../scripts/projectRestorePreview';document.querySelectorAll<HTMLElement>('[data-local-project-restore]').forEach(initProjectRestorePreview);</script>
+<style>[data-local-project-restore]{max-width:55rem;margin:2rem auto}[data-restore-counts]{display:grid;grid-template-columns:1fr auto;gap:.45rem 2rem}[data-restore-counts] dd{margin:0}[data-restore-summary] li{margin:.5rem 0}[data-restore-status]:not(:empty){border-left:3px solid var(--tok-studio-gold-ink);padding:.8rem}[data-restore-summary] .studio-check{margin:1.5rem 0;display:flex;align-items:start;gap:.7rem}[data-restore-summary] input[type=checkbox]{margin-top:.3rem}</style>
+

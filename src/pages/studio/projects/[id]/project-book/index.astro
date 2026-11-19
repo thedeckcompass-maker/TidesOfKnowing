@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import ProjectBookOverview from '../../../../../components/studio/ProjectBookOverview.astro';
+import {studioReadAccessResponse,studioProjectWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProjectWorkspace,getStudioProductionPlan} from '../../../../../lib/studio/queries';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+const access=await studioReadAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);
+if(access)return access;
+const readOnly=(await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id))!==null;
+if(!Astro.params.id||!Astro.locals.supabase)return new Response(null,{status:404});
+const {project,cards,guidebook}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);
+if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+const production=await getStudioProductionPlan(Astro.locals.supabase,project.id);
+const completedCards=cards.filter(c=>c.status==='complete').length;
+const completedSections=guidebook.filter(s=>s.status==='complete').length;
+---
+<BaseLayout title={`Project Workbook | ${project.name}`} description="Read your creative concept, manuscript and publishing plans." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+ <main class="studio-page page-inner project-books-page">
+  <header><p class="studio-eyebrow">My Project Workbook</p><h1>{project.name}</h1><nav aria-label="Workbook tools"><a href={`/studio/projects/${project.id}/guidebook-outline/`}>Design your guidebook</a> · <a href={`/studio/projects/${project.id}/my-deck/`}>My cards</a> · <a href={`/studio/projects/${project.id}/exports/`}>Project exports</a></nav></header>
+<details class="studio-panel studio-panel--wide workbook-pulse"><summary id="pulse-heading">Project pulse and planning tools</summary>
+        
+        
+        <div class="studio-stats">
+          <div class="studio-stat"><strong>{cards.length}</strong> cards</div>
+          <div class="studio-stat"><strong>{completedCards}</strong> cards marked complete</div>
+          <div class="studio-stat"><strong>{completedSections}/{guidebook.length}</strong> guidebook sections marked complete</div>
+        </div>
+        <p class="studio-panel__intro"><strong>Next action:</strong> {project.next_action || "Choose the next concrete piece of work."}</p>
+        {project.current_risk ? <p><strong>Current risk:</strong> {project.current_risk}</p> : null}
+        <div class="studio-export-links" data-read-only={readOnly}><details><summary>Planning tools</summary><a href={`/studio/projects/${project.id}/programme/`}>Earlier programme planner</a><a href={`/studio/projects/${project.id}/production/`}>Plan production</a></details></div>
+      </details>
+  <ProjectBookOverview readOnly={readOnly} project={project} cards={cards} sections={guidebook} production={production} standalone />
+ {readOnly&&<style>.studio-export-links a:not([href$="/exports/"]){display:none}</style>}
+ </main>
+</BaseLayout>
+<style>
+.project-books-page>header{max-width:100%;margin-bottom:.6rem}.project-books-page>header h1{font:400 clamp(1.7rem,2.7vw,2.4rem)/1.2 "Playfair Display",Georgia,serif;margin:.25rem 0}.project-books-page>header p{line-height:1.7}
+.workbook-pulse{padding:.8rem 1rem!important;display:block;margin-bottom:1rem}.workbook-pulse summary{font-weight:600;cursor:pointer}.workbook-pulse .studio-stats{display:flex;gap:1rem;flex-wrap:wrap;margin:0}.workbook-pulse[open] .studio-stats{margin-top:.75rem}.workbook-pulse .studio-stat{padding:0;background:none;font-size:.85rem}.workbook-pulse .studio-stat strong{display:inline;font-size:1rem}.workbook-pulse .studio-panel__intro,.workbook-pulse>.studio-export-links{font-size:.85rem;margin:.25rem 0}.project-books-page :global(.project-book-choices){margin:.5rem 0}.project-books-page :global(.book-title-page){padding-top:2rem}
+</style>
+
+<style>.workbook-pulse .studio-export-links details[open]>a{display:inline-flex;align-items:center;margin:.5rem 1.25rem .5rem 0;min-height:2.75rem;text-decoration:underline;text-underline-offset:.2em}.workbook-pulse .studio-export-links a:focus-visible{outline:3px solid #065e73;outline-offset:3px}</style>

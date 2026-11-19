@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import CreatorJourney from '../../../../../components/studio/CreatorJourney.astro';
+import {studioAccountAccessResponse as studioAccessResponse,studioProjectWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProjectWorkspace} from '../../../../../lib/studio/queries';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+const access=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);
+if(access)return access;
+if(!Astro.params.id||!Astro.locals.supabase)return new Response(null,{status:404});
+const {project,cards,families,guidebook}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);
+if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+if(await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,project.id))return Astro.redirect('/studio/projects/'+project.id+'/project-book/',303);
+---
+<BaseLayout title={`Creative journey | ${project.name}`} description="Your private creative journey." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio"><div class="studio-page page-inner"><CreatorJourney project={project} cards={cards} families={families} guidebook={guidebook}/></div></BaseLayout>

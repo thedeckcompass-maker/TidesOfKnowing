@@ -1,0 +1,4 @@
+import {visualBookMarkdown} from './symbolJournal';
+import {preparedVisualImage} from './visualDesign';
+import {fingerprint} from './editorialSnapshots';
+export async function exchangeSource(client:import('@supabase/supabase-js').SupabaseClient,actor:string,project:string){const {data:p,error}=await client.from('studio_projects').select('id,owner_id,name,settings').eq('id',project).eq('owner_id',actor).maybeSingle();if(error||!p)throw Error('Project not found.');const book=p.settings?.visual_direction_v1;const text=book?visualBookMarkdown(book):'',images=(p.settings?.visual_design_v1?.references??[]).map((r:{id:string;image:string;note:string})=>({id:r.id,image:preparedVisualImage(r.image),note:r.note??''}));return {project:p,bookText:text,bookVersion:book?.revision??0,images,fingerprint:await fingerprint({text,images})};}

@@ -1,0 +1,6 @@
+---
+import DcsPublicLayout from '../../layouts/DcsPublicLayout.astro';
+import {approvedPublicHtml} from '../../lib/studio/approvedPublicPresentation';
+const scripts=[];
+---
+<DcsPublicLayout page="realise" title="Realise | Deck Creator Studio" description="Discuss the support your deck needs before agreeing any partnership."><Fragment set:html={approvedPublicHtml('realise',Boolean(Astro.locals.user))}/>{scripts.map(name=><script slot="scripts" is:inline src={'/dcs-approved/'+name+'.js'} defer></script>)}</DcsPublicLayout>

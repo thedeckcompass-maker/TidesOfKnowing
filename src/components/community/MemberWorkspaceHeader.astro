@@ -7,11 +7,12 @@ interface Props {
 }
 
 const { section, isAdmin } = Astro.props;
+const pathname = Astro.url.pathname.replace(/\/+$/, '');
 ---
 
 <header class="member-workspace-header">
   <div class="page-inner member-workspace-header__inner">
-    <a href="/community/" class="member-workspace-header__brand" aria-label="Practice Commons home">
+    <a href="/" class="member-workspace-header__brand" aria-label="Tides of Knowing home">
       <img
         src="/images/brand/tides-of-knowing-mark.svg"
         alt=""
@@ -22,7 +23,7 @@ const { section, isAdmin } = Astro.props;
       />
       <span class="member-workspace-header__brand-primary">Tides of Knowing</span>
       <span class="member-workspace-header__brand-sep" aria-hidden="true">|</span>
-      <span class="member-workspace-header__brand-secondary">Practice Commons</span>
+      <span class="member-workspace-header__brand-secondary">Member account</span>
     </a>
 
     <button
@@ -45,8 +46,8 @@ const { section, isAdmin } = Astro.props;
       id="member-workspace-nav"
       aria-label="Member workspace"
     >
-      <a href="/community/" aria-current={section === "commons" ? "page" : undefined}>
-        Community
+      <a href="/studio/community/" aria-current={section === "commons" ? "page" : undefined}>
+        Studio community
       </a>
       <a href="/community/account/" aria-current={section === "account" ? "page" : undefined}>
         Account
@@ -56,9 +57,13 @@ const { section, isAdmin } = Astro.props;
       </a>
       {
         isAdmin ? (
-          <a href="/ask-leilia/admin/" aria-current={section === "admin" ? "page" : undefined}>
-            Administration
-          </a>
+          <details class="member-workspace-header__admin" data-active={String(section === "admin")}>
+            <summary>Administration <span aria-hidden="true">▾</span></summary>
+            <div class="member-workspace-header__admin-panel" aria-label="Administration destinations">
+              <a href="/ask-leilia/admin/" aria-current={pathname === '/ask-leilia/admin' ? 'page' : undefined}><strong>Tides administration</strong><small>Reading requests</small></a>
+              <a href="/ask-leilia/admin/studio-community/" aria-current={pathname === '/ask-leilia/admin/studio-community' ? 'page' : undefined}><strong>DCS administration</strong><small>Community discussions and moderation</small></a>
+            </div>
+          </details>
         ) : null
       }
       <form class="member-workspace-header__logout" method="post" action="/auth/logout/">
@@ -73,17 +78,20 @@ const { section, isAdmin } = Astro.props;
 
 <script>
   function initMemberWorkspaceHeader() {
-    const toggle = document.querySelector(".member-workspace-header__toggle");
-    const nav = document.getElementById("member-workspace-nav");
-    if (!(toggle instanceof HTMLButtonElement) || !(nav instanceof HTMLElement)) return;
+    const toggleCandidate = document.querySelector(".member-workspace-header__toggle");
+    const navCandidate = document.getElementById("member-workspace-nav");
+    if (!(toggleCandidate instanceof HTMLButtonElement) || !(navCandidate instanceof HTMLElement)) return;
+    const toggle = toggleCandidate, nav = navCandidate;
     if (toggle.dataset.bound === "true") return;
     toggle.dataset.bound = "true";
+    const admin = nav.querySelector<HTMLDetailsElement>(".member-workspace-header__admin");
+    const adminSummary = admin?.querySelector<HTMLElement>("summary");
 
     function isOpen() {
       return nav.classList.contains("member-workspace-header__nav--open");
     }
 
-    function setOpen(nextOpen) {
+    function setOpen(nextOpen: boolean) {
       const open = Boolean(nextOpen);
       nav.classList.toggle("member-workspace-header__nav--open", open);
       document.body.classList.toggle("member-workspace-nav-open", open);
@@ -104,15 +112,25 @@ const { section, isAdmin } = Astro.props;
     nav.addEventListener("click", (event) => {
       const target = event.target;
       if (target instanceof Element && target.closest("a, button")) {
+        if (admin) admin.open = false;
         setOpen(false);
       }
     });
 
     document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && admin?.open) {
+        admin.open = false;
+        adminSummary?.focus({ preventScroll: true });
+        event.preventDefault();
+        return;
+      }
       if (event.key === "Escape" && isOpen()) {
         setOpen(false);
         toggle.focus({ preventScroll: true });
       }
+    });
+    document.addEventListener("click", (event) => {
+      if (admin?.open && event.target instanceof Node && !admin.contains(event.target)) admin.open = false;
     });
 
     function onViewportChange() {
@@ -128,3 +146,17 @@ const { section, isAdmin } = Astro.props;
   initMemberWorkspaceHeader();
   document.addEventListener("astro:page-load", initMemberWorkspaceHeader);
 </script>
+
+<style>
+ .member-workspace-header__admin{position:relative;color:#17334d}
+ .member-workspace-header__admin>summary{display:flex;align-items:center;gap:.35rem;list-style:none;cursor:pointer;padding:.2rem .35rem;border-radius:var(--radius-control);font:700 .72rem var(--font-body);letter-spacing:.04em;text-transform:uppercase;color:#17334d}
+ .member-workspace-header__admin>summary::-webkit-details-marker{display:none}
+ .member-workspace-header__admin[data-active=true]>summary,.member-workspace-header__admin[open]>summary{background:#e9e1cd}
+ .member-workspace-header__admin>summary:focus-visible,.member-workspace-header__admin-panel a:focus-visible{outline:3px solid #065e73;outline-offset:3px}
+ .member-workspace-header__admin-panel{position:absolute;top:calc(100% + .4rem);left:0;z-index:20;min-width:19rem;max-width:calc(100vw - 2rem);box-sizing:border-box;padding:.4rem;background:#fffdf7;border:1px solid #70848e;border-radius:6px;box-shadow:0 5px 18px #0b1f3a26}
+ .member-workspace-header__admin-panel a{display:block;padding:.75rem 1rem;min-height:44px;box-sizing:border-box;color:#17334d;background:transparent;text-transform:none;letter-spacing:normal;white-space:normal;text-decoration:none}
+ .member-workspace-header__admin-panel a:hover,.member-workspace-header__admin-panel a:focus-visible{background:#e4ece9;color:#17334d;text-decoration:underline}
+ .member-workspace-header__admin-panel strong{display:block;color:#17334d;font-size:.95rem}
+ .member-workspace-header__admin-panel small{display:block;margin-top:.2rem;color:#405364;font-size:.85rem;font-weight:400;line-height:1.4}
+ @media(max-width:900px){.member-workspace-header__admin{width:100%}.member-workspace-header__admin>summary{min-height:44px;box-sizing:border-box;padding:.62rem 0;border-top:1px solid #d5d9d5}.member-workspace-header__admin-panel{position:static;min-width:0;width:100%;max-width:100%;margin:.2rem 0 .5rem;box-shadow:none}.member-workspace-header__admin-panel a{padding:.65rem .7rem}}
+</style>

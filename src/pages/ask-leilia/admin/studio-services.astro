@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';import ServiceRecords from '../../../components/studio/ServiceRecords.astro';import {isAdminProfile} from '../../../lib/community/auth';
+export const prerender=false;if(!Astro.locals.user||Astro.locals.profile?.id!==Astro.locals.user.id||!isAdminProfile(Astro.locals.profile))return new Response('Not found.',{status:404});
+---
+<BaseLayout title="DCS services | Tides administration" description="Programme services, scheduling and delivery." metaRobots="noindex, nofollow"><main class="page-inner" style="padding-block:3rem"><a href="/ask-leilia/admin/">Tides administration</a><h1>DCS programmes and services</h1><nav aria-label="DCS administration"><a href="/ask-leilia/admin/studio-community/">Chapter community questions</a> · <a href="/studio/editorial/">Confidential editorial requests</a> · <a href="/ask-leilia/admin/studio-access/">Studio access</a></nav><ServiceRecords admin={true}/></main></BaseLayout>

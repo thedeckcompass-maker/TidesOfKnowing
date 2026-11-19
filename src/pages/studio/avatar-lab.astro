@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MemberAvatarEditor from '../../components/community/MemberAvatarEditor.astro';
+
+export const prerender = false;
+
+if (!['localhost','127.0.0.1'].includes(Astro.url.hostname.toLowerCase())) {
+  return new Response('Not found',{status:404});
+}
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+---
+
+<BaseLayout
+  title="Your Community profile | Deck Creator Studio"
+  description="Manage your Community photograph."
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main class="page-inner avatar-lab">
+    <h1>Your Community profile</h1>
+
+    <MemberAvatarEditor username="Leilia"/>
+
+    <section class="avatar-lab__example" aria-label="Community identity">
+      <h2>Your Community identity</h2>
+      <div class="avatar-lab__member">
+        <span class="avatar-lab__avatar" data-member-avatar>
+          <span data-member-initials>L</span>
+          <img data-member-image alt="" hidden/>
+        </span>
+        <div>
+          <strong>Leilia</strong>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+const preview=document.querySelector<HTMLElement>('[data-member-avatar]');
+const image=preview?.querySelector<HTMLImageElement>('[data-member-image]');
+const initials=preview?.querySelector<HTMLElement>('[data-member-initials]');
+
+function updateAvatar(url:string|null){
+  if(!image||!initials)return;
+  if(url){
+    image.src=url;
+    image.hidden=false;
+    initials.hidden=true;
+  }else{
+    image.removeAttribute('src');
+    image.hidden=true;
+    initials.hidden=false;
+  }
+}
+
+window.addEventListener('community-avatar-change',(event)=>{
+  updateAvatar((event as CustomEvent<{url:string|null}>).detail.url);
+});
+
+try{
+  updateAvatar(localStorage.getItem('dcs-community-avatar-local-v1'));
+}catch{
+  updateAvatar(null);
+}
+</script>
+
+<style>
+.avatar-lab{
+  max-width:760px;
+  margin:2rem auto;
+  padding:1.5rem;
+}
+.avatar-lab h1{
+  margin:0 0 1.5rem;
+}
+.avatar-lab__example{
+  margin-top:1.2rem;
+  padding:1.2rem;
+  border:1px solid #c8d7cc;
+  border-radius:.8rem;
+  background:#f0f5f1;
+}
+.avatar-lab__example h2{
+  font-size:1.1rem;
+  margin:0 0 1rem;
+}
+.avatar-lab__member{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+}
+.avatar-lab__avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#dce8df;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:650;
+  color:#315348;
+}
+.avatar-lab__avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.avatar-lab__avatar img[hidden]{display:none}
+</style>

@@ -1,0 +1,20 @@
+---
+import {CREATIVE_CHAPTERS} from '../../lib/studio/communityChapters';
+import {COMMUNITY_SECTION_MEANINGS} from '../../lib/studio/communityPresentation';
+import {communityPage} from '../../lib/studio/communityExperience';
+const {selected}=Astro.props;
+---
+<aside class="community-section-rail">
+ <details class="community-section-disclosure" open>
+  <summary>Browse the eight Sections</summary>
+  <nav aria-label="Community Sections">
+   {CREATIVE_CHAPTERS.map((c,i)=><a class="community-rail-link" data-creative-chapter={c.id} aria-current={selected===c.id?'page':undefined} href={communityPage(`/studio/community/${c.id}/`,Astro.url)}><span class="community-rail-number">{String(i+1).padStart(2,'0')}</span><span><strong>{c.name}</strong><small>{COMMUNITY_SECTION_MEANINGS[c.id]}</small></span></a>)}
+  </nav>
+ </details>
+ <p class="community-rail-editorial"><a href={communityPage('/studio/editorial-support/',Astro.url)}>Editorial Support ↗</a><small>For private, programme-specific assistance.</small></p>
+</aside>
+<script>
+// Native disclosure on smaller screens; desktop navigation must stay visible after resize.
+const disclosure=document.querySelector<HTMLDetailsElement>('.community-section-disclosure');
+if(disclosure){const media=matchMedia('(max-width:800px)');let mobileOpen=false;disclosure.open=!media.matches;disclosure.querySelector('summary')?.addEventListener('click',event=>{if(!media.matches){event.preventDefault();disclosure.open=true;}else mobileOpen=!disclosure.open;});media.addEventListener('change',()=>{disclosure.open=media.matches?mobileOpen:true;});}
+</script>

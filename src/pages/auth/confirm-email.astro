@@ -1,0 +1,13 @@
+---
+import PasswordAuth from '../../components/PasswordAuth.astro';
+import {passwordAction} from '../../lib/community/passwordAuth';
+import {authOrigin} from '../../lib/community/authOrigin';
+export const prerender=false;
+let error='',message='';
+if(Astro.request.method==='POST'){
+ if(Astro.request.headers.get('origin')!==Astro.url.origin){Astro.response.status=403;error='Invalid request. Please reload this page.';}
+ else if(!Astro.locals.supabase){Astro.response.status=503;error='Confirmation is temporarily unavailable.';}
+ else{const result=await passwordAction(Astro.locals.supabase.auth,'confirm',await Astro.request.formData(),authOrigin(Astro.locals,Astro.url));error=result.error??'';message=result.message??'';if(error)Astro.response.status=400;}
+}
+---
+<PasswordAuth mode="confirm" next="/studio/" error={error} message={message}/>

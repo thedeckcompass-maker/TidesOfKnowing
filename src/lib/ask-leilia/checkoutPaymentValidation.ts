@@ -23,7 +23,7 @@ export type CheckoutPaymentValidationResult =
       audit: CheckoutPaymentAudit;
     };
 
-function stripeObjectId(value: Stripe.Checkout.Session.Discount["promotion_code"]): string | null {
+function stripeObjectId(value: unknown): string | null {
   if (!value) return null;
   if (typeof value === "string") return value;
   if (typeof value === "object" && "id" in value && typeof value.id === "string") return value.id;

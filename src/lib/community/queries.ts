@@ -1,3 +1,4 @@
+import { withPublicAuthors } from "./usernames";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   COMMUNITY_POSTS_PER_PAGE,
@@ -56,7 +57,7 @@ export async function getCommunitySections(
 
 export async function getSectionByKey(
   supabase: SupabaseClient,
-  key: CommunitySectionKey,
+  key: CommunitySectionKey | 'deck-creator-studio',
 ): Promise<CommunitySection | null> {
   const { data, error } = await supabase
     .from("community_sections")
@@ -76,13 +77,14 @@ export async function getSectionByKey(
 export async function getCommunityPosts(
   supabase: SupabaseClient,
   options: {
-    mode: CommunityListMode;
+    mode: CommunityListMode | {kind:'section';sectionKey:'deck-creator-studio'};
     page: number;
   },
 ): Promise<{
   posts: CommunityPostSummary[];
   totalCount: number;
   totalPages: number;
+  unavailable?: boolean;
 }> {
   const page = Math.max(1, options.page);
   const from = (page - 1) * COMMUNITY_POSTS_PER_PAGE;
@@ -108,7 +110,6 @@ export async function getCommunityPosts(
         updated_at,
         deleted_at,
         section:community_sections!inner(key, name),
-        author:profiles(display_name),
         replies:community_replies(count)
       `,
       { count: "exact" },
@@ -133,12 +134,12 @@ export async function getCommunityPosts(
 
   if (error) {
     console.error("Unable to load community posts:", error);
-    return { posts: [], totalCount: 0, totalPages: 1 };
+    return { posts: [], totalCount: 0, totalPages: 1, unavailable: true };
   }
 
   const totalCount = count ?? 0;
   return {
-    posts: ((data ?? []) as Record<string, unknown>[]).map(normalizeSummary),
+    posts: (await withPublicAuthors(supabase, (data ?? []) as Record<string, unknown>[])).map(normalizeSummary),
     totalCount,
     totalPages: totalCommunityPages(totalCount),
   };
@@ -167,8 +168,7 @@ export async function getCommunityPostBySlug(
         created_at,
         updated_at,
         deleted_at,
-        section:community_sections(id, key, name, description, display_order, is_active),
-        author:profiles(id, display_name, role)
+        section:community_sections(id, key, name, description, display_order, is_active)
       `,
     )
     .eq("slug", slug)
@@ -182,7 +182,7 @@ export async function getCommunityPostBySlug(
 
   if (!data) return null;
 
-  const row = data as unknown as Record<string, unknown>;
+  const [row] = await withPublicAuthors(supabase, [data as unknown as Record<string, unknown>]);
   return {
     ...(row as unknown as CommunityPostDetail),
     section: one(row.section as CommunityPostDetail["section"] | CommunityPostDetail["section"][]),
@@ -206,8 +206,7 @@ export async function getCommunityReplies(
         status,
         created_at,
         updated_at,
-        deleted_at,
-        author:profiles(id, display_name, role)
+        deleted_at
       `,
     )
     .eq("post_id", postId);
@@ -223,7 +222,7 @@ export async function getCommunityReplies(
     return [];
   }
 
-  return ((data ?? []) as Record<string, unknown>[]).map((row) => ({
+  return (await withPublicAuthors(supabase, (data ?? []) as Record<string, unknown>[])).map((row) => ({
     ...(row as unknown as CommunityReplyDetail),
     author: one(row.author as CommunityReplyDetail["author"] | CommunityReplyDetail["author"][]),
   }));

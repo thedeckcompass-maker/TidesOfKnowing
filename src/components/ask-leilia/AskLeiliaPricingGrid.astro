@@ -176,11 +176,12 @@ const readingPayload = readings.map((reading) => {
     if (!(root instanceof HTMLElement) || root.dataset.detailsBound === "true") return;
     root.dataset.detailsBound = "true";
 
-    const dialog = root.querySelector("[data-ask-leilia-details-dialog]");
+    const dialogCandidate = root.querySelector("[data-ask-leilia-details-dialog]");
     const jsonEl = root.querySelector("[data-ask-leilia-readings-json]");
-    if (!(dialog instanceof HTMLDialogElement) || !(jsonEl instanceof HTMLElement)) return;
+    if (!(dialogCandidate instanceof HTMLDialogElement) || !(jsonEl instanceof HTMLElement)) return;
+    const dialog = dialogCandidate;
 
-    let readings = [];
+    let readings: Array<{ name: string; price: string; descriptor?: string; positioning: string; moreInfo: string[]; deliverables: string[]; requestHref: string; ctaLabel: string }> = [];
     try {
       readings = JSON.parse(jsonEl.textContent || "[]");
     } catch {
@@ -195,9 +196,9 @@ const readingPayload = readings.map((reading) => {
     const listEl = dialog.querySelector("[data-details-deliverables]");
     const ctaEl = dialog.querySelector("[data-details-cta]");
     const closeBtn = dialog.querySelector("[data-ask-leilia-details-close]");
-    let lastTrigger = null;
+    let lastTrigger: Element | null = null;
 
-    function openDetails(index, trigger) {
+    function openDetails(index: number, trigger: Element) {
       const reading = readings[index];
       if (!reading) return;
       if (

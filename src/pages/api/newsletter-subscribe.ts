@@ -20,14 +20,14 @@ function isValidEmail(email: string): boolean {
 type SubscribePayload = {
   name?: string;
   email?: string;
-  /** Honeypot — must stay empty for humans. */
+  /** Honeypot â€” must stay empty for humans. */
   website?: string;
   source_component?: string;
 };
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    const runtimeEnv = (locals as { runtime?: { env?: Record<string, string> } })?.runtime?.env;
+    const runtimeEnv = (locals as { serverRuntime?: { env?: Record<string, string> } })?.serverRuntime?.env;
     const apiKey = runtimeEnv?.MAILERLITE_API_KEY ?? import.meta.env.MAILERLITE_API_KEY;
 
     if (!apiKey) {

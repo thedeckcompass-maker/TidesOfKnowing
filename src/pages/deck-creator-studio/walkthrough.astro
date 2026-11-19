@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { walkthroughSteps } from '../../data/studio/creator-guidance.mjs';
+---
+<BaseLayout title="A creator's walkthrough | Deck Creator Studio" description="Follow a deck project from a first idea to cards, guidebook, workbook and export." metaRobots="noindex, nofollow">
+  <main class="walkthrough page-inner"><header><p>Deck Creator Studio</p><h1>From an idea to a deck</h1><p>Follow the creative journey at your own pace. These links take you to the real Studio; project tools require an eligible signed-in account.</p></header>
+  <ol>{walkthroughSteps.map((step, index) => <li><p class="step-number">{index + 1}</p><div><h2>{step.title}</h2><p>{step.body}</p><a href={step.href}>{step.label}</a></div></li>)}</ol>
+  <p>Already have an account? <a href="/auth/login/?redirectTo=%2Fstudio%2F">Sign in and return to your Studio</a>.</p>
+  <section><h2>Work with others when you choose</h2><p>Collaborate and Develop offer different levels of editorial guidance. The general Community provides a place for conversations with other creators.</p><p><a href="/deck-creator-studio/pricing/">Compare support options</a> · <a href="/studio/community/">Visit Community</a></p></section>
+  <section><h2>The Lexicon example</h2><p>The 22-card Lexicon project is being prepared as a higher-tier demonstration. Its editable project will be available after the isolated demonstration environment and content review are complete.</p></section>
+  <p><a href="/deck-creator-studio/faq/">Read the Studio FAQ</a></p></main>
+</BaseLayout>
+<style>.walkthrough{max-width:60rem;margin:2rem auto;line-height:1.65}.walkthrough ol{list-style:none;padding:0;display:grid;gap:1rem}.walkthrough li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;border:1px solid #b99d65;border-radius:.5rem;padding:1rem}.walkthrough h2{margin:.1rem 0}.step-number{font-weight:bold;margin:.1rem 0}.walkthrough a:focus-visible{outline:3px solid #a47623;outline-offset:3px}</style>

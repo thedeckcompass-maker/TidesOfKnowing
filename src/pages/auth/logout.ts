@@ -11,10 +11,10 @@ async function signOut(locals: App.Locals) {
 
 export const GET: APIRoute = async ({ locals, cookies }) => {
   await signOut(locals);
-  return authRedirect("/community/?signed_out=true", cookies);
+  return authRedirect("/studio/?signed_out=true", cookies);
 };
 
 export const POST: APIRoute = async ({ locals, cookies }) => {
   await signOut(locals);
-  return authRedirect("/community/?signed_out=true", cookies);
+  return authRedirect("/studio/?signed_out=true", cookies);
 };

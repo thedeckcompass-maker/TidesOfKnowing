@@ -42,8 +42,8 @@ const lastSignedInAt = Astro.locals.user.last_sign_in_at ?? undefined;
 ---
 
 <BaseLayout
-  title="Practice Commons Account | Tides of Knowing"
-  description="Manage your Practice Commons account and email preferences."
+  title="Account | Tides of Knowing"
+  description="Manage your existing account and email preferences."
   metaRobots="noindex, nofollow"
 >
   <main class="community-account page-inner">
@@ -81,7 +81,7 @@ const lastSignedInAt = Astro.locals.user.last_sign_in_at ?? undefined;
 
     <section class="community-account__panel" aria-labelledby="email-heading">
       <h2 id="email-heading">Email preferences</h2>
-      <p>Keep notifications minimal and useful. You can return to the Commons when you have time.</p>
+      <p>Keep notifications minimal and useful. You can return to your account when you have time.</p>
       <CommunityNotificationSettings preferences={preferences} />
     </section>
 

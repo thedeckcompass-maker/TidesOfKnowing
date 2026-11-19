@@ -1,0 +1,1 @@
+(()=>{'use strict';const header=document.querySelector('.site-header');if(!header)return;const measure=()=>document.body.style.setProperty('--tok-header-height',Math.ceil(header.getBoundingClientRect().height)+'px');measure();if(typeof ResizeObserver!=='undefined'){const observer=new ResizeObserver(measure);observer.observe(header);}window.addEventListener('resize',measure);})();

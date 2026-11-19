@@ -28,8 +28,7 @@ function formatDate(value: string): string {
         <li id={`reply-${reply.id}`}>
           <article class:list={["community-reply", reply.status !== "published" && "community-reply--moderated"]}>
             <p class="community-reply__meta">
-              <span>{reply.author?.display_name ?? "Reader"}</span>
-              {reply.author?.role === "admin" ? <span>Leigh / admin</span> : null}
+              <span>{reply.author?.username ?? "Community member"}</span>
               <time datetime={reply.created_at}>{formatDate(reply.created_at)}</time>
               {reply.status !== "published" ? <span>{reply.status}</span> : null}
             </p>

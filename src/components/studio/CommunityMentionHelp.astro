@@ -1,0 +1,19 @@
+---
+import {communityPage} from '../../lib/studio/communityExperience';
+const {checked=false}=Astro.props;
+---
+<div class="community-mention">
+ <label><input type="checkbox" name="request_leilia" checked={checked}/> Mention @Leilia</label>
+ <details class="community-mention-help"><summary aria-label="About mentioning Leilia">?</summary><p>Invite Leilia's editorial perspective on a wider Community conversation. A response is not guaranteed. For private feedback on your own work, use your programme's allowance or enquire through <a href={communityPage('/studio/editorial-support/',Astro.url)}>Editorial Support</a>.</p></details>
+</div>
+<style>
+ .community-mention{display:flex;align-items:flex-start;justify-content:flex-end;justify-self:end;margin-inline-start:auto;gap:.25rem;max-width:100%}
+ .community-mention label{display:inline-flex;vertical-align:top;align-items:center;gap:.5rem;min-height:44px;margin:0!important}
+ .community-mention input{width:auto!important;margin:0}
+ .community-mention-help{display:block;position:relative;flex:none;min-width:0;margin:0!important}
+ .community-mention-help summary{display:grid;position:relative;margin:0;place-items:center;box-sizing:border-box;list-style:none;width:44px;min-height:44px;cursor:pointer;border:0;border-radius:6px;color:#065e73;background:transparent;font-size:14px;font-weight:600}
+ .community-mention-help summary::before{content:'';position:absolute;box-sizing:border-box;width:22px;height:22px;inset:11px;border:1px solid #065e73;border-radius:50%;pointer-events:none}
+ .community-mention-help summary::-webkit-details-marker{display:none}
+ .community-mention-help p{position:absolute;z-index:5;inset-inline-end:0;top:100%;box-sizing:border-box;width:min(28rem,calc(100vw - 6rem));max-width:none;padding:.85rem;margin:.2rem 0;line-height:1.65;font-size:13px;overflow-wrap:anywhere;background:#fffdf7;border:1px solid #9ba9a4;border-radius:6px;box-shadow:0 5px 18px #0b1f3a18;text-align:start}
+ .community-mention-help :focus-visible{outline:3px solid #065e73;outline-offset:3px}
+</style>

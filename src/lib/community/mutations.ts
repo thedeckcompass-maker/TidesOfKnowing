@@ -14,7 +14,7 @@ type MutationResult<T> =
 async function loadPost(service: SupabaseClient, postId: string) {
   const { data, error } = await service
     .from("community_posts")
-    .select("id, author_id, title, slug, status, is_pinned")
+    .select("id, author_id, title, slug, status, is_pinned, section_id")
     .eq("id", postId)
     .maybeSingle();
 
@@ -31,8 +31,17 @@ async function loadPost(service: SupabaseClient, postId: string) {
         slug: string;
         status: string;
         is_pinned: boolean;
+        section_id: string;
       }
     | null;
+}
+
+// Generic public actions must use the persisted target, never a submitted section key.
+// Private rooms require their separately authorized guarded adapters.
+async function publicMutationTarget(service: SupabaseClient, post: {section_id?: string} | null, expectedSection?: CommunitySectionKey): Promise<boolean> {
+  if (!post?.section_id) return false;
+  const {data, error} = await service.from("community_sections").select("key, is_active").eq("id", post.section_id).maybeSingle();
+  return !error && data?.is_active === true && ["reading-practice", "reader-development"].includes(data.key) && (expectedSection === undefined || data.key === expectedSection);
 }
 
 async function loadReply(service: SupabaseClient, replyId: string) {
@@ -151,6 +160,7 @@ export async function updateCommunityPost(
   service: SupabaseClient,
   input: {
     postId: string;
+    sectionKey: CommunitySectionKey;
     userId: string;
     isAdmin: boolean;
     title: string;
@@ -160,7 +170,7 @@ export async function updateCommunityPost(
   },
 ): Promise<MutationResult<{ slug: string }>> {
   const post = await loadPost(service, input.postId);
-  if (!post || post.status === "deleted") {
+  if (!post || post.status === "deleted" || !(await publicMutationTarget(service, post, input.sectionKey))) {
     return { ok: false, error: "Post not found.", status: 404 };
   }
 
@@ -199,7 +209,7 @@ export async function createCommunityReply(
   },
 ): Promise<MutationResult<{ id: string; postAuthorId: string; postSlug: string }>> {
   const post = await loadPost(service, input.postId);
-  if (!post || post.status !== "published") {
+  if (!post || post.status !== "published" || !(await publicMutationTarget(service, post))) {
     return { ok: false, error: "Post not found.", status: 404 };
   }
 
@@ -292,6 +302,10 @@ export async function updateCommunityReply(
 ): Promise<MutationResult<{ postId: string }>> {
   const reply = await loadReply(service, input.replyId);
   if (!reply || reply.status === "deleted") {
+    return { ok: false, error: "Reply not found.", status: 404 };
+  }
+
+  if (!(await publicMutationTarget(service, await loadPost(service, reply.post_id)))) {
     return { ok: false, error: "Reply not found.", status: 404 };
   }
 

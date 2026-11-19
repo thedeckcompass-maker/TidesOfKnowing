@@ -1,0 +1,5 @@
+---
+export const prerender=false;
+if(!Astro.locals.user)return Astro.redirect('/auth/login/?redirectTo=%2Fstudio%2Fcommunity%2F',303);
+return Astro.redirect('/studio/community/',303);
+---

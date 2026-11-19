@@ -1,0 +1,7 @@
+---
+import DcsPublicLayout from '../../layouts/DcsPublicLayout.astro';
+import presentation from '../../data/studio/approved-public/presentation.json';
+import {studioExploreHref} from '../../data/studio/creator-guidance.mjs';
+const content=presentation.landing.pricingHtml.replaceAll('@@JOIN@@',studioExploreHref(Boolean(Astro.locals.user)).replaceAll('&','&amp;'));
+---
+<DcsPublicLayout title="Choose your Deck Creator Studio pathway" description="Compare Explore, Create, Collaborate and Develop."><header class="hero"><p class="eyebrow">Deck Creator Studio</p><h1>Choose the support that fits</h1></header><Fragment set:html={content}/><Fragment set:html={presentation.landing.dialogs}/><script slot="scripts" is:inline src="/dcs-approved/plan.js" defer></script></DcsPublicLayout>

@@ -1,0 +1,18 @@
+---
+import presentation from '../data/studio/approved-public/presentation.json';
+import {siteBase} from '../lib/site';
+import {getEcosystemJsonLdGraph} from '../lib/ecosystem-structured-data';
+import '../styles/dcs-approved-public.css';
+interface Props {title:string;description:string;page?:'landing'|'faq'|'checkout'|'consultation'|'realise';jsonLd?:unknown;metaRobots?:string;}
+const {title,description,page='landing',jsonLd,metaRobots}=Astro.props;
+const view=presentation[page];
+const header=view.header.replaceAll('@@ACCOUNT@@',Astro.locals.user?'/studio/account/':'/auth/login/?redirectTo=%2Fstudio%2Faccount%2F');
+const canonical=new URL(Astro.url.pathname,siteBase(Astro)).href;
+const structured=[getEcosystemJsonLdGraph(),...(jsonLd?(Array.isArray(jsonLd)?jsonLd:[jsonLd]):[])];
+---
+<!doctype html><html lang="en-US"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{title}</title><meta name="description" content={description}/>{metaRobots&&<meta name="robots" content={metaRobots}/>}<link rel="canonical" href={canonical}/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:type" content="website"/><meta property="og:site_name" content="Tides of Knowing™"/><meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>{structured.map(value=><script type="application/ld+json" set:html={JSON.stringify(value)}/>)}</head>
+<body class:list={['dcs-fidelity','tok-body--studio',page==='faq'&&'tok-body--reading',page!=='checkout'&&'has-family-masthead']} data-dcs-page={page}>
+  <a class="skip" href="#main">Skip to content</a><Fragment set:html={header}/><main id="main" tabindex="-1" class={view.mainClass}><slot/></main><Fragment set:html={view.footer}/>
+  <script is:inline src="/dcs-approved/navigation.js" defer></script>
+  <slot name="scripts"/>
+</body></html>

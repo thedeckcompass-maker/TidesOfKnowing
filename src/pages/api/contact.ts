@@ -84,7 +84,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    const runtimeEnv = (locals as { runtime?: { env?: Record<string, string> } })?.runtime?.env;
+    const runtimeEnv = (locals as { serverRuntime?: { env?: Record<string, string> } })?.serverRuntime?.env;
     const apiKey = runtimeEnv?.EMAIL_API_KEY ?? import.meta.env.EMAIL_API_KEY;
 
     if (!apiKey) {

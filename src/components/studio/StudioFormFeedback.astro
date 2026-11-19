@@ -1,0 +1,19 @@
+---
+interface Props { formId: string; targetPath: string; successParam: string; }
+const {formId,targetPath,successParam}=Astro.props;
+---
+<p role="alert" tabindex="-1" hidden data-studio-feedback data-form-id={formId} data-target-path={targetPath} data-success-param={successParam}></p>
+<script>
+for(const feedback of document.querySelectorAll<HTMLElement>('[data-studio-feedback]')){
+ const form=document.getElementById(feedback.dataset.formId??'');if(!(form instanceof HTMLFormElement))continue;let saving=false;
+ form.addEventListener('submit',async event=>{
+  if(form.dataset.studioNativeDraft==='1')return;
+  event.preventDefault();if(saving)return;saving=true;feedback.hidden=true;form.setAttribute('aria-busy','true');const button=form.querySelector<HTMLButtonElement>('button[type=submit]');if(button)button.disabled=true;
+  try{const response=await fetch(form.action,{method:'POST',credentials:'same-origin',body:new FormData(form)});const destination=new URL(response.url);
+   if(response.ok && destination.origin===location.origin && destination.pathname===feedback.dataset.targetPath && destination.searchParams.has(feedback.dataset.successParam??'')){document.dispatchEvent(new CustomEvent('studio-writing-saved',{detail:{formId:form.id}}));location.assign(destination.href);return;}
+   throw new Error(destination.origin===location.origin?destination.searchParams.get('error')||'Save not confirmed. Your draft is still here. Check your connection before retrying.':'Save not confirmed. Your draft is still here.');
+  }catch(error){feedback.textContent=error instanceof Error?error.message:'Your draft has not been saved. It is still here.';feedback.hidden=false;feedback.focus();}
+  finally{saving=false;form.removeAttribute('aria-busy');if(button)button.disabled=false;}
+ });
+}
+</script>

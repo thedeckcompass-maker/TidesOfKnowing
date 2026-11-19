@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/studio.css';
+export const prerender=false;
+if(!Astro.locals.user||Astro.locals.profile?.status!=='active')return Astro.redirect('/auth/login/?redirectTo=%2Fstudio%2Fexports%2F');
+const {data:projects,error}=await Astro.locals.supabase!.from('studio_projects').select('id,name').eq('owner_id',Astro.locals.user.id).order('updated_at',{ascending:false});
+---
+<BaseLayout title="Exports | Deck Creator Studio" studioWorkspace={true} tdcPlacement="none" metaRobots="noindex, nofollow" description="Download your private deck manuscripts, project records and creative work."><main class="studio-page page-inner"><p class="studio-eyebrow">Your work, to keep</p><h1>Exports</h1><div class="studio-grid"><section class="studio-panel studio-panel--wide"><h2>Project exports</h2><p>Choose a project for its manuscript, private reference books, journal and complete restorable backup.</p>{error?<p role="alert">Your project list is temporarily unavailable.</p>:<ul>{projects?.map(p=><li><a href={`/studio/projects/${p.id}/exports/`}>{p.name}</a></li>)}</ul>}</section><section class="studio-panel studio-panel--side"><h2>Private inspiration</h2><p>Save a copy of your account-level ideas, image previews and project-link history. This JSON file is separate from your manuscripts and journals. Original image files remain on your device.</p><a class="studio-button studio-button--secondary" href="/api/studio/inspiration?download=1">Download my inspiration</a><p>This structured copy can be read as text; automatic account-inspiration import is not available here.</p></section></div><a href="/studio/creators-desk/">Return to Creator’s Desk</a></main></BaseLayout>

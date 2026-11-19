@@ -1,0 +1,20 @@
+---
+const {postId,replyId=null,record,reports=[]}=Astro.props;
+const state=record.status??'published';
+const choices=state==='hidden'?['restore']:state==='published'?(replyId?['hide']:['hide','lock']):state==='locked'?['hide','unlock']:[];
+const open=reports.filter((r:any)=>r.status==='open'&&(replyId?r.reply_id===replyId:r.post_id===postId&&!r.reply_id));
+const noun=replyId?'comment':'discussion';
+const actionLabel=(action:string)=>action==='hide'?(replyId?'Hide this comment':'Hide entire discussion'):action[0].toUpperCase()+action.slice(1)+' '+noun;
+---
+<section class="community-moderation" id={'moderate-'+(replyId??postId)} aria-label={noun+' actions'}>
+ <p class="moderation-state">{replyId?'Comment':'Discussion'} status: <strong>{state}</strong></p>
+ {choices.length>0&&<form method="post" action="/api/studio/community-completion" data-admin-moderation>
+  <input type="hidden" name="action" value="moderate"/><input type="hidden" name="post_id" value={postId}/><input type="hidden" name="reply_id" value={replyId??''}/><input type="hidden" name="expected" value={record.updated_at}/><input type="hidden" name="key" value={crypto.randomUUID()}/>
+  <input type="hidden" name="transition" value=""/>
+  <div class="moderation-buttons">{choices.map(action=><button type="button" data-choose-action={action}>{actionLabel(action)}</button>)}{open.length>0&&<button type="button" data-choose-action="dismiss">Dismiss report</button>}</div>
+  <div data-action-fields hidden><p data-action-description></p>
+  <label>Report to resolve (optional)<select name="report_id"><option value="">No report</option>{open.map((r:any)=><option value={r.id}>{r.reason} · {new Date(r.created_at).toLocaleString('en-GB')}</option>)}</select></label>
+  <label>Reason<textarea name="reason" required minlength="5" maxlength="1000" rows="2"></textarea></label><div class="moderation-buttons"><button type="submit" data-confirm-action>Confirm action</button><button type="button" data-cancel-action>Cancel</button></div></div><p role="status" data-admin-action-status></p>
+ </form>}
+ <p class="moderation-help">Content and authorship are preserved. Hiding is reversible.</p>
+</section>

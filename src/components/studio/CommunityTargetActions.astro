@@ -1,0 +1,27 @@
+---
+const {postId,replyId=null,state=null,label='this question'}=Astro.props;
+---
+<div class="community-target-actions" data-community-target data-post-id={postId} data-target-reply={replyId??''} data-scribe-ready={state?'true':'false'}>
+ <form method="post" action="/api/studio/community-completion" data-community-completion="scribe">
+  <input type="hidden" name="action" value="scribe"/><input type="hidden" name="post_id" value={postId}/><input type="hidden" name="reply_id" value={replyId??''}/><input type="hidden" name="selected" value={state?.selected?'false':'true'}/>
+  <button type="submit" aria-label={`Give it a Scribe: ${label}`} aria-pressed={state?.selected?'true':'false'} disabled={!state||(!state.eligible&&!state.selected)} hidden={state&&!state.withdrawable} data-scribe-button>{state?.selected?'Scribe given':'Give it a Scribe'}</button>
+  <span data-scribe-count aria-label={`Scribes for ${label}`}>{state?`${state.count} ${state.count===1?'Scribe':'Scribes'}`:'Checking appreciation…'}</span>
+  <button type="button" data-scribe-check hidden>Check appreciation</button><span role="status" data-completion-status></span>
+ </form>
+ <details class="community-more"><summary aria-label={`More options for ${label}`} title="More options">⋯</summary><div class="community-more-menu">
+ <details class="community-report"><summary aria-label={`Report ${label}`}>Report</summary>
+  <form method="post" action="/api/studio/community-completion" data-community-completion="report">
+   <input type="hidden" name="action" value="report"/><input type="hidden" name="post_id" value={postId}/><input type="hidden" name="reply_id" value={replyId??''}/><input type="hidden" name="key" value={crypto.randomUUID()}/>
+   <label>Reason<select name="reason" required><option value="privacy_concern">Privacy concern</option><option value="disrespectful_or_harmful">Harmful or disrespectful</option><option value="spam">Spam</option><option value="off_topic">Off topic</option><option value="duplicate">Duplicate</option><option value="other">Other</option></select></label>
+   <label>Details (optional)<textarea name="notes" maxlength="2000" rows="2"></textarea></label><p>This report is private to the authorised moderation recipient.</p><button type="submit">Send report</button><p role="status" data-completion-status></p>
+  </form>
+ </details>
+ </div></details>
+</div>
+<script>import '../../scripts/communityCompletion';</script>
+<style>
+:global(.dcs-thread__surface)>.community-target-actions{padding-inline:1.5rem;padding-bottom:.5rem}@media(max-width:640px){:global(.dcs-thread__surface)>.community-target-actions{padding-inline:.9rem}}
+.community-target-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem 1rem;margin-block:.35rem;font-size:.85rem}.community-target-actions>form{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}.community-target-actions button,.community-report summary{font:inherit;color:#155765;min-height:36px;cursor:pointer}.community-target-actions button{border:1px solid #b6ccc8;border-radius:5px;padding:.3rem .6rem;background:transparent}.community-target-actions button[aria-pressed=true]{background:#dcece7;font-weight:700}.community-target-actions button:focus-visible,.community-report summary:focus-visible{outline:3px solid #278b8b;outline-offset:3px}.community-target-actions [disabled]{cursor:default;opacity:.65}.community-report{position:relative}.community-report form{padding:.8rem;border:1px solid #c6c3b8;max-width:32rem;background:#fffdf7}.community-report label{display:block;margin-block:.5rem}.community-report select,.community-report textarea{display:block;width:100%;box-sizing:border-box;font:inherit}.community-target-actions [data-completion-status]:not(:empty){flex-basis:100%}[hidden]{display:none!important}
+.community-more{position:relative}.community-more>summary{display:flex;align-items:center;justify-content:center;list-style:none;width:36px;min-height:36px;border:1px solid #b6ccc8;border-radius:5px;color:#155765;font-size:1.3rem;line-height:1;cursor:pointer}.community-more>summary::-webkit-details-marker{display:none}.community-more>summary:focus-visible{outline:3px solid #278b8b;outline-offset:3px}.community-more-menu{position:absolute;right:0;top:calc(100% + .35rem);z-index:8;width:12rem;max-width:calc(100vw - 3rem);box-sizing:border-box;padding:.6rem;border:1px solid #c6c3b8;border-radius:5px;box-shadow:0 3px 12px #17334920;background:#fffdf7}.community-report form{padding:.6rem 0 0;border:0}.community-report summary{padding:.3rem 0}.community-report textarea{min-height:5rem}
+@media(max-width:640px){.community-target-actions{position:relative}.community-more{position:static}.community-more-menu{left:0;right:auto;top:100%;width:min(20rem,100%);max-width:100%}}
+</style>

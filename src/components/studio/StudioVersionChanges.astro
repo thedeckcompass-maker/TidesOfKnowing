@@ -1,0 +1,15 @@
+---
+import StudioReadableText from './StudioReadableText.astro';
+import type { VersionChange } from '../../lib/studio/versionHistory';
+interface Props { changes: VersionChange[]; emptyMessage: string; }
+const { changes, emptyMessage } = Astro.props;
+---
+{changes.length ? <div class="studio-version-changes">
+  {changes.map(change => <section class="studio-version-change">
+    <h4>{change.label}</h4>
+    <div class="studio-version-change__sides">
+      <section><h5>Before</h5><StudioReadableText value={change.before} legacyProse={change.legacyProse} /></section>
+      <section><h5>After</h5><StudioReadableText value={change.after} legacyProse={change.legacyProse} /></section>
+    </div>
+  </section>)}
+</div> : <p>{emptyMessage}</p>}

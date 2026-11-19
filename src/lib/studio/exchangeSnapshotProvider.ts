@@ -1,0 +1,4 @@
+import type {SupabaseClient} from '@supabase/supabase-js';
+import {captureExchange,type ExchangeSnapshotProvider} from './projectSnapshot';
+/** RPC must atomically read owner rows plus monotonic revision, including every enquiry/change/deletion. */
+export function preparedExchangeSnapshotProvider(client:SupabaseClient):ExchangeSnapshotProvider{return {async capture(ownerId,projectId){const a=await client.auth.getUser();if(a.error||a.data.user?.id!==ownerId)throw Error('Sign in again before exporting.');let r=await client.rpc('studio_exchange_export_snapshot_v1',{p_project:projectId});if(!r.error&&!r.data)r=await client.rpc('studio_complimentary_exchange_export_snapshot_v1',{p_project:projectId});if(r.error||!r.data)throw Error('Private Exchange backup is unavailable. No incomplete archive was issued.');return captureExchange({capture:async()=>r.data},ownerId,projectId);}};}

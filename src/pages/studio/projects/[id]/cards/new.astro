@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import {studioProjectWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProjectWorkspace} from '../../../../../lib/studio/queries';
+export const prerender=false;
+const denied=await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id);if(denied)return denied;
+if(!Astro.params.id||!Astro.locals.supabase)return new Response(null,{status:404});
+const {project,families}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);
+if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+---
+<BaseLayout title="Add a card" metaRobots="noindex, nofollow" bodyClass="tok-body--studio" tdcPlacement="none" memberWorkspace={false} description="Create a new card within your private deck project.">
+<main class="studio-page page-inner"><StudioHeader title="Add a card" eyebrow={project.name} projectId={project.id}/>
+<form class="studio-form card-create-task" data-card-create data-owner={project.owner_id} data-project={project.id} action={`/api/studio/projects/${project.id}/cards`} method="post">
+<p>Project: <strong>{project.name}</strong> · <a href="/studio/?orientation=skip&task=addcard&choose=1">Choose another project</a></p>
+<input type="hidden" name="creation_id" value={crypto.randomUUID()}/>
+<label class="studio-field"><span>Card title</span><input name="title" required maxlength="120" autocomplete="off"/></label>
+<label class="studio-field"><span>Card number <small>(optional)</small></span><input name="card_number" maxlength="30"/></label>
+<details><summary>Organise this card <span>(optional)</span></summary><label class="studio-field"><span>Family</span><select name="family_id"><option value="">No family</option>{families.map(f=><option value={f.id}>{f.name}</option>)}</select></label></details>
+<p role="status" aria-live="polite" data-create-status></p>
+<div class="studio-actions"><button class="studio-button" type="submit">Create card</button><a href={`/studio/projects/${project.id}/my-deck/`}>Cancel — back to my cards</a></div>
+</form></main></BaseLayout>
+<script>import '../../../../../scripts/createCardTask';</script>
+<style>.card-create-task{max-width:44rem;padding:1.5rem;background:#faf8f3;border:1px solid #cec9c1}.card-create-task details{margin:1rem 0}.card-create-task .studio-actions{gap:1rem;flex-wrap:wrap}.card-create-task input,.card-create-task select{max-width:100%;box-sizing:border-box}.card-create-task [role=status]:empty{display:none}</style>

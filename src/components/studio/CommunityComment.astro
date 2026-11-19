@@ -1,0 +1,31 @@
+---
+import CommunityComposer from './CommunityComposer.astro';
+import CommunityTargetActions from './CommunityTargetActions.astro';
+import {communityInitials,communityTime,communityFullTime} from '../../lib/studio/communityPresentation';
+import CommunityThreadModeration from './CommunityThreadModeration.astro';
+const {reply,postId,rootId,enabled,hasChildren=false,canReply=true,staff=false}=Astro.props;
+const name=reply.author_username??'Community member';
+// Founder badge requires trusted identity; do not infer privilege from a display name.
+const founder=reply.badge?.founder===true;
+---
+<div class:list={['dcs-thread__comment',{'community-own-comment':reply.my_reply===true}]} id={'reply-'+reply.id} data-comment-id={reply.id} data-deleted={String(!!reply.deleted)} data-updated-at={reply.updated_at}>
+ <span class="dcs-thread__avatar" aria-hidden="true">{reply.deleted?'':communityInitials(name)}</span>
+ <div class="dcs-thread__comment-body">
+  <div class="community-comment-reading" data-reading>
+   <div class="community-comment-bubble"><div class="dcs-thread__byline"><strong>{reply.deleted?(reply.hidden?'Hidden comment':'Deleted comment'):name}</strong>{!reply.deleted&&founder&&<span class="community-founder-badge">Founder</span>}<time datetime={reply.created_at} title={communityFullTime(reply.created_at)}>{communityTime(reply.created_at)}</time>{!reply.deleted&&reply.updated_at!==reply.created_at&&<small>Edited</small>}</div>
+   {!reply.deleted&&<p data-comment-text>{reply.body}</p>}{!reply.deleted&&reply.badge?.tier&&<small class="community-pathway-badge">{reply.badge.tier}</small>}</div>
+   {staff&&!reply.deleted&&<CommunityThreadModeration postId={postId} replyId={reply.id} record={{status:'published',updated_at:reply.updated_at}}/>}
+   {enabled&&!reply.deleted&&<div class="dcs-thread__actions">
+    {canReply&&<button type="button" data-toggle-reply aria-expanded="false" aria-controls={'compose-'+reply.id}>Reply</button>}
+    {reply.my_reply===true&&<><button type="button" data-edit-comment>Edit</button><details class="community-comment-options"><summary aria-label="More options for your comment">•••</summary><form method="post" action="/api/studio/community-member-actions" data-member-mutation data-has-children={String(hasChildren)}><input type="hidden" name="action" value="delete"/><input type="hidden" name="reply_id" value={reply.id}/><input type="hidden" name="expected_updated_at" value={reply.updated_at}/><button type="submit">Delete comment</button><p role="alert" data-mutation-error hidden></p></form></details></>}
+   </div>}
+   {!reply.deleted&&<CommunityTargetActions postId={postId} replyId={reply.id} label={`comment by ${name}`} state={reply.scribe??null}/>}
+  </div>
+  {enabled&&canReply&&!reply.deleted&&<div id={'compose-'+reply.id} data-reply-composer hidden><p class="community-reply-context">Replying to {name} in this thread</p><CommunityComposer postId={postId} parentId={rootId} label={`Reply to ${name}`} inline/><button type="button" data-cancel-reply>Cancel reply</button></div>}
+  {enabled&&reply.my_reply===true&&!reply.deleted&&<form class="community-comment-edit" method="post" action="/api/studio/community-member-actions" data-member-mutation data-edit-form hidden>
+   <input type="hidden" name="action" value="edit"/><input type="hidden" name="reply_id" value={reply.id}/><input type="hidden" name="expected_updated_at" value={reply.updated_at}/>
+   <label><span class="community-edit-heading">Editing your comment</span><textarea name="body" required minlength="2" maxlength="8000" aria-label="Edit your comment" rows="4">{reply.body}</textarea></label>
+   <div class="community-composer-actions"><small data-edit-state>No changes</small><button type="button" data-cancel-edit>Cancel</button><button type="submit" disabled>Save changes</button></div><p role="alert" data-mutation-error hidden></p>
+  </form>}
+ </div>
+</div>

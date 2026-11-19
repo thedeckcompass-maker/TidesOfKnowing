@@ -4,20 +4,21 @@ interface Props {
   title: string;
   lede?: string;
   projectId?: string;
+  photographsHref?: string;
 }
 
-const { eyebrow = "Deck Creator Studio", title, lede, projectId } = Astro.props;
+const { eyebrow = "Tides of Knowing / Deck Creator Studio", title, lede, projectId, photographsHref } = Astro.props;
 ---
 
+{projectId ? <nav class="studio-breadcrumbs" aria-label="Project breadcrumb"><a href="/studio/?orientation=skip">Projects</a><span aria-hidden="true"> / </span><a href={`/studio/projects/${projectId}/my-deck/`}>My cards</a><span aria-hidden="true"> / </span><span>{title}</span></nav> : null}
 <header class="studio-header">
   <div>
     <p class="studio-eyebrow">{eyebrow}</p>
     <h1>{title}</h1>
     {lede ? <p class="studio-lede">{lede}</p> : null}
   </div>
-  <nav class="studio-nav" aria-label="Deck Creator Studio">
-    <a href="/studio/">Projects</a>
-    {projectId ? <a href={`/studio/projects/${projectId}/`}>Project dashboard</a> : null}
-    <a href="/community/account/">Account</a>
+  <nav class="studio-nav" aria-label="Contextual project tools">
+    
+    {photographsHref ? <a href={photographsHref}>Journal photographs</a> : null}
   </nav>
 </header>

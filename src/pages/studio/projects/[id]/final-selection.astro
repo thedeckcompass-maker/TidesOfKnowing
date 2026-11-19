@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../components/studio/StudioHeader.astro';
+import FinalSelection from '../../../../components/studio/FinalSelection.astro';
+import {studioAccountAccessResponse as studioAccessResponse,studioProjectWriteAccessResponse} from '../../../../lib/studio/access';
+import {getStudioProjectWorkspace,getDeletedStudioCardIds} from '../../../../lib/studio/queries';
+import '../../../../styles/studio.css';
+export const prerender=false;
+const denied=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);if(denied)return denied;
+if(!Astro.locals.supabase||!Astro.params.id)return new Response(null,{status:404});
+const {project,cards}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+const deletedCardIds=await getDeletedStudioCardIds(Astro.locals.supabase,project.id);
+const canWrite=!await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,project.id);
+---
+<BaseLayout title="Final selection and sequence" metaRobots="noindex, nofollow" description="Review and arrange your final card selection and sequence."><main class="studio-page page-inner"><StudioHeader title="Final selection and sequence" projectId={project.id}/><FinalSelection project={project} cards={cards} deletedCardIds={deletedCardIds} canWrite={canWrite}/><a href={`/studio/projects/${project.id}/journey/?chapter=companion`}>Return to the Companion</a></main></BaseLayout>

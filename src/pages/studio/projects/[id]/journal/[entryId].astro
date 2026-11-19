@@ -1,0 +1,127 @@
+---
+import JournalOriginalGallery from "../../../../../components/studio/JournalOriginalGallery.astro";
+import BaseLayout from "../../../../../layouts/BaseLayout.astro";
+import StudioHeader from "../../../../../components/studio/StudioHeader.astro";
+import StudioEditorialSaveBar from "../../../../../components/studio/StudioEditorialSaveBar.astro";
+import JournalDraftRecovery from "../../../../../components/studio/JournalDraftRecovery.astro";
+import { studioAccountAccessResponse as studioAccessResponse, studioProjectWriteAccessResponse as studioWriteAccessResponse } from "../../../../../lib/studio/access";
+import { getStudioJournalEntry, getStudioJournalMedia, getStudioProjectWorkspace } from "../../../../../lib/studio/queries";
+import { STUDIO_COMMUNITY_TOPICS, STUDIO_EXCERPT_PURPOSES, STUDIO_JOURNAL_TAGS } from "../../../../../lib/studio/types";
+import { STUDIO_JOURNAL_PHOTO_BUCKET, STUDIO_JOURNAL_PHOTO_LIMIT } from "../../../../../lib/studio/journalMedia";
+import "../../../../../styles/studio.css";
+
+export const prerender = false;
+
+const projectId = Astro.params.id;
+const entryId = Astro.params.entryId;
+const accessResponse = await studioAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.supabase);
+if (accessResponse) return accessResponse;
+const canWrite = !await studioWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id);
+if (!projectId || !entryId || !Astro.locals.supabase) return new Response(null, { status: 404 });
+
+const [workspace, entry, media] = await Promise.all([
+  getStudioProjectWorkspace(Astro.locals.supabase, projectId),
+  getStudioJournalEntry(Astro.locals.supabase, projectId, entryId),
+  getStudioJournalMedia(Astro.locals.supabase, projectId, entryId),
+]);
+if (!workspace.project || !entry) return new Response(null, { status: 404 });
+
+const photos = await Promise.all(media.photos.map(async (photo) => {
+  const { data } = await Astro.locals.supabase!.storage.from(STUDIO_JOURNAL_PHOTO_BUCKET).createSignedUrl(photo.storage_path, 600);
+  return { ...photo, signedUrl: data?.signedUrl ?? null };
+}));
+
+const saved = Astro.url.searchParams.get("saved") === "1";
+const created = Astro.url.searchParams.get("created") === "1";
+const error = Astro.url.searchParams.get("error");
+const photosSaved = Astro.url.searchParams.get("photos") === "1";
+const photoRemoved = Astro.url.searchParams.get("photoRemoved") === "1";
+const excerptSaved = Astro.url.searchParams.get("excerpt") === "1";
+const shared = Astro.url.searchParams.get("shared") === "1";
+const shareWithdrawn = Astro.url.searchParams.get("shareWithdrawn") === "1";
+const purposeLabel = (value: string) => value.replaceAll("_", " ");
+const activeShareByExcerpt = new Map(
+  media.shares.filter((share) => !share.withdrawn_at && share.journal_excerpt_id).map((share) => [share.journal_excerpt_id, share]),
+);
+---
+
+<BaseLayout title={`${entry.title} | Creator Journal`} description="Private Deck Creator Studio journal entry." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+  <main class:list={["studio-page", "page-inner", { "studio-page--editing": canWrite }]}>
+    <StudioHeader eyebrow={`${workspace.project.name} · Private journal`} title={entry.title} lede="All journal entries are private. Record what you discover, then use selected material later for social posts or a crowdfunding campaign." projectId={projectId} photographsHref="#journal-photographs" />
+    {created ? <p class="studio-notice" role="status">Journal entry created.</p> : null}
+    {saved ? <p class="studio-notice" role="status">Journal entry saved.</p> : null}
+    {photosSaved ? <p class="studio-notice" role="status">Private journal photographs saved.</p> : null}
+    {photoRemoved ? <p class="studio-notice" role="status">Journal photograph removed.</p> : null}
+    {excerptSaved ? <p class="studio-notice" role="status">Private journey update prepared. Open Crowd Funding to view and download it.</p> : null}
+    {shared ? <p class="studio-notice" role="status">A separate community copy was published. The source journal remains private.</p> : null}
+    {shareWithdrawn ? <p class="studio-notice" role="status">The community copy was withdrawn. The private controlled excerpt remains unchanged.</p> : null}
+    {error ? <p class="studio-notice" role="alert">{error}</p> : null}
+    {!canWrite ? <p class="studio-notice" role="status">This journal entry is available to read. Editing is paused while Studio access is read-only.</p> : null}
+
+    <section class="studio-panel">
+      <form data-studio-journal-editor id="studio-journal-editor" class="studio-form studio-form--two" method="post" action={`/api/studio/journal/${entry.id}`}>
+        <input type="hidden" name="project_id" value={projectId} /><input type="hidden" name="return_to_project" value="on" /><input type="hidden" name="expected_updated_at" value={entry.updated_at} />
+        <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" value={entry.title} /></label>
+        <label class="studio-field"><span>Entry type</span><select name="entry_kind"><option value="reflection" selected={entry.entry_kind === "reflection"}>Reflection</option><option value="decision" selected={entry.entry_kind === "decision"}>Decision</option><option value="milestone" selected={entry.entry_kind === "milestone"}>Milestone</option></select></label>
+        <label class="studio-field"><span>Linked card</span><select name="linked_card_id"><option value="">No linked card</option>{workspace.cards.map((card) => <option value={card.id} selected={entry.linked_card_id === card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</select></label>
+        <label class="studio-field"><span>Linked guidebook section</span><select name="linked_section_id"><option value="">No linked section</option>{workspace.guidebook.map((section) => <option value={section.id} selected={entry.linked_section_id === section.id}>{section.title}</option>)}</select></label>
+        <fieldset class="studio-field studio-field--full studio-fieldset"><legend>Tags</legend><div class="studio-check-grid">{STUDIO_JOURNAL_TAGS.map((tag) => <label class="studio-check"><input type="checkbox" name="tags" value={tag} checked={entry.tags.includes(tag)} /> <span>{tag}</span></label>)}</div></fieldset>
+        <label class="studio-field studio-field--full"><span>Journal entry</span><textarea class="studio-editor" name="body_markdown" maxlength="50000">{entry.body_markdown}</textarea></label>
+        <label class="studio-check studio-check--standalone studio-field--full"><input type="checkbox" name="selected_for_process" checked={entry.selected_for_process} /> <span>Add to Project highlights</span></label>
+        <p class="studio-privacy-note studio-field--full">This selection is internal to your private Studio project. Highlighting does not share the entry or prepare a journey update.</p>
+        <div class="studio-field--full"><button class="studio-button" type="submit" disabled={!canWrite}>Save and return to project</button></div>
+      </form>
+    {canWrite ? <StudioEditorialSaveBar returnToProject={`/studio/projects/${projectId}/`} formId="studio-journal-editor" savedLabel="Journal entry saved" saveLabel="Save and return to project" error={Boolean(error)} /> : null}
+    {canWrite ? <JournalDraftRecovery formId="studio-journal-editor" ownerId={workspace.project.owner_id} projectId={projectId} entryId={entryId}/> : null}
+    </section>
+
+    <div class="studio-grid studio-journal-tools">
+      <section class="studio-panel studio-panel--wide" id="journal-photographs" aria-labelledby="photo-heading">
+        <p class="studio-kicker">Private evidence</p>
+        <h2 id="photo-heading">Add photos</h2>
+        {(Astro.locals as any).studioOriginalMediaLocal ? <JournalOriginalGallery project={workspace.project} entry={entry} photos={(await Astro.locals.supabase!.from("studio_journal_photos").select("*").eq("project_id",projectId).eq("journal_entry_id",entryId)).data??[]}/> : <><p class="studio-panel__intro">Add up to five photographs. Your browser creates new JPEG copies before upload, removing embedded location and descriptive metadata. Originals are not uploaded.</p>
+        {photos.length ? <ul class="studio-photo-grid">{photos.map((photo) => <li class="studio-photo-card">{photo.signedUrl ? <img src={photo.signedUrl} alt={photo.caption || "Private journal photograph"} loading="lazy" /> : null}<p>{photo.caption || "No caption"}</p><form method="post" action={`/api/studio/journal/photos/${photo.id}`}><input type="hidden" name="project_id" value={projectId} /><input type="hidden" name="entry_id" value={entryId} /><button class="studio-text-button" type="submit">Remove photograph</button></form></li>)}</ul> : <p class="studio-empty">No photographs have been added.</p>}
+        {photos.length < STUDIO_JOURNAL_PHOTO_LIMIT ? <form class="studio-form studio-photo-form" method="post" action={`/api/studio/journal/${entryId}/photos`} enctype="multipart/form-data" data-journal-photo-form>
+          <input type="hidden" name="project_id" value={projectId} />
+          <label class="studio-field"><span>Photographs</span><input type="file" accept="image/jpeg,image/png,image/webp" multiple required data-journal-photo-input /><small>{STUDIO_JOURNAL_PHOTO_LIMIT - photos.length} remaining. Each prepared copy must be under 6 MB.</small></label>
+          <label class="studio-field"><span>Caption for this upload</span><input name="caption" maxlength="240" /></label>
+          <p class="studio-privacy-note" data-journal-photo-status>Files are prepared on this device before they are sent.</p>
+          <button class="studio-button" type="submit">Prepare and upload privately</button>
+        </form> : <p class="studio-privacy-note">This entry has reached the five-photograph limit.</p>}</>}
+      </section>
+
+      <section class="studio-panel studio-panel--full" id="excerpt-heading" aria-labelledby="journey-moved-heading"><h2 id="journey-moved-heading">Prepare a journey update</h2><p>Journey updates now have their own space in Crowd Funding. Choose text and an optional photograph from this entry for a Kickstarter update or to share your deck's progress elsewhere. Your source entry stays private; nothing is published automatically.</p><p id="exports-heading"><a class="studio-link-button" href={`/studio/projects/${projectId}/crowd-funding/?entry=${entryId}`}>Open this entry in Crowd Funding</a></p></section>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-journal-photo-form]");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const input = form.querySelector<HTMLInputElement>("[data-journal-photo-input]");
+    const status = form.querySelector<HTMLElement>("[data-journal-photo-status]");
+    if (!input?.files?.length) return;
+    const body = new FormData(form);
+    body.delete("photos");
+    try {
+      if (status) status.textContent = "Removing embedded metadata and preparing private copies…";
+      for (const file of Array.from(input.files)) {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, 2200 / Math.max(bitmap.width, bitmap.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+        canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+        canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        bitmap.close();
+        const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
+        if (!blob) throw new Error("Image preparation failed");
+        body.append("photos", new File([blob], "journal-photo.jpg", { type: "image/jpeg" }));
+      }
+      const response = await fetch(form.action, { method: "POST", body, redirect: "follow" });
+      window.location.assign(response.url);
+    } catch {
+      if (status) status.textContent = "The photographs could not be prepared. Try a JPG, PNG or WebP file.";
+    }
+  });
+</script>

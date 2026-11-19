@@ -5,7 +5,7 @@
   max-width: 72rem;
 }
 
-.tok-library--articles :global(.breadcrumbs) {
+.tok-library--articles .breadcrumbs {
   max-width: none;
   margin: 0;
   padding: 0 0 0.3rem;
@@ -121,7 +121,7 @@
   align-items: stretch;
 }
 
-.tok-library--articles .tok-library__grid :global(.article-card) {
+.tok-library--articles .tok-library__grid .article-card {
   min-width: 0;
 }
 

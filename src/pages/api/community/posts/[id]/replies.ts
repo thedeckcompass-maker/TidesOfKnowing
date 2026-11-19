@@ -10,7 +10,7 @@ import { validateReplyInput } from "../../../../../lib/community/validation";
 export const prerender = false;
 
 export const POST: APIRoute = async ({ params, request, locals, redirect, url }) => {
-  if (!locals.user || !canContribute(locals.profile)) {
+  if (!locals.user || locals.profile?.id !== locals.user.id || !canContribute(locals.profile)) {
     return json({ ok: false, error: "Please log in to reply." }, 401);
   }
 
@@ -46,3 +46,4 @@ export const POST: APIRoute = async ({ params, request, locals, redirect, url })
 
   return redirect(`${communityPostPath(result.value.postSlug)}#replies`, 303);
 };
+

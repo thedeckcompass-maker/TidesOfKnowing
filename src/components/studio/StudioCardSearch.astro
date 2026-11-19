@@ -1,0 +1,22 @@
+<div class="studio-form" data-studio-card-search>
+  <label class="studio-field"><span>Find a card</span><input type="search" autocomplete="off" placeholder="Card name, number or family" /></label>
+  <button type="button" class="studio-text-button">Clear search</button><p role="status" aria-live="polite" data-card-search-count></p>
+</div>
+<script>
+const search = document.querySelector<HTMLElement>('[data-studio-card-search]');
+const input = search?.querySelector<HTMLInputElement>('input');
+const count = search?.querySelector<HTMLElement>('[data-card-search-count]');
+if(search && input && count) {
+ const rows = Array.from(document.querySelectorAll<HTMLElement>('[data-card-search-text]'));
+ const normalize = (s:string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+ const update = () => {
+  const query=normalize(input.value.trim()); let visible=0;
+  for(const row of rows){row.hidden=!normalize(row.dataset.cardSearchText??'').includes(query);if(!row.hidden)visible++;}
+  for(const family of document.querySelectorAll<HTMLElement>('.studio-family')) family.hidden=!!query&&!family.querySelector('[data-card-search-text]:not([hidden])');
+  for(const link of document.querySelectorAll<HTMLAnchorElement>('.studio-family-nav a')){const target=document.getElementById(link.hash.slice(1));link.hidden=Boolean(target?.hidden);}
+  search.querySelector<HTMLButtonElement>('button')!.hidden=!query;
+  count.textContent=!rows.length?'No cards saved yet. Add your first card above.':visible ? `${visible} of ${rows.length} cards shown` : 'No matching cards. Try another name, number or family.';
+ };
+ input.addEventListener('input',update);search.querySelector('button')?.addEventListener('click',()=>{input.value='';update();input.focus();});update();
+}
+</script>

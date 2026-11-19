@@ -1,0 +1,31 @@
+---
+import EditorialRequestForm from './EditorialRequestForm.astro';
+const {entry,review,sources=[]}=Astro.props;
+---
+<section class="ep-review" aria-label="Prepare your written review">
+<div class="ep-introduction"><p class="ep-kicker">A focused reading of your work</p><h1>Prepare your written review</h1><p>Choose a saved card or guidebook passage and tell Leilia what you want to understand or strengthen. Your selected version, passage and question form the private submission.</p><p>Full manuscript editing, proofreading and broader style work require a separate enquiry.</p></div>
+{!sources.length&&<p class="ep-notice" role="status">There is no eligible saved work to select yet. Save your card or guidebook writing in an owned project, then return here. Your existing review reservation is preserved.</p>}
+<EditorialRequestForm action="review-submit" entry={entry} itemId={review.id}>
+<input type="hidden" name="projectId"/><input type="hidden" name="sourceFingerprint"/>
+<fieldset><legend><span>1</span> Select your saved material</legend><p>Only the selected version and passage are shared. Later project edits do not change this submission.</p>
+<label>Saved work<select data-ep-source required><option value="">Choose a saved card or guidebook section</option>{sources.map((s:any)=><option value={s.fingerprint} data-project={s.projectId} data-text={s.text}>{s.title} · version {s.version}</option>)}</select></label>
+<label>Passage for review<textarea name="selectedText" rows="7" maxlength="50000" required></textarea></label><p class="ep-hint">Keep the passage within the selected saved work. It will be checked when you submit.</p></fieldset>
+<fieldset><legend><span>2</span> Set the editorial focus</legend><label>What would you like Leilia to review?<textarea name="question" minlength="10" maxlength="6000" required rows="4" placeholder="For example, is this card's guidance clear and consistent with the deck's intended audience?"></textarea></label>
+<label>Relevant context <span class="ep-optional">optional</span><textarea name="constraints" maxlength="4000" rows="3" placeholder="Include the intended reader, a concern or a decision you are working towards."></textarea></label></fieldset>
+<fieldset><legend><span>3</span> Check your request</legend><p>Your submission is private to you and the assigned editorial recipient. Review the material and question before sending.</p>
+<button type="button" data-ep-review disabled={!sources.length} class="ep-primary">Review my request</button>
+<section data-ep-confirm hidden class="ep-confirm" aria-label="Check the exact submission"><h3 tabindex="-1">Your request at a glance</h3><p data-ep-preview="source"></p><h4>Selected passage</h4><p data-ep-preview="selectedText" class="ep-passage"></p><h4>Your question</h4><p data-ep-preview="question" class="ep-passage"></p><p data-ep-preview="constraints" class="ep-passage"></p>
+<label class="ep-checkbox"><input type="checkbox" name="reviewed" value="true" required disabled/> I have checked this saved material and question and want to share them privately with the assigned editor.</label>
+<button type="submit" data-ep-submit disabled class="ep-primary">Send for written review</button><p class="ep-hint">Sending shares this request. It does not mark the review as delivered.</p></section>
+</fieldset>
+</EditorialRequestForm>
+</section>
+<script>
+for(const section of document.querySelectorAll<HTMLElement>('.ep-review')){
+ const form=section.querySelector<HTMLFormElement>('form')!,select=form.querySelector<HTMLSelectElement>('[data-ep-source]')!,passage=form.querySelector<HTMLTextAreaElement>('[name="selectedText"]')!,confirmPanel=form.querySelector<HTMLElement>('[data-ep-confirm]')!,consent=form.querySelector<HTMLInputElement>('[name="reviewed"]')!,submit=form.querySelector<HTMLButtonElement>('[data-ep-submit]')!;
+ const invalidate=()=>{confirmPanel.hidden=true;consent.checked=false;consent.disabled=true;submit.disabled=true;};
+ select.addEventListener('change',()=>{const option=select.selectedOptions[0];if(passage.value&&passage.value!==passage.dataset.sourceText&&!confirm('Replace your passage with the newly selected saved work?')){select.value=select.dataset.previous??'';return;}form.querySelector<HTMLInputElement>('[name="projectId"]')!.value=option.dataset.project??'';form.querySelector<HTMLInputElement>('[name="sourceFingerprint"]')!.value=option.value;passage.value=option.dataset.text??'';passage.dataset.sourceText=passage.value;select.dataset.previous=select.value;invalidate();});
+ form.addEventListener('input',event=>{if(event.target!==consent)invalidate();});
+ form.querySelector('[data-ep-review]')!.addEventListener('click',()=>{if(!form.reportValidity())return;for(const name of ['selectedText','question','constraints'])form.querySelector<HTMLElement>('[data-ep-preview="'+name+'"]')!.textContent=(form.elements.namedItem(name) as HTMLTextAreaElement).value;form.querySelector<HTMLElement>('[data-ep-preview="source"]')!.textContent=select.selectedOptions[0].textContent;confirmPanel.hidden=false;consent.disabled=false;submit.disabled=false;confirmPanel.querySelector<HTMLElement>('h3')!.focus();});
+}
+</script>

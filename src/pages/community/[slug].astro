@@ -1,4 +1,6 @@
 ---
+import {dcsParticipationAccess} from '../../lib/community/dcsParticipation';
+import {isDcsHistoryPost,parkedCommonsResponse} from "../../lib/community/practiceCommons";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CommunityAdminControls from "../../components/community/CommunityAdminControls.astro";
@@ -6,6 +8,7 @@ import CommunityAuthPrompt from "../../components/community/CommunityAuthPrompt.
 import CommunityReplyForm from "../../components/community/CommunityReplyForm.astro";
 import CommunityReplyList from "../../components/community/CommunityReplyList.astro";
 import CommunityReportForm from "../../components/community/CommunityReportForm.astro";
+import {studioAccessResponse} from '../../lib/studio/access';
 import { canContribute, isAdminProfile } from "../../lib/community/auth";
 import { getCommunityPostBySlug, getCommunityReplies } from "../../lib/community/queries";
 import { communityPostPath, communitySectionPath } from "../../lib/community/slugs";
@@ -18,8 +21,20 @@ export const prerender = false;
 
 const slug = Astro.params.slug ?? "";
 const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
-if (!post) return Astro.redirect("/community/", 302);
+if (!post || !isDcsHistoryPost(post)) return parkedCommonsResponse();
 
+const isPrivateStudio=String(post.section?.key)==='deck-creator-studio';
+let studioExcerpt='';
+if(isPrivateStudio){
+ const denied=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);
+ if(denied)return denied;
+ Astro.response.headers.set('Cache-Control','private, no-store');
+ Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+ const context=await Astro.locals.supabase!.from('community_posts').select('studio_selected_text').eq('id',post.id).eq('section_id',post.section_id).in('status',['published','locked']).maybeSingle();
+ if(context.error||!context.data)return new Response('The shared excerpt could not be loaded. Please try again.',{status:503,headers:{'Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow'}});
+ studioExcerpt=typeof context.data.studio_selected_text==='string'?context.data.studio_selected_text:'';
+}
+const participationDenied=await dcsParticipationAccess(Astro.locals);
 const isAdmin = isAdminProfile(Astro.locals.profile);
 const replies = Astro.locals.supabase
   ? await getCommunityReplies(Astro.locals.supabase, post.id, { includeModerated: isAdmin })
@@ -31,15 +46,15 @@ const reportRedirectTo = `${communityPostPath(post.slug)}?report=sent#replies`;
 const sectionHref = post.section ? communitySectionPath(post.section.key) : "/community/";
 const crumbs: BreadcrumbItem[] = [
   { label: "Home", url: "/" },
-  { label: "Practice Commons", url: "/community/" },
+  { label: "Studio community", url: "/studio/community/" },
   { label: post.section?.name ?? "Post", url: sectionHref },
   { label: post.title, url: null },
 ];
-const canEdit = Boolean(
+const canEdit = !participationDenied && Boolean(
   Astro.locals.user &&
-    (Astro.locals.user.id === post.author_id || isAdmin),
+    (Astro.locals.user.id === post.author_id && post.status === "published"),
 );
-const canReport = canContribute(Astro.locals.profile);
+const canReport = !participationDenied;
 const postTypeLabel = readingPracticePostTypeLabel(post.post_type);
 const reportSent = Astro.url.searchParams.get("report") === "sent";
 const isLocked = post.status === "locked";
@@ -57,7 +72,7 @@ const jsonLd = [
     dateModified: post.updated_at,
     author: {
       "@type": "Person",
-      name: post.author?.display_name ?? "Reader",
+      name: post.author?.username ?? "Community member",
     },
   },
 ];
@@ -72,10 +87,11 @@ function formatDate(value: string): string {
 ---
 
 <BaseLayout
-  title={`${post.title} | Practice Commons | Tides of Knowing`}
+  title={`${post.title} | Studio community | Tides of Knowing`}
   description={post.body.replace(/\s+/g, " ").slice(0, 155)}
   ogUrl={canonical}
-  jsonLd={jsonLd}
+  jsonLd={isPrivateStudio ? undefined : jsonLd}
+  metaRobots={isPrivateStudio ? "noindex, nofollow" : undefined}
 >
   <main class="community-post page-inner">
     <Breadcrumbs items={crumbs} />
@@ -100,7 +116,7 @@ function formatDate(value: string): string {
         {postTypeLabel ? <span class="community-post__type">{postTypeLabel}</span> : null}
       </p>
       <h1>{post.title}</h1>
-      <p class="community-post__byline">By {post.author?.display_name ?? "Reader"}</p>
+      <p class="community-post__byline">By {post.author?.username ?? "Community member"}</p>
       {
         spreadImageUrl ? (
           <figure class="community-post__spread">
@@ -119,6 +135,7 @@ function formatDate(value: string): string {
       }
       <div class="community-post__body">
         {post.body.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
+        {isPrivateStudio&&studioExcerpt&&<blockquote style="white-space:pre-wrap">{studioExcerpt}</blockquote>}
       </div>
       {
         canEdit ? (
@@ -159,7 +176,7 @@ function formatDate(value: string): string {
           <p class="community-post__locked">
             This discussion has been closed to new replies, but remains available for reading.
           </p>
-        ) : canContribute(Astro.locals.profile) ? (
+        ) : !participationDenied ? (
           <CommunityReplyForm postId={post.id} />
         ) : (
           <CommunityAuthPrompt message="Join the Practice Commons to reply to this practice note." redirectTo={communityPostPath(post.slug)} />

@@ -1,0 +1,10 @@
+---
+import CommunityInboxActions from './CommunityInboxActions.astro';
+const {record,postId,question=false,parentName=''}=Astro.props;
+const row={id:record.id,thread_id:postId,kind:question?'question':'comment',reply_id:question?null:record.id,version:0,moderation_only:true,status:record.status,hidden:record.status==='hidden',updated_at:record.updated_at,state:'Preserved content',retention:record.retention};
+---
+<article class="inbox-thread-item" id={'moderate-'+record.id} data-inbox-row data-task={JSON.stringify(row)}>
+<header><strong>{question?'Original question':parentName?'↳ Nested reply':'Comment'} · {record.author_username??'Community member'}</strong><small>{record.status}{parentName?' · Replying to '+parentName:''}</small></header>
+{record.status!=='hidden'&&<p>{record.body??record.question}</p>}
+<footer class="inbox-thread-actions"><CommunityInboxActions row={row} hiddenText={record.status==='hidden'?(record.body??record.question):undefined}/></footer>
+</article>

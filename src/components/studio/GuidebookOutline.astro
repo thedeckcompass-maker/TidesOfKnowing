@@ -1,0 +1,55 @@
+---
+import {guidebookOutline} from '../../lib/studio/guidebookOutline';
+const {project,cardId=null,cards=[],canWrite=true}=Astro.props;
+const outline=guidebookOutline(project.settings);
+---
+<section class="outline-workspace" data-guidebook-outline data-project={project.id} data-owner={project.owner_id} data-card={cardId??''} data-write={String(canWrite)}>
+<script type="application/json" data-outline-initial set:html={JSON.stringify({outline,updatedAt:project.updated_at,deckType:project.deck_type,cards:cards.map((c:any)=>({id:c.id,title:c.title}))}).replace(/</g,'\\u003c')}/>
+{cardId&&!outline.setupConfirmed&&<p><a class="studio-button" href={`/studio/projects/${project.id}/guidebook-outline/?card=${cardId}`}>Choose your shared guidebook structure</a> · Return to this card when ready.</p>}{cardId?<h2>Write this card's guidebook entry</h2>:null}
+<p>{cardId?"Write at your own pace. You can save an unfinished entry and return later.":"Choose the sections that will appear whenever you write a card entry. You can change them later, and you don't need to complete every section at once."}</p>
+{!cardId&&<div class="outline-preset-choice"><label for={'outline-template-'+project.id}>Start with a guidebook format<select id={'outline-template-'+project.id} data-outline-template disabled={!canWrite}><option value="">Choose a format</option><option value="oracle">Oracle guidebook</option><option value="tarot">Tarot guidebook</option><option value="custom">Custom guidebook</option></select></label><p>Use a suggested structure or create your own. You can customize any format.</p><div data-outline-template-preview></div></div>}
+<div class:list={['outline-composition',{'outline-composition--writing':!!cardId}]}><div>
+{!cardId&&<><h2>Your guidebook sections <span data-outline-count></span></h2><p>Arrange these in the order you want them to appear in your guidebook.</p></>}
+<div data-outline-fields></div>
+{!cardId?<button class="studio-button studio-button--secondary" type="button" data-outline-add>Add section</button>:<a href={`/studio/projects/${project.id}/guidebook-outline/`}>Design your guidebook</a>}
+<div class="outline-actions"><button class="studio-button" type="button" data-outline-save disabled={!canWrite}>{cardId?'Save guidebook writing':'Save guidebook structure'}</button></div></div><aside class="outline-entry-preview" aria-label="Card entry preview"><p><a class="studio-link-button" href={`/studio/projects/${project.id}/project-book/?book=manuscript`}>View Guidebook</a></p>{cardId?<details><summary>Preview this card entry</summary><div data-outline-preview></div></details>:<><h2>Preview a card entry</h2><p>This read-only sample shows your shared card-entry headings. Read the developing Guidebook above; use its Edit links to continue writing.</p><div data-outline-preview></div></>}</aside></div>
+{!cardId&&<details class="outline-guidance"><summary>Changing sections safely</summary><p>Drag a section using its grip, or focus the grip and press Alt + Up or Down. You can also choose a section's position. Renaming or reordering keeps its writing. A section with writing cannot be removed: open the linked cards to review and move that text first.</p><p>These sections repeat for every card. The existing Card Title field identifies the card. Covers, introductions and author biographies belong to the book's one-off sections. Private imagery notes stay separate from reader-facing writing.</p></details>}
+{cardId?<details><summary>Creator approval for recurring writing</summary><p>Read every card's recurring sections before approving this saved outline and writing revision. Later writing or outline changes invalidate approval. This does not publish anything or imply staff review.</p><label class="outline-confirm"><input type="checkbox" data-outline-confirm/> I have reviewed all saved recurring card text in this revision.</label><button type="button" data-outline-approve disabled={!canWrite}>Approve saved recurring writing</button><p data-outline-approval-state>{outline.approval?.revision===outline.revision?'Current revision has creator approval.':'Current revision has no matching creator approval.'}</p></details>:null}
+<details data-outline-recovery hidden><summary>Recover this draft</summary><p>Keep a copy while resolving a save problem.</p><button class="studio-button studio-button--secondary" type="button" data-outline-download>Download recovery copy</button></details>
+<p role="status" aria-live="polite" data-outline-status></p>
+</section>
+<script>import {initGuidebookOutline} from '../../scripts/guidebookOutline';document.querySelectorAll<HTMLElement>('[data-guidebook-outline]').forEach(initGuidebookOutline);</script>
+<style>.outline-workspace{margin:1.5rem 0;padding:1.25rem;border:1px solid #cec9c1;background:#faf8f2;max-width:65rem}.outline-workspace h2{font-family:'Playfair Display',Georgia,serif}.outline-workspace p{line-height:1.65}.outline-workspace :global(label){display:grid;gap:.4rem;margin:1rem 0}.outline-workspace :global(input),.outline-workspace :global(textarea){font:inherit;padding:.7rem;max-width:100%;box-sizing:border-box;width:100%}.outline-workspace :global(textarea){min-height:8rem}.outline-workspace :global(button){font:inherit;min-height:44px;margin:.25rem;padding:.5rem}.outline-workspace :global(article){border-bottom:1px solid #cec9c1;padding:.7rem 0}.outline-workspace :global(button:focus-visible){outline:3px solid #315e67}.outline-workspace :global([data-outline-preview] p){white-space:pre-wrap}.outline-actions{display:flex;flex-wrap:wrap;margin:1rem 0}.outline-workspace :global(.outline-confirm){display:flex;align-items:flex-start;gap:.65rem}.outline-workspace :global(input[type=checkbox]){width:1.1rem;height:1.1rem;min-width:1.1rem;padding:0;margin:.2rem 0 0}</style>
+
+<style is:global>
+.outline-preset-choice{max-width:48rem}.outline-preset-choice select{font:inherit;padding:.6rem;width:100%;min-height:44px}.outline-workspace .outline-editor{display:grid;grid-template-columns:minmax(200px,2fr) minmax(0,3fr);gap:1.4rem;align-items:start;margin-top:1rem}.outline-workspace .outline-section-list{list-style:none;padding:0;margin:0;border:1px solid #cec9c1;background:#fffdf7}.outline-workspace .outline-section-list li{display:flex;align-items:center;border-bottom:1px solid #e3ded4;padding:.2rem}.outline-workspace .outline-section-list li:last-child{border:0}.outline-workspace .outline-section-list li[aria-current=true]{background:#e2ece9;border-left:3px solid #315e67}.outline-workspace .outline-section-list button{margin:0;border:0;background:transparent;text-align:left}.outline-workspace .outline-section-select{flex:1;min-width:0;overflow-wrap:anywhere}.outline-workspace .outline-grip{cursor:grab;font-size:1.5rem;flex:0 0 44px;touch-action:none}.outline-workspace .outline-detail{min-width:0;border:1px solid #cec9c1;padding:1rem;background:#fffdf7}.outline-workspace .outline-detail label{margin:.25rem 0 .8rem}.outline-workspace .outline-detail h3{margin:0 0 .8rem}.outline-workspace [hidden]{display:none!important}.outline-workspace .outline-preset-summary{padding:.7rem 1rem;background:#eee9df}.outline-workspace .outline-preset-summary p{margin:.4rem 0}.outline-workspace .outline-section-list button:focus-visible{outline:3px solid #315e67;outline-offset:-3px}.outline-workspace .outline-detail p{margin:.4rem 0}.outline-workspace .outline-remove{font-size:.9rem}.outline-workspace .outline-detail input{padding:.55rem}@media(max-width:650px){.outline-workspace .outline-editor{grid-template-columns:1fr;gap:.8rem}.outline-workspace{padding:.8rem}.outline-workspace .outline-section-list{max-height:18rem;overflow:auto}}
+</style>
+
+<style is:global>.outline-workspace .outline-mobile-position{display:none!important}@media(max-width:650px){.outline-workspace .outline-mobile-position{display:grid!important}.outline-mobile-position select{font:inherit;padding:.6rem;width:100%;min-height:44px}}</style>
+
+<style is:global>
+.tok-body--studio .outline-workspace{max-width:none;padding:clamp(1rem,2vw,1.5rem);background:var(--tok-studio-paper,#f2efe9)}
+.tok-body--studio .outline-composition{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);gap:1.5rem;align-items:start}
+.tok-body--studio .outline-entry-preview{border:1px solid var(--tok-studio-rule,#cec9c1);padding:1rem 1.25rem;background:#fffdf7;min-width:0}
+.tok-body--studio .outline-workspace .outline-editor{grid-template-columns:1fr;gap:.75rem}
+.tok-body--studio .outline-workspace h2{font-size:1.4rem;margin:.75rem 0 .5rem}
+.tok-body--studio .outline-workspace h3{font-family:'Playfair Display',Georgia,serif}
+.tok-body--studio .outline-workspace p{max-width:65ch;margin:.5rem 0 .8rem}
+.tok-body--studio .outline-workspace .outline-section-list li[aria-current=true]{background:#e8e3db;border-left:3px solid #c6a85a}
+.tok-body--studio .outline-workspace .outline-section-list input{min-width:0;flex:1;margin:0;padding:.5rem;border:1px solid transparent;background:transparent}
+.tok-body--studio .outline-workspace .outline-section-list input:focus{border-color:#8a6a1f;background:#fffdf7}
+.tok-body--studio .outline-workspace .outline-mobile-position{display:grid!important}
+.tok-body--studio .outline-workspace .outline-detail{padding:.75rem}
+.tok-body--studio .outline-workspace .outline-detail h3{font-size:1rem;margin:0 0 .4rem}
+.tok-body--studio .outline-preset-summary button{margin:.4rem .5rem .2rem 0}
+.tok-body--studio .outline-grip svg{width:20px;height:24px;display:block;margin:auto;pointer-events:none}
+.tok-body--studio .outline-guidance{margin-top:1rem}
+@media(max-width:760px){.tok-body--studio .outline-composition{grid-template-columns:1fr}.tok-body--studio .outline-entry-preview{position:static}}
+</style>
+<style is:global>
+.tok-body--studio .outline-workspace .outline-mobile-position select{box-sizing:border-box;min-height:44px;padding:.78rem .85rem;font:inherit;line-height:1.5;border:1px solid var(--tok-studio-rule);border-radius:var(--radius-md);background-color:var(--tok-studio-card);color:var(--tok-studio-copy)}
+.tok-body--studio .outline-workspace :is(select,input,textarea,button,a):focus-visible{outline:3px solid var(--tok-studio-teal,#065e73);outline-offset:3px}
+.tok-body--studio .outline-workspace .outline-entry-preview a:hover{color:var(--tok-studio-teal,#065e73)}
+.tok-body--studio .outline-workspace select option{color:var(--tok-studio-copy);background:var(--tok-studio-card)}
+.tok-body--studio .outline-workspace .outline-editor:has(.outline-detail[hidden]){gap:0}
+</style>

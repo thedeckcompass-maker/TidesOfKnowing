@@ -1,0 +1,104 @@
+---
+interface Props {
+  reply: {
+    id:string;
+    body:string;
+    updated_at:string;
+    my_reply?:boolean;
+    deleted?:boolean;
+  };
+  enabled:boolean;
+}
+
+const {reply,enabled}=Astro.props;
+const visible=enabled&&reply.my_reply===true&&!reply.deleted;
+---
+
+{visible&&
+  <div class="community-reply-actions">
+    <details class="community-reply-edit">
+      <summary>Edit comment</summary>
+      <form
+        method="post"
+        action="/api/studio/community-member-actions"
+        data-community-member-action
+      >
+        <input type="hidden" name="action" value="edit"/>
+        <input type="hidden" name="reply_id" value={reply.id}/>
+        <input
+          type="hidden"
+          name="expected_updated_at"
+          value={reply.updated_at}
+        />
+        <label class="studio-field">
+          Edit your comment
+          <textarea
+            name="body"
+            required
+            minlength="2"
+            maxlength="8000"
+            rows="4"
+          >{reply.body}</textarea>
+        </label>
+        <p role="status" data-community-action-status hidden></p>
+        <button type="submit" class="studio-button">
+          Save changes
+        </button>
+      </form>
+    </details>
+
+    <details class="community-reply-delete">
+      <summary>Delete comment</summary>
+      <p>
+        Your comment will be replaced with "Comment deleted".
+        Replies from other members will remain.
+      </p>
+      <form
+        method="post"
+        action="/api/studio/community-member-actions"
+        data-community-member-action
+      >
+        <input type="hidden" name="action" value="delete"/>
+        <input type="hidden" name="reply_id" value={reply.id}/>
+        <input
+          type="hidden"
+          name="expected_updated_at"
+          value={reply.updated_at}
+        />
+        <p role="status" data-community-action-status hidden></p>
+        <button type="submit">Confirm deletion</button>
+      </form>
+    </details>
+  </div>
+}
+
+<style>
+.community-reply-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem 1rem;
+  margin:.7rem 0;
+}
+.community-reply-actions details{
+  flex-basis:100%;
+}
+.community-reply-actions summary{
+  cursor:pointer;
+  color:#294d43;
+  font-weight:600;
+}
+.community-reply-actions form{
+  display:grid;
+  gap:.7rem;
+  max-width:38rem;
+  margin:.7rem 0;
+}
+.community-reply-actions textarea{
+  width:100%;
+  box-sizing:border-box;
+}
+.community-reply-delete{
+  border-top:1px solid #d8dfd8;
+  padding-top:.5rem;
+}
+</style>

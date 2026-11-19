@@ -1,5 +1,5 @@
 type RuntimeLocals = {
-  runtime?: {
+  serverRuntime?: {
     env?: Record<string, string | undefined>;
   };
 };
@@ -13,7 +13,7 @@ export type CommunityEnv = {
 };
 
 function runtimeEnv(locals?: unknown): Record<string, string | undefined> {
-  return (locals as RuntimeLocals | undefined)?.runtime?.env ?? {};
+  return (locals as RuntimeLocals | undefined)?.serverRuntime?.env ?? {};
 }
 
 function readEnv(name: string, locals?: unknown): string {

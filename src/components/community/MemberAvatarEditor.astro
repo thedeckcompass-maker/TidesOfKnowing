@@ -1,0 +1,422 @@
+---
+interface Props {
+  username?: string;
+}
+
+const { username = 'Community member' } = Astro.props;
+const initials = username.trim().split(/\s+/)
+  .slice(0,2).map(p=>p[0]?.toUpperCase()??'').join('') || 'CM';
+---
+
+<section class="avatar-editor" data-avatar-editor>
+  <div class="avatar-editor__visual">
+    <div class="avatar-editor__crop" data-crop-area>
+      <canvas data-crop-canvas width="320" height="320"
+        role="img" aria-label="Profile photograph crop preview"></canvas>
+      <span data-avatar-initials>{initials}</span>
+    </div>
+  </div>
+
+  <div class="avatar-editor__body">
+    <h2>Profile photograph</h2>
+    <p class="avatar-editor__description">
+      Your photograph appears beside your Community discussions and replies.
+    </p>
+
+    <input
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      data-avatar-file
+      aria-label="Choose a profile photograph"
+      class="avatar-editor__file"
+    />
+
+    <div data-crop-controls hidden>
+      <label for="avatar-zoom">Zoom</label>
+      <input id="avatar-zoom" data-avatar-zoom
+        type="range" min="1" max="3" step=".01" value="1" />
+      <p class="avatar-editor__hint">Drag the photograph to reposition it.</p>
+    </div>
+
+    <div class="avatar-editor__actions">
+      <button type="button" data-avatar-choose class="avatar-primary">
+        Choose photograph
+      </button>
+      <button type="button" data-avatar-save class="avatar-primary" disabled hidden>
+        Save photograph
+      </button>
+      <button type="button" data-avatar-remove class="avatar-text" hidden>
+        Remove
+      </button>
+    </div>
+
+    <p class="avatar-editor__format">JPG, PNG or WebP · Maximum 5 MB</p>
+    <p data-avatar-error role="alert" hidden></p>
+  </div>
+</section>
+
+<script>
+export {};
+
+const STORAGE_KEY='dcs-community-avatar-local-v1';
+const root=document.querySelector<HTMLElement>('[data-avatar-editor]');
+
+if(root){
+  const input=root.querySelector<HTMLInputElement>('[data-avatar-file]')!;
+  const canvas=root.querySelector<HTMLCanvasElement>('[data-crop-canvas]')!;
+  const context=canvas.getContext('2d')!;
+  const crop=root.querySelector<HTMLElement>('[data-crop-area]')!;
+  const initials=root.querySelector<HTMLElement>('[data-avatar-initials]')!;
+  const zoomInput=root.querySelector<HTMLInputElement>('[data-avatar-zoom]')!;
+  const controls=root.querySelector<HTMLElement>('[data-crop-controls]')!;
+  const choose=root.querySelector<HTMLButtonElement>('[data-avatar-choose]')!;
+  const save=root.querySelector<HTMLButtonElement>('[data-avatar-save]')!;
+  const remove=root.querySelector<HTMLButtonElement>('[data-avatar-remove]')!;
+  const error=root.querySelector<HTMLElement>('[data-avatar-error]')!;
+
+  const SIZE=320;
+  let photo:HTMLImageElement|null=null;
+  let zoom=1;
+  let offsetX=0;
+  let offsetY=0;
+  let changed=false;
+  let dragging=false;
+  let dragX=0;
+  let dragY=0;
+  let savedUrl:string|null=null;
+  let imageVersion=0;
+
+  function showError(message=''){
+    error.textContent=message;
+    error.hidden=!message;
+  }
+
+  function notify(url:string|null){
+    window.dispatchEvent(
+      new CustomEvent('community-avatar-change',{detail:{url}})
+    );
+  }
+
+  function dimensions(){
+    if(!photo)return {w:SIZE,h:SIZE};
+    const base=Math.max(
+      SIZE/photo.naturalWidth,
+      SIZE/photo.naturalHeight
+    );
+    return {
+      w:photo.naturalWidth*base*zoom,
+      h:photo.naturalHeight*base*zoom
+    };
+  }
+
+  function constrain(){
+    const {w,h}=dimensions();
+    offsetX=Math.max(-(w-SIZE)/2,Math.min((w-SIZE)/2,offsetX));
+    offsetY=Math.max(-(h-SIZE)/2,Math.min((h-SIZE)/2,offsetY));
+  }
+
+  function draw(target:CanvasRenderingContext2D,size:number){
+    if(!photo)return;
+    constrain();
+    const {w,h}=dimensions();
+    const ratio=size/SIZE;
+    target.clearRect(0,0,size,size);
+    target.drawImage(
+      photo,
+      ((SIZE-w)/2+offsetX)*ratio,
+      ((SIZE-h)/2+offsetY)*ratio,
+      w*ratio,
+      h*ratio
+    );
+  }
+
+  function render(){
+    context.clearRect(0,0,SIZE,SIZE);
+    if(photo)draw(context,SIZE);
+    canvas.hidden=!photo;
+    initials.hidden=!!photo;
+    controls.hidden=!photo;
+    crop.classList.toggle('is-editing',!!photo);
+    save.hidden=!photo;
+    save.disabled=!photo||!changed;
+    remove.hidden=!photo&&!savedUrl;
+    choose.textContent=photo?'Change photograph':'Choose photograph';
+  }
+
+  function loadImage(url:string,markChanged:boolean){
+    const version=++imageVersion;
+    const next=new Image();
+    next.onload=()=>{
+      if(version!==imageVersion)return;
+      if(next.naturalWidth*next.naturalHeight>40000000){
+        showError('Choose a smaller photograph.');
+        return;
+      }
+      photo=next;
+      zoom=1;
+      offsetX=0;
+      offsetY=0;
+      zoomInput.value='1';
+      changed=markChanged;
+      showError();
+      render();
+    };
+    next.onerror=()=>{
+      if(version===imageVersion)
+        showError('This photograph could not be opened.');
+    };
+    next.src=url;
+  }
+
+  choose.addEventListener('click',()=>input.click());
+
+  input.addEventListener('change',()=>{
+    const file=input.files?.[0];
+    if(!file)return;
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){
+      showError('Choose a JPG, PNG or WebP photograph.');
+      input.value='';
+      return;
+    }
+    if(file.size>5*1024*1024){
+      showError('Choose a photograph smaller than 5 MB.');
+      input.value='';
+      return;
+    }
+    const url=URL.createObjectURL(file);
+    const version=imageVersion+1;
+    const image=new Image();
+    image.onload=()=>{
+      URL.revokeObjectURL(url);
+      if(version!==imageVersion)return;
+      if(image.naturalWidth*image.naturalHeight>40000000){
+        showError('Choose a smaller photograph.');
+        return;
+      }
+      photo=image;
+      zoom=1;
+      offsetX=0;
+      offsetY=0;
+      zoomInput.value='1';
+      changed=true;
+      showError();
+      render();
+    };
+    image.onerror=()=>{
+      URL.revokeObjectURL(url);
+      showError('This photograph could not be opened.');
+    };
+    imageVersion=version;
+    image.src=url;
+    input.value='';
+  });
+
+  zoomInput.addEventListener('input',()=>{
+    zoom=Number(zoomInput.value);
+    changed=true;
+    render();
+  });
+
+  crop.addEventListener('pointerdown',event=>{
+    if(!photo)return;
+    dragging=true;
+    dragX=event.clientX;
+    dragY=event.clientY;
+    crop.setPointerCapture(event.pointerId);
+  });
+
+  crop.addEventListener('pointermove',event=>{
+    if(!dragging||!photo)return;
+    const rect=crop.getBoundingClientRect();
+    offsetX+=(event.clientX-dragX)*SIZE/rect.width;
+    offsetY+=(event.clientY-dragY)*SIZE/rect.height;
+    dragX=event.clientX;
+    dragY=event.clientY;
+    changed=true;
+    render();
+  });
+
+  function stopDragging(){dragging=false;}
+  crop.addEventListener('pointerup',stopDragging);
+  crop.addEventListener('pointercancel',stopDragging);
+  crop.addEventListener('lostpointercapture',stopDragging);
+
+  save.addEventListener('click',()=>{
+    if(!photo||!changed)return;
+    const output=document.createElement('canvas');
+    output.width=256;
+    output.height=256;
+    const outputContext=output.getContext('2d');
+    if(!outputContext){
+      showError('The photograph could not be processed.');
+      return;
+    }
+    draw(outputContext,256);
+    const url=output.toDataURL('image/jpeg',.86);
+    try{
+      localStorage.setItem(STORAGE_KEY,url);
+      savedUrl=url;
+      changed=false;
+      loadImage(url,false);
+      notify(url);
+    }catch{
+      showError('This browser could not save the photograph.');
+    }
+  });
+
+  remove.addEventListener('click',()=>{
+    ++imageVersion;
+    try{
+      localStorage.removeItem(STORAGE_KEY);
+    }catch{
+      showError('This browser could not remove the saved photograph.');
+      return;
+    }
+    photo=null;
+    savedUrl=null;
+    changed=false;
+    zoom=1;
+    offsetX=0;
+    offsetY=0;
+    zoomInput.value='1';
+    showError();
+    render();
+    notify(null);
+  });
+
+  try{
+    savedUrl=localStorage.getItem(STORAGE_KEY);
+    if(savedUrl)loadImage(savedUrl,false);
+  }catch{
+    showError('Local photograph storage is unavailable.');
+  }
+  render();
+}
+</script>
+
+<style>
+.avatar-editor{
+  display:flex;
+  align-items:center;
+  gap:1.6rem;
+  padding:1.3rem;
+  border:1px solid #c8d7cc;
+  border-radius:.8rem;
+  background:#fffdf9;
+}
+.avatar-editor__visual{flex:none}
+.avatar-editor__crop{
+  width:190px;
+  height:190px;
+  position:relative;
+  overflow:hidden;
+  border-radius:50%;
+  background:#dce8df;
+  color:#315348;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  touch-action:none;
+}
+.avatar-editor__crop.is-editing{cursor:grab}
+.avatar-editor__crop.is-editing:active{cursor:grabbing}
+.avatar-editor__crop canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.avatar-editor__crop canvas[hidden]{display:none}
+.avatar-editor__crop span{
+  font-size:3.5rem;
+  font-weight:650;
+}
+.avatar-editor__body{flex:1;min-width:0}
+.avatar-editor h2{
+  font-size:1.3rem;
+  margin:0 0 .35rem;
+}
+.avatar-editor__description{
+  font-size:.9rem;
+  margin:0 0 1rem;
+}
+.avatar-editor__file{
+  position:absolute;
+  width:1px;
+  height:1px;
+  opacity:0;
+  pointer-events:none;
+}
+[data-crop-controls]{margin:.65rem 0}
+[data-crop-controls][hidden]{display:none}
+[data-crop-controls] label{
+  display:block;
+  font-size:.85rem;
+  font-weight:600;
+}
+[data-avatar-zoom]{
+  display:block;
+  width:min(100%,280px);
+  accent-color:#315348;
+}
+.avatar-editor__hint{
+  margin:.25rem 0;
+  font-size:.8rem;
+  color:#62736a;
+}
+.avatar-editor__actions{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.55rem;
+  margin-top:.6rem;
+}
+.avatar-editor button{
+  font:inherit;
+  font-size:.88rem;
+  cursor:pointer;
+  border-radius:.4rem;
+  padding:.55rem .8rem;
+  min-height:42px;
+}
+.avatar-primary{
+  border:1px solid #315348;
+  background:#315348;
+  color:#fff;
+}
+.avatar-primary:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+.avatar-text{
+  border:1px solid transparent;
+  background:transparent;
+  color:#315348;
+  text-decoration:underline;
+}
+.avatar-editor__format{
+  margin:.6rem 0 0;
+  font-size:.78rem;
+  color:#62736a;
+}
+[data-avatar-error]{
+  color:#9b332a;
+  font-size:.85rem;
+  margin:.5rem 0 0;
+}
+[data-avatar-error][hidden]{display:none}
+.avatar-editor button:focus-visible,
+.avatar-editor input:focus-visible{
+  outline:3px solid #b88b37;
+  outline-offset:3px;
+}
+@media(max-width:600px){
+  .avatar-editor{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .avatar-editor__crop{
+    width:150px;
+    height:150px;
+  }
+}
+</style>

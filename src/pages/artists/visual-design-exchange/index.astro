@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../components/studio/StudioHeader.astro';
+import VisualExchangeWorkspace from '../../../components/studio/VisualExchangeWorkspace.astro';
+import {exchangeStore} from '../../../lib/studio/artistDirectory';
+import '../../../styles/studio.css';
+export const prerender=false;
+const user=Astro.locals.user,store=exchangeStore(Astro.locals);
+if(!user||Astro.locals.profile?.id!==user.id||Astro.locals.profile.status!=='active')return new Response('Sign in with your existing account.',{status:401});
+if(!store)return new Response('Hosted artist board is not connected.',{status:503});
+if(!await store.registeredArtist(user.id))return new Response('Register an artist profile to browse. No creator membership is required.',{status:403});
+---
+<BaseLayout title="Visual Design Exchange | Artists" description="Creator-selected visual snapshots for registered artists." studioWorkspace={true} tdcPlacement="none"><main class="studio-page page-inner"><StudioHeader title="Visual Design Exchange"/><VisualExchangeWorkspace board={true}/></main></BaseLayout>

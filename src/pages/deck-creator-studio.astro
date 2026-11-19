@@ -1,0 +1,7 @@
+---
+import DcsPublicLayout from '../layouts/DcsPublicLayout.astro';
+import presentation from '../data/studio/approved-public/presentation.json';
+import {approvedPublicHtml} from '../lib/studio/approvedPublicPresentation';
+import HistoricalFoundingCollaboration from '../components/studio/HistoricalFoundingCollaboration.astro';
+---
+<DcsPublicLayout title="Deck Creator Studio | Shape your ideas into a deck" description="Start with free Explore and choose independent tools or the human guidance your deck needs."><Fragment set:html={approvedPublicHtml('landing',Boolean(Astro.locals.user))}/><HistoricalFoundingCollaboration/><Fragment set:html={presentation.landing.dialogs}/><script slot="scripts" is:inline src="/dcs-approved/plan.js" defer></script></DcsPublicLayout>

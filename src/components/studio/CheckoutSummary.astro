@@ -1,0 +1,8 @@
+---
+interface Props {choice:{name:string;offer:string;billing:string;terms:string}}
+const {choice}=Astro.props;
+const arrangement=choice.billing==='monthly'?'Monthly subscription':choice.billing==='annual'?'Annual subscription':choice.billing==='once'?'1 upfront payment':'Fixed payment schedule';
+---
+<aside class="card soft order-summary" data-enhanced-summary aria-labelledby="summary-heading"><h2 id="summary-heading">Your order summary</h2><p><strong>{choice.name}</strong></p>{choice.offer==='create'&&<p>Independent Studio workspace</p>}<ul class="summary-items"><li><strong>Arrangement</strong><br/><span data-summary="arrangement">{arrangement}</span></li><li><strong>Schedule</strong><br/><span data-summary="schedule">{choice.terms}</span></li></ul><p data-summary="totalLabel">{choice.offer==='create'?'Recurring amount':'Total'}</p><p class="summary-total" data-summary="total">{choice.terms}</p><p class="compact-note" data-summary="renewal">{choice.offer==='create'?'Renews until canceled.':'No automatic renewal.'}</p>
+{choice.offer==='develop'&&<p class="compact-note">All included private consultations and written reviews become available after the first confirmed payment, within your program period. {choice.billing==='instalments'?'The remaining fixed installments are still due.':''} Existing program agreements keep their recorded terms.</p>}
+</aside>

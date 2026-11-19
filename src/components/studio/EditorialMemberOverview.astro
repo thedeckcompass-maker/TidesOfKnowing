@@ -1,0 +1,27 @@
+---
+import {serviceAllowancePresentation} from '../../lib/studio/serviceAllowancePresentation';
+const {entry,groups=[]}=Astro.props;
+const date=(value:string)=>new Date(value).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
+const active=Date.now()>=Date.parse(entry.promise.start)&&Date.now()<Date.parse(entry.promise.editorialEnds)&&(entry.paymentAvailability?.editorial??true);
+const consultations=serviceAllowancePresentation(entry.promise.benefits.consultations,entry.consultations,'completed',entry.paymentAvailability?.consultations??entry.promise.benefits.consultations,active);
+const reviews=serviceAllowancePresentation(entry.promise.benefits.assessments,entry.reviews,'delivered',entry.paymentAvailability?.reviews??entry.promise.benefits.assessments,active);
+const invitations=groups.flatMap((g:any)=>g.invitations.filter((i:any)=>i.enrolmentId===entry.id).map((i:any)=>({date:g.at,type:'Group session',subject:g.title,status:i.attended?'Attended':i.rsvp==='no'?'Declined':i.rsvp==='yes'?'Scheduled':'Invited',used:i.attended})));
+const activity=[...invitations,...entry.consultations.map((c:any)=>({date:c.date,type:'Private consultation',subject:'',status:c.status==='completed'?'Completed':c.status==='scheduled'?'Scheduled':'Pending request',used:c.status==='completed'})),...entry.reviews.map((r:any)=>({date:r.submission?.created_at,type:'Written review',subject:r.submission?.title??'',purpose:r.submission?.question??'',status:({requested:'Pending request',submitted:'Submitted',in_review:'In review',delivered:'Delivered'} as Record<string,string>)[r.status]??r.status,used:r.status==='delivered'}))];
+---
+<section class="editorial-overview" aria-label="Your editorial programme">
+<h2>{entry.promise.benefits.name}</h2>
+<p>Editorial support: <strong>{date(entry.promise.start)} to {date(entry.promise.editorialEnds)}</strong> (UTC). Studio access until {date(entry.paymentAvailability?.createEndsAt??entry.promise.createEnds)}.</p>
+<dl class="editorial-balances">
+<div><dt>Group sessions remaining</dt><dd><strong>{entry.groupsRemaining}</strong><span>{entry.promise.benefits.groups} included · {entry.groupsAttended} attended</span><span>Requests and invitations do not consume a session.</span></dd></div>
+<div><dt>Consultations available to request</dt><dd><strong>{consultations.requestable}</strong><span>{consultations.included} included · {consultations.completed} completed · {consultations.pending} pending</span></dd></div>
+<div><dt>Written reviews available to request</dt><dd><strong>{reviews.requestable}</strong><span>{reviews.included} included · {reviews.completed} delivered · {reviews.pending} pending</span></dd></div>
+</dl>
+{!active&&<p role="status">{Date.now()<Date.parse(entry.promise.start)?'Your editorial period has not started.':Date.now()>=Date.parse(entry.promise.editorialEnds)?'Your editorial period has ended. Your recorded activity remains available.':'New requests are unavailable under your current recorded programme eligibility.'}</p>}
+<section class="editorial-activity" aria-label="Your editorial activity"><h3>Your editorial activity</h3>
+{activity.length===0?<p>No editorial services have been requested yet. Your available benefits are shown above; choose an included service below when you are ready.</p>:<ul>{activity.map((item:any)=><li><h4>{item.type} — {item.status}</h4><p>{item.date?<time datetime={item.date}>{date(item.date)}{item.type!=='Written review'&&<> · {item.date.slice(11,16)} UTC</>}</time>:'No date recorded yet.'}</p>{item.subject&&<p>{item.subject}</p>}{item.purpose&&<p>Request: {item.purpose}</p>}<p>{item.used?'Included entitlement consumed.':'Not recorded as consumed.'}</p></li>)}</ul>}
+</section>
+<nav class="editorial-paths" aria-label="Choose editorial support"><a href={'#included-benefits-'+entry.id}><strong>Use an included editorial benefit</strong><span>Choose from the eligible actions for your recorded programme.</span></a><a href="#request-additional-quote" data-open-quote><strong>Request additional editorial support</strong><span>Enquire about separate work. Scope and price require agreement; an enquiry is not acceptance, allocation or payment.</span></a></nav>
+</section>
+<style>
+.editorial-overview h2{margin-top:0}.editorial-balances{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem!important}.editorial-balances>div{padding:1rem!important;background:#e8efec;border-left:4px solid #315e67;min-width:0}.editorial-balances dt{font-weight:700}.editorial-balances dd{margin:0}.editorial-balances dd>strong{display:block;font-size:2.5rem;line-height:1.3;color:#173f46}.editorial-balances span{display:block;margin-top:.4rem;font-size:.95rem}.editorial-activity{margin-block:1.5rem}.editorial-activity ul{padding:0;list-style:none}.editorial-activity li{padding:.8rem 1rem;margin:.6rem 0;border-left:3px solid #8a7347;background:#f4f1e9}.editorial-activity h4,.editorial-activity p{margin:.3rem 0}.editorial-paths{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.editorial-paths a{display:block;padding:1rem;border:1px solid #527c76;border-radius:.35rem;min-height:44px;color:#173f46;background:#fffaf0}.editorial-paths strong,.editorial-paths span{display:block}.editorial-paths span{margin-top:.4rem;font-size:.95rem}.editorial-paths a:focus-visible{outline:3px solid #315e67;outline-offset:4px}@media(max-width:700px){.editorial-balances,.editorial-paths{grid-template-columns:1fr}}
+</style>

@@ -1,0 +1,20 @@
+---
+import {studioBillingFromEnvironment} from '../../lib/studio/billingEnvironment';
+let data:any=null,error=false;
+try{const p=(Astro.locals as any).studioBillingManagement??studioBillingFromEnvironment(Astro.locals.serverRuntime?.env).studioBillingManagement;if(p&&Astro.locals.user&&Astro.locals.profile?.status==='active'&&Astro.locals.profile.role==='member')data=await p.summary(Astro.locals.user.id);}catch{error=true;}
+---
+<section id="billing"><h2>Studio payments and access</h2>
+{error&&<p>Payment records are temporarily unavailable. Your account and original work remain protected.</p>}
+{!data&&!error&&<p>Online billing changes are not activated.</p>}
+{data?.purchases.map((p:any)=><article><h3>{p.offer==='create'?'Create':p.offer==='collaborate'?'Collaborate':'Develop'}</h3>{p.supersededForAccessBy?<p>This earlier Create subscription was replaced by your editorial programme access, with the recorded prepaid adjustment. Its old paid term is not counted again.</p>:<p>Create access through {p.createEndsAt}. Your original work remains yours.</p>}
+{p.upgrade&&<p>Your previous Create renewal has stopped. The unused prepaid adjustment is US${(p.upgrade.amountMinor/100).toFixed(2)} by {p.upgrade.adjustment}, recorded under {p.upgrade.reference}. Create will not automatically resume billing.</p>}
+{p.refund&&<p>The recorded {p.refund.kind} refund agreement is {p.refund.reference}. Your creative work is retained.</p>}
+{p.offer==='create'&&!p.supersededForAccessBy&&p.subscriptionId&&(p.cancelRequested?<p>Renewal cancellation is confirmed. Existing paid access continues through its paid term.</p>:<form class="studio-form" data-account-billing method="post" action="/api/studio/billing-account"><input type="hidden" name="action" value="cancel-create"/><input type="hidden" name="subscriptionId" value={p.subscriptionId}/><label class="studio-check"><input type="checkbox" name="confirmed" value="yes" required/>Stop future Create renewals; retain my current paid access and work.</label><button class="studio-button" type="submit">Cancel Create renewal</button><p role="status" tabindex="-1"></p></form>)}</article>)}
+{data?.pending.length>0&&<div>{data.pending.map((p:any)=><p>Pending purchase reference: {p.purchaseId}</p>)}<p>An earlier purchase is awaiting completion. Reopen its original checkout, or close the verified unpaid attempt before selecting another plan. A paid or processing payment cannot be discarded.</p><form class="studio-form" data-account-billing method="post" action="/api/studio/billing-account"><input type="hidden" name="action" value="recover-checkout"/><label class="studio-check"><input type="checkbox" name="confirmed" value="yes" required/>Close my earlier unpaid checkout if its payment state permits this.</label><button class="studio-button" type="submit">Reconcile pending checkout</button><p role="status" tabindex="-1"></p></form></div>}
+{Astro.locals.profile?.role==='admin'&&<p><a href="/studio/billing-admin/">Record billing agreements</a></p>}
+</section>
+<script>
+for(const form of document.querySelectorAll<HTMLFormElement>('form[data-account-billing]'))form.addEventListener('submit',async event=>{event.preventDefault();const output=form.querySelector<HTMLElement>('[role=status]')!,button=form.querySelector<HTMLButtonElement>('button')!;button.disabled=true;try{const response=await fetch(form.getAttribute('action')!,{method:'POST',body:new FormData(form)}),result=await response.json();if(!response.ok)throw Error(result.error);form.dispatchEvent(new Event('account-form-saved',{bubbles:true}));output.textContent=result.closed?'The unpaid checkout is closed. You may choose your plan again.':'Create renewal is cancelled. Your paid term and original work are retained.';}catch(error){output.textContent=error instanceof Error?error.message:'Could not verify this action. Keep your retry reference.';button.disabled=false;}});
+</script>
+
+<style>form[data-billing-admin],form[data-account-billing]{max-width:44rem;margin-block:1.5rem}form button{justify-self:start}form [role=status]{overflow-wrap:anywhere}</style>

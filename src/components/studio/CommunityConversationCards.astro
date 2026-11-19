@@ -1,0 +1,17 @@
+---
+import {CREATIVE_CHAPTERS} from '../../lib/studio/communityChapters';
+import {communityPage} from '../../lib/studio/communityExperience';
+const {posts=[],url=Astro.url}=Astro.props;
+const date=(value:string)=>new Date(value).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});
+---
+<div class="community-conversation-list">
+{posts.map((post:any)=>{
+ const section=CREATIVE_CHAPTERS.find(c=>c.id===post.chapter);if(!section)return null;
+ const count=post.reply_count??post.replies?.filter((r:any)=>!r.deleted).length??0;
+ return <article class="community-conversation-card" data-creative-chapter={section.id} data-discussion-row data-topic={post.topic??''} data-search={String(post.question??'').toLowerCase()}>
+  <p class="community-category">{section.name}{post.status==='locked'&&<span> · Locked</span>}</p>
+  <h3><a href={communityPage(`/studio/community/${section.id}/discussion/${post.id}/`,url)}>{post.question}</a></h3>
+  <p class="community-byline">{post.author_username??'Community member'} · <time datetime={post.created_at}>{date(post.created_at)}</time> · {count} {count===1?'reply':'replies'}</p>
+ </article>;
+})}
+</div>
