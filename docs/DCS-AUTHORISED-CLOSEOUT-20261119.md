@@ -1,3 +1,5 @@
+> **Conditional source merge authorised:** The owner approved merging PR #30 after whole-PR source/parallel-authority, review/check and automation verification. Source reconciliation and security checks passed; no application correction or deployment is needed. Merge/ready remains paused pending confirmation of Supabase GitHub Production/PR automation settings. See [DCS-PR30-AUTHORITY-RECONCILIATION-20261119.md](DCS-PR30-AUTHORITY-RECONCILIATION-20261119.md). No hosted setting was changed during this merge assessment.
+
 > **Configuration close-out completed:** Read [DCS-CONFIGURATION-CLOSEOUT-20261119.md](DCS-CONFIGURATION-CLOSEOUT-20261119.md) for the definitive build entry, source-dependency correction and approved Pages automation safeguard. No application deployment or data change occurred.
 
 # DCS authorised close-out — 19 November 2026
@@ -38,7 +40,7 @@ The established remote workflow uses a branch and pull request. The owner explic
 
 | Item | Status and next action |
 | --- | --- |
-| Recorded source integration | Scoped commits are pushed and draft PR #30 is open. Pages automation is disabled and the definitive coordinated pipeline is verified. Main integration now awaits only separate merge authority; none was given. No accepted application change is awaiting deployment. |
+| Recorded source integration | Scoped commits are pushed and draft PR #30 is open. Pages automation is disabled and the definitive coordinated pipeline is verified. Conditional merge authority has now been given. Whole-PR authority/security checks passed; the Supabase integration automation gate remains unverified, so the PR stays draft/unmerged. No accepted application change is awaiting deployment. |
 | Owner authentication | Immediate reset/sign-in resolved by owner report. Retain the unexplained earlier failure; investigate only if it recurs with specific non-secret event evidence. Owner verification of cross-device/remember-me and email-template signature remains. |
 | Genuine Develop demonstration | Grant is already active until revoked. Owner can use the ordinary interface. Full create/edit/save/reopen, journal/private artwork, version restoration and exports need owner acceptance; no synthetic Production writes are authorised. |
 | UI acceptance | Real-phone Report menus/nested replies/Scribes, keyboard/zoom/screen reader, current public/pricing/editorial presentation, admin filters/actions and save/navigation behavior still need owner visual acceptance. Local DOM tests and HTTP checks do not replace it. |
