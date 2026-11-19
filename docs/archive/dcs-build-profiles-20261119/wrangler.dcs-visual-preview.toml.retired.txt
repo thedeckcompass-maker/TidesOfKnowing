@@ -1,0 +1,36 @@
+# Protected consolidated release Worker; deployment still requires explicit authorization.
+# Access protection is managed separately. Do not deploy if its enforcement is unverified.
+name = "tidesofknowing-consolidated"
+account_id = "bd6ec7740077c69b954f70cf9aa61c95"
+main = "./src/worker.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+preview_urls = false
+routes = []
+
+# Preserve owner-managed PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY.
+# Never substitute blank placeholders or copy keys into this file.
+keep_vars = true
+
+[secrets]
+required = ["SUPABASE_SERVICE_ROLE_KEY"]
+
+[vars]
+STUDIO_RUNTIME_ENABLED = "false"
+STUDIO_BILLING_TEST_ENABLED = "false"
+STUDIO_BILLING_LIVE_ENABLED = "false"
+STUDIO_BILLING_SCHEDULER_ENABLED = "false"
+
+[triggers]
+crons = []
+
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = false
+
+# Astro generates dist/server/wrangler.json with compiled paths and module rules.
+# Do not upload src/worker.ts directly or reuse an older generated configuration.
+

@@ -67,3 +67,7 @@ TWOCARDDUPLICATE/
 /ALL Things TAROT/
 /src/**/*.before-*
 /src/**/*.stage7-backup
+
+# Private parked Lexicon access/recovery and former account-specific import instructions
+/config/lexicon-preview-access.json
+/config/lexicon-preview-import-*.json

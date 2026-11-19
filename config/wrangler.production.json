@@ -1,0 +1,46 @@
+{
+  "name": "tidesofknowing-consolidated",
+  "account_id": "bd6ec7740077c69b954f70cf9aa61c95",
+  "compatibility_date": "2026-04-01",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "keep_vars": true,
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "STUDIO_RUNTIME_ENABLED": "true",
+    "STUDIO_DEPLOYMENT_TARGET": "production",
+    "STUDIO_RUNTIME_CONFIG_JSON": "{\"community\":true,\"services\":true,\"exchange\":true,\"exports\":true,\"artists\":true,\"artistPortfolio\":true,\"recipientId\":\"7e3224e7-b303-4150-a45e-dd9a12efdb68\",\"historyPolicy\":\"deny\"}",
+    "STUDIO_BILLING_LIVE_ENABLED": "false",
+    "STUDIO_BILLING_TEST_ENABLED": "false",
+    "STUDIO_BILLING_SCHEDULER_ENABLED": "false",
+    "STUDIO_FOUNDING_ENABLED": "true",
+    "STUDIO_FOUNDING_ORIGIN": "https://www.tidesofknowing.com"
+  },
+  "hyperdrive": [
+    {
+      "binding": "DCS_EXCHANGE_DB",
+      "id": "1ed3105145e041ffae0192deba9f7973"
+    }
+  ],
+  "secrets": {
+    "required": [
+      "SUPABASE_SERVICE_ROLE_KEY"
+    ]
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": [
+        "**/*.js",
+        "**/*.mjs"
+      ]
+    }
+  ],
+  "no_bundle": true
+}

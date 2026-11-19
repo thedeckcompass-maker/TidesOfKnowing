@@ -6,8 +6,9 @@ import {X509Certificate,createHash} from 'node:crypto';
 import {runPreviewImport} from './import-lexicon-preview.mjs';
 import {previewSslOptions,PREVIEW_REF,PREVIEW_DB} from './lib/lexicon-preview-sql.mjs';
 
-const config=JSON.parse(await readFile('config/lexicon-preview-import-55d385ed.json','utf8'));
 const fixture=await readFile('scripts/fixtures/lexicon-demo-20261114.json');
+// Offline mock identities; never read a retained real Preview import instruction.
+const config={projectRef:PREVIEW_REF,ownerId:'11111111-1111-4111-8111-111111111111',actorId:'11111111-1111-4111-8111-111111111111',projectId:'22222222-2222-4222-8222-222222222222',deckType:'hybrid',pathway:'personal',fixtureSha256:createHash('sha256').update(fixture).digest('hex')};
 const pem=rootCertificates.find(p=>{const c=new X509Certificate(p);return c.ca&&c.checkIssued(c)&&c.verify(c.publicKey)&&Date.parse(c.validFrom)<Date.now()&&Date.parse(c.validTo)>Date.now();});
 const bytes=Buffer.from(pem);
 const caOptions={caFile:'offline-public-root.crt',caSha256:createHash('sha256').update(bytes).digest('hex'),caSource:`SUPABASE_DASHBOARD_${PREVIEW_REF}`,readCertificate:async()=>bytes};

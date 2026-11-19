@@ -3,16 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "prebuild": "node scripts/generate-article-audio-manifest.mjs && node scripts/sync-client-reading-spread-images.mjs",
+    "prebuild": "node scripts/dcs-production.cjs check",
     "predev": "node scripts/generate-article-audio-manifest.mjs",
     "dev": "astro dev",
-    "build": "astro build",
-    "postbuild": "node scripts/verify-cloudflare-build.mjs",
+    "build": "node scripts/dcs-production.cjs build",
+    "postbuild": "node scripts/dcs-production.cjs verify",
     "preview": "astro preview",
     "publish-article": "node scripts/add-article.mjs",
     "generate:lead-magnets": "node scripts/generate-lead-magnets.mjs",
     "astro": "astro",
-    "publish": "npm run build && wrangler deploy --config dist/server/wrangler.json",
+    "publish": "node scripts/dcs-production.cjs release",
     "diag:headers": "node scripts/diag-fetch-headers.mjs",
     "validate:related-cards": "node scripts/validate-repeating-card-related-map.mjs",
     "validate:repeating-card-metadata": "node scripts/validate-repeating-card-metadata.mjs",
@@ -35,7 +35,8 @@
     "verify:reading-library-head": "node scripts/verify-reading-library-head.mjs",
     "seo:rcm-tracker": "node scripts/generate-repeating-card-index-tracker.mjs",
     "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs",
-    "test:studio-stripe": "node scripts/studio-stripe.test.mjs"
+    "test:studio-stripe": "node scripts/studio-stripe.test.mjs",
+    "release:production": "node scripts/dcs-production.cjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.12",

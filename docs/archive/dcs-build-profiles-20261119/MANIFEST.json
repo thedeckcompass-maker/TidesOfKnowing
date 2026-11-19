@@ -1,0 +1,52 @@
+[
+  {
+    "original": "wrangler.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.toml.retired.txt",
+    "sha256": "48d30b12f5c1f952aa6b6a1915a118649a4774ddf6305ff0b0df458a51bb2386"
+  },
+  {
+    "original": "wrangler.downloaded-stage-20261104.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.downloaded-stage-20261104.toml.retired.txt",
+    "sha256": "48d30b12f5c1f952aa6b6a1915a118649a4774ddf6305ff0b0df458a51bb2386"
+  },
+  {
+    "original": "wrangler.community-preview.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.community-preview.toml.retired.txt",
+    "sha256": "7107b0cc91883e375db649822a8d208b08d12a9069a8721b8ccd3a443db2b748"
+  },
+  {
+    "original": "wrangler.local-community.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.local-community.toml.retired.txt",
+    "sha256": "eb8551bb6aab310a2942b8076414cfdf90ed86169290fa45a9999681972f78eb"
+  },
+  {
+    "original": "wrangler.dcs-stage7-build.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.dcs-stage7-build.toml.retired.txt",
+    "sha256": "dded9aac7d7788b0e17089b4c9c3cf375d9e287c13bce9e93ed7142020563e80"
+  },
+  {
+    "original": "wrangler.dcs-visual-preview.toml",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.dcs-visual-preview.toml.retired.txt",
+    "sha256": "bdb9c2ae8e51f57399fa4c885f733afeb0ce4b9bd668783cc7b2762a98c39445"
+  },
+  {
+    "original": "wrangler.consolidated.jsonc",
+    "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.consolidated.jsonc.retired.txt",
+    "sha256": "decabc51893858dbd6950ea425f805500b5395c5dd2f4940d255b885369a70d1"
+  },
+  {
+    "original": "astro.consolidated.config.mjs",
+    "archive": "docs/archive/dcs-build-profiles-20261119/astro.consolidated.config.mjs.retired.txt",
+    "sha256": "a6745c3be4dc3e98eaf1a404758a21c04ce674740dd81a1dfe8b254ac23a3d2b"
+  },
+  {
+    "original": "astro.dcs-preview-20261104.config.mjs",
+    "archive": "docs/archive/dcs-build-profiles-20261119/astro.dcs-preview-20261104.config.mjs.retired.txt",
+    "sha256": "883428f33cf0d57dc9ca9919125834e91f7c5e320dfdbd026239f76c1d1c34ef"
+  },
+  {
+    "original": "astro.dcs-stage7-build.config.mjs",
+    "archive": "docs/archive/dcs-build-profiles-20261119/astro.dcs-stage7-build.config.mjs.retired.txt",
+    "sha256": "19cd4180dc3be2c40b2617b81843f43b0e702aefb4c25bc55260147895ab4217"
+  }
+]

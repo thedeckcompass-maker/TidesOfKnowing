@@ -1,6 +1,6 @@
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {pathToFileURL} from 'node:url';import {createRequire} from 'node:module';import {experimental_AstroContainer as Container} from 'astro/container';
 const require=createRequire(import.meta.url),{parseHTML}=require(path.resolve('.build-temp/dcs-community-admin-layout-20261118/dom-tooling/node_modules/linkedom'));
-const dir=path.resolve('.build-temp/dcs-authorised-closeout-20261119'),server=dir+'/build/dist/server',baseline=path.resolve('.build-temp/dcs-group-allowances-20261119-v2/build');
+const dir=path.resolve(process.env.DCS_TEST_PACKET??'.build-temp/dcs-authorised-closeout-20261119'),server=dir+'/build/dist/server',baseline=path.resolve('.build-temp/dcs-group-allowances-20261119-v2/build');
 const p=JSON.parse(fs.readFileSync(dir+'/build/src/data/studio/approved-public/presentation.json')),old=JSON.parse(fs.readFileSync(baseline+'/src/data/studio/approved-public/presentation.json'));
 for(const page of Object.keys(p))for(const key of Object.keys(p[page]))if(key!=='header'||page==='checkout')assert.deepEqual(p[page][key],old[page][key],page+'.'+key+' content must be preserved');
 for(const file of ['src/lib/studio/serviceOffers.ts','src/lib/studio/creatorDesk.ts','src/lib/studio/access.ts','src/scripts/studioDraftGuard.ts','src/pages/api/studio/projects.ts'])assert.equal(fs.readFileSync(dir+'/build/'+file,'utf8'),fs.readFileSync(baseline+'/'+file,'utf8'));

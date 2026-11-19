@@ -1,6 +1,19 @@
-# Used by `wrangler pages dev` / deploy. Keeps compatibility_date within the
-# Workers binary supported range (avoids "newest date supported is …" errors).
-name = "tidesofknowing"
-pages_build_output_dir = "dist"
+# Build-only default. No deployable entry or Production resource target.
+# Release exclusively through npm run release:production -- <phase>.
+name = "dcs-build-only-do-not-deploy"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = false
+preview_urls = false
+keep_vars = false
+routes = []
+
+[assets]
+binding = "ASSETS"
+run_worker_first = true
+
+[vars]
+STUDIO_RUNTIME_ENABLED = "false"
+STUDIO_BILLING_LIVE_ENABLED = "false"
+STUDIO_BILLING_TEST_ENABLED = "false"
+STUDIO_BILLING_SCHEDULER_ENABLED = "false"
