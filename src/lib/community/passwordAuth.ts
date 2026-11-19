@@ -8,7 +8,7 @@ export async function passwordAction(auth: SupabaseClient['auth'], mode: string,
    if(result.error&&!['user_not_found','email_not_confirmed'].includes(result.error.code??''))return {error:'Unable to request confirmation right now. Please wait a few minutes and try again.'};
    return {message:'If this address has an unconfirmed account, a fresh confirmation email will be requested. Check your inbox and spam folder; this message does not confirm delivery.'};
   }
-  if(mode==='forgot') {const result=await auth.resetPasswordForEmail(email,{redirectTo:origin+'/auth/callback/?redirectTo=%2Fauth%2Fpassword-update%2F'});if(result.error && result.error.code!=='user_not_found')return {error:'Unable to request a reset email right now. Please wait a few minutes and try again.'};return {message:'If this address has an account, a password setup or reset email will arrive shortly. Open it in this browser.'};}
+  if(mode==='forgot') {const result=await auth.resetPasswordForEmail(email,{redirectTo:origin+'/auth/callback/?redirectTo=%2Fauth%2Fpassword-update%2F'});if(result.error && result.error.code!=='user_not_found')return {error:'Unable to request a reset email right now. Please wait a few minutes and try again.'};return {message:`A password setup or reset request was submitted for ${email}. If it matches an account, an email may be sent. This message does not confirm sending or delivery. Check the address above and your inbox and spam folder. Open any reset email in this browser.`};}
   if(mode==='update') {
    const {data,error}=await auth.getUser();if(error||!data.user)return {error:'Your session has expired. Request a new reset link.'};
    if(password.length<12||password.length>128)return {error:'Use a password between 12 and 128 characters.'};
