@@ -1,3 +1,5 @@
+> **Latest continuation — configuration cleanup complete:** [DCS-CONFIGURATION-CLOSEOUT-20261119.md](DCS-CONFIGURATION-CLOSEOUT-20261119.md). Required artwork dependency recorded; obsolete profiles archived; canonical coordinated pipeline verified; automatic Pages Git deployments disabled with explicit owner approval. PR #30 remains unmerged.
+
 > **Current continuation: authorised close-out, 19 November 2026.** Read [DCS-AUTHORISED-CLOSEOUT-20261119.md](DCS-AUTHORISED-CLOSEOUT-20261119.md) and [DCS-CLOSEOUT-RELEASE-20261119.md](DCS-CLOSEOUT-RELEASE-20261119.md) first. Accepted source is now recorded in Git. The wording-only reset acknowledgement is live; it does not claim email delivery or solve the earlier unexplained Auth failure. Owner reset/sign-in succeeded by owner report, and the ongoing Develop workspace grant remains active. The rejected project-start brief remains rolled back. Payments/video remain disabled. Older statuses and no-commit instructions below are historical and superseded.
 
 ---

@@ -615,7 +615,9 @@
       "path": "wrangler.toml",
       "initialStatus": " M",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved tracked local-stage configuration; not committed or deployed; owner review after close-out"
+      "disposition": "Former stage profile archived; current path replaced by verified build-only default",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.toml.retired.txt",
+      "archivedOriginalSha256": "48d30b12f5c1f952aa6b6a1915a118649a4774ddf6305ff0b0df458a51bb2386"
     },
     {
       "path": "DCS-GATE-B-ARCHIVE-ASSEMBLY-20261116.cjs",
@@ -897,19 +899,25 @@
       "path": "astro.consolidated.config.mjs",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/astro.consolidated.config.mjs.retired.txt",
+      "archivedOriginalSha256": "a6745c3be4dc3e98eaf1a404758a21c04ce674740dd81a1dfe8b254ac23a3d2b"
     },
     {
       "path": "astro.dcs-preview-20261104.config.mjs",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/astro.dcs-preview-20261104.config.mjs.retired.txt",
+      "archivedOriginalSha256": "883428f33cf0d57dc9ca9919125834e91f7c5e320dfdbd026239f76c1d1c34ef"
     },
     {
       "path": "astro.dcs-stage7-build.config.mjs",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/astro.dcs-stage7-build.config.mjs.retired.txt",
+      "archivedOriginalSha256": "19cd4180dc3be2c40b2617b81843f43b0e702aefb4c25bc55260147895ab4217"
     },
     {
       "path": "config/lexicon-preview-access.json",
@@ -921,7 +929,7 @@
       "path": "config/lexicon-preview-import-55d385ed.json",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Old fixture-specific active instruction retired to private .build-temp/dcs-configuration-closeout-20261119/lexicon-preview-import.retired.json.txt"
     },
     {
       "path": "docs/DCS-ACCEPTANCE-PROVISIONING-BLOCKER-20261118.md",
@@ -2312,8 +2320,9 @@
     {
       "path": "local-folder-prototype/desktopArtwork.ts",
       "initialStatus": "??",
-      "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "category": "accepted-required-build-dependency",
+      "disposition": "Current behavior preserved; recorded in Git as required compile dependency, integration remains dormant",
+      "sha256": "d1c5ac7ea5f124eaae553c439ddb6357cf099c92f042249b25511c18277df42f"
     },
     {
       "path": "public/dcs-approved/0119ef80e488-tok-landscape-bluff-hill-narrow.svg",
@@ -9731,43 +9740,55 @@
       "path": "wrangler.community-preview.toml",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.community-preview.toml.retired.txt",
+      "archivedOriginalSha256": "7107b0cc91883e375db649822a8d208b08d12a9069a8721b8ccd3a443db2b748"
     },
     {
       "path": "wrangler.consolidated.jsonc",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.consolidated.jsonc.retired.txt",
+      "archivedOriginalSha256": "decabc51893858dbd6950ea425f805500b5395c5dd2f4940d255b885369a70d1"
     },
     {
       "path": "wrangler.dcs-stage7-build.toml",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.dcs-stage7-build.toml.retired.txt",
+      "archivedOriginalSha256": "dded9aac7d7788b0e17089b4c9c3cf375d9e287c13bce9e93ed7142020563e80"
     },
     {
       "path": "wrangler.dcs-visual-preview.toml",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.dcs-visual-preview.toml.retired.txt",
+      "archivedOriginalSha256": "bdb9c2ae8e51f57399fa4c885f733afeb0ce4b9bd668783cc7b2762a98c39445"
     },
     {
       "path": "wrangler.downloaded-stage-20261104.toml",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.downloaded-stage-20261104.toml.retired.txt",
+      "archivedOriginalSha256": "48d30b12f5c1f952aa6b6a1915a118649a4774ddf6305ff0b0df458a51bb2386"
     },
     {
       "path": "wrangler.lexicon-preview.json",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Parked dedicated Lexicon configuration retained in Git with its required tooling"
     },
     {
       "path": "wrangler.local-community.toml",
       "initialStatus": "??",
       "category": "local-reference-or-unapproved-tool",
-      "disposition": "Preserved locally; explicit exclusion, not selected for production"
+      "disposition": "Archived as non-selectable historical text",
+      "archive": "docs/archive/dcs-build-profiles-20261119/wrangler.local-community.toml.retired.txt",
+      "archivedOriginalSha256": "eb8551bb6aab310a2942b8076414cfdf90ed86169290fa45a9999681972f78eb"
     },
     {
       "path": "scripts/dcs-closeout-auth-callback.test.cjs",
@@ -9835,5 +9856,13 @@
       "disposition": "Added during authorised close-out; contains no application feature change"
     }
   ],
-  "privateReferenceFiles": 5
+  "privateReferenceFiles": 5,
+  "configurationCloseout": {
+    "profilesArchived": 10,
+    "privateEvidenceRoot": ".build-temp/dcs-configuration-closeout-20261119",
+    "artworkDependencyRecorded": true,
+    "defaultStageConfigurationRetired": true,
+    "pagesAutomationDisabled": true,
+    "noApplicationDeployment": true
+  }
 }

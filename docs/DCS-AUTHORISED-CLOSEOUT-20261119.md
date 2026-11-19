@@ -1,3 +1,5 @@
+> **Configuration close-out completed:** Read [DCS-CONFIGURATION-CLOSEOUT-20261119.md](DCS-CONFIGURATION-CLOSEOUT-20261119.md) for the definitive build entry, source-dependency correction and approved Pages automation safeguard. No application deployment or data change occurred.
+
 # DCS authorised close-out — 19 November 2026
 
 This is the current continuation record. Earlier release and stop-work documents remain historical evidence; their old blockers, pending deployments and no-commit instructions do not override the later owner approvals recorded here.
@@ -16,7 +18,7 @@ Already-live work captured by this reconciliation includes the restored public d
 
 The project-start/journal-routing/terminology/earlier-notes brief remains rejected and rolled back. Its 34 restored files match the accepted baseline; its four new application files are absent. Retired tooling and preview candidates remain only in the local rollback archive. The preview server remains stopped. See `DCS-PROJECT-START-ROLLBACK-20261119.md`.
 
-The owner explicitly requested preserving the unrelated desktop-artwork prototype and generated Preview configurations locally, for review after this task. They are not accepted production inputs. `wrangler.toml` retains its pre-existing, generated local-stage modification; it is deliberately not committed, restored or used for production deployment.
+The later owner review corrected the desktop-artwork classification: it is a required compile dependency for a dormant option. Its unchanged bytes and the exact accepted release adapters are now recorded in Git. Ten superseded profiles are archived, the root stage configuration and stale discovery redirect are retired, and a definitive build/release pipeline is established. See `DCS-CONFIGURATION-CLOSEOUT-20261119.md` and `DCS-PRODUCTION-BUILD-RELEASE.md`. No local-folder integration, creator-navigation or layout change was enabled.
 
 ## Authentication status
 
@@ -30,13 +32,13 @@ Accepted-live source commit: `8db6df8`; wording-only commit: `90ba385`; release/
 
 The full per-path initial status and disposition ledger is retained privately there, including all temporary outputs. Coverage verification found zero initial paths without a disposition: all 85,762 entries in the first snapshot are covered by the later 87,481-entry ledger, which also includes the new isolated build. A sanitized project-file register is version controlled. Generated Wrangler/cache artifacts are removed from Git tracking only; no local files are deleted. Build outputs, private references, raw account/test evidence and historical operators outside the accepted release remain local, with explicit inventory/exclusion entries. Historical material being retained does not authorise executing it.
 
-The established remote workflow uses a branch and pull request. Production Pages still has automatic main-branch deployment enabled and a machine-specific output directory. Do not merge this reconciliation into main or run a generic publish command without resolving that deployment-path safeguard. Pushing a review branch may trigger an automatic Pages preview build; it does not authorise changing the protected Preview Supabase database. Configuration is not changed to conceal or bypass that dependency.
+The established remote workflow uses a branch and pull request. The owner explicitly approved disabling Pages automatic Production and Preview Git deployments; both settings were applied and verified without changing the active pair, domains, bindings, secrets or build settings. The former machine-specific Git output path is inert. The coordinated release runner is now the definitive entry point. PR #30 remains draft: the automatic-build safeguard is resolved, but merging is not authorised.
 
 ## Remaining work and next actions
 
 | Item | Status and next action |
 | --- | --- |
-| Recorded source integration | Scoped commits are pushed and draft PR #30 is open. Main integration remains held until its machine-specific Pages Git-build/output procedure is made safe. No accepted application change is awaiting deployment. Do not force-push or bypass the merge safeguard. |
+| Recorded source integration | Scoped commits are pushed and draft PR #30 is open. Pages automation is disabled and the definitive coordinated pipeline is verified. Main integration now awaits only separate merge authority; none was given. No accepted application change is awaiting deployment. |
 | Owner authentication | Immediate reset/sign-in resolved by owner report. Retain the unexplained earlier failure; investigate only if it recurs with specific non-secret event evidence. Owner verification of cross-device/remember-me and email-template signature remains. |
 | Genuine Develop demonstration | Grant is already active until revoked. Owner can use the ordinary interface. Full create/edit/save/reopen, journal/private artwork, version restoration and exports need owner acceptance; no synthetic Production writes are authorised. |
 | UI acceptance | Real-phone Report menus/nested replies/Scribes, keyboard/zoom/screen reader, current public/pricing/editorial presentation, admin filters/actions and save/navigation behavior still need owner visual acceptance. Local DOM tests and HTTP checks do not replace it. |
@@ -53,7 +55,7 @@ The established remote workflow uses a branch and pull request. Production Pages
 | Reviewed, bots, second admin | Deliberately deferred. No second-admin access, bot, or separate Reviewed workflow added. |
 | MPC/printer proof | Two-MPC-square safe/trim/production-proof boundary remains held for its specific verification. |
 | Lexicon | Introductory PDF/import and related stabilization work parked; no new import or preview deployment. |
-| Local prototype/configurations | Owner asked to return to these after close-out. Review the preserved prototype and generated Preview configurations with the owner before adopting, archiving or changing them. |
+| Local prototype/configurations | Review and authorised narrow cleanup completed. Required artwork dependency recorded, obsolete profiles archived and root build target made safe; private Lexicon evidence remains parked. No navigation/layout work authorised. |
 | Supabase subscription | Temporary acceptance project already deleted and verified absent; no teardown remains. Pro is ongoing, not cancelled by deletion. Owner reported $25 charged/$33.79 projection against $40 operation cap; recorded renewal 18 December. Final invoice/tax and downgrade suitability remain unverified. No new charge or downgrade authorised here. |
 | Recovery | Existing guarded application rollback remains available. Database migrations already installed; do not rerun them. Recheck backup availability before a future database operation; database backups do not contain private Storage bytes. |
 

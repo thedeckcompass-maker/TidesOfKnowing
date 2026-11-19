@@ -1,3 +1,5 @@
+> **Later configuration close-out:** The Pages automatic-build gate is now resolved through the owner-approved two-setting change. PR #30 remains unmerged because merge authority was withheld. No application deployment followed. See [DCS-CONFIGURATION-CLOSEOUT-20261119.md](DCS-CONFIGURATION-CLOSEOUT-20261119.md).
+
 # DCS close-out release — 19 November 2026
 
 The owner separately approved deployment of the password-reset acknowledgement wording. The accepted layout-repair source was used, not the older auth candidate. Exactly one application source file differs: `src/lib/community/passwordAuth.ts`, SHA-256 `7938d4fb18cbcb2a6942212b8ba91dfda9d3fe9f40ee5d140ea56ca51ebed81c`.
