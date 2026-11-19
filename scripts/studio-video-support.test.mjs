@@ -1,0 +1,30 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {parse} from '@astrojs/compiler-rs';
+import * as html from 'parse5';
+const all=(n,f)=>[...(f(n)?[n]:[]),...(n.childNodes??[]).flatMap(c=>all(c,f))];
+
+test('editorial support integrates video guidance without provider actions', async () => {
+  const guide=await readFile('src/components/studio/VideoSupportGuide.astro','utf8');
+  const page=await readFile('src/pages/studio/editorial-support.astro','utf8');
+  assert.deepEqual(parse(guide).diagnostics,[]);
+  assert.deepEqual(parse(page).diagnostics,[]);
+  assert.match(page,/<VideoSupportGuide\s*\/>/);
+  assert.match(page,/Astro\.locals\.profile\?\.id!==Astro\.locals\.user\.id/);
+  assert.match(guide,/view=consultations/);
+  assert.match(guide,/view=groups/);
+  assert.match(guide,/not available through this interface yet/);
+  assert.match(guide,/Recording is off by default/);
+  assert.match(guide,/agreement of everyone being recorded/);
+  assert.match(guide,/Expired access does not by itself prove/);
+  assert.doesNotMatch(guide,/<(?:video|iframe|form)\b|https?:\/\//i);
+  const fragment=html.parseFragment(guide.slice(guide.indexOf('<section'),guide.indexOf('<style>')));
+  const cards=all(fragment,n=>n.tagName==='section'&&(n.attrs??[]).some(a=>a.name==='class'&&a.value==='video-support__card'));
+  assert.equal(cards.length,4);
+  const links=all(fragment,n=>n.tagName==='a').map(n=>n.attrs.find(a=>a.name==='href')?.value);
+  assert.deepEqual(links,['/studio/editorial-support/?view=consultations','/studio/editorial-support/?view=groups']);
+  assert.equal(all(fragment,n=>n.tagName==='button').length,0);
+  assert.match(guide,/@media\(max-width:759px\)/);
+  assert.match(guide,/:focus-visible/);
+});

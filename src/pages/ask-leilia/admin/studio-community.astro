@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {isAdminProfile} from '../../../lib/community/auth';
+import {communityAdminStore} from '../../../lib/studio/communityAdmin';
+import {CREATIVE_CHAPTERS} from '../../../lib/studio/communityChapters';
+import {inboxFilters,INBOX_PATH,inboxId} from '../../../lib/studio/communityInbox';
+import CommunityInboxActions from '../../../components/studio/CommunityInboxActions.astro';
+import CommunityInboxThreadItem from '../../../components/studio/CommunityInboxThreadItem.astro';
+import {threadGroups} from '../../../lib/studio/communityAdminView';
+import '../../../styles/dcs-community-admin.css';
+import '../../../styles/dcs-community-inbox.css';
+export const prerender=false;
+if(!Astro.locals.user||Astro.locals.profile?.id!==Astro.locals.user.id||!isAdminProfile(Astro.locals.profile))return new Response('Not found.',{status:404});
+Astro.response.headers.set('Cache-Control','private, no-store');
+const filters=inboxFilters(Astro.url.searchParams),tab=filters.tab??'inbox';
+let data:any=null,error='',staff=false,detail:any=null;
+try{const store=await communityAdminStore(Astro.locals);staff=true;data=await store.communityInboxRead(Astro.locals.user.id,filters);
+ if(data.rows.length&&tab!=='log'){try{const kept=await store.communityRetentionStates(Astro.locals.user.id,[...new Set(data.rows.map((r:any)=>r.thread_id))] as string[]);data.rows=data.rows.map((r:any)=>({...r,retention:kept[r.thread_id]??null}));}catch{data.rows=data.rows.map((r:any)=>({...r,retention:null}));}}
+ const thread=Astro.url.searchParams.get('thread');if(inboxId(thread)){const all=await store.communityAdminRead(Astro.locals.user.id,true);detail=all.find((p:any)=>p.id===thread)??null;if(detail){try{const kept=(await store.communityRetentionStates(Astro.locals.user.id,[thread]))[thread]??null;detail.retention=kept;detail.replies=detail.replies.map((r:any)=>({...r,retention:kept}));}catch{detail.retention=null;}}}
+}catch{error='The inbox could not be loaded. Counts are unavailable; no changes have been made.';}
+const c=data?.counters;
+const view={inbox:'Needs attention',done:'Completed',hidden:'Hidden content',log:'Moderation history'}[tab];
+const countLabel={inbox:'outstanding items',done:'completed tasks',hidden:'hidden contributions',log:'recorded actions'}[tab];
+const link=(changes:Record<string,string|null>)=>{const v={...filters,page:'1',...changes};const p=new URLSearchParams();for(const[k,x]of Object.entries(v))if(x)p.set(k,x);return INBOX_PATH+'?'+p;};
+const pillar=(id:string)=>CREATIVE_CHAPTERS.find(x=>x.id===id)?.name??'Community';
+const stamp=(s:string)=>s?new Date(s).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}):'';
+const open=(r:any)=>{if(r.hidden)return link({thread:r.thread_id})+'#moderate-'+(r.reply_id??r.thread_id);const q=new URLSearchParams({admin_task:r.id,task_version:String(r.version),admin_return:new URLSearchParams(filters).toString()});if(r.reply_id)q.set('reply',r.reply_id);return '/studio/community/'+r.pillar+'/discussion/'+r.thread_id+'/?'+q+(r.reply_id?'#reply-'+r.reply_id:'');};
+---
+<BaseLayout title="DCS Community administration | Tides of Knowing" description="Your Community task inbox." metaRobots="noindex, nofollow">
+<main id="dcs-community-admin" class="page-inner dcs-inbox" data-inbox data-admin={Astro.locals.user.id}>
+ <header class="inbox-heading"><a href="/ask-leilia/admin/">← Tides administration</a><h1>DCS Community administration</h1><p>Your conversations and work needing attention.</p></header>
+ {error&&<p role="alert">{error}</p>}
+ {data&&<>
+ <div class="inbox-sticky">
+ <nav class="inbox-counters" aria-label="Items needing attention">
+ <a href={link({tab:'inbox',focus:'new'})}><span>New in community</span><strong>{c.new}</strong><small>Unread discussions and comments</small></a>
+ <a class="inbox-mentions" href={link({tab:'inbox',focus:'mentions'})}><span>@Leilia</span><strong>{c.mentions}</strong><small>Unread mentions</small></a>
+ <a href={link({tab:'inbox',focus:'reports'})}><span>Reports</span><strong>{c.reports}</strong><small>Open reports</small></a>
+ {staff&&<a class="inbox-confidential" href="/studio/editorial/"><span>Confidential editorial</span><strong>{c.editorial}</strong><small>Private queue · unread</small></a>}
+ </nav>
+ <nav class="inbox-tabs" aria-label="Community administration views">{[['inbox','Needs attention'],['done','Completed'],['hidden','Hidden content'],['log','Moderation history']].map(([id,label])=><a href={link({tab:id,focus:null,type:null,q:null,handled:null})} aria-current={tab===id?'page':undefined}>{label}</a>)}</nav>
+ <p class="inbox-pillar-caption">{view} by pillar · counts include opened work and match the current view and filters.</p>
+ <nav class="inbox-pillars" aria-label={view+' by pillar'}>{CREATIVE_CHAPTERS.map(x=><a class:list={{muted:!c.pillars[x.id],active:filters.pillar===x.id}} aria-label={x.name+': '+(c.pillars[x.id]??0)+' '+countLabel} aria-current={filters.pillar===x.id?'true':undefined} href={link({pillar:filters.pillar===x.id?null:x.id})}><span>{x.name}</span><strong>{c.pillars[x.id]??0}</strong></a>)}</nav>
+ </div>
+ <div class="inbox-toolbar">{tab!=='log'&&<details><summary>Filters</summary><form method="get" class="inbox-filter-form">
+ <input type="hidden" name="tab" value={tab}/>{filters.focus&&<input type="hidden" name="focus" value={filters.focus}/>}
+ <label>Month (UTC)<input type="month" name="month" value={filters.month}/></label>
+ <label>Pillar<select name="pillar"><option value="">All pillars</option>{CREATIVE_CHAPTERS.map(x=><option selected={filters.pillar===x.id} value={x.id}>{x.name}</option>)}</select></label>
+ {tab!=='hidden'&&tab!=='log'&&<><label>Type<select name="type"><option value="">All types</option>{['question','comment','report'].map(x=><option selected={filters.type===x} value={x}>{x}</option>)}</select></label><label>Pathway<select name="tier"><option value="">All pathways</option>{['Explore','Create','Collaborate','Develop','Realise'].map(x=><option selected={filters.tier===x}>{x}</option>)}</select></label><label>Search<input name="q" maxlength="150" value={filters.q}/></label></>}
+ {tab==='done'&&<label>Handled by<select name="handled"><option value="">All handlers</option><option value={Astro.locals.user.id} selected={filters.handled===Astro.locals.user.id}>Leilia</option></select></label>}
+ <label>Order<select name="sort"><option value="oldest" selected={filters.sort!=='newest'}>Oldest first</option><option value="newest" selected={filters.sort==='newest'}>Newest first</option></select></label><button type="submit">Apply filters</button><a href={INBOX_PATH+'?tab='+tab}>Clear filters</a></form></details>}
+ <span>{data.total} {countLabel} · 25 per page</span>{tab!=='log'&&<a href={link({sort:filters.sort==='newest'?'oldest':'newest'})}>{filters.sort==='newest'?'Show oldest first':'Show newest first'}</a>}</div>
+ <h2 class="inbox-view-heading">{view}{filters.pillar?' · '+pillar(filters.pillar):' · All pillars'}</h2>
+ <p class="inbox-view-help">{tab==='inbox'?'Outstanding discussions, comments and reports. Opening an item does not complete it. Use Reports above to see flagged content only.':tab==='done'?'Completed tasks, with the person and time recorded. Content visibility is separate from completion.':tab==='hidden'?'Preserved hidden contributions. Hiding does not erase content or task history.':'Past moderation actions, not outstanding work. History stays recorded after work is completed.'}</p>
+ <p role="status" data-inbox-status></p>
+ {Astro.url.searchParams.has('completed')&&<p class="inbox-notice">Reply saved and task marked done. <button type="button" data-undo-return>Undo completion</button></p>}
+ {detail?<section class="inbox-detail"><a href={link({thread:null})}>← Return to list</a><h2>{pillar(detail.chapter)} · Preserved discussion</h2><CommunityInboxThreadItem postId={detail.id} record={detail} question/><h3>Comments and nested replies</h3>{threadGroups(detail.replies??[]).map(({parent,children})=><div class="admin-thread-group"><CommunityInboxThreadItem postId={detail.id} record={parent}/>{children.length>0&&<div class="admin-nested-replies">{children.map((r:any)=><CommunityInboxThreadItem postId={detail.id} record={r} parentName={parent.author_username}/>)}</div>}</div>)}</section>:<>
+ {tab==='inbox'&&c.outstanding===0?<section class="inbox-clear"><span aria-hidden="true">✓</span><h2>All clear</h2><p>Nothing is outstanding. Completed work stays in Completed.</p></section>:<>
+ {tab==='inbox'&&data.rows.length>0&&<div class="inbox-bulk"><label><input type="checkbox" data-select-page/> Select this page</label><button type="button" data-bulk="done">Mark selected done</button><button type="button" data-bulk="hide">Hide selected</button></div>}
+ {!data.rows.length&&<p class="inbox-empty">{tab==='inbox'&&c.outstanding>0?'No items match these filters. Outstanding work remains in other views or the confidential queue.':'No items in this view.'}</p>}
+ <div class="inbox-list">{data.rows.map((r:any)=>tab==='log'?<article class="inbox-log"><div><strong>{r.action.replaceAll('_',' ')}</strong><small>{pillar(r.pillar)} · {stamp(r.created_at)} · {r.handler}</small></div><details><summary>Reason and provenance</summary><p>{r.reason}</p><code>{r.admin_user_id}</code></details><a href={link({thread:r.post_id})+'#moderate-'+(r.reply_id??r.post_id)}>View item</a></article>:<article class:list={['inbox-row',{'inbox-unread':r.state==='New'}]} data-inbox-row data-task={JSON.stringify(r)}>
+ {tab==='inbox'&&<input type="checkbox" data-select-task aria-label={'Select '+r.kind+' by '+r.author}/>}
+ <div class="inbox-row-main"><div class="inbox-row-meta"><span class={'inbox-tag '+(r.mention?'mention':'')}>{r.mention?'@Leilia · ':''}{r.kind}</span><span>{pillar(r.pillar)}</span><strong>{r.author}</strong>{r.tier&&<span class="inbox-tier">{r.tier}</span>}{r.founder&&<span class="inbox-tier">Founder</span>}<time datetime={r.created_at}>{stamp(r.created_at)}</time><small>{r.state}</small></div><p>{r.excerpt}</p>{r.completed_at&&<small>Handled by {r.handler} · {stamp(r.completed_at)}</small>}</div>
+ <div class="inbox-row-buttons">{r.status==='deleted'?<span>Content removed</span>:<a href={open(r)} data-open-task>Open thread</a>}<CommunityInboxActions row={r}/></div></article>)}</div>
+ <nav class="inbox-paging" aria-label="Inbox pages">{Number(data.page)>1&&<a rel="prev" href={link({page:String(data.page-1)})}>← Previous</a>}<span>Page {data.page} of {Math.max(1,Math.ceil(data.total/25))}</span>{data.page*25<data.total&&<a rel="next" href={link({page:String(data.page+1)})}>Next →</a>}</nav>
+ </>}
+ </>}
+ </>}
+ <dialog data-command-dialog><form method="dialog"><h2 data-command-title>Confirm action</h2><p data-command-description></p><label data-reason-label>Reason<textarea name="reason" minlength="5" maxlength="1000" rows="3"></textarea></label><p data-command-error role="alert"></p><div><button type="submit" value="cancel" formnovalidate>Cancel</button><button type="submit" value="confirm">Confirm</button></div></form></dialog>
+</main></BaseLayout>
+<script>import '../../../scripts/studioCommunityInbox';import '../../../scripts/communityRetentionKeep';</script>
+

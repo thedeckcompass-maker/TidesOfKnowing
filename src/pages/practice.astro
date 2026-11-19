@@ -26,7 +26,7 @@ const practicePageLd = {
   isPartOf: { "@id": ENTITY_IDS.tidesWebSite },
 };
 
-const jsonLd = [practicePageLd, breadcrumbJsonLd(crumbs, siteHref)];
+const jsonLd = [practicePageLd, breadcrumbJsonLd(crumbs, siteHref.href)];
 ---
 
 <BaseLayout title={title} description={description} ogUrl={ogUrl} jsonLd={jsonLd}>

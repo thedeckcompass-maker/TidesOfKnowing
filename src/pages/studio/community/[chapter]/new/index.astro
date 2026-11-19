@@ -1,0 +1,273 @@
+---
+import {communityContinuation} from '../../../../../lib/studio/communityNavigation';
+import '../../../../../styles/communityExperience.css';
+import {communityPage,communityBrowseReturn} from '../../../../../lib/studio/communityExperience';
+import CommunityMentionHelp from '../../../../../components/studio/CommunityMentionHelp.astro';
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import {CREATIVE_CHAPTERS} from '../../../../../lib/studio/communityChapters';
+import {supportStore} from '../../../../../lib/studio/supportProvider';
+import '../../../../../styles/studio.css';
+
+export const prerender=false;
+
+if(!Astro.locals.user){
+  return Astro.redirect('/auth/login/',303);
+}
+
+const who=Astro.locals.user.id;
+
+if(Astro.locals.profile?.id!==who ||
+   Astro.locals.profile?.status!=='active'){
+  return new Response('Community access unavailable.',{status:403});
+}
+
+const chapter=CREATIVE_CHAPTERS.find(
+  c=>c.id===Astro.params.chapter
+);
+
+if(!chapter){
+  return new Response('Chapter not found.',{status:404});
+}
+
+const store=supportStore(Astro.locals);
+let allowed=false;
+
+try{
+  allowed=!!store&&await store.allowed(who,'general_community');
+}catch{
+  return new Response('Community access could not be verified.',{status:503});
+}
+
+if(!allowed){
+  return new Response('Community access unavailable.',{status:403});
+}
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+
+const chapterNumber=String(
+  CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1
+).padStart(2,'0');
+const submissionKey=crypto.randomUUID();
+---
+
+<BaseLayout
+  title={`Start a discussion | ${chapter.name} | Deck Creator Studio`}
+  description="Start a conversation with other deck creators."
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main class="studio-page page-inner community-new"
+    data-creative-chapter={chapter.id}>
+
+    <nav class="community-new__breadcrumb" aria-label="Breadcrumb">
+      <a href={communityBrowseReturn(Astro.url)}>My Community</a>
+      <span aria-hidden="true">/</span>
+      <a href={communityPage(`/studio/community/${chapter.id}/`,Astro.url)}>{chapter.name}</a>
+    </nav>
+
+    <header class="community-new__header">
+      <span class="community-new__number">{chapterNumber}</span>
+      <div>
+        <p>{chapter.name}</p>
+        <h1>Start a discussion</h1>
+      </div>
+    </header>
+
+    <form data-community-create
+      action="/api/studio/contextual-support"
+      method="post">
+
+      <input type="hidden" name="action" value="submit"/>
+      <input type="hidden" name="capability" value="general_community"/>
+      <input type="hidden" name="chapter" value={chapter.id}/>
+      <input type="hidden" name="submission_key" value={submissionKey}/>
+      <input type="hidden" name="selected_text" value=""/>
+
+      <label for="community-question">Your question</label>
+      <textarea id="community-question" name="question"
+        rows="5" minlength="20" maxlength="5900"
+        required placeholder="What would you like to discuss?"></textarea>
+
+      <p class="community-new__audience">Post discussion shares your question with eligible General Community members. Keep confidential project material in <a href={communityPage('/studio/editorial-support/',Astro.url)}>Editorial Support</a>.</p>
+      <div class="community-new__review-row">
+      <label class="community-new__consent">
+        <input type="checkbox" name="reviewed" required/>
+        <span>
+          Share with General Community
+        </span>
+      </label>
+      <CommunityMentionHelp/>
+      </div>
+
+      <p data-community-create-error role="alert" hidden></p>
+
+      <div class="community-new__actions">
+        <button type="submit">Post discussion</button>
+        <a href={communityPage(`/studio/community/${chapter.id}/`,Astro.url)}>Cancel</a>
+      </div>
+    </form>
+  </main>
+</BaseLayout>
+
+<script>
+import {communityPage} from '../../../../../lib/studio/communityExperience';
+import {communityContinuation} from '../../../../../lib/studio/communityNavigation';
+const form=document.querySelector<HTMLFormElement>(
+  '[data-community-create]'
+);
+
+if(form){
+  const submit=form.querySelector<HTMLButtonElement>(
+    'button[type="submit"]'
+  )!;
+  const error=form.querySelector<HTMLElement>(
+    '[data-community-create-error]'
+  )!;
+  const chapter=form.querySelector<HTMLInputElement>(
+    'input[name="chapter"]'
+  )!.value;
+
+  let busy=false;
+
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();
+
+    if(busy||!form.reportValidity())return;
+
+    busy=true;
+    submit.disabled=true;
+    error.hidden=true;
+    error.textContent='';
+
+    try{
+      const response=await fetch(form.getAttribute('action')!,{
+        method:'POST',
+        body:new FormData(form),
+        credentials:'same-origin'
+      });
+
+      const result=await response.json();
+
+      if(!response.ok||result?.error||!/^([a-f0-9]{8}-)([a-f0-9]{4}-){3}[a-f0-9]{12}$/i.test(result?.id??'')){
+        throw new Error(
+          result?.error??'Your discussion could not be saved.'
+        );
+      }
+
+      window.location.assign(
+        communityPage(`/studio/community/${encodeURIComponent(chapter)}/discussion/${result.id}/`,new URL(location.href))
+      );
+    }catch(cause){
+      error.textContent=cause instanceof Error
+        ?cause.message
+        :'Your discussion could not be saved.';
+      error.hidden=false;
+    }finally{
+      busy=false;
+      submit.disabled=false;
+    }
+  });
+}
+</script>
+
+<style is:global>
+.community-new{
+  max-width:760px;
+  margin:1rem auto 3rem;
+  padding:1.2rem;
+  background:#edf3ee;
+  border-radius:14px;
+}
+.community-new__breadcrumb{
+  display:flex;
+  gap:.5rem;
+  margin-bottom:.9rem;
+  font-size:.85rem;
+}
+.community-new__header{
+  display:flex;
+  align-items:center;
+  gap:.9rem;
+  margin-bottom:1rem;
+}
+.community-new__number{
+  display:grid;
+  place-items:center;
+  width:56px;
+  height:56px;
+  flex:none;
+  border-radius:10px;
+  background:var(--chapter-accent);
+  color:var(--chapter-ink);
+  font-weight:750;
+  font-size:1.2rem;
+}
+.community-new__header p{
+  margin:0 0 .15rem;
+  font-size:.85rem;
+  color:#597065;
+}
+.community-new__header h1{
+  margin:0;
+  font-size:1.55rem;
+}
+.community-new form{
+  display:grid;
+  gap:.75rem;
+  padding:1.25rem;
+  border:1px solid #d2ded5;
+  border-radius:12px;
+  background:#fffefa;
+}
+.community-new form>label:first-of-type{
+  font-weight:650;
+}
+.community-new textarea{
+  box-sizing:border-box;
+  width:100%;
+  min-height:145px;
+  padding:.75rem;
+  border:1px solid #b6cbbd;
+  border-radius:9px;
+  font:inherit;
+  resize:vertical;
+}
+.community-new__consent{
+  display:flex;
+  align-items:flex-start;
+  gap:.55rem;
+  font-size:.88rem;
+  min-height:44px;
+  align-items:center;
+}
+.community-new__review-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem 1rem}
+.community-new__audience{font-size:.85rem;line-height:1.65;margin:0;color:#41556a}
+.community-new__consent input{
+  margin-top:.25rem;
+}
+.community-new__actions{
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+.community-new__actions button{
+  min-height:42px;
+  padding:.55rem 1rem;
+  border:0;
+  border-radius:8px;
+  background:var(--chapter-accent);
+  color:var(--chapter-ink);
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+}
+.community-new__actions button:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+.community-new [role="alert"]{
+  color:#a23b32;
+  font-size:.88rem;
+}
+</style>

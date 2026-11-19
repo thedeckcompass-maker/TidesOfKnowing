@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),repo=path.resolve(import.meta.dirname,'..'),out=fs.mkdtempSync(path.join(os.tmpdir(),'studio-return-'));
+await require('esbuild').build({entryPoints:[path.join(repo,'src/lib/community/authCallback.ts')],outfile:path.join(out,'redirect.cjs'),bundle:true,platform:'node',format:'cjs'});
+const {safeAuthCallbackRedirect:safe}=require(path.join(out,'redirect.cjs'));
+for(const value of ['/studio/','/studio/account/','/studio/projects/11111111-1111-4111-8111-111111111111/'])assert.equal(safe(value),value);
+assert.equal(safe('%2Fstudio%2Fcreators-desk%2F'),'/studio/creators-desk/');
+assert.equal(safe('/studio/account/?arbitrary=1#x'),'/studio/account/');
+for(const value of ['https://evil.invalid','//evil.invalid','%252f%252fevil.invalid','/studio/../auth/','/studio/%2e%2e/','/studio/\\evil.invalid','/studio/%0d%0aLocation:evil','/api/studio/export','/studio.evil.invalid/'])assert.equal(safe(value),'/community/');
+assert.equal(safe('/community/'),'/community/');assert.equal(safe('/community/account/'),'/community/account/');assert.equal(safe(null),'/community/');
+console.log('Actual redirect implementation: Studio path preservation, public defaults and malicious input rejection passed.');

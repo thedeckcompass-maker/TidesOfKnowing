@@ -1,0 +1,23 @@
+---
+import SymbolVisualDesk from './SymbolVisualDesk.astro';
+import CardCreationForm from './CardCreationForm.astro';
+import LivingCollection from './LivingCollection.astro';
+const {project,cards=[],families=[]}=Astro.props;
+const base=`/studio/projects/${project.id}`;
+---
+<section data-chapter-panel="expression" hidden>
+ <p class="studio-eyebrow">Section four · The Expression</p>
+ <h2>Your deck is finding its voice.</h2>
+ <p>Open a card to develop its writing and artwork, or capture a new idea. Final inclusion and sequence can wait.</p>
+ <div class="expression-work expression-card-compilation" aria-labelledby="expression-cards-title"><div>
+  <div class="expression-work-heading"><h3 id="expression-cards-title">My cards</h3><a class="studio-link-button" href={`/studio/projects/${project.id}/cards/new/`}>Add a card</a></div>
+  <LivingCollection project={project} cards={cards} families={families}/></div>
+ </div>
+ <div class="expression-output"><h3>Your saved writing</h3><p>Read your card writing in the Manuscript in My Project Workbook. Use an Edit link there to return to a card.</p><a href={base+'/project-book/?book=manuscript'}>View saved work in My Project Workbook</a><a href={base+'/exports/'}>Open Exports</a></div>
+ <details class="expression-support"><summary>Symbols, observations and connections</summary><p>Supporting material for your cards, available whenever it helps. Your existing notes and connections remain here.</p><SymbolVisualDesk project={project} cards={cards} expressionLabels={true}/></details>
+ <details class="expression-support"><summary>Take an editorial pause</summary><p>What is the one thing you most want someone to understand? Which phrase sounds most like you? What does this card contribute that would be missing without it?</p><p>These are reflective prompts, not personal editorial feedback or automated rewrites.</p></details>
+ <p class="expression-next"><button type="button" class="studio-button studio-button--secondary" data-chapter="visual-world">Explore The Visual World</button></p>
+</section>
+<style>section h2{font:clamp(1.8rem,3vw,2.5rem)/1.2 'Playfair Display',Georgia,serif}section p{line-height:1.75}.expression-work{margin:1.5rem 0 2rem}.expression-work-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}.expression-work-heading h3,.expression-output h3{font:500 1.35rem/1.3 'Playfair Display',Georgia,serif;margin:.3rem 0}.expression-output{border-top:1px solid #cec9c1;padding:1rem 0}.expression-output a{display:block;margin:.6rem 0}.expression-support{border-top:1px solid #cec9c1;padding:1rem 0}.expression-support>summary{cursor:pointer;font-weight:600}.expression-next{margin-top:1.5rem}@media(max-width:760px){.expression-work-heading{align-items:flex-start;flex-direction:column}.expression-work-heading .studio-button{width:auto}}</style>
+
+<style>.expression-card-compilation{display:grid;grid-template-columns:minmax(0,2fr) minmax(240px,1fr);gap:1.5rem;align-items:start}.expression-card-compilation>div{min-width:0}.expression-card-compilation :global(#add-card){grid-column:auto;scroll-margin-top:5rem}.expression-card-compilation :global(#add-card h2){font-size:1.5rem}@media(max-width:1000px){.expression-card-compilation{grid-template-columns:1fr}}</style>

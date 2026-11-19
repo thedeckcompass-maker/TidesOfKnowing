@@ -1,0 +1,129 @@
+---
+import '../../../../../../styles/communityExperience.css';
+import {communityPage,communityBrowseReturn} from '../../../../../../lib/studio/communityExperience';
+import {encodeDiscoveryCursor,discoveryUrl} from '../../../../../../lib/studio/communityDiscovery';
+import CommunitySectionRail from '../../../../../../components/studio/CommunitySectionRail.astro';
+import CommunityComment from '../../../../../../components/studio/CommunityComment.astro';
+import CommunityTargetActions from '../../../../../../components/studio/CommunityTargetActions.astro';
+import {inboxMarker} from '../../../../../../lib/studio/communityInbox';
+import CommunityThreadModeration from '../../../../../../components/studio/CommunityThreadModeration.astro';
+import CommunityComposer from '../../../../../../components/studio/CommunityComposer.astro';
+import {COMMUNITY_SECTION_MEANINGS,communityInitials,communityTime,communityFullTime} from '../../../../../../lib/studio/communityPresentation';
+import {communityWorkContext} from '../../../../../../lib/studio/communityNavigation';
+import BaseLayout from '../../../../../../layouts/BaseLayout.astro';
+import {CREATIVE_CHAPTERS} from '../../../../../../lib/studio/communityChapters';
+import {supportStore} from '../../../../../../lib/studio/supportProvider';
+import '../../../../../../styles/studio.css';
+
+export const prerender=false;
+
+if(!Astro.locals.user){
+  return Astro.redirect('/auth/login/',303);
+}
+
+const who=Astro.locals.user.id;
+if(Astro.locals.profile?.id!==who||
+   Astro.locals.profile?.status!=='active'){
+  return new Response('Community access unavailable.',{status:403});
+}
+
+const chapter=CREATIVE_CHAPTERS.find(
+  c=>c.id===Astro.params.chapter
+);
+const id=Astro.params.id??'';
+
+if(!chapter||!/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(id)){
+  return new Response('Discussion not found.',{status:404});
+}
+
+const store=supportStore(Astro.locals);
+if(!store){
+  return new Response('Community is temporarily unavailable.',{status:503});
+}
+
+let allowed=false;
+try{
+  allowed=await store.allowed(who,'general_community');
+}catch{
+  return new Response('Community access could not be verified.',{status:503});
+}
+if(!allowed)return new Response('Community access unavailable.',{status:403});
+
+let post:any=null,nextReplies:any=null;
+try{
+  if(typeof store.communityThread!=='function')throw Error('Bounded discussion read is not connected.');
+  const result=await store.communityThread(who,id,chapter.id,Astro.url.searchParams.get('replies')??'',Astro.url.searchParams.get('reply')??'');
+  post=result.post;nextReplies=result.next;
+}catch{
+  return new Response('Discussion could not be loaded.',{status:503});
+}
+
+if(!post)return new Response('Discussion not found.',{status:404});
+
+const enabled=
+  Astro.locals.studioSupportHostedEnabled===true&&
+  Astro.locals.studioSupportLocal!==true&&
+  Astro.locals.studioCommunityMemberActionsEnabled===true;
+
+let staff=false,taskContext:any=null,badges:any={};
+try{staff=await store.isStaff(who,true);const marker=inboxMarker(Astro.url);if(staff&&marker){taskContext=await store.communityInboxContext(who,marker.id,post.id);if(taskContext.version!==marker.version)taskContext=null;}const trusted=await store.communityBadges(who,post.id);badges=trusted.authors??{};post.updated_at=trusted.postUpdatedAt;}catch{taskContext=null;}
+const marker=inboxMarker(Astro.url);
+let scribeStates:any[]=[];try{scribeStates=await store.communityScribes(who,post.id,post.replies.filter((r:any)=>!r.deleted).map((r:any)=>r.id));}catch{};
+const replies:any[]=(Array.isArray(post.replies)?post.replies:[]).map((r:any)=>({...r,badge:badges[r.author_username]??null,scribe:scribeStates.find(s=>s.reply_id===r.id)}));
+const writable=enabled&&post.status==='published';
+const parents=replies
+  .filter((r:any)=>!r.parent_reply_id||
+    !replies.some((p:any)=>p.id===r.parent_reply_id))
+  .sort((a:any,b:any)=>
+    Date.parse(a.created_at??'')-Date.parse(b.created_at??''));
+
+const children=(parentId:string)=>replies
+  .filter((r:any)=>r.parent_reply_id===parentId)
+  .sort((a:any,b:any)=>
+    Date.parse(a.created_at??'')-Date.parse(b.created_at??''));
+
+const historicalInitials=(name:string)=>name.trim().split(/\s+/)
+  .slice(0,2).map(x=>x[0]?.toUpperCase()??'').join('')||'M';
+
+const historicalDate=(value:string)=>value?
+  new Date(value).toLocaleDateString('en-GB',{
+    day:'numeric',month:'short',year:'numeric'
+  }):'';
+
+const number=String(
+  CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1
+).padStart(2,'0');
+
+const question=String(post.question??'');
+const paragraphs=question.split(/\n[ \t]*\n/);
+const heading=paragraphs.shift()??question;
+const remaining=paragraphs.length?paragraphs.join('\n\n'):'';
+const work=communityWorkContext(Astro.url.searchParams.get('from'));
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+---
+
+<BaseLayout title={`Discussion | ${chapter.name} | Deck Creator Studio`} description="A Community conversation." metaRobots="noindex, nofollow" memberWorkspace={false}>
+<main class="studio-page page-inner community-experience community-layout dcs-thread" data-creative-chapter={chapter.id} data-community-thread={post.id} data-admin-thread={staff?true:undefined} data-admin-task={taskContext?JSON.stringify(taskContext):undefined} data-admin-return={taskContext?new URLSearchParams(marker!.returnTo.split('?')[1]).toString():undefined}>
+ <CommunitySectionRail selected={chapter.id}/>
+ <div class="community-main-column">
+  <nav class="dcs-thread__breadcrumb" aria-label="Discussion return navigation"><a href={communityBrowseReturn(Astro.url)}>← Back to conversations</a>{work&&<a href={work.returnTo}>Return to My Project Workbook ↗</a>}</nav>
+  {staff&&marker&&<aside class="community-admin-return"><a href={marker.returnTo}>← Return to Community Inbox</a><p>{taskContext?taskContext.kind==='report'?'This is an open report. Replying does not resolve it. Return to the Inbox to Hide or Dismiss it with a reason.':'Replying to the highlighted item marks its task done. Leaving without replying keeps it outstanding.':'This task changed. Return to the Inbox and reopen it before completing work.'}</p></aside>}
+  <header class="dcs-thread__chapter"><span class="dcs-thread__number">{number}</span><div><strong>{chapter.name}</strong><small>{COMMUNITY_SECTION_MEANINGS[chapter.id]}</small></div><a href={communityPage(`/studio/community/${chapter.id}/`,Astro.url)}>All discussions</a></header>
+  <section class="dcs-thread__surface" aria-label="Discussion">
+   <div class="dcs-thread__origin"><div class="dcs-thread__author"><span class="dcs-thread__avatar" aria-hidden="true">{communityInitials(post.author_username??'Community member')}</span><div><strong>{post.author_username??'Community member'}</strong>{badges[post.author_username]?.tier&&<small class="community-pathway-badge">{badges[post.author_username].tier}</small>}{badges[post.author_username]?.founder&&<small>Founder</small>}<small><time datetime={post.created_at} title={communityFullTime(post.created_at)}>{communityTime(post.created_at)}</time> · General Community</small></div></div><h1>{heading}</h1>{remaining&&<p class="community-post-text">{remaining}</p>}</div>
+   {staff&&<CommunityThreadModeration postId={post.id} record={{status:post.status,updated_at:post.updated_at??''}}/>}<CommunityTargetActions postId={post.id} state={scribeStates.find(s=>s.reply_id===null)??null}/>
+   {post.status==='locked'&&<p class="community-locked-notice" role="status">This discussion is locked. You can read it, but new contributions are closed.</p>}
+   <div class="community-conversation-heading"><h2>The conversation</h2><small>Oldest first</small></div>
+   <nav aria-label="Discussion reply pages" class="community-breadcrumbs">{(Astro.url.searchParams.has('replies')||Astro.url.searchParams.has('reply'))&&<a href={discoveryUrl(Astro.url.pathname,Astro.url)}>First replies</a>}{nextReplies&&<a rel="next" href={discoveryUrl(Astro.url.pathname,Astro.url,{replies:encodeDiscoveryCursor({...nextReplies,v:1,post:id,chapter:chapter.id}),reply:null})}>Next replies</a>}</nav>
+   <div class="dcs-thread__responses" aria-label="Comments">
+    {parents.map((reply:any)=>{const nested=children(reply.id).filter((r:any)=>!r.deleted);const hasChildren=reply.has_children===true||nested.length>0;if(reply.deleted&&!hasChildren)return null;return <article class="dcs-thread__group"><CommunityComment reply={reply} postId={post.id} rootId={reply.id} enabled={writable} staff={staff} hasChildren={hasChildren}/>{nested.length>0&&<details class="dcs-thread__nested" open><summary>{nested.length} {nested.length===1?'reply':'replies'}</summary><div class="dcs-thread__branch" role="group" aria-label={reply.deleted?'Replies in this thread':`Replies to ${reply.author_username??'Community member'}`}>{nested.map((child:any)=><CommunityComment reply={child} postId={post.id} rootId={reply.id} enabled={writable} staff={staff} canReply={!reply.deleted}/>)}</div></details>}</article>;})}
+    {!parents.length&&<p class="community-empty">Be the first to join this conversation.</p>}
+   </div>
+   {writable&&<div class="community-main-composer"><CommunityComposer postId={post.id}/></div>}
+   <p role="status" data-thread-status class="community-sr-only"></p>
+  </section>
+  <p class="community-thread-note">For private, programme-specific feedback, visit <a href={communityPage('/studio/editorial-support/',Astro.url)}>Editorial Support</a>.</p>
+ </div>
+</main></BaseLayout>
+<script>import '../../../../../../scripts/studioCommunityConversation';import '../../../../../../scripts/studioCommunityThreadModeration';</script>

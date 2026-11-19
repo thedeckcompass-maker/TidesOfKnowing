@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../components/studio/StudioHeader.astro';
+import GuidebookOutline from '../../../../components/studio/GuidebookOutline.astro';
+import {studioReadAccessResponse,studioProjectWriteAccessResponse as studioWriteAccessResponse} from '../../../../lib/studio/access';
+import {getStudioProjectWorkspace} from '../../../../lib/studio/queries';
+import '../../../../styles/studio.css';
+export const prerender=false;
+const denied=await studioReadAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);if(denied)return denied;
+if(!Astro.locals.supabase||!Astro.params.id)return new Response(null,{status:404});
+const {project,cards}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+const canWrite=!await studioWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id);
+const requestedCard=Astro.url.searchParams.get('card');const returnCard=cards.find(c=>c.id===requestedCard);
+---
+<BaseLayout title="Design your guidebook" description="Organise the structure and recurring sections of your deck guidebook." metaRobots="noindex, nofollow"><main class="studio-page page-inner guidebook-structure-page"><StudioHeader eyebrow="DECK CREATOR STUDIO / YOUR GUIDEBOOK" title="Design your guidebook" projectId={project.id}/><p class="studio-meta">Editable anytime</p><GuidebookOutline project={project} cards={cards} canWrite={canWrite}/><a href={returnCard?`/studio/projects/${project.id}/cards/${returnCard.id}/`:`/studio/projects/${project.id}/my-deck/`}>{returnCard?'Return to this card':'Continue to my cards'}</a></main></BaseLayout>
+
+<style>.guidebook-structure-page :global(.studio-header){margin-bottom:1.25rem}.guidebook-structure-page :global(.outline-workspace){margin-top:1rem}</style>

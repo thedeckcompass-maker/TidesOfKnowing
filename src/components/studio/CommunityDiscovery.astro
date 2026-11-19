@@ -1,0 +1,42 @@
+---
+import {CREATIVE_CHAPTERS} from '../../lib/studio/communityChapters';
+import {COMMUNITY_SECTION_MEANINGS,communityTime,communityFullTime} from '../../lib/studio/communityPresentation';
+import {discoveryQuery,discoveryUrl,discoveryThreadUrl,loadDiscovery} from '../../lib/studio/communityDiscovery';
+const {section}=Astro.props;let result:any=null,error='',query;
+const url=Astro.url,searchUrl=new URL(url);
+// Compact directory opens the existing All/twenty-result contract.
+if(!searchUrl.searchParams.has('view')||searchUrl.searchParams.get('view')==='directory')searchUrl.searchParams.set('view','all');
+try{query=discoveryQuery(searchUrl,section);result=await loadDiscovery(Astro.locals,query);}catch{error='Community search is temporarily unavailable. No partial results are shown.';}
+const view=query?.scope??'all';
+---
+<section id="community-discovery" class="community-discovery" aria-label="Find Community conversations">
+ <div class="community-search-panel">
+ <form method="get" action={url.pathname} class="community-discovery-form">
+  <input type="hidden" name="view" value={view}/>{url.searchParams.get('from')&&<input type="hidden" name="from" value={url.searchParams.get('from')}/>}
+  <div class="community-search-line"><label class="community-keyword"><span class="community-sr-only">Search discussions, replies and public usernames</span><input data-studio-help="none" name="q" type="search" maxlength="200" value={query?.q??''} placeholder="Search conversations or usernames"/></label><button type="submit">Search</button><button type="button" data-community-filters aria-controls="community-filter-fields" aria-expanded={query?.author||query?.section&&!section?'true':'false'}>Filters</button></div>
+  <div id="community-filter-fields" class="community-filter-fields" hidden={!query?.author&&!(query?.section&&!section)}>
+   <label>Section<select name="section">{!section&&<option value="">All eight Sections</option>}{CREATIVE_CHAPTERS.filter(c=>!section||c.id===section).map(c=><option value={c.id} selected={query?.section===c.id}>{c.name} — {COMMUNITY_SECTION_MEANINGS[c.id]}</option>)}</select></label>
+   <label>Contributions by username<input name="author" maxlength="40" value={query?.author??''} placeholder="Exact public username"/></label>
+  </div>
+ </form>
+ <nav aria-label="Conversation scope" class="community-view-nav">{[['all','All conversations'],['mine','My conversations'],['leilia',"Leilia's contributions"]].map(([key,label])=><a href={discoveryUrl(url.pathname,url,{view:key,cursor:null})} aria-current={view===key?'page':undefined}>{label}</a>)}</nav>
+ </div>
+ {view==='mine'&&<p class="community-scope-note">Conversations you started or replied to.</p>}
+ {view==='leilia'&&<p class="community-scope-note">Leilia's public Community contributions. Private editorial conversations are not included; a personal response is not guaranteed.</p>}
+ {error?<p role="alert">{error}</p>:<><div class="community-results-bar"><p role="status">{result.total} {result.total===1?'conversation':'conversations'}</p><small>Most recently started</small></div>
+ <div class="community-conversation-list">{result.posts.map((p:any)=><article class="community-conversation-card" data-creative-chapter={p.chapter}>
+  <p class="community-category">{CREATIVE_CHAPTERS.find(c=>c.id===p.chapter)?.name}{p.status==='locked'&&<span> · Locked</span>}</p>
+  <h3><a href={discoveryThreadUrl(p.chapter,p.id,url)}>{p.title||p.question}</a></h3>
+  {p.title&&p.title!==p.question&&<p class="community-excerpt">{p.question}</p>}
+  <p class="community-byline">{/^[\p{L}\p{N}_-]+$/u.test(p.author_username)?<a href={discoveryUrl(url.pathname,url,{author:p.author_username,cursor:null})}>{p.author_username}</a>:p.author_username} · <time datetime={p.created_at} title={communityFullTime(p.created_at)}>{communityTime(p.created_at)}</time><span>{p.reply_count} {p.reply_count===1?'comment':'comments'}</span></p>
+  {p.matches.map((r:any)=><blockquote><p>{r.body}</p><a href={discoveryThreadUrl(p.chapter,p.id,url,r.id)}>Reply by {r.author_username} — view in discussion</a></blockquote>)}
+ </article>)}</div>
+ {!result.posts.length&&<p>No permitted conversations match these filters.</p>}
+ <nav aria-label="Search result pages" class="community-breadcrumbs">{query?.cursor&&<a href={discoveryUrl(url.pathname,url,{cursor:null})}>First page</a>}{result.next&&<a rel="next" href={discoveryUrl(url.pathname,url,{cursor:result.next})}>Next page</a>}</nav>
+ </>}
+ <p class="community-search-editorial"><a href={discoveryUrl('/studio/editorial-support/',url)}>Editorial Support — private assistance and programme requests</a></p>
+</section>
+<script>
+const button=document.querySelector<HTMLButtonElement>('[data-community-filters]'),fields=document.getElementById('community-filter-fields');
+if(button&&fields)button.addEventListener('click',()=>{fields.hidden=!fields.hidden;button.setAttribute('aria-expanded',String(!fields.hidden));if(!fields.hidden)fields.querySelector('select')?.focus();});
+</script>

@@ -1,0 +1,42 @@
+/* Scoped to the Community administrator page; no public/member styles change. */
+#dcs-community-admin{color:#17334d;background:#f2efe9;max-width:1440px;margin:2rem auto;padding:clamp(1rem,3vw,2rem);border-radius:8px;box-sizing:border-box;color-scheme:light}
+#dcs-community-admin :is(h1,h2,h3,h4,p,label,summary,strong,small,th,td,time,code,blockquote){color:#17334d}
+#dcs-community-admin :is(h1,h2,h3,h4){line-height:1.25}
+#dcs-community-admin h1{font-size:clamp(1.8rem,3vw,2.7rem);margin:.75rem 0}
+#dcs-community-admin h2{font-size:1.6rem}#dcs-community-admin h3{font-size:1.25rem;margin:0 0 .5rem}#dcs-community-admin h4{font-size:1.1rem}
+#dcs-community-admin p{max-width:80ch;line-height:1.6}#dcs-community-admin a{color:#065e73;text-decoration:underline;text-underline-offset:3px}
+#dcs-community-admin :is(button,select,textarea){font:inherit;box-sizing:border-box;min-height:44px;border:1px solid #52697b;border-radius:5px;background:#fff;color:#17334d;padding:.65rem .85rem;max-width:100%}
+#dcs-community-admin button{cursor:pointer;font-weight:600;background:#fffaf0}
+#dcs-community-admin button:hover{background:#e4ece9}#dcs-community-admin button[aria-pressed=true],#dcs-community-admin button[type=submit]{background:#17334d;color:#fff}
+#dcs-community-admin button:disabled{background:#e2e5e5;color:#405364;cursor:default}
+#dcs-community-admin :is(button,a,select,textarea,summary):focus-visible{outline:3px solid #065e73;outline-offset:4px}
+#dcs-community-admin [hidden]{display:none!important}#dcs-community-admin [id]{scroll-margin-top:7rem}
+#dcs-community-admin .admin-section-links{display:flex;gap:.7rem;flex-wrap:wrap;margin:1.5rem 0}#dcs-community-admin .admin-section-links a{padding:.6rem .9rem;background:#fff;border:1px solid #86949a;border-radius:5px}
+#dcs-community-admin .admin-filters{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:1.5rem 0}
+#dcs-community-admin label{display:block;font-weight:600}#dcs-community-admin :is(select,textarea){display:block;width:100%;margin:.4rem 0 1rem}
+#dcs-community-admin .admin-pillars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:.5rem;margin:1rem 0 1.5rem}
+#dcs-community-admin .admin-pillars button{padding:.7rem .35rem;font-size:.9rem;overflow-wrap:anywhere}#dcs-community-admin .admin-pillars button small{display:block;font-size:.8rem;font-weight:400;margin-top:.4rem;color:inherit}#dcs-community-admin .admin-pillars button strong{color:inherit}
+#dcs-community-admin .admin-discussion{background:#fff;border:1px solid #a9b5ba;border-radius:8px;padding:clamp(1rem,2vw,1.6rem);margin:1.2rem 0}
+#dcs-community-admin .admin-words{white-space:pre-wrap;overflow-wrap:anywhere}
+#dcs-community-admin .admin-meta{font-size:.9rem}#dcs-community-admin .admin-notice{padding:.7rem 1rem;background:#e4ece9;border-left:4px solid #065e73}
+#dcs-community-admin .community-moderation{margin:.7rem 0 1.5rem;padding:.85rem 1rem;background:#f6f3ea;border:1px solid #adb7b8;border-radius:6px}
+#dcs-community-admin .moderation-state{margin:0 0 .6rem}#dcs-community-admin .moderation-help{font-size:.85rem;margin:.7rem 0 0}
+#dcs-community-admin .moderation-buttons{display:flex;gap:.6rem;flex-wrap:wrap}#dcs-community-admin [data-action-fields]{border-top:1px solid #a9b5ba;margin-top:1rem;padding-top:.5rem}
+#dcs-community-admin .admin-comment{padding:.6rem 0 .6rem 1rem;border-left:3px solid #97aaa9;margin:1rem 0}
+#dcs-community-admin .admin-comments{border-top:1px solid #b5c1c3;margin-top:1.5rem}#dcs-community-admin .admin-reply-composer{border-top:1px solid #b5c1c3;padding:1rem 0}#dcs-community-admin summary{cursor:pointer;min-height:44px;padding:.5rem 0;box-sizing:border-box;text-decoration:underline}
+#dcs-community-admin .admin-section-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}#dcs-community-admin #community-reports,#dcs-community-admin #community-history{border-top:2px solid #97aaa9;margin-top:2rem;padding-top:1rem}
+#dcs-community-admin .report-filter{max-width:28rem}#dcs-community-admin .admin-table-scroll{overflow-x:auto}#dcs-community-admin table{border-collapse:collapse;width:100%;font-size:.95rem;background:#fff}#dcs-community-admin th{text-align:left;background:#e4ece9}#dcs-community-admin :is(th,td){padding:.85rem;border-bottom:1px solid #b4c0c2;vertical-align:top}#dcs-community-admin td small{display:block;margin-top:.3rem}#dcs-community-admin td code{overflow-wrap:anywhere}#dcs-community-admin .admin-item-link{display:inline-block;padding:.45rem .6rem;min-height:44px;box-sizing:border-box;border:1px solid #879b9e;border-radius:5px}
+#dcs-community-admin .admin-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+@media(max-width:1000px){#dcs-community-admin .admin-pillars{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(max-width:600px){#dcs-community-admin .admin-filters{grid-template-columns:1fr}#dcs-community-admin .admin-pillars{grid-template-columns:repeat(2,minmax(0,1fr))}#dcs-community-admin .admin-section-heading{align-items:start;flex-direction:column}#dcs-community-admin .admin-table-scroll table{min-width:650px}}
+#dcs-community-admin .admin-view-label{max-width:34rem;margin:1rem 0}#dcs-community-admin .admin-original-question{border:2px solid #52697b;background:#f5f7f5;border-radius:6px;padding:1rem;margin-top:1rem}#dcs-community-admin .admin-original-question h4{margin:.25rem 0 .75rem}#dcs-community-admin .admin-item-meta{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .8rem;font-size:.9rem}#dcs-community-admin .admin-badge{padding:.15rem .5rem;border:1px solid #527071;border-radius:4px;background:#e4ece9;color:#17334d}#dcs-community-admin .admin-nested-replies{margin-left:clamp(.8rem,3vw,2.5rem);border-left:2px solid #527071;padding-left:.6rem}#dcs-community-admin .admin-nested{border-left:0;padding-left:.5rem}#dcs-community-admin .admin-hidden-body{background:#eef0ed;border-radius:5px;padding:.3rem .7rem}#dcs-community-admin [data-context-label]{font-style:italic}#dcs-community-admin [data-filter-context=true]{border-style:dashed}#dcs-community-admin .admin-thread-group{margin-block:1rem}#dcs-community-admin [data-admin-item][data-item-status=hidden] .community-moderation{padding:.5rem .7rem;margin-bottom:.5rem}#dcs-community-admin [data-admin-item][data-item-status=hidden] .moderation-help{display:none}
+/* Desktop toolbar alignment; the confidential destination uses the assigned staff gate. */
+#dcs-community-admin .admin-section-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.5fr);gap:.65rem;align-items:stretch}
+#dcs-community-admin .admin-section-links a{display:flex;align-items:center;justify-content:center;min-width:0;min-height:44px;box-sizing:border-box;padding:.65rem .6rem;font-size:clamp(.875rem,1vw,1rem);line-height:1.35;text-align:center}
+#dcs-community-admin .admin-section-links .admin-confidential-button{background:#5b365f;color:#fff;border-color:#5b365f;text-decoration:none}
+#dcs-community-admin .admin-section-links .admin-confidential-button:hover{background:#452849;color:#fff;text-decoration:underline}
+#dcs-community-admin .admin-filters{grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:start}
+#dcs-community-admin .admin-filters label{min-width:0;font-size:clamp(.875rem,1vw,1rem)}
+#dcs-community-admin .admin-filters .admin-view-label{max-width:none;margin:0}
+#dcs-community-admin .admin-filters select{min-width:0;font-size:clamp(.875rem,1vw,1rem)}
+@media(max-width:900px){#dcs-community-admin .admin-section-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){#dcs-community-admin .admin-filters{grid-template-columns:1fr}#dcs-community-admin .admin-section-links{grid-template-columns:1fr}}

@@ -52,7 +52,7 @@ function formatDate(value: string): string {
             </h2>
             <p class="community-post-card__excerpt">{excerpt(post.body)}</p>
             <p class="community-post-card__foot">
-              <span>By {post.author?.display_name ?? "Reader"}</span>
+              <span>By {post.author?.username ?? "Community member"}</span>
               <span>{post.reply_count === 1 ? "1 reply" : `${post.reply_count} replies`}</span>
             </p>
           </article>

@@ -1,0 +1,24 @@
+---
+import type {StudioCardFamily} from '../../lib/studio/types';
+const {project,families=[]}=Astro.props as {project:any;families:StudioCardFamily[]};
+---
+      <section id="add-card" class="studio-card-create studio-panel studio-panel--side" aria-labelledby="add-card-heading">
+        <p class="studio-kicker">Begin a card</p>
+        <h2 id="add-card-heading">Add a card</h2>
+        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/cards`}>
+          <label class="studio-field"><span>Working title</span><input name="title" required maxlength="120" /></label>
+          <label class="studio-field"><span>Card number or label</span><input name="card_number" maxlength="30" /></label><p class="studio-meta">Capture your card now. Final inclusion and sequence can wait until the Companion chapter.</p>
+          <label class="studio-field"><span>Family</span><select name="family_id"><option value="">No family</option>{families.map((family) => <option value={family.id}>{family.name}</option>)}</select></label>
+          <button class="studio-button" type="submit">Create card</button>
+        </form>
+        <details>
+          <summary>Add a card family</summary>
+          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/families`}>
+            <label class="studio-field"><span>Family name</span><input name="name" required maxlength="80" /></label>
+            <label class="studio-field"><span>Description</span><textarea name="description" maxlength="1000"></textarea></label>
+            <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={families.length} required /></label>
+            <button class="studio-button" type="submit">Create family</button>
+          </form>
+        </details>
+      </section>
+

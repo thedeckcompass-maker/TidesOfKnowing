@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
+import { unified } from "@astrojs/markdown-remark";
 
 // https://astro.build/config
 // Sitemap: `src/pages/sitemap.xml.ts` (priorities + changefreq).
@@ -8,7 +9,12 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   site: "https://www.tidesofknowing.com",
   output: "server",
-  adapter: cloudflare(),
+  // Existing authentication uses Supabase cookies, not Astro session storage.
+  session: false,
+  // Preserve build-time image transforms without provisioning a remote image binding.
+  adapter: cloudflare({ imageService: "compile", prerenderEnvironment: "node", remoteBindings: false }),
+  markdown: { processor: unified() },
+  compressHTML: true,
   integrations: [],
   server: {
     port: 4322,

@@ -1,0 +1,10 @@
+---
+import CommunityModeration from './CommunityModeration.astro';
+const {record,postId,reports=[],kind='comment',parentName=null}=Astro.props;
+const hidden=record.status==='hidden';
+---
+<article class:list={['admin-comment',{'admin-nested':kind==='reply'}]} data-reply-id={record.id} data-admin-item data-kind={kind} data-item-status={record.status} data-mentions={String(record.mentions_leilia===true)} data-open-reports={record.open_report_count??0} data-scribes={record.scribe_count??0}>
+ <header class="admin-item-meta"><strong>{kind==='reply'?'↳ Nested reply':'Comment'} · {record.author_username??'Community member'}</strong>{parentName&&<span>Replying to {parentName}</span>}<time datetime={record.created_at}>{new Date(record.created_at).toLocaleString('en-GB')}</time><span data-item-state>{record.status}</span><span class="admin-badge" data-report-badge hidden={!record.open_report_count}>Reported ({record.open_report_count??0})</span><span class="admin-badge" data-mention-badge hidden={!record.mentions_leilia}>@Leilia</span><span class="admin-badge" data-scribe-badge hidden={!record.scribe_count}>Scribes ({record.scribe_count??0})</span><small data-context-label hidden>Parent context</small></header>
+ {hidden?<details class="admin-hidden-body"><summary>Hidden {kind} — show preserved text</summary><p class="admin-words">{record.body}</p></details>:<p class="admin-words">{record.body}</p>}
+ <CommunityModeration postId={postId} replyId={record.id} record={record} reports={reports}/>
+</article>

@@ -1,0 +1,9 @@
+---
+import DcsPublicLayout from '../../layouts/DcsPublicLayout.astro';
+import presentation from '../../data/studio/approved-public/presentation.json';
+import {approvedPublicHtml} from '../../lib/studio/approvedPublicPresentation';
+import {faqPageJsonLd} from '../../lib/faqPageJsonLd';
+import {siteBase} from '../../lib/site';
+const schema=faqPageJsonLd(presentation.faq.questions,new URL('/deck-creator-studio/faq/',siteBase(Astro)).href);
+---
+<DcsPublicLayout page="faq" title="Deck Creator Studio FAQ | Tides of Knowing" description="Explore, pathways, payments, creative ownership and getting started." jsonLd={schema}><Fragment set:html={approvedPublicHtml('faq',Boolean(Astro.locals.user))}/></DcsPublicLayout>

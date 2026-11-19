@@ -19,8 +19,8 @@ import { tryFulfillCompassEnrolment } from "../../../lib/compass/fulfilment";
 export const prerender = false;
 
 function stripeWebhookSecret(locals?: unknown): string {
-  const runtimeEnv = (locals as { runtime?: { env?: Record<string, string | undefined> } } | undefined)
-    ?.runtime?.env;
+  const runtimeEnv = (locals as { serverRuntime?: { env?: Record<string, string | undefined> } } | undefined)
+    ?.serverRuntime?.env;
   return (
     runtimeEnv?.STRIPE_WEBHOOK_SECRET ??
     (import.meta.env.STRIPE_WEBHOOK_SECRET as string | undefined) ??

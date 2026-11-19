@@ -271,11 +271,24 @@ export async function getAskLeiliaQueueCounts(
   return empty;
 }
 
+// Compare the effective signing request path only; never rewrite the supplied key.
+// storage-js 2.108.2 strips leading slashes, then interpolates the key into a URL.
+function isQuotationSigningPath(path: string): boolean {
+  const signingRoot = "/storage/v1/object/sign/ask-leilia-uploads/";
+  const pathname = new URL(signingRoot + path.replace(/^\/+/, ""), "https://storage.invalid").pathname;
+  // The Storage route decodes its wildcard once. Only ASCII escapes can form
+  // this ASCII namespace; this also avoids rejecting unrelated malformed UTF-8.
+  const decodedPath = pathname.replace(/%([0-7][0-9a-f])/gi, (_, hex: string) =>
+    String.fromCharCode(parseInt(hex, 16)),
+  );
+  return decodedPath.startsWith(signingRoot + "dcs-quotation-evidence/");
+}
+
 export async function getAskLeiliaUploadUrl(
   service: import("@supabase/supabase-js").SupabaseClient,
   imageUrl: string | null,
 ): Promise<string | null> {
-  if (!imageUrl) return null;
+  if (!imageUrl || isQuotationSigningPath(imageUrl)) return null;
 
   const { data, error } = await service.storage
     .from("ask-leilia-uploads")
@@ -295,7 +308,7 @@ export async function getAskLeiliaDeliveryPdfUrl(
   expiresInSeconds = 60 * 10,
   options?: { download?: string | boolean },
 ): Promise<string | null> {
-  if (!deliveryPdfPath) return null;
+  if (!deliveryPdfPath || isQuotationSigningPath(deliveryPdfPath)) return null;
 
   const ttl = Math.min(Math.max(1, Math.floor(expiresInSeconds)), 60 * 60);
   const { data, error } = await service.storage

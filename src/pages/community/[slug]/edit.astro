@@ -1,4 +1,6 @@
 ---
+import {dcsParticipationAccess} from '../../../lib/community/dcsParticipation';
+import {isDcsHistoryPost,parkedCommonsResponse} from '../../../lib/community/practiceCommons';
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import CommunityPostForm from "../../../components/community/CommunityPostForm.astro";
 import { isAdminProfile } from "../../../lib/community/auth";
@@ -6,28 +8,37 @@ import { getCommunityPostBySlug, getCommunitySections } from "../../../lib/commu
 import { communityPostPath } from "../../../lib/community/slugs";
 
 export const prerender = false;
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
 
 if (!Astro.locals.user) return Astro.redirect("/auth/register/", 303);
 
 const slug = Astro.params.slug ?? "";
 const post = Astro.locals.supabase ? await getCommunityPostBySlug(Astro.locals.supabase, slug) : null;
-if (!post) return Astro.redirect("/community/", 302);
+if (!post || !isDcsHistoryPost(post)) return parkedCommonsResponse();
+const denied=await dcsParticipationAccess(Astro.locals);if(denied)return denied;
 
-const canEdit = Astro.locals.user.id === post.author_id || isAdminProfile(Astro.locals.profile);
+const canEdit = Astro.locals.user.id === post.author_id && post.status === "published";
 if (!canEdit) return Astro.redirect(communityPostPath(post.slug), 302);
 
-const sections = Astro.locals.supabase ? await getCommunitySections(Astro.locals.supabase) : [];
+
 ---
 
 <BaseLayout
-  title={`Edit ${post.title} | Practice Commons | Tides of Knowing`}
-  description="Edit a Practice Commons post."
+  title={`Edit ${post.title} | Studio community | Tides of Knowing`}
+  description="Edit a Studio community post."
   metaRobots="noindex, nofollow"
 >
   <main class="community-edit page-inner">
-    <p class="community-edit__kicker">Practice Commons</p>
+    <p class="community-edit__kicker">Studio community</p>
     <h1>Edit post</h1>
-    <CommunityPostForm sections={sections} post={post} />
+    <form method="post" action={`/api/community/posts/${post.id}`}>
+      <input type="hidden" name="intent" value="edit" />
+      <label>Title<input name="title" value={post.title} minlength="8" maxlength="140" required /></label>
+      <label>Discussion<textarea name="body" minlength="20" maxlength="12000" required>{post.body}</textarea></label>
+      <button type="submit">Save changes</button>
+      <a href={communityPostPath(post.slug)}>Return to discussion</a>
+    </form>
   </main>
 </BaseLayout>
 

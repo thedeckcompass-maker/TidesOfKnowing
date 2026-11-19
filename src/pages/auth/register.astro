@@ -1,7 +1,12 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import {chooseAuthPersistence} from '../../lib/community/authPersistence';
+import {authOrigin} from '../../lib/community/authOrigin';
+import '../../styles/dcs-auth.css';
+import { usernameError } from "../../lib/community/usernameRules";
+import DcsPublicLayout from "../../layouts/DcsPublicLayout.astro";
 import { json } from "../../lib/community/api";
 import { cleanDisplayName } from "../../lib/community/auth";
+import { safeAuthCallbackRedirect } from "../../lib/community/authCallback";
 import { runAuthOtpRegisterFlow } from "../../lib/community/authOtpRegister";
 import {
   createAuthOtpSubmissionId,
@@ -12,13 +17,15 @@ import { validateDisplayName } from "../../lib/community/validation";
 
 export const prerender = false;
 
-const title = "Join the Practice Commons | Tides of Knowing";
-const description = "Join the Practice Commons at Tides of Knowing with a simple email sign-in link.";
-const GENERIC_SEND_ERROR = "Unable to send a sign-in link right now. Please try again.";
+const returning = Astro.url.searchParams.get('mode') === 'sign-in';
+if(returning && Astro.request.method==='GET' && Astro.url.searchParams.get('method')!=='link') return Astro.redirect('/auth/login/?redirectTo='+encodeURIComponent(safeAuthCallbackRedirect(Astro.url.searchParams.get('redirectTo')??'/community/account/')),303);
+const title = (returning ? 'Sign in' : 'Create an account') + ' | Tides of Knowing';
+const description = "Create your Deck Creator Studio account with your email and password.";
+const GENERIC_SEND_ERROR = "Unable to complete this request right now. Please try again, or use Sign in if you already have an account.";
 
 let error = "";
 let errorReference = "";
-const redirectTo = "/community/";
+const redirectTo = safeAuthCallbackRedirect(Astro.url.searchParams.get('redirectTo') ?? (returning ? '/community/account/' : '/studio/'));
 const joinSubmissionId = createAuthOtpSubmissionId();
 
 function prefersJsonResponse(request: Request): boolean {
@@ -76,33 +83,45 @@ function checkEmailRedirect(
 ) {
   const checkEmailUrl = new URL("/auth/check-email/", Astro.url);
   checkEmailUrl.searchParams.set("email", email);
-  if (includeDisplayName) {
-    checkEmailUrl.searchParams.set("displayName", displayName);
-  }
+
   checkEmailUrl.searchParams.set("redirectTo", next);
   return authRedirect(checkEmailUrl.pathname + checkEmailUrl.search, Astro.cookies);
 }
 
 if (Astro.request.method === "POST") {
   const prefersJson = prefersJsonResponse(Astro.request);
+  if(Astro.request.headers.get("origin")!==Astro.url.origin) return new Response("Invalid request origin",{status:403});
   const form = await Astro.request.formData();
   const email = String(form.get("email") ?? "").trim().toLowerCase();
   const authModeRaw = String(form.get("authMode") ?? "join");
+  if(!['join','sign-in'].includes(authModeRaw))return json({ok:false,error:'Choose account creation or sign in. Use the confirmation page to request another confirmation email.'},400);
   const claimMode = normalizeAuthOtpClaimMode(authModeRaw);
   const isReturningMemberSignIn = claimMode === "sign-in";
-  const displayName = cleanDisplayName(form.get("displayName"));
+  const desiredUsername = String(form.get("communityUsername") ?? "").trim();
+  const requestedUsernameError = claimMode === "join" ? usernameError(desiredUsername) : null;
+  const firstName=String(form.get('firstName')??'').trim(), lastName=String(form.get('lastName')??'').trim();
+  const combinedName=[firstName,lastName].filter(Boolean).join(' ');
+  const password=String(form.get('password')??'');
+  const passwordError=claimMode==='join'?(!firstName||!lastName||firstName.length>60||lastName.length>60?'Enter your first and last name, up to 60 characters each.':password.length<12||password.length>128?'Use a password between 12 and 128 characters.':password!==String(form.get('confirmPassword')??'')?'The passwords do not match.':null):null;
+  const displayName=cleanDisplayName(combinedName);
   const displayNameValidation = claimMode === "join"
-    ? validateDisplayName(form.get("displayName"))
+    ? validateDisplayName(combinedName)
     : ({ ok: true, value: { displayName: "" } } as const);
-  const next = "/community/";
+  const next = safeAuthCallbackRedirect(String(form.get('redirectTo') ?? '/community/account/'));
   const submissionId = String(form.get("submissionId") ?? "").trim();
   const headerSubmissionId = Astro.request.headers.get("x-auth-submission-id")?.trim() ?? "";
 
   if (!Astro.locals.supabase) {
     if (prefersJson) {
-      return json({ ok: false, error: "Practice Commons sign-in is not configured yet." }, 503);
+      return json({ ok: false, error: "Account sign-in is temporarily unavailable." }, 503);
     }
-    error = "Practice Commons sign-in is not configured yet.";
+    error = "Account sign-in is temporarily unavailable.";
+  } else if(passwordError){
+    if(prefersJson)return json({ok:false,error:passwordError},400);
+    error=passwordError;
+  } else if (requestedUsernameError) {
+    if(prefersJson) return json({ok:false,error:requestedUsernameError},400);
+    error=requestedUsernameError;
   } else if (!displayNameValidation.ok) {
     if (prefersJson) {
       return json({ ok: false, error: displayNameValidation.error }, 400);
@@ -114,9 +133,10 @@ if (Astro.request.method === "POST") {
     }
     error = "Please enter a valid email address.";
   } else {
+    chooseAuthPersistence(Astro.cookies,Astro.request,form.get("rememberMe")==="on");
     const emailRedirectTo = new URL(
       `/auth/callback/?redirectTo=${encodeURIComponent(next)}`,
-      Astro.url,
+      authOrigin(Astro.locals,Astro.url),
     ).href;
 
     const flow = await runAuthOtpRegisterFlow(
@@ -132,12 +152,16 @@ if (Astro.request.method === "POST") {
         locals: Astro.locals,
         isExpectedReturningMemberPrivacyError,
         signInWithOtp: async ({ email: otpEmail, emailRedirectTo: redirect, shouldCreateUser, displayName: otpDisplayName }) => {
+          if(claimMode==='join'){
+            const result=await Astro.locals.supabase!.auth.signUp({email:otpEmail,password,options:{emailRedirectTo:redirect,data:{first_name:firstName,last_name:lastName,display_name:otpDisplayName,requested_community_username:desiredUsername}}});
+            return {error:result.error};
+          }
           const result = await Astro.locals.supabase!.auth.signInWithOtp({
             email: otpEmail,
             options: {
               emailRedirectTo: redirect,
-              shouldCreateUser,
-              ...(otpDisplayName ? { data: { display_name: otpDisplayName } } : {}),
+              shouldCreateUser: false,
+              ...(otpDisplayName ? { data: { display_name: otpDisplayName, ...(shouldCreateUser ? {requested_community_username: desiredUsername} : {}) } } : {}),
             },
           });
           return { error: result.error };
@@ -184,14 +208,16 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<BaseLayout title={title} description={description} metaRobots="noindex, nofollow">
-  <main class="auth-page page-inner">
+<DcsPublicLayout page="checkout" title={title} description={description} metaRobots="noindex, nofollow">
+  <div class="auth-page page-inner dcs-auth">
     <section class="auth-card" aria-labelledby="auth-heading">
       <div data-auth-entry>
-        <p class="auth-kicker">Practice Commons</p>
-        <h1 id="auth-heading">Join the Practice Commons</h1>
+        <p class="auth-kicker">Tides of Knowing · Deck Creator Studio</p>
+        <h1 id="auth-heading">{returning ? "Email sign-in link" : "Create your Studio account"}</h1>
+        <p>{returning ? <span>New here? <a href={"/auth/register/?redirectTo="+encodeURIComponent(redirectTo)}>Create an account</a></span> : <span>Already have an account? <a href={"/auth/login/?redirectTo="+encodeURIComponent(redirectTo)}>Sign in</a></span>}</p>
+        <p>Secure email links remain available for your existing account. You can also set a password and sign in directly. If you cannot access that email address, contact hello@tidesofknowing.com.</p>
         <p class="auth-lede">
-          Enter your name and email address and we'll email you a secure sign-in link.
+          {returning ? "Enter the email address you used to create your account. We'll send a secure sign-in link if an account exists." : "Create one account for Tides of Knowing and Deck Creator Studio. Your name stays private; your username appears in the community. Confirm your email to finish setting up your account."}
         </p>
 
         {
@@ -203,47 +229,58 @@ if (Astro.request.method === "POST") {
           ) : null
         }
 
-        <form method="post" action="/auth/register/" class="auth-form" data-auth-register-form>
-          <input type="hidden" name="authMode" value="join" />
+        <form method="post" action={returning ? `/auth/register/?mode=sign-in&method=link&redirectTo=${encodeURIComponent(redirectTo)}` : `/auth/register/?mode=join&redirectTo=${encodeURIComponent(redirectTo)}`} class="auth-form" data-auth-register-form data-auth-purpose={returning?'link':'signup'}>
+          <input type="hidden" name="authMode" value={returning ? "sign-in" : "join"} />
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <input type="hidden" name="submissionId" value={joinSubmissionId} />
-          <label for="displayName">Your name</label>
-          <input id="displayName" name="displayName" type="text" autocomplete="nickname" minlength="2" maxlength="60" required />
-          <label for="email">Email address</label>
-          <input id="email" name="email" type="email" autocomplete="email" required />
+          <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required />
+          {!returning && <>
+          <fieldset class="register-name"><legend>Name</legend><div><label>First name<input name="firstName" autocomplete="given-name" maxlength="60" required /></label><label>Last name<input name="lastName" autocomplete="family-name" maxlength="60" required /></label></div></fieldset>
+          <label for="communityUsername">Username</label><input id="communityUsername" name="communityUsername" type="text" minlength="3" maxlength="24" pattern="[A-Za-z][A-Za-z0-9]{2,23}" autocomplete="username" required aria-describedby="register-username-help"/><p id="register-username-help">Letters and numbers only, starting with a letter. Your name is not shown publicly.</p>
+          {['password','confirmPassword'].map(name=><div class="register-password"><label for={name}>{name==='password'?'Password':'Confirm password'}</label><div><input id={name} name={name} type="password" autocomplete="new-password" minlength="12" maxlength="128" required/><button type="button" data-register-password={name} aria-controls={name} aria-pressed="false" aria-label={name==='password'?'Show password':'Show confirmation password'} hidden>Show password</button></div></div>)}
+          <p>Use a unique password of 12–128 characters.</p></>}
+          <label class="remember-choice"><input type="checkbox" name="rememberMe"/> Keep me signed in on this browser</label>
           <button
             type="submit"
             data-auth-register-submit
-            data-sending-text="Sending sign-in link..."
+            data-sending-text={returning?'Requesting sign-in link…':'Creating your account…'}
           >
-            Continue
+            {returning?'Request sign-in link':'Create account'}
           </button>
           <p class="auth-submit-status" data-auth-register-status hidden>
-            Please wait while we prepare your secure sign-in link.
+            Please wait while we process your request.
           </p>
         </form>
       </div>
       <div class="auth-confirmation" data-auth-confirmation hidden>
         <h2>✓ Check your email</h2>
         <p>
-          Check your email for your secure sign-in link:
+          Check your email for {returning?'a sign-in link':'your account confirmation'}:
           <strong data-auth-confirmation-email></strong>
         </p>
-        <p>Click the link in that email to enter the Practice Commons.</p>
+        <p>Open the email to confirm your address and return to Deck Creator Studio. This screen does not confirm delivery.</p>
         <p>If it doesn't arrive within a minute or two, check your Spam or Promotions folder.</p>
-        <button type="button" data-auth-reset>Send another link</button>
+        <p><a href="/auth/confirm-email/">Request another confirmation email</a> or <a href="/auth/login/?redirectTo=%2Fstudio%2F">sign in</a>.</p>
       </div>
     </section>
-  </main>
-</BaseLayout>
+  </div>
+</DcsPublicLayout>
 
 <script>
   import { bindAuthRegisterForms } from "../../lib/community/authRegisterForm";
 
+  const password=document.querySelector<HTMLInputElement>('#password'), confirmation=document.querySelector<HTMLInputElement>('#confirmPassword');
+  const validatePasswords=()=>confirmation?.setCustomValidity(confirmation.value!==password?.value?'The passwords do not match.':'');
+  password?.addEventListener('input',validatePasswords);confirmation?.addEventListener('input',validatePasswords);
+  for(const button of document.querySelectorAll<HTMLButtonElement>('[data-register-password]')){
+    const input=document.getElementById(button.dataset.registerPassword??'');if(!(input instanceof HTMLInputElement))continue;
+    button.hidden=false;button.addEventListener('pointerdown',e=>{if(document.activeElement===input)e.preventDefault();});
+    button.addEventListener('click',()=>{const start=input.selectionStart,end=input.selectionEnd,show=input.type==='password';input.type=show?'text':'password';if(start!==null&&end!==null)requestAnimationFrame(()=>{if(document.activeElement===input)input.setSelectionRange(start,end)});button.textContent=show?'Hide password':'Show password';button.setAttribute('aria-pressed',String(show));button.setAttribute('aria-label',(show?'Hide ':'Show ')+(input.name==='confirmPassword'?'confirmation password':'password'));});
+  }
   bindAuthRegisterForms({
     cardSelector: ".auth-card",
     confirmedClass: "auth-card--confirmed",
-    defaultButtonText: "Continue",
+    defaultButtonText: document.querySelector<HTMLFormElement>('[data-auth-register-form]')?.dataset.authPurpose==='signup'?'Create account':'Request sign-in link',
   });
 </script>
 
@@ -446,3 +483,7 @@ if (Astro.request.method === "POST") {
     border: 1px solid color-mix(in srgb, #b42318 45%, transparent);
   }
 </style>
+
+<style>.register-name{border:0;padding:0;margin:0;min-width:0}.register-name>div{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.register-name label,.register-password{display:grid;gap:.4rem}.register-password>div{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}.register-password input{flex:1 1 12rem;min-width:0}.register-password button{padding:.45rem .7rem;min-height:2.75rem;font-size:.9rem}.register-password button[hidden]{display:none}@media(max-width:420px){.register-name>div{grid-template-columns:1fr}}</style>
+
+<style>.remember-choice{display:flex;align-items:center;gap:.6rem}.remember-choice input{width:auto;min-width:1rem}</style>

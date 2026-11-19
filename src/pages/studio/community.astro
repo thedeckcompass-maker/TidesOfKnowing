@@ -1,0 +1,48 @@
+---
+import {communityContinuation} from '../../lib/studio/communityNavigation';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CommunitySectionRail from '../../components/studio/CommunitySectionRail.astro';
+import CommunityDiscovery from '../../components/studio/CommunityDiscovery.astro';
+import CommunityMentionHelp from '../../components/studio/CommunityMentionHelp.astro';
+import {communityView,communityConversations,communityPage} from '../../lib/studio/communityExperience';
+import '../../styles/communityExperience.css';
+import CommunityNotifications from '../../components/studio/CommunityNotifications.astro';
+import {CREATIVE_CHAPTERS} from '../../lib/studio/communityChapters';
+import {supportStore} from '../../lib/studio/supportProvider';
+import {POST as submitCommunity} from '../api/studio/contextual-support';
+import '../../styles/studio.css';
+import {CHAPTER_QUESTIONS} from '../../lib/studio/contextualSupport';
+export const prerender=false;
+if(!Astro.locals.user)return Astro.redirect('/auth/login/?redirectTo=%2Fstudio%2Fcommunity%2F',303);
+if(Astro.locals.profile?.id!==Astro.locals.user.id||Astro.locals.profile?.status!=='active')return new Response('Your account is not currently available.',{status:403});
+Astro.response.headers.set('Cache-Control','private, no-store');
+let error='',loadError='',question='',chapter=Astro.url.searchParams.get('chapter')??CREATIVE_CHAPTERS[0].id,mention=false,reviewed=false,key: string=crypto.randomUUID(),posts:any[]=[];
+const store=supportStore(Astro.locals);let available=false;
+try{available=!!store&&await store.allowed(Astro.locals.user.id,'general_community');}catch{loadError='Community could not be loaded. Please try again.';}
+if(Astro.request.method==='POST'){
+ const draft=await Astro.request.clone().formData();question=String(draft.get('question')??'');chapter=String(draft.get('chapter')??chapter);mention=draft.get('request_leilia')==='on';reviewed=draft.get('reviewed')==='on';key=String(draft.get('submission_key')??key);
+ const response=await submitCommunity(Astro as any);const result=await response.json();if(response.ok)return Astro.redirect(communityContinuation('/studio/community/?posted=1&chapter='+encodeURIComponent(chapter),Astro.url.searchParams.get('from')),303);error=result.error??'Your question was not saved. Please retry.';Astro.response.status=response.status;
+}
+const view=communityView(Astro.url.searchParams.get('view'));
+
+const memberActionsEnabled=
+  Astro.locals.studioCommunityMemberActionsEnabled===true &&
+  Astro.locals.studioSupportHostedEnabled===true &&
+  Astro.locals.studioSupportLocal!==true;
+const chosen=CREATIVE_CHAPTERS.find(c=>c.id===chapter)??CREATIVE_CHAPTERS[0];
+
+if(Astro.request.method==='GET'&&Astro.url.searchParams.has('chapter')&&!Astro.url.searchParams.has('view')&&CREATIVE_CHAPTERS.some(c=>c.id===chapter))return Astro.redirect(communityPage('/studio/community/'+chapter+'/',Astro.url),303);
+---
+
+<BaseLayout title="Community | Deck Creator Studio" description="Conversations with other deck creators." metaRobots="noindex, nofollow" memberWorkspace={false}>
+<main class="studio-page page-inner community-directory community-experience community-layout">
+<CommunitySectionRail/><div class="community-main-column">
+<header class="community-page-heading"><div><h1>Community</h1><p>Exchange ideas, ask questions and learn from other deck creators.</p></div><a class="community-primary" href={communityPage('/studio/community/'+chosen.id+'/new/',Astro.url)}>+ Start a discussion</a></header>
+{loadError&&<p role="alert">{loadError}</p>}
+{!available&&<p role="status">Community is not currently available to your account. <a href="/studio/account/">View your support details</a>.</p>}
+<CommunityDiscovery/>
+{error&&<section role="alert"><h2>Your earlier contribution was not saved</h2><p>{error}</p><form method="post" class="studio-form"><input type="hidden" name="action" value="submit"/><input type="hidden" name="capability" value="general_community"/><input type="hidden" name="submission_key" value={key}/><input type="hidden" name="chapter" value={chosen.id}/><input type="hidden" name="selected_text" value=""/><label>Your question<textarea name="question" required minlength="20" maxlength="5900">{question}</textarea></label><CommunityMentionHelp checked={mention}/><label><input type="checkbox" name="reviewed" required checked={reviewed}/> I am ready to share with General Community.</label><button type="submit">Retry this contribution</button></form></section>}
+<details class="community-boundaries"><summary>Who can see my contributions?</summary><p>Studio Community contributions are visible to eligible Studio members. Keep confidential project material in <a href="/studio/editorial-support/">your private editorial support</a>.</p></details>
+<CommunityNotifications enabled={Astro.locals.studioCommunityActivityEnabled===true&&Astro.locals.studioSupportHostedEnabled===true&&Astro.locals.studioSupportLocal!==true}/>
+</div></main></BaseLayout>
+

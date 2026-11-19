@@ -1,0 +1,28 @@
+---
+interface Props {entry:any;review:any;admin:boolean;sources?:any[]}
+const {entry,review,admin,sources=[]}=Astro.props;
+const submission=review.submission;
+const active=Date.now()>=Date.parse(entry.promise.start)&&Date.now()<Date.parse(entry.promise.editorialEnds)&&(entry.paymentAvailability?.editorial??true)&&(entry.paymentAvailability?.reviews??entry.promise.benefits.assessments)>0;
+---
+<section class="assessment">
+<p>Status: {review.status.replaceAll('_',' ')}</p>
+{submission&&<><h4>{submission.title}</h4><p class="passage">{submission.selected_text}</p><p><strong>Your question:</strong> {submission.question}</p>{submission.constraints&&<p>{submission.constraints}</p>}{submission.replies.map((reply:any)=><section><h4>Written assessment</h4><p class="passage">{reply.body}</p></section>)}</>}
+{!admin&&active&&review.status==='requested'&&<form action="/api/studio/service-records" method="post" data-service-form>
+<input type="hidden" name="action" value="review-submit"/><input type="hidden" name="key" value={crypto.randomUUID()}/><input type="hidden" name="enrolmentId" value={entry.id}/><input type="hidden" name="itemId" value={review.id}/><input type="hidden" name="revision" value={entry.revision}/><input type="hidden" name="projectId"/><input type="hidden" name="sourceFingerprint"/>
+<label>Saved work to assess<select data-assessment-source required><option value="">Choose saved work</option>{sources.map(s=><option value={s.fingerprint} data-project={s.projectId} data-text={s.text}>{s.title} — version {s.version}</option>)}</select></label>
+<label>Passage for assessment<textarea name="selectedText" rows="8" maxlength="50000"></textarea></label>
+<label>What would you like Leilia to assess?<textarea name="question" minlength="10" maxlength="6000" required rows="4"></textarea></label>
+<label>Relevant context (optional)<textarea name="constraints" maxlength="4000" rows="3"></textarea></label>
+<label><input type="checkbox" name="reviewed" value="true" required/> I have checked the saved work and question for this assessment.</label>
+<button disabled={!sources.length}>Send for assessment</button>{!sources.length&&<p>Save the card or guidebook writing you want assessed first.</p>}<p data-result role="status"></p>
+</form>}
+{admin&&active&&submission&&review.status!=='delivered'&&<form action="/api/studio/service-records" method="post" data-service-form>
+<input type="hidden" name="action" value="review-reply"/><input type="hidden" name="key" value={crypto.randomUUID()}/><input type="hidden" name="enrolmentId" value={entry.id}/><input type="hidden" name="itemId" value={review.id}/><input type="hidden" name="revision" value={entry.revision}/><input type="hidden" name="requestRevision" value={submission.revision}/>
+<label>Written assessment<textarea name="body" rows="8" maxlength="20000" required></textarea></label><button>Save and deliver assessment</button><p data-result role="status"></p>
+</form>}
+{admin&&!submission&&<p>The member has not submitted work for this assessment yet.</p>}
+</section>
+<script>
+for(const select of document.querySelectorAll<HTMLSelectElement>('[data-assessment-source]'))select.addEventListener('change',()=>{const option=select.selectedOptions[0],form=select.form!;const writing=form.querySelector<HTMLTextAreaElement>('[name="selectedText"]')!;if(writing.value&&writing.value!==writing.dataset.sourceText&&!confirm('Replace the selected passage with the newly selected saved work?')){select.value=select.dataset.previous??'';return;}form.querySelector<HTMLInputElement>('[name="projectId"]')!.value=option.dataset.project??'';form.querySelector<HTMLInputElement>('[name="sourceFingerprint"]')!.value=option.value;writing.value=option.dataset.text??'';writing.dataset.sourceText=writing.value;select.dataset.previous=select.value;});
+</script>
+<style>.passage{white-space:pre-wrap}.assessment{padding:1rem;border-left:2px solid #bdad91;margin:1rem 0}.assessment label{display:block;margin:1rem 0}.assessment textarea,.assessment select{display:block;width:100%;box-sizing:border-box;padding:.7rem;font:inherit}.assessment input[type=checkbox]{display:inline;width:auto}.assessment button{padding:.7rem 1rem;font:inherit}</style>

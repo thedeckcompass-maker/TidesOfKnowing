@@ -4,6 +4,7 @@ import "../styles/share.css";
 import "../styles/member-workspace.css";
 import MailerLiteUniversal from "../components/MailerLiteUniversal.astro";
 import TdcConversionBlock from "../components/TdcConversionBlock.astro";
+import StudioShell from "../components/studio/StudioShell.astro";
 import MemberWorkspaceHeader from "../components/community/MemberWorkspaceHeader.astro";
 import { isAdminProfile } from "../lib/community/auth";
 import {
@@ -46,6 +47,8 @@ interface Props {
   mailerLite?: boolean;
   /** When `auto`, enables the member workspace chrome for authenticated Commons and admin routes. */
   memberWorkspace?: boolean | "auto";
+  studioWorkspace?: boolean;
+  studioProjectId?: string;
 }
 
 const {
@@ -67,6 +70,8 @@ const {
   metaRobots,
   mailerLite = false,
   memberWorkspace = "auto",
+  studioWorkspace = false,
+  studioProjectId,
 } = Astro.props;
 
 const trimmedOg = typeof ogUrl === "string" ? ogUrl.trim() : "";
@@ -108,6 +113,7 @@ const isToolsSection = /^\/tools(\/|$)/.test(Astro.url.pathname);
  * Hybrid bands (blue on reading routes) are section-level, not body class changes.
  */
 const pathname = Astro.url.pathname;
+const isStudioWorkspace = studioWorkspace || pathname.startsWith("/studio/") || pathname.startsWith("/community/sections/deck-creator-studio/") || (pathname === "/community/account/" && Astro.url.searchParams.get("workspace") === "studio");
 const isToolsRoute = pathname.startsWith("/tools");
 const isCompassApplyRoute = pathname.startsWith("/compass/apply");
 const isCompassBlueRoute =
@@ -125,13 +131,11 @@ const isFieldNotesSection =
   pathname === "/blog" || pathname.startsWith("/blog/");
 const baseBodySurface =
   isToolsRoute || isCompassBlueRoute ? "tok-body--system" : "tok-body--reading";
-const isMemberWorkspace =
-  memberWorkspace === true ||
-  (memberWorkspace !== false && isMemberWorkspaceRoute(pathname, isAuthenticated));
+const isMemberWorkspace = !isStudioWorkspace && (memberWorkspace === true || (memberWorkspace !== false && isMemberWorkspaceRoute(pathname, isAuthenticated)));
 const memberWorkspaceSection = getMemberWorkspaceSection(pathname);
 const isWorkspaceAdmin = isAdminProfile(Astro.locals.profile);
-const effectiveTdcPlacement = isMemberWorkspace && tdcPlacement === "before-footer" ? "none" : tdcPlacement;
-const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-workspace" : null, bodyClassProp]
+const effectiveTdcPlacement = (isStudioWorkspace || isMemberWorkspace) && tdcPlacement === "before-footer" ? "none" : tdcPlacement;
+const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-workspace" : null, bodyClassProp, isStudioWorkspace ? "tok-body--studio" : null]
   .filter(Boolean)
   .join(" ");
 ---
@@ -199,7 +203,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     {
-      isMemberWorkspace ? (
+      isStudioWorkspace ? <StudioShell projectId={studioProjectId} /> : isMemberWorkspace ? (
         <MemberWorkspaceHeader section={memberWorkspaceSection} isAdmin={isWorkspaceAdmin} />
       ) : (
         <header class="site-header">
@@ -244,27 +248,28 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
               >
                 Tools
               </a>
-              <a
-                class="site-nav__link"
-                href="/articles/"
-                aria-current={isArticlesSection ? "page" : undefined}
-              >
-                Articles
-              </a>
-              <a
-                class="site-nav__link"
-                href="/blog/"
-                aria-current={isFieldNotesSection ? "page" : undefined}
-              >
-                Field Notes
-              </a>
-              <a
-                class="site-nav__link"
-                href="/community/"
-                aria-current={isCommunityRoute ? "page" : undefined}
-              >
-                Community
-              </a>
+              <div class="site-nav__articles-group">
+  <a
+    class="site-nav__link"
+    href="/articles/"
+    aria-current={isArticlesSection ? "page" : undefined}
+  >
+    Articles
+  </a>
+  <details class="site-nav__dropdown">
+    <summary class="site-nav__dropdown-summary" aria-label="Articles submenu">▾</summary>
+    <ul class="site-nav__dropdown-list">
+      <li>
+        <a
+          class="site-nav__dropdown-link"
+          href="/blog/"
+          aria-current={isFieldNotesSection ? "page" : undefined}
+        >Field Notes</a>
+      </li>
+    </ul>
+  </details>
+</div>
+              
               <a
                 class="site-nav__link"
                 href="/ask-leilia/"
@@ -282,22 +287,25 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
               </a>
               <a
                 class="site-nav__link"
+                href="/deck-creator-studio/"
+                aria-current={pathname.startsWith("/deck-creator-studio") ? "page" : undefined}
+              >
+                Deck Creator Studio
+              </a>
+              <a
+                class="site-nav__link"
                 href="/about/"
                 aria-current={isAboutRoute ? "page" : undefined}
               >
                 About
               </a>
-              {
-                isAuthenticated ? (
-                  <a
-                    class="site-nav__link"
-                    href="/community/account/"
-                    aria-current={pathname.startsWith("/community/account") ? "page" : undefined}
-                  >
-                    Account
-                  </a>
-                ) : null
-              }
+              <a
+  class="site-nav__link"
+  href={isAuthenticated ? "/studio/account/" : "/auth/login/?redirectTo=%2Fstudio%2Faccount%2F"}
+  aria-current={pathname.startsWith("/studio/account") ? "page" : undefined}
+>
+  Account
+</a>
             </nav>
           </div>
         </header>
@@ -312,7 +320,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
       <TdcConversionBlock subscribePlacement="site-footer-conversion" />
     )}
 
-    <footer class:list={["site-footer", isMemberWorkspace && "site-footer--workspace"]}>
+    {isStudioWorkspace ? <StudioShell footer /> : <footer class:list={["site-footer", isMemberWorkspace && "site-footer--workspace"]}>
       <div class="page-inner site-footer__inner">
         <nav class="site-footer__discover" aria-label="Sections">
           <a class="site-footer__discover-link" href="/articles/">Articles</a>
@@ -322,7 +330,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
           <a class="site-footer__discover-link" href="/blog/">Field Notes</a>
           <a class="site-footer__discover-link" href="/articles/compass-method/">Method</a>
           <a class="site-footer__discover-link" href="/practice/">Practice</a>
-          <a class="site-footer__discover-link" href="/community/">Community</a>
+          
           <a class="site-footer__discover-link" href="/ask-leilia/">Ask Leilia</a>
           <a class="site-footer__discover-link" href="/compass/">Training</a>
           <a class="site-footer__discover-link" href="/contact/">Contact</a>
@@ -340,7 +348,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
           The COMPASS Method™ · Original interpretive framework by Tides of Knowing.
         </p>
       </div>
-    </footer>
+    </footer>}
 
     <script is:inline>
       (function () {
@@ -493,7 +501,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
 
   .site-nav {
     display: flex;
-    gap: clamp(1rem, 4vw, 2rem);
+    gap: clamp(0.4rem, 0.9vw, 0.85rem);
     align-items: center;
   }
 
@@ -526,6 +534,8 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
   }
 
   .site-nav__link {
+      white-space: nowrap;
+      flex-shrink: 0;
     font-family: var(--font-body);
     font-size: var(--tok-type-nav);
     font-weight: 600;
@@ -635,12 +645,73 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
     background: color-mix(in srgb, var(--tok-surface-panel) 45%, transparent);
   }
 
+    .site-nav__articles-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown-summary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.5rem;
+      min-height: 2rem;
+      white-space: nowrap;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown-list {
+      white-space: nowrap;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown-summary:focus-visible {
+      outline: 2px solid var(--masthead-gold);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 1200px) {
+      .site-nav__articles-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .site-nav__articles-group .site-nav__dropdown-list {
+        position: absolute;
+        left: 0;
+        right: auto;
+      }
+    }
+    /* Articles dropdown alignment correction */
+    .site-nav__articles-group {
+      position: relative;
+      gap: 0.05rem;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown {
+      position: static;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown-summary {
+      min-width: 0;
+      min-height: 1.5rem;
+      padding: 0 0.1rem;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .site-nav__articles-group .site-nav__dropdown-list {
+      top: 100%;
+      left: 0;
+      right: auto;
+    }
   #main-content {
     padding-top: var(--tok-header-height);
   }
 
   /* Literal px: custom properties in @media are unsupported on many mobile browsers. */
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     :global(:root) {
       /* Logo + Menu row exceeds 4.25rem; align main offset with rendered masthead height. */
       --tok-header-height: 5.25rem;
@@ -775,7 +846,7 @@ const bodyClass = [baseBodySurface, isMemberWorkspace ? "tok-body--member-worksp
     }
   }
 
-  @media (min-width: 901px) {
+  @media (min-width: 1201px) {
     .site-header__inner {
       flex-wrap: nowrap;
     }

@@ -1,0 +1,9 @@
+---
+const {postId,parentId='',label='Write a comment',inline=false}=Astro.props;
+---
+<form class:list={['community-composer',{'community-inline-composer':inline}]} method="post" action="/api/studio/community-member-actions" data-member-mutation>
+ <input type="hidden" name="action" value="reply"/><input type="hidden" name="post_id" value={postId}/><input type="hidden" name="parent_id" value={parentId}/><input type="hidden" name="submission_key" value={crypto.randomUUID()}/>
+ <label><span class="community-sr-only">{label}</span><textarea name="body" required minlength="2" maxlength="8000" rows="1" placeholder={label+'…'} aria-label={label}></textarea></label>
+ <div class="community-composer-actions"><small>Shared with General Community.</small><button type="submit" disabled>{inline?'Post reply':'Post comment'}</button></div>
+ <p role="alert" data-mutation-error hidden></p>
+</form>

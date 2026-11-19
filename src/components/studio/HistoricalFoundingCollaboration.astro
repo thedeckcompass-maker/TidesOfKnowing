@@ -1,0 +1,77 @@
+---
+import SurfaceSection from '../ui/SurfaceSection.astro';
+import Button from '../ui/Button.astro';
+import data from '../../data/studio/founding-collaboration.json';
+const applicationHref='/downloads/'+data.applicationFile;
+const applicationAvailable=data.applicationAvailable&&Boolean(import.meta.glob('/public/downloads/*.docx',{query:'?url',import:'default'})['/public/downloads/'+data.applicationFile]);
+---
+<details id="founding-collaboration" class="historical-founding"><summary>Historical Founding Creator Collaboration arrangements</summary>
+  <article class="creator-invitation">
+    <SurfaceSection surface="reading-soft" class="creator-invitation__hero">
+      <header class="creator-invitation__reading">
+        <aside aria-label="Current Studio offers"><p>Current Studio pathways are Explore, Create, Collaborate and Develop. This section preserves the separate founding collaboration. Existing individual agreements remain unchanged.</p><p><a href="/deck-creator-studio/pricing/">View current Studio plans and prices</a></p></aside>
+        <p class="creator-invitation__eyebrow">{data.subtitle}</p>
+        <h2>{data.title}</h2>
+        <p class="creator-invitation__tagline">{data.tagline}</p>
+        <Button href="/auth/register/?mode=join&amp;redirectTo=%2Fstudio%2F" surface="blue">Join free Explore</Button>
+        <p><a href="/deck-creator-studio/walkthrough/">Walk through the Studio</a> · <a href="/deck-creator-studio/faq/">Studio questions and answers</a></p>
+      </header>
+    </SurfaceSection>
+    <SurfaceSection surface="reading">
+      <div class="creator-invitation__reading creator-invitation__prose" set:html={data.intro} />
+    </SurfaceSection>
+    {data.sections.map(section => (
+      <SurfaceSection surface={section.id === "explore-this-opportunity" ? "reading-soft" : "reading"} id={section.id}>
+        <div class="creator-invitation__reading creator-invitation__prose">
+          <h2>{section.heading}</h2>
+          {section.id === "what-i-bring-to-your-project" && <figure class="creator-invitation__portrait"><img src="/images/about/leigh-spencer-profile.png" width="640" height="853" alt="Leilia Spencer smiling outdoors in a park." loading="lazy" decoding="async" /><figcaption>Leilia Spencer</figcaption></figure>}
+          {section.id === "explore-this-opportunity" ? <nav aria-label="On this page"><ul>{applicationAvailable&&<li><a href={applicationHref}>Optional Word application</a></li>}<li><a href="#apply-for-the-founding-collaboration">Collaboration enquiry</a></li></ul><div set:html={section.html} /></nav> : <div set:html={section.html} />}
+          {section.id === "founding-investment-and-pricing" && <aside class="creator-invitation__application" aria-label="Founding payment choices"><p><strong>One payment: US$495.</strong></p><p><strong>Two payments: US$297.50 each (US$595 total).</strong> The second payment is due one calendar month after the first.</p><p>Online founding payments are not open yet. No payment has been taken through this page.</p></aside>}
+          {section.id === "apply-for-the-founding-collaboration" && (
+            <>
+              <aside class="creator-invitation__application" aria-label="Optional collaboration application">
+                {applicationAvailable ? <Button href={applicationHref}>Optional application (Word DOCX)</Button> : <p>The optional Word application is not currently available. The same 24 preparation questions remain below.</p>}
+                <p>Use your existing free Explore account for the two introductory sessions. These questions are optional preparation, not another account registration. Payment is optional after both sessions. Existing agreements are unchanged.</p>
+              </aside>
+              <details class="creator-invitation__questions">
+                <summary>Read the 24 application questions</summary>
+                <h3>Your personal and creative context (optional)</h3>
+                <p>{data.optionalContext}</p>
+                {data.questions.map(item => <section><h3>{item.question}</h3>{item.notes.map(note => <p>{note}</p>)}</section>)}
+              </details>
+            </>
+          )}
+        </div>
+      </SurfaceSection>
+    ))}
+  </article>
+</details>
+<style>
+  .creator-invitation__reading { width: 100%; max-width: var(--reading-width); margin-inline: auto; }
+  .creator-invitation :global(.creator-invitation__hero) { color: var(--dcs-ink); background: var(--dcs-paper-soft); }
+  .creator-invitation__hero h2 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; color: var(--dcs-ink); margin-block: var(--space-sm) var(--space-md); }
+  .creator-invitation__eyebrow { font-family: var(--font-body); color: var(--dcs-ink); font-size: var(--tok-type-label); }
+  .creator-invitation__tagline { font-family: var(--font-accent); font-size: 1.4rem; margin-bottom: var(--space-md); }
+  .creator-invitation__prose { font-family: var(--font-body); color: var(--tok-text-dark); line-height: var(--tok-line-prose); overflow-wrap: anywhere; }
+  .creator-invitation__prose :global(h2), .creator-invitation__prose :global(h3) { font-family: var(--font-heading); color: var(--tok-on-reading); line-height: 1.3; }
+  .creator-invitation__prose :global(h2) { font-size: clamp(1.7rem, 3vw, 2.2rem); margin-block: 0 var(--space-md); }
+  .creator-invitation__prose :global(h3) { font-size: 1.3rem; margin-top: var(--space-lg); }
+  .creator-invitation__prose :global(p), .creator-invitation__prose :global(ul) { margin-block: 0 var(--space-md); }
+  .creator-invitation__prose :global(li) { margin-bottom: var(--space-xs); }
+  .creator-invitation__prose :global(a:not(.tok-ui-btn)) { color: var(--tok-water); text-decoration: underline; text-underline-offset: .2em; }
+  .creator-invitation :global(section[id]) { scroll-margin-top: var(--tok-scroll-anchor-offset); }
+  .creator-invitation__prose :global(hr) { border: 0; border-top: 1px solid var(--tok-border-light); margin-block: var(--space-lg); }
+  .creator-invitation__prose :global(table) { border-collapse: collapse; width: 100%; margin-block: var(--space-md); }
+  .creator-invitation__prose :global(th), .creator-invitation__prose :global(td) { text-align: left; border-bottom: 1px solid var(--tok-border-light); padding: var(--space-sm); }
+  .creator-invitation__application, .creator-invitation__questions { border: 1px solid var(--tok-border-light); border-radius: var(--radius-md); padding: var(--space-md); margin-block: var(--space-md); background: var(--tok-surface-reading-soft); }
+  .creator-invitation__application :global(.tok-ui-btn) { white-space: normal; margin-bottom: var(--space-md); }
+  .creator-invitation__questions summary { font-weight: 600; cursor: pointer; color: var(--tok-water); }
+  .creator-invitation__questions section { border-bottom: 1px solid var(--tok-border-light); }
+  .creator-invitation :global(#explore-this-opportunity) { padding-bottom: var(--space-sm); }
+  .creator-invitation :global(#explore-this-opportunity nav > :last-child) { margin-bottom: 0; }
+  .creator-invitation__portrait { margin: 0 0 var(--space-lg); max-width: 240px; }
+  .creator-invitation__portrait img { display: block; width: 100%; height: auto; border-radius: var(--radius-md); }
+  .creator-invitation__portrait figcaption { margin-top: var(--space-sm); font-family: var(--font-accent); }
+</style>
+
+<style>.historical-founding{--dcs-ink:#1A1A1A;--dcs-paper-soft:#E8E3DB;margin-block:2rem}.historical-founding>summary{cursor:pointer;min-height:44px}.historical-founding :global(.tok-ui-btn){display:inline-block;background:#C6A85A;color:#0B1F3A;padding:.8rem;border:1px solid #8A6A1F}</style>

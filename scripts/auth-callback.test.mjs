@@ -281,7 +281,7 @@ run("emailRedirectTo destinations for current flows", () => {
     join(REPO_ROOT, "src/pages/api/community/account/sign-in-link.ts"),
     "utf8",
   );
-  assert.match(registerSrc, /const next = "\/community\/"/);
+  assert.match(registerSrc, /const next = safeAuthCallbackRedirect/);
   assert.match(accountSrc, /const redirectTo = "\/community\/account\/"/);
 });
 

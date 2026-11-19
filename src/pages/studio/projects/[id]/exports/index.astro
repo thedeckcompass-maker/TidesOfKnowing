@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import ProjectWorkingExports from '../../../../../components/studio/ProjectWorkingExports.astro';
+import ProjectBookOverview from '../../../../../components/studio/ProjectBookOverview.astro';
+import {studioReadAccessResponse,studioProjectWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProjectWorkspace,getStudioProductionPlan,getStudioJournalEntries} from '../../../../../lib/studio/queries';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+const access=await studioReadAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);
+if(access)return access;
+if(!Astro.params.id||!Astro.locals.supabase)return new Response(null,{status:404});
+const readOnly=Boolean(await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id));
+const {project,cards,guidebook}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);
+if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+const production=await getStudioProductionPlan(Astro.locals.supabase,project.id);
+let entries:any[]=[],updates:any[]=[],exportListError=false;
+try{entries=await getStudioJournalEntries(Astro.locals.supabase,project.id);const result=await Astro.locals.supabase.from('studio_journal_excerpts').select('id,title,photo_id,journal_entry_id').eq('project_id',project.id).order('created_at',{ascending:false});if(result.error)throw result.error;updates=result.data??[];}catch{exportListError=true;}
+---
+<BaseLayout title={`Exports | ${project.name}`} description="Export your manuscript, project reference, journal or complete backup." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio">
+ <main class="studio-page page-inner project-books-page">
+  <header><p class="studio-eyebrow">{project.name}</p><h1>Exports</h1><p>Choose the material you need and the format that suits its purpose.</p><a href={`/studio/projects/${project.id}/project-book/`}>Return to My Project Workbook</a></header>
+  <ProjectWorkingExports project={project} cards={cards} entries={entries} updates={updates} loadError={exportListError}/><ProjectBookOverview readOnly={readOnly} project={project} cards={cards} sections={guidebook} production={production} standalone exportsOnly />
+ </main>
+</BaseLayout>
+<style>.project-books-page>header{max-width:75ch;margin-bottom:1.5rem}.project-books-page>header h1{font:400 clamp(2rem,4vw,3rem)/1.2 Georgia,serif}.project-books-page>header p{line-height:1.7}</style>

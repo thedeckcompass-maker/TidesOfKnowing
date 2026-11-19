@@ -1,0 +1,102 @@
+---
+import '../../../../styles/communityExperience.css';
+import {communityPage,communityBrowseReturn} from '../../../../lib/studio/communityExperience';
+import CommunitySectionRail from '../../../../components/studio/CommunitySectionRail.astro';
+import {COMMUNITY_SECTION_MEANINGS} from '../../../../lib/studio/communityPresentation';
+import CommunityDiscovery from '../../../../components/studio/CommunityDiscovery.astro';
+import {communityConversations} from '../../../../lib/studio/communityExperience';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import {CREATIVE_CHAPTERS} from '../../../../lib/studio/communityChapters';
+import {COMMUNITY_TOPICS} from '../../../../lib/studio/communityTopics';
+import {supportStore} from '../../../../lib/studio/supportProvider';
+import '../../../../styles/studio.css';
+
+export const prerender = false;
+
+if(!Astro.locals.user){
+  return Astro.redirect('/auth/login/',303);
+}
+
+const who=Astro.locals.user.id;
+
+if(Astro.locals.profile?.id!==who ||
+   Astro.locals.profile?.status!=='active'){
+  return new Response('Community access unavailable.',{status:403});
+}
+
+const chapter=CREATIVE_CHAPTERS.find(
+  c=>c.id===Astro.params.chapter
+);
+
+if(!chapter){
+  return new Response('Chapter not found.',{status:404});
+}
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+
+const store=supportStore(Astro.locals);
+let posts:any[]=[];
+let loadError='';
+
+if(!store){
+  loadError='Community is temporarily unavailable.';
+}else{
+  try{
+    const allowed=await store.allowed(who,'general_community');
+    if(!allowed){
+      return new Response('Community access unavailable.',{status:403});
+    }
+  }catch{
+    loadError='Discussions could not be loaded.';
+  }
+}
+
+const topicLabel=(id:string)=>
+  COMMUNITY_TOPICS.find(t=>t.id===id)?.label??id;
+
+const chapterNumber=String(
+  CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1
+).padStart(2,'0');
+---
+
+<BaseLayout
+  title={`${chapter.name} | Community | Deck Creator Studio`}
+  description={`Conversations in ${chapter.name}.`}
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main class="studio-page page-inner authenticated-chapter community-experience community-layout"
+    data-creative-chapter={chapter.id}>
+
+    <CommunitySectionRail selected={chapter.id}/><div class="community-main-column">
+    <nav class="authenticated-chapter__breadcrumb" aria-label="Breadcrumb">
+      <a href={communityBrowseReturn(Astro.url)}>My Community</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{chapter.name}</span>
+    </nav>
+
+    <header class="authenticated-chapter__header">
+      <span class="authenticated-chapter__number">{chapterNumber}</span>
+      <div><h1>{chapter.name}</h1><small>{COMMUNITY_SECTION_MEANINGS[chapter.id]}</small></div>
+      <a class="authenticated-chapter__create"
+        href={communityPage(`/studio/community/${chapter.id}/new/`,Astro.url)}>
+        Start a discussion
+      </a>
+    </header>
+
+    {loadError ? (
+      <p role="alert">{loadError}</p>
+    ) : (
+      <>
+        <CommunityDiscovery section={chapter.id}/>
+      </>
+    )}
+  </div></main>
+</BaseLayout>
+
+<script>
+import {communityPage} from '../../../../lib/studio/communityExperience';
+const legacy=location.hash.match(/^#discussion-([a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/i);if(legacy)location.replace(communityPage(location.pathname+'discussion/'+legacy[1]+'/',new URL(location.href)));
+</script>
+

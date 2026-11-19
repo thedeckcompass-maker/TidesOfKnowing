@@ -1,0 +1,7 @@
+// Keep authoring in its own tab. No written content is encoded in navigation URLs.
+let currentTool='';
+const track=(event:Event)=>{const e=event.target as HTMLElement;if(e.closest('.studio-shell'))return;currentTool=e.closest('#project-book')?'book':e.closest('#chapter-support')?'guidance':'';};
+document.addEventListener('focusin',track);document.addEventListener('pointerdown',track);document.addEventListener('studio-chapter-visible',()=>currentTool='');
+function context(){const u=new URL(location.href);const chapter=document.querySelector<HTMLElement>('[data-current-chapter]')?.dataset.currentChapter;const doc=document.querySelector<HTMLElement>('[data-document-panel]:not([hidden])');const moment=doc?.dataset.step??document.querySelector<HTMLElement>('[data-moment][aria-current="step"]')?.dataset.moment;if(chapter)u.searchParams.set('chapter',chapter);if(moment)u.searchParams.set('moment',moment);if(currentTool)u.hash=currentTool==='book'?'project-book':'chapter-support';return u.pathname+u.search+u.hash;}
+for(const link of document.querySelectorAll<HTMLAnchorElement>('[data-journey-map-link],[data-studio-welcome-link]')){link.target='_blank';link.rel='noopener';link.addEventListener('click',()=>{const u=new URL(link.hasAttribute('data-journey-map-link')?'/studio/journey-map/':'/studio/welcome/',location.origin);u.searchParams.set('from',context());if(link.hasAttribute('data-studio-welcome-link'))u.hash='personal-welcome';link.href=u.pathname+u.search+u.hash;});}
+

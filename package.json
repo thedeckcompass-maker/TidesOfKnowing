@@ -3,16 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "prebuild": "node scripts/generate-article-audio-manifest.mjs && node scripts/sync-client-reading-spread-images.mjs",
+    "prebuild": "node scripts/dcs-production.cjs check",
     "predev": "node scripts/generate-article-audio-manifest.mjs",
     "dev": "astro dev",
-    "build": "astro build",
-    "postbuild": "node scripts/fix-cloudflare-routes.mjs",
+    "build": "node scripts/dcs-production.cjs build",
+    "postbuild": "node scripts/dcs-production.cjs verify",
     "preview": "astro preview",
     "publish-article": "node scripts/add-article.mjs",
     "generate:lead-magnets": "node scripts/generate-lead-magnets.mjs",
     "astro": "astro",
-    "publish": "npm run build && wrangler pages deploy dist --project-name=tidesofknowing",
+    "publish": "node scripts/dcs-production.cjs release",
     "diag:headers": "node scripts/diag-fetch-headers.mjs",
     "validate:related-cards": "node scripts/validate-repeating-card-related-map.mjs",
     "validate:repeating-card-metadata": "node scripts/validate-repeating-card-metadata.mjs",
@@ -34,21 +34,30 @@
     "test:auth-otp": "node scripts/auth-otp-claim.test.mjs && node scripts/auth-otp-register.test.mjs && node scripts/auth-otp-account-sign-in-link.test.mjs",
     "verify:reading-library-head": "node scripts/verify-reading-library-head.mjs",
     "seo:rcm-tracker": "node scripts/generate-repeating-card-index-tracker.mjs",
-    "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs"
+    "seo:rcm-gsc": "node scripts/analyze-repeating-card-gsc-export.mjs",
+    "test:studio-stripe": "node scripts/studio-stripe.test.mjs",
+    "release:production": "node scripts/dcs-production.cjs"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/cloudflare": "14.4.3",
+    "@astrojs/markdown-remark": "7.3.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
-    "astro": "^5.7.0",
-    "resend": "^6.12.2",
-    "stripe": "^22.2.3"
+    "astro": "7.4.4",
+    "pg": "^8.23.1",
+    "resend": "6.37.0",
+    "stripe": "^22.2.3",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.2.0",
+    "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
     "gray-matter": "^4.0.3",
-    "markdown-it": "^14.2.0",
-    "puppeteer": "^25.1.0",
-    "sharp": "^0.35.3",
-    "wrangler": "^4.54.0"
+    "markdown-it": "14.3.3",
+    "puppeteer": "25.16.0",
+    "sharp": "0.35.5",
+    "wrangler": "4.156.0"
   }
 }

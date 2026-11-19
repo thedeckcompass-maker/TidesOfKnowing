@@ -1,0 +1,45 @@
+---
+import SessionTimeDraft from './SessionTimeDraft.astro';
+---
+<section class="video-support" aria-labelledby="video-support-heading">
+  <div class="video-support__intro">
+    <h2 id="video-support-heading">Sessions and recordings</h2>
+    <p>Consultations and group sessions are listed separately in your editorial support. Availability depends on your recorded program.</p>
+    <p class="video-support__status" role="status">Video joining and recording delivery are not available through this interface yet. Your existing consultation and group service records remain available above.</p>
+  </div>
+  <div class="video-support__grid">
+    <section class="video-support__card" aria-labelledby="video-private-heading">
+      <h3 id="video-private-heading">Your creator consultation</h3>
+      <p>Bring the question or piece of work you want to explore with Leilia.</p>
+      <a href="/studio/editorial-support/?view=consultations">View consultations</a>
+    </section>
+    <section class="video-support__card" aria-labelledby="video-group-heading">
+      <h3 id="video-group-heading">Group sessions</h3>
+      <p>Review your group invitations and session details in your editorial support.</p>
+      <a href="/studio/editorial-support/?view=groups">View group sessions</a>
+    </section>
+    <section class="video-support__card" aria-labelledby="video-consent-heading">
+      <h3 id="video-consent-heading">Recording is your choice</h3>
+      <p>Recording is off by default. A recording requires the agreement of everyone being recorded and an explanation of its purpose and audience. Group recording is not enabled.</p>
+      <p>Consent for recording, group sharing and any transcription or AI processing are separate. The arrangements for withdrawal are still being determined.</p>
+    </section>
+    <section class="video-support__card" aria-labelledby="video-recording-heading">
+      <h3 id="video-recording-heading">Private recordings and teaching</h3>
+      <p>If a private recording is offered in the future, access is intended only for authorized participants and for a limited time. Its exact verified deadline would be shown with it; processing and delivery can shorten the time available.</p>
+      <p>Playback, secure download, transcripts and captions are not available here yet. Expired access does not by itself prove that a provider has deleted a file. Group recordings and reusable teaching have separate, undecided arrangements.</p>
+    </section>
+  </div>
+  <SessionTimeDraft/>
+</section>
+<style>
+.video-support{margin:2rem 0;padding:1.25rem;border:1px solid var(--tok-border-light,#b9ad9b);border-radius:.5rem}
+.video-support__intro{max-width:72ch}
+.video-support__status{font-size:.95rem}
+.video-support__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin-top:1.5rem}
+.video-support__card{min-width:0;padding:1.25rem;border:1px solid var(--tok-border-light,#cec9c1);border-radius:.5rem;background:#fff}
+.video-support__card h3{margin:0 0 .75rem}
+.video-support__card p:last-child{margin-bottom:0}
+.video-support__card a{display:inline-flex;align-items:center;min-height:46px;color:#065e73;text-underline-offset:.2em}
+.video-support a:focus-visible,.video-support summary:focus-visible{outline:3px solid #8a6a1f;outline-offset:3px}
+@media(max-width:759px){.video-support__grid{grid-template-columns:1fr}}
+</style>

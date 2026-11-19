@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { studioAccessResponse } from "../../../../../lib/studio/access";
+import { studioProjectWriteAccessResponse as studioAccessResponse, sameOriginMutation } from "../../../../../lib/studio/access";
 import { parseStudioGuidebookCreate } from "../../../../../lib/studio/validation";
 
 export const prerender = false;
@@ -12,10 +12,30 @@ function projectRedirect(projectId: string, key: "saved" | "error", value: strin
 }
 
 export const POST: APIRoute = async ({ request, locals, params }) => {
-  const accessResponse = studioAccessResponse(locals.user, locals.profile);
+  if (!sameOriginMutation(request)) return new Response("Invalid request origin.", {status:403});
+  const accessResponse = await studioAccessResponse(locals.user,locals.profile,locals.supabase,params.id);
   if (accessResponse) return accessResponse;
   const projectId = params.id;
   if (!projectId || !locals.supabase) return new Response("Not found", { status: 404 });
+
+  if (!locals.user) return new Response("Not found", { status: 404 });
+
+  const owned = await locals.supabase
+    .from("studio_projects")
+    .select("id")
+    .eq("id", projectId)
+    .eq("owner_id", locals.user.id)
+    .maybeSingle();
+
+  if (owned.error) {
+    console.error("Unable to verify Studio project ownership:", owned.error);
+    return new Response(
+      "Project ownership could not be verified. No changes were made.",
+      { status: 503, headers: { "Cache-Control": "private, no-store" } }
+    );
+  }
+
+  if (!owned.data) return new Response("Not found", { status: 404 });
 
   const parsed = parseStudioGuidebookCreate(await request.formData());
   if (!parsed.ok) return projectRedirect(projectId, "error", parsed.error);

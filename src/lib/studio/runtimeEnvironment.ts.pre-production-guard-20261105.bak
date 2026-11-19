@@ -1,0 +1,25 @@
+import {DCS_RUNTIME_CONFIG,type RuntimeConfig} from './runtimeComposition';
+import {verifiedArtistPreviewOrigin} from './artistPreviewOrigin';
+/** Provider flags come only from trusted bindings; the actual request origin selects an exact approved preview host. */
+export function studioRuntimeConfiguration(env:Record<string,unknown>={},requestOrigin='https://www.tidesofknowing.com'):RuntimeConfig{
+ if(env.STUDIO_RUNTIME_ENABLED!=='true')return DCS_RUNTIME_CONFIG;
+ const raw=env.STUDIO_RUNTIME_CONFIG_JSON;if(typeof raw!=='string'||raw.length>4000)throw Error('Studio runtime configuration missing.');
+ const value=JSON.parse(raw);if(!value||Array.isArray(value)||typeof value!=='object')throw Error('Invalid Studio runtime configuration.');
+ const allowed=['services','exchange','community','exports','artists','artistPortfolio','recipientId','historyPolicy'];
+ if(Object.keys(value).some(k=>!allowed.includes(k)))throw Error('Unsupported runtime configuration.');
+ const config:RuntimeConfig={origin:'https://www.tidesofknowing.com'};
+ for(const key of allowed.slice(0,6) as Array<'services'|'exchange'|'community'|'exports'|'artists'|'artistPortfolio'>){if(value[key]!==undefined&&typeof value[key]!=='boolean')throw Error('Explicit provider flags required.');config[key]=value[key]===true;}
+ if(config.artistPortfolio)config.origin=verifiedArtistPreviewOrigin(requestOrigin);
+ if(config.services||config.community){if(!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value.recipientId??''))throw Error('Verified service recipient configuration required.');config.recipientId=value.recipientId;}
+ if(config.community){if(!['allow','deny'].includes(value.historyPolicy))throw Error('Explicit community history policy required.');config.historyPolicy=value.historyPolicy;}
+ if(config.services||config.exchange||config.artists||config.artistPortfolio){const db=env.DCS_EXCHANGE_DB as {connectionString?:unknown}|undefined;if(typeof db?.connectionString!=='string'||!db.connectionString)throw Error('Restricted DCS_EXCHANGE_DB binding required.');config.database={connectionString:db.connectionString};}
+ if(config.community){
+  const approvedOrigin='https://feature-deck-creator-studio-m3g9.tidesofknowing.pages.dev';
+  const approvedSupabase='https://utzcmbidotxgmulguzxo.supabase.co';
+  if(env.STUDIO_DEPLOYMENT_TARGET!=='staging'||
+     requestOrigin!==approvedOrigin||
+     env.PUBLIC_SUPABASE_URL!==approvedSupabase)
+    throw Error('Community activation is restricted to the approved staging environment.');
+ } return config;
+}
+

@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import {CREATIVE_CHAPTERS} from '../../../../../lib/studio/communityChapters';
+import {COMMUNITY_TOPICS} from '../../../../../lib/studio/communityTopics';
+import '../../../../../styles/studio.css';
+
+export const prerender = false;
+
+if (!['localhost','127.0.0.1'].includes(Astro.url.hostname.toLowerCase())) {
+  return new Response('Not found',{status:404});
+}
+
+const chapter = CREATIVE_CHAPTERS.find(c=>c.id===Astro.params.chapter);
+if (!chapter) return new Response('Chapter not found',{status:404});
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+---
+
+<BaseLayout
+  title={`Start a discussion | ${chapter.name} | Deck Creator Studio`}
+  description="Start a conversation within your chosen Creative Chapter."
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main class="studio-page page-inner forum-new">
+    <nav aria-label="Breadcrumb">
+      <a href="/studio/community-lab/">My Community</a>
+      <span> / </span>
+      <a href={`/studio/community-lab/${chapter.id}/`}>{chapter.name}</a>
+      <span> / Start a discussion</span>
+    </nav>
+
+    <header class="forum-new-heading">
+      <span class="forum-new-number">
+        {String(CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1).padStart(2,'0')}
+      </span>
+      <div>
+        <p class="studio-eyebrow">Creative Chapter · {chapter.name}</p>
+        <h1>Start a discussion</h1>
+        <p>Ask a question, share an idea or invite perspectives from other creators.</p>
+      </div>
+    </header>
+
+    <form data-forum-new data-chapter={chapter.id} class="forum-new-form">
+      <label>
+        Primary topic
+        <select name="topic" required>
+          <option value="">Choose a topic</option>
+          {COMMUNITY_TOPICS.map(t=>
+            <option value={t.id}>{t.label}</option>
+          )}
+        </select>
+      </label>
+
+      <label>
+        Your discussion question
+        <textarea name="question" required minlength="20"
+          maxlength="5900" rows="6"
+          placeholder="What would you like to explore with other creators?"></textarea>
+      </label>
+
+      <p class="forum-guidance">
+        Your discussion belongs to {chapter.name}. You can add supporting
+        context and optional images as the conversation develops.
+      </p>
+
+      <p data-form-status role="status" aria-live="polite"></p>
+
+      <div class="forum-new-actions">
+        <button type="submit" class="studio-button">Create discussion</button>
+        <a href={`/studio/community-lab/${chapter.id}/`}>Cancel</a>
+      </div>
+    </form>
+  </main>
+</BaseLayout>
+
+<script>
+const form=document.querySelector<HTMLFormElement>('[data-forum-new]');
+if(form){
+  const status=form.querySelector<HTMLElement>('[data-form-status]');
+  form.addEventListener('submit',event=>{
+    event.preventDefault();
+    if(!form.reportValidity())return;
+
+    const data=new FormData(form);
+    const chapter=form.dataset.chapter??'';
+    const topic=String(data.get('topic')??'');
+    const question=String(data.get('question')??'').trim();
+
+    if(!chapter||!topic||question.length<20){
+      if(status)status.textContent='Complete the topic and question.';
+      return;
+    }
+
+    const id=crypto.randomUUID();
+    const record={
+      id,chapter,topic,question,
+      author:'You · Preview member',
+      date:Date.now(),
+      replies:[],
+      images:[],
+      unread:false
+    };
+
+    try{
+      const key='studio-community-lab-discussions';
+      const existing=JSON.parse(sessionStorage.getItem(key)??'[]');
+      if(!Array.isArray(existing))throw Error('Invalid local preview data');
+      sessionStorage.setItem(key,JSON.stringify([record,...existing]));
+      window.location.assign(
+        `/studio/community-lab/${encodeURIComponent(chapter)}/?created=${id}`
+      );
+    }catch{
+      if(status){
+        status.textContent='The local preview could not save this discussion. Your text is preserved.';
+      }
+    }
+  });
+}
+</script>
+
+<style>
+.forum-new{max-width:57rem;background:#e8f0eb;border-radius:.7rem;padding:1.5rem}
+.forum-new nav{font-size:.9rem;margin-bottom:1rem}
+.forum-new-heading{display:flex;align-items:center;gap:1rem;background:#fffdf9;border:1px solid #afc1b4;border-left:5px solid #58705b;border-radius:.6rem;padding:1.2rem;margin-bottom:1rem}
+.forum-new-heading h1{font-size:clamp(1.6rem,2.5vw,2.1rem);margin:.3rem 0}
+.forum-new-heading p:last-child{margin:.3rem 0;font-size:.95rem}
+.forum-new-number{font-size:1.4rem;font-weight:700;color:#58705b}
+.forum-new-form{display:grid;gap:1rem;background:#fffdf9;border:1px solid #d0d9d1;border-radius:.6rem;padding:1.2rem}
+.forum-new-form label{display:grid;gap:.4rem;font-weight:600}
+.forum-new-form select,.forum-new-form textarea{width:100%;box-sizing:border-box;padding:.75rem;border:1px solid #9eafa4;border-radius:.4rem;font:inherit}
+.forum-guidance{font-size:.88rem;color:#53655b}
+.forum-new-actions{display:flex;align-items:center;gap:1.2rem}
+@media(max-width:600px){.forum-new{padding:.7rem}.forum-new-heading{align-items:flex-start}}
+</style>

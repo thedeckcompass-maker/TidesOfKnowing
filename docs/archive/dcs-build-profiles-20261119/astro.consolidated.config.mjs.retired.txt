@@ -1,0 +1,23 @@
+// REVIEW ONLY: dedicated explicit build profile; default stage config unchanged.
+import base from './astro.config.mjs';
+import cloudflare from '@astrojs/cloudflare';
+import { loadEnv } from 'vite';
+import { fileURLToPath } from 'node:url';
+
+// Dedicated runner must use --mode production. Check dotenv selection too;
+// the Cloudflare plugin loads these settings after config evaluation.
+const projectRoot = fileURLToPath(new URL('.', import.meta.url));
+const selectedEnvironment = loadEnv('production', projectRoot, 'CLOUDFLARE_').CLOUDFLARE_ENV;
+if (process.env.CLOUDFLARE_ENV || selectedEnvironment) {
+  throw new Error('Consolidated build requires CLOUDFLARE_ENV unset in process and production-mode dotenv settings. No settings were changed.');
+}
+
+export default {
+  ...base,
+  adapter: cloudflare({
+    imageService: 'compile',
+    prerenderEnvironment: 'node',
+    remoteBindings: false,
+    configPath: './wrangler.consolidated.jsonc'
+  })
+};

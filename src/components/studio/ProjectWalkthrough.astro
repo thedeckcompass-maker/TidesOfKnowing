@@ -1,0 +1,18 @@
+---
+import {walkthroughSteps} from '../../data/studio/creator-guidance.mjs';
+import {projectTask,projectDestination} from '../../lib/studio/navigation';
+interface Props {project:{id:string;name:string}}
+const {project}=Astro.props;
+// The containing project route has already verified account, ownership and write access.
+const steps=walkthroughSteps.flatMap(step=>{
+ const task=projectTask(new URL(step.href,'https://studio.invalid').searchParams.get('task'));
+ return task?[{...step,href:projectDestination(task,project.id)}]:[];
+});
+---
+<section class="project-walkthrough" aria-labelledby="project-walkthrough-heading">
+ <h1 id="project-walkthrough-heading">Continue your project</h1>
+ <p>Work with {project.name} through the real Studio tools. Choose where you want to continue; this list does not mark your creative work as finished.</p>
+ <ol>{steps.map(step=><li><h2>{step.title}</h2><p>{step.body}</p><a href={step.href}>{step.label}</a></li>)}</ol>
+ <p><a href={`/studio/projects/${project.id}/my-deck/`}>Return to your cards</a> · <a href="/studio/creators-desk/">Creator’s Desk</a></p>
+</section>
+<style>.project-walkthrough{max-width:64rem}.project-walkthrough ol{padding-left:1.5rem;display:grid;gap:1rem}.project-walkthrough li{padding:.7rem 1rem;border:1px solid #cdbb8b;border-radius:.4rem}.project-walkthrough h2{font-size:1.2rem;margin:.2rem 0}.project-walkthrough a{display:inline-block;padding:.4rem 0}.project-walkthrough a:focus-visible{outline:3px solid #a47623;outline-offset:4px}</style>

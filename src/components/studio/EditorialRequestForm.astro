@@ -1,0 +1,9 @@
+---
+const {action,entry,itemId,groupId}=Astro.props;
+---
+<form method="post" action="/api/studio/service-records" data-service-form class="ep-form">
+<input type="hidden" name="action" value={action}/><input type="hidden" name="key" value={crypto.randomUUID()}/>
+{entry&&<><input type="hidden" name="enrolmentId" value={entry.id}/><input type="hidden" name="revision" value={entry.revision}/></>}
+{itemId&&<input type="hidden" name="itemId" value={itemId}/>}{groupId&&<input type="hidden" name="groupId" value={groupId}/>}
+<slot/><p data-result role="status" tabindex="-1"></p>
+</form>

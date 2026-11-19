@@ -1,0 +1,110 @@
+'use strict';
+// Disposable loopback PostgreSQL only. Never connects to a hosted project.
+const {spawnSync,spawn}=require('node:child_process');
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),net=require('node:net'),assert=require('node:assert/strict');
+const bin='C:\\Users\\DELL 7410\\Documents\\Codex\\2026-10-20\\task\\journey-spark-evidence\\editorial-db-runtime\\pgsql\\bin';
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'dcs-explore-test-'));
+const db=path.join(root,'db'); let started=false;
+function run(exe,args,opts={}) {const p=spawnSync(path.join(bin,exe),args,{...opts,encoding:'utf8',windowsHide:true,timeout:60000});if(p.error||p.status!==0)throw Error(exe+': '+(p.error||p.stderr||p.status));return p.stdout;}
+async function main(){
+ const server=net.createServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));const port=server.address().port;await new Promise(r=>server.close(r));
+ const env={SystemRoot:process.env.SystemRoot,PATH:bin+';'+process.env.SystemRoot+'\\System32',PGHOST:'127.0.0.1',PGPORT:String(port),PGUSER:'fixture',PGDATABASE:'postgres'};
+ const sql=s=>run('psql.exe',['-X','-v','ON_ERROR_STOP=1','-c',s],{env});
+ try {
+  run('initdb.exe',['-D',db,'-U','fixture','-A','trust','--no-locale'],{env});
+  const start=spawnSync(path.join(bin,'pg_ctl.exe'),['-D',db,'-l',path.join(root,'server.log'),'-o','-h 127.0.0.1 -p '+port,'-w','start'],{env,stdio:'ignore',windowsHide:true,timeout:30000});if(start.status!==0)throw Error('fixture startup failed');started=true;
+  sql(`create role authenticated; create schema auth; create schema studio_private; create schema storage;
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+create function storage.foldername(text) returns text[] language sql immutable as $$ select string_to_array($1,'/') $$;
+create table storage.objects(bucket_id text,name text); alter table storage.objects enable row level security;
+create policy fixture_storage_owner on storage.objects for all to authenticated using ((storage.foldername(name))[1]=auth.uid()::text) with check ((storage.foldername(name))[1]=auth.uid()::text);
+create policy "Manual Studio journal media insert" on storage.objects as restrictive for insert with check(true);
+create policy "Manual Studio journal media update" on storage.objects as restrictive for update using(true) with check(true);
+create policy "Manual Studio journal media delete" on storage.objects as restrictive for delete using(true);
+grant usage on schema storage to authenticated; grant execute on function storage.foldername(text) to authenticated; grant select,insert,update,delete on storage.objects to authenticated;
+create table public.profiles(id uuid primary key,role text,status text);
+create table public.studio_access(user_id uuid,starts_at timestamptz,expires_at timestamptz,revoked_at timestamptz);
+create table public.studio_projects(id uuid primary key,owner_id uuid not null references profiles(id),status text not null default 'planning',settings jsonb default '{}',updated_at timestamptz default now());
+create table public.studio_cards(id uuid primary key,project_id uuid not null references studio_projects(id),status text default 'draft',title text,card_number text,sort_order integer,family_id uuid);
+create table public.studio_card_versions(id integer primary key,card_id uuid references studio_cards(id) on delete cascade);
+create table public.studio_creator_inspiration(owner_id uuid primary key,inbox jsonb,revision integer default 0,updated_at timestamptz default now());
+create function studio_private.has_access() returns boolean language sql stable as $$ select false $$;
+alter table studio_projects enable row level security; alter table studio_cards enable row level security;
+create policy "Studio entitlement required for creating" on studio_projects as restrictive for insert with check(true);
+create policy "Studio entitlement required for editing" on studio_projects as restrictive for update using(true) with check(true);
+create policy "Studio entitlement required insert" on studio_cards as restrictive for insert with check(true);
+create policy "Studio entitlement required update" on studio_cards as restrictive for update using(true) with check(true);
+create policy fixture_project_owner on studio_projects for all to authenticated using(owner_id=auth.uid()) with check(owner_id=auth.uid());
+create policy fixture_card_owner on studio_cards for all to authenticated using(exists(select 1 from studio_projects p where p.id=project_id and p.owner_id=auth.uid())) with check(exists(select 1 from studio_projects p where p.id=project_id and p.owner_id=auth.uid()));
+grant usage on schema public,auth,studio_private to authenticated; grant execute on function auth.uid() to authenticated;
+grant execute on function studio_private.has_access() to authenticated; grant select,insert,update on studio_projects,studio_cards to authenticated;`);
+  for(const table of ['studio_card_families','studio_guidebook_sections','studio_journal_entries','studio_journal_photos','studio_journal_excerpts','studio_production_plans']) {
+    const prefix=table.startsWith('studio_journal_')||table==='studio_production_plans'?'Manual Studio access required ':'Studio entitlement required ';
+    sql(`create table ${table}(project_id uuid); alter table ${table} enable row level security; create policy "${prefix}insert" on ${table} as restrictive for insert with check(true); create policy "${prefix}update" on ${table} as restrictive for update using(true) with check(true);`);
+  }
+  const migration=fs.readFileSync(path.join(__dirname,'../supabase/migrations/20261116010000_studio_explore_capacity.sql'),'utf8');sql(migration);
+  const owner='00000000-0000-0000-0000-000000000001', project='10000000-0000-0000-0000-000000000001', project2='10000000-0000-0000-0000-000000000002';
+  const card=i=>`20000000-0000-0000-0000-${String(i).padStart(12,'0')}`;
+  sql(`insert into profiles values ('${owner}','MEMBER','active'); insert into studio_projects(id,owner_id) values('${project}','${owner}');`);
+  assert.throws(()=>sql(`insert into studio_projects(id,owner_id) values('${project2}','${owner}')`),/STUDIO_EXPLORE_PROJECT_CAPACITY/);
+  for(let i=1;i<=10;i++)sql(`insert into studio_cards(id,project_id) values('${card(i)}','${project}')`);
+  sql(`insert into studio_card_versions values (1,'${card(1)}');`);
+  assert.throws(()=>sql(`insert into studio_cards(id,project_id) values('${card(11)}','${project}')`),/STUDIO_EXPLORE_CARD_CAPACITY/);
+  sql(`update studio_cards set status='review' where id='${card(1)}'; update studio_cards set deleted_at=now() where id='${card(1)}'; insert into studio_cards(id,project_id) values('${card(11)}','${project}');`);
+  assert.throws(()=>sql(`update studio_cards set deleted_at=null where id='${card(1)}'`),/STUDIO_EXPLORE_CARD_CAPACITY/);
+  sql(`update studio_cards set deleted_at=now() where id='${card(11)}'; update studio_cards set deleted_at=null where id='${card(1)}'; update studio_projects set deleted_at=now() where id='${project}'; insert into studio_projects(id,owner_id) values('${project2}','${owner}');`);
+  assert.match(sql(`select count(*) from studio_card_versions where id=1`),/\b1\b/);
+  assert.throws(()=>sql(`update studio_projects set deleted_at=null where id='${project}'`),/STUDIO_EXPLORE_PROJECT_CAPACITY/);
+  const rollback=fs.readFileSync(path.join(__dirname,'../supabase/rollbacks/20261116010000_studio_explore_capacity_rollback.sql'),'utf8');
+  assert.throws(()=>sql(rollback),/Rollback stopped: soft-deleted projects or cards exist/);
+  assert.throws(()=>sql(`set role authenticated; set request.jwt.claim.sub='00000000-0000-0000-0000-000000000099'; select studio_remove_deleted_project_card_v1('${project}','${card(1)}');`),/STUDIO_DELETED_PROJECT_REQUIRED/);
+  sql(`set role authenticated; set request.jwt.claim.sub='${owner}'; select studio_remove_deleted_project_card_v1('${project}','${card(1)}');`);
+  sql(`update studio_projects set deleted_at=now() where id='${project2}'; update studio_projects set deleted_at=null where id='${project}';`);
+  sql(`update studio_cards set deleted_at=null where id='${card(1)}';`);
+  assert.match(sql(`select count(*) from studio_card_versions where id=1`),/\b1\b/);
+  assert.throws(()=>sql(`begin isolation level repeatable read; insert into studio_cards(id,project_id) values('${card(12)}','${project}'); commit;`),/STUDIO_CAPACITY_ISOLATION_REQUIRED/);
+  sql(`insert into studio_access values('${owner}',now()-interval '1 day',now()+interval '1 day',null); insert into studio_cards(id,project_id) values('${card(12)}','${project}');`);
+  sql(`begin isolation level repeatable read; update studio_cards set status='review' where id='${card(12)}'; commit;`);
+  sql(`update studio_access set expires_at=now()-interval '1 second'; update studio_cards set status='complete' where id='${card(12)}';`);
+  assert.throws(()=>sql(`insert into studio_cards(id,project_id) values('${card(13)}','${project}')`),/STUDIO_EXPLORE_CARD_CAPACITY/);
+  sql(`update studio_cards set deleted_at=now() where id in ('${card(10)}','${card(12)}');`);
+  const foreign='00000000-0000-0000-0000-000000000002';
+  sql(`insert into profiles values('${foreign}','member','active');`);
+  assert.throws(()=>sql(`set role authenticated; set request.jwt.claim.sub='${foreign}'; insert into studio_cards(id,project_id) values('${card(99)}','${project}');`),/row-level security/);
+  sql(`update profiles set status='inactive' where id='${foreign}'`);
+  assert.throws(()=>sql(`set role authenticated; set request.jwt.claim.sub='${foreign}'; insert into studio_projects(id,owner_id) values('10000000-0000-0000-0000-000000000099','${foreign}');`),/row-level security/);
+  sql(`update profiles set status='active' where id='${foreign}'`);
+  sql(`set role authenticated; set request.jwt.claim.sub='${owner}'; insert into storage.objects values('studio-journal-photos','${owner}/${project}/entry/fixture.jpg');`);
+  assert.throws(()=>sql(`set role authenticated; set request.jwt.claim.sub='${foreign}'; insert into storage.objects values('studio-journal-photos','${foreign}/${project}/entry/foreign.jpg');`),/row-level security/);
+  const inspiration='30000000-0000-0000-0000-000000000001';
+  sql(`insert into studio_creator_inspiration(owner_id,inbox) values('${owner}','{"entries":[{"id":"${inspiration}","text":"synthetic"}]}');`);
+  assert.throws(()=>sql(`set role authenticated; set request.jwt.claim.sub='${foreign}'; select studio_explore_inspiration_link_v1('${inspiration}','${project}');`),/Active owned project required/);
+  sql(`set role authenticated; set request.jwt.claim.sub='${owner}'; select studio_explore_inspiration_link_v1('${inspiration}','${project}');`);
+  assert.match(sql(`select inbox->'entries'->0->'projectLink'->>'projectId' from studio_creator_inspiration where owner_id='${owner}'`),new RegExp(project));
+  assert.throws(()=>sql(`insert into studio_cards(id,project_id) values('${card(13)}','${project}'),('${card(14)}','${project}');`),/STUDIO_EXPLORE_CARD_CAPACITY/);
+  assert.match(sql(`select count(*) from studio_cards where id in ('${card(13)}','${card(14)}');`),/\b0\b/);
+  const capture=`set role authenticated; set request.jwt.claim.sub='${owner}'; select studio_capture_atomic_v1('${project}',`;
+  const payload=`'{"id":"${card(15)}","title":"capture","card_number":"","sort_order":20}'::jsonb, '{"saved":true}'::jsonb)`;
+  assert.throws(()=>sql(capture+`'2000-01-01'::timestamptz,`+payload),/STUDIO_CAPTURE_CONFLICT/);
+  assert.match(sql(`select count(*) from studio_cards where id='${card(15)}';`),/\b0\b/);
+  sql(capture+`(select updated_at from studio_projects where id='${project}'),`+payload);
+  assert.match(sql(`select settings->>'saved' from studio_projects where id='${project}'`),/true/);
+  sql(`update studio_cards set deleted_at=now() where id='${card(15)}'`);
+  const {Client}=require('pg');
+  const cfg={host:'127.0.0.1',port,user:'fixture',database:'postgres'};
+  const a=new Client(cfg),b=new Client(cfg); await Promise.all([a.connect(),b.connect()]);
+  try {
+   const results=await Promise.allSettled([a.query(`insert into studio_cards(id,project_id) values('${card(13)}','${project}')`),b.query(`insert into studio_cards(id,project_id) values('${card(14)}','${project}')`)]);
+   assert.equal(results.filter(x=>x.status==='fulfilled').length,1);
+   assert.match(String(results.find(x=>x.status==='rejected').reason),/STUDIO_EXPLORE_CARD_CAPACITY/);
+   assert.equal((await a.query(`select count(*)::int as n from studio_cards where project_id='${project}' and deleted_at is null`)).rows[0].n,10);
+   await a.query(`update studio_projects set deleted_at=now() where id='${project}'`);
+   const p3='10000000-0000-0000-0000-000000000003',p4='10000000-0000-0000-0000-000000000004';
+   const projectResults=await Promise.allSettled([a.query(`insert into studio_projects(id,owner_id) values('${p3}','${owner}')`),b.query(`insert into studio_projects(id,owner_id) values('${p4}','${owner}')`)]);
+   assert.equal(projectResults.filter(x=>x.status==='fulfilled').length,1);
+   assert.match(String(projectResults.find(x=>x.status==='rejected').reason),/STUDIO_EXPLORE_PROJECT_CAPACITY/);
+  } finally {await Promise.all([a.end(),b.end()]);}
+  console.log('PASS: PostgreSQL capacity, soft restoration, editing, upgrade, expiry, batch rollback, concurrent inserts and isolation checks');
+ } finally {if(started){run('pg_ctl.exe',['-D',db,'-m','fast','-w','stop'],{env});started=false;}if(fs.existsSync(path.join(db,'postmaster.pid')))throw Error('Fixture still running; preserved: '+root);if(path.dirname(fs.realpathSync(root)).toLowerCase()!==fs.realpathSync(os.tmpdir()).toLowerCase()||!path.basename(root).startsWith('dcs-explore-test-'))throw Error('Unsafe fixture path');fs.rmSync(root,{recursive:true,force:true});}
+}
+main().catch(e=>{console.error(e);process.exitCode=1});

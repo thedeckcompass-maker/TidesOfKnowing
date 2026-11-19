@@ -1,0 +1,300 @@
+---
+interface Props {
+  formId: string;
+  savedLabel: string;
+  saveLabel: string;
+  error?: boolean;
+  returnToProject?: string;
+}
+const { formId, savedLabel, saveLabel, error = false, returnToProject } = Astro.props;
+---
+
+<div class="studio-save-status" role="status" aria-live="polite" data-save-inline data-save-state>{error ? "Last save failed. Check your work." : savedLabel}</div>
+<label class="studio-save-preference"><input type="checkbox" data-save-preference checked /> Five-minute reminders</label>
+<aside hidden class="studio-editorial-save" data-editorial-save data-form-id={formId} data-project-return={returnToProject} data-owner-id={Astro.locals.user?.id} aria-label="Writing save controls">
+  <div class="studio-editorial-save__message">
+    <strong>Time to save your writing</strong>
+    <span data-save-reminder hidden>Five minutes of unsaved work. Save when you are ready.</span>
+  </div>
+  <div class="studio-editorial-save__actions">
+    <button type="button" data-save-dismiss>Dismiss reminder</button>
+    <button class="studio-button" type="submit" form={formId} data-save-button>{saveLabel}</button>
+  </div>
+</aside>
+
+<script>
+  import { registerStudioDraft } from "../../scripts/studioDraftGuard";
+  import { journalWritingSnapshot } from "../../lib/studio/journalSaveContract";
+  import { initStudioJournalEditorialController, initStudioEditorialController } from "../../scripts/studioEditorialController";
+
+  const bar = document.querySelector<HTMLElement>("[data-editorial-save]");
+  const form = bar
+    ? document.getElementById(bar.dataset.formId ?? "")
+    : null;
+
+  const state = document.querySelector<HTMLElement>("[data-save-inline]");
+  const reminder = bar?.querySelector<HTMLElement>("[data-save-reminder]");
+  const preference = document.querySelector<HTMLInputElement>("[data-save-preference]");
+  const button = bar?.querySelector<HTMLButtonElement>("[data-save-button]");
+
+  // Cards/guidebook keep the existing version-validated controller. Journal retains its separate timestamp contract.
+  if (bar && form instanceof HTMLFormElement && form.id !== 'studio-journal-editor' && state && reminder && preference && button) {
+    form.dataset.studioVersionedSave=''; form.dataset.creatorId=bar.dataset.ownerId??'';
+    state.dataset.studioSaveFeedbackFor=form.id;
+    initStudioEditorialController();
+    const key='studio-five-minute-save-reminders';
+    try {preference.checked=localStorage.getItem(key)!=='off';} catch {}
+    const snapshot=()=>JSON.stringify([...new FormData(form)].filter(([k])=>k!=='expected_current_version'));
+    let baseline=snapshot(),dirtySince=0,dismissedAt=0,shownAt=0;
+    const dismiss=()=>{bar.hidden=true;dismissedAt=Date.now();shownAt=0};
+    const refresh=()=>{const dirty=snapshot()!==baseline;if(dirty&&!dirtySince)dirtySince=Date.now();if(!dirty)dirtySince=0;const now=Date.now();if(shownAt&&now-shownAt>=15000)dismiss();else if(dirty&&preference.checked&&!shownAt&&now-Math.max(dirtySince,dismissedAt)>=300000){bar.hidden=false;reminder.hidden=false;shownAt=now;}if(!dirty||!preference.checked){bar.hidden=true;shownAt=0;}};
+    form.addEventListener('input',refresh);form.addEventListener('change',refresh);
+    document.addEventListener('studio-writing-saved',((e:CustomEvent)=>{if(e.detail.formId===form.id){baseline=snapshot();refresh();}}) as EventListener);
+    bar.querySelector('[data-save-dismiss]')?.addEventListener('click',dismiss);
+    preference.addEventListener('change',()=>{try{localStorage.setItem(key,preference.checked?'on':'off')}catch{}refresh()});
+    window.setInterval(refresh,15000);
+    document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&(form.contains(document.activeElement)||bar.contains(document.activeElement))){e.preventDefault();form.requestSubmit();}});
+  }
+  if (
+    bar && form instanceof HTMLFormElement && form.id === "studio-journal-editor" &&
+    state && reminder && preference && button
+  ) {
+    const executeSave = initStudioJournalEditorialController();
+    if (!executeSave) throw Error("Journal save controller unavailable.");
+
+    const preferenceKey = "studio-five-minute-save-reminders";
+    try {
+      preference.checked =
+        localStorage.getItem(preferenceKey) !== "off";
+    } catch {}
+
+    const formValues = () =>
+      JSON.stringify(Array.from(new FormData(form).entries()));
+
+    const protectedNames = new Set([
+      "project_id", "entry_id", "expected_updated_at",
+      "return_to_project"
+    ]);
+
+    const restoreValues = (entries: unknown) => {
+      if (!Array.isArray(entries)) throw Error("Invalid draft.");
+
+      for (const element of Array.from(form.elements)) {
+        if (
+          !(element instanceof HTMLInputElement ||
+            element instanceof HTMLTextAreaElement ||
+            element instanceof HTMLSelectElement) ||
+          !element.name ||
+          protectedNames.has(element.name) ||
+          (element instanceof HTMLInputElement &&
+            element.type === "hidden")
+        ) continue;
+
+        const matches = entries.filter(
+          (entry): entry is [string, string] =>
+            Array.isArray(entry) &&
+            entry[0] === element.name &&
+            typeof entry[1] === "string"
+        );
+
+        if (
+          element instanceof HTMLInputElement &&
+          ["checkbox", "radio"].includes(element.type)
+        ) {
+          element.checked = matches.some(
+            entry => entry[1] === element.value
+          );
+        } else if (matches.length) {
+          element.value = matches[0][1];
+        } else if (element instanceof HTMLSelectElement &&
+                   element.multiple) {
+          for (const option of Array.from(element.options)) {
+            option.selected = false;
+          }
+        }
+      }
+
+      form.dispatchEvent(new Event("input", { bubbles: true }));
+    };
+
+    let baseline = journalWritingSnapshot(form);
+    let savedFormValues = JSON.parse(formValues());
+    let acknowledgedSequence = 0;
+    let dirty = false;
+    let saving = false;
+    let navigating = false;
+    let saveFailure = "";
+    let dirtySince = 0;
+    let dismissedAt = 0;
+    let shownAt = 0;
+
+    const dismiss = () => {
+      bar.hidden = true;
+      dismissedAt = Date.now();
+      shownAt = 0;
+    };
+
+    const updateState = () => {
+      const changed = journalWritingSnapshot(form) !== baseline;
+      if (changed && !dirty) dirtySince = Date.now();
+      if (!changed) dirtySince = 0;
+      dirty = changed;
+
+      if (!saving) {
+        state.textContent = saveFailure ||
+          (dirty ? "Unsaved changes" : "No unsaved changes");
+      }
+
+      const now = Date.now();
+      const due = dirty && !saving && preference.checked &&
+        now - Math.max(dirtySince, dismissedAt) >= 300000;
+
+      if (shownAt && now - shownAt >= 15000) dismiss();
+      else if (due && !shownAt) {
+        bar.hidden = false;
+        reminder.hidden = false;
+        shownAt = now;
+      }
+
+      if (!dirty || !preference.checked) {
+        bar.hidden = true;
+        shownAt = 0;
+      }
+    };
+
+    const requestSave = async (continuing = false): Promise<boolean> => {
+      if (saving) return false;
+
+      saving = true;
+      button.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      state.textContent = "Saving…";
+
+      try {
+        const result = await executeSave();
+
+        if (!result.confirmed) {
+          saveFailure = result.message;
+          state.setAttribute("role", "alert");
+          updateState();
+          return false;
+        }
+
+        if (result.submissionSequence <= acknowledgedSequence) {
+          saveFailure =
+            "A newer save has already been acknowledged.";
+          updateState();
+          return false;
+        }
+
+        acknowledgedSequence = result.submissionSequence;
+        baseline = result.acknowledgedSnapshot;
+
+        // Preserve the exact acknowledged editable values for discard.
+        // Newer edits must never replace the acknowledged revision.
+        savedFormValues = result.acknowledgedValues;
+
+        saveFailure = "";
+        state.setAttribute("role", "status");
+        updateState();
+
+        if (dirty) {
+          saveFailure =
+            "The submitted revision was saved. Newer edits remain unsaved.";
+          state.textContent = saveFailure;
+          return false;
+        }
+
+        document.dispatchEvent(new CustomEvent(
+          "studio-writing-saved",
+          { detail: { formId: form.id } }
+        ));
+        dismiss();
+
+        if (!continuing) {
+          navigating = true;
+          location.assign(result.destination);
+        }
+
+        return true;
+      } finally {
+        saving = false;
+        button.disabled = false;
+        form.removeAttribute("aria-busy");
+        updateState();
+      }
+    };
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      void requestSave(false);
+    });
+
+    registerStudioDraft({
+      root: form,
+      key: "writing:" + bar.dataset.ownerId + ":" + location.pathname,
+      label: "journal entry",
+      destination: "the saved project record",
+      fields: "textarea,input:not([type=hidden]),select",
+      priority: 100,
+      dirty: () => dirty,
+      save: async () => requestSave(true),
+      snapshot: () => JSON.parse(formValues()),
+      restore: value => {
+        restoreValues(value);
+        saveFailure = "";
+        updateState();
+      },
+      discard: () => {
+        restoreValues(savedFormValues);
+        saveFailure = "";
+        updateState();
+      },
+      message: () => state.textContent ?? ""
+    });
+
+    bar.querySelector("[data-save-dismiss]")
+      ?.addEventListener("click", dismiss);
+
+    form.addEventListener("input", () => {
+      saveFailure = "";
+      updateState();
+    });
+    form.addEventListener("change", updateState);
+    window.addEventListener("pageshow", updateState);
+
+    preference.addEventListener("change", () => {
+      try {
+        localStorage.setItem(
+          preferenceKey, preference.checked ? "on" : "off"
+        );
+      } catch {}
+      updateState();
+    });
+
+    window.setInterval(updateState, 15000);
+
+    window.addEventListener("beforeunload", event => {
+      if (dirty && !navigating) event.preventDefault();
+    });
+
+    document.addEventListener("keydown", event => {
+      const focus = document.activeElement;
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "s" &&
+        (form.contains(focus) || bar.contains(focus))
+      ) {
+        event.preventDefault();
+        if (!saving) form.requestSubmit();
+      }
+    });
+
+    updateState();
+    form.dataset.editorReady = "1";
+    document.dispatchEvent(new CustomEvent(
+      "studio-editor-ready",
+      { detail: { formId: form.id } }
+    ));
+  }
+</script>

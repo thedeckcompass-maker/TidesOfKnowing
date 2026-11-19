@@ -1,3 +1,5 @@
+import {resolveCommunityAudience} from "../../../../lib/community/studioAudience";
+import {parkedCommonsResponse} from "../../../../lib/community/practiceCommons";
 import type { APIRoute } from "astro";
 import { canContribute, isAdminProfile } from "../../../../lib/community/auth";
 import { json, parseJsonOrForm } from "../../../../lib/community/api";
@@ -5,6 +7,7 @@ import { setReplyStatus, updateCommunityReply } from "../../../../lib/community/
 import { createCommunityServiceClient } from "../../../../lib/community/supabaseServer";
 import { validateReplyInput } from "../../../../lib/community/validation";
 
+import {dcsParticipation} from '../../../../lib/community/dcsParticipation';
 export const prerender = false;
 
 function safeRedirectTo(value: unknown): string | null {
@@ -12,8 +15,9 @@ function safeRedirectTo(value: unknown): string | null {
   return value;
 }
 
-export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
-  if (!locals.user || !canContribute(locals.profile)) {
+export const POST: APIRoute = async (ctx) => {
+  const { params, request, locals, redirect } = ctx;
+  if (!locals.user || locals.profile?.id !== locals.user.id || !canContribute(locals.profile)) {
     return json({ ok: false, error: "Please log in first." }, 401);
   }
 
@@ -22,6 +26,20 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
 
   const payload = await parseJsonOrForm(request);
   const intent = String(payload.intent ?? "edit");
+  if (intent === "edit") {
+    const client = createCommunityServiceClient(locals);
+    let audience;
+    try {
+      audience = await resolveCommunityAudience(client, "reply", replyId);
+    } catch {
+      return json({ok:false,error:"Discussion lookup unavailable."},503);
+    }
+    if (audience !== "public_commons") {
+      return json({ok:false,error:"Reply not found."},404);
+    }
+  }
+  if(intent !== "edit" && !["hide","delete","restore"].includes(intent))return parkedCommonsResponse();
+  if (intent !== "edit" && !isAdminProfile(locals.profile)) return json({ ok: false, error: "Not found." }, 404);
   const service = createCommunityServiceClient(locals);
   const isAdmin = isAdminProfile(locals.profile);
 
@@ -52,3 +70,5 @@ export const POST: APIRoute = async ({ params, request, locals, redirect }) => {
 
   return json({ ok: result.ok, error: result.ok ? undefined : result.error }, result.ok ? 200 : (result.status ?? 500));
 };
+
+

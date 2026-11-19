@@ -1,0 +1,14 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process'),crypto=require('node:crypto'),assert=require('node:assert/strict');
+const root=process.cwd(),dir=path.resolve('.build-temp/dcs-sales-pathways-20261119'),build=dir+'/build',prior=path.resolve('.build-temp/dcs-report-menu-20261119'),old=prior+'/build';
+const changed=['src/data/studio/approved-public/presentation.json','src/data/studio/creator-guidance.mjs','src/styles/dcs-approved-public.css'];
+const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex'),walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]);
+assert(!fs.existsSync(build+'/dist')&&!fs.existsSync(dir+'/source-association.json'),'EXISTING_BUILD_OUTPUT');fs.mkdirSync(build,{recursive:true});const baseline=JSON.parse(fs.readFileSync(prior+'/source-association.json'));for(const f of baseline.files)assert.equal(sha(old+'/'+f.path),f.sha256,'BASELINE_SOURCE_DRIFT');
+fs.cpSync(old+'/src',build+'/src',{recursive:true});for(const f of changed){fs.mkdirSync(path.dirname(build+'/'+f),{recursive:true});fs.copyFileSync(root+'/'+f,build+'/'+f);}
+for(const f of ['package.json','tsconfig.json','astro.config.mjs'])fs.copyFileSync(old+'/'+f,build+'/'+f);
+for(const f of ['node_modules','scripts','local-folder-prototype'])fs.symlinkSync(root+'/'+f,build+'/'+f,'junction');
+const config=JSON.parse(fs.readFileSync(old+'/wrangler.json'));config.name='dcs-privacy-policy-local';config.main=build+'/src/worker.ts';fs.writeFileSync(build+'/wrangler.json',JSON.stringify(config,null,2));
+const files=walk(build+'/src').map(f=>({path:path.relative(build,f).replaceAll('\\','/'),sha256:sha(f)}));const before=new Map(baseline.files.map(f=>[f.path,f.sha256]));const delta=files.filter(f=>f.sha256!==before.get(f.path));assert.deepEqual(delta.map(f=>f.path).sort(),changed.slice().sort());
+fs.writeFileSync(dir+'/source-association.json',JSON.stringify({baseline:prior,build,changed:delta,files},null,2));
+const env={...process.env,ASTRO_TELEMETRY_DISABLED:'1',WRANGLER_SEND_METRICS:'false',WRANGLER_WRITE_LOGS:'false',PUBLIC_SUPABASE_URL:'',PUBLIC_SUPABASE_ANON_KEY:'',SUPABASE_SERVICE_ROLE_KEY:'',STUDIO_RUNTIME_ENABLED:'false',STUDIO_BILLING_LIVE_ENABLED:'false',STUDIO_BILLING_TEST_ENABLED:'false',STUDIO_BILLING_SCHEDULER_ENABLED:'false'};delete env.CLOUDFLARE_API_TOKEN;delete env.SUPABASE_ACCESS_TOKEN;
+const r=cp.spawnSync(process.execPath,[root+'/node_modules/astro/bin/astro.mjs','build'],{cwd:build,env,windowsHide:true,encoding:'utf8',maxBuffer:24*1024*1024});fs.writeFileSync(dir+'/build.log',(r.stdout||'')+(r.stderr||''));fs.writeFileSync(dir+'/build-result.json',JSON.stringify({exitCode:r.status,productionRequests:0,changed:delta.map(f=>f.path)},null,2));console.log(JSON.stringify({exitCode:r.status,changedFiles:delta.length}));process.exitCode=r.status??1;

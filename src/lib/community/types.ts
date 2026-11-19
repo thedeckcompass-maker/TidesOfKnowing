@@ -97,17 +97,17 @@ export type CommunityReport = {
 
 export type CommunityPostSummary = CommunityPost & {
   section: Pick<CommunitySection, "key" | "name"> | null;
-  author: Pick<CommunityProfile, "display_name"> | null;
+  author: { username: string | null } | null;
   reply_count: number;
 };
 
 export type CommunityPostDetail = CommunityPost & {
   section: CommunitySection | null;
-  author: Pick<CommunityProfile, "id" | "display_name" | "role"> | null;
+  author: { id: string; username: string | null } | null;
 };
 
 export type CommunityReplyDetail = CommunityReply & {
-  author: Pick<CommunityProfile, "id" | "display_name" | "role"> | null;
+  author: { id: string; username: string | null } | null;
 };
 
 export type CommunityReportQueueItem = CommunityReport & {

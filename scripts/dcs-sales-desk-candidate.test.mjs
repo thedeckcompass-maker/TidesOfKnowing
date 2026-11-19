@@ -1,0 +1,16 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import {pathToFileURL} from 'node:url';import {createRequire} from 'node:module';import {experimental_AstroContainer as Container} from 'astro/container';
+const require=createRequire(import.meta.url),{parseHTML}=require(path.resolve('.build-temp/dcs-community-admin-layout-20261118/dom-tooling/node_modules/linkedom'));
+const dir=path.resolve('.build-temp/dcs-sales-desk-20261119'),server=dir+'/build/dist/server',original=globalThis.fetch;let external=0;globalThis.fetch=async()=>{external++;throw Error('External requests forbidden');};
+try{
+ const line=fs.readFileSync(server+'/entry.mjs','utf8').split('\n').find(s=>s.startsWith('var _manifest = deserializeManifest(')),manifest=JSON.parse(line.slice(line.indexOf('(')+1,line.lastIndexOf(');'))),container=await Container.create({manifest:{inlinedScripts:new Map(manifest.inlinedScripts)},resolve:id=>'/'+manifest.entryModules[id]});
+ const file=fs.readdirSync(server+'/chunks').find(n=>n.endsWith('.mjs')&&fs.readFileSync(server+'/chunks/'+n,'utf8').includes('/src/pages/studio/creators-desk.astro')&&fs.readFileSync(server+'/chunks/'+n,'utf8').includes('var page ='));assert(file);
+ const component=(await(await import(pathToFileURL(server+'/chunks/'+file))).page()).default,owner='aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',reads=[];
+ const db={from(table){reads.push(table);const q={select(){return q},eq(field,value){if(field==='owner_id')assert.equal(value,owner);return q},is(){return q},neq(){return q},order:async()=>({data:[],error:null}),maybeSingle:async()=>({data:null,error:null})};return q;},rpc:async name=>{assert.equal(name,'studio_has_write_access');return{data:true,error:null};}};
+ const locals={user:{id:owner},profile:{id:owner,status:'active',role:'member'},supabase:db,serverRuntime:{env:{STUDIO_DEPLOYMENT_TARGET:'production'}}};
+ for(const provider of [{read:async()=>({entries:[]})},{read:async()=>({entries:[{promise:{programme:'develop'}}]})},{read:async()=>{throw Error('Synthetic service lookup failure');}}]){
+  const response=await container.renderToResponse(component,{request:new Request('https://www.tidesofknowing.com/studio/creators-desk/'),locals:{...locals,studioServiceRecords:provider}});assert.equal(response.status,200);const html=await response.text(),{document:d}=parseHTML(html),tiles=[...d.querySelectorAll('.desk-tiles > a')];
+  assert.equal(tiles.length,7);assert.equal(tiles[6].querySelector('strong').textContent,'Editorial Support');assert.equal(tiles[6].getAttribute('href'),'/studio/editorial-support/');assert(!html.includes('8 group sessions'));fs.writeFileSync(dir+'/desk-'+(provider===undefined?'unavailable':reads.length)+'.html',html);
+ }
+ const denied=await container.renderToResponse(component,{request:new Request('https://www.tidesofknowing.com/studio/creators-desk/'),locals:{...locals,profile:{...locals.profile,status:'suspended'}}});assert.equal(denied.status,403);
+ assert.equal(external,0);const result={passed:true,compiledDeskStates:3,allSevenLinks:true,noProgrammeServicesInvented:true,suspendedAccountDenied:true,externalRequests:0,productionWrites:0,browserAutomation:false};fs.writeFileSync(dir+'/desk-candidate-tests.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+}finally{globalThis.fetch=original;}

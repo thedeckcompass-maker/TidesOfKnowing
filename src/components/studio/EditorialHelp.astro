@@ -1,0 +1,14 @@
+---
+import {STANDARD_OFFERS} from '../../lib/studio/serviceOffers';
+const {account=false}=Astro.props;
+---
+<section class="studio-panel" data-editorial-help aria-label="Editorial support explained">
+<h2>Editorial support for your deck</h2>
+<p>Explore and Create creators can learn about editorial help and enquire about additional work. These memberships do not include private consultations or written reviews.</p>
+<p>Support can include group editorial guidance, private consultations and focused written reviews. Full manuscript editing, proofreading, brand review, and editorial style or voice work are separate enquiries.</p>
+<details><summary>What Collaborate and Develop include</summary>{(['collaborate','develop'] as const).map(key=>{const offer=STANDARD_OFFERS[key];return <p><strong>{offer.name}:</strong> {offer.description} The standard programme includes {offer.groups} group sessions, {offer.consultations} private {offer.consultations===1?'consultation':'consultations'} and {offer.assessments} written {offer.assessments===1?'review':'reviews'}.</p>})}<p>Your recorded agreement, support dates, completed services and any payment-stage release determine what is available to you now. Your account shows those actual allocations and permitted request actions; a programme description does not grant access.</p></details>
+<p>Version-linked confidential feedback shares only the saved material you explicitly select with authorised editorial staff. It is available only when your recorded access permits it; it is separate from community discussion and artist collaboration.</p>
+<p><a href={account?'#request-additional-quote':'/studio/account/#request-additional-quote'} data-open-quote>Enquire about additional editorial work</a>. You can use a working title without creating a deck project. Leilia agrees the scope and price manually before any additional work or charge.</p>
+<p>An enquiry or written quotation acceptance does not initiate payment, allocate services or grant project access. Additional consultation and assessment purchasing remains unavailable.</p>
+{!account&&<p><a href="/studio/account/#services">View your recorded support and available actions</a></p>}
+</section>

@@ -34,3 +34,40 @@ Reference - Leigh/
 
 # Portable editorial duplicate (When Two Cards Meet) — not for commit
 TWOCARDDUPLICATE/
+
+# Isolated, non-deployed Lexicon preview build outputs
+.preview-builds/
+
+# Private parallel-build reference; never commit or publish
+/.build-temp/parallel-source-reference-20261113/
+/.build-temp/parallel-source-reference-20261113.integrity.json
+/.build-temp/dcs-acceptance-production-schema-catalog-20261118.json
+/.build-temp/dcs-connected-acceptance-20261118/
+/.build-temp/dcs-coordinated-release-20261118/
+/.build-temp/dcs-onboarding-repair-20261118/
+
+# Private Community inbox build and verification packets
+/.build-temp/dcs-community-inbox-20261119*/
+
+# Isolated privacy publication evidence and build output
+/.build-temp/dcs-privacy-policy-20261119/
+
+# Private retention implementation and verification artifacts
+/.build-temp/dcs-community-retention-20261119*/
+/.build-temp/dcs-inbox-clarity-20261119/
+/.build-temp/dcs-report-menu-20261119/
+/.build-temp/dcs-owner-develop-20261119/
+/.build-temp/dcs-owner-auth-blocker-20261119/
+
+# Close-out: build packets, caches and private evidence remain local
+/.build-temp/
+/.npm-cache/
+/supabase/.temp/
+/worker-configuration.d.ts
+/ALL Things TAROT/
+/src/**/*.before-*
+/src/**/*.stage7-backup
+
+# Private parked Lexicon access/recovery and former account-specific import instructions
+/config/lexicon-preview-access.json
+/config/lexicon-preview-import-*.json

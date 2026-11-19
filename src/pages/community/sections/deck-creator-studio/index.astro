@@ -1,0 +1,50 @@
+---
+import {POST as submitCommunity} from '../../../api/studio/contextual-support';
+import {CREATIVE_CHAPTERS,isCommunityChapter} from '../../../../lib/studio/communityChapters';
+import StudioHeader from '../../../../components/studio/StudioHeader.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { studioAccessResponse } from '../../../../lib/studio/access';
+import CommunityPostList from '../../../../components/community/CommunityPostList.astro';
+import {getSectionByKey,getCommunityPosts} from '../../../../lib/community/queries';
+import { supportStore } from '../../../../lib/studio/supportProvider';
+import '../../../../styles/studio.css';
+export const prerender=false;
+const denied=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);
+if(denied)return denied;
+Astro.response.headers.set('Cache-Control','private, no-store');
+const pageValue=Number(Astro.url.searchParams.get('page')??'1');
+const page=Number.isSafeInteger(pageValue)&&pageValue>0?pageValue:1;
+const section=await getSectionByKey(Astro.locals.supabase!,'deck-creator-studio');
+if(!section)return new Response('The Studio community is not available yet.',{status:503,headers:{'Cache-Control':'private, no-store','X-Robots-Tag':'noindex'}});
+let feed:Awaited<ReturnType<typeof getCommunityPosts>>;
+try{feed=await getCommunityPosts(Astro.locals.supabase!,{mode:{kind:'section',sectionKey:'deck-creator-studio'},page});}
+catch{feed={posts:[],totalCount:0,totalPages:1,unavailable:true};}
+if(!feed.unavailable&&page>feed.totalPages)return new Response(null,{status:302,headers:{Location:'/community/sections/deck-creator-studio/','Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow'}});
+const store=supportStore(Astro.locals),actor=Astro.locals.user!.id;
+let question='',chapter='spark',projectId='',reviewed=false,key:string=crypto.randomUUID();
+let available=false,error='',projects:{id:string;name:string}[]=[];
+try {
+ available=!!store&&await store.allowed(actor,'private_community');
+ if(available){
+  const owned=await Astro.locals.supabase!.from('studio_projects').select('id,name').eq('owner_id',actor).is('archived_at',null).order('updated_at',{ascending:false});
+  if(owned.error)throw Error('Project choices could not be loaded.');
+  projects=owned.data??[];
+ }
+}catch{available=false;projects=[];error='The private community could not be loaded. Please try again.';}
+if(Astro.request.method==='POST'){
+ const draft=await Astro.request.clone().formData();question=String(draft.get('question')??'');chapter=String(draft.get('chapter')??'spark');projectId=String(draft.get('project_id')??'');reviewed=draft.get('reviewed')==='on';key=String(draft.get('submission_key')??key);
+ const response=draft.get('capability')==='private_community'?await submitCommunity(Astro as any):Response.json({error:'Review the private community audience before sending.'},{status:409});const result=await response.json();if(response.ok)return Astro.redirect('/community/sections/deck-creator-studio/?posted=1',303);error=result.error??'Your question was not saved. Keep your draft and retry.';Astro.response.status=response.status;
+}
+---
+<BaseLayout title="Deck Creator Studio community | Tides of Knowing" description="Private discussion for admitted collaborators." metaRobots="noindex, nofollow">
+<main class="studio-page page-inner" data-community-workspace><StudioHeader title="Studio community" lede="One private conversation for your written and visual deck work." />
+<section class="studio-panel"><h2>Share your progress or ask for feedback</h2><p>Private community questions and replies are visible to everyone admitted to this room. Confidential editorial feedback is a separate conversation.</p>
+{error&&<p role="alert">{error}</p>}
+{Astro.url.searchParams.get('posted')==='1'&&<p role="status">Your question has been posted.</p>}
+{available?<><p>You can discuss a question without a deck project. Associating an owned project does not share its contents or grant access. Use project-linked support to review and share a selected excerpt.</p><form method="post" class="studio-form" data-private-community-question data-community-question><input type="hidden" name="capability" value="private_community"/><input type="hidden" name="action" value="submit"/><input type="hidden" name="submission_key" value={key}/><input type="hidden" name="selected_text" value=""/><label class="studio-field">Section discussion<select name="chapter" required>{CREATIVE_CHAPTERS.map(c=><option value={c.id} selected={c.id===(isCommunityChapter(chapter)?chapter:'spark')}>{c.name}</option>)}</select></label><label class="studio-field">Project (optional)<select name="project_id"><option value="">No project association</option>{projects.map(p=><option value={p.id} selected={p.id===projectId}>{p.name}</option>)}</select></label><label class="studio-field">Your question<textarea name="question" required minlength="20" maxlength="6000" rows="5">{question}</textarea></label><label><input type="checkbox" name="reviewed" required checked={reviewed}/> I have reviewed this question and its private community audience.</label><button type="submit" class="studio-button">Post question</button></form><ul>{projects.map(project=><li><a href={`/studio/projects/${project.id}/journey/#chapter-support`}>{project.name}: project-linked support</a></li>)}</ul></>:!error&&<p>Private community questions are not currently available for this account. Existing discussions remain below.</p>}
+{feed.unavailable?<p role="alert">Your discussion history could not be loaded. <a href={Astro.url.pathname+Astro.url.search}>Try loading it again</a>. No discussions have been removed.</p>:<CommunityPostList posts={feed.posts}/>} 
+{!feed.unavailable&&feed.totalPages>1&&<nav aria-label="Studio discussion pages">{page>1&&<a href={page===2?'/community/sections/deck-creator-studio/':'?page='+String(page-1)}>Previous discussions</a>}<span> Page {page} of {feed.totalPages} </span>{page<feed.totalPages&&<a href={'?page='+String(page+1)}>More discussions</a>}</nav>}
+</section></main>
+</BaseLayout>
+
+<script>import '../../../../scripts/studioCommunity';</script>

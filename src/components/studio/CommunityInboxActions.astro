@@ -1,0 +1,12 @@
+---
+const {row,hiddenText}=Astro.props;
+---
+<details class="inbox-actions"><summary>Actions</summary><div>
+ {hiddenText!=null&&<details class="inbox-preserved-text"><summary>Show preserved hidden text</summary><p>{hiddenText}</p></details>}
+ {row.retention?.preservedTest?<small>Kept — preserved test records</small>:<button type="button" data-retention-keep data-post={row.thread_id} data-kept={String(row.retention?.kept===true)} data-event={row.retention?.event??''} disabled={!row.retention}>{row.retention?.kept?'Allow scheduled cleanup':'Keep this discussion'}</button>}
+ {row.kind!=='report'&&row.state!=='Done'&&!row.moderation_only&&!row.hidden&&<button type="button" data-task-action="done">Mark done</button>}
+ {row.kind!=='report'&&row.state==='Done'&&row.status!=='deleted'&&!row.moderation_only&&<button type="button" data-task-action="undo">Return to Inbox</button>}
+ {row.status==='hidden'?(row.kind!=='report'&&<button type="button" data-task-action="restore">Restore content</button>):['published','locked'].includes(row.status)&&<button type="button" data-task-action="hide">Hide {!row.reply_id?'discussion':'comment'}</button>}
+ {row.kind==='report'&&<button type="button" data-task-action="dismiss">Dismiss report</button>}
+ {row.kind==='question'&&['published','locked'].includes(row.status)&&<button type="button" data-task-action={row.status==='locked'?'unlock':'lock'}>{row.status==='locked'?'Unlock':'Lock'} discussion</button>}
+ </div></details>

@@ -1,0 +1,38 @@
+'use strict';
+// Uses the existing disposable localhost-only fixture; never connects to hosted DB.
+const fs=require('fs'),path=require('path'),Module=require('module');
+const file=path.join(__dirname,'dcs-production-authorization-review.test.cjs');
+let source=fs.readFileSync(file,'utf8');
+const marker="const a='00000000-0000-0000-0000-000000000001'";
+if(!source.includes(marker))throw Error('FIXTURE_BOOTSTRAP_CHANGED');
+const addition=String.raw`
+sql("create role dcs_service_executor; alter table public.profiles add column role text default 'member'; create table auth.users(id uuid primary key,email text,email_confirmed_at timestamptz); create function public.is_admin(user_id uuid default auth.uid()) returns boolean language sql stable security definer set search_path='' as $$ select exists(select 1 from public.profiles where id=user_id and role='admin' and status='active') $$; grant execute on function public.is_admin(uuid) to authenticated;");
+const admin='00000000-0000-0000-0000-000000000080',creator='00000000-0000-0000-0000-000000000081',other='00000000-0000-0000-0000-000000000082';
+sql("insert into public.profiles(id,status,role) values('"+admin+"','active','admin'),('"+creator+"','active','member'),('"+other+"','active','member'); insert into auth.users values('"+creator+"','hello@thedeckcompass.com',now()),('"+other+"','other@example.invalid',now());");
+let grant=fs.readFileSync('docs/DCS-COMPLIMENTARY-DEVELOP-GRANT-20261118.REVIEW.sql','utf8');assert.match(grant,/ROLLBACK;\s*$/);sql(grant.replace(/ROLLBACK;\s*$/,'COMMIT;'));
+const adminCall=(id,op,ver='null')=>"set role authenticated; select set_config('request.jwt.claim.sub','"+admin+"',false); select public.studio_manage_complimentary_develop_workspace_v1('"+id+"','"+op+"',"+ver+");";
+assert.throws(()=>sql(adminCall(other,'grant')),/Exact confirmed member/);
+assert.throws(()=>sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select public.studio_manage_complimentary_develop_workspace_v1('"+creator+"','grant',null);"),/Administrator and distinct target required/);
+sql(adminCall(creator,'grant'));
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select studio_private.has_complimentary_develop_workspace_v1();").split('\n').at(-1),'t');
+sql("insert into public.studio_access values('"+creator+"',now()-interval '1 day',now()+interval '1 day',null)");
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+other+"',false); select studio_private.has_complimentary_develop_workspace_v1();").split('\n').at(-1),'f');
+assert.throws(()=>sql("set role anon; select studio_private.has_complimentary_develop_workspace_v1();"),/permission denied/);
+assert.throws(()=>sql(adminCall(creator,'revoke',"'2000-01-01'::timestamptz")),/Grant changed/);
+const version=sql("set role authenticated; select set_config('request.jwt.claim.sub','"+admin+"',false); select updated_at from public.studio_inspect_complimentary_develop_workspace_v1('"+creator+"')").split('\n').at(-1);
+sql(adminCall(creator,'revoke',"'"+version+"'::timestamptz"));
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select studio_private.has_complimentary_develop_workspace_v1();").split('\n').at(-1),'f');
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select studio_private.creator_workspace_full_access_v1();").split('\n').at(-1),'t');
+sql("update public.studio_access set revoked_at=now() where user_id='"+creator+"'");
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select studio_private.creator_workspace_full_access_v1();").split('\n').at(-1),'f');
+assert.equal(sql("select count(*) from studio_private.complimentary_develop_audit_v1"),'2');
+const revokedVersion=sql("set role authenticated; select set_config('request.jwt.claim.sub','"+admin+"',false); select updated_at from public.studio_inspect_complimentary_develop_workspace_v1('"+creator+"')").split('\n').at(-1);
+sql(adminCall(creator,'restore',"'"+revokedVersion+"'::timestamptz"));
+sql("update public.profiles set status='inactive' where id='"+creator+"'; update auth.users set email='changed@example.invalid' where id='"+creator+"'");
+assert.equal(sql("set role authenticated; select set_config('request.jwt.claim.sub','"+creator+"',false); select public.studio_complimentary_develop_workspace_active_v1();").split('\n').at(-1),'f');
+const inactiveVersion=sql("set role authenticated; select set_config('request.jwt.claim.sub','"+admin+"',false); select updated_at from public.studio_inspect_complimentary_develop_workspace_v1('"+creator+"')").split('\n').at(-1);
+sql(adminCall(creator,'revoke',"'"+inactiveVersion+"'::timestamptz"));
+console.log('PASS complimentary grant: owner-only, admin-controlled, revocable; fixture only');
+`;
+source=source.replace(marker,()=>addition+'\n'+marker);
+const child=new Module(file,module);child.filename=file;child.paths=module.paths;child._compile(source,file);

@@ -116,7 +116,7 @@ a:focus-visible {
   margin-inline: auto;
 }
 
-@media (min-width: var(--bp-md)) {
+@media (min-width: 768px) {
   .article-prose {
     font-size: 1.125rem;
   }
@@ -232,7 +232,7 @@ a:focus-visible {
   border-bottom: 2px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
 }
 
-@media (max-width: calc(var(--bp-md) - 1px)) {
+@media (max-width: 767px) {
   .article-prose figure.article-section-image img,
   .article-prose figure.tok-inline-figure img {
     max-height: 280px;
@@ -273,7 +273,7 @@ a:focus-visible {
   border-bottom: 2px solid color-mix(in srgb, var(--tok-gold) 25%, transparent);
 }
 
-@media (max-width: calc(var(--bp-md) - 1px)) {
+@media (max-width: 767px) {
   .article-prose p:has(> img:only-child) img {
     max-height: 280px;
   }
@@ -294,7 +294,7 @@ a:focus-visible {
   clear: both;
 }
 
-@media (max-width: calc(var(--bp-md) - 1px)) {
+@media (max-width: 767px) {
   .article-prose .article-wide-bleed {
     margin-left: 0;
     margin-right: 0;

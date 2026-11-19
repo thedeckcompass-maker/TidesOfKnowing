@@ -1,0 +1,48 @@
+---
+import {STANDARD_OFFERS} from '../../lib/studio/serviceOffers';
+import {studioExploreHref} from '../../data/studio/creator-guidance.mjs';
+const {selectedOffer=null,selectedBilling=null}=Astro.props;
+const freeHref=studioExploreHref(Boolean(Astro.locals.user));
+const offers=[['create',STANDARD_OFFERS.create],['collaborate',STANDARD_OFFERS.collaborate],['develop',STANDARD_OFFERS.develop]] as const;
+const alternative=(key:string)=>selectedOffer===key&&selectedBilling===(key==='create'?'annual':'instalments');
+const price=(key:string,offer:any)=>key==='create'?(alternative(key)?offer.annual:offer.monthly):(alternative(key)?offer.total:offer.price);
+const cadence=(key:string,offer:any)=>key==='create'?(alternative(key)?'Per year':'Per month'):(alternative(key)?`${offer.payments} monthly payments of US$${offer.instalment}. US$${offer.total.toLocaleString('en-US')} total.`:'One payment');
+---
+<section id="choices" class="dcs-public-pathways" aria-labelledby="pathways-title">
+  <header><p class="dcs-eyebrow">Choose the support that fits</p><h2 id="pathways-title">Your Studio pathway</h2><p>Start free, work independently or add human editorial guidance. Your original creative work stays yours.</p></header>
+  <div class="dcs-pathway-grid">
+    <article id="offer-explore" class="dcs-pathway-card" data-pathway="explore">
+      <h3>Explore</h3><p class="dcs-pathway-position">Give your deck idea its first shape.</p><p class="dcs-price">Free</p><p class="dcs-price-cadence">Ongoing free access</p>
+      <div class="dcs-pathway-body"><ul><li>One active project at a time</li><li>Up to ten active cards</li><li>Edit, revise and preview your guidebook</li><li>General Studio Community</li></ul>
+      <p>Deleting a card frees a place. Keep your project and writing when you upgrade.</p><a class="dcs-public-button" href={freeHref}>Start free</a></div>
+      <a href="/deck-creator-studio/faq/#explore">Read the Explore details</a>
+    </article>
+    {offers.map(([key,offer])=><article id={'offer-'+key} class="dcs-pathway-card" data-pathway={key}>
+      <h3>{offer.name}</h3><p class="dcs-pathway-position">{offer.description}</p>
+      <p class="dcs-price"><span class="dcs-currency">US</span><span data-pathway-amount>${price(key,offer).toLocaleString('en-US')}</span></p><p class="dcs-price-cadence" data-pathway-cadence aria-live="polite">{cadence(key,offer)}</p>
+      <form class="dcs-payment-options dcs-pathway-body" method="get" action="/deck-creator-studio/checkout/">
+        <input type="hidden" name="offer" value={key}/><fieldset><legend>Payment option</legend>
+          {key==='create'?<>
+            <label><input type="radio" name="billing" value="monthly" checked={!alternative(key)} data-amount={offer.monthly} data-cadence="Per month"/>US${offer.monthly} monthly</label>
+            <label><input type="radio" name="billing" value="annual" checked={alternative(key)} data-amount={offer.annual} data-cadence="Per year"/>US${offer.annual} annually</label>
+          </>:<>
+            <label><input type="radio" name="billing" value="once" checked={!alternative(key)} data-amount={offer.price} data-cadence="One payment"/>Pay once</label>
+            <label><input type="radio" name="billing" value="instalments" checked={alternative(key)} data-amount={offer.total} data-cadence={`${offer.payments} monthly payments of US$${offer.instalment}. US$${offer.total.toLocaleString('en-US')} total.`}/>{offer.payments} payments of US${offer.instalment}</label>
+          </>}
+        </fieldset>
+      <ul>{key==='create'?<><li>Independent cards, artwork and guidebook tools</li><li>Working exports and production planning</li><li>Artist Studio access</li><li>General Studio Community</li></>:<>
+        <li>Everything in Create</li><li>{offer.groups} group sessions</li><li>{offer.consultations} private {offer.consultations===1?'consultation':'consultations'}</li><li>{offer.assessments} written editorial {offer.assessments===1?'assessment':'assessments'}</li><li>{offer.createMonths} months of Create</li>
+      </>}</ul>
+      {key==='create'&&<p>Annual membership saves US${offer.monthly*12-offer.annual} compared with twelve monthly payments.</p>}
+        <button class="dcs-public-button" type="submit">Choose {offer.name}</button>
+      </form>
+      <a href={key==='create'?'/deck-creator-studio/faq/#create-membership':'/deck-creator-studio/pricing/#support-terms'}>Read the {offer.name} details</a>
+    </article>)}
+  </div>
+</section>
+<script>
+  for(const form of document.querySelectorAll<HTMLFormElement>('.dcs-payment-options')){
+    const sync=()=>{const choice=form.querySelector<HTMLInputElement>('input[name="billing"]:checked'),card=form.closest('article');if(!choice||!card)return;const amount=card.querySelector('[data-pathway-amount]'),cadence=card.querySelector('[data-pathway-cadence]');if(amount)amount.textContent='$'+Number(choice.dataset.amount).toLocaleString('en-US');if(cadence)cadence.textContent=choice.dataset.cadence??'';};
+    form.addEventListener('change',sync);sync();
+  }
+</script>

@@ -1,0 +1,28 @@
+---
+import '../../styles/studio.css';
+import {primaryNavigation,studioMenu,PROJECT_TASKS,projectDestination, type ProjectTask} from '../../lib/studio/navigation';
+import {ownedCommunityContext,isCommunityPath} from '../../lib/studio/communityNavigation';
+interface Props {footer?:boolean;projectId?:string;}
+const {footer=false,projectId}=Astro.props,pathname=Astro.url.pathname;
+const candidate=pathname.match(/^\/studio\/projects\/([0-9a-f-]{36})(?:\/|$)/i)?.[1]??projectId;
+let project:{id:string;name:string}|null=null;
+if(candidate&&Astro.locals.user&&Astro.locals.supabase&&/^[a-f0-9-]{36}$/i.test(candidate)){const result=await Astro.locals.supabase.from('studio_projects').select('id,name').eq('id',candidate).eq('owner_id',Astro.locals.user.id).maybeSingle();if(!result.error)project=result.data;}
+const workReturn=isCommunityPath(pathname)?await ownedCommunityContext(Astro.locals,Astro.url.searchParams.get('from')):null;
+const primary=primaryNavigation(project?.id),groups=studioMenu(project?.id);
+const activeTask:ProjectTask=project&&pathname===`/studio/projects/${project.id}/`&&Astro.url.searchParams.get('view')==='walkthrough'?'walkthrough':project&&pathname===`/studio/projects/${project.id}/`&&Astro.url.searchParams.get('view')==='project'?'settings':pathname.endsWith('/cards/new/')?'addcard':pathname.includes('/cards/')?'cards':(Object.entries(PROJECT_TASKS).find(([,value])=>!value[1].startsWith('?')&&pathname.endsWith('/'+value[1]))?.[0] as ProjectTask)??'cards';
+const changeProject=projectDestination(activeTask,null,Astro.url.searchParams.get('book'))+'&choose=1';
+const current=(href:string)=>{const target=new URL(href,Astro.url);return pathname===target.pathname&&(!target.searchParams.has('task')||target.searchParams.get('task')===Astro.url.searchParams.get('task'))&&!(pathname==='/studio/'&&Astro.url.searchParams.has('task')&&!target.searchParams.has('task'))?'page':undefined;};
+---
+{footer?<footer class="studio-shell"><div class="page-inner studio-shell__inner"><nav aria-label="Studio footer"><a href="/studio/?orientation=skip">My projects</a><a href="/studio/community/">Community</a><a href="/studio/account/">Account</a><a href="/">Return to Tides of Knowing</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav><small>© {new Date().getFullYear()} Tides of Knowing · Leilia Spencer. All rights reserved.</small></div></footer>:
+<header class="studio-shell" data-studio-owner={Astro.locals.user?.id} data-project={project?.id} data-work-return={workReturn?.returnTo}><div class="page-inner studio-shell__inner"><a class="studio-shell__brand" href="/studio/creators-desk/">Deck Creator Studio</a><nav aria-label="Studio workspace"><div class="studio-primary-links">{primary.map(item=><a href={item.href} aria-current={current(item.href)}>{item.label}</a>)}</div><details class="studio-utilities"><summary>Studio menu</summary><div class="studio-menu-panel">{groups.map(group=><section><h2>{group.label}</h2>{group.items.map(item=><a href={item.href} data-studio-welcome-link={item.href.startsWith('/studio/welcome/')?true:undefined} data-journey-map-link={item.href==='/studio/journey-map/'?true:undefined}>{item.label}</a>)}</section>)}<form method="post" action="/auth/logout/"><button class="studio-text-button" type="submit">Sign out</button></form></div></details></nav></div>{project&&<div class="page-inner studio-project-context"><span>{project.name}</span><a href={changeProject} data-workbook-change-project={activeTask==='workbook'?true:undefined}>Change project</a></div>}{workReturn&&<div class="page-inner studio-project-context"><a href={workReturn.returnTo}>Return to {workReturn.label}</a></div>}</header>}
+<script>import '../../scripts/studioFieldWisdom';import '../../scripts/projectBookReturn';</script>
+
+
+<script>import "../../scripts/studioJourneyNavigation";</script>
+
+<script>import "../../scripts/studioNativeDrafts";</script>
+
+<script>import "../../scripts/studioQuestionDrafts";</script>
+<script>import "../../scripts/studioCardNavigation";</script>
+
+<script>import '../../scripts/studioDisclosures';import '../../scripts/studioWorkNavigation';</script>

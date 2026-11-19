@@ -1,26 +1,59 @@
 ---
+import EditorialHelp from '../../components/studio/EditorialHelp.astro';
+import {projectTask,projectDestination,PROJECT_TASKS,workbookVolume} from '../../lib/studio/navigation';
+import FoundingJourney from '../../components/studio/FoundingJourney.astro';
+import {loadFoundingWorkspace} from '../../lib/studio/foundingWorkspace';
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import StudioHeader from "../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../lib/studio/access";
+import { studioAccountAccessResponse,loadStudioGuidance } from "../../lib/studio/access";
 import { getStudioProjects } from "../../lib/studio/queries";
 import { studioDeckTypeLabel, studioPathwayLabel } from "../../lib/studio/types";
 import "../../styles/studio.css";
 
+const foundingRecord=await loadFoundingWorkspace(Astro.locals,Astro.url,import.meta.env.DEV);
 export const prerender = false;
+// Local orientation is optional; the hosted access contract below is unchanged.
+const canWrite=Boolean(Astro.locals.user&&Astro.locals.profile?.id===Astro.locals.user.id&&Astro.locals.profile.status==='active');
+const orientation=(Astro.locals as any).studioOrientationLocal===true?(Astro.locals as any).studioOrientationStore:null;
+if(canWrite&&orientation&&Astro.locals.user&&Astro.locals.profile?.id===Astro.locals.user.id&&Astro.locals.profile.status==='active'&&Astro.url.searchParams.get('orientation')!=='skip'&&orientation.firstEntry(Astro.locals.user.id))return Astro.redirect('/studio/welcome/?from=%2Fstudio%2F');
 
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
+const accessResponse = await studioAccountAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.supabase);
 if (accessResponse) return accessResponse;
+// General editorial entry opens programme information before project selection.
+if(Astro.url.searchParams.get('task')==='editorial'&&Astro.url.searchParams.get('select')!=='project')return Astro.redirect('/studio/editorial-support/',303);
 
 let projects: Awaited<ReturnType<typeof getStudioProjects>> = [];
+let deletedProjects: { id:string; name:string }[] = [];
+let deletedProjectCards: { id:string; project_id:string; title:string }[] = [];
 let databaseReady = Boolean(Astro.locals.supabase);
 if (Astro.locals.supabase) {
   try {
     projects = await getStudioProjects(Astro.locals.supabase);
+    const removed = await Astro.locals.supabase.from('studio_projects').select('id,name').eq('owner_id',Astro.locals.user!.id).not('deleted_at','is',null).order('updated_at',{ascending:false});
+    if (removed.error) throw removed.error;
+    deletedProjects = removed.data ?? [];
+    if (deletedProjects.length) {
+      for(let offset=0;;offset+=500){const cards=await Astro.locals.supabase.from('studio_cards').select('id,project_id,title').in('project_id',deletedProjects.map(p=>p.id)).is('deleted_at',null).order('id').range(offset,offset+499);if(cards.error)throw cards.error;deletedProjectCards.push(...(cards.data??[]));if((cards.data??[]).length<500)break;}
+    }
   } catch (queryError) {
     databaseReady = false;
     console.error("Deck Creator Studio schema is not ready:", queryError);
   }
 }
+const requestedTask=projectTask(Astro.url.searchParams.get('task'))??(Astro.url.searchParams.get('view')==='workbook'?'workbook':null);
+projects=projects.filter(p=>p.owner_id===Astro.locals.user?.id);
+const editableProjectIds=new Set<string>(),manageableProjectIds=new Set<string>();
+if(Astro.locals.supabase){
+  const checks=await Promise.all([...projects.map(p=>({id:p.id,rpc:'studio_project_can_edit_v1'})),...deletedProjects.map(p=>({id:p.id,rpc:'studio_project_can_manage_lifecycle_v1'}))].map(async item=>{try{const result=await Astro.locals.supabase!.rpc(item.rpc,{p_project:item.id});return {...item,allowed:!result.error&&result.data===true}}catch{return {...item,allowed:false}}}));
+  for(const item of checks)if(item.allowed)(item.rpc==='studio_project_can_edit_v1'?editableProjectIds:manageableProjectIds).add(item.id);
+}
+const guidance=await loadStudioGuidance(Astro.locals.supabase,Astro.locals.user!.id,Astro.locals.profile,projects.map(p=>p.id));
+const requestedBook=workbookVolume(Astro.url.searchParams.get('book'));
+// With one verified owned project there is no selection decision. Explicit Change project
+// keeps the chooser available for creating another project instead of redirecting back.
+if(projects.length===1&&(requestedTask==='workbook'||editableProjectIds.has(projects[0].id)&&requestedTask==='addcard')&&Astro.url.searchParams.get('choose')!=='1')return Astro.redirect(projectDestination(requestedTask!,projects[0].id,requestedBook),303);
+const taskName=requestedTask?PROJECT_TASKS[requestedTask][0]:null;
+const workbookSelection=!canWrite||requestedTask==='workbook';
 const created = Astro.url.searchParams.get("created") === "1";
 const error = Astro.url.searchParams.get("error");
 ---
@@ -33,25 +66,30 @@ const error = Astro.url.searchParams.get("error");
   memberWorkspace={false}
   bodyClass="tok-body--studio"
 >
-  <main class="studio-page page-inner">
+  {canWrite&&!orientation&&Astro.locals.user&&Astro.url.searchParams.get('orientation')!=='skip'&&<script is:inline define:vars={{orientationUser:Astro.locals.user.id}}>
+    try{const state=JSON.parse(localStorage.getItem('studio-orientation-position:'+orientationUser)||sessionStorage.getItem('studio-orientation-position:'+orientationUser)||'null');if(!state||!['finish','dismiss'].includes(state.action))location.replace('/studio/welcome/?from=%2Fstudio%2F');}catch{}
+  </script>}
+  <main class:list={["studio-page page-inner",{"studio-task-chooser":Boolean(requestedTask)}]}>
+<FoundingJourney record={foundingRecord}/>
     <StudioHeader
-      title="Deck Creator Studio"
-      lede="A private working environment for shaping your deck, card system and guidebook from first idea to publication."
+      title={requestedTask==='exchange'?'Choose a deck to explore with artists':taskName?'Choose a project for '+taskName:'My projects'}
+      lede={requestedTask==='exchange'?'Select a deck to prepare a private visual brief. Choosing a project does not share anything.':taskName?'Select the project for this task. You can cancel without changing your work.':'Create a working space for your deck, or resume a project.'}
     />
 
     {created ? <p class="studio-notice" role="status">Your project workspace is ready.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
     {!databaseReady ? <p class="studio-notice" role="status">The private project workspace is being prepared. No project data has been changed.</p> : null}
 
-    <div class="studio-grid">
+    {requestedTask==='editorial'&&<EditorialHelp/>}
+    {requestedTask&&<p><a href="/studio/creators-desk/">Cancel — return to Creator’s Desk</a></p>}<div class="studio-grid studio-projects-layout">
       <section class="studio-panel studio-panel--wide" aria-labelledby="projects-heading">
         <p class="studio-kicker">Your work</p>
-        <h2 id="projects-heading">Deck projects</h2>
+        <h2 id="projects-heading">{requestedTask?"Select your project":"Deck projects"}</h2>
         {projects.length ? (
-          <ul class="studio-list">
+          <ul class="studio-list studio-list--projects">
             {projects.map((project) => (
               <li class="studio-card">
-                <div class="studio-card__row">
+                <div class="studio-card__row studio-project-row">
                   <div>
                     <p class="studio-meta">
                       {studioDeckTypeLabel[project.deck_type]} · {studioPathwayLabel[project.pathway]}
@@ -59,10 +97,11 @@ const error = Astro.url.searchParams.get("error");
                     <h3>{project.name}</h3>
                     <p>{project.next_action || project.purpose || "Define the next useful step for this deck."}</p>
                   </div>
-                  <div>
+                  <div class="studio-project-actions">
                     <span class="studio-status">{project.status}</span>
-                    <p><a class="studio-link-button" href={`/studio/projects/${project.id}/`}>Open project</a></p>
-                  </div>
+                    <p>{editableProjectIds.has(project.id)&&<a class="studio-button" href={projectDestination(requestedTask??(workbookSelection?'workbook':'cards'),project.id,requestedBook)}>{requestedTask==='exchange'?'Prepare visual brief':taskName?'Open '+taskName:'Resume project'}</a>}{editableProjectIds.has(project.id)&&!requestedTask&&<a href={projectDestination('settings',project.id)}>Project settings</a>}{!editableProjectIds.has(project.id)&&(!requestedTask||requestedTask==='workbook'||requestedTask==='exports'||requestedTask==='editorial')&&<a href={projectDestination(requestedTask==='editorial'?'editorial':requestedTask==='exports'?'exports':'workbook',project.id,requestedBook)}>{requestedTask==='editorial'?'Editorial support and retained history':requestedTask==='exports'?'Project exports and backup':'My Project Workbook'}</a>}</p>
+                    {editableProjectIds.has(project.id)&&!requestedTask&&<details><summary>Delete project</summary><p>This removes the project from your active workspace. Its cards, writing and history remain available to restore.</p><form method="post" action={`/api/studio/projects/${project.id}/lifecycle`}><input type="hidden" name="action" value="delete"/><input type="hidden" name="confirm" value="yes"/><button type="submit">Confirm delete project</button></form></details>}
+</div>
                 </div>
               </li>
             ))}
@@ -70,23 +109,25 @@ const error = Astro.url.searchParams.get("error");
         ) : (
           <p class="studio-empty">No projects yet. Create the first working space for your deck.</p>
         )}
+        {canWrite&&!requestedTask&&deletedProjects.some(project=>manageableProjectIds.has(project.id))&&<details><summary>Deleted projects</summary><p>Restore a project when you have room. Your saved work remains with it.</p><ul>{deletedProjects.filter(project=>manageableProjectIds.has(project.id)).map(project=><li>{project.name}<form method="post" action={`/api/studio/projects/${project.id}/lifecycle`}><input type="hidden" name="action" value="restore"/><input type="hidden" name="confirm" value="yes"/><button type="submit">Restore project</button></form>{deletedProjectCards.some(card=>card.project_id===project.id)&&<details><summary>Manage cards before restoring</summary><p>To fit Explore, you can remove active cards first. Their writing, artwork and history remain available to restore later.</p>{deletedProjectCards.filter(card=>card.project_id===project.id).map(card=><details><summary>{card.title}</summary><form method="post" action={`/api/studio/cards/${card.id}/lifecycle`}><input type="hidden" name="project_id" value={project.id}/><input type="hidden" name="action" value="delete"/><input type="hidden" name="confirm" value="yes"/><button type="submit">Confirm delete {card.title}</button></form></details>)}</details>}</li>)}</ul></details>}
       </section>
 
       <section class="studio-panel studio-panel--side" aria-labelledby="create-project-heading">
         <p class="studio-kicker">Start here</p>
         <h2 id="create-project-heading">Create a project</h2>
-        <p class="studio-panel__intro">Choose the structure that fits the deck. You can change these settings later.</p>
-        {databaseReady ? <form class="studio-form" method="post" action="/api/studio/projects">
+        <p class="studio-panel__intro">Give your deck a working name. You can add a card, capture an idea or develop your creative direction at your own pace.</p>
+        {guidance==='studio'?<p>Create a project within your active Studio access. Your existing creative work stays with your account.</p>:<p>Project capacity follows your current entitlement. Keep working in an authorised project or choose to begin another where your access permits. Existing work is not replaced.</p>}
+        {databaseReady&&canWrite ? <form class="studio-form" data-explore-project-draft data-owner={Astro.locals.user?.id} method="post" action="/api/studio/projects"><input type="hidden" name="request_id" value={crypto.randomUUID()}/><input type="hidden" name="task" value={requestedTask??''}/><input type="hidden" name="book" value={requestedBook??''}/>
           <label class="studio-field">
             <span>Project name</span>
             <input name="name" required maxlength="120" autocomplete="off" />
           </label>
-          <label class="studio-field">
+          <details><summary>Optional starting structure</summary><p>You can revisit these choices as your idea develops. Planned card count is not the physical size of the cards.</p><label class="studio-field">
             <span>Deck type</span>
             <select name="deck_type" required>
               <option value="oracle">Oracle</option>
               <option value="tarot">Tarot</option>
-              <option value="hybrid">Hybrid</option>
+              <option value="hybrid">Custom</option>
             </select>
           </label>
           <label class="studio-field">
@@ -98,16 +139,25 @@ const error = Astro.url.searchParams.get("error");
             </select>
           </label>
           <label class="studio-field">
-            <span>Planned deck size</span>
+            <span>Planned card count</span>
             <input name="deck_size" type="number" min="1" max="240" inputmode="numeric" />
-          </label>
+          </label></details>
           <label class="studio-field">
-            <span>What is this deck for?</span>
+            <span>What will this deck help people explore or do?</span><small>Describe the deck's central intention and hoped-for use, for example reflection, daily practice or coaching conversations. You can develop this intention as your deck takes shape.</small>
             <textarea name="purpose" maxlength="1200"></textarea>
           </label>
-          <button class="studio-button" type="submit">Create project</button>
-        </form> : <p class="studio-empty">Project creation will appear when the private Studio schema is ready.</p>}
+          <p role="status" aria-live="polite" data-project-create-status></p><button class="studio-button" type="submit">Create project</button>
+        </form> : <p class="studio-empty">Use the Creator’s Desk to develop your concept. A paid Create entitlement enables the complete project workspace.</p>}
       </section>
     </div>
   </main>
 </BaseLayout>
+<script>import '../../scripts/exploreProjectDraft';</script>
+
+<style>.studio-project-row>div:first-child{flex:1 1 auto;min-width:0}.studio-project-actions{flex:0 0 15rem;width:15rem;max-width:100%}.studio-project-actions p{display:flex;flex-direction:column;align-items:stretch;gap:.65rem}.studio-project-actions a{white-space:nowrap}.studio-project-actions .studio-link-button{text-align:center;justify-content:center}.studio-project-actions a:not(.studio-link-button){align-self:flex-start;min-height:2.75rem;display:inline-flex;align-items:center}@media(max-width:760px){.studio-project-row{flex-direction:column;align-items:stretch}.studio-project-actions{flex-basis:auto;width:15rem;max-width:100%}}</style>
+
+<style>.studio-list--projects{grid-template-columns:minmax(0,1fr)}.studio-project-row{min-width:0}@media(max-width:400px){.studio-project-actions .studio-link-button{padding-inline:.65rem}}</style>
+
+<style>.studio-task-chooser .studio-projects-layout{grid-template-columns:minmax(0,1fr)}.studio-task-chooser .studio-project-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,18rem);gap:1.2rem}.studio-task-chooser .studio-project-actions{min-width:0;width:100%}.studio-task-chooser .studio-project-actions a{max-width:100%;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere;text-align:center}.studio-task-chooser .studio-card{border-left:4px solid #955f50}@media(max-width:700px){.studio-task-chooser .studio-project-row{grid-template-columns:1fr}.studio-task-chooser .studio-project-actions{align-items:stretch}}</style>
+
+<style>.studio-task-chooser :global(.studio-header){margin-bottom:1rem;padding-bottom:1rem}.studio-task-chooser :global(.studio-header h1){font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.15}</style>

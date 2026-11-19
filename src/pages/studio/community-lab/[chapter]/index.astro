@@ -1,0 +1,524 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import {CREATIVE_CHAPTERS} from '../../../../lib/studio/communityChapters';
+import {COMMUNITY_TOPICS} from '../../../../lib/studio/communityTopics';
+import {COMMUNITY_LAB_EXAMPLES} from '../../../../lib/studio/communityLabFixtures';
+import '../../../../styles/studio.css';
+
+export const prerender = false;
+
+if (!['localhost','127.0.0.1'].includes(Astro.url.hostname.toLowerCase())) {
+  return new Response('Not found',{status:404});
+}
+
+const chapter = CREATIVE_CHAPTERS.find(
+  c => c.id === Astro.params.chapter
+);
+
+if (!chapter) return new Response('Chapter not found',{status:404});
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+
+const descriptions:Record<string,string> = {
+  spark:'Explore original ideas and the distinctive purpose behind a deck.',
+  foundation:'Discuss readers, intentions and the foundations of your creative work.',
+  architecture:'Explore card structures, systems and interpretive relationships.',
+  expression:'Discuss writing, language and the expression of meaning.',
+  'visual-world':'Explore illustration, symbolism, composition and artistic collaboration.',
+  companion:'Develop guidebooks, instructions and the reader experience.',
+  making:'Discuss prototypes, materials, printing and production decisions.',
+  'into-the-world':'Explore publishing, distribution, positioning and launch.'
+};
+
+const discussions = COMMUNITY_LAB_EXAMPLES.filter(d => d.chapter === chapter.id);
+
+const topicLabel = (id:string) =>
+  COMMUNITY_TOPICS.find(t=>t.id===id)?.label ?? id;
+---
+
+<BaseLayout
+  title={`${chapter.name} | Community | Deck Creator Studio`}
+  description={descriptions[chapter.id]}
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main class="studio-page page-inner chapter-forum chapter-forum--community">
+    <nav aria-label="Breadcrumb">
+      <a href="/studio/community-lab/">My Community</a>
+      <span aria-hidden="true"> / </span>
+      <span aria-current="page">{chapter.name}</span>
+    </nav>
+
+    <header class="chapter-heading chapter-identity">
+      <div class="chapter-identity-number">
+        {String(CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1).padStart(2,'0')}
+      </div>
+      <div class="chapter-identity-copy">
+        <p class="studio-eyebrow">Creative Chapter</p>
+        <h1>{chapter.name}</h1>
+        <p>{descriptions[chapter.id]}</p>
+      </div>
+      <a class="studio-button" href={`/studio/community-lab/${chapter.id}/new/`}>
+        + Start a discussion
+      </a>
+    </header>
+
+    <div class="chapter-discovery">
+      <label>
+        Search this chapter
+        <input type="search" data-forum-search
+          placeholder="Search questions and responses"/>
+      </label>
+      <div class="chapter-topic-filter" aria-label="Filter discussions by topic">
+        <span class="chapter-filter-label">Filter by topic</span>
+        <select data-forum-topic hidden aria-label="Selected topic">
+          <option value="all">All topics</option>
+          {COMMUNITY_TOPICS.map(t=>
+            <option value={t.id}>{t.label}</option>
+          )}
+        </select>
+        <div class="chapter-topic-chips">
+          <button type="button" data-topic-chip="all"
+            aria-pressed="true">All topics</button>
+          {[...new Set(discussions.map(d=>d.topic))].map(id=>
+            <button type="button" data-topic-chip={id}
+              aria-pressed="false">{topicLabel(id)}</button>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <section aria-label="Chapter discussions" data-chapter-id={chapter.id}>
+      <div class="forum-heading">
+        <h2>Discussions</h2>
+        <p data-forum-count>{discussions.length} conversations</p>
+      </div>
+
+      {discussions.length===0&&
+        <p>No example discussions in this chapter yet.</p>
+      }
+
+      {discussions.map(d=>
+        <article class="forum-topic" data-forum-discussion data-topic={d.topic} data-search={`${d.question} ${d.author} ${d.excerpt} ${topicLabel(d.topic)}`.toLowerCase()}>
+          <div class="forum-topic-top">
+            <span>{topicLabel(d.topic)}</span>
+            {d.unread>0&&<strong>{d.unread} new replies</strong>}
+          </div>
+
+          <h3>
+            <a href={`/studio/community-lab/${chapter.id}/discussion/${d.id}/`}>
+              {d.question}
+            </a>
+          </h3>
+
+          <p class="forum-meta">
+            Started by {d.author} · {d.replies} replies ·
+            {d.participants} participants
+          </p>
+
+          <div class="forum-latest">
+            <strong>{d.latest} · Latest response</strong>
+            <p>{d.excerpt}</p>
+          </div>
+
+          <p class="forum-meta">Active {d.activity}</p>
+        </article>
+      )}
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+.chapter-forum{max-width:75rem}
+.chapter-forum nav{margin:1rem 0 1.5rem;font-size:.9rem}
+.chapter-heading{display:flex;align-items:center;justify-content:space-between;gap:2rem;margin:1.5rem 0 2rem}
+.chapter-heading h1{margin:.2rem 0;font-size:clamp(2rem,3vw,2.7rem)}
+.chapter-heading p:last-child{max-width:45rem;line-height:1.5}
+.chapter-heading .studio-button{flex-shrink:0}
+.forum-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.forum-heading h2{font-size:1.4rem}
+.forum-topic{padding:1.2rem;margin:.8rem 0;border:1px solid #d0d7d0;border-radius:.6rem;background:#fffdf9}
+.forum-topic-top{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:#526761}
+.forum-topic-top strong{color:#215d4b}
+.forum-topic h3{font-size:1.12rem;line-height:1.4;margin:.6rem 0}
+.forum-topic h3 a{color:#203d43}
+.forum-meta{font-size:.85rem;color:#5c6966}
+.forum-latest{padding:.8rem 1rem;background:#f0f4f0;border-radius:.4rem;margin:1rem 0}
+.forum-latest strong{font-size:.85rem}
+.forum-latest p{font-size:.9rem;line-height:1.5;margin:.3rem 0 0}
+@media(max-width:650px){
+  .chapter-heading{flex-direction:column;align-items:flex-start;gap:.8rem}
+  .forum-topic{padding:.85rem}
+}
+</style>
+
+<style>
+.chapter-forum--community{
+  max-width:75rem;
+  background:#e8f0eb;
+  padding:1.25rem 1.6rem 2rem;
+  border-radius:.8rem;
+}
+.chapter-forum--community nav{margin:.2rem 0 .9rem}
+.chapter-forum--community .chapter-identity{
+  display:flex;
+  align-items:center;
+  gap:1.1rem;
+  padding:1.2rem;
+  margin:.5rem 0 1rem;
+  background:#fffdf9;
+  border:1px solid #aebfb2;
+  border-left:5px solid #58705b;
+  border-radius:.65rem;
+}
+.chapter-identity-number{
+  font-size:1.35rem;
+  color:#58705b;
+  font-weight:700;
+}
+.chapter-identity-copy{flex:1;min-width:0}
+.chapter-identity-copy h1{
+  font-size:clamp(1.5rem,2.3vw,2rem);
+  margin:.2rem 0;
+}
+.chapter-identity-copy p:last-child{
+  font-size:.95rem;
+  margin:.3rem 0 0;
+}
+.chapter-discovery{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:1rem;
+  margin:1rem 0 .7rem;
+}
+.chapter-discovery label{font-weight:600;font-size:.88rem}
+.chapter-discovery input,.chapter-discovery select{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  margin-top:.35rem;
+  padding:.7rem;
+  border:1px solid #afbeb3;
+  border-radius:.4rem;
+  background:white;
+  font:inherit;
+}
+.chapter-forum--community .forum-heading{margin:.8rem 0}
+.chapter-forum--community .forum-heading h2{margin:.3rem 0}
+.chapter-forum--community .forum-topic{margin:.6rem 0;padding:.9rem 1rem}
+.chapter-forum--community .forum-latest{margin:.6rem 0;padding:.65rem .85rem}
+[data-forum-discussion][hidden]{display:none}
+@media(max-width:650px){
+  .chapter-forum--community{padding:.8rem}
+  .chapter-forum--community .chapter-identity{flex-wrap:wrap}
+  .chapter-identity-copy{flex-basis:75%}
+  .chapter-discovery{grid-template-columns:1fr}
+}
+</style>
+
+<script>
+const search=document.querySelector<HTMLInputElement>('[data-forum-search]');
+const topic=document.querySelector<HTMLSelectElement>('[data-forum-topic]');
+const getRows=()=>[...document.querySelectorAll<HTMLElement>('[data-forum-discussion]')];
+const count=document.querySelector<HTMLElement>('[data-forum-count]');
+
+function loadLocalDiscussions(){
+  const section=document.querySelector<HTMLElement>('[data-chapter-id]');
+  const chapter=section?.dataset.chapterId;
+  if(!section||!chapter)return;
+
+  let saved:unknown;
+  try{
+    saved=JSON.parse(
+      sessionStorage.getItem('studio-community-lab-discussions')??'[]'
+    );
+  }catch{return;}
+
+  if(!Array.isArray(saved))return;
+
+  for(const item of saved){
+    if(!item||typeof item!=='object')continue;
+    const d=item as Record<string,unknown>;
+
+    if(d.chapter!==chapter ||
+       typeof d.id!=='string' ||
+       !/^[a-f0-9-]{36}$/i.test(d.id) ||
+       typeof d.question!=='string' ||
+       typeof d.topic!=='string' ||
+       typeof d.author!=='string')continue;
+
+    const article=document.createElement('article');
+    article.className='forum-topic';
+    article.dataset.forumDiscussion='';
+    article.dataset.topic=d.topic;
+
+    const topicLabel=document.querySelector<HTMLOptionElement>(
+      `[data-forum-topic] option[value="${d.topic}"]`
+    )?.textContent??d.topic;
+
+    article.dataset.search=[
+      d.question,d.author,topicLabel
+    ].join(' ').toLowerCase();
+
+    const meta=document.createElement('p');
+    meta.className='forum-meta';
+    meta.textContent=`${topicLabel} · Started by ${d.author}`;
+
+    const heading=document.createElement('h3');
+    const link=document.createElement('a');
+    link.href=`/studio/community-lab/${chapter}/discussion/${d.id}/`;
+    link.textContent=d.question;
+    heading.append(link);
+
+    const count=document.createElement('p');
+    count.className='forum-meta';
+    count.textContent='0 replies · New discussion';
+
+    article.append(meta,heading,count);
+
+    section.querySelector('.forum-heading')?.after(article);
+  }
+}
+loadLocalDiscussions();
+function filterDiscussions(){
+  const term=search?.value.trim().toLowerCase()??'';
+  const selected=topic?.value??'all';
+  let visible=0;
+
+  for(const row of getRows()){
+    row.hidden=!(
+      (selected==='all'||row.dataset.topic===selected) &&
+      (!term||(row.dataset.search??'').includes(term))
+    );
+    if(!row.hidden)visible++;
+  }
+
+  if(count){
+    count.textContent=`${visible} ${visible===1?'conversation':'conversations'}`;
+  }
+}
+
+search?.addEventListener('input',filterDiscussions);
+topic?.addEventListener('change',filterDiscussions);
+document.querySelectorAll<HTMLButtonElement>('[data-topic-chip]')
+  .forEach(button=>button.addEventListener('click',()=>{
+    if(!topic)return;
+    topic.value=button.dataset.topicChip??'all';
+    document.querySelectorAll('[data-topic-chip]').forEach(chip=>{
+      chip.setAttribute('aria-pressed',
+        String(chip===button));
+    });
+    filterDiscussions();
+  }));
+</script>
+
+<style>
+.chapter-forum--community .chapter-discovery{
+  display:block;
+  margin:.8rem 0 1rem;
+}
+.chapter-forum--community .chapter-discovery>label{
+  display:block;
+}
+.chapter-forum--community .chapter-discovery input[type=search]{
+  width:100%;
+  min-height:48px;
+}
+.chapter-topic-filter{margin:.9rem 0 0}
+.chapter-filter-label{
+  display:block;
+  font-size:.88rem;
+  font-weight:600;
+  margin-bottom:.5rem;
+}
+.chapter-topic-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+}
+.chapter-topic-chips button{
+  font:inherit;
+  font-size:.86rem;
+  padding:.45rem .8rem;
+  border:1px solid #9fb3a5;
+  border-radius:2rem;
+  background:#fffdf9;
+  color:#294d43;
+  cursor:pointer;
+}
+.chapter-topic-chips button[aria-pressed=true]{
+  background:#d4e5d8;
+  border-color:#496c57;
+  font-weight:700;
+}
+.chapter-topic-chips button:focus-visible{
+  outline:3px solid #b88b37;
+  outline-offset:2px;
+}
+</style>
+
+
+
+
+<style is:global>
+/* STAGE7 SINGLE-ROW CHAPTER FILTERS */
+
+.chapter-forum--community .chapter-discovery {
+  display:flex!important;
+  flex-direction:row;
+  align-items:center;
+  gap:.7rem;
+  margin:.65rem 0 1rem;
+  min-width:0;
+}
+
+.chapter-forum--community .chapter-discovery > label {
+  flex:1 1 300px;
+  min-width:180px;
+  margin:0;
+  font-size:0;
+}
+
+/* Keep the select available to the existing filtering script. */
+.chapter-forum--community select[data-forum-topic] {
+  display:none!important;
+}
+
+.chapter-forum--community .chapter-filter-label {
+  display:none!important;
+}
+
+.chapter-forum--community .chapter-topic-filter {
+  flex:0 1 auto;
+  min-width:0;
+  max-width:55%;
+  margin:0;
+}
+
+.chapter-forum--community .chapter-topic-chips {
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:.4rem;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  padding:.2rem 0;
+}
+
+.chapter-forum--community .chapter-topic-chips button {
+  flex:none;
+  white-space:nowrap;
+  padding:.45rem .75rem;
+  font-size:.83rem;
+}
+
+.chapter-forum--community .chapter-discovery input[type="search"] {
+  display:block;
+  width:100%;
+  min-height:44px;
+  margin:0;
+  font-size:.9rem;
+}
+
+.chapter-forum--community .chapter-discovery
+  .studio-field-help-wrap > button,
+.chapter-forum--community .chapter-discovery
+  .studio-field-help-wrap > .studio-field-help {
+  display:none!important;
+}
+
+@media(max-width:650px) {
+  .chapter-forum--community .chapter-discovery {
+    flex-wrap:wrap;
+    gap:.4rem;
+  }
+  .chapter-forum--community .chapter-discovery > label {
+    flex:1 1 100%;
+  }
+  .chapter-forum--community .chapter-topic-filter {
+    flex:1 1 100%;
+    max-width:100%;
+  }
+}
+</style>
+
+<style is:global>
+/* STAGE7 FINAL COMPACT TOPIC TOOLBAR */
+
+.chapter-forum--community .chapter-discovery {
+  display:grid!important;
+  grid-template-columns:minmax(180px,30%) minmax(0,1fr);
+  align-items:center;
+  gap:.75rem;
+  margin:.5rem 0 .8rem;
+}
+
+.chapter-forum--community .chapter-discovery > label {
+  min-width:0;
+  width:100%;
+  margin:0;
+  font-size:0!important;
+  line-height:0;
+}
+
+.chapter-forum--community .chapter-discovery input[type="search"] {
+  display:block;
+  width:100%;
+  min-height:42px;
+  font-size:.9rem!important;
+  line-height:normal;
+  margin:0;
+}
+
+.chapter-forum--community .chapter-filter-label {
+  display:none!important;
+}
+
+.chapter-forum--community .chapter-topic-filter {
+  min-width:0;
+  max-width:none!important;
+  width:100%;
+  margin:0!important;
+}
+
+.chapter-forum--community .chapter-topic-chips {
+  display:flex;
+  flex-wrap:nowrap!important;
+  gap:.4rem;
+  align-items:center;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+  overscroll-behavior-x:contain;
+  padding:.3rem 0;
+  max-width:100%;
+}
+
+.chapter-forum--community .chapter-topic-chips button {
+  flex:0 0 auto;
+  white-space:nowrap;
+  min-height:38px;
+}
+
+.chapter-forum--community
+  .studio-field-help-wrap > button,
+.chapter-forum--community
+  .studio-field-help-wrap .studio-field-help,
+.chapter-forum--community
+  .chapter-discovery [aria-label="Help"] {
+  display:none!important;
+}
+
+.chapter-forum--community .chapter-discovery
+  select[data-forum-topic] {
+  display:none!important;
+}
+
+@media(max-width:650px) {
+  .chapter-forum--community .chapter-discovery {
+    grid-template-columns:minmax(0,1fr);
+    gap:.35rem;
+  }
+}
+</style>

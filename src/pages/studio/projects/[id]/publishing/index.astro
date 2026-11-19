@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import {studioAccountAccessResponse as studioAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProject} from '../../../../../lib/studio/queries';
+export const prerender=false;
+const denied=await studioAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);if(denied)return denied;
+const projectId=Astro.params.id;
+const project=projectId&&Astro.locals.supabase?await getStudioProject(Astro.locals.supabase,projectId):null;if(!project)return new Response('Not found',{status:404});
+---
+<BaseLayout title={`Publishing | ${project.name}`} description="Private project publishing resources." metaRobots="noindex, nofollow" tdcPlacement="none"><main class="studio-page studio-release-page page-inner"><StudioHeader title="Publishing" eyebrow={project.name} lede="Publishing resources for this project." projectId={project.id}/><section class="studio-panel"><h2>To be developed</h2><p>Additional publishing guidance and resources will be added here. This section does not yet provide a complete publishing service.</p><p>Your existing production planning tools remain available for specifications, artwork permissions, prototypes, suppliers, costs, fulfilment and release readiness.</p><a class="studio-link-button" href={`/studio/projects/${project.id}/production/`}>Open Production plan</a></section></main></BaseLayout>

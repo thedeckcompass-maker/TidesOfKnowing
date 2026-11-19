@@ -1,0 +1,509 @@
+---
+import BaseLayout from '../../../../../../layouts/BaseLayout.astro';
+import { CREATIVE_CHAPTERS } from '../../../../../../lib/studio/communityChapters';
+import { COMMUNITY_LAB_EXAMPLES } from '../../../../../../lib/studio/communityLabFixtures';
+import '../../../../../../styles/studio.css';
+
+export const prerender = false;
+
+if (!['localhost','127.0.0.1'].includes(Astro.url.hostname.toLowerCase())) {
+  return new Response('Not found',{status:404});
+}
+
+const chapter = CREATIVE_CHAPTERS.find(c=>c.id===Astro.params.chapter);
+if (!chapter) return new Response('Chapter not found',{status:404});
+
+const discussion = COMMUNITY_LAB_EXAMPLES.find(
+  d=>d.id===Astro.params.id && d.chapter===chapter.id
+);
+
+Astro.response.headers.set('Cache-Control','private, no-store');
+Astro.response.headers.set('X-Robots-Tag','noindex, nofollow');
+---
+
+<BaseLayout
+  title={`Discussion | ${chapter.name} | Deck Creator Studio`}
+  description="A conversation in Deck Creator Studio Community."
+  metaRobots="noindex, nofollow"
+  memberWorkspace={false}
+>
+  <main
+    class="studio-page page-inner forum-discussion"
+    data-forum-discussion-page
+    data-chapter={chapter.id}
+    data-discussion-id={Astro.params.id}
+    data-example={discussion ? JSON.stringify(discussion) : ''}
+  >
+    <nav class="forum-breadcrumb" aria-label="Breadcrumb">
+      <a href="/studio/community-lab/">My Community</a>
+      <span aria-hidden="true">/</span>
+      <a href={`/studio/community-lab/${chapter.id}/`}>{chapter.name}</a>
+    </nav>
+
+    <div class="forum-chapter-bar">
+      <span class="forum-chapter-mark">
+        {String(CREATIVE_CHAPTERS.findIndex(c=>c.id===chapter.id)+1).padStart(2,'0')}
+      </span>
+      <span class="forum-chapter-name">{chapter.name}</span>
+      <a href={`/studio/community-lab/${chapter.id}/`}>
+        <span aria-hidden="true">←</span> All discussions
+      </a>
+    </div>
+
+    <section class="forum-conversation" aria-label="Community discussion">
+      <div data-discussion-content></div>
+
+      <section class="forum-responses" aria-label="Replies">
+        <div data-discussion-replies></div>
+      </section>
+
+      <section class="forum-participation" aria-label="Write a reply">
+        <form data-discussion-reply-form>
+          <div class="forum-composer-row">
+            <span class="forum-avatar forum-avatar--small forum-self-avatar"
+              aria-label="Your avatar">Y</span>
+            <div class="forum-composer-body">
+              <label class="forum-sr-only" for="community-main-reply">
+                Write a reply
+              </label>
+              <textarea id="community-main-reply" name="body"
+                minlength="2" maxlength="8000" rows="1" required
+                placeholder="Join the conversation…"></textarea>
+              <div class="forum-composer-actions">
+                <p data-discussion-status role="status"
+                  aria-live="polite" hidden></p>
+                <button class="forum-primary-action" type="submit" hidden>
+                  Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  import '../../../../../../scripts/studioCommunityLabDiscussion';
+
+  function syncSelfAvatar(){
+    const target=document.querySelector<HTMLElement>('.forum-self-avatar');
+    if(!target)return;
+    try{
+      const saved=localStorage.getItem('dcs-community-avatar-local-v1');
+      if(saved?.startsWith('data:image/jpeg;base64,')){
+        const image=document.createElement('img');
+        image.src=saved;
+        image.alt='';
+        target.replaceChildren(image);
+      }
+    }catch{}
+  }
+  syncSelfAvatar();
+</script>
+
+<style is:global>
+.forum-sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  margin:-1px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+}
+.forum-discussion{
+  box-sizing:border-box;
+  width:min(100%,850px);
+  max-width:850px;
+  margin:1.2rem auto 3rem;
+  padding:1rem 1.25rem 2rem;
+  background:#edf3ee;
+  border-radius:16px;
+  color:#243c35;
+}
+.forum-discussion [hidden]{display:none!important}
+.forum-breadcrumb{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin:0 0 .75rem;
+  font-size:.82rem;
+  color:#62776a;
+}
+.forum-breadcrumb a{
+  color:#426758;
+  text-decoration:none;
+}
+.forum-breadcrumb a:hover{text-decoration:underline}
+.forum-chapter-bar{
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+  min-height:45px;
+  margin-bottom:.65rem;
+  padding:.45rem .8rem;
+  background:#dce8df;
+  border-radius:10px;
+}
+.forum-chapter-mark{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  background:#bfd4c5;
+  color:#234d3e;
+  font-size:.85rem;
+  font-weight:750;
+}
+.forum-chapter-name{
+  flex:1;
+  font-size:.94rem;
+  font-weight:700;
+}
+.forum-chapter-bar>a{
+  color:#315d4a;
+  text-decoration:none;
+  font-size:.82rem;
+  font-weight:600;
+}
+.forum-conversation{
+  padding:1rem 1.2rem;
+  background:#fffefa;
+  border:1px solid #d8e2d9;
+  border-radius:13px;
+  box-shadow:0 2px 9px rgba(29,63,43,.045);
+}
+.forum-origin{padding:.3rem 0 1.1rem}
+.forum-author-row,
+.forum-comment-header{
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+}
+.forum-avatar{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  overflow:hidden;
+  border-radius:50%;
+  background:#d7e6db;
+  color:#35604b;
+  font-weight:750;
+  line-height:1;
+  border:1px solid #c8d9cb;
+}
+.forum-avatar--large{
+  width:42px;
+  height:42px;
+  font-size:1rem;
+}
+.forum-avatar--small{
+  width:34px;
+  height:34px;
+  font-size:.8rem;
+}
+.forum-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.forum-avatar--empty{
+  background:#eceee9;
+  border-color:#e1e5df;
+}
+.forum-author-details,
+.forum-comment-identity{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:.1rem;
+}
+.forum-author-details strong,
+.forum-comment-byline strong{
+  font-size:.91rem;
+  color:#223b31;
+}
+.forum-author-details time,
+.forum-comment-byline time{
+  font-size:.77rem;
+  color:#718076;
+}
+.forum-topic-pill{
+  display:inline-flex;
+  margin:.95rem 0 .3rem;
+  padding:.25rem .6rem;
+  border-radius:99px;
+  background:#ecf2ed;
+  color:#486858;
+  font-size:.75rem;
+  text-transform:capitalize;
+}
+.forum-question{
+  font-size:clamp(1.2rem,2.8vw,1.55rem)!important;
+  line-height:1.35!important;
+  font-weight:700;
+  margin:.25rem 0 .1rem!important;
+  color:#223b31;
+}
+.forum-responses{
+  padding:0;
+  margin:0;
+  border-top:1px solid #e5ebe4;
+}
+.forum-comment-group{
+  padding:.75rem 0;
+  border-bottom:1px solid #edf0eb;
+}
+.forum-comment{
+  margin:0;
+  padding:0;
+  background:transparent;
+  border:0;
+}
+.forum-comment-byline{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:.55rem;
+}
+.forum-reply-context{
+  font-size:.75rem;
+  color:#688477;
+}
+.forum-comment-text{
+  margin:.25rem 0 .3rem 2.85rem!important;
+  line-height:1.52;
+  font-size:.91rem;
+  color:#33473d;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+.forum-comment-actions{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  margin-left:2.85rem;
+  min-height:27px;
+}
+.forum-action,
+.forum-thread-toggle{
+  border:0;
+  background:none;
+  box-shadow:none;
+  padding:.25rem .3rem;
+  color:#547665;
+  font-size:.79rem;
+  font-weight:600;
+  cursor:pointer;
+}
+.forum-action:hover,
+.forum-thread-toggle:hover{
+  color:#214d3a;
+  text-decoration:underline;
+}
+.forum-comment-menu{
+  position:relative;
+  margin-left:auto;
+}
+.forum-comment-menu summary{
+  list-style:none;
+  cursor:pointer;
+  padding:.12rem .5rem;
+  color:#607d6b;
+  letter-spacing:2px;
+}
+.forum-comment-menu summary::-webkit-details-marker{display:none}
+.forum-comment-menu-options{
+  position:absolute;
+  z-index:5;
+  top:100%;
+  right:0;
+  display:flex;
+  flex-direction:column;
+  min-width:105px;
+  padding:.35rem;
+  border:1px solid #d5dfd5;
+  border-radius:8px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+}
+.forum-comment-menu-options button{
+  width:100%;
+  text-align:left;
+  padding:.45rem .55rem;
+}
+.forum-thread-toggle{
+  margin:.25rem 0 .15rem 2.65rem;
+  color:#476e59;
+}
+.forum-comment-branch{
+  margin:.3rem 0 .2rem 2.95rem;
+  padding:.25rem 0 .25rem 1rem;
+  border-left:2px solid #d4e3d5;
+}
+.forum-comment--child{
+  padding:.5rem 0;
+}
+.forum-comment--child+.forum-comment--child{
+  border-top:1px solid #f0f2ed;
+}
+.forum-inline-composer{
+  margin:.55rem 0 .55rem 2.8rem;
+}
+.forum-inline-composer textarea,
+.forum-participation textarea{
+  box-sizing:border-box;
+  width:100%;
+  min-height:44px;
+  padding:.65rem .8rem;
+  border:1px solid #c4d5c8;
+  border-radius:10px;
+  background:#fcfefb;
+  color:#233e31;
+  font:inherit;
+  font-size:.9rem;
+  line-height:1.5;
+  resize:vertical;
+}
+.forum-inline-composer textarea:focus,
+.forum-participation textarea:focus{
+  outline:2px solid #8fb99d;
+  outline-offset:1px;
+}
+.forum-inline-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:.6rem;
+  margin-top:.4rem;
+}
+.forum-primary-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:.4rem .9rem;
+  border:1px solid #315d48;
+  border-radius:8px;
+  background:#315d48;
+  color:#fff;
+  font-size:.84rem;
+  font-weight:700;
+  cursor:pointer;
+}
+.forum-primary-action:hover{background:#234a37}
+.forum-participation{
+  margin-top:.8rem;
+  padding:.9rem 0 .2rem;
+  border-top:1px solid #e5ebe4;
+}
+.forum-composer-row{
+  display:flex;
+  align-items:flex-start;
+  gap:.65rem;
+}
+.forum-composer-body{flex:1;min-width:0}
+.forum-composer-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:.7rem;
+  margin-top:.4rem;
+}
+.forum-participation form:not(.is-expanded) textarea{
+  height:44px;
+  min-height:44px;
+  resize:none;
+  border-radius:24px;
+}
+.forum-participation form.is-expanded textarea{
+  min-height:110px;
+}
+.forum-composer-actions [data-discussion-status]{
+  margin:auto auto auto 0;
+  color:#9a3b31;
+  font-size:.81rem;
+}
+.forum-empty{
+  margin:.8rem 0;
+  font-size:.88rem;
+  color:#64786b;
+}
+.forum-discussion button:focus-visible,
+.forum-discussion summary:focus-visible,
+.forum-discussion a:focus-visible{
+  outline:3px solid #b88b37;
+  outline-offset:2px;
+}
+@media(max-width:620px){
+  .forum-discussion{
+    margin:.5rem auto 1.5rem;
+    padding:.55rem;
+  }
+  .forum-conversation{padding:.85rem}
+  .forum-chapter-bar{flex-wrap:wrap}
+  .forum-comment-text,
+  .forum-comment-actions{
+    margin-left:2.6rem!important;
+  }
+  .forum-comment-branch{
+    margin-left:1.3rem;
+    padding-left:.6rem;
+  }
+  .forum-inline-composer{margin-left:0}
+}
+</style>
+
+<style is:global>
+/* Two-column opening discussion */
+.forum-origin {
+  display: grid;
+  grid-template-columns: 170px minmax(0,1fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+.forum-origin .forum-author-row {
+  align-items: flex-start;
+}
+.forum-origin-question {
+  min-width: 0;
+}
+.forum-origin-question .forum-topic-pill {
+  margin: 0 0 .45rem;
+}
+.forum-origin-question .forum-question {
+  margin: 0!important;
+}
+@media (max-width:600px) {
+  .forum-origin {
+    grid-template-columns: 115px minmax(0,1fr);
+    gap: .7rem;
+  }
+  .forum-origin .forum-avatar--large {
+    width: 32px;
+    height: 32px;
+  }
+}
+</style>
+
+<style is:global>
+/* STAGE7 COMPACT COMMUNITY HIERARCHY */
+.forum-discussion .forum-origin-question .forum-question {
+  font-size:1.075rem!important;
+  font-weight:600!important;
+  line-height:1.5!important;
+  letter-spacing:0;
+  margin:0!important;
+}
+.forum-discussion .forum-origin {
+  align-items:start;
+  gap:1rem;
+}
+.forum-discussion .forum-origin-question {
+  padding-top:.1rem;
+}
+</style>

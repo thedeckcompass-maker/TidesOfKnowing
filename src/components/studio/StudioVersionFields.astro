@@ -1,0 +1,9 @@
+---
+import StudioReadableText from './StudioReadableText.astro';
+import type { VersionField } from '../../lib/studio/versionHistory';
+interface Props { fields: VersionField[]; }
+const { fields } = Astro.props;
+---
+<div class="studio-version-preview__fields">
+  {fields.map(field => <section><h4>{field.label}</h4><StudioReadableText value={field.value} legacyProse={field.legacyProse} /></section>)}
+</div>

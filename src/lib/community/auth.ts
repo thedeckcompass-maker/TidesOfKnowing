@@ -1,4 +1,6 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
+import {completeRequestedUsername} from './usernameRules';
+import {getCommunityUsername} from './usernames';
 import { communityEnv } from "./env";
 import { createCommunityServiceClient } from "./supabaseServer";
 import type { CommunityProfile } from "./types";
@@ -101,7 +103,8 @@ export async function getAuthContext(
   }
 
   const ensured = await ensureCommunityProfile(user, locals);
-  const profile = ensured ?? (await getProfile(supabase, user.id));
+  const currentProfile = ensured ?? (await getProfile(supabase, user.id));
+  const profile = await completeRequestedUsername(supabase,user,currentProfile ? {...currentProfile,username:await getCommunityUsername(supabase,user.id)} : null);
 
   return { user, profile };
 }

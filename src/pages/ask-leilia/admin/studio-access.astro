@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FoundingCommencement from '../../../components/studio/FoundingCommencement.astro';
+import {FOUNDING_ADMIN,foundingRuntime,foundingCommand} from '../../../lib/studio/foundingRuntime';
+import { isAdminProfile } from '../../../lib/community/auth';
+import { sameOriginMutation, sixMonthDate, loadStudioAccess, annualCollaborationPreview } from '../../../lib/studio/access';
+export const prerender=false;
+if (!Astro.locals.user) return Astro.redirect('/auth/register/?mode=sign-in',303);
+if (!isAdminProfile(Astro.locals.profile)) return new Response('Not found',{status:404});
+Astro.response.headers.set('Cache-Control','private, no-store');
+const db=Astro.locals.supabase;
+const founding=foundingRuntime(Astro.locals,Astro.url);
+let foundingValues:Record<string,string>={},foundingPreview:ReturnType<typeof annualCollaborationPreview>|null=null,foundingSaved:any=null,foundingUncertain=false;
+const annualPreviewEnabled=import.meta.env.DEV&&['127.0.0.1','localhost','[::1]'].includes(Astro.url.hostname);
+let annualPreview: ReturnType<typeof annualCollaborationPreview>|null=null;
+let member: {id:string;display_name:string;email?:string}|null=null, notice='',error='';
+if (Astro.request.method==='POST') {
+ if (!sameOriginMutation(Astro.request)) return new Response('Invalid request origin',{status:403});
+ const form=await Astro.request.formData();const operation=String(form.get('operation')||'');
+ if(['founding-preview','founding-confirm','founding-reconcile'].includes(operation)&&Astro.locals.user.id===FOUNDING_ADMIN&&Astro.locals.profile?.id===Astro.locals.user.id){
+   for(const key of ['key','version','agreement','collaborationStarts','agreementConfirmed','paymentVerified','onboardingCompleted','setupCompleted'])foundingValues[key]=String(form.get(key)||'');
+  const selected=String(form.get('userId')||'');if(/^[0-9a-f-]{36}$/i.test(selected)&&selected!==Astro.locals.user.id)member={id:selected,display_name:'Member account'};
+  foundingUncertain=operation==='founding-reconcile';
+ }
+ if (!db) error='Access management is unavailable.';
+ else if(operation==='lookup') {
+  const email=String(form.get('email')||'').trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254) error='Enter the exact email used to create the account.';
+  else {const result=await db.rpc('studio_lookup_member',{member_email:email});if(result.error)error='Lookup unavailable. Check that the reviewed access migration has been installed.';else {member=result.data?.[0]||null;if(member)member={...member,email};}if(!result.error&&!member)error='No ordinary member matched. Ask the tester to create their account first.';}
+ } else {
+  const id=String(form.get('userId')||'');
+  if(!/^[0-9a-f-]{36}$/i.test(id)||id===Astro.locals.user.id) error='Choose another ordinary member.';
+  else if(['complimentary-grant','complimentary-revoke','complimentary-restore'].includes(operation)) {
+   if(form.get('complimentaryConfirmed')!=='on')error='Confirm the complimentary workspace action.';
+   else {const result=await db.rpc('studio_manage_complimentary_develop_workspace_v1',{target_user:id,operation:operation.slice('complimentary-'.length),expected_updated_at:form.get('complimentaryVersion')||null});if(result.error)error='Complimentary access was not changed. Look up the account again before retrying.';else notice='Complimentary workspace access updated. No payment or programme service was recorded.';}
+  }
+  else if(['founding-preview','founding-confirm','founding-reconcile'].includes(operation)) {
+   try{
+    if(Astro.locals.user.id!==FOUNDING_ADMIN||Astro.locals.profile?.id!==Astro.locals.user.id)throw Error('Only Leilia may manage founding commencement.');
+    if(form.get('agreement')!=='founder')throw Error('Choose the existing founding agreement.');
+    const original=await loadStudioAccess(db,id);if(!original&&operation!=='founding-reconcile')throw Error('Look up the existing access record first; historical dates will remain unchanged.');
+    if(operation==='founding-preview'){
+     foundingPreview=annualCollaborationPreview('founder',String(form.get('collaborationStarts')||''));
+     notice='Founding dates previewed. No access or payment action was performed.';
+    }else{
+     if(!founding?.canConfirm)throw Error('Founding commencement is not enabled for this administrator and origin.');
+     const command=foundingCommand(form);
+     if(operation==='founding-reconcile'){
+      const saved=await founding.read(id,command);foundingSaved=saved;foundingUncertain=false;
+      notice=saved.confirmation?'Saved commencement confirmed.': 'No confirmation was found for these exact details. Your draft and retry key are retained; no confirmation was submitted.';
+      if(saved.confirmation)foundingSaved={...saved,receipt:saved.confirmation};
+     }else{
+      const outcome=await founding.confirm(command);foundingUncertain=outcome.state==='uncertain';
+      if(outcome.state==='confirmed'){foundingSaved={receipt:outcome.result,confirmation:outcome.result};notice='Founding commencement confirmed. No email or payment action was performed.';}
+      else error='Commencement could not be confirmed. Keep these details and check the saved commencement before retrying.';
+     }
+    }
+   }catch(cause){error=cause instanceof Error?cause.message:'Founding commencement could not be confirmed.';}
+  }
+  else if(operation==='annual-collaboration') {
+   if(!annualPreviewEnabled) error='Annual collaboration is a local preview only. No hosted access was changed.';
+   else if(form.get('agreementConfirmed')!=='on') error='Confirm the explicit collaboration agreement.';
+   else {const original=await loadStudioAccess(db,id);if(!original)error='Look up the existing access record first; historical dates will remain unchanged.';else try {annualPreview=annualCollaborationPreview(String(form.get('agreement')||''),String(form.get('collaborationStarts')||''));notice='Local agreement preview prepared. No access grant or database record was changed.';}catch(cause){error=cause instanceof Error?cause.message:'Invalid collaboration details.';}}
+  }
+  else if(!['grant','extend','revoke','restore','paid'].includes(operation)) error='Choose a valid action.';
+  else if(operation==='paid'&&form.get('paymentVerified')!=='on') error='Confirm you have independently verified payment.';
+  else {
+   const result=await db.rpc('studio_manage_access',{target_user:id,operation,onboarding:form.get('onboarding')||null,zone:form.get('zone')||null,expiry:form.get('expiry')||null,expected_updated_at:form.get('version')||null,note:String(form.get('note')||'').trim()});
+   error=result.error?'Access was not changed. Check dates and account status, then look up the account again before retrying.':'';
+   notice=result.error?'':'Access updated. No email or payment action was performed.';
+  }
+  if(db&&/^[0-9a-f-]{36}$/i.test(id)&&id!==Astro.locals.user.id){member={id,display_name:'Member account'};}
+ }
+}
+const access=member?await loadStudioAccess(db,member.id):null;
+const foundingEnabled=!!(founding?.canConfirm&&member&&member.id!==FOUNDING_ADMIN&&access);
+const paidEnd=access?sixMonthDate(access.onboarding_date):'';
+const events=member&&db?await db.from('moderation_actions').select('action,reason,created_at').eq('target_user_id',member.id).like('action','studio_%').order('created_at',{ascending:false}).limit(20):null;
+const complimentary=member&&db?await db.rpc('studio_inspect_complimentary_develop_workspace_v1',{target_user:member.id}):null;
+---
+<BaseLayout title="Studio access | Administration" description="Manage admitted Studio collaborators." metaRobots="noindex, nofollow">
+ <main class="access-admin page-inner">
+ <p><a href="/ask-leilia/admin/">← Administration</a></p><h1>Studio access</h1>
+ <p>Grant access to Studio and its private community room on the member’s existing account. No payment, card or coupon is required for introductory access.</p>
+ {error&&<p role="alert">{error}</p>}{notice&&<p role="status">{notice}</p>}
+ <section><h2>Find an existing member</h2><form method="post"><input type="hidden" name="operation" value="lookup"/><label>Email used for the account<input name="email" type="email" required autocomplete="off"/></label><button>Find member</button></form></section>
+ {member&&<section><h2>{member.display_name}</h2>{member.email&&<p>{member.email}</p>}<p>Ordinary member · Account ID: {member.id}</p>
+ {access?<><p><strong>{access.revoked_at?'Revoked':Date.parse(access.expires_at)<=Date.now()?'Expired':access.phase==='paid'?'Paid':'Introductory'}</strong></p><p>Original onboarding: {access.onboarding_date} ({access.time_zone}). Access ends at {new Intl.DateTimeFormat('en-GB',{dateStyle:'long',timeStyle:'short',timeZone:access.time_zone}).format(new Date(access.expires_at))} ({access.time_zone}).</p><p>Generic paid access uses {paidEnd}, six calendar months from original onboarding, regardless of conversion date.</p></>:<p>No Studio access granted.</p>}
+ {(access||foundingValues.key)&&<FoundingCommencement member={member} access={access} preview={foundingPreview} enabled={foundingEnabled} values={foundingValues} uncertain={foundingUncertain} saved={foundingSaved}/>}
+ {complimentary&&!complimentary.error&&<section><h3>Complimentary Develop workspace</h3><p>Ongoing until revoked. This does not record a payment or grant programme services.</p><p>{complimentary.data?.[0]?(complimentary.data[0].active?'Active':'Revoked'):'No complimentary workspace grant.'}</p><form method="post"><input type="hidden" name="userId" value={member.id}/><input type="hidden" name="complimentaryVersion" value={complimentary.data?.[0]?.updated_at||''}/><label>Action<select name="operation" required>{!complimentary.data?.[0]?<option value="complimentary-grant">Grant</option>:complimentary.data[0].active?<option value="complimentary-revoke">Revoke</option>:<option value="complimentary-restore">Restore</option>}</select></label><label><input type="checkbox" name="complimentaryConfirmed" required/> Confirm this workspace action for the selected member.</label><button>Save complimentary workspace action</button></form></section>}
+ <form method="post"><input type="hidden" name="userId" value={member.id}/><input type="hidden" name="version" value={access?.updated_at||''}/>
+ <label>Action<select name="operation" required>{!access?<option value="grant">Grant introductory access</option>:<><option value="">Choose an action</option><option value="extend">Extend introductory access</option><option value="revoke">Revoke access</option><option value="restore">Restore access</option><option value="paid">Confirm generic paid access (existing six-month rule)</option><option value="annual-collaboration" disabled={!annualPreviewEnabled}>Prepare 12-month collaboration (local preview)</option></>}</select></label>
+ {!access&&<><label>Original onboarding date<input type="date" name="onboarding" required/></label><label>Timezone<select name="zone" required><option value="">Choose timezone</option><option value="America/Mexico_City">Mexico City</option><option value="UTC">UTC</option></select></label></>}
+ <label>Temporary access ends at the start of this date<input type="date" name="expiry" required={!access}/></label><p>Choose the expiry explicitly for a grant or introductory extension/restore. Paid conversion always uses the original six-month end date. Paid restore keeps its existing end date.</p>
+ <label><input type="checkbox" name="paymentVerified"/> For “Confirm paid access”: I have independently verified payment.</label>
+ <fieldset><legend>Explicit annual collaboration preview</legend><p>Twelve months from an explicitly configured collaboration start date; personal support for two calendar months from that same agreed start date. Collaboration start is not automatically free-account creation, onboarding or payment. This preview does not shorten, renew or change existing grants. US$495 applies only if the creator proceeds after both no-obligation introductory sessions; Leilia then sends the payment link.</p><label>Agreement<select name="agreement"><option value="">Choose agreement</option><option value="founder">Founding creator collaboration</option><option value="private-collaboration">Private collaboration</option></select></label><label>Explicit collaboration start date<input name="collaborationStarts" type="date"/></label><p>Both periods begin on the agreed collaboration start date. Dates are entered explicitly here and are not saved to an account.</p><label><input type="checkbox" name="agreementConfirmed"/> The member has this explicit collaboration agreement.</label></fieldset>
+ <label>Admin note (optional)<textarea name="note" maxlength="1000"/></label><button>Save access change</button></form>
+ {annualPreview&&<section role="status"><h3>Local agreement preview</h3><p>Agreement: {annualPreview.agreement}. Collaboration start: {annualPreview.collaborationStarts}. Personal support starts: {annualPreview.setupStarts}. Platform access boundary: {annualPreview.platformEnds} ({access?.time_zone}). Support end: {annualPreview.supportEnds}. Existing entitlement and original onboarding remain unchanged, even if this proposed boundary is earlier. This is not an active grant.</p></section>}
+ <h3>Recent access history</h3><ul>{(events?.data||[]).map(event=><li>{event.created_at}: {event.action}{event.reason?` — ${event.reason}`:''}</li>)}</ul>
+ </section>}
+ </main>
+</BaseLayout>
+<style>.access-admin{max-width:900px;padding-block:var(--space-lg)}section{padding:var(--space-md);margin-block:var(--space-lg);border:1px solid var(--tok-border-light);border-radius:var(--radius-md)}form,label{display:grid;gap:var(--space-sm)}form{max-width:600px}input:not([type=checkbox]),select,textarea{width:100%;padding:.6rem;font:inherit}button{padding:.7rem 1rem;cursor:pointer;justify-self:start}p{overflow-wrap:anywhere}input[type=checkbox]{justify-self:start}</style>

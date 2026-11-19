@@ -18,7 +18,7 @@ type LeadMagnetSlug = keyof typeof LEAD_MAGNETS;
 type LeadMagnetPayload = {
   name?: string;
   email?: string;
-  /** Honeypot — must stay empty for humans. */
+  /** Honeypot â€” must stay empty for humans. */
   website?: string;
   resourceSlug?: string;
   source_component?: string;
@@ -66,7 +66,7 @@ export const GET: APIRoute = () =>
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    const runtimeEnv = (locals as { runtime?: { env?: Record<string, string> } })?.runtime?.env;
+    const runtimeEnv = (locals as { serverRuntime?: { env?: Record<string, string> } })?.serverRuntime?.env;
     const staticEnv = import.meta.env as Record<string, string | undefined>;
     const apiKey = runtimeEnv?.MAILERLITE_API_KEY ?? staticEnv.MAILERLITE_API_KEY;
 

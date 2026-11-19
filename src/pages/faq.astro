@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {tidesFaqSections} from '../data/tides-faq';
+import {ASK_LEILIA_READINGS} from '../data/askLeilia';
+import {faqPageJsonLd} from '../lib/faqPageJsonLd';
+import {siteBase} from '../lib/site';
+const canonical=new URL('/faq/',siteBase(Astro)).href;
+const id=(section:string,index:number)=>`${section}-${index+1}`;
+const jsonLd=faqPageJsonLd(tidesFaqSections.flatMap(s=>s.questions.map(([question,answerHtml])=>({question,answerHtml}))),canonical);
+---
+<BaseLayout title="Tides of Knowing FAQ" description="Answers about personal readings, requests, delivery and finding your way around Tides of Knowing." ogUrl={canonical} jsonLd={jsonLd}>
+ <main class="tides-faq page-inner"><header><p>Questions, answered</p><h1>Tides of Knowing FAQ</h1><p>Find the reading or resource that fits what you want to explore.</p><nav aria-label="Choose an FAQ"><a href="/faq/" aria-current="page">Tides of Knowing</a> · <a href="/deck-creator-studio/faq/">Deck Creator Studio</a></nav></header>
+ <div class="faq-layout"><nav aria-label="FAQ categories"><h2>Find an answer</h2><ul>{tidesFaqSections.map(s=><li><a href={'#'+s.id}>{s.title}</a></li>)}</ul><details><summary>Find a specific question</summary><ul>{tidesFaqSections.flatMap(s=>s.questions.map(([q],index)=><li><a href={'#'+id(s.id,index)}>{q}</a></li>))}</ul></details></nav>
+ <div>{tidesFaqSections.map(s=><section id={s.id}><h2>{s.title}</h2>{s.questions.map(([q,a],index)=><article id={id(s.id,index)}><h3>{q}</h3><p>{a}</p></article>)}{s.id==='readings'&&<ul>{ASK_LEILIA_READINGS.map(r=><li><a href={r.requestHref}>{r.name}: {r.price}</a></li>)}</ul>}{s.id==='requests'&&<p><a href="/ask-leilia/">Compare the current readings and request options</a></p>}{s.id==='privacy'&&<p><a href="/privacy/">Read the Privacy Policy</a></p>}</section>)}</div></div>
+ </main>
+</BaseLayout>
+<style>.tides-faq{max-width:74rem;margin:2rem auto;line-height:1.65}.faq-layout{display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,3fr);gap:2rem}.faq-layout nav{align-self:start}.tides-faq article{margin:1.5rem 0;scroll-margin-top:6rem}.tides-faq h3{margin-bottom:.25rem}.tides-faq a:focus-visible{outline:3px solid #a47623;outline-offset:3px}@media(max-width:700px){.faq-layout{grid-template-columns:1fr;gap:0}}</style>

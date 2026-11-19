@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import StudioHeader from '../../../../../components/studio/StudioHeader.astro';
+import CompanionEntryEditor from '../../../../../components/studio/CompanionEntryEditor.astro';
+import StudioVersionHistory from '../../../../../components/studio/StudioVersionHistory.astro';
+import {studioReadAccessResponse,studioProjectWriteAccessResponse as studioWriteAccessResponse} from '../../../../../lib/studio/access';
+import {getStudioProjectWorkspace,getStudioGuidebookVersions} from '../../../../../lib/studio/queries';
+import '../../../../../styles/studio.css';
+export const prerender=false;
+const access=await studioReadAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase);if(access)return access;
+if(!Astro.params.id||!Astro.params.sectionId||!Astro.locals.supabase)return new Response(null,{status:404});
+const {project,cards,guidebook}=await getStudioProjectWorkspace(Astro.locals.supabase,Astro.params.id);if(!project||project.owner_id!==Astro.locals.user?.id)return new Response(null,{status:404});
+const section=Astro.params.sectionId==='new'?null:guidebook.find(s=>s.id===Astro.params.sectionId);if(Astro.params.sectionId!=='new'&&!section)return new Response(null,{status:404});
+const canWrite=!await studioWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,Astro.params.id),versions=section?await getStudioGuidebookVersions(Astro.locals.supabase,project.id,section.id):[];
+---
+<BaseLayout title={`Companion entry | ${project.name}`} description="Private reader-facing manuscript editor." metaRobots="noindex, nofollow" tdcPlacement="none" memberWorkspace={false} bodyClass="tok-body--studio"><main class="studio-page page-inner"><StudioHeader title={section?.title??'New companion section'} projectId={project.id}/><CompanionEntryEditor project={project} section={section} cards={cards} sections={guidebook} canWrite={canWrite}/>{section?<StudioVersionHistory kind="guidebook" versions={versions} projectId={project.id} resourceId={section.id} canWrite={canWrite} references={{cards:Object.fromEntries(cards.map(c=>[c.id,c.title]))}}/>:null}</main></BaseLayout>

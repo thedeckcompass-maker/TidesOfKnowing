@@ -1,55 +1,55 @@
 /* Member workspace: dedicated authenticated header (Practice Commons + admin) */
 
-:global(body.tok-body--member-workspace) {
+body.tok-body--member-workspace {
   --tok-header-height: 4.15rem;
 }
 
 @media (max-width: 900px) {
-  :global(body.tok-body--member-workspace) {
+  body.tok-body--member-workspace {
     --tok-header-height: 3.35rem;
   }
 }
 
-:global(body.tok-body--member-workspace #main-content) {
+body.tok-body--member-workspace #main-content {
   padding-top: var(--tok-header-height);
 }
 
-:global(body.tok-body--member-workspace .site-footer--workspace .site-footer__discover) {
+body.tok-body--member-workspace .site-footer--workspace .site-footer__discover {
   gap: 0.65rem 1rem;
 }
 
-:global(body.tok-body--member-workspace .site-footer--workspace .site-footer__discover-link:nth-child(n + 7)) {
+body.tok-body--member-workspace .site-footer--workspace .site-footer__discover-link:nth-child(n + 7) {
   display: none;
 }
 
-:global(body.tok-body--member-workspace .site-footer__inner) {
+body.tok-body--member-workspace .site-footer__inner {
   padding-top: 1.25rem;
   padding-bottom: 0.75rem;
 }
 
-:global(body.tok-body--member-workspace .site-footer__meta) {
+body.tok-body--member-workspace .site-footer__meta {
   padding-top: 0.65rem;
   padding-bottom: 1.25rem;
 }
 
-:global(body.tok-body--member-workspace .community--dashboard .community-hero) {
+body.tok-body--member-workspace .community--dashboard .community-hero {
   margin-top: 0;
 }
 
-:global(body.tok-body--member-workspace .community--dashboard .community-hero h1) {
+body.tok-body--member-workspace .community--dashboard .community-hero h1 {
   font-size: clamp(1.65rem, 5.5vw, 2.75rem);
   margin-bottom: 0.55rem;
 }
 
-:global(body.tok-body--member-workspace .community--dashboard) {
+body.tok-body--member-workspace .community--dashboard {
   padding-top: 0.65rem;
 }
 
-:global(body.tok-body--member-workspace .community-account) {
+body.tok-body--member-workspace .community-account {
   padding-top: 0.85rem;
 }
 
-:global(body.tok-body--member-workspace .ask-admin) {
+body.tok-body--member-workspace .ask-admin {
   padding-top: 0.85rem;
 }
 
@@ -201,7 +201,7 @@
 }
 
 @media (min-width: 901px) {
-  :global(body.tok-body--member-workspace) {
+  body.tok-body--member-workspace {
     --tok-header-height: 3.55rem;
   }
 

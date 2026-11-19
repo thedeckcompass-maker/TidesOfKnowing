@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {build} from 'esbuild';
+const require=createRequire(import.meta.url),built=await build({entryPoints:['src/lib/studio/exchangeSnapshotProvider.ts'],bundle:true,platform:'node',format:'cjs',write:false});
+const mod={exports:{}};new Function('module','exports','require',built.outputFiles[0].text)(mod,mod.exports,require);
+const owner='owner',project='project',snapshot={ownerId:owner,projectId:project,revision:7,rows:[]};
+let calls=[];const client={auth:{getUser:async()=>({data:{user:{id:owner}},error:null})},rpc:async name=>{calls.push(name);return name==='studio_exchange_export_snapshot_v1'?{data:null,error:null}:{data:snapshot,error:null}}};
+assert.deepEqual(await mod.exports.preparedExchangeSnapshotProvider(client).capture(owner,project),snapshot);
+assert.deepEqual(calls,['studio_exchange_export_snapshot_v1','studio_complimentary_exchange_export_snapshot_v1']);
+calls=[];client.rpc=async name=>{calls.push(name);return {data:null,error:{message:'unavailable'}}};
+await assert.rejects(()=>mod.exports.preparedExchangeSnapshotProvider(client).capture(owner,project),/No incomplete archive/);
+assert.deepEqual(calls,['studio_exchange_export_snapshot_v1']);
+await assert.rejects(()=>mod.exports.preparedExchangeSnapshotProvider(client).capture('foreign',project),/Sign in again/);
+console.log('PASS exchange export fallback: owner verified, legacy error fails closed, complimentary snapshot validated');

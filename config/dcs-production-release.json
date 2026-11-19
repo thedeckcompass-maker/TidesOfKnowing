@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "accountId": "bd6ec7740077c69b954f70cf9aa61c95",
+  "zoneId": "707ff76e871b7a78a4bdd8492b2d562a",
+  "worker": "tidesofknowing-consolidated",
+  "pages": "tidesofknowing",
+  "pagesId": "770284b7-07db-4b37-bec6-dda90d995641",
+  "productionBranch": "main",
+  "supabaseRef": "vbdqvjvhjleqdadiiqjx",
+  "acceptedPacket": ".build-temp/dcs-authorised-closeout-20261119",
+  "output": ".build-temp/dcs-production-release-20261119-v2",
+  "sourceManifest": "docs/DCS-CLOSEOUT-SOURCE-20261119.json",
+  "priorWorkerVersion": "09a58112-f999-40be-b631-7bb5848eab89",
+  "priorPagesDeployment": "14046671-08dc-4135-8bd0-f5eb4dcefbf5",
+  "bindingsFingerprint": "e7b4c9176ad315cea2d093e0d6a3595b64304dc7fd316235a461c355252f0a05",
+  "runtimeFingerprint": "4a29f243fccf22429414c679f088ae33172e2f103faa6ca4e0a4482173469c53",
+  "pagesConfigFingerprint": "dd835396a37c46513690b369f6ef7cb0d89c69bbb7af005f5d2cb6e191203e67",
+  "acceptedWorkerManifestSha256": "c7ac2ef3d5680d52a3c7794f9cb1775a5d2f410edb3ed4e95b966234b6b2a6fd",
+  "acceptedPagesManifestSha256": "745abeb842c84987cd8e7f0f94b5a6e138728d14a4ae6c76db3dbaa42d552e63",
+  "routes": [
+    {
+      "id": "4a7bca0172344bffa19c5b9a69de6470",
+      "pattern": "https://www.tidesofknowing.com/_dcs-assets/*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "d1263b5d5a2343a8a04e8137f3f5ef50",
+      "pattern": "https://www.tidesofknowing.com/auth/*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "29d80d618c564a699a6892b77299dda1",
+      "pattern": "https://www.tidesofknowing.com/community/account*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "0474610322af40ccb866026fc3a16a98",
+      "pattern": "https://www.tidesofknowing.com/api/ask-leilia/requests/*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "1bddc7349d3d43a7b0ec582489391158",
+      "pattern": "https://www.tidesofknowing.com/api/reading-library/*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "de4ba0b5bbbf40be834dac968538ab79",
+      "pattern": "https://www.tidesofknowing.com/api/studio*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "e7ce3de971b74be0aa8c0e5ffba4aec1",
+      "pattern": "https://www.tidesofknowing.com/api/artists/*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "2a980832828548a98e477955f57fcc54",
+      "pattern": "https://www.tidesofknowing.com/ask-leilia/admin/studio-*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "eca5aefacf904f3fb4e80be68e5a352e",
+      "pattern": "https://www.tidesofknowing.com/artists/collaborate*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "5eacbffbf9a24f518b1e4c7a1a183855",
+      "pattern": "https://www.tidesofknowing.com/artists/visual-design-exchange*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "9c02f3ec823a446ba54b5ad9adcb203e",
+      "pattern": "https://www.tidesofknowing.com/deck-creator-studio/checkout*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "64cf68c03d644b6888d681d8cbef90f1",
+      "pattern": "https://www.tidesofknowing.com/studio*",
+      "script": "tidesofknowing-consolidated"
+    },
+    {
+      "id": "43b4413a4b86483da19ab47dd8477758",
+      "pattern": "https://www.tidesofknowing.com/community/sections/deck-creator-studio*",
+      "script": "tidesofknowing-consolidated"
+    }
+  ]
+}

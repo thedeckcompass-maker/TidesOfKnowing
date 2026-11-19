@@ -1,0 +1,15 @@
+export default async function({assert,parseHTML,render,locals,provider,baseRow,empty,setInbox,post,parent,now,checks,fs,evidence}){
+ setInbox({...structuredClone(empty),counters:{...empty.counters,pillars:{spark:3}},total:0});
+ let html=await(await render(locals(),'?tab=log&pillar=visual-world')).text(),doc=parseHTML(html).document;
+ assert.deepEqual([...doc.querySelectorAll('.inbox-tabs>a')].map(x=>x.textContent),['Needs attention','Completed','Hidden content','Moderation history']);
+ assert.match(doc.querySelector('.inbox-view-help').textContent,/not outstanding work/);assert.match(doc.querySelector('.inbox-view-heading').textContent,/The Visual World/);
+ const spark=[...doc.querySelectorAll('.inbox-pillars>a')].find(a=>a.getAttribute('href').includes('pillar=spark'));assert.match(spark.getAttribute('href'),/tab=log/);assert.equal(spark.querySelector('strong').textContent,'3');assert.match(spark.getAttribute('aria-label'),/3 recorded actions/);
+ setInbox({...structuredClone(empty),counters:{...empty.counters,outstanding:1,pillars:{spark:1}},rows:[{...baseRow,state:'Opened'}],total:1});html=await(await render()).text();doc=parseHTML(html).document;assert(!doc.querySelector('.inbox-clear'));assert.equal(doc.querySelector('.inbox-tabs [aria-current=page]').textContent,'Needs attention');assert.match(doc.querySelector('.inbox-view-help').textContent,/Opening an item does not complete it/);
+ provider.communityRetentionStates=async()=>({[post]:{kept:false,event:null,preservedTest:true}});
+ provider.communityAdminRead=async()=>[{id:post,chapter:'spark',status:'hidden',question:'Synthetic preserved original question',author_username:'SyntheticCreator',updated_at:now,replies:[{id:parent,body:'Synthetic preserved nested context',status:'hidden',author_username:'SyntheticCreator',updated_at:now,parent_reply_id:null}]}];
+ html=await(await render(locals(),'?tab=hidden&thread='+post)).text();fs.writeFileSync(evidence+'/hidden-thread-render.html',html);doc=parseHTML(html).document;
+ assert.equal(doc.querySelectorAll('.inbox-thread-item').length,2);
+ for(const item of doc.querySelectorAll('.inbox-thread-item')){assert(!item.querySelector('header .inbox-actions'));const actions=item.querySelector('.inbox-thread-actions>.inbox-actions');assert(actions);assert(!actions.hasAttribute('open'));assert(actions.querySelector('.inbox-preserved-text'));assert(!actions.querySelector('.inbox-preserved-text').hasAttribute('open'));assert(actions.querySelector('[data-task-action=restore]'));assert(!actions.querySelector('[data-task-action=hide]'));assert(actions.textContent.includes('Kept — preserved test records'));assert(!item.querySelector(':scope > p'));}
+ const css=fs.readFileSync('src/styles/dcs-community-inbox.css','utf8');assert(css.includes('.inbox-thread-actions{margin-top:.75rem'));assert(css.includes('left:calc(100% + .6rem)'));assert(css.includes('@media(max-width:600px)'));
+ checks.push('Obvious attention/completed controls and accurate view labels; preserved hidden text grouped in each item Actions menu below its heading, right-opening on desktop with narrow-screen fallback');
+}

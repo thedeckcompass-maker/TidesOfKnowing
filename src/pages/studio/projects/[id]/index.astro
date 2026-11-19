@@ -1,26 +1,41 @@
 ---
+import CreatorCapture from '../../../../components/studio/CreatorCapture.astro';
+import ProjectWalkthrough from '../../../../components/studio/ProjectWalkthrough.astro';
+import StudioCardSearch from "../../../../components/studio/StudioCardSearch.astro";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import StudioHeader from "../../../../components/studio/StudioHeader.astro";
-import { studioAccessResponse } from "../../../../lib/studio/access";
+import { studioAccountAccessResponse, studioProjectWriteAccessResponse } from "../../../../lib/studio/access";
 import { getStudioProjectWorkspace } from "../../../../lib/studio/queries";
 import { studioDeckTypeLabel, studioPathwayLabel } from "../../../../lib/studio/types";
 import "../../../../styles/studio.css";
 
 export const prerender = false;
 
-const accessResponse = studioAccessResponse(Astro.locals.user, Astro.locals.profile);
-if (accessResponse) return accessResponse;
 const projectId = Astro.params.id;
+if(!Astro.locals.user&&projectId&&/^[0-9a-f-]{36}$/i.test(projectId))return Astro.redirect('/auth/login/?redirectTo='+encodeURIComponent('/studio/projects/'+projectId+'/'));
+const deskPath='/studio/creators-desk/';
+const bookmarkHref=['127.0.0.1','localhost'].includes(Astro.url.hostname)?deskPath:new URL(deskPath,Astro.site??Astro.url.origin).href;
+const accessResponse = await studioAccountAccessResponse(Astro.locals.user, Astro.locals.profile, Astro.locals.supabase);
+if (accessResponse) return accessResponse;
 if (!projectId || !Astro.locals.supabase) return new Response(null, { status: 404 });
 
 const workspace = await getStudioProjectWorkspace(Astro.locals.supabase, projectId);
-if (!workspace.project) return new Response(null, { status: 404 });
+if (!workspace.project || workspace.project.owner_id !== Astro.locals.user?.id) return new Response(null, { status: 404 });
 const { project, families, cards, guidebook } = workspace;
+const walkthrough=Astro.url.searchParams.get('view')==='walkthrough';
+if(Astro.url.searchParams.get('view')!=='project'&&!walkthrough)return Astro.redirect('/studio/projects/'+project.id+'/my-deck/');
+if(await studioProjectWriteAccessResponse(Astro.locals.user,Astro.locals.profile,Astro.locals.supabase,project.id))return Astro.redirect('/studio/projects/'+project.id+'/project-book/',303);
 const saved = Astro.url.searchParams.get("saved");
 const created = Astro.url.searchParams.get("created") === "1";
 const error = Astro.url.searchParams.get("error");
 const completedCards = cards.filter((card) => card.status === "complete").length;
 const completedSections = guidebook.filter((section) => section.status === "complete").length;
+const cardById = new Map(cards.map((card) => [card.id, card]));
+const familySections = families.map((family) => ({
+  family,
+  cards: cards.filter((card) => card.family_id === family.id),
+}));
+const unassignedCards = cards.filter((card) => !card.family_id || !families.some((family) => family.id === card.family_id));
 ---
 
 <BaseLayout
@@ -31,92 +46,21 @@ const completedSections = guidebook.filter((section) => section.status === "comp
   memberWorkspace={false}
   bodyClass="tok-body--studio"
 >
-  <main class="studio-page page-inner">
-    <StudioHeader
-      eyebrow={`${studioDeckTypeLabel[project.deck_type]} · ${studioPathwayLabel[project.pathway]}`}
-      title={project.name}
-      lede={project.promise || project.purpose || "Shape the deck system, write each card and build the guidebook in one private workspace."}
-      projectId={project.id}
-    />
+  <main class="studio-page page-inner creator-desk-page">
+    {walkthrough ? <ProjectWalkthrough project={project}/> : <>
+    {Astro.url.searchParams.get('editor_saved')==='1'?<p class="studio-notice" role="status">Your writing was saved. You are back in {project.name}.</p>:null}
+    {Astro.url.searchParams.get('unchanged')==='1'?<p class="studio-notice" role="status">No changes to save. You are back in {project.name}; your existing version is unchanged.</p>:null}
+    {Astro.url.searchParams.get('journal_created') && /^[a-f0-9-]{36}$/i.test(Astro.url.searchParams.get('journal_created')??'')?<p class="studio-notice" role="status">Journal entry saved in {project.name}. <a href={`/studio/projects/${project.id}/journal/${Astro.url.searchParams.get('journal_created')}/`}>Open saved entry</a> or <a href={`/studio/projects/${project.id}/journal/${Astro.url.searchParams.get('journal_created')}/#journal-photographs`}>add photographs</a>.</p>:null}
+
+    <nav class="studio-breadcrumbs" aria-label="Project breadcrumb"><a href="/studio/">Projects</a><span aria-hidden="true"> / </span><span>Project inspiration</span></nav><header class="creator-desk-heading"><p class="studio-eyebrow">{project.name}</p><h1>Project inspiration</h1></header>
 
     {created ? <p class="studio-notice" role="status">Project created. Add the structure you already know, then refine it as the deck develops.</p> : null}
     {saved ? <p class="studio-notice" role="status">Changes saved.</p> : null}
     {error ? <p class="studio-notice" role="alert">{error}</p> : null}
 
-    <div class="studio-grid">
-      <section class="studio-panel studio-panel--wide" aria-labelledby="pulse-heading">
-        <p class="studio-kicker">Whole-deck view</p>
-        <h2 id="pulse-heading">Project pulse</h2>
-        <div class="studio-stats">
-          <div class="studio-stat"><strong>{cards.length}</strong> cards scaffolded</div>
-          <div class="studio-stat"><strong>{completedCards}</strong> cards complete</div>
-          <div class="studio-stat"><strong>{completedSections}/{guidebook.length}</strong> guidebook sections complete</div>
-        </div>
-        <p class="studio-panel__intro"><strong>Next action:</strong> {project.next_action || "Choose the next concrete piece of work."}</p>
-        {project.current_risk ? <p><strong>Current risk:</strong> {project.current_risk}</p> : null}
-      </section>
 
-      <section class="studio-panel studio-panel--side" aria-labelledby="settings-heading">
-        <p class="studio-kicker">Editable</p>
-        <h2 id="settings-heading">Project settings</h2>
-        <details>
-          <summary>Edit purpose, pathway and progress</summary>
-          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}`}>
-            <label class="studio-field"><span>Project name</span><input name="name" required maxlength="120" value={project.name} /></label>
-            <label class="studio-field"><span>Deck type</span><select name="deck_type"><option value="oracle" selected={project.deck_type === "oracle"}>Oracle</option><option value="tarot" selected={project.deck_type === "tarot"}>Tarot</option><option value="hybrid" selected={project.deck_type === "hybrid"}>Hybrid</option></select></label>
-            <label class="studio-field"><span>Pathway</span><select name="pathway"><option value="personal" selected={project.pathway === "personal"}>Personal or gift edition</option><option value="independent" selected={project.pathway === "independent"}>Independent publication</option><option value="commercial" selected={project.pathway === "commercial"}>Commercial or crowdfunded launch</option></select></label>
-            <label class="studio-field"><span>Status</span><select name="status"><option value="planning" selected={project.status === "planning"}>Planning</option><option value="writing" selected={project.status === "writing"}>Writing</option><option value="artwork" selected={project.status === "artwork"}>Artwork</option><option value="production" selected={project.status === "production"}>Production</option><option value="complete" selected={project.status === "complete"}>Complete</option><option value="archived" selected={project.status === "archived"}>Archived</option></select></label>
-            <label class="studio-field"><span>Deck size</span><input name="deck_size" type="number" min="1" max="240" value={project.deck_size ?? ""} /></label>
-            <label class="studio-field"><span>Purpose</span><textarea name="purpose">{project.purpose}</textarea></label>
-            <label class="studio-field"><span>Intended reader</span><textarea name="intended_reader">{project.intended_reader}</textarea></label>
-            <label class="studio-field"><span>Core promise</span><textarea name="promise">{project.promise}</textarea></label>
-            <label class="studio-field"><span>Project description</span><textarea name="description">{project.description}</textarea></label>
-            <label class="studio-field"><span>Next action</span><textarea name="next_action">{project.next_action}</textarea></label>
-            <label class="studio-field"><span>Current risk</span><textarea name="current_risk">{project.current_risk}</textarea></label>
-            <button class="studio-button" type="submit">Save settings</button>
-          </form>
-        </details>
-      </section>
-
-      <section id="cards" class="studio-panel studio-panel--wide" aria-labelledby="cards-heading">
-        <p class="studio-kicker">Card workspace</p>
-        <h2 id="cards-heading">Cards</h2>
-        <p class="studio-panel__intro">Order the whole deck, track progress and open a card for structured writing, research and artwork notes.</p>
-        {cards.length ? (
-          <ul class="studio-list">
-            {cards.map((card) => (
-              <li class="studio-card">
-                <div class="studio-card__row">
-                  <div><p class="studio-meta">{card.card_number || `Position ${card.sort_order}`} · version {card.version_number}</p><h3>{card.title}</h3></div>
-                  <div><span class="studio-status">{card.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/cards/${card.id}/`}>Write card</a></div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : <p class="studio-empty">No cards have been scaffolded yet.</p>}
-      </section>
-
-      <section class="studio-panel studio-panel--side" aria-labelledby="add-card-heading">
-        <p class="studio-kicker">Add structure</p>
-        <h2 id="add-card-heading">Add a card</h2>
-        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/cards`}>
-          <label class="studio-field"><span>Title</span><input name="title" required maxlength="120" /></label>
-          <label class="studio-field"><span>Card number or label</span><input name="card_number" maxlength="30" /></label>
-          <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={cards.length} required /></label>
-          <label class="studio-field"><span>Family</span><select name="family_id"><option value="">No family</option>{families.map((family) => <option value={family.id}>{family.name}</option>)}</select></label>
-          <button class="studio-button" type="submit">Create card</button>
-        </form>
-        <details>
-          <summary>Add a card family</summary>
-          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/families`}>
-            <label class="studio-field"><span>Family name</span><input name="name" required maxlength="80" /></label>
-            <label class="studio-field"><span>Description</span><textarea name="description" maxlength="1000"></textarea></label>
-            <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={families.length} required /></label>
-            <button class="studio-button" type="submit">Create family</button>
-          </form>
-        </details>
-      </section>
-
+    {!(project.settings as Record<string, any>)?.guidebook_outline_v1?.setupConfirmed&&<p class="studio-notice">Before writing your card entries, <a href={`/studio/projects/${project.id}/guidebook-outline/?setup=1`}>save your guidebook structure</a>. Existing work stays available.</p>}
+    <p><a href="/studio/creators-desk/">Open your standalone Creator’s Desk</a>. The inspiration below belongs to this project.</p><CreatorCapture project={project} cards={cards}/>    <nav class="desk-links" aria-label="Creator’s Desk"><a href={`/studio/projects/${project.id}/journey/?chapter=expression#expression-cards-title`}>Work on my cards</a><a href={`/studio/projects/${project.id}/creative-direction/`}>Creative direction</a><a href={`/studio/projects/${project.id}/guidebook-outline/`}>Design your guidebook</a><a href={`/studio/projects/${project.id}/journey/`}>Eight Sections</a><a href={`/studio/projects/${project.id}/project-book/`}>Project Workbook</a><a href={`/studio/projects/${project.id}/journal/`}>Private journal</a><a href={`/studio/projects/${project.id}/exports/`}>Exports</a></nav><details class="desk-card-management"><summary>Manage book sections</summary><div class="studio-grid studio-card-first" >
       <section id="guidebook" class="studio-panel studio-panel--wide" aria-labelledby="guidebook-heading">
         <p class="studio-kicker">Versioned manuscript</p>
         <h2 id="guidebook-heading">Guidebook</h2>
@@ -126,8 +70,14 @@ const completedSections = guidebook.filter((section) => section.status === "comp
             {guidebook.map((section) => (
               <li class="studio-card">
                 <div class="studio-card__row">
-                  <div><p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p><h3>{section.title}</h3></div>
-                  <div><span class="studio-status">{section.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/guidebook/${section.id}/`}>Edit section</a></div>
+                  <div>
+                    <p class="studio-meta">{section.section_type.replaceAll("_", " ")} · version {section.version_number}</p>
+                    <h3>{section.title}</h3>
+                    {section.card_id && cardById.get(section.card_id) ? (
+                      <p class="studio-relationship">Card this section belongs to: <a href={`/studio/projects/${project.id}/cards/${section.card_id}/`}>{cardById.get(section.card_id)?.title}</a></p>
+                    ) : null}
+                  </div>
+                  <div><span class="studio-status">{section.status}</span> <a class="studio-link-button" href={`/studio/projects/${project.id}/guidebook/${section.id}/`}>Open manuscript</a></div>
                 </div>
               </li>
             ))}
@@ -138,13 +88,50 @@ const completedSections = guidebook.filter((section) => section.status === "comp
       <section class="studio-panel studio-panel--side" aria-labelledby="add-guidebook-heading">
         <p class="studio-kicker">Manuscript structure</p>
         <h2 id="add-guidebook-heading">Add a section</h2>
-        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/guidebook`}>
+        <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}/guidebook`}><label class="studio-field"><span>Start with a book section (optional)</span><input type="hidden" name="book_surface" value="section"/><input type="hidden" name="book_placement" value="front"/><input type="hidden" name="book_format" value="undecided"/><select data-book-section-kind><option value="">Custom section</option><option value="Front cover|front_matter|front-cover">Front cover</option><option value="Inside front cover|front_matter|inside-front">Inside front cover</option><option value="Card entries|chapter|card-entries">Card entries (position in book)</option><option value="Inside back cover|closing|inside-back">Inside back cover</option><option value="Back cover|closing|back-cover">Back cover</option><option value="Spine|closing|spine">Spine</option><option value="Title page|front_matter|title-page">Title page</option><option value="Copyright and publication details|front_matter|copyright">Copyright and publication details</option><option value="Credits|front_matter|credits">Credits</option><option value="Dedication|front_matter">Dedication</option><option value="Introduction|front_matter">Introduction</option><option value="How to use this deck|instructions">How to use this deck</option><option value="About the author|closing|author-bio">Author biography</option><option value="About the artist|closing|artist-bio">Artist biography</option><option value="Acknowledgements|closing">Acknowledgements</option><option value="References|closing">References</option><option value="Resources and contact|closing">Resources and contact</option><option value="Closing note|closing">Closing note</option></select></label><p data-book-section-help role="status">Choose only the sections your book needs. You can rename and reorder them.</p>
           <label class="studio-field"><span>Title</span><input name="title" required maxlength="160" /></label>
           <label class="studio-field"><span>Section type</span><select name="section_type"><option value="front_matter">Front matter</option><option value="card_entry">Card entry</option><option value="instructions">Instructions</option><option value="chapter">Chapter</option><option value="closing">Closing material</option><option value="other">Other</option></select></label>
-          <label class="studio-field"><span>Order</span><input name="sort_order" type="number" min="0" max="999" value={guidebook.length} required /></label>
+          <label class="studio-field"><span>Card this section belongs to (optional)</span><select name="card_id"><option value="">General section - no card</option>{familySections.map(({ family, cards: familyCards }) => familyCards.length ? <optgroup label={family.name}>{familyCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null)}{unassignedCards.length ? <optgroup label="Unassigned">{unassignedCards.map((card) => <option value={card.id}>{card.card_number ? `${card.card_number} · ` : ""}{card.title}</option>)}</optgroup> : null}</select></label>
+          <label class="studio-field"><span>Manuscript sort position</span><small>Section order is separate from card number; gaps leave room for other sections.</small><input name="sort_order" type="number" min="0" max="999" value={guidebook.length} required /></label>
           <button class="studio-button" type="submit">Create section</button>
         </form>
       </section>
     </div>
+    </details><details id="project-administration" class="studio-secondary-tools"><summary>Project settings and progress</summary>    {(project.settings as Record<string, any>)?.editorial_history_v1?.records?.length?<p><a href={`/studio/projects/${project.id}/editorial/`}>Read imported private editorial history</a> — archived evidence, not active requests.</p>:null}<div class="studio-grid">      
+
+      <section class="studio-panel studio-panel--side" aria-labelledby="settings-heading">
+        <p class="studio-kicker">Editable</p>
+        <h2 id="settings-heading">Project settings</h2>
+        <details>
+          <summary>Edit purpose, pathway and progress</summary>
+          <form class="studio-form" method="post" action={`/api/studio/projects/${project.id}`}>
+            <input type="hidden" name="expected_updated_at" value={project.updated_at} />
+            <label class="studio-field"><span>Project name</span><input name="name" required maxlength="120" value={project.name} /></label>
+            <label class="studio-field"><span>Deck type</span><select name="deck_type"><option value="oracle" selected={project.deck_type === "oracle"}>Oracle</option><option value="tarot" selected={project.deck_type === "tarot"}>Tarot</option><option value="hybrid" selected={project.deck_type === "hybrid"}>Custom</option></select></label>
+            <label class="studio-field"><span>Pathway</span><select name="pathway"><option value="personal" selected={project.pathway === "personal"}>Personal or gift edition</option><option value="independent" selected={project.pathway === "independent"}>Independent publication</option><option value="commercial" selected={project.pathway === "commercial"}>Commercial or crowdfunded launch</option></select></label>
+            <label class="studio-field"><span>Status</span><select name="status"><option value="planning" selected={project.status === "planning"}>Planning</option><option value="writing" selected={project.status === "writing"}>Writing</option><option value="artwork" selected={project.status === "artwork"}>Artwork</option><option value="production" selected={project.status === "production"}>Production</option><option value="complete" selected={project.status === "complete"}>Complete</option><option value="archived" selected={project.status === "archived"}>Archived</option></select></label>
+            <label class="studio-field"><span>Deck size</span><input name="deck_size" type="number" min="1" max="240" value={project.deck_size ?? ""} /></label>
+            <label class="studio-field"><span>What will this deck help people explore or do?</span><small>Describe its central intention and hoped-for use.</small><textarea name="purpose">{project.purpose}</textarea></label>
+            <label class="studio-field"><span>Intended reader</span><textarea name="intended_reader">{project.intended_reader}</textarea></label>
+            <label class="studio-field"><span>Core promise</span><textarea name="promise">{project.promise}</textarea></label>
+            <label class="studio-field"><span>Project description</span><textarea name="description">{project.description}</textarea></label>
+            <label class="studio-field"><span>Next action</span><textarea name="next_action">{project.next_action}</textarea></label>
+            <label class="studio-field"><span>Current risk</span><textarea name="current_risk">{project.current_risk}</textarea></label>
+            <button class="studio-button" type="submit">Save settings</button>
+          </form>
+        </details>
+      </section>
+
+</div></details>
+    </>}
   </main>
 </BaseLayout>
+
+<script>document.querySelectorAll<HTMLSelectElement>('[data-book-section-kind]').forEach(select=>{let suggested='';const kindField=select.form!.elements.namedItem('section_type') as HTMLSelectElement;kindField.addEventListener('change',()=>{(select.form!.elements.namedItem('book_placement') as HTMLInputElement).value=kindField.value==='closing'?'back':['front_matter','instructions'].includes(kindField.value)?'front':'body';});select.addEventListener('change',()=>{const form=select.form!,title=form.elements.namedItem('title') as HTMLInputElement,type=form.elements.namedItem('section_type') as HTMLSelectElement,help=form.querySelector('[data-book-section-help]')!;const [name,kind,surface='section']=select.value.split('|');if(!name){(form.elements.namedItem('book_surface') as HTMLInputElement).value='section';return;}if(title.value&&title.value!==suggested){help.textContent='Your title is unchanged. Clear it first if you want to use the suggested section name.';return}title.value=name;type.value=kind;(form.elements.namedItem('book_surface') as HTMLInputElement).value=surface;(form.elements.namedItem('book_placement') as HTMLInputElement).value=kind==='closing'?'back':kind==='chapter'?'body':'front';suggested=name;title.dispatchEvent(new Event('input',{bubbles:true}));type.dispatchEvent(new Event('change',{bubbles:true}));help.textContent=kind==='front_matter'&&name.startsWith('Copyright')?'Add your own publication, rights and credit details in the section editor. ISBN and legal wording are optional and are not supplied automatically.':'Create this section, then write its content in the editor. You can rename or reorder it later.';});});</script>
+
+<style>.desk-links{display:flex;flex-wrap:wrap;gap:.7rem 1.2rem;padding:1rem 0;border-block:1px solid #cdbb8b;margin:1rem 0 1.5rem}.desk-links a{min-height:32px;display:inline-flex;align-items:center}</style>
+<style>.studio-field > small {display:block;line-height:1.5;margin-block:.25rem .5rem;max-width:64ch}</style>
+
+<style>.creator-desk-page{padding-top:1.2rem}.creator-desk-heading{margin:.6rem 0 1rem}.creator-desk-heading h1{font:400 clamp(1.65rem,2.8vw,2.3rem)/1.15 'Playfair Display',Georgia,serif;margin:.2rem 0}.creator-desk-heading .studio-eyebrow{margin:0}.creator-desk-page .desk-links{margin:.7rem 0;padding:.5rem 0;gap:.35rem 1.1rem}.desk-card-management{margin:1rem 0}.desk-card-management>summary{cursor:pointer;font-weight:600;padding:.65rem 0}.desk-card-management [id]{scroll-margin-top:5rem}</style>
+<script>const openDeskTarget=()=>{const id=decodeURIComponent(location.hash.slice(1));if(!id)return;if(id==='cards'||id==='add-card'||id.startsWith('family-')){location.replace(location.pathname+'journey/?chapter=expression#'+(id==='add-card'?'add-card':'expression-cards-title'));return;}const target=document.getElementById(id);const container=target?.closest<HTMLDetailsElement>('.desk-card-management');if(container){container.open=true;requestAnimationFrame(()=>target?.scrollIntoView({block:'start'}));}};window.addEventListener('hashchange',openDeskTarget);openDeskTarget();</script>
+<style>.creator-desk-heading{position:relative}.desk-bookmark{font-size:.85rem;margin-top:.5rem}.desk-bookmark summary{cursor:pointer;min-height:28px}.desk-bookmark p{max-width:60ch;line-height:1.5;margin:.5rem 0}@media(min-width:1000px){.desk-bookmark{position:absolute;right:0;top:0;max-width:28rem}.desk-bookmark[open]{position:static;margin-left:auto}}</style>

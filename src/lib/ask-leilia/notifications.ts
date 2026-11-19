@@ -6,8 +6,8 @@ import { readingTypeLabel, type AskLeiliaDbReadingType } from "./readingTypes";
 import { cardPreferenceLabel, type AskLeiliaCardPreference, type AskLeiliaStatus } from "./types";
 
 function notifyEmail(locals?: unknown): string {
-  const runtimeEnv = (locals as { runtime?: { env?: Record<string, string | undefined> } } | undefined)
-    ?.runtime?.env;
+  const runtimeEnv = (locals as { serverRuntime?: { env?: Record<string, string | undefined> } } | undefined)
+    ?.serverRuntime?.env;
   return (
     runtimeEnv?.ASK_LEILIA_NOTIFY_EMAIL ??
     (import.meta.env.ASK_LEILIA_NOTIFY_EMAIL as string | undefined) ??

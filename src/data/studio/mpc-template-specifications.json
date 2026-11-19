@@ -1,0 +1,163 @@
+{
+  "verifiedOn": "2026-11-17",
+  "sourceBase": "https://www.makeplayingcards.com/dl/templates/playingcard/",
+  "templates": {
+    "tarot": {
+      "canvas": [
+        2.99,
+        4.99
+      ],
+      "safe": [
+        2.51,
+        4.51
+      ],
+      "dpi": 300,
+      "sha256": "ed20b809c97d66f9e28fded50b8a2baf7ac9fcd15d9e570a278b134ed1910d57"
+    },
+    "jumbo": {
+      "canvas": [
+        3.74,
+        5.24
+      ],
+      "safe": [
+        3.25,
+        4.75
+      ],
+      "dpi": 300,
+      "sha256": "bd3a45e85c74285694b9527b059655000f9a3c4a683ba4cb513737ac2de6518d",
+      "rasterSource": {
+        "file": "Jumbo-sizes.psd",
+        "pixels": [
+          1122,
+          1572
+        ],
+        "dpi": 300,
+        "sha256": "8685f24cc4181665c59275609848e905cba572b133c0ae976aa92ce4e7e7aeb8"
+      },
+      "vectorSource": {
+        "file": "Jumbo-sizes.ai",
+        "sha256": "35cce4a238fe4f8483f13d9265d9ca2fd1d204b0d2db51d31dc65e42493d8cd6"
+      },
+      "reconciliation": "PSD document header is 1122 × 1572 at 300 DPI; Illustrator artboard is 269.28 × 377.28 points (3.74 × 5.24 inches). Both agree with the physical full canvas. The rotated PDF full-canvas label 1570 × 1120 is inconsistent with these source documents, not a different supported resolution."
+    },
+    "large": {
+      "canvas": [
+        3.74,
+        5.99
+      ],
+      "safe": [
+        3.26,
+        5.51
+      ],
+      "dpi": 300,
+      "sha256": "e0a71487b4a982d10c40579a6aaaf0754046aa77881960200a2b2a31b63429f2"
+    },
+    "poker-standard": {
+      "canvas": [
+        2.72,
+        3.7
+      ],
+      "safe": [
+        2.28,
+        3.27
+      ],
+      "dpi": 300,
+      "sha256": "fcb9e8c0623427a8b1f8a7c24c87acf5b1b4ac344fa074886bb99f45c03a8aa5"
+    },
+    "poker-traditional": {
+      "canvas": [
+        2.74,
+        3.74
+      ],
+      "safe": [
+        2.3,
+        3.3
+      ],
+      "dpi": 300,
+      "sha256": "e5d44308556e025364b43a50c4c44567d2355ec1451c00244eccae5e781affc1"
+    },
+    "bridge": {
+      "canvas": [
+        2.49,
+        3.74
+      ],
+      "safe": [
+        2.05,
+        3.3
+      ],
+      "dpi": 300,
+      "sha256": "37ea0afa5eeeca262402a2460cfe6579205fc5af60f170bd5edbbc357874b3be"
+    },
+    "square-2-5": {
+      "canvas": [
+        2.74,
+        2.74
+      ],
+      "safe": [
+        2.3,
+        2.3
+      ],
+      "dpi": 300,
+      "sha256": "a4f21f52537312e340aa91115c94d4a6781fa7e193c2e09943e624a6912b8280",
+      "issue": "Full canvas is verified as 822 × 822 pixels at 300 DPI from the PSD. The PDF/Illustrator safe-area labels disagree: 2.3 inches calculates to 690 pixels, but the printed label says 685. The Illustrator artboard also differs slightly from the PSD. Existing 2.3-inch working guides are retained, not newly certified. Confirm the final safe boundary and production template with MPC before printing.",
+      "rasterSource": {
+        "file": "2-5X2-5-square-size-card.psd",
+        "pixels": [
+          822,
+          822
+        ],
+        "dpi": 300,
+        "sha256": "81f9fe6575af4123a17e151244964a6d101ac3685cd94c3effd44e028f40b8ac"
+      },
+      "vectorSource": {
+        "file": "2-5X2-5-square-size-card.ai",
+        "sha256": "87af5b6df6880d19d2baae4cbdb65df7fe8310c705bfe3dae43312f62247fdb9"
+      },
+      "reconciliation": "PSD document header is 822 × 822 at 300 DPI, agreeing with the labelled 2.74-inch full canvas. Illustrator artboard is 197.008 points (2.73622 inches), approximately one pixel smaller when rounded at 300 DPI. Its printed 820-pixel full-canvas label remains inconsistent with the PSD, not an exact alternate DPI specification."
+    },
+    "square-2-75": {
+      "canvas": [
+        2.99,
+        2.99
+      ],
+      "safe": [
+        2.51,
+        2.51
+      ],
+      "dpi": 300,
+      "sha256": "84702258765ebdf5dad852d6c5a20943508d9b47d3902c7165393f663d255986",
+      "issue": "Full canvas is verified as 897 × 897 pixels at 300 DPI from the PSD. The PDF/Illustrator safe and trim labels disagree: 2.51 and 2.75 inches calculate to 753 and 825 pixels, but the printed labels say 759 and 830. The Illustrator artboard also differs slightly from the PSD. Existing physical working guides are retained, not newly certified. Confirm the final safe/trim boundaries and production template with MPC before printing.",
+      "rasterSource": {
+        "file": "2_75square.psd",
+        "pixels": [
+          897,
+          897
+        ],
+        "dpi": 300,
+        "sha256": "9866bbb487d618837b61c65a7f39cdc6053a38c2a0da93a9e999f0accb4c79b3"
+      },
+      "vectorSource": {
+        "file": "2_75square.ai",
+        "sha256": "1280ee8dff81e509f14ca44eb2718069597e219319ece4a8672f7cd6cb43ba3b"
+      },
+      "reconciliation": "PSD document header is 897 × 897 at 300 DPI, agreeing with the labelled 2.99-inch full canvas. Illustrator artboard is 215.008 points (2.98622 inches), approximately one pixel smaller when rounded at 300 DPI. This explains a one-pixel rounded canvas variation, but not the 759-pixel safe or 830-pixel trim labels."
+    },
+    "square-3-5": {
+      "canvas": [
+        3.74,
+        3.74
+      ],
+      "safe": [
+        3.26,
+        3.26
+      ],
+      "dpi": 300,
+      "sha256": "512c5723e5d167160819822591e432157f9978ed064fbdc1b07f9022ed2ab3c1"
+    }
+  },
+  "verificationSources": [
+    "https://www.makeplayingcards.com/pops/pc-temp-guide.html",
+    "https://www.makeplayingcards.com/pops/faq-photo.html",
+    "https://www.makeplayingcards.com/design/custom-3-5-x-5-game-cards.html"
+  ]
+}

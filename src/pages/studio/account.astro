@@ -1,0 +1,63 @@
+---
+import BillingAccount from "../../components/studio/BillingAccount.astro";
+import ServiceAttention from "../../components/studio/ServiceAttention.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CommunityUsername from '../../components/community/CommunityUsername.astro';
+import { usernameFormAction } from '../../lib/community/usernameSave';
+import StudioHeader from '../../components/studio/StudioHeader.astro';
+import '../../styles/studio.css';
+if(!Astro.locals.user) return Astro.redirect('/auth/login/',303);
+Astro.response.headers.set('Cache-Control','private, no-store');
+let usernameError='',usernameDraft='';
+let savedUsername: string | null = null;
+if (Astro.locals.supabase) {
+  const {data, error: lookupError} = await Astro.locals.supabase
+    .from('community_usernames')
+    .select('username')
+    .eq('user_id', Astro.locals.user.id)
+    .maybeSingle();
+  if (!lookupError) savedUsername = data?.username ?? null;
+}
+if(Astro.request.method==='POST'){
+ const outcome=await usernameFormAction(Astro.request,Astro.locals.supabase,Astro.locals.user.id,'/studio/account/');
+ if(outcome.response)return outcome.response;
+ usernameError=outcome.error??'';usernameDraft=outcome.draft;Astro.response.status=outcome.status??400;
+}
+---
+<BaseLayout title="Your private account | Tides of Knowing" description="Your private Tides account details." metaRobots="noindex, nofollow" memberWorkspace={false}>
+<main class="studio-page page-inner account-page"><StudioHeader title="Your Studio account" />
+<div class="account-toolbar"><nav aria-label="Account sections"><a href="#account-details">Account details</a><a href="#services">Program</a><a href="/studio/editorial-support/?view=groups">Group sessions</a><a href="/studio/editorial-support/?view=consultations">Consultations</a><a href="/studio/editorial-support/?view=reviews">Assessments</a><a href="/studio/editorial-support/?view=additional">Additional support</a></nav><a class="community-button" href="/studio/community/">Community</a></div>
+<section id="services"><h2>Your program and support</h2><p><a href="/studio/editorial-support/">Open Editorial Support</a> for your programme and requests.</p><p>Your recorded programme, activity and service requests are available in <a href="/studio/editorial-support/">Your Editorial Partnership</a>.</p><p id="request-additional-quote"><a href="/studio/editorial-support/?view=additional">Enquire about additional editorial work</a>.</p></section><ServiceAttention/>
+<section id="account-details" class="account-card"><h2>Account details</h2><p>Your name and email are private. Your community posts use your public username.</p>
+<dl class="account-identity"><div><dt>Name</dt><dd>{Astro.locals.profile?.display_name || 'Not supplied'}</dd></div><div><dt>Email</dt><dd>{Astro.locals.user.email}</dd></div></dl>
+<CommunityUsername compact username={savedUsername} action="/studio/account/" draft={usernameDraft} error={usernameError} success={Astro.url.searchParams.get('usernameSaved')==='1'}/>
+<a href="/community/account/?workspace=studio">Community account settings</a></section>
+<BillingAccount/>
+</main></BaseLayout>
+<style is:global>
+.account-page{max-width:82rem;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,3.5rem)!important}.account-page p{max-width:65ch}.account-toolbar{display:flex;gap:1rem;align-items:start;justify-content:space-between;margin:1rem 0}.account-toolbar nav{display:flex;flex-wrap:wrap;gap:.4rem .6rem}.account-toolbar a{display:inline-flex;align-items:center;min-height:44px;padding:.35rem .75rem;box-sizing:border-box;border:1px solid #ad9b79;border-radius:.3rem;font-size:.95rem}.account-toolbar .community-button{background:#d5ba7b;color:#173f46;white-space:nowrap}.account-card{padding:1.25rem 1.5rem;background:#fffaf0;color:#173f46;border:1px solid #c6bcae;border-radius:.4rem}.account-card :is(h2,h3,p,dt,dd,label){color:#173f46}.account-card h2{margin:0;font-size:1.35rem}.account-identity{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.8rem 0}.account-identity dt{font-weight:700}.account-identity dd{margin:.15rem 0;overflow-wrap:anywhere}.account-page .community-username-settings{max-width:none;margin:.8rem 0;border-top:1px solid #c6bcae;padding-top:.7rem}.account-page .community-username-settings h3{font-size:1.1rem;margin:0}.account-page .community-username-settings p{font-size:.95rem;margin:.4rem 0}.account-page .community-username-settings form{grid-template-columns:minmax(12rem,26rem) auto;gap:.4rem 1rem;align-items:center;max-width:65ch}.account-page .community-username-settings label,.account-page #username-help,.account-page [data-username-feedback],.account-page [data-username-progress]{grid-column:1/-1}.account-page .community-username-settings input{grid-column:1;grid-row:2;min-height:44px;padding:.45rem .7rem}.account-page .community-username-settings button{grid-column:2;grid-row:2;min-height:44px;padding:.45rem .75rem;font-size:.9rem}.account-page :is(button,select){min-height:44px}.account-page :focus-visible{outline:3px solid #b88b37;outline-offset:4px}.account-page [id]{scroll-margin-top:10rem}.account-page .service-records{max-width:none}.account-page .service-records>article{padding:1.25rem 1.5rem;background:#fffaf0;color:#173f46;border:1px solid #c6bcae;border-radius:.4rem;margin:1rem 0}.account-page .service-records>article :is(h2,h3,h4,p,dt,dd,label){color:#173f46}.account-page .service-records>article>h2{margin:0;font-size:1.4rem}.account-page .service-records dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:.75rem}.account-page .service-records dl>div{background:#e8efec;border-left:3px solid #527c76;padding:.7rem 1rem}.account-page .service-records .actions{gap:.5rem}.account-page .service-records form{margin:.4rem 0}.account-page .service-records button{font-size:.9rem;padding:.45rem .75rem}.account-page .member-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1rem 0}.account-page .member-service-grid>section{padding:1rem;background:#f1ece1;border-top:3px solid #8a7347;min-width:0}.account-page .member-service-grid h3{margin:0 0 .5rem;font-size:1.15rem}.account-page .member-service-grid p{font-size:.95rem;line-height:1.55}.account-page .member-service-grid .item{padding:.65rem;margin:.6rem 0}.account-page .service-records :is(input,select,textarea){max-width:100%}.account-page .service-addons,.account-page .quote-requests{padding:1rem 1.5rem;background:#fffaf0;color:#173f46;border:1px solid #c6bcae;border-radius:.4rem}.account-page .service-addons :is(h3,p),.account-page .quote-requests :is(h3,h4,p,label){color:#173f46}.service-admin article{padding-inline:clamp(1.5rem,3vw,2.5rem)!important}.service-admin article p{max-width:65ch}
+@media(max-width:900px){.account-page .member-service-grid{grid-template-columns:1fr}.account-toolbar{flex-direction:column}}@media(max-width:550px){.account-identity{grid-template-columns:1fr}.account-page .community-username-settings form{display:flex;flex-direction:column;align-items:stretch}.account-page .community-username-settings button{align-self:flex-start}.account-card,.account-page .service-records>article{padding:1rem}.account-toolbar a{font-size:.9rem}}
+</style>
+<script>
+const page=document.querySelector('.account-page');
+// One set of links, resolved against the services actually included for this member.
+for(const link of page?.querySelectorAll<HTMLAnchorElement>('.account-toolbar a[href^="#"]')??[]){const id=link.hash.slice(1).replace(/^account-help-/,''),area=document.querySelector<HTMLElement>('[data-profile-area="'+id+'"]')??document.getElementById(id);if(area)link.href="#"+area.id;}
+for(const fallback of page?.querySelectorAll<HTMLElement>('[data-account-fallback]')??[]){const id=fallback.dataset.accountFallback!;const actual=page?.querySelector('[data-profile-area="'+id+'"]')??[...page!.querySelectorAll('[id]')].find(e=>e!==fallback&&e.id===id);if(actual){fallback.hidden=true;fallback.removeAttribute('id');}}
+const forms=[...page!.querySelectorAll<HTMLFormElement>('form')];
+const fingerprint=(form:HTMLFormElement)=>JSON.stringify([...new FormData(form)].filter(([name])=>!['key','revision'].includes(name)));
+const initial=new Map(forms.map(form=>[form,fingerprint(form)]));
+const dirty=()=>forms.filter(form=>form.isConnected&&fingerprint(form)!==initial.get(form));
+window.addEventListener('beforeunload',event=>{if(dirty().length){event.preventDefault();event.returnValue='';}});
+page?.addEventListener('click',event=>{const link=(event.target as Element).closest<HTMLAnchorElement>('a[href]');if(!link||link.target==='_blank')return;const destination=new URL(link.href);if(destination.pathname===location.pathname&&destination.search===location.search&&destination.hash)return;if(dirty().length&&!confirm('You have unsaved entries. Leave this page without saving them?')){event.preventDefault();event.stopImmediatePropagation();}},true);
+// An unrelated service action reloads the page: do not silently lose another form's text.
+page?.addEventListener('submit',event=>{const form=event.target as HTMLFormElement;if(dirty().some(other=>other!==form)){event.preventDefault();event.stopImmediatePropagation();let notice=form.querySelector<HTMLElement>('[data-result],[data-username-feedback]');if(notice){notice.hidden=false;notice.textContent='Save or clear your other unsaved entries before continuing.';}}},true);
+page?.addEventListener('account-form-saved',event=>{const form=event.target as HTMLFormElement;if(initial.has(form))initial.set(form,fingerprint(form));});
+function positionSection(){const id=decodeURIComponent(location.hash.slice(1));const target=id&&document.getElementById(id);if(!target)return;const headers=[...document.querySelectorAll('header')].filter(e=>['fixed','sticky'].includes(getComputedStyle(e).position));const bottom=Math.max(0,...headers.map(e=>e.getBoundingClientRect().bottom));target.style.scrollMarginTop=Math.max(32,bottom+24)+'px';target.scrollIntoView({block:'start'});target.setAttribute('tabindex','-1');target.focus({preventScroll:true});}
+page?.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>requestAnimationFrame(positionSection)));window.addEventListener('hashchange',positionSection);if(location.hash)requestAnimationFrame(positionSection);
+</script>
+
+<style is:global>.account-page .service-records>article{padding:1.25rem 1.5rem!important}.account-page .quote-requests form{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;max-width:65ch}.account-page .quote-requests label{display:grid;gap:.3rem;min-width:0}.account-page .quote-requests label:has(textarea),.account-page .quote-requests [data-result]{grid-column:1/-1}.account-page .quote-requests :is(input,select,textarea){width:100%;box-sizing:border-box;padding:.5rem .65rem;font:inherit;min-height:44px}.account-page .quote-requests button{justify-self:start;padding:.5rem .8rem;font:inherit;min-height:44px}.account-page .service-records .actions form{flex:0 1 auto}.account-page .service-records .actions [data-result]:empty{display:none}@media(max-width:550px){.account-page .quote-requests form{grid-template-columns:1fr}}</style>
+
+<style is:global>.account-page .studio-header{padding-block:1rem;margin-bottom:1rem}.account-page .studio-header h1{font-size:clamp(2rem,3vw,2.8rem)}.account-page .studio-nav:empty{display:none}</style>
+
+<style is:global>@media(max-width:550px){.account-page .community-username-settings form{display:flex!important;flex-direction:column;align-items:stretch;min-width:0}.account-page .community-username-settings form>*{max-width:100%;box-sizing:border-box}.account-page .community-username-settings button{align-self:flex-start}.account-page .studio-field-help-wrap{min-width:0}.account-page .account-card{padding:1rem!important}}.account-page button{min-height:44px!important}</style>

@@ -1,0 +1,4 @@
+// The local adapter exercises the preserved response-channel vocabulary only.
+// No provider fallback: production actions remain disconnected.
+export function localSupport(locals:any){return locals.studioSupportLocal===true?locals.studioSupportStore:null;}
+export const CHAPTER_QUESTIONS:Record<string,string>={spark:'What would help you describe the heart of your idea?',foundation:'Which reader experience or boundary would you like to explore?',architecture:'Which relationship between your cards needs another perspective?',expression:'Which writing choice would you like to discuss?','visual-world':'Which visual decision would benefit from another perspective?',companion:'What might help someone use your deck with confidence?',making:'Which making or proof decision needs another perspective?','into-the-world':'Which way of sharing your work would you like to explore?'};
